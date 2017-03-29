@@ -2,7 +2,7 @@
 
 use Cake\Utility\Inflector;
 
-$this->extend('/Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 
 $plugin = 'Croogo/Nodes'; $controller = 'Nodes';
 $modelPath = $this->request->query('model');

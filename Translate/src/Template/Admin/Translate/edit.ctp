@@ -67,18 +67,26 @@ $this->append('tab-content');
 $this->end();
 
 $this->start('panels');
-    echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-        $this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-        $this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-        $this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index',
+    echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+
+    $out =
+        $this->Form->button(__d('croogo', 'Apply'), [
+            'name' => 'apply',
+            'class' => 'btn-outline-primary',
+        ]) .
+        $this->Form->button(__d('croogo', 'Save'), [
+            'class' => 'btn-outline-success',
+        ]) .
+        $this->Html->link(__d('croogo', 'Cancel'), ['action' => 'index',
             '?' => [
                 'id' => $this->request->query('id'),
                 'model' => urldecode($this->request->query('model')),
             ],
-        ), array(
+        ], [
             'class' => 'cancel',
-            'button' => 'danger'
-        ));
+            'button' => 'outline-danger'
+        ]);
+    echo $this->Html->div('card-buttons d-flex justify-content-center', $out);
     echo $this->Html->endBox();
 $this->end();
 

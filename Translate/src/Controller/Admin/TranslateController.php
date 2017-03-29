@@ -80,7 +80,7 @@ class TranslateController extends AppController
             ])->first();
 
         $languages = $this->Languages->find('list', [
-            'keyField' => 'alias',
+            'keyField' => 'locale',
             'valueField' => 'native',
             'conditions' => [
                 $this->Languages->aliasField('status') => true,
