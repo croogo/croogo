@@ -18,10 +18,10 @@ Croogo::hookComponent('*', [
 
 Croogo::hookHelper('*', 'Croogo/Blocks.Regions');
 
-Croogo::mergeConfig('Translate.tables.Blocks', [
+Croogo::translateModel('Croogo/Blocks.Blocks', [
     'fields' => [
-        'title' => 'titleTranslation',
-        'body' => 'bodyTranslation',
+        'title',
+        'body',
     ],
-    'translateTable' => 'Croogo/Blocks.Blocks',
+    'allowEmptyTranslations' => false,
 ]);

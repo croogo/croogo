@@ -6,6 +6,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Database\Expression\IdentifierExpression;
 use Cake\Event\Event;
+use Cake\I18n\I18n;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
 use Cake\Utility\Inflector;
@@ -63,6 +64,7 @@ class NodesController extends AppController
      */
     public function index()
     {
+        $locale = I18n::locale();
         if (!$this->request->param('type')) {
             $this->request->params['type'] = 'node';
         }
@@ -76,11 +78,13 @@ class NodesController extends AppController
         }
 
         if ($this->request->param('type')) {
+            $cacheKeys = ['type', $locale, $this->request->param('type')];
+            $cacheKey = implode('_', $cacheKeys);
             $type = $this->Nodes->Taxonomies->Vocabularies->Types->find()
                 ->where([
                     'Types.alias' => $this->request->param('type'),
                 ])
-                ->cache('type_' . $this->request->param('type'), 'nodes_index')
+                ->cache($cacheKey, 'nodes_index')
                 ->firstOrFail();
             if (isset($type->params['nodes_per_page']) && !$this->request->query('limit')) {
                 $limit = $type->params['nodes_per_page'];
@@ -97,7 +101,7 @@ class NodesController extends AppController
         }
 
         if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_index_' . $this->Croogo->roleId() . '_' . Configure::read('Config.language');
+            $cacheNamePrefix = 'nodes_index_' . $this->Croogo->roleId() . '_' . $locale;
             if (isset($type)) {
                 $cacheNamePrefix .= '_' . $type->alias;
             }
@@ -138,11 +142,14 @@ class NodesController extends AppController
      */
     public function term()
     {
+        $locale = I18n::locale();
+        $cacheKeys = ['term', $locale, $this->request->param('slug')];
+        $cacheKey = implode('_', $cacheKeys);
         $term = $this->Nodes->Taxonomies->Terms->find()
             ->where([
                 'Terms.slug' => $this->request->param('slug')
             ])
-            ->cache('term_' . $this->request->param('slug'), 'nodes_term')
+            ->cache($cacheKey, 'nodes_term')
             ->firstOrFail();
 
         if (!$this->request->param('type')) {
@@ -158,11 +165,13 @@ class NodesController extends AppController
         $query = $this->Nodes->find('view', ['roleId' => $this->Croogo->roleId()]);
 
         if ($this->request->param('type')) {
+            $cacheKeys = ['type', $locale, $this->request->param('type')];
+            $cacheKey = implode('_', $cacheKeys);
             $type = $this->Nodes->Taxonomies->Vocabularies->Types->find()
             ->where([
                 'Types.alias' => $this->request->param('type'),
             ])
-            ->cache('type_' . $this->request->param('type'), 'nodes_term')
+            ->cache($cacheKey, 'nodes_term')
             ->firstOrFail();
 
             if (isset($type->params['nodes_per_page']) && empty($this->request->param('limit'))) {
@@ -182,7 +191,7 @@ class NodesController extends AppController
                 '_' .
                 $this->request->param('slug') .
                 '_' .
-                Configure::read('Config.language');
+                $locale;
             if (isset($type)) {
                 $cacheNamePrefix .= '_' . $type->alias;
             }
@@ -295,9 +304,12 @@ class NodesController extends AppController
      */
     public function view($id = null)
     {
+        $locale = I18n::locale();
         if ($this->request->param('slug') && $this->request->param('type')) {
+            $cacheKeys = ['type', $locale, $this->request->param('type')];
+            $cacheKey = implode('_', $cacheKeys);
             $type = $this->Nodes->Taxonomies->Vocabularies->Types->find()
-                ->cache('type_' . $this->request->param('type'), 'nodes_view')
+                ->cache($cacheKey, 'nodes_view')
                 ->where([
                     'alias' => $this->request->param('type'),
                 ])
@@ -316,11 +328,13 @@ class NodesController extends AppController
                 'roleId' => $this->Croogo->roleId(),
             ])
             ->firstOrFail();
+            $cacheKeys = ['type', $locale, $node->type];
+            $cacheKey = implode('_', $cacheKeys);
             $type = $this->Nodes->Taxonomies->Vocabularies->Types->find()
             ->where([
                 'Types.alias' => $node->type,
             ])
-            ->cache('type_' . $node->type, 'nodes_view')
+            ->cache($cacheKey, 'nodes_view')
             ->firstOrFail();
         }
 

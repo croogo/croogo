@@ -2,6 +2,8 @@
 
 namespace Croogo\Settings\Model\Table;
 
+use Cake\ORM\Entity;
+use Cake\ORM\Query;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -53,4 +55,20 @@ class LanguagesTable extends CroogoTable
         $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp');
     }
+
+    public function findActive(Query $query)
+    {
+        $query
+            ->select(['id', 'alias', 'locale'])
+            ->where(['status' => true])
+            ->formatResults(function ($results) {
+                $formatted = [];
+                foreach ($results as $row) {
+                    $formatted[$row->alias] = ['locale' => $row->locale];
+                }
+                return $formatted;
+            });
+        return $query;
+    }
+
 }

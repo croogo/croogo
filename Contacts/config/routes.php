@@ -1,7 +1,7 @@
 <?php
 
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
+use Croogo\Core\Router;
 
 Router::plugin('Croogo/Contacts', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('admin', function (RouteBuilder $route) {
@@ -12,6 +12,6 @@ Router::plugin('Croogo/Contacts', ['path' => '/'], function (RouteBuilder $route
         });
     });
 
-    $route->connect('/contact', ['controller' => 'Contacts', 'action' => 'view', 'contact']);
-    $route->connect('/contact/*', ['controller' => 'Contacts', 'action' => 'view']);
+    Router::build($route, '/contact', ['controller' => 'Contacts', 'action' => 'view', 'contact']);
+    Router::build($route, '/contact/*', ['controller' => 'Contacts', 'action' => 'view']);
 });

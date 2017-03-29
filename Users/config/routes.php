@@ -1,7 +1,7 @@
 <?php
 
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
+use Croogo\Core\Router;
 
 Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('admin', function (RouteBuilder $route) {
@@ -12,9 +12,9 @@ Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
         });
     });
 
-    $route->connect('/register', ['controller' => 'Users', 'action' => 'add']);
-    $route->connect('/user/:username', ['controller' => 'Users', 'action' => 'view'], ['pass' => ['username']]);
+    Router::build($route, '/register', ['controller' => 'Users', 'action' => 'add']);
+    Router::build($route, '/user/:username', ['controller' => 'Users', 'action' => 'view'], ['pass' => ['username']]);
 
-    $route->connect('/users', ['controller' => 'Users', 'action' => 'index']);
-    $route->connect('/users/:action/*', ['controller' => 'Users']);
+    Router::build($route, '/users', ['controller' => 'Users', 'action' => 'index']);
+    Router::build($route, '/users/:action/*', ['controller' => 'Users']);
 });

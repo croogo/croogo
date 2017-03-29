@@ -407,4 +407,12 @@ class Croogo
         Configure::write($key, $values);
         return $values;
     }
+
+    public static function translateModel($model, $config)
+    {
+        Croogo::mergeConfig('Translate.models', [
+            $model => $config
+        ], true);
+    }
+
 }

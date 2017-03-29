@@ -1,7 +1,7 @@
 <?php
 
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
+use Croogo\Core\Router;
 
 Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('admin', function (RouteBuilder $route) {
@@ -16,7 +16,7 @@ Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route
     $route->extensions(['rss']);
 
     $route->scope('/comments', [], function (RouteBuilder $route) {
-        $route->connect('/', ['controller' => 'Comments']);
+        Router::build('/', ['controller' => 'Comments']);
 
         $route->fallbacks();
     });

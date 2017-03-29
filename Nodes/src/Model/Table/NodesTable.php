@@ -4,6 +4,7 @@ namespace Croogo\Nodes\Model\Table;
 
 use Cake\Database\Schema\TableSchema;
 use Cake\Event\Event;
+use Cake\I18n\I18n;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -252,7 +253,14 @@ class NodesTable extends CroogoTable
     {
         $defaults = ['slug' => null, 'type' => null, 'roleId' => null];
         $options += $defaults;
-        $cacheKey = 'node_' . $options['roleId'] . '_' . $options['type'] . '_' . $options['slug'];
+        $cacheKeys = [
+            'node',
+            I18n::locale(),
+            $options['roleId'],
+            $options['type'],
+            $options['slug'],
+        ];
+        $cacheKey = implode('_', $cacheKeys);
 
         $query->find('view', $options)
             ->find('bySlug', $options)
@@ -270,7 +278,13 @@ class NodesTable extends CroogoTable
     {
         $defaults = ['id' => null, 'roleId' => null];
         $options += $defaults;
-        $cacheKey = 'node_' . $options['roleId'] . '_' . $options['id'];
+        $cacheKeys = [
+            'node',
+            I18n::locale(),
+            $options['roleId'],
+            $options['id'],
+        ];
+        $cacheKey = implode('_', $cacheKeys);
         $query->find('view', $options)
             ->where([
                 $this->aliasField('id') => $options['id'],

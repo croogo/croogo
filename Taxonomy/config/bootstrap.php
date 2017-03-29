@@ -15,18 +15,16 @@ Croogo::hookComponent('*', 'Croogo/Taxonomy.Taxonomies');
 
 Croogo::hookHelper('*', 'Croogo/Taxonomy.Taxonomies');
 
-Croogo::mergeConfig('Translate.models.Term', [
+Croogo::translateModel('Croogo/Taxonomy.Terms', [
     'fields' => [
-        'title' => 'titleTranslation',
-        'description' => 'descriptionTranslation',
+        'title',
+        'description',
     ],
-    'translateModel' => 'Taxonomy.Term',
 ]);
 
-Croogo::mergeConfig('Translate.models.Type', [
+Croogo::translateModel('Croogo/Taxonomy.Types', [
     'fields' => [
-        'title' => 'titleTranslation',
-        'description' => 'descriptionTranslation',
+        'title',
+        'description',
     ],
-    'translateModel' => 'Taxonomy.Type',
 ]);

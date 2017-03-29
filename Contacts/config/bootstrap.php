@@ -10,12 +10,11 @@ Cache::config('contacts_view', array_merge(
     ['groups' => ['contacts']]
 ));
 
-Croogo::mergeConfig('Translate.models.Contact', [
+Croogo::translateModel('Croogo/Contacts.Contacts', [
     'fields' => [
         'title' => 'titleTranslation',
         'body' => 'bodyTranslation',
     ],
-    'translateModel' => 'Contacts.Contact',
 ]);
 
 // Configure Wysiwyg

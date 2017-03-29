@@ -1,8 +1,8 @@
 <?php
 
-namespace Croogo\Translate\Controller;
+namespace Croogo\Translate\Controller\Admin;
 
-use Croogo\Core\Controller\AppController;
+use Croogo\Core\Controller\Admin\AppController as CroogoController;
 
 /**
  * Translate App Controller
@@ -14,7 +14,7 @@ use Croogo\Core\Controller\AppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TranslateAppController extends AppController
+class AppController extends CroogoController
 {
 
 }
