@@ -8,19 +8,12 @@
         echo $this->Html->css(array(
             '/croogo/css/croogo-bootstrap',
             '/croogo/css/croogo-bootstrap-responsive',
-            '/croogo/css/thickbox',
         ));
         echo $this->Layout->js();
         echo $this->Html->script(array(
             '/croogo/js/jquery/jquery.min',
             '/croogo/js/jquery/jquery-ui.min',
-            '/croogo/js/jquery/jquery.cookie',
             '/croogo/js/jquery/jquery.hoverIntent.minified',
-            '/croogo/js/jquery/superfish',
-            '/croogo/js/jquery/supersubs',
-            '/croogo/js/jquery/jquery.tipsy',
-            '/croogo/js/jquery/jquery.elastic-1.6.1.js',
-            '/croogo/js/jquery/thickbox-compressed',
             '/croogo/js/underscore-min',
             '/croogo/js/admin',
             '/croogo/js/croogo-bootstrap.js',
