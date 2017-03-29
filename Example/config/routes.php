@@ -1,7 +1,7 @@
 <?php
 
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
+use Croogo\Core\Router;
 
 Router::plugin('Croogo/Example', ['path' => '/'], function (RouteBuilder $routeBuilder) {
     $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
@@ -16,7 +16,7 @@ Router::plugin('Croogo/Example', ['path' => '/'], function (RouteBuilder $routeB
         $routeBuilder->fallbacks();
     });
 
-    $routeBuilder->connect('/example/route/here', [
+    Router::build($routeBuilder, '/example/route/here', [
         'plugin' => 'Croogo/Example',
         'controller' => 'example',
         'action' => 'index',

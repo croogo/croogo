@@ -14,9 +14,9 @@ Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
 
     $route->extensions(['rss']);
 
-    $route->connect('/', ['controller' => 'Nodes', 'action' => 'promoted']);
-    $route->connect('/promoted/*', ['controller' => 'Nodes', 'action' => 'promoted']);
-    $route->connect('/search/*', ['controller' => 'Nodes', 'action' => 'search']);
+    Router::build($route, '/', ['controller' => 'Nodes', 'action' => 'promoted']);
+    Router::build($route, '/promoted/*', ['controller' => 'Nodes', 'action' => 'promoted']);
+    Router::build($route, '/search/*', ['controller' => 'Nodes', 'action' => 'search']);
 
     // Content types
     Router::routableContentTypes($route);

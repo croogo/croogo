@@ -7,6 +7,7 @@ use Cake\Database\Exception\MissingConnectionException;
 use Cake\Log\Log;
 use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router as CakeRouter;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -25,6 +26,20 @@ use Cake\Utility\Inflector;
  */
 class Router extends CakeRouter
 {
+
+/**
+ * Helper method to setup both default and localized route
+ */
+    public static function build(RouteBuilder $builder, $path, $defaults, $options = [])
+    {
+        if (Plugin::loaded('Croogo/Translate')) {
+            $languages = Configure::read('I18n.languages');
+            $i18nPath = '/:lang' . $path;
+            $i18nOptions = array_merge($options, ['lang' => implode('|', $languages)]);
+            $builder->connect($i18nPath, $defaults, $i18nOptions);
+        }
+        $builder->connect($path, $defaults, $options);
+    }
 
 /**
  * Check wether request is a API call.
@@ -108,19 +123,19 @@ class Router extends CakeRouter
  */
     public static function contentType($alias, $routeBuilder)
     {
-        $routeBuilder->connect('/' . $alias, [
+        static::build($routeBuilder, '/' . $alias, [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index', 'type' => $alias
         ]);
-        $routeBuilder->connect('/' . $alias . '/archives/*', [
+        static::build($routeBuilder, '/' . $alias . '/archives/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index', 'type' => $alias
         ]);
-        $routeBuilder->connect('/' . $alias . '/:slug', [
+        static::build($routeBuilder, '/' . $alias . '/:slug', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'view', 'type' => $alias
         ]);
-        $routeBuilder->connect('/' . $alias . '/term/:slug/*', [
+        static::build($routeBuilder, '/' . $alias . '/term/:slug/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'term', 'type' => $alias
         ]);
