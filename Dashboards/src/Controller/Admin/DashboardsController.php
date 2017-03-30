@@ -128,7 +128,7 @@ class DashboardsController extends AppController
      */
     public function toggle($id = null, $status = null)
     {
-        $this->Croogo->fieldToggle($this->{$this->modelClass}, $id, $status);
+        $this->Croogo->fieldToggle($this->Dashboards, $id, $status);
     }
 
     /**
