@@ -212,6 +212,12 @@ class UsersController extends AppController
             return $this->redirect($this->Auth->redirectUrl());
         }
 
+        $session = $this->request->session();
+        $redirectUrl = $this->Auth->redirectUrl();
+        if ($redirectUrl && !$session->check('Croogo.redirect')) {
+            $session->write('Croogo.redirect', $redirectUrl);
+        }
+
         if ($this->request->is('post')) {
             Croogo::dispatchEvent('Controller.Users.beforeAdminLogin', $this);
             $user = $this->Auth->identify();
@@ -225,7 +231,13 @@ class UsersController extends AppController
                 }
 
                 Croogo::dispatchEvent('Controller.Users.adminLoginSuccessful', $this);
-                return $this->redirect($this->Auth->redirectUrl());
+                if ($session->check('Croogo.redirect')) {
+                    $redirectUrl = $session->read('Croogo.redirect');
+                    $session->delete('Croogo.redirect');
+                } else {
+                    $redirectUrl = $this->Auth->redirectUrl();
+                }
+                return $this->redirect($redirectUrl);
             } else {
                 Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);
                 $this->Auth->authError = __d('croogo', 'Incorrect username or password');
