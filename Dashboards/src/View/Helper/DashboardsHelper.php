@@ -5,6 +5,7 @@ namespace Croogo\Dashboards\View\Helper;
 use Cake\View\Helper;
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
+use Cake\Log\Log;
 use Cake\View\View;
 use Croogo\Core\Croogo;
 use Croogo\Dashboards\CroogoDashboard;
@@ -96,6 +97,11 @@ class DashboardsHelper extends Helper
 
         foreach ($dashboards as $alias => $dashboard) {
             if ($currentRole != 'superadmin' && !in_array($currentRole, $dashboard['access'])) {
+                continue;
+            }
+
+            if (empty($dashboard['cell'])) {
+                Log::error('Dashboard ' . $alias . ' has no cell attribute');
                 continue;
             }
 
