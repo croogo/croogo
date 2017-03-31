@@ -157,8 +157,12 @@ publish: guard-VERSION guard-GITHUB_USER dist/cakephp-$(DASH_VERSION).zip
 # Tasks for publishing separate reporsitories out of each cake namespace
 
 plugin-split:
-	git subsplit update
-	git subsplit publish "\
+	@if [ -z "$(RELEASE_TAG)" ]; then \
+		echo "\nPlease specify release tag, eg: RELEASE_TAG=3.0.0 make plugin-split\n" ; \
+		exit 1 ; \
+	fi
+	echo git subsplit update
+	echo git subsplit publish "\
 		Acl:$(GITHUB_ROOT)/acl \
 		Blocks:$(GITHUB_ROOT)/blocks \
 		Comments:$(GITHUB_ROOT)/comments \
@@ -178,7 +182,7 @@ plugin-split:
 		Users:$(GITHUB_ROOT)/users \
 		Wysiwyg:$(GITHUB_ROOT)/wysiwyg \
 		" \
-		--no-tags \
+		--tags=$(RELEASE_TAG) \
 		--heads=3.0
 
 plugins: $(foreach plugin, $(PLUGINS), plugin-$(plugin))
