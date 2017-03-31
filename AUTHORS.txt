@@ -10,13 +10,13 @@ Kyle Robinson Young <kyle@dontkry.com>
 Damien Biasotto <damien@occi-tech.com>
 Derbois Aymeric <aymeric@occi-tech.com>
 Pierre Martin <pierre@occi-tech.com>
-chadrien <chadrien@chadrien.fr>
 Walther Lalk <dakota@users.noreply.github.com>
+chadrien <chadrien@chadrien.fr>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 Paul Gardner <phpmagpie@webbedit.co.uk>
 Christopher M. Depré <mail@chris-depre.de>
-Damien Biasotto <damien@occitech.fr>
 Jose Diaz-Gonzalez <josegonzalez@users.noreply.github.com>
+Damien Biasotto <damien@occitech.fr>
 euromark <euromark@web.de>
 Eko Tristiyono <eko@xintesa.com>
 Yuan Chavik <yuan@xintesa.com>
@@ -44,6 +44,7 @@ elbakai <m.elbakai@gmail.com>
 primeminister <primeminister@mowd.nl>
 ADmad <admad.coder@gmail.com>
 James Sapara <james.sapara@gmail.com>
+Livia Scapin <livia.scapin@bluewin.ch>
 Matt Curry <matt@pseudocoder.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
 dimas <dimas@xintesa.com>
@@ -55,6 +56,8 @@ cdbruin <casper@ectrader.nl>
 daniel <daniel@daniels-MacBook-Air.local>
 roland-w <roland-w@users.noreply.github.com>
 tmaiaroto <tom@shift8creative.com>
+yudapc <yudapc@gmail.com>
+ADmad <ADmad@users.noreply.github.com>
 Adam Taylor <ataylor32@gmail.com>
 Adrien Louis-Rossignol <adrien.louis.r@gmail.com>
 Andrea de la Huerta <info@metamorfosys.de>
