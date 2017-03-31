@@ -50,7 +50,9 @@ Dashboard.sortable = function(selector, saveDashboard) {
       placeholder: 'box-placeholder',
       forcePlaceholderSize: true,
       opacity: 0.75,
-      tolerance: "pointer",
+      tolerance: 'pointer',
+      helper: 'clone',
+      appendTo: $('body'),
       start: function () {
         sortables.addClass('sorting');
       },
