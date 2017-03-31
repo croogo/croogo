@@ -16,7 +16,7 @@ Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route
     $route->extensions(['rss']);
 
     $route->scope('/comments', [], function (RouteBuilder $route) {
-        Router::build('/', ['controller' => 'Comments']);
+        Router::build($route, '/', ['controller' => 'Comments']);
 
         $route->fallbacks();
     });
