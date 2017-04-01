@@ -75,3 +75,5 @@ application.
   * **Documentation**: [http://docs.croogo.org](http://docs.croogo.org)
   * **Google Group**: [http://groups.google.com/group/croogo](http://groups.google.com/group/croogo)
   * **IRC Channel**: [#croogo](irc://irc.freenode.net/croogo) on irc.freenode.net
+
+  * **Gitter**: [![Join the chat at https://gitter.im/croogo/croogo](https://badges.gitter.im/croogo/croogo.svg)](https://gitter.im/croogo/croogo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
