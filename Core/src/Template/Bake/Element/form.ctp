@@ -73,16 +73,9 @@ $this->append('tab-content');
                 continue;
             }
             if (isset($keyFields[$field])) {
-                $fieldData = $schema->column($field);
-                if (!empty($fieldData['null'])) {
 %>
         echo $this->Form->input('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true]);
 <%
-                } else {
-%>
-        echo $this->Form->input('<%= $field %>', ['options' => $<%= $keyFields[$field] %>]);
-<%
-                }
                 continue;
             }
             if (!in_array($field, ['created', 'modified', 'updated'])) {
@@ -101,7 +94,10 @@ $this->append('tab-content');
         if (!empty($associations['BelongsToMany'])) {
             foreach ($associations['BelongsToMany'] as $assocName => $assocData) {
 %>
-            echo $this->Form->input('<%= $assocData['property'] %>._ids', ['options' => $<%= $assocData['variable'] %>]);
+            echo $this->Form->input('<%= $assocData['property'] %>._ids', [
+                'empty' => true,
+                'options' => $<%= $assocData['variable'] %>,
+            ]);
 <%
             }
         }

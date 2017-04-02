@@ -102,8 +102,9 @@ $this->append('table-body');
             </div>
         </td>
     </tr>
+    <?php endforeach; ?>
+</tbody>
 <?php
-endforeach;
 
 $this->end();
 
