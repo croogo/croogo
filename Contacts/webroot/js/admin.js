@@ -4,7 +4,7 @@
  * @return void
  */
 $(function () {
-  Admin.toggleRowSelection('#MessageCheckAll');
+  Admin.toggleRowSelection('#MessagesCheckAll');
 
   $('.comment-view').on('click', function () {
     var $el = $(this);

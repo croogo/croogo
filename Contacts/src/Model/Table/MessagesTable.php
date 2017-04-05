@@ -2,6 +2,7 @@
 
 namespace Croogo\Contacts\Model\Table;
 
+use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -16,31 +17,6 @@ use Croogo\Core\Model\Table\CroogoTable;
  */
 class MessagesTable extends CroogoTable
 {
-
-/**
- * Validation
- *
- * @var array
- * @access public
- */
-    public $validate = [
-        'name' => [
-            'rule' => 'notEmpty',
-            'message' => 'This field cannot be left blank.',
-        ],
-        'email' => [
-            'rule' => 'email',
-            'message' => 'Please provide a valid email address.',
-        ],
-        'title' => [
-            'rule' => 'notEmpty',
-            'message' => 'This field cannot be left blank.',
-        ],
-        'body' => [
-            'rule' => 'notEmpty',
-            'message' => 'This field cannot be left blank.',
-        ],
-    ];
 
     public function initialize(array $config)
     {
@@ -70,22 +46,23 @@ class MessagesTable extends CroogoTable
                 ]
             ]
         ]);
+
+        $this->searchManager()
+            ->value('contact_id')
+            ->value('status', [
+                'field' => $this->aliasField('status'),
+            ]);
     }
 
-/**
- * Filter fields
- *
- * @var array
- * @access public
- */
-    public $filterArgs = [
-        'contact_id' => [
-            'type' => 'value',
-        ],
-        'status' => [
-            'type' => 'value',
-        ],
-    ];
+    public function validationDefault(Validator $validator)
+    {
+        $notBlankMessage = __d('croogo', 'This field cannot be left blank.');
+        $validator->notBlank('name', $notBlankMessage);
+        $validator->email('email', __d('croogo', 'Please provide a valid email address.'));
+        $validator->notBlank('title', $notBlankMessage);
+        $validator->notBlank('body', $notBlankMessage);
+        return $validator;
+    }
 
 /**
  * Mark messages as read in bulk
@@ -96,8 +73,8 @@ class MessagesTable extends CroogoTable
     public function bulkRead($ids)
     {
         return $this->updateAll(
-            [$this->escapeField('status') => 1],
-            [$this->escapeField() => $ids]
+            ['status' => 1],
+            [$this->aliasField('id') . ' IN' => $ids]
         );
     }
 
@@ -110,8 +87,8 @@ class MessagesTable extends CroogoTable
     public function bulkUnread($ids)
     {
         return $this->updateAll(
-            [$this->escapeField('status') => 0],
-            [$this->escapeField() => $ids]
+            ['status' => 0],
+            [$this->aliasField('id') . ' IN' => $ids]
         );
     }
 }

@@ -33,15 +33,17 @@ class MessagesController extends AppController
  */
     public function process()
     {
-        $Message = $this->{$this->modelClass};
-        list($action, $ids) = $this->BulkProcess->getRequestVars($Message->alias);
+        $Messages = $this->Messages;
+        list($action, $ids) = $this->BulkProcess->getRequestVars($Messages->alias());
 
         $messageMap = [
             'delete' => __d('croogo', 'Messages deleted'),
             'read' => __d('croogo', 'Messages marked as read'),
             'unread' => __d('croogo', 'Messages marked as unread'),
         ];
-        return $this->BulkProcess->process($Message, $action, $ids, $messageMap);
+        return $this->BulkProcess->process($Messages, $action, $ids, [
+            'messageMap' => $messageMap,
+        ]);
     }
 
     public function beforePaginate(Event $event)
@@ -67,4 +69,18 @@ class MessagesController extends AppController
             'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
+
+    public function index()
+    {
+        $this->Crud->on('beforePaginate', function(Event $event) {
+            $query = $event->subject()->query;
+            if (empty($this->request->query('sort'))) {
+                $query->order([
+                    $this->Messages->aliasField('id') => 'desc',
+                ]);
+            }
+        });
+        return $this->Crud->execute();
+    }
+
 }

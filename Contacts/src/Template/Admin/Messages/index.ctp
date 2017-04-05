@@ -47,7 +47,7 @@ $this->append('form-start', $this->Form->create(null, [
 
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([
-    $this->Form->checkbox('checkAll'),
+    $this->Form->checkbox('checkAll', ['id' => 'MessagesCheckAll']),
     $this->Paginator->sort('contact_id', __d('croogo', 'Contact')),
     $this->Paginator->sort('name', __d('croogo', 'Name')),
     $this->Paginator->sort('email', __d('croogo', 'Email')),
@@ -63,6 +63,8 @@ $rows = [];
 foreach ($messages as $message) {
     $actions = [];
 
+    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'view', $message->id],
+        ['icon' => $this->Theme->geticon('read'), 'tooltip' => __d('croogo', 'View this item')]);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $message->id],
         ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);
     $actions[] = $this->Croogo->adminRowAction('', '#Message' . $message->id . 'Id', [
@@ -76,7 +78,10 @@ foreach ($messages as $message) {
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
 
     $rows[] = [
-        $this->Form->checkbox('Message.' . $message->id . '.id', ['class' => 'row-select']),
+        $this->Form->checkbox('Messages.' . $message->id . '.id', [
+            'class' => 'row-select',
+            'id' => 'Messages'. $message->id . 'Id',
+        ]),
         $message->contact->title,
         $message->name,
         $message->email,
