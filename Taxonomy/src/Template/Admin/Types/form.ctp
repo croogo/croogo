@@ -86,6 +86,7 @@ echo $this->Html->tabStart('type-params');
 echo $this->Form->input('params', [
     'type' => 'stringlist',
     'label' => __d('croogo', 'Params'),
+    'default' => 'routes=true',
 ]);
 echo $this->Html->tabEnd();
 $this->end();
