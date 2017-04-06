@@ -96,7 +96,12 @@ class DashboardsHelper extends Helper
         }
 
         foreach ($dashboards as $alias => $dashboard) {
-            if ($currentRole != 'superadmin' && !in_array($currentRole, $dashboard['access'])) {
+            if ($currentRole != 'superadmin' &&
+                (
+                !empty($dashboard['access']) &&
+                !in_array($currentRole, $dashboard['access'])
+                )
+            ) {
                 continue;
             }
 
