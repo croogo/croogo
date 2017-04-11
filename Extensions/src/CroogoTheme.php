@@ -145,12 +145,14 @@ class CroogoTheme
             DS . 'webroot' . DS . 'theme.json',
         ];
 
-        if (empty($path)) {
+        if ($theme && empty($path)) {
             try {
                 $path = Plugin::path($theme);
             } catch (MissingPluginException $exception) {
                 throw new MissingThemeException([$theme], $exception->getCode(), $exception);
             }
+        } else {
+            $path = ROOT . DS;
         }
 
         foreach ($themeConfigs as $themeManifestFile) {
