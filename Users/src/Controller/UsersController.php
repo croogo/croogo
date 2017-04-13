@@ -189,7 +189,13 @@ class UsersController extends AppController
  */
     public function login()
     {
+        $session = $this->request->session();
         if (!$this->request->is('post')) {
+            $redirectUrl = $this->Auth->redirectUrl();
+            if ($redirectUrl && !$session->check('Croogo.redirect')) {
+            $this->log($redirectUrl);
+                $session->write('Croogo.redirect', $redirectUrl);
+            }
             return;
         }
 
@@ -208,7 +214,14 @@ class UsersController extends AppController
 
         Croogo::dispatchEvent('Controller.Users.loginSuccessful', $this);
 
-        return $this->redirect($this->Auth->redirectUrl());
+        if ($session->check('Croogo.redirect')) {
+            $redirectUrl = $session->read('Croogo.redirect');
+            $session->delete('Croogo.redirect');
+        } else {
+            $redirectUrl = $this->Auth->redirectUrl();
+        }
+
+        return $this->redirect($redirectUrl);
     }
 
 /**
