@@ -143,7 +143,7 @@ foreach ($relations as $alias => $details):
     <div class="related">
         <h4><?= __('Related <%= $otherPluralHumanName %>') ?></h4>
         <?php if (!empty($<%= $singularVar %>-><%= $details['property'] %>)): ?>
-        <table cellpadding="0" cellspacing="0">
+        <table class="table table-sm table-responsive">
             <tr>
 <% foreach ($details['fields'] as $field): %>
                 <th scope="col"><?= __('<%= Inflector::humanize($field) %>') ?></th>
@@ -159,7 +159,7 @@ foreach ($relations as $alias => $details):
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => '<%= $details['controller'] %>', 'action' => 'view', <%= $otherPk %>]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => '<%= $details['controller'] %>', 'action' => 'edit', <%= $otherPk %>]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => '<%= $details['controller'] %>', 'action' => 'delete', <%= $otherPk %>], ['confirm' => __('Are you sure you want to delete # {0}?', <%= $otherPk %>)]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => '<%= $details['controller'] %>', 'action' => 'delete', <%= $otherPk %>], ['confirm' => __('Are you sure you want to delete # {0}?', <%= $otherPk %>), 'escape' => true]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
