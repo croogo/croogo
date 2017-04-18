@@ -163,9 +163,11 @@ class FilterComponent extends Component
             'action' => 'login',
         ]);
         if ($this->_controller->request->param('prefix') == 'admin') {
-            $this->_controller->Auth->config('loginRedirect', Configure::read('Croogo.dashboardUrl'));
+            $loginRedirect = Configure::read('Croogo.dashboardUrl') ?: '/admin';
+            $this->_controller->Auth->config('loginRedirect', $loginRedirect);
         } else {
-            $this->_controller->Auth->config('loginRedirect', Configure::read('Croogo.homeUrl'));
+            $loginRedirect = Configure::read('Croogo.homeUrl') ?: '/';
+            $this->_controller->Auth->config('loginRedirect', $loginRedirect);
         }
         $this->_controller->Auth->config('unauthorizedRedirect', [
             'plugin' => 'Croogo/Users',
