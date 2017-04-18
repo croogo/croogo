@@ -22,6 +22,15 @@ use Croogo\Users\Model\Table\UsersTable;
 class UsersController extends AppController
 {
 
+    /**
+     * {inheritdoc}
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['logout']);
+    }
+
 /**
  * Index
  *
@@ -192,8 +201,7 @@ class UsersController extends AppController
         $session = $this->request->session();
         if (!$this->request->is('post')) {
             $redirectUrl = $this->Auth->redirectUrl();
-            if ($redirectUrl && !$session->check('Croogo.redirect')) {
-            $this->log($redirectUrl);
+            if ($redirectUrl != '/' && !$session->check('Croogo.redirect')) {
                 $session->write('Croogo.redirect', $redirectUrl);
             }
             return;
@@ -232,6 +240,7 @@ class UsersController extends AppController
     public function logout()
     {
         Croogo::dispatchEvent('Controller.Users.beforeLogout', $this);
+        $this->request->session()->delete('Croogo.redirect');
 
         $this->Flash->success(__d('croogo', 'Log out successful.'), 'auth');
 
