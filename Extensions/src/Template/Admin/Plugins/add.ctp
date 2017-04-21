@@ -4,13 +4,13 @@ $this->extend('/Common/admin_edit');
 
 $this->Breadcrumbs->add(__d('croogo', 'Extensions'), $this->request->here())
     ->add(__d('croogo', 'Plugins'),
-        ['plugin' => 'Croogo/Extensions', 'controller' => 'extensions_plugins', 'action' => 'index'])
+        ['plugin' => 'Croogo/Extensions', 'controller' => 'Plugins', 'action' => 'index'])
     ->add(__d('croogo', 'Upload'), $this->request->here());
 
 $this->append('form-start', $this->Form->create(null, [
     'url' => [
         'plugin' => 'Croogo/Extensions',
-        'controller' => 'extensions_plugins',
+        'controller' => 'Plugins',
         'action' => 'add',
     ],
     'type' => 'file',
@@ -21,7 +21,7 @@ echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#plugins-upload');
 $this->end();
 
 $this->append('tab-content');
-echo $this->Html->tabStart('plugins-upload') . $this->Form->input('file', [
+echo $this->Html->tabStart('plugins-upload') . $this->Form->input('Plugin.file', [
         'type' => 'file',
         'class' => 'c-file'
     ]);
