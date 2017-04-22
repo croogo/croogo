@@ -676,16 +676,17 @@ class Plugin extends CakePlugin
     {
         $plugin = Inflector::camelize($plugin);
         if (!isset($this->_PluginActivation)) {
-            $className = $plugin . 'Activation';
+            $className = 'PluginActivation';
 
             $registered = Configure::read('plugins');
             $pluginPaths = Hash::merge(App::path('Plugin'), $registered);
             unset($pluginPaths['Croogo']); //Otherwise we get croogo plugins twice!
 
             if (isset($pluginPaths[$plugin])) {
-                $configFile = $pluginPaths[$plugin] . DS . 'config' . DS . $className . '.php';
+                $configFile = $pluginPaths[$plugin] . 'config' . DS . $className . '.php';
                 if (file_exists($configFile) && include $configFile) {
-                    $this->_PluginActivation = new $className;
+                    $fqcn = App::className($plugin . '.' . $className, 'Config');
+                    $this->_PluginActivation = new $fqcn;
 
                     return $this->_PluginActivation;
                 }
@@ -693,7 +694,8 @@ class Plugin extends CakePlugin
             foreach ($pluginPaths as $path) {
                 $configFile = $path . DS . $plugin . DS . 'config' . DS . $className . '.php';
                 if (file_exists($configFile) && include $configFile) {
-                    $this->_PluginActivation = new $className;
+                    $fqcn = App::className($plugin . '.' . $className, 'Config');
+                    $this->_PluginActivation = new $fqcn;
 
                     return $this->_PluginActivation;
                 }
