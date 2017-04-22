@@ -90,7 +90,7 @@ $this->end();
 
 $this->start('bulk-action');
 
-echo $this->Form->input('Links.action', [
+echo $this->Form->input('action', [
     'class' => 'c-select',
     'label' => __d('croogo', 'Bulk actions'),
     'options' => [
