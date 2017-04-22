@@ -4,6 +4,7 @@ namespace Croogo\Acl\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * AclAccess Component provides various methods to manipulate Aros and Acos,
@@ -58,8 +59,8 @@ class AccessComponent extends Component
     {
         $title = __d('croogo', 'Parent Role');
         $element = 'Acl.admin/parent_role';
-        Croogo::hookAdminTab('Roles/admin_add', $title, $element);
-        Croogo::hookAdminTab('Roles/admin_edit', $title, $element);
+        Croogo::hookAdminTab('Croogo/Users.Admin/Roles/add', $title, $element);
+        Croogo::hookAdminTab('Croogo/Users.Admin/Roles/edit', $title, $element);
 
         $this->_controller->Role->bindAro();
         $id = null;
@@ -103,11 +104,11 @@ class AccessComponent extends Component
  */
     public function addAco($action, $allowRoles = [])
     {
-        $actionPath = $this->_controller->Auth->authorize['all']['actionPath'];
+        $actionPath = $this->_controller->Auth->config('authorize.all.actionPath');
         if (strpos($action, $actionPath) === false) {
             $action = str_replace('//', '/', $actionPath . '/' . $action);
         }
-        $Aco = ClassRegistry::init('Acl.AclAco');
+        $Aco = TableRegistry::get('Croogo/Acl.Acos');
         $Aco->addAco($action, $allowRoles);
     }
 
@@ -129,7 +130,7 @@ class AccessComponent extends Component
         if (strpos($action, $actionPath) === false) {
             $action = str_replace('//', '/', $actionPath . '/' . $action);
         }
-        $Aco = ClassRegistry::init('Acl.AclAco');
+        $Aco = TableRegistry::get('Croogo/Acl.Acos');
         $Aco->removeAco($action);
     }
 }

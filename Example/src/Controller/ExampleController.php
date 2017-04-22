@@ -2,7 +2,7 @@
 
 namespace Croogo\Example\Controller;
 
-use Croogo\Example\Controller\ExampleAppController;
+use Croogo\Example\Controller\AppController;
 
 /**
  * Example Controller
@@ -14,7 +14,7 @@ use Croogo\Example\Controller\ExampleAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExampleController extends ExampleAppController
+class ExampleController extends AppController
 {
 
    /**

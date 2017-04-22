@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example Activation
  *
@@ -12,7 +13,9 @@
  */
 namespace Croogo\Example\Config;
 
-class ExampleActivation
+use Cake\ORM\TableRegistry;
+
+class PluginActivation
 {
 
 /**
@@ -35,33 +38,33 @@ class ExampleActivation
     public function onActivation(&$controller)
     {
         // ACL: set ACOs with permissions
-        $controller->Croogo->addAco('Example/Example/admin_index'); // ExampleController::admin_index()
-        $controller->Croogo->addAco('Example/Example/index', ['registered', 'public']); // ExampleController::index()
+        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos->addAco('Croogo\Example/Admin/Example/index'); // ExampleController::admin_index()
+        $Acos->addAco('Croogo\Example/Example/index', ['registered', 'public']); // ExampleController::index()
 
-        $this->Link = ClassRegistry::init('Menus.Link');
+        $Links = TableRegistry::get('Croogo/Menus.Links');
 
         // Main menu: add an Example link
-        $mainMenu = $this->Link->Menu->findByAlias('main');
-        $this->Link->Behaviors->attach('Tree', [
+        $mainMenu = $Links->Menus->findByAlias('main')->first();
+        $Links->addBehavior('Tree', [
             'scope' => [
-                'Link.menu_id' => $mainMenu['Menu']['id'],
+                'Links.menu_id' => $mainMenu->id,
             ],
         ]);
-        $this->Link->create();
-        $this->Link->save([
+        $Links->save($Links->newEntity([
             // Menu in which the link should go
-            'menu_id' => $mainMenu['Menu']['id'],
+            'menu_id' => $mainMenu->id,
             // Link caption
             'title' => 'Example',
             // The link
-            'link' => 'plugin:example/controller:example/action:index',
+            'link' => 'plugin:Croogo%2fExample/controller:Example/action:index',
             // Status : activated or not (0 or 1)
             'status' => 1,
             // Link class
             'class' => 'example',
             // Roles which link is visible. Empty string means visible to all
             'visibility_roles' => '["1","2","3"]',
-        ]);
+        ]));
     }
 
 /**
@@ -84,35 +87,34 @@ class ExampleActivation
     public function onDeactivation(&$controller)
     {
         // ACL: remove ACOs with permissions
-        $controller->Croogo->removeAco('Example'); // ExampleController ACO and it's actions will be removed
+        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos->removeAco('Croogo\Example'); // Plugin ACOs and it's actions will be removed
 
-        $this->Link = ClassRegistry::init('Menus.Link');
+        $Links = TableRegistry::get('Croogo/Menus.Links');
 
         // Main menu: delete Example link
-        $link = $this->Link->find('first', [
-            'joins' => [
-                [
-                    'table' => 'menus',
-                    'alias' => 'JoinMenu',
+        $link = $Links->find()
+            ->where([
+                'Links.link' => 'plugin:Croogo%2fExample/controller:Example/action:index',
+            ])
+            ->contain([
+                'Menus' => [
                     'conditions' => [
-                        'JoinMenu.alias' => 'main',
+                        'Menus.alias' => 'main',
                     ],
                 ],
-            ],
-            'conditions' => [
-                'Link.link' => 'plugin:example/controller:example/action:index',
-            ],
-        ]);
+            ])
+            ->first();
         if (empty($link)) {
             return;
         }
-        $this->Link->Behaviors->attach('Tree', [
+        $Links->addBehavior('Tree', [
             'scope' => [
-                'Link.menu_id' => $link['Link']['menu_id'],
+                'Links.menu_id' => $link->menu_id,
             ],
         ]);
-        if (isset($link['Link']['id'])) {
-            $this->Link->delete($link['Link']['id']);
+        if (isset($link->id)) {
+            $Links->delete($link);
         }
     }
 }

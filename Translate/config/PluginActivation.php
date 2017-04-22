@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Translate Activation
  *
@@ -9,7 +10,10 @@
  */
 namespace Croogo\Translate\Config;
 
-class TranslateActivation
+use Cake\ORM\TableRegistry;
+use Croogo\Core\Plugin;
+
+class PluginActivation
 {
 
 /**
@@ -31,11 +35,12 @@ class TranslateActivation
  */
     public function onActivation(&$controller)
     {
-        $controller->Croogo->addAco('Translate/Translate/admin_index');
-        $controller->Croogo->addAco('Translate/Translate/admin_edit');
-        $controller->Croogo->addAco('Translate/Translate/admin_delete');
-                $CroogoPlugin = new CroogoPlugin();
-        $CroogoPlugin->migrate('Translate');
+        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos->addAco('Croogo\Translate/Admin/Translate/index');
+        $Acos->addAco('Croogo\Translate/Admin/Translate/edit');
+        $Acos->addAco('Croogo\Translate/Admin/Translate/delete');
+        $CroogoPlugin = new Plugin();
+        $CroogoPlugin->migrate('Croogo/Translate');
     }
 
 /**
@@ -57,6 +62,7 @@ class TranslateActivation
  */
     public function onDeactivation(&$controller)
     {
-        $controller->Croogo->removeAco('Translate');
+        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos->removeAco('Croogo\Translate');
     }
 }
