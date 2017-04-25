@@ -915,7 +915,7 @@ class Plugin extends CakePlugin
         if (empty($plugin)) {
             throw new InvalidArgumentException(__d('croogo', 'Invalid plugin'));
         }
-        $pluginPath = APP . 'Plugin' . DS . $plugin;
+        $pluginPath = ROOT . DS . 'plugins' . DS . $plugin;
         if (is_link($pluginPath)) {
             return unlink($pluginPath);
         }
