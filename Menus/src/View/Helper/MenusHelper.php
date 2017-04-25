@@ -3,8 +3,10 @@
 namespace Croogo\Menus\View\Helper;
 
 use Cake\Event\Event;
+use Cake\Routing\Exception\MissingRouteException;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
+use Cake\Log\LogTrait;
 use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\Nav;
@@ -22,6 +24,9 @@ use Croogo\Core\Utility\StringConverter;
  */
 class MenusHelper extends Helper
 {
+
+    use LogTrait;
+
     public $helpers = [
         'Html',
     ];
@@ -231,11 +236,22 @@ class MenusHelper extends Helper
                 $currentUrl = $this->_View->request->url;
             }
 
-            if (Router::url($link->link->getUrl()) == Router::url('/' . $currentUrl)) {
-                if (!isset($linkAttr['class'])) {
-                    $linkAttr['class'] = '';
+            try {
+                if (Router::url($link->link->getUrl()) == Router::url('/' . $currentUrl)) {
+                    if (!isset($linkAttr['class'])) {
+                        $linkAttr['class'] = '';
+                    }
+                    $linkAttr['class'] .= ' ' . $options['selected'];
                 }
-                $linkAttr['class'] .= ' ' . $options['selected'];
+            } catch (MissingRouteException $e) {
+                $this->log(
+                    sprintf('MissingRouteException for menu id %d - %s:',
+                        $link->id, $link->title
+                    ),
+                    LOG_WARNING
+                );
+                $this->log($e->getMessage(), LOG_WARNING);
+                continue;
             }
 
             $linkOutput = $this->Html->link($link->title, $link->link->getUrl(), $linkAttr);
