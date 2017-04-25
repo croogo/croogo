@@ -686,6 +686,10 @@ class Plugin extends CakePlugin
                 $configFile = $pluginPaths[$plugin] . 'config' . DS . $className . '.php';
                 if (file_exists($configFile) && include $configFile) {
                     $fqcn = App::className($plugin . '.' . $className, 'Config');
+                    if (!$fqcn) {
+                        $this->log(sprintf('Unable to load PluginActivation class. Expected class name is %s\\Config\\PluginActivation', str_replace('/', '\\', $plugin), LOG_CRIT));
+                        return null;
+                    }
                     $this->_PluginActivation = new $fqcn;
 
                     return $this->_PluginActivation;
@@ -695,6 +699,10 @@ class Plugin extends CakePlugin
                 $configFile = $path . DS . $plugin . DS . 'config' . DS . $className . '.php';
                 if (file_exists($configFile) && include $configFile) {
                     $fqcn = App::className($plugin . '.' . $className, 'Config');
+                    if (!$fqcn) {
+                        $this->log(sprintf('Unable to load PluginActivation class. Expected class name is %s\\Config\\PluginActivation', str_replace('/', '\\', $plugin), LOG_CRIT));
+                        return null;
+                    }
                     $this->_PluginActivation = new $fqcn;
 
                     return $this->_PluginActivation;
