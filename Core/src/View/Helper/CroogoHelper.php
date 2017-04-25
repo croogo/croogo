@@ -75,16 +75,6 @@ class CroogoHelper extends Helper
         $this->_ParamsType = new ParamsType;
     }
 
-    /**
-     * Before Render callback
-     */
-    public function beforeRender($viewFile)
-    {
-        if ($this->request->param('prefix') === 'admin') {
-            Croogo::dispatchEvent('Croogo.setupAdminData', $this->_View);
-        }
-    }
-
     public function statuses()
     {
         return $this->_CroogoStatus->statuses();
