@@ -5,11 +5,11 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Roles'), ['plugin' => 'Croogo/Users', 'controller' => 'Roles', 'action' => 'index']);
 
 if ($this->request->param('action') == 'edit') {
-    $this->Breadcrumbs->add($role->title, $this->request->here());
+    $this->Breadcrumbs->add($role->title, $this->request->getRequestTarget());
 }
 
 if ($this->request->param('action') == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 }
 
 $this->assign('form-start', $this->Form->create($role));

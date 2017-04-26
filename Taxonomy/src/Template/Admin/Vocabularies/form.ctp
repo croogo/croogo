@@ -17,7 +17,7 @@ if ($this->request->params['action'] == 'add') {
     $this->assign('title', __d('croogo', 'Add Vocabulary'));
 
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['action' => 'index'])
-        ->add(__d('croogo', 'Add'), $this->request->here());
+        ->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 }
 
 $this->append('form-start', $this->Form->create($vocabulary, [

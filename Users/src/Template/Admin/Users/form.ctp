@@ -9,11 +9,11 @@ $this->Breadcrumbs->add(__d('croogo', 'Users'),
         ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index']);
 
 if ($this->request->param('action') == 'edit') {
-    $this->Breadcrumbs->add($user->name, $this->request->here());
+    $this->Breadcrumbs->add($user->name, $this->request->getRequestTarget());
     $this->assign('title', __d('croogo', 'Edit user %s', $user->username));
 } else {
     $this->assign('title', __d('croogo', 'New user'));
-    $this->Breadcrumbs->add(__d('croogo', 'New user'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'New user'), $this->request->getRequestTarget());
 }
 
 $this->start('action-buttons');

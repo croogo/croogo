@@ -5,7 +5,7 @@ $this->extend('Croogo/Core./Common/admin_view');
 $this->Breadcrumbs
     ->add(__d('croogo', 'Messages'), ['action' => 'index']);
 
-    $this->Breadcrumbs->add($message->title, $this->request->here());
+    $this->Breadcrumbs->add($message->title, $this->request->getRequestTarget());
 
 $this->append('action-buttons');
     echo $this->Croogo->adminAction(__('List Messages'), ['action' => 'index']);

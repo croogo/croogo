@@ -11,11 +11,11 @@ if ($this->request->params['action'] == 'add') {
     $this->assign('title', __d('croogo', 'Create content: %s', $type->title));
 
     $this->Breadcrumbs->add(__d('croogo', 'Create'), ['action' => 'create'])
-        ->add($type->title, $this->request->here());
+        ->add($type->title, $this->request->getRequestTarget());
 }
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add($node->title, $this->request->here());
+    $this->Breadcrumbs->add($node->title, $this->request->getRequestTarget());
 }
 
 $this->append('form-start', $this->Form->create($node, [

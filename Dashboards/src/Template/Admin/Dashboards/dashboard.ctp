@@ -3,7 +3,7 @@
 $this->Croogo->adminScript('Croogo/Dashboards.admin');
 $this->Html->css('Croogo/Dashboards.admin', array('block' => true));
 
-$this->Breadcrumbs  ->add(__d('croogo', 'Dashboard'), $this->request->here());
+$this->Breadcrumbs  ->add(__d('croogo', 'Dashboard'), $this->request->getRequestTarget());
 
 echo $this->Dashboards->dashboards();
 

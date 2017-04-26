@@ -12,11 +12,11 @@ $this->Breadcrumbs->add(__d('croogo', 'Blocks'), [
     ]);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add($region->title, $this->request->here());
+    $this->Breadcrumbs->add($region->title, $this->request->getRequestTarget());
 }
 
 if ($this->request->params['action'] == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 }
 
 $this->append('form-start', $this->Form->create($region));
