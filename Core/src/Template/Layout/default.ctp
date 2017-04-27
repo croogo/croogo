@@ -26,8 +26,6 @@ use Cake\Core\Configure;
     echo $this->Html->script(array(
         'Croogo/Core.jquery/jquery.min',
         'Croogo/Core.jquery/jquery.hoverIntent.minified',
-        'Croogo/Core.jquery/superfish',
-        'Croogo/Core.jquery/supersubs',
         'Croogo/Core.theme',
     ));
     echo $this->Blocks->get('css');
