@@ -26,6 +26,7 @@ $this->end(); ?>
                     else:
                         $file = $this->Url->assetUrl(Configure::read('Site.theme') . '.' . $currentTheme['screenshot']);
                     endif;
+                    $file = str_replace($this->request->base, '', $file);
                     $imgUrl = $this->Html->thumbnail($file);
                     $link = $this->Html->link($imgUrl, $file, [
                         'escape' => false,
