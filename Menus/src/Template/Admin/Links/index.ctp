@@ -8,7 +8,7 @@ $this->Croogo->adminscript('Croogo/Menus.admin');
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Breadcrumbs->add(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index'])
-    ->add(__d('croogo', $menu->title), $this->request->here());
+    ->add(__d('croogo', $menu->title), $this->request->getRequestTarget());
 
 $this->append('action-buttons');
 echo $this->Croogo->adminAction(__d('croogo', 'New link'), ['action' => 'add', 'menu_id' => $menu->id], ['button' => 'success']);

@@ -6,7 +6,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Extensions'),
     ['plugin' => 'Croogo/Extensions', 'controller' => 'extensions_plugins', 'action' => 'index'])
     ->add(__d('croogo', 'Locales'),
         ['plugin' => 'Croogo/Extensions', 'controller' => 'extensions_locales', 'action' => 'index'])
-    ->add(__d('croogo', 'Upload'), $this->request->here());
+    ->add(__d('croogo', 'Upload'), $this->request->getRequestTarget());
 
 $this->append('form-start', $this->Form->create(null, [
     'url' => [

@@ -12,7 +12,7 @@ if ($this->request->params['action'] == 'add') {
                 'action' => 'index',
                 '?' => ['menu_id' => $menu->id],
             ])
-        ->add(__d('croogo', 'Add'), $this->request->here());
+        ->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
     $formUrl = [
         'action' => 'add',
         $menu->id,
@@ -24,7 +24,7 @@ if ($this->request->params['action'] == 'edit') {
             'action' => 'index',
             '?' => ['menu_id' => $menu->id],
         ])
-        ->add($link->title, $this->request->here());
+        ->add($link->title, $this->request->getRequestTarget());
     $formUrl = [
         'action' => 'edit',
         '?' => [

@@ -4,7 +4,7 @@ use Croogo\Core\Status;
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Breadcrumbs->add(__d('croogo', 'Menus'), $this->request->url);
+$this->Breadcrumbs->add(__d('croogo', 'Menus'), $this->request->getUri()->getPath());
 
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([

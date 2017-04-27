@@ -9,11 +9,11 @@ $this->Breadcrumbs
     ]);
 
 if ($this->request->param('action') == 'edit') {
-    $this->Breadcrumbs->add($setting->key, $this->request->here());
+    $this->Breadcrumbs->add($setting->key, $this->request->getRequestTarget());
 }
 
 if ($this->request->param('action') == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 }
 
 $this->append('form-start', $this->Form->create($setting, [

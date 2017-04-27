@@ -13,7 +13,7 @@ if ($this->request->params['action'] == 'edit') {
 }
 
 if ($this->request->params['action'] == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 }
 
 $this->append('form-start', $this->Form->create($type));

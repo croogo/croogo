@@ -7,13 +7,13 @@ $this->extend('Croogo/Core./Common/admin_edit');
 $this->Breadcrumbs->add(__d('croogo', 'Menus'), ['action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add($menu->title, $this->request->here());
+    $this->Breadcrumbs->add($menu->title, $this->request->getRequestTarget());
 
     $this->assign('title', __d('croogo', 'Edit Menu'));
 }
 
 if ($this->request->params['action'] == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 
     $this->assign('title', __d('croogo', 'Add Menu'));
 }

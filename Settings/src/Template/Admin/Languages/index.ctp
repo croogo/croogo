@@ -4,7 +4,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Breadcrumbs->add(__d('croogo', 'Settings'),
     ['plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'prefix', 'Site'])
-    ->add(__d('croogo', 'Languages'), $this->request->url);
+    ->add(__d('croogo', 'Languages'), $this->request->getUri()->getPath());
 
 $tableHeaders = $this->Html->tableHeaders([
     $this->Paginator->sort('title', __d('croogo', 'Title')),

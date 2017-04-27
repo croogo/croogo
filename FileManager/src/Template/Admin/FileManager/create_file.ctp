@@ -5,7 +5,7 @@ $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Breadcrumbs->add(__d('croogo', 'File Manager'),
         ['plugin' => 'Croogo/FileManager', 'controller' => 'FileManager', 'action' => 'browse'])
-    ->add(__d('croogo', 'Create File'), $this->request->here());
+    ->add(__d('croogo', 'Create File'), $this->request->getRequestTarget());
 
 $this->start('page-heading');
 echo $this->element('Croogo/FileManager.admin/breadcrumbs');

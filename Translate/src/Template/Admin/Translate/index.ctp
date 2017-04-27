@@ -27,7 +27,7 @@ $this->Breadcrumbs
             $record->id,
         )
     )
-    ->add(__d('croogo', 'Translations'), $this->request->here());
+    ->add(__d('croogo', 'Translations'), $this->request->getRequestTarget());
 
 $this->start('action-buttons');
     $translateButton = $this->Html->link(
