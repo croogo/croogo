@@ -6,11 +6,13 @@ Dashboard.saveDashboard = function(e, ui) {
     box = null,
     serialize = function(column) {
       return function(index) {
+        var $this = $(this);
         dashboard.push({
+          'id': $this.data('id'),
           'column': column,
           'weight': index,
           'alias': this.id,
-          'collapsed': !$(this).find('.card-block').is(':visible') ? 1 : 0
+          'collapsed': !$this.find('.card-block').is(':visible') ? 1 : 0
         });
       }
     };
@@ -32,13 +34,19 @@ Dashboard.saveDashboard = function(e, ui) {
     return;
   }
 
+  var saveUrl = $('#dashboard-url').text();
   var collapsed = !box.find('.card-block').is(':visible') ? 1 : 0;
-  $.post($('#dashboard-url').text(), {dashboard: dashboard}, function() {
+  var saveCallback = function(data, textStatus, jqXHR) {
     box
       .find('.toggle-icon .fa')
       .removeClass('fa-spinner fa-spin')
       .addClass(collapsed ? 'fa-plus' : 'fa-minus')
-  });
+
+    for (var i in data) {
+      $('#' + data[i].alias).data('id', data[i].id);
+    }
+  };
+  $.post(saveUrl, {dashboard: dashboard}, saveCallback, 'json');
 };
 
 Dashboard.sortable = function(selector, saveDashboard) {

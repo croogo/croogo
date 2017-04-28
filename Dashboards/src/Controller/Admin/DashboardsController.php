@@ -68,6 +68,7 @@ class DashboardsController extends AppController
     public function dashboard()
     {
         $boxesForDashboard = $this->Dashboards->find('all')->select([
+            'id',
             'alias',
             'collapsed',
             'status',
@@ -94,10 +95,17 @@ class DashboardsController extends AppController
             throw new Exception('You must be logged in');
         }
         $data = Hash::insert($this->request->data['dashboard'], '{n}.user_id', $userId);
-        $this->Dashboards->deleteAll(['user_id' => $userId]);
-        $entities = $this->Dashboards->newEntities($data);
+        $dashboardIds = array_filter(Hash::extract($data, '{n}.id'));
+        $query = $this->Dashboards->find();
+        if ($dashboardIds) {
+            $query->where(['id IN' => $dashboardIds]);
+        }
+        $entities = $query->toArray();
+        $patched = $this->Dashboards->patchEntities($entities, $data);
         $this->Dashboards->connection()->getDriver()->enableAutoQuoting();
-        $this->Dashboards->saveMany($entities);
+        $results = $this->Dashboards->saveMany($patched);
+        $this->set(compact('results'));
+        $this->set('_serialize', 'results');
     }
 
     /**

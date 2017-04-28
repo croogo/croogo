@@ -1,4 +1,13 @@
-<div class="card card-<?php echo $alias; ?> dashboard-card" id="<?php echo $alias ?>">
+<?php
+
+if (isset($dashboard['id'])):
+    $dataId = 'data-id="' . h($dashboard['id']) . '"';
+else:
+    $dataId = null;
+endif;
+
+?>
+<div class="card card-<?php echo $alias; ?> dashboard-card" id="<?php echo $alias ?>" <?= $dataId ?>>
     <div class="card-header">
         <i class="fa fa-list move-handle"></i>
         <?php echo $dashboard['title'] ?>
