@@ -3,9 +3,11 @@
 namespace Croogo\Acl\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\Utility\Hash;
-use Cake\ORM\TableRegistry;
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Utility\Hash;
+use Cake\Log\Log;
+use Cake\ORM\TableRegistry;
 
 /**
  * AclPermission Model
@@ -113,8 +115,10 @@ class PermissionsTable extends \Acl\Model\Table\PermissionsTable
         ])->toArray();
         $permissionsByActions = [];
         foreach ($permissionsForCurrentUser as $acoId) {
-            $pathQuery = $this->Aco->find('path', ['for' => $acoId]);
-            if (!$pathQuery) {
+            try {
+                $pathQuery = $this->Aco->find('path', ['for' => $acoId]);
+            } catch (RecordNotFoundException $e) {
+                Log::debug('Cannot find ACO path for ' . $acoId);
                 continue;
             }
             $path = join('/', $pathQuery->extract('alias')->toArray());
