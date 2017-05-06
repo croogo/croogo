@@ -4,7 +4,7 @@
  */
 $this->Html->script('Croogo/FileManager.attachments/browse', ['block' => true]);
 ?>
-<div class="card-columns">
+<div class="card-deck">
     <?php
     $rows = [];
     foreach ($attachments as $attachment):
@@ -13,14 +13,20 @@ $this->Html->script('Croogo/FileManager.attachments/browse', ['block' => true]);
         if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
             $thumbnail = $this->Image->resize($attachment->path, 400, 200, [], ['class' => 'card-img-top']);
         } else {
-            $thumbnail = $this->Html->image('/croogo/img/icons/page_white.png', ['class' => 'card-img-top']);
+            $thumbnail = $this->Html->image('Croogo/Core./img/icons/page_white.png', [
+                'class' => 'card-img-top',
+            ]);
         }
 
-        $footerText = $attachment->title .
-            '<br>' .
-            $this->Html->tag('small', $attachment->slug, ['class' => 'text-muted']);
-        $cardHeader = $this->Html->div('card-header', $footerText);
-        $card = $this->Html->div('card text-xs-center selector', $cardHeader . $thumbnail, [
+        $footerText = $this->Html->tag('small', $attachment->slug, [
+            'class' => 'text-muted',
+        ]);
+
+        $cardHeader = $this->Html->div('card-header', $attachment->title);
+        $cardBlock = $this->Html->div('card-block', $thumbnail);
+        $cardFooter = $this->Html->div('card-footer', $footerText);
+        $card = $this->Html->div('card text-center selector',
+            $cardHeader . $cardBlock . $cardFooter, [
             'data-slug' => $attachment->slug,
         ]);
         echo $card;
