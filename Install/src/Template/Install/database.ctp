@@ -51,7 +51,7 @@ echo $this->Form->input('host', [
     'prepend' => $this->Html->icon('home'),
     'label' => __d('croogo', 'Host'),
 ]);
-echo $this->Form->input('login', [
+echo $this->Form->input('username', [
     'placeholder' => __d('croogo', 'Login'),
     'default' => 'root',
     'tooltip' => __d('croogo', 'Database login/username'),
