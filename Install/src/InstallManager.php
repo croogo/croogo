@@ -228,6 +228,9 @@ class InstallManager
     public function setupAcos()
     {
         $generator = new AclGenerator();
+        if ($this->controller) {
+            $generator->controller = $this->controller;
+        }
         $generator->insertAcos(ConnectionManager::get('default'));
     }
 

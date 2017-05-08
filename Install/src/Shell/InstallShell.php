@@ -164,6 +164,7 @@ class InstallShell extends Shell
         try {
             $this->out('Setting up access control objects. Please wait...');
             $generator = new AclGenerator();
+            $generator->Shell = $this;
             $generator->insertAcos(ConnectionManager::get('default'));
             $InstallManager->setupGrants();
         } catch (\Exception $e) {

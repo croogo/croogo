@@ -211,6 +211,7 @@ class InstallController extends Controller
     {
         try {
             $install = new InstallManager();
+            $install->controller = $this;
             $install->setupAcos();
             $install->setupGrants();
 
