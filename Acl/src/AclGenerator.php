@@ -29,8 +29,8 @@ class AclGenerator extends AclExtras
 
     public function out($msg)
     {
-        preg_match('/Created Aco node: \<success\>(.*)\<\/success\>/', $msg, $matches);
-//        echo($matches[1] . PHP_EOL);
+        $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
+        return parent::out($msg);
     }
 
     protected function _checkMethods($className, $controllerName, $node, $pluginPath = null, $prefixPath = null)

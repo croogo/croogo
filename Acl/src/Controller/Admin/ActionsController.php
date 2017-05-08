@@ -2,9 +2,9 @@
 
 namespace Croogo\Acl\Controller\Admin;
 
-use Acl\AclExtras;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Croogo\Acl\AclGenerator;
 
 /**
  * AclActions Controller
@@ -162,7 +162,7 @@ class ActionsController extends AppController
  */
     public function generate()
     {
-        $AclExtras = new AclExtras();
+        $AclExtras = new AclGenerator();
         $AclExtras->startup($this);
         if (isset($this->request->query['sync'])) {
             $AclExtras->acoSync();
