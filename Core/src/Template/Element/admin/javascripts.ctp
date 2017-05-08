@@ -19,6 +19,7 @@ if (!$this->request->is('ajax')):
         'Croogo/Core.moment-timezone-with-data',
         'Croogo/Core.bootstrap-datetimepicker.min',
         'Croogo/Core.typeahead_autocomplete',
+        'Croogo/Core.ekko-lightbox.min.js',
     ]);
 
 endif;

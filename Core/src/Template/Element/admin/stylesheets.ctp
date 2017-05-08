@@ -7,6 +7,7 @@ if (!$this->request->is('ajax')):
         'Croogo/Core.tether.min.css',
         'Croogo/Core.bootstrap-datetimepicker.min',
         'Croogo/Core.typeaheadjs',
+        'Croogo/Core.ekko-lightbox.min.css',
     ]);
 
 endif;
