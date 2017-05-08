@@ -29,7 +29,9 @@ class AclGenerator extends AclExtras
 
     public function out($msg)
     {
-        $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
+        if (!isset($this->Shell)) {
+            $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
+        }
         return parent::out($msg);
     }
 
