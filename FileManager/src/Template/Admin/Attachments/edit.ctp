@@ -46,11 +46,12 @@ $fileType = $fileType['0'];
 if ($fileType == 'image'):
     $imgUrl = $this->Image->resize('/uploads/' . $attachment->slug, 200, 300, true);
 else:
-    $imgUrl = $this->Html->thumbnail('/croogo/core/img/icons/' .
-            $this->Filemanager->mimeTypeToImage($attachment->mime_type)) . ' ' . $attachment->mime_type;
+    $imgUrl = $this->Html->thumbnail('Croogo/Core./img/icons/' .
+        $this->Filemanager->mimeTypeToImage($attachment->mime_type)) .
+        ' ' . $attachment->mime_type;
 endif;
 $preview = $this->Html->link($imgUrl, $attachment->path, [
-    'class' => 'thickbox',
+    'data-toggle' => 'lightbox',
 ]);
 echo $this->Html->beginBox(__d('croogo', 'Preview')) . $preview;
 echo $this->Html->endBox();

@@ -68,12 +68,12 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getReques
             $icon = $this->FileManager->filename2icon($file);
             if ($icon == 'picture.png'):
                 $image = '/' . str_replace(WWW_ROOT, '', $fullpath);
-                $thickboxOptions = [
-                    'class' => 'thickbox',
+                $lightboxOptions = [
+                    'data-toggle' => 'lightbox',
                     'escape' => false,
                 ];
-                $linkFile = $this->Html->link($file, $image, $thickboxOptions);
-                $actions[] = $this->Html->link(__d('croogo', 'View'), $image, $thickboxOptions);
+                $linkFile = $this->Html->link($file, $image, $lightboxOptions);
+                $actions[] = $this->Html->link(__d('croogo', 'View'), $image, $lightboxOptions);
             else:
                 $linkFile = $this->FileManager->linkFile($file, $fullpath);
                 $actions[] = $this->FileManager->link(__d('croogo', 'Edit'), [

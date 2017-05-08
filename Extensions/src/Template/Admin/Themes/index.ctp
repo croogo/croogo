@@ -30,7 +30,7 @@ $this->end(); ?>
                     $imgUrl = $this->Html->thumbnail($file);
                     $link = $this->Html->link($imgUrl, $file, [
                         'escape' => false,
-                        'class' => 'thickbox',
+                        'data-toggle' => 'lightbox',
                     ]);
                     echo $this->Html->tag('div', $link);
                 endif;
@@ -76,7 +76,7 @@ $this->end(); ?>
                         $imgUrl = $this->Html->thumbnail($file);
                         $link = $this->Html->link($imgUrl, $file, [
                             'escape' => false,
-                            'class' => 'thickbox',
+                            'data-toggle' => 'lightbox',
                         ]);
                         echo $this->Html->tag('div', $link, [
                             'class' => 'screenshot ' . $this->Theme->getCssClass('columnRight'),

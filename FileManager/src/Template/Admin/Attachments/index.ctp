@@ -59,8 +59,9 @@ foreach ($attachments as $attachment) {
         $imgUrl = $this->Image->resize('/uploads/' . $attachment->slug, 200, 100, true, ['alt' => $attachment->title]);
         $thumbnail = $this->Html->link($imgUrl, $attachment->path, [
             'escape' => false,
-            'class' => 'img-thumbnail thickbox',
+            'class' => 'img-thumbnail',
             'title' => $attachment->title,
+            'data-toggle' => 'lightbox',
         ]);
     } else {
         $thumbnail = $this->Html->thumbnail('/croogo/core/img/icons/page_white.png', ['alt' => $attachment->mime_type]) .

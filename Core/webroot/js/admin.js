@@ -163,6 +163,13 @@ Admin.extra = function () {
   }
   $("div.message").addClass("notice");
   $('#loading p').addClass('ui-corner-bl ui-corner-br');
+
+  if (typeof $.fn.ekkoLightbox !== 'undefined') {
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox();
+    });
+  }
 }
 
 /**
