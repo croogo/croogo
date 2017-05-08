@@ -57,8 +57,11 @@ foreach ($attachments as $attachment) {
     $imagecreatefrom = ['gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm'];
     if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
         $imgUrl = $this->Image->resize('/uploads/' . $attachment->slug, 200, 100, true, ['alt' => $attachment->title]);
-        $thumbnail = $this->Html->link($imgUrl, $attachment->path,
-            ['escape' => false, 'class' => 'thickbox', 'title' => $attachment->title]);
+        $thumbnail = $this->Html->link($imgUrl, $attachment->path, [
+            'escape' => false,
+            'class' => 'img-thumbnail thickbox',
+            'title' => $attachment->title,
+        ]);
     } else {
         $thumbnail = $this->Html->thumbnail('/croogo/core/img/icons/page_white.png', ['alt' => $attachment->mime_type]) .
             ' ' .
