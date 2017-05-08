@@ -45,6 +45,20 @@ class AcosTable extends \Acl\Model\Table\AcosTable
                 $node = $node->toArray();
                 $parent = $node[0];
             } else {
+                if (!$parent) {
+                    $parent = $this->find()
+                        ->where([
+                            $this->aliasField('alias') => 'controllers',
+                        ])
+                        ->first();
+
+                    if (!$parent) {
+                        $rootNode = $this->newEntity([
+                            'alias' => 'controllers',
+                        ]);
+                        $parent = $this->save($rootNode);
+                    }
+                }
                 $aco = $this->newEntity([
                     'parent_id' => $parent->id,
                     'alias' => $alias,
