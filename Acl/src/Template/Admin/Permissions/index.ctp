@@ -63,6 +63,10 @@ $tableHeaders = array_merge($tableHeaders, $roleTitles);
 $tableHeaders = $this->Html->tableHeaders($tableHeaders);
 $this->end();
 
+$this->append('table-heading');
+    echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
+
 $this->append('table-body');
 $currentController = '';
 $icon = '<i class="icon-none float-right"></i>';
