@@ -7,6 +7,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Log\LogTrait;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
+use Cake\Validation\Validator;
 use Croogo\Nodes\Model\Table\NodesTable;
 
 /**
@@ -47,6 +48,12 @@ class AttachmentsTable extends NodesTable
             ],
         ]);
         parent::initialize($config);
+    }
+
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('file');
+        return $validator;
     }
 
     /**
