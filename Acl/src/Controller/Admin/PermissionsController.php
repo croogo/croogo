@@ -43,7 +43,7 @@ class PermissionsController extends AppController
             if (!$this->request->is('post')) {
                 throw new MethodNotAllowedException();
             }
-            $this->Security->csrfCheck = false;
+            $this->eventManager()->off($this->Csrf);
         }
     }
 

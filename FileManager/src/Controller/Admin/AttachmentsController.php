@@ -44,7 +44,7 @@ class AttachmentsController extends AppController
         $this->set('type', $this->Attachments->type);
 
         if ($this->action == 'add') {
-            $this->Security->csrfCheck = false;
+            $this->eventManager()->off($this->Csrf);
         }
 
         $this->paginate = [

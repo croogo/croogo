@@ -37,7 +37,7 @@ class ActionsController extends AppController
     {
         parent::beforeFilter($event);
         if ($this->request->param('action') == 'generate' && $this->request->param('prefix') == 'admin') {
-            $this->Security->csrfCheck = false;
+            $this->eventManager()->off($this->Csrf);
         }
     }
 
