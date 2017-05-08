@@ -45,6 +45,7 @@ Croogo::hookComponent('*', [
 ]);
 Croogo::hookComponent('*', 'Croogo/Acl.Filter');
 Croogo::hookComponent('*', 'Security');
+Croogo::hookComponent('*', 'Csrf');
 Croogo::hookComponent('*', 'Acl.Acl');
 Croogo::hookComponent('*', 'Auth');
 Croogo::hookComponent('*', 'Flash');
