@@ -103,7 +103,7 @@ class CroogoTheme
                     'question-sign' => 'question-sign',
                     'read' => 'eye',
                     'refresh' => 'refresh',
-                    'resize' => 'resize-small',
+                    'resize' => 'arrows-alt',
                     'search' => 'search',
                     'success-sign' => 'ok-sign',
                     'translate' => 'flag',
