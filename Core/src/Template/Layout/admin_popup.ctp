@@ -1,3 +1,6 @@
+<?php
+$showActions = isset($showActions) ? $showActions : true;
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,14 +20,26 @@
         <div class="<?php echo $this->Theme->getCssClass('container'); ?>">
             <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
                 <div id="content" class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
+                    <div class="col-12 d-flex justify-content-between align-items-center">
+                        <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
+                        <?php if ($showActions && $actionsBlock = $this->fetch('action-buttons')): ?>
+                            <div class="actions ml-auto">
+                                <?php echo $actionsBlock; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
                     <?php echo $this->Layout->sessionFlash(); ?>
                     <?php echo $this->fetch('content'); ?>
+                    </div>
                 </div>
             </div>
         </div>
         <?php
         echo $this->element('Croogo/Core.admin/initializers');
-        echo $this->Blocks->get('scriptBottom');
+        echo $this->fetch('postLink');
+        echo $this->fetch('scriptBottom');
+        echo $this->Js->writeBuffer();
         ?>
     </body>
 </html>
