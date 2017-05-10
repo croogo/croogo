@@ -18,11 +18,18 @@
   }
 }
 
+.actions,
 .card-buttons {
-  margin-bottom: 10px;
   .btn {
     margin-right: 4px;
   }
+  .fa {
+    margin-right: 2px;
+  }
+}
+
+.card-buttons {
+  margin-bottom: 10px;
 }
 
 #breadcrumb-container + .actions {
