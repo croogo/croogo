@@ -77,7 +77,7 @@ class CroogoTheme
                     'imageClass' => '',
                     'row' => 'row-fluid',
                     'tableClass' => 'table table-striped',
-                    'thumbnailClass' => 'img-polaroid',
+                    'thumbnailClass' => 'img-thumbnail',
                 ],
                 'iconDefaults' => [
                     'iconSet' => 'fa',
@@ -108,7 +108,7 @@ class CroogoTheme
                     'success-sign' => 'ok-sign',
                     'translate' => 'flag',
                     'update' => 'pencil',
-                    'upload' => 'upload-alt',
+                    'upload' => 'upload',
                     'warning-sign' => 'warning-sign',
                     'x-mark' => 'remove',
                     'user' => 'user',
