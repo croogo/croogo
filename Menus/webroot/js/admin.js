@@ -47,6 +47,61 @@ Links.reloadParents = function(event) {
   });
 }
 
+
+Links.setupSelect2 = function(selector) {
+  var link = $(selector);
+
+  var initSelect2 = function(link, opt, vals) {
+    if (opt) {
+      link.html(opt).change()
+    }
+    setTimeout(function() {
+      if (vals) {
+        link.val(vals);
+      }
+      link.select2({
+        tags: true,
+        tokenSeparators: [' '],
+        allowClear: true,
+        theme: 'bootstrap',
+        placeholder: {
+          id: '-1',
+          text: ''
+        }
+      })
+    }, 1);
+  };
+
+  var makeOption = function(val) {
+    return '<option data-select2-tag="true" selected="selected" ' +
+      'value="' + val + '">' + decodeURIComponent(val) + '</option>';
+  }
+
+  link
+    .on('chooserSelect', function(e, data) {
+      var opt = "";
+      var values = [];
+      var rel = $(data).attr('rel');
+      if (
+        rel.indexOf('plugin:') >= 0 ||
+        rel.indexOf('controller:') >= 0 ||
+        rel.indexOf('action:') >= 0
+      ) {
+        var arr = rel.split('/');
+        for (var i in arr) {
+          opt += makeOption(arr[i]);
+          values.push(arr[i]);
+        }
+      } else {
+        opt = makeOption(rel);
+        values.push(rel);
+      }
+      initSelect2(link, opt, values);
+    })
+
+    initSelect2(link);
+};
+
 /**
  * document ready
  *
@@ -60,6 +115,7 @@ $(function() {
   }
 
   $('#LinkMenuId').on('change', Links.reloadParents);
+  Links.setupSelect2('#link')
 
   Admin.toggleRowSelection('#LinksCheckAll');
 });
