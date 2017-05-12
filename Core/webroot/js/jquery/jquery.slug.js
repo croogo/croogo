@@ -311,8 +311,8 @@
 
         $slugEdit.on('click.slugger', function(e) {
           e.preventDefault();
-          $slugEdit.hide();
-          $slugSpan.hide();
+          $slugEdit.remove();
+          $slugSpan.remove();
           $slugInput.show();
         });
       });
