@@ -63,10 +63,38 @@ echo $this->Form->input('title', [
     'label' => __d('croogo', 'Title'),
 ]);
 
+$linkString = (string)$link->link;
+$linkOptions = [];
+if (preg_match('/(plugin:)|(controller:)|(action:)/', $linkString)):
+    $linkKeys = explode('/', $linkString);
+    foreach ($linkKeys as $linkKey):
+        $linkOptions[] = [
+            'value' => $linkKey,
+            'text' => urldecode($linkKey),
+            'selected' => true,
+            'data-select2-tag' => "true",
+        ];
+    endforeach;
+else:
+    if (!$link->isNew()):
+        $linkOptions[] = [
+            'value' => $linkString,
+            'text' => $linkString,
+            'selected' => true,
+            'data-select2-tag' => "true",
+        ];
+    endif;
+endif;
+
 echo $this->Form->input('link', [
     'label' => __d('croogo', 'Link'),
     'linkChooser' => true,
+    'class' => 'no-select2',
+    'type' => 'select',
+    'multiple' => true,
+    'options' => $linkOptions,
 ]);
+
 echo $this->Html->tabEnd();
 
 echo $this->Html->tabStart('link-misc');

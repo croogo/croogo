@@ -1,0 +1,15 @@
+.form-inline {
+  .select2-container--bootstrap {
+    margin-right: 2px;
+  }
+}
+
+.form-group {
+  .select2-container--bootstrap {
+    min-width: 100% !important;
+  }
+}
+
+#link + .select2-container {
+  padding-right: 60px;
+}

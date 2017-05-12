@@ -170,6 +170,13 @@ Admin.extra = function () {
       $(this).ekkoLightbox();
     });
   }
+
+  if (typeof $.fn.select2 !== 'undefined') {
+    $('select:not(".no-select2")').select2({
+      width: 'auto',
+      theme: 'bootstrap'
+    });
+  }
 }
 
 /**

@@ -8,6 +8,8 @@ if (!$this->request->is('ajax')):
         'Croogo/Core.bootstrap-datetimepicker.min',
         'Croogo/Core.typeaheadjs',
         'Croogo/Core.ekko-lightbox.min.css',
+        'Croogo/Core.select2.min.css',
+        'Croogo/Core.select2-bootstrap.min.css',
     ]);
 
 endif;

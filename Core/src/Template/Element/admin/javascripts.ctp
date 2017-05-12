@@ -20,6 +20,7 @@ if (!$this->request->is('ajax')):
         'Croogo/Core.bootstrap-datetimepicker.min',
         'Croogo/Core.typeahead_autocomplete',
         'Croogo/Core.ekko-lightbox.min.js',
+        'Croogo/Core.select2.full.min.js',
     ]);
 
 endif;

@@ -33,6 +33,6 @@ class LinkType extends Type
 
     public function toDatabase($value, Driver $driver)
     {
-        return (string)$value;
+        return (string)implode('/', (array)$value);
     }
 }
