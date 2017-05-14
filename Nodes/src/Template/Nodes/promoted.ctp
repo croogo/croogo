@@ -10,7 +10,7 @@
             $this->Nodes->set($node);
     ?>
     <div id="node-<?php echo $this->Nodes->field('id'); ?>" class="node node-type-<?php echo $this->Nodes->field('type'); ?>">
-        <h2><?php echo $this->Html->link($this->Nodes->field('title'), $this->Nodes->field('url')->getArrayCopy()); ?></h2>
+        <h2><?php echo $this->Html->link($this->Nodes->field('title'), $this->Nodes->field('url')->getUrl()); ?></h2>
         <?php
             echo $this->Nodes->info();
             echo $this->Nodes->body();
