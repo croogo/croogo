@@ -83,7 +83,7 @@ class AutoLoginComponent extends Component
     {
         $time = time();
         $username = $request->data($this->_fields['username']);
-        $hasher = $this->_registry->Auth->passwordHasher();
+        $hasher = $this->_registry->Auth->authenticationProvider()->passwordHasher();
         $data = json_encode([
             'hash' => $hasher->hash($username . $time),
             'time' => $time,
