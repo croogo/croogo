@@ -60,13 +60,13 @@ class DateTimeWidget extends CakeDateTimeWidget
         }
 
         $widget = <<<html
+            <input
+                type="hidden"
+                name="${name}"
+                value="$val"
+                id="$id"
+            />
             <div class="input-group $type">
-                <input
-                    type="hidden"
-                    name="${name}"
-                    value="$val"
-                    id="$id"
-                />
                 <input
                     type="text"
                     class="form-control"
