@@ -98,9 +98,10 @@ $this->start('panels');
 
     echo $this->Html->beginBox(__d('croogo', 'Access control'));
     echo $this->Form->input('visibility_roles', [
-        'label' => __d('croogo', 'Roles'),
+        'class' => 'c-select',
         'options' => $roles,
-        'multiple' => 'checkbox'
+        'multiple' => true,
+        'label' => false,
     ]);
     echo $this->Html->endBox();
 $this->end();
