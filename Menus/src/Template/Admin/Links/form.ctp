@@ -89,7 +89,7 @@ endif;
 echo $this->Form->input('link', [
     'label' => __d('croogo', 'Link'),
     'linkChooser' => true,
-    'class' => 'no-select2',
+    'class' => 'no-select2 link-chooser',
     'type' => 'select',
     'multiple' => true,
     'options' => $linkOptions,

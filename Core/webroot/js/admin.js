@@ -173,7 +173,7 @@ Admin.extra = function () {
 
   if (typeof $.fn.select2 !== 'undefined') {
     $('select:not(".no-select2")').select2({
-      width: 'auto',
+      dropdownAutoWidth: true,
       theme: 'bootstrap'
     });
   }

@@ -6,10 +6,11 @@
 
 .form-group {
   .select2-container--bootstrap {
-    min-width: 100% !important;
+    min-width: 100%; // make select in inactive tab pane has 100% width
   }
 }
 
-#link + .select2-container {
+.link-chooser + .select2-container {
   padding-right: 60px;
+  min-width: 100%;
 }
