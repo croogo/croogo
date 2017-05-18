@@ -45,10 +45,6 @@ class AccessComponent extends Component
             case 'Roles':
                 $this->_setupRole();
                 break;
-            case 'AclActions':
-            case 'AclPermissions':
-                $this->_checkUpgrade();
-                break;
         }
     }
 
@@ -67,26 +63,7 @@ class AccessComponent extends Component
         if (!empty($this->_controller->request->params['pass'][0])) {
             $id = $this->_controller->request->params['pass'][0];
         }
-        $this->_controller->set('parents', $this->_controller->Role->allowedParents($id));
-    }
-
-/**
- * checks wether ACL upgrade is required
- * writes a session variable that will be picked up by the AclHelper
- */
-    protected function _checkUpgrade()
-    {
-        $key = AuthComponent::$sessionKey . '.aclUpgrade';
-        if ($this->_controller->Session->check($key)) {
-            $upgrade = $this->_controller->Session->read($key);
-            if ($upgrade) {
-                $this->_controller->helpers[] = 'Acl.Acl';
-            }
-            return;
-        }
-        $node = $this->_controller->Acl->Aco->node('controllers/Nodes/admin_index');
-        $this->_controller->Session->write($key, !empty($node));
-        $this->_controller->helpers[] = 'Acl.Acl';
+        $this->_controller->set('parents', $this->_controller->Roles->allowedParents($id));
     }
 
 /**
