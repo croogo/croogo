@@ -1,8 +1,11 @@
 <?php
 
-namespace Croogo\Acl\Controller\Component\Acl;
+namespace Croogo\Acl\Adapter;
 
-use App\Controller\Component\Acl\DbAcl;
+use Acl\Adapter\CachedDbAcl;
+use Cake\Controller\Component;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * HabtmDbAcl implements an ACL control system in the database like DbAcl with
@@ -13,12 +16,12 @@ use App\Controller\Component\Acl\DbAcl;
  * @license MIT
  * @link http://github.com/ceeram/Authorize
  */
-class HabtmDbAcl extends DbAcl
+class HabtmDbAcl extends CachedDbAcl
 {
 
     public $settings = [
-        'userModel' => 'Users.User',
-        'groupAlias' => 'Role',
+        'userModel' => 'Croogo/Users.Users',
+        'groupAlias' => 'Roles',
     ];
 
 /**
@@ -55,21 +58,22 @@ class HabtmDbAcl extends DbAcl
         }
         extract($this->settings);
 
-        $User = ClassRegistry::init($userModel);
+        $User = TableRegistry::get($userModel);
         list($plugin, $groupAlias) = pluginSplit($groupAlias);
-        list($joinModel) = $User->joinModel($User->hasAndBelongsToMany[$groupAlias]['with']);
-        $userField = $User->hasAndBelongsToMany[$groupAlias]['foreignKey'];
-        $groupField = $User->hasAndBelongsToMany[$groupAlias]['associationForeignKey'];
+        $assoc = $User->associations()->get($groupAlias);
 
-        $node = $this->Acl->Aro->node($aro);
-        $userId = Hash::extract($node, '0.Aro.foreign_key');
-        $groupIDs = ClassRegistry::init($joinModel)->find('list', [
-            'fields' => [$groupField],
-            'conditions' => [$userField => $userId],
-            'recursive' => -1
-        ]);
-        foreach ((array)$groupIDs as $groupID) {
-            $aro = ['model' => $groupAlias, 'foreign_key' => $groupID];
+        $joinModel = $assoc->junction();
+
+        $userField = $assoc->foreignKey();
+        $groupField = $assoc->targetForeignKey();
+
+        $node = $this->Acl->Aro->node($aro)->first();
+        $userId = $node->foreign_key;
+        $query = $joinModel->find()
+            ->select([$groupField])
+            ->where([$userField => $userId]);
+        foreach ($query as $entity) {
+            $aro = ['model' => $groupAlias, 'foreign_key' => $entity->get($groupField)];
             $allowed = parent::check($aro, $aco, $action);
             if ($allowed) {
                 return true;
@@ -77,4 +81,5 @@ class HabtmDbAcl extends DbAcl
         }
         return false;
     }
+
 }

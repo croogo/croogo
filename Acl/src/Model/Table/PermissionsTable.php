@@ -93,7 +93,7 @@ class PermissionsTable extends \Acl\Model\Table\PermissionsTable
         $aroId = $aroIds[0];
 
         if (Configure::read('Access Control.multiRole')) {
-            $RolesUser = TableRegistry::get('Croogo/Users.RolesUser');
+            $RolesUser = TableRegistry::get('Croogo/Users.RolesUsers');
             $rolesAro = $RolesUser->getRolesAro($userId);
             $aroIds = array_unique(Hash::merge($aroIds, $rolesAro));
         }

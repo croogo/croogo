@@ -1,6 +1,7 @@
 <?php
 
 use Cake\Cache\Cache;
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Croogo\Core\Croogo;
 
@@ -21,4 +22,8 @@ if (Configure::read('Site.acl_plugin') == 'Croogo/Acl') {
         'prefix' => Configure::read('Croogo.Cache.defaultPrefix'),
         'groups' => ['acl']
     ]);
+
+    if (Configure::read('Access Control.multiRole')) {
+        Configure::write('Acl.classname', App::className('Croogo/Acl.HabtmDbAcl', 'Adapter'));
+    }
 }

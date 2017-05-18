@@ -1,8 +1,18 @@
 <?php
-if (isset($roles[$this->request->data['User']['role_id']])) {
-    $validRoles = array_diff_key($roles, array($this->request->data['User']['role_id'] => null));
+
+$entity = $this->Form->context()->entity();
+if ($entity->role_id) {
+    $validRoles = array_diff_key($roles, array($entity->role_id => null));
 } else {
     $validRoles = $roles;
 }
 
-echo $this->Form->input('Role', array('values' => $validRoles, 'class' => 'input checkbox', 'multiple' => 'checkbox'));
+$selected = $entity->roles ?
+    \Cake\Utility\Hash::extract($entity->roles, '{n}.id') :
+    [];
+echo $this->Form->input('roles._ids', [
+    'value' => $selected,
+    'class' => 'c-select',
+    'options' => $validRoles,
+    'multiple' => true,
+]);

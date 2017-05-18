@@ -46,7 +46,6 @@ class CroogoAclBehavior extends AclBehavior
 
         foreach ($types as $type) {
             $alias = Inflector::pluralize($type);
-            ;
             $table->hasOne($alias);
         }
     }

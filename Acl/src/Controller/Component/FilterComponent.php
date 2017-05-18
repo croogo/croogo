@@ -3,6 +3,7 @@
 namespace Croogo\Acl\Controller\Component;
 
 use Cake\Cache\Cache;
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Controller\Component;
 use Cake\Controller\Component\AuthComponent;
@@ -43,8 +44,9 @@ class FilterComponent extends Component
         $this->_controller = $event->subject();
 
         if ($this->_config('multiRole')) {
-            Croogo::hookAdminTab('Admin/Users/add', 'Roles', 'Acl.admin/roles');
-            Croogo::hookAdminTab('Admin/Users/edit', 'Roles', 'Acl.admin/roles');
+            Croogo::hookAdminTab('Admin/Users/add', 'Roles', 'Croogo/Acl.admin/roles');
+            Croogo::hookAdminTab('Admin/Users/edit', 'Roles', 'Croogo/Acl.admin/roles');
+
         }
     }
 
