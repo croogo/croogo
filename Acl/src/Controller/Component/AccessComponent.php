@@ -5,6 +5,7 @@ namespace Croogo\Acl\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Croogo\Core\Croogo;
 
 /**
  * AclAccess Component provides various methods to manipulate Aros and Acos,
@@ -36,8 +37,7 @@ class AccessComponent extends Component
     {
         $controller = $event->subject();
         $this->_controller = $controller;
-        $adminPrefix = isset($controller->request->params['admin']);
-        if (!$adminPrefix) {
+        if ($controller->request->param('prefix') != 'admin') {
             return;
         }
 
@@ -54,11 +54,10 @@ class AccessComponent extends Component
     protected function _setupRole()
     {
         $title = __d('croogo', 'Parent Role');
-        $element = 'Acl.admin/parent_role';
-        Croogo::hookAdminTab('Croogo/Users.Admin/Roles/add', $title, $element);
-        Croogo::hookAdminTab('Croogo/Users.Admin/Roles/edit', $title, $element);
+        $element = 'Croogo/Acl.admin/parent_role';
+        Croogo::hookAdminTab('Admin/Roles/add', $title, $element);
+        Croogo::hookAdminTab('Admin/Roles/edit', $title, $element);
 
-        $this->_controller->Role->bindAro();
         $id = null;
         if (!empty($this->_controller->request->params['pass'][0])) {
             $id = $this->_controller->request->params['pass'][0];
