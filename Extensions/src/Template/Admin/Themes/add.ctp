@@ -11,7 +11,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Extensions'),
 $this->append('form-start', $this->Form->create(null, [
     'url' => [
         'plugin' => 'Croogo/Extensions',
-        'controller' => 'extensions_themes',
+        'controller' => 'Themes',
         'action' => 'add',
     ],
     'type' => 'file',
