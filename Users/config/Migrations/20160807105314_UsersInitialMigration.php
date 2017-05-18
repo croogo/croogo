@@ -137,7 +137,7 @@ class UsersInitialMigration extends AbstractMigration
             ->addColumn('granted_by', 'integer', [
                 'default' => null,
                 'limit' => 11,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('created', 'datetime', [
                 'default' => null,
