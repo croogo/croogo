@@ -83,67 +83,6 @@ class AclHelper extends Helper
     }
 
 /**
- * Returns an array of allowed actions for current logged in Role
- *
- * @param int$roleIdRole id
- * @return array
- */
-    public function getAllowedActionsByRoleId($roleId)
-    {
-        if (!empty($this->allowedActions[$roleId])) {
-            return $this->allowedActions[$roleId];
-        }
-
-        $this->allowedActions[$roleId] = $this->Permissions->getAllowedActionsByRoleId($roleId);
-        return $this->allowedActions[$roleId];
-    }
-
-/**
- * Check if url is allowed for the Role
- *
- * @param int$roleIdRole id
- * @param $url array
- * @return boolean
- */
-    public function linkIsAllowedByRoleId($roleId, $url)
-    {
-        if (is_string($url)) {
-            return $this->_isWhitelist($url);
-        }
-        if (isset($url['admin']) && $url['admin'] == true) {
-            $url['action'] = 'admin_' . $url['action'];
-        }
-        $plugin = empty($url['plugin']) ? null : Inflector::camelize($url['plugin']) . '/';
-        $path = '/:plugin/:controller/:action';
-        $path = str_replace(
-            [':controller', ':action', ':plugin/'],
-            [Inflector::camelize($url['controller']), $url['action'], $plugin],
-            'controllers/' . $path
-        );
-        $linkAction = str_replace('//', '/', $path);
-        if (in_array($linkAction, $this->getAllowedActionsByRoleId($roleId))) {
-            return true;
-        }
-        return false;
-    }
-
-/**
- * Returns an array of allowed actions for current logged in User
- *
- * @param int $userId User Id
- * @return array
- */
-    public function getAllowedActionsByUserId($userId)
-    {
-        if (!empty($this->allowedActions[$userId])) {
-            return $this->allowedActions[$userId];
-        }
-
-        $this->allowedActions[$userId] = $this->Permissions->getAllowedActionsByUserId($userId);
-        return $this->allowedActions[$userId];
-    }
-
-/**
  * Check if url is allowed for the User
  *
  * @param int $userId User Id
