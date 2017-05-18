@@ -5,6 +5,7 @@ namespace Croogo\Acl\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Croogo\Core\Croogo;
 
 /**
  * AclAccess Component provides various methods to manipulate Aros and Acos,
@@ -36,18 +37,13 @@ class AccessComponent extends Component
     {
         $controller = $event->subject();
         $this->_controller = $controller;
-        $adminPrefix = isset($controller->request->params['admin']);
-        if (!$adminPrefix) {
+        if ($controller->request->param('prefix') != 'admin') {
             return;
         }
 
         switch ($controller->name) {
             case 'Roles':
                 $this->_setupRole();
-                break;
-            case 'AclActions':
-            case 'AclPermissions':
-                $this->_checkUpgrade();
                 break;
         }
     }
@@ -58,35 +54,15 @@ class AccessComponent extends Component
     protected function _setupRole()
     {
         $title = __d('croogo', 'Parent Role');
-        $element = 'Acl.admin/parent_role';
-        Croogo::hookAdminTab('Croogo/Users.Admin/Roles/add', $title, $element);
-        Croogo::hookAdminTab('Croogo/Users.Admin/Roles/edit', $title, $element);
+        $element = 'Croogo/Acl.admin/parent_role';
+        Croogo::hookAdminTab('Admin/Roles/add', $title, $element);
+        Croogo::hookAdminTab('Admin/Roles/edit', $title, $element);
 
-        $this->_controller->Role->bindAro();
         $id = null;
         if (!empty($this->_controller->request->params['pass'][0])) {
             $id = $this->_controller->request->params['pass'][0];
         }
-        $this->_controller->set('parents', $this->_controller->Role->allowedParents($id));
-    }
-
-/**
- * checks wether ACL upgrade is required
- * writes a session variable that will be picked up by the AclHelper
- */
-    protected function _checkUpgrade()
-    {
-        $key = AuthComponent::$sessionKey . '.aclUpgrade';
-        if ($this->_controller->Session->check($key)) {
-            $upgrade = $this->_controller->Session->read($key);
-            if ($upgrade) {
-                $this->_controller->helpers[] = 'Acl.Acl';
-            }
-            return;
-        }
-        $node = $this->_controller->Acl->Aco->node('controllers/Nodes/admin_index');
-        $this->_controller->Session->write($key, !empty($node));
-        $this->_controller->helpers[] = 'Acl.Acl';
+        $this->_controller->set('parents', $this->_controller->Roles->allowedParents($id));
     }
 
 /**

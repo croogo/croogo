@@ -2,8 +2,8 @@
 
 namespace Croogo\Nodes\Controller\Component;
 
-use Cake\Acl\Controller\Component\Acl\HabtmDbAcl;
 use Cake\Controller\Component;
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
@@ -42,19 +42,6 @@ class NodesComponent extends Component
             $this->Nodes = $this->controller->Nodes;
         } else {
             $this->Nodes = TableRegistry::get('Croogo/Nodes.Nodes');
-        }
-
-        if (Configure::read('Access Control.multiRole')) {
-            Configure::write('Acl.classname', 'Acl.HabtmDbAcl');
-                        $this->controller->Acl->adapter('HabtmDbAcl');
-            $this->Node->User->bindModel([
-                'hasAndBelongsToMany' => [
-                    'Role' => [
-                        'className' => 'Users.Role',
-                        'with' => 'Users.RolesUser',
-                    ],
-                ],
-            ], false);
         }
     }
 

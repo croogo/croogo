@@ -41,14 +41,10 @@ class UserAroBehavior extends Behavior
         if (!Configure::read('Access Control.multiRole')) {
             return;
         }
-        $model->bindModel([
-            'hasAndBelongsToMany' => [
-                'Roles' => [
-                    'className' => 'Croogo/Users.Roles',
-                    'unique' => 'keepExisting',
-                ],
-            ]
-        ], false);
+        $model->belongsToMany('Roles', [
+            'className' => 'Croogo/Users.Roles',
+            'saveStrategy' => 'replace',
+        ]);
     }
 
     /**

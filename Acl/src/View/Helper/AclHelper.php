@@ -2,7 +2,9 @@
 
 namespace Croogo\Acl\View\Helper;
 
+use Acl\Controller\Component\AclComponent;
 use Cake\Core\Configure;
+use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -47,6 +49,8 @@ class AclHelper extends Helper
         $plugin = 'Croogo/Acl';
         /* TODO: App::uses('AclPermission', $plugin . '.Model'); */
         $this->Permissions = TableRegistry::get($plugin . '.Permissions');
+
+        $this->Acl = new AclComponent(new ComponentRegistry());
     }
 
 /**
@@ -76,67 +80,6 @@ class AclHelper extends Helper
             );
             $this->_View->Blocks->append('actions', $link);
         }
-    }
-
-/**
- * Returns an array of allowed actions for current logged in Role
- *
- * @param int$roleIdRole id
- * @return array
- */
-    public function getAllowedActionsByRoleId($roleId)
-    {
-        if (!empty($this->allowedActions[$roleId])) {
-            return $this->allowedActions[$roleId];
-        }
-
-        $this->allowedActions[$roleId] = $this->Permissions->getAllowedActionsByRoleId($roleId);
-        return $this->allowedActions[$roleId];
-    }
-
-/**
- * Check if url is allowed for the Role
- *
- * @param int$roleIdRole id
- * @param $url array
- * @return boolean
- */
-    public function linkIsAllowedByRoleId($roleId, $url)
-    {
-        if (is_string($url)) {
-            return $this->_isWhitelist($url);
-        }
-        if (isset($url['admin']) && $url['admin'] == true) {
-            $url['action'] = 'admin_' . $url['action'];
-        }
-        $plugin = empty($url['plugin']) ? null : Inflector::camelize($url['plugin']) . '/';
-        $path = '/:plugin/:controller/:action';
-        $path = str_replace(
-            [':controller', ':action', ':plugin/'],
-            [Inflector::camelize($url['controller']), $url['action'], $plugin],
-            'controllers/' . $path
-        );
-        $linkAction = str_replace('//', '/', $path);
-        if (in_array($linkAction, $this->getAllowedActionsByRoleId($roleId))) {
-            return true;
-        }
-        return false;
-    }
-
-/**
- * Returns an array of allowed actions for current logged in User
- *
- * @param int $userId User Id
- * @return array
- */
-    public function getAllowedActionsByUserId($userId)
-    {
-        if (!empty($this->allowedActions[$userId])) {
-            return $this->allowedActions[$userId];
-        }
-
-        $this->allowedActions[$userId] = $this->Permissions->getAllowedActionsByUserId($userId);
-        return $this->allowedActions[$userId];
     }
 
 /**
@@ -183,17 +126,11 @@ class AclHelper extends Helper
             $linkAction = 'controllers/Croogo\\Dashboards/Admin/Dashboards/dashboard';
         }
 
-        if (in_array($linkAction, $this->getAllowedActionsByUserId($userId))) {
+        $userAro = ['model' => 'Users', 'foreign_key' => $userId];
+        if ($this->Acl->check($userAro, $linkAction, '*')) {
             return true;
-        } else {
-            $userAro = ['model' => 'Users', 'foreign_key' => $userId];
-            $nodes = $this->Permissions->Aro->node($userAro)->toArray();
-            if (isset($nodes[0])) {
-                if ($this->Permissions->check($userAro, $linkAction)) {
-                    return true;
-                }
-            }
         }
         return false;
     }
+
 }

@@ -41,4 +41,14 @@ class RolesController extends AppController
         }
     }
 
+    public function index()
+    {
+        $this->Crud->on('beforePaginate', function(Event $event) {
+            $event->subject()->query
+                ->find('roleHierarchy')
+                ->order(['ParentAro.lft' => 'DESC']);
+        });
+        return $this->Crud->execute();
+    }
+
 }

@@ -25,7 +25,15 @@ use Croogo\Users\Model\Entity\User;
  */
 class UsersController extends AppController
 {
+
     public $modelClass = 'Croogo/Users.Users';
+
+    public $paginate = [
+        'limit' => 10,
+        'order' => [
+            'id' => 'DESC',
+        ],
+    ];
 
 /**
  * Initialize
@@ -42,8 +50,22 @@ class UsersController extends AppController
             'displayFields' => $this->Users->displayFields(),
             'searchFields' => ['role_id', 'name']
         ]);
+
         $this->Crud->config('actions.edit', [
             'editfields' => $this->Users->editFields(),
+            'saveOptions' => [
+                'associated' => [
+                    'Roles',
+                ],
+            ],
+        ]);
+
+        $this->Crud->config('actions.add', [
+            'saveOptions' => [
+                'associated' => [
+                    'Roles',
+                ],
+            ],
         ]);
 
         $this->Crud->addListener('Crud.Api');
@@ -66,9 +88,26 @@ class UsersController extends AppController
             'Crud.beforePaginate' => 'beforePaginate',
             'Crud.beforeLookup' => 'beforeLookup',
             'Crud.beforeRedirect' => 'beforeCrudRedirect',
+            'Crud.beforeFind' => 'beforeCrudFind',
             'Crud.beforeSave' => 'beforeCrudSave',
             'Crud.afterSave' => 'afterCrudSave',
         ];
+    }
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        $this->Crud->on('relatedModel', function(Event $event) {
+            if ($event->subject()->name == 'Roles') {
+                $event->subject()->query = $this->Users->Roles
+                    ->find('roleHierarchy')
+                    ->order([
+                        'ParentAro.lft' => 'DESC',
+                    ])
+                    ->find('list');
+            }
+        });
+
     }
 
     public function beforeSetupAdminData()
@@ -129,6 +168,24 @@ class UsersController extends AppController
         }
 
         $entity->activation_key = substr(bin2hex(Security::randomBytes(20)), 0, 60);
+    }
+
+    /**
+     * @param \Cake\Event\Event $event Event object
+     * @return void
+     */
+    public function beforeCrudFind(Event $event)
+    {
+        /**
+         * @var \Cake\ORM\Query
+         */
+        $query = $event->subject()->query
+            ->contain([
+                'Roles' => [
+                    'finder' => 'roleHierarchy',
+                ],
+            ]);
+        return $query;
     }
 
     public function afterCrudSave(Event $event) {
@@ -294,11 +351,17 @@ class UsersController extends AppController
         /** @var \Cake\ORM\Query $query */
         $query = $event->subject()->query;
 
-        $query->contain([
-            'Roles'
-        ]);
+        $query
+            ->leftJoinWith('Roles')
+            ->distinct();
 
-        $this->set('roles', $this->Users->Roles->find('list'));
+        $roles = $this->Users->Roles
+            ->find('roleHierarchy')
+            ->order([
+                'ParentAro.lft' => 'DESC',
+            ])
+            ->find('list');
+        $this->set(compact('roles'));
     }
 
     protected function _getSenderEmail()

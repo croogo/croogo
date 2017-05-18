@@ -3,6 +3,7 @@
 namespace Croogo\Users\Model\Table;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\ORM\Query;
@@ -42,7 +43,17 @@ class UsersTable extends CroogoTable
     {
         parent::initialize($config);
 
-        $this->belongsTo('Croogo/Users.Roles');
+        $multiRole = Configure::read('Access Control.multiRole');
+
+        if ($multiRole) {
+            $this->belongsToMany('Croogo/Users.Roles', [
+                'through' => 'Croogo/Users.RolesUsers',
+                'strategy' => 'subquery',
+            ]);
+            unset($this->_displayFields['role.title']);
+        } else {
+            $this->belongsTo('Croogo/Users.Roles');
+        }
 
         $this->addBehavior('Acl.Acl', [
             'className' => 'Croogo/Core.CroogoAcl',
@@ -68,8 +79,17 @@ class UsersTable extends CroogoTable
                 'field' => ['Users.name', 'Users.username', 'Users.email'],
                 'before' => true,
                 'after' => true,
-            ])
-            ->value('role_id');
+            ]);
+
+        if ($multiRole) {
+            $this->searchManager()
+                ->add('role_id', 'Search.Finder', [
+                    'finder' => 'filterMultiRoles',
+                ]);
+        } else {
+            $this->searchManager()
+                ->value('role_id');
+        }
     }
 
     /**
@@ -243,6 +263,19 @@ class UsersTable extends CroogoTable
                     'last' => true
                 ]
             ]);
+    }
+
+    public function findFilterMultiRoles(Query $query, array $options)
+    {
+        $roleId = isset($options['role_id']) ? $options['role_id'] : false;
+        $query
+            ->where([
+                $this->aliasField('role_id') => $roleId,
+            ])
+            ->orWhere([
+                $this->Roles->aliasField('id') => $roleId,
+            ]);
+        return $query;
     }
 
 }

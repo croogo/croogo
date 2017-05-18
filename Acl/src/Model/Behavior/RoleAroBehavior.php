@@ -3,9 +3,12 @@
 namespace Croogo\Acl\Model\Behavior;
 
 use Cake\Cache\Cache;
-use Cake\ORM\Behavior;
 use Cake\Event\Event;
+use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
+use Cake\ORM\Query;
+use Cake\ORM\ResultSet;
+use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
 /**
@@ -20,6 +23,12 @@ use Cake\Utility\Inflector;
  */
 class RoleAroBehavior extends Behavior
 {
+
+    protected $_defaultConfig = [
+        'implementedFinders' => [
+            'roleHierarchy' => 'findRoleHierarchy',
+        ],
+    ];
 
 /**
  * parentNode
@@ -75,23 +84,41 @@ class RoleAroBehavior extends Behavior
     }
 
 /**
- * bindAro
+ * findRoleHierarchy
  *
  * binds Aro model so that it gets retrieved during admin_[edit|add].
  */
-    public function bindAro(Model $model)
+    public function findRoleHierarchy(Query $query, array $options)
     {
-        $model->bindModel([
-            'hasOne' => [
-                'Aro' => [
-                    'foreignKey' => false,
-                    'conditions' => [
-                        sprintf("model = '%s'", $model->alias),
-                        sprintf('foreign_key = %s.%s', $model->alias, $model->primaryKey),
-                    ],
-                ],
+
+        $alias = $this->_table->alias();
+        $primaryKey = $this->_table->primaryKey();
+        $this->_table->hasOne('ParentAro', [
+            'className' => 'Aros',
+            'bindingKey' => 'id',
+            'foreignKey' => 'foreign_key',
+            'conditions' => [
+                'model' => $alias,
             ],
-        ], false);
+        ]);
+
+        $query
+            ->contain('ParentAro')
+            ->formatResults(function($resultSet) {
+                foreach ($resultSet as $result) {
+                    if ($result->parent_aro) {
+                        $result->parent_id = $result->parent_aro->parent_id;
+                        $result->lft = $result->parent_aro->lft;
+                        $result->rght = $result->parent_aro->rght;
+                        $result->setDirty('parent_id', false);
+                        $result->setDirty('lft', false);
+                        $result->setDirty('rght', false);
+                        $result->unsetProperty('parent_aro');
+                    }
+                }
+                return $resultSet;
+            });
+        return $query;
     }
 
 /**
@@ -114,20 +141,22 @@ class RoleAroBehavior extends Behavior
  * @param int$idRole id
  * @return array list of allowable parent roles in 'list' format
  */
-    public function allowedParents(Model $model, $id = null)
+    public function allowedParents($id = null)
     {
-        if (!$model->Behaviors->enabled('Croogo.Aliasable')) {
-            $model->Behaviors->load('Croogo.Aliasable');
+        if (!$this->_table->behaviors()->has('Croogo/Core.Aliasable')) {
+            $this->_table->addBehavior('Croogo/Core.Aliasable');
         }
-        if ($id == $model->byAlias('public')) {
+        if ($id == $this->_table->byAlias('public')) {
             return [];
         }
-        $adminRoleId = $model->byAlias('superadmin');
+        $adminRoleId = $this->_table->byAlias('superadmin');
         $excludes = Hash::filter(array_values([$adminRoleId, $id]));
-        $options = ['conditions' => [
-            'NOT' => [$model->alias . '.id' => $excludes],
-        ]];
-        return $model->find('list', $options);
+        $conditions = [
+            'NOT' => [$this->_table->aliasField('id') . ' IN'=> $excludes],
+        ];
+        return $this->_table->find('list')
+            ->where($conditions)
+            ->toArray();
     }
 
 /**
