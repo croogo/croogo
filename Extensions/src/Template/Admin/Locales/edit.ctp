@@ -45,5 +45,3 @@ $this->append('panels');
 
     echo $this->Croogo->adminBoxes();
 $this->end();
-
-$this->append('form-end', $this->Form->end());

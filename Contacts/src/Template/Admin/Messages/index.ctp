@@ -114,4 +114,3 @@ echo $this->Form->button(__d('croogo', 'Apply'), [
     'class' => 'bulk-process btn-outline-primary',
 ]);
 $this->end();
-$this->append('form-end', $this->Form->end());

@@ -89,5 +89,3 @@ $this->start('panels');
     echo $this->Html->div('card-buttons d-flex justify-content-center', $out);
     echo $this->Html->endBox();
 $this->end();
-
-$this->append('form-end', $this->Form->end());

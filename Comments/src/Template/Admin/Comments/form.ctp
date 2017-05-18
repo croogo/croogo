@@ -38,5 +38,3 @@ echo $this->Form->input('ip', [
 echo $this->Html->endBox();
 
 $this->end();
-
-$this->append('form-end', $this->Form->end());

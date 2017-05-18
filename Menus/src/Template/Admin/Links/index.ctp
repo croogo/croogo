@@ -112,6 +112,3 @@ echo $this->Form->button(__d('croogo', 'Apply'), [
     'class' => 'btn-outline-primary'
 ]);
 $this->end();
-
-$this->append('form-end', $this->Form->end());
-?>

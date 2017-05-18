@@ -55,6 +55,4 @@ echo $this->Html->beginBox('Publishing');
 echo $this->element('Croogo/Core.admin/buttons', ['type' => 'menu']);
 echo $this->element('Croogo/Core.admin/publishable');
 echo $this->Html->endBox();
-echo $this->end();
-
-$this->append('form-end', $this->Form->end());
+$this->end();

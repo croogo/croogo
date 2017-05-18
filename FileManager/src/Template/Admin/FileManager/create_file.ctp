@@ -39,5 +39,3 @@ echo $this->element('Croogo/Core.admin/buttons', [
 ]);
 echo $this->Html->endBox();
 $this->end();
-
-$this->append('form-end', $this->Form->end());

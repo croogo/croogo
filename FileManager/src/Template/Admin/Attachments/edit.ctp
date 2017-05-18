@@ -57,5 +57,3 @@ echo $this->Html->beginBox(__d('croogo', 'Preview')) . $preview;
 echo $this->Html->endBox();
 
 $this->end();
-
-$this->append('form-end', $this->Form->end());

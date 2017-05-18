@@ -43,4 +43,3 @@ echo $this->Form->input('status', [
 ]);
 echo $this->Html->endBox();
 $this->end();
-$this->append('form-end', $this->Form->end());

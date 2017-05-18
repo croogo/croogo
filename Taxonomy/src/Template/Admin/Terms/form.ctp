@@ -56,5 +56,3 @@ $this->start('buttons');
     echo $this->element('Croogo/Core.admin/buttons', ['type' => 'Terms']);
     echo $this->Html->endBox();
 $this->end();
-
-$this->assign('form-end', $this->Form->end());

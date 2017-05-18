@@ -72,5 +72,3 @@ echo $this->Form->input('tags', [
 ]);
 echo $this->Html->endBox();
 $this->end();
-
-$this->assign('form-end', $this->Form->end());

@@ -120,4 +120,3 @@ if (!$chooser):
     ]);
     $this->end();
 endif;
-$this->append('form-end', $this->Form->end());

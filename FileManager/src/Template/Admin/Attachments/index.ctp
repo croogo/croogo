@@ -111,5 +111,3 @@ $this->Js->set($jsVarName, __d('croogo', '%s selected items?'));
 $this->Js->buffer("$('.bulk-process').on('click', Attachments.confirmProcess);");
 
 $this->end();
-
-$this->append('form-end', $this->Form->end());

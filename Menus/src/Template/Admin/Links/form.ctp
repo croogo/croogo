@@ -134,5 +134,3 @@ echo $this->Form->input('visibility_roles', [
 ]);
 echo $this->Html->endBox();
 $this->end();
-
-$this->append('form-end', $this->Form->end());

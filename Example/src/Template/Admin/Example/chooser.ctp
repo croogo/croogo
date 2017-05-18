@@ -135,8 +135,6 @@ echo $this->Form->input('user_id', array(
 
 $this->end();
 
-$this->append('form-end', $this->Form->end());
-
 $script = <<<EOF
 $('#node-id, #node-url, #block-id, #block-title, #user-id')
     .on('chooserSelect', function(event, data) {

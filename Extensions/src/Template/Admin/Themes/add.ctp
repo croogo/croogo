@@ -35,5 +35,3 @@ echo $this->Html->beginBox(__d('croogo', 'Publishing')) . '<div class="clearfix"
     $this->Html->link(__d('croogo', 'Cancel'), ['action' => 'index'], ['button' => 'danger']) . '</div></div>';
 echo $this->Html->endBox();
 $this->end();
-
-$this->append('form-end', $this->Form->end());

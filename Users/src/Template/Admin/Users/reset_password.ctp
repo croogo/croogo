@@ -22,5 +22,3 @@ echo $this->Form->input('verify_password',
     ['label' => __d('croogo', 'Verify Password'), 'type' => 'password', 'value' => '']);
 echo $this->Html->tabEnd();
 $this->end();
-
-$this->assign('form-end', $this->Form->end());
