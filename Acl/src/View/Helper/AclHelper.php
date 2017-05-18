@@ -2,7 +2,9 @@
 
 namespace Croogo\Acl\View\Helper;
 
+use Acl\Controller\Component\AclComponent;
 use Cake\Core\Configure;
+use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -47,6 +49,8 @@ class AclHelper extends Helper
         $plugin = 'Croogo/Acl';
         /* TODO: App::uses('AclPermission', $plugin . '.Model'); */
         $this->Permissions = TableRegistry::get($plugin . '.Permissions');
+
+        $this->Acl = new AclComponent(new ComponentRegistry());
     }
 
 /**
@@ -183,17 +187,11 @@ class AclHelper extends Helper
             $linkAction = 'controllers/Croogo\\Dashboards/Admin/Dashboards/dashboard';
         }
 
-        if (in_array($linkAction, $this->getAllowedActionsByUserId($userId))) {
+        $userAro = ['model' => 'Users', 'foreign_key' => $userId];
+        if ($this->Acl->check($userAro, $linkAction, '*')) {
             return true;
-        } else {
-            $userAro = ['model' => 'Users', 'foreign_key' => $userId];
-            $nodes = $this->Permissions->Aro->node($userAro)->toArray();
-            if (isset($nodes[0])) {
-                if ($this->Permissions->check($userAro, $linkAction)) {
-                    return true;
-                }
-            }
         }
         return false;
     }
+
 }
