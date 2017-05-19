@@ -103,5 +103,4 @@ $this->append('tab-content');
         }
 %>
     echo $this->Html->tabEnd();
-    echo $this->Croogo->adminTabs();
 $this->end();
