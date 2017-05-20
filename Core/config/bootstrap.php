@@ -56,7 +56,6 @@ require_once __DIR__ . DS . 'croogo_bootstrap.php';
 
 Croogo::hookHelper('*', 'Croogo/Core.Js');
 Croogo::hookHelper('*', 'Croogo/Core.Layout');
-Croogo::hookHelper('*', 'Croogo/Core.CroogoApp');
 \Croogo\Core\timerStop('Croogo bootstrap');
 
 if (Configure::read('Croogo.installed') && $dbConfigExists) {
