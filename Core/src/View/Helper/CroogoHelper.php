@@ -405,18 +405,20 @@ class CroogoHelper extends Helper
     {
         $options = Hash::merge([
             'button' => 'secondary',
-            'method' => 'get',
             'list' => false,
         ], $options);
         if ($options['list'] === true) {
             $list = true;
             unset($options['list']);
         }
-        if (strcasecmp($options['method'], 'post') == 0) {
+        if (isset($options['method']) && strcasecmp($options['method'], 'post') == 0) {
             $options['block'] = 'scriptBottom';
             $out = $this->Form->postLink($title, $url, $options, $confirmMessage);
         } else {
-            $out = $this->Html->link($title, $url, $options, $confirmMessage);
+            if ($confirmMessage && empty($options['confirm'])) {
+                $options['confirm'] = $confirmMessage;
+            }
+            $out = $this->Html->link($title, $url, $options);
         }
         if (isset($list)) {
             $out = $this->Html->tag('li', $out);
