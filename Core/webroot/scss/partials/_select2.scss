@@ -10,7 +10,12 @@
   }
 }
 
-.link-chooser + .select2-container {
-  padding-right: 60px;
-  min-width: 100%;
+.link-chooser {
+  &+ .select2-container {
+    padding-right: 60px;
+    min-width: 100%;
+  }
+  &~ .input-group-btn {
+    margin-left: -60px;
+  }
 }
