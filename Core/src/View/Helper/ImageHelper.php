@@ -62,8 +62,6 @@ class ImageHelper extends HtmlHelper
 
         if (!array_key_exists('class', $htmlAttributes)) {
             $htmlAttributes['class'] = $imgClass;
-        } elseif (isset($htmlAttributes['class']) && $htmlAttributes['class'] !== false) {
-            $htmlAttributes['class'] .= ' ' . $imgClass;
         }
 
         $sourcefile = WWW_ROOT . DS . $path;

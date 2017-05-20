@@ -1,15 +1,13 @@
 <div class="navbar navbar-light bg-faded">
-    <div class="float-left">
+    <div class="d-flex justify-content-between">
+        <div>
         <?php
         echo __d('croogo', 'Sort by:');
         echo ', ' . $this->Paginator->sort('title', __d('croogo', 'Title'), ['class' => 'sort']);
         echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), ['class' => 'sort']);
         ?>
-    </div>
-    <div class="float-right">
+        </div>
         <button type="button" class="btn btn-primary add-image">Add images</button>
-    </div>
-    <div class="float-right">
         <?php echo $this->element('Croogo/Nodes.admin/nodes_search'); ?>
     </div>
 </div>
@@ -21,7 +19,7 @@
         list($mimeType, $imageType) = explode('/', $attachment->mime_type);
         $imagecreatefrom = ['gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm'];
         if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
-            $thumbnail = $this->Image->resize($attachment->path, 500, 500, [], ['class' => 'thumbnail card-img-bottom img-fluid']);
+            $thumbnail = $this->Image->resize($attachment->path, 500, 500, [], ['class' => 'card-img-bottom img-fluid']);
         } else {
             $thumbnail = $this->Html->image(
                 '/croogo/img/icons/page_white.png',
@@ -29,10 +27,8 @@
             );
         }
 
-        $footerText = $attachment->title .
-            '<br>' .
-            $this->Html->tag('small', $attachment->path, ['class' => 'text-muted']);
-        $cardHeader = $this->Html->div('card-header', $footerText);
+        $headerText = $this->Html->div('', $attachment->title);
+        $cardHeader = $this->Html->div('card-header', $headerText);
         $card = $this->Html->div(
             'card text-xs-center selector item-choose',
             $cardHeader . $thumbnail,

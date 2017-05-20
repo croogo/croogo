@@ -4,20 +4,29 @@ $(function() {
   });
 
   var $body = $('body');
-  var baseUrl = $('#base-url').text();
+  var $dropzoneTarget = $('#dropzone-target');
   var $tokenFields = $('#tokens').find('input');
+  var baseUrl = $dropzoneTarget.data('baseUrl');
   var tokens = {};
   $tokenFields.each(function () {
     tokens[this.name] = this.value;
   });
 
   var dropzone = new Dropzone(document.body, {
-    url: $('#dropzone-url').text(),
+    url: $dropzoneTarget.data('url'),
     previewsContainer: "#dropzone-previews",
     clickable: '.add-image',
     previewTemplate: $('#dropzone-preview').html(),
     addRemoveLinks: false,
     params: tokens,
+    thumbnailWidth: 250,
+    thumbnailHeight: null,
+    init: function () {
+      this.on("addedfile", function (file) {
+        file.previewElement.remove();
+        this.previewsContainer.prepend(file.previewElement);
+      });
+    },
     dragstart: function () {
       $body.addClass('dragging');
     },
@@ -35,6 +44,9 @@ $(function() {
     drop: function () {
       $body.removeClass('dragging');
     },
+    sending: function (file, xhr, formData) {
+      xhr.setRequestHeader('X-CSRF-Token', $dropzoneTarget.data('csrfToken'))
+    },
     success: function (file, response) {
       var _ref, _i, _len;
       if (file.previewElement) {
@@ -50,7 +62,7 @@ $(function() {
 
         $preview.find('progress').remove();
         $preview.find('.file-size').remove();
-        $preview.find('.file-slug').text(response.data.path)
+        $preview.find('.file-slug').remove()
       }
     },
     error: function (file, message) {

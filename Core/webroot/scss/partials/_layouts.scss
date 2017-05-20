@@ -116,6 +116,12 @@ footer {
   display: none;
 }
 
+.modal {
+  .navbar + .card-columns {
+    margin-top: 1rem;
+  }
+}
+
 .selector {
   position: relative;
   cursor: pointer;
@@ -133,6 +139,17 @@ footer {
   }
   &:hover:before {
     opacity: 1;
+  }
+
+  .card-header {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .progress {
+    width: 100%;
+    border-radius: 0;
   }
 }
 

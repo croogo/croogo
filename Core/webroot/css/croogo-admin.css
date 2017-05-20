@@ -11706,11 +11706,15 @@ footer {
 .hidden {
   display: none; }
 
-/* line 119, webroot/scss/partials/_layouts.scss */
+/* line 120, webroot/scss/partials/_layouts.scss */
+.modal .navbar + .card-columns {
+  margin-top: 1rem; }
+
+/* line 125, webroot/scss/partials/_layouts.scss */
 .selector {
   position: relative;
   cursor: pointer; }
-  /* line 123, webroot/scss/partials/_layouts.scss */
+  /* line 129, webroot/scss/partials/_layouts.scss */
   .selector::before {
     content: '';
     position: absolute;
@@ -11721,31 +11725,40 @@ footer {
     background: rgba(150, 150, 150, 0.5);
     opacity: 0;
     transition: opacity .1s linear; }
-  /* line 134, webroot/scss/partials/_layouts.scss */
+  /* line 140, webroot/scss/partials/_layouts.scss */
   .selector:hover:before {
     opacity: 1; }
+  /* line 144, webroot/scss/partials/_layouts.scss */
+  .selector .card-header {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+  /* line 150, webroot/scss/partials/_layouts.scss */
+  .selector .progress {
+    width: 100%;
+    border-radius: 0; }
 
-/* line 140, webroot/scss/partials/_layouts.scss */
+/* line 157, webroot/scss/partials/_layouts.scss */
 .card-column .card {
   margin-bottom: 0.75rem;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
 
-/* line 149, webroot/scss/partials/_layouts.scss */
+/* line 166, webroot/scss/partials/_layouts.scss */
 .admin-login .card, .installer .card {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
-/* line 155, webroot/scss/partials/_layouts.scss */
+/* line 172, webroot/scss/partials/_layouts.scss */
 .admin-login #authMessage, .installer #authMessage {
   margin-bottom: 10px; }
-/* line 159, webroot/scss/partials/_layouts.scss */
+/* line 176, webroot/scss/partials/_layouts.scss */
 .admin-login .input-prepend, .installer .input-prepend {
   margin-bottom: 10px; }
-/* line 163, webroot/scss/partials/_layouts.scss */
+/* line 180, webroot/scss/partials/_layouts.scss */
 .admin-login .forgot, .installer .forgot {
   vertical-align: middle;
   margin: 0 20px; }
 
 @media (min-width: 576px) {
-  /* line 172, webroot/scss/partials/_layouts.scss */
+  /* line 189, webroot/scss/partials/_layouts.scss */
   .admin-login .card, .installer .card {
     max-width: 800px;
     min-width: 500px; } }
