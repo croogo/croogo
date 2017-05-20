@@ -12,6 +12,7 @@ use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
 use Croogo\Core\Croogo;
 use Croogo\Core\Database\Type\ParamsType;
+use Croogo\Core\Plugin;
 use Croogo\Core\Status;
 
 /**
@@ -565,6 +566,32 @@ class CroogoHelper extends Helper
         }
 
         return $this->_View->cell('Croogo/Core.Admin/LinkChooser', [$target]);
+    }
+
+    public function dataUri($theme, $path, $allowedMimeTypes = null)
+    {
+        $allowedMimeTypes = array_filter(array_merge([
+            'image/jpeg',
+            'image/png',
+        ], (array)$allowedMimeTypes));
+        if ($theme) {
+            $file = Plugin::path($theme) . 'webroot/' . $path;
+        } else {
+            $file = WWW_ROOT . $path;
+        }
+        if (!file_exists($file)) {
+            return null;
+        }
+        $mimeType = mime_content_type($file);
+        if (!in_array($mimeType, $allowedMimeTypes)) {
+            return null;
+        }
+        $dataUri = sprintf(
+            'data:%s;base64,%s',
+            $mimeType,
+            base64_encode(file_get_contents($file))
+        );
+        return $dataUri;
     }
 
 }
