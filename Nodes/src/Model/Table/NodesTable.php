@@ -55,6 +55,10 @@ class NodesTable extends CroogoTable
         ]);
 
         $this->belongsTo('Croogo/Users.Users');
+        $this->belongsTo('Parent', [
+            'className' => 'Croogo/Nodes.Nodes',
+            'foreignKey' => 'parent_id',
+        ]);
 
         $this->searchManager()
             ->add('q', 'Search.Finder', [
