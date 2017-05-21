@@ -65,24 +65,6 @@ class AclHelper extends Helper
     }
 
 /**
- * beforeRender
- *
- */
-    public function beforeRender($viewFile)
-    {
-        // display upgrade link when required
-        $key = AuthComponent::$sessionKey . '.aclUpgrade';
-        if ($this->_View->Session->read($key)) {
-            $link = $this->_View->Croogo->adminAction(
-                __d('croogo', 'Upgrade Acl database'),
-                ['controller' => 'acl_permissions', 'action' => 'upgrade'],
-                ['button' => 'primary']
-            );
-            $this->_View->Blocks->append('actions', $link);
-        }
-    }
-
-/**
  * Check if url is allowed for the User
  *
  * @param int $userId User Id

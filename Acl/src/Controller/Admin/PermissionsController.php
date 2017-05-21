@@ -153,22 +153,4 @@ class PermissionsController extends AppController
         $this->set(compact('acoId', 'aroId', 'data', 'success', 'permitted'));
     }
 
-/**
- * admin_upgrade
- *
- * upgrades ACL database
- * @return void
- */
-    public function upgrade()
-    {
-        $AclUpgrade = new AclUpgrade();
-        $result = $AclUpgrade->upgrade();
-        if ($result === true) {
-            $this->Session->delete(AuthComponent::$sessionKey . '.aclUpgrade');
-            $this->Flash->success(__d('croogo', 'ACL database has been upgraded successfully'));
-        } else {
-            $this->Flash->error(join('<br>', $result));
-        }
-        return $this->redirect($this->referer());
-    }
 }
