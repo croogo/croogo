@@ -2,8 +2,6 @@
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
-
 $this->Croogo->adminScript('Croogo/Acl.acl_permissions');
 
 $this->Breadcrumbs->add(__d('croogo', 'Users'),
@@ -50,63 +48,21 @@ echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
     ['controller' => 'Actions', 'action' => 'index', 'permissions' => 1]);
 $this->end();
 
-$this->set('tableClass', 'table permission-table');
-$this->start('table-heading');
-$roleTitles = array_values($roles->toArray());
-$roleIds = array_keys($roles->toArray());
+$this->Js->buffer('AclPermissions.tabSwitcher();');
 
-$tableHeaders = [
-    __d('croogo', 'Id'),
-    __d('croogo', 'Alias'),
-];
-$tableHeaders = array_merge($tableHeaders, $roleTitles);
-$tableHeaders = $this->Html->tableHeaders($tableHeaders);
-$this->end();
+?>
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+    <div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 
-$this->append('table-heading');
-    echo $this->Html->tag('thead', $tableHeaders);
-$this->end();
+        <ul id="permissions-tab" class="nav nav-tabs">
+        <?php
+            echo $this->Croogo->adminTabs();
+        ?>
+        </ul>
 
-$this->append('table-body');
-$currentController = '';
-$icon = '<i class="icon-none float-right"></i>';
-foreach ($acos as $aco) {
-    $id = $aco->id;
-    $alias = $aco->alias;
-    $class = '';
-    if (substr($alias, 0, 1) == '_') {
-        $level = 1;
-        $class .= 'level-' . $level;
-        $oddOptions = ['class' => 'hidden controller-' . $currentController];
-        $evenOptions = ['class' => 'hidden controller-' . $currentController];
-        $alias = substr_replace($alias, '', 0, 1);
-    } else {
-        $level = 0;
-        $class .= ' controller';
-        if ($aco->children > 0) {
-            $class .= ' perm-expand';
-        }
-        $oddOptions = [];
-        $evenOptions = [];
-        $currentController = $alias;
-    }
+        <div class="tab-content">
+            <?php echo $this->Croogo->adminTabs(); ?>
+        </div>
 
-    $row = [
-        $id,
-        $this->Html->div(trim($class), $alias . $icon, [
-            'data-id' => $id,
-            'data-alias' => $alias,
-            'data-level' => $level,
-        ]),
-    ];
-
-    foreach ($roles as $roleId => $roleTitle) {
-        $row[] = '';
-    }
-
-    echo $this->Html->tableCells($row, $oddOptions, $evenOptions);
-}
-echo $this->Html->tag('thead', $tableHeaders);
-$this->end();
-
-$this->Js->buffer('AclPermissions.documentReady();');
+    </div>
+</div>
