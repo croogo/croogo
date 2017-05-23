@@ -36,6 +36,10 @@ class NodesController extends AppController
         $this->loadComponent('Croogo/Core.Recaptcha');
         $this->loadComponent('Croogo/Core.BulkProcess');
 
+        if ($this->request->param('action') == 'toggle') {
+            $this->eventManager()->off($this->Csrf);
+        }
+
         $this->_setupPrg();
     }
 
