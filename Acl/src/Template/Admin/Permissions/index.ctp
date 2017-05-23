@@ -31,7 +31,7 @@ $out = $this->Croogo->adminAction(__d('croogo', 'Generate'), $generateUrl, [
         'class' => 'dropdown-item',
         'tooltip' => [
             'data-title' => __d('croogo', 'Create new actions (no removal)'),
-            'data-placement' => 'right',
+            'data-placement' => 'left',
         ],
     ]);
 $out .= $this->Croogo->adminAction(__d('croogo', 'Synchronize'), $generateUrl + ['sync' => 1], [
@@ -41,10 +41,12 @@ $out .= $this->Croogo->adminAction(__d('croogo', 'Synchronize'), $generateUrl + 
         'class' => 'dropdown-item',
         'tooltip' => [
             'data-title' => __d('croogo', 'Create new & remove orphaned actions'),
-            'data-placement' => 'right',
+            'data-placement' => 'left',
         ],
     ]);
-echo $this->Html->div('btn-group', $toolsButton . $this->Html->div('dropdown-menu', $out));
+echo $this->Html->div('btn-group', $toolsButton . $this->Html->tag('ul', $out, [
+    'class' => 'dropdown-menu dropdown-menu-right',
+]));
 
 echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
     ['controller' => 'Actions', 'action' => 'index', 'permissions' => 1]);

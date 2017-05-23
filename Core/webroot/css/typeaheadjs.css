@@ -1,7 +1,9 @@
+.dropdown-menu[:not(.dropdown-menu-right)], span.twitter-typeahead .tt-menu {
+  left: 0;
+}
 .dropdown-menu, span.twitter-typeahead .tt-menu {
   position: absolute;
   top: 100%;
-  left: 0;
   z-index: 1000;
   display: none;
   float: left;

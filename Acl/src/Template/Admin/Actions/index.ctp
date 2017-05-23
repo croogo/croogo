@@ -40,7 +40,7 @@ $this->append('action-buttons');
             'class' => 'dropdown-item',
             'tooltip' => array(
                 'data-title' => __d('croogo', 'Create new actions (no removal)'),
-                'data-placement' => 'right',
+                'data-placement' => 'left',
             ),
         )
     );
@@ -53,13 +53,15 @@ $this->append('action-buttons');
             'class' => 'dropdown-item',
             'tooltip' => array(
                 'data-title' => __d('croogo', 'Create new & remove orphaned actions'),
-                'data-placement' => 'right',
+                'data-placement' => 'left',
             ),
         )
     );
     echo $this->Html->div('btn-group',
         $toolsButton .
-        $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'))
+        $this->Html->tag('ul', $out, [
+            'class' => 'dropdown-menu dropdown-menu-right',
+        ])
     );
 $this->end();
 
