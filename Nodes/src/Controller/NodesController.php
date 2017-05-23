@@ -92,8 +92,6 @@ class NodesController extends AppController
             $query->andWhere([
                     $this->Nodes->aliasField('type') => $type->alias,
                 ]);
-            $this->set('title_for_layout', $type->title);
-            $this->set('title', $type);
         }
 
         if (isset($limit)) {
@@ -211,8 +209,6 @@ class NodesController extends AppController
                 new IdentifierExpression($this->Nodes->aliasField('created')),
             ]));
         $nodes = $this->paginate($query);
-
-        $this->set('title_for_layout', $term->title);
 
         $this->set(compact('term', 'type', 'nodes'));
         $camelizedType = Inflector::camelize($type->alias, '-');
