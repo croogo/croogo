@@ -233,13 +233,7 @@ class InstallManager
     {
         $generator = new AclGenerator();
         if ($this->controller) {
-            $dummyShell = new class {
-                use LogTrait;
-                function out($msg, $newlines = 1, $level = 1) {
-                    $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
-                    $this->log($msg);
-                }
-            };
+            $dummyShell = new DummyShell();
             $generator->Shell = $dummyShell;
         }
         $generator->insertAcos(ConnectionManager::get('default'));
@@ -310,5 +304,13 @@ class InstallManager
                 }
             }
         }
+    }
+}
+
+class DummyShell {
+    use LogTrait;
+    function out($msg, $newlines = 1, $level = 1) {
+        $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
+        $this->log($msg);
     }
 }
