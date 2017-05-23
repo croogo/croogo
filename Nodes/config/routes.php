@@ -22,3 +22,15 @@ Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
     Router::routableContentTypes($route);
     Router::contentType('_placeholder', $route);
 });
+
+Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('api', function (RouteBuilder $route) {
+        $route->scope('/v1.0', ['prefix' => 'api/v10'], function (RouteBuilder $route) {
+            $route->extensions(['json']);
+
+            $route->scope('/nodes', [], function (RouteBuilder $route) {
+                $route->fallbacks();
+            });
+        });
+    });
+});

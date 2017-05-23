@@ -241,7 +241,7 @@ class NodesController extends AppController
      */
     public function beforeCrudFind(Event $event)
     {
-        $event->subject()->query->contain(['Users']);
+        $event->subject()->query->contain(['Users', 'Parent']);
     }
 
     /**
@@ -300,7 +300,7 @@ class NodesController extends AppController
         }
         $roles = $this->Nodes->Users->Roles->find('list');
         $parents = $this->Nodes->find('list')->where([
-            'type' => $type->id
+            'type' => $type->alias,
         ])->toArray();
         $users = $this->Nodes->Users->find('list')->toArray();
         $this->set(compact('roles', 'parents', 'users'));

@@ -80,7 +80,7 @@ $this->start('panels');
                 'data-queryField' => 'name',
                 'data-relatedElement' => '#user-id',
                 'data-url' => Router::url([
-                    'prefix' => 'admin',
+                    'prefix' => 'api/v10',
                     'plugin' => 'Croogo/Users',
                     'controller' => 'Users',
                     'action' => 'lookup',
@@ -88,12 +88,27 @@ $this->start('panels');
                 ]),
             ],
         ]);
-        echo $this->Form->input('parent_id', [
+
+        echo $this->Form->autocomplete('parent_id', [
             'label' => __d('croogo', 'Parent'),
             'options' => $parents,
-            'empty' => '(no parent)',
-            'class' => 'c-select',
+            'default' => $node->parent_id,
+            'autocomplete' => [
+                'default' => $node->parent ? $node->parent->title : null,
+                'data-displayField' => 'title',
+                'data-queryField' => 'title',
+                'data-relatedElement' => '#parent-id',
+                'data-url' => $this->Url->build([
+                    'prefix' => 'api/v10',
+                    'plugin' => 'Croogo/Nodes',
+                    'controller' => 'Nodes',
+                    'action' => 'lookup',
+                    'type' => $node->type,
+                    '_ext' => 'json',
+                ]),
+            ],
         ]);
+
     echo $this->Html->endBox();
 
     echo $this->Html->beginBox(__d('croogo', 'Access control'));

@@ -46,7 +46,7 @@ AclPermissions.tabLoad = function(e) {
 	var matches = (e.target.toString().match(/#.+/gi));
 	var pane = matches[0];
 	var alias = $target.data('alias');
-	var $span = $('.' + Admin.iconClass('spinner', false), $target);
+	var $span = $('span:first-child', $target);
 	var spinnerClass = Admin.spinnerClass();
 	if ($span.length > 0) {
 		$span.addClass(spinnerClass);
@@ -54,7 +54,7 @@ AclPermissions.tabLoad = function(e) {
 		$target.append(' <span class="' + spinnerClass + '"></span>');
 	};
 	$(pane).load(
-		Croogo.basePath + 'admin/acl/acl_permissions/',
+		Croogo.basePath + 'admin/acl/permissions/',
 		$.param({ root: alias }),
 		function(responseText, textStatus, xhr) {
 			$('span', $target).removeClass(spinnerClass);

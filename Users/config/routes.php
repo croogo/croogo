@@ -18,3 +18,15 @@ Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
     Router::build($route, '/users', ['controller' => 'Users', 'action' => 'index']);
     Router::build($route, '/users/:action/*', ['controller' => 'Users']);
 });
+
+Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('api', function (RouteBuilder $route) {
+        $route->scope('/v1.0', ['prefix' => 'api/v10'], function (RouteBuilder $route) {
+            $route->extensions(['json']);
+
+            $route->scope('/users', [], function (RouteBuilder $route) {
+                $route->fallbacks();
+            });
+        });
+    });
+});
