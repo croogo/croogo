@@ -288,7 +288,6 @@ class CroogoHelper extends Helper
         if (is_array($rowActions)) {
             foreach ($rowActions as $title => $link) {
                 $linkOptions = $options;
-                $confirmMessage = false;
                 if (is_array($link)) {
                     $config = $link[key($link)];
                     if (isset($config['options'])) {
@@ -332,11 +331,8 @@ class CroogoHelper extends Helper
         $options = Hash::merge([
             'escapeTitle' => false,
             'escape' => true,
+            'confirm' => $confirmMessage,
         ], $options);
-
-        if (!$confirmMessage) {
-            $options['confirm'] = $confirmMessage;
-        }
 
         if (is_array($url)) {
             $action = $url['action'];
@@ -383,6 +379,7 @@ class CroogoHelper extends Helper
     {
         if (!empty($options['confirm'])) {
             $options['data-confirm-message'] = $options['confirm'];
+            unset($options['confirm']);
         }
         if (isset($options['icon'])) {
             $options['iconInline'] = false;
@@ -406,6 +403,7 @@ class CroogoHelper extends Helper
         $options = Hash::merge([
             'button' => 'secondary',
             'list' => false,
+            'confirm' => $confirmMessage,
         ], $options);
         if ($options['list'] === true) {
             $list = true;
@@ -413,11 +411,8 @@ class CroogoHelper extends Helper
         }
         if (isset($options['method']) && strcasecmp($options['method'], 'post') == 0) {
             $options['block'] = 'scriptBottom';
-            $out = $this->Form->postLink($title, $url, $options, $confirmMessage);
+            $out = $this->Form->postLink($title, $url, $options);
         } else {
-            if ($confirmMessage && empty($options['confirm'])) {
-                $options['confirm'] = $confirmMessage;
-            }
             $out = $this->Html->link($title, $url, $options);
         }
         if (isset($list)) {
