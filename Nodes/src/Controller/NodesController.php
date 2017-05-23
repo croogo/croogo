@@ -236,7 +236,8 @@ class NodesController extends AppController
             ->find('byAccess', [
                 'roleId' => $this->Croogo->roleId(),
             ])
-            ->find('search', $this->Nodes->filterParams($this->request->query));
+            ->find('search', $this->Nodes->filterParams($this->request->query))
+            ->contain('Users');
 
         $this->set('nodes', $this->Paginator->paginate($query));
     }
