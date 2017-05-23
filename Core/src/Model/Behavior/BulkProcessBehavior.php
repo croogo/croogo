@@ -3,6 +3,7 @@
 namespace Croogo\Core\Model\Behavior;
 
 use Cake\Database\Exception;
+use Cake\Log\Log;
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
@@ -177,6 +178,7 @@ class BulkProcessBehavior extends Behavior
                 return true;
             });
         } catch (\Exception $exception) {
+            Log::critical(__FUNCTION__ . ': ' . $exception->getMessage());
             return false;
         }
     }
