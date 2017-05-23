@@ -277,8 +277,11 @@
           .addClass($target.data('slugClass') ? $target.data('slugClass') : settings.slugClass);
         var $slugEdit = $('<a href="#" class="editable"></a>')
           .addClass($target.data('slugEditClass') ? $target.data('slugEditClass') : settings.editClass)
-          .html($target.data('slugEditLabel') ? $target.data('slugEditLabel') : settings.editLabel)
-          .hide();
+          .html($target.data('slugEditLabel') ? $target.data('slugEditLabel') : settings.editLabel);
+
+        if ($target.data('slugEditLabel')) {
+          $slugEdit.hide();
+        }
 
         if (settings.hide || $target.data('slugHide')) {
           $slugInput
