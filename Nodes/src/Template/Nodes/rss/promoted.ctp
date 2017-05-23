@@ -1,5 +1,14 @@
 <?php
 
+use Cake\Core\Configure;
+
+$this->assign('title', $type->title);
+
+$channel = [
+    'title' => Configure::read('Site.title'),
+    'description' => Configure::read('Site.tagline'),
+];
+
 $Url = $this->Url;
 $items = $this->Rss->items($nodes->toArray(), function($item) use ($Url) {
     return [
@@ -11,4 +20,4 @@ $items = $this->Rss->items($nodes->toArray(), function($item) use ($Url) {
     ];
 });
 
-$this->set('items', $items);
+$this->set(compact('channel', 'items'));

@@ -1,6 +1,13 @@
 <?php
 
+use Cake\Core\Configure;
 use Cake\Routing\Router;
+
+$channel = [
+    'title' => __d('croogo', 'Comments') . ' - ' . Configure::read('Site.title'),
+    'description' => Configure::read('Site.tagline'),
+];
+$this->set('channel', $channel);
 
 function rss_transform($item) {
     $name = $item->name;
