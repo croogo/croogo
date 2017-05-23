@@ -13,63 +13,7 @@ var Nodes = {};
  * @return void
  */
 Nodes.documentReady = function () {
-  Nodes.filter();
-}
-
-/**
- * Submits form for filtering Nodes
- *
- * @return void
- */
-Nodes.filter = function () {
-  $('.nodes div.actions a.filter').click(function () {
-    $('.nodes div.filter').slideToggle();
-    return false;
-  });
-
-  $('#FilterAddForm div.submit input').click(function () {
-    $('#FilterAddForm').submit();
-    return false;
-  });
-
-  $('#FilterAdminIndexForm').submit(function () {
-    var filter = '';
-    var q = '';
-
-    // type
-    if ($('#FilterType').val() != '') {
-      filter += 'type:' + $('#FilterType').val() + ';';
-    }
-
-    // status
-    if ($('#FilterStatus').val() != '') {
-      filter += 'status:' + $('#FilterStatus').val() + ';';
-    }
-
-    // promoted
-    if ($('#FilterPromote').val() != '') {
-      filter += 'promote:' + $('#FilterPromote').val() + ';';
-    }
-
-    //query string
-    if ($('#FilterQ').val() != '') {
-      q = $('#FilterQ').val();
-    }
-    var loadUrl = Croogo.basePath + 'admin/nodes/nodes/index/';
-    if (filter != '') {
-      loadUrl += 'filter:' + filter;
-    }
-    if (q != '') {
-      if (filter == '') {
-        loadUrl += 'q:' + q;
-      } else {
-        loadUrl += '/q:' + q;
-      }
-    }
-
-    window.location = loadUrl;
-    return false;
-  });
+  Admin.toggleRowSelection('#NodesCheckAll');
 }
 
 Nodes.confirmProcess = function (event) {
@@ -100,10 +44,8 @@ Nodes.confirmProcess = function (event) {
  *
  * @return void
  */
-$(document).ready(function () {
+$(function () {
   if (Croogo.params.controller == 'Nodes') {
     Nodes.documentReady();
   }
-
-  Admin.toggleRowSelection('#NodesCheckAll');
 });
