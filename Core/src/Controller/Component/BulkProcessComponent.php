@@ -35,11 +35,16 @@ class BulkProcessComponent extends Component
     protected $_controller = null;
 
 /**
- * Startup
+ * beforeFilter
  */
-    public function startup(Event $event)
+    public function beforeFilter(Event $event)
     {
         $this->_controller = $event->subject();
+        if ($this->_controller->request->param('action') == 'process') {
+            $this->_controller->Security->config('validatePost', false);
+            $this->_controller->eventManager()->off($this->_controller->Csrf);
+        }
+
     }
 
 /**
