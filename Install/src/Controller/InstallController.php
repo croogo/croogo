@@ -11,7 +11,6 @@ use Cake\Controller\Controller;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Utility\File;
-use Croogo\Acl\AclGenerator;
 use Croogo\Core\Router;
 use Croogo\Install\AssetGenerator;
 use Croogo\Install\InstallManager;

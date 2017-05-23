@@ -5,6 +5,7 @@ namespace Croogo\Install;
 use Cake\Core\Configure;
 use Cake\Database\Exception\MissingConnectionException;
 use Cake\Datasource\ConnectionManager;
+use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
 use Croogo\Acl\AclGenerator;
 use Croogo\Core\Plugin;
@@ -15,6 +16,9 @@ class InstallManager
     const CAKE_VERSION = '3.3.6';
 
     const DATASOURCE_REGEX = "/(\'Datasources'\s\=\>\s\[\n\s*\'default\'\s\=\>\s\[\n\X*\'__FIELD__\'\s\=\>\s\').*(\'\,)(?=\X*\'test\'\s\=\>\s)/";
+
+    use LogTrait;
+
     /**
      * Default configuration
      *
@@ -229,7 +233,14 @@ class InstallManager
     {
         $generator = new AclGenerator();
         if ($this->controller) {
-            $generator->controller = $this->controller;
+            $dummyShell = new class {
+                use LogTrait;
+                function out($msg, $newlines = 1, $level = 1) {
+                    $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
+                    $this->log($msg);
+                }
+            };
+            $generator->Shell = $dummyShell;
         }
         $generator->insertAcos(ConnectionManager::get('default'));
     }
