@@ -144,11 +144,13 @@ $tableFooters = trim($this->fetch('table-footer'));
                 <div id="bulk-action">
                     <?php echo $bulkAction; ?>
                 </div>
-            <?php endif; ?>
+                <?php endif; ?>
 
                 <?php
                 if ($formEnd = trim($this->fetch('form-end'))):
                     echo $formEnd;
+                elseif ($formStart):
+                    echo $this->Form->end();
                 endif;
                 ?>
 
