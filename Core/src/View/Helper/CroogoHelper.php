@@ -294,9 +294,9 @@ class CroogoHelper extends Helper
                     if (isset($config['options'])) {
                         $linkOptions = Hash::merge($options, $config['options']);
                     }
-                    if (isset($config['confirmMessage'])) {
-                        $confirmMessage = $config['confirmMessage'];
-                        unset($config['confirmMessage']);
+                    if (isset($config['confirm'])) {
+                        $linkOptions['confirm'] = $config['confirm'];
+                        unset($config['confirm']);
                     }
                     if (isset($config['title'])) {
                         $title = $config['title'];
@@ -304,7 +304,7 @@ class CroogoHelper extends Helper
                     $link = key($link);
                 }
                 $link = $this->Menus->linkStringToArray(str_replace(':id', $id, $link));
-                $output .= $this->adminRowAction($title, $link, $linkOptions, $confirmMessage);
+                $output .= $this->adminRowAction($title, $link, $linkOptions);
             }
         }
 
@@ -379,10 +379,10 @@ class CroogoHelper extends Helper
      * where element id is equal to $url parameter and immediately submit the form
      * it's on.  This works in tandem with Admin.processLink() in javascript.
      */
-    protected function _bulkRowAction($title, $url = null, $options = [], $confirmMessage = false)
+    protected function _bulkRowAction($title, $url = null, $options = [])
     {
-        if (!empty($confirmMessage)) {
-            $options['data-confirm-message'] = $confirmMessage;
+        if (!empty($options['confirm'])) {
+            $options['data-confirm-message'] = $options['confirm'];
         }
         if (isset($options['icon'])) {
             $options['iconInline'] = false;
