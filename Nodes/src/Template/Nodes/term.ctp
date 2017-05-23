@@ -1,6 +1,13 @@
 <?php
 
-$this->assign('title', $term->title);
+$titles = [];
+if (isset($term)):
+    $titles[] = $term->title;
+endif;
+if (isset($type)):
+    $titles[] = $type->title;
+endif;
+$this->assign('title', implode (' | ', $titles));
 
 ?>
 <div class="nodes">
