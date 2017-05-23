@@ -351,9 +351,15 @@ class UsersController extends AppController
         /** @var \Cake\ORM\Query $query */
         $query = $event->subject()->query;
 
-        $query
-            ->leftJoinWith('Roles')
-            ->distinct();
+        $multiRole = Configure::read('Access Control.multiRole');
+        if ($multiRole) {
+            $query
+                ->leftJoinWith('Roles')
+                ->distinct();
+        } else {
+            $query
+                ->contain('Roles');
+        }
 
         $roles = $this->Users->Roles
             ->find('roleHierarchy')
