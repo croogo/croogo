@@ -102,7 +102,7 @@ echo $this->Html->tableCells($rows);
 $this->end();
 if (!$chooser):
     $this->start('bulk-action');
-    echo $this->Form->input('Blocks.action', [
+    echo $this->Form->input('action', [
         'label' => __d('croogo', 'Bulk action'),
         'class' => 'c-select',
         'options' => [

@@ -34,6 +34,7 @@ class NodesController extends AppController
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Croogo/Core.BulkProcess');
         $this->loadComponent('Croogo/Core.Recaptcha');
+        $this->loadComponent('Croogo/Core.BulkProcess');
 
         $this->_setupPrg();
     }

@@ -107,7 +107,7 @@ $this->append('table-body');
 $this->end();
 
 $this->start('bulk-action');
-echo $this->Form->input('Nodes.action', [
+echo $this->Form->input('action', [
     'label' => __d('croogo', 'Bulk actions'),
     'class' => 'c-select',
     'options' => [
@@ -129,7 +129,7 @@ $jsVarName = uniqid('confirmMessage_');
 echo $this->Form->button(__d('croogo', 'Apply'), [
     'type' => 'button',
     'class' => 'bulk-process btn-outline-primary',
-    'data-relatedElement' => '#nodes-action',
+    'data-relatedElement' => '#action',
     'data-confirmMessage' => $jsVarName,
     'escape' => true,
 ]);
