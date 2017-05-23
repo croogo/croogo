@@ -1,6 +1,7 @@
 <?php
 use Cake\Core\Plugin;
 
+$this->assign('title', $node->title);
 $this->Nodes->set($node);
 ?>
 <div id="node-<?php echo $this->Nodes->field('id'); ?>" class="node node-type-<?php echo $this->Nodes->field('type'); ?>">

@@ -1,3 +1,8 @@
+<?php
+if (isset($type)):
+    $this->assign('title', $type->title);
+endif;
+?>
 <div class="nodes">
     <?php
         if (count($nodes) == 0) {

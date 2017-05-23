@@ -1,5 +1,9 @@
+<?php
+
+$this->assign('title', $term->title);
+
+?>
 <div class="nodes">
-    <h2><?php echo $title_for_layout; ?></h2>
 
     <?php
         if (count($nodes) == 0) {
