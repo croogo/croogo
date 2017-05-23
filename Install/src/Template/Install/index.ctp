@@ -4,44 +4,44 @@ $check = true;
 
 // tmp is writable
 if (is_writable(TMP)) {
-    echo '<p class="success">' . __d('croogo', 'Your tmp directory is writable.') . '</p>';
+    echo '<p><span class="badge badge-success">' . __d('croogo', 'Your tmp directory is writable.') . '</span></p>';
 } else {
     $check = false;
-    echo '<p class="error">' . __d('croogo', 'Your tmp directory is NOT writable.') . '</p>';
+    echo '<p><span class="badge badge-danger">' . __d('croogo', 'Your tmp directory is NOT writable.') . '</span></p>';
 }
 
 // config is writable
 if (is_writable(ROOT . DS . 'config')) {
-    echo '<p class="success">' . __d('croogo', 'Your config directory is writable.') . '</p>';
+    echo '<p><span class="badge badge-success">' . __d('croogo', 'Your config directory is writable.') . '</span></p>';
 } else {
     $check = false;
-    echo '<p class="error">' . __d('croogo', 'Your config directory is NOT writable.') . '</p>';
+    echo '<p><span class="badge badge-danger">' . __d('croogo', 'Your config directory is NOT writable.') . '</danger></p>';
 }
 
 $versions = \Croogo\Install\InstallManager::versionCheck();
 if ($versions['php']) {
-    echo '<p class="success">' .
+    echo '<p><span class="badge badge-success">' .
         sprintf(__d('croogo', 'PHP version %s >= %s'), phpversion(), \Croogo\Install\InstallManager::PHP_VERSION) .
-        '</p>';
+        '</span></p>';
 } else {
     $check = false;
-    echo '<p class="error">' .
+    echo '<p><span class="badge badge-danger">' .
         sprintf(__d('croogo', 'PHP version %s < %s'), phpversion(), \Croogo\Install\InstallManager::PHP_VERSION) .
-        '</p>';
+        '</span></p>';
 }
 
 // cakephp version
 if ($versions['cake']) {
-    echo '<p class="success">' .
+    echo '<p><span class="badge badge-success">' .
         __d('croogo', 'CakePhp version %s >= %s', \Cake\Core\Configure::version(),
             \Croogo\Install\InstallManager::CAKE_VERSION) .
-        '</p>';
+        '</span></p>';
 } else {
     $check = false;
-    echo '<p class="error">' .
+    echo '<p><span class="badge badge-danger">' .
         __d('croogo', 'CakePHP version %s < %s', \Cake\Core\Configure::version(),
             \Croogo\Install\InstallManager::CAKE_VERSION) .
-        '</p>';
+        '</span></p>';
 }
 
 if ($check) {
