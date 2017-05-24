@@ -572,7 +572,7 @@ class CroogoHelper extends Helper
             'image/png',
         ], (array)$allowedMimeTypes));
         if ($theme) {
-            $file = Plugin::path($theme) . 'webroot/' . $path;
+            $file = Plugin::path($theme) . '/webroot/' . $path;
         } else {
             $file = WWW_ROOT . $path;
         }

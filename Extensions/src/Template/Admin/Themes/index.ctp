@@ -64,6 +64,7 @@ $this->end(); ?>
             <?php
             $hasAvailable = false;
             foreach ($themesData as $themeAlias => $theme):
+                $themeName = $theme['name'];
                 $isAdminOnly = (!isset($theme['adminOnly']) || $theme['adminOnly'] != 'true');
                 $isDefault = !($themeAlias == 'default' && !Configure::read('Site.theme'));
                 $display = $themeAlias != Configure::read('Site.theme') && $isAdminOnly && $isDefault;
@@ -72,7 +73,7 @@ $this->end(); ?>
                 endif;
                 echo '<div class="content ' . $this->Theme->getCssClass('row') . '">';
                 if (!empty($theme['screenshot'])):
-                    $dataUri = $this->Croogo->dataUri($themeAlias, $theme['screenshot']);
+                    $dataUri = $this->Croogo->dataUri($themeName, $theme['screenshot']);
                     $thumbnail = $this->Html->thumbnail($dataUri);
                     $image = sprintf('<a href="%s" %s>%s</a>',
                         $dataUri,
@@ -102,13 +103,13 @@ $this->end(); ?>
                 endif;
                 $out .= $this->Html->tag('div', $this->Form->postLink(__d('croogo', 'Activate'), [
                         'action' => 'activate',
-                        str_replace('/', '.', $themeAlias),
+                        urlencode($themeName),
                     ], [
                         'button' => 'secondary',
                         'icon' => $this->Theme->getIcon('power-on'),
                     ]) . $this->Form->postLink(__d('croogo', 'Delete'), [
                         'action' => 'delete',
-                        str_replace('/', '.', $themeAlias),
+                        urlencode($themeName),
                     ], [
                         'button' => 'danger',
                         'escape' => true,

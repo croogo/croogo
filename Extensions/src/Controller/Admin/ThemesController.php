@@ -61,8 +61,6 @@ class ThemesController extends AppController
      */
     public function activate($theme = null)
     {
-        $theme = str_replace('.', '/', $theme);
-
         try {
             $this->_CroogoTheme->activate($theme);
 
@@ -126,15 +124,13 @@ class ThemesController extends AppController
      */
     public function delete($alias = null)
     {
-        $theme = str_replace('.', '/', $alias);
-
         if ($alias == null) {
             $this->Flash->error(__d('croogo', 'Invalid Theme.'));
 
             return $this->redirect(['action' => 'index']);
         }
 
-        if ($alias == 'default') {
+        if ($alias == 'Croogo/Core') {
             $this->Flash->error(__d('croogo', 'Default theme cannot be deleted.'));
 
             return $this->redirect(['action' => 'index']);
