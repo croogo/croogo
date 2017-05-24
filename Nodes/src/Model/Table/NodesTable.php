@@ -60,6 +60,13 @@ class NodesTable extends CroogoTable
             'foreignKey' => 'parent_id',
         ]);
 
+        $this->belongsTo('Types', [
+            'className' => 'Croogo/Nodes.Types',
+            'foreignKey' => 'type',
+            'bindingKey' => 'alias',
+            'propertyName' => 'node_type',
+        ]);
+
         $this->searchManager()
             ->add('q', 'Search.Finder', [
                 'finder' => 'filterPublishedNodes'
@@ -220,14 +227,8 @@ class NodesTable extends CroogoTable
                 'roleId' => $options['roleId'],
             ]);
         }
-        $query->find('published', $options)
-            ->contain([
-                'Taxonomies' => [
-                    'Terms',
-                    'Vocabularies',
-                ],
-                'Users',
-            ]);
+        $query
+            ->find('published', $options);
 
         return $query;
     }
@@ -308,9 +309,18 @@ class NodesTable extends CroogoTable
     {
         $options += ['roleId' => null];
 
-        return $query->andWhere([
-            $this->aliasField('status') . ' IN' => $this->status($options['roleId']),
-        ]);
+        return $query
+            ->andWhere([
+                $this->aliasField('status') . ' IN' => $this->status($options['roleId']),
+            ])
+            ->contain([
+                'Taxonomies' => [
+                    'Terms',
+                    'Vocabularies',
+                ],
+                'Users',
+                'Types',
+            ]);
     }
 
     public function findPromoted(Query $query)
