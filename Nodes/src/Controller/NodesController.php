@@ -239,6 +239,12 @@ class NodesController extends AppController
             ->find('search', $this->Nodes->filterParams($this->request->query))
             ->contain('Users');
 
+        if (!$this->request->query('sort')) {
+            $query->order([
+                $this->Nodes->aliasField('created') => 'desc',
+            ]);
+        }
+
         $this->set('nodes', $this->Paginator->paginate($query));
     }
 
