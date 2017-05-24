@@ -31,6 +31,10 @@ class LinksController extends AppController
 
         $this->loadComponent('Croogo/Core.BulkProcess');
         $this->loadModel('Croogo/Users.Roles');
+
+        if ($this->request->param('action') == 'toggle') {
+            $this->eventManager()->off($this->Csrf);
+        }
     }
 
     public function index()

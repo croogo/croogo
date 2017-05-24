@@ -260,7 +260,7 @@ class MenusHelper extends Helper
             }
             $liAttr = $this->_mergeLinkParams($link, 'liAttr');
             $liAttr = !empty($liAttr) ? $liAttr : $options['subTagAttributes'];
-			$linkOutput = $this->Html->tag($options['subTag'], $linkOutput, $liAttr);
+            $linkOutput = $this->Html->tag($options['subTag'], $linkOutput, $liAttr);
             $output .= $linkOutput;
         }
         if ($output != null) {
