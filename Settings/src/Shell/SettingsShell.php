@@ -87,7 +87,7 @@ class SettingsShell extends Shell
                         ],
                         'editable' => [
                             'short' => 'e',
-                            'boolean' => true,
+                            'choices' => ['1', '0', 'y', 'n', 'Y', 'N'],
                         ],
                         'params' => [
                             'short' => 'p',
@@ -168,12 +168,20 @@ class SettingsShell extends Shell
             }
             $this->warn($text);
             $this->success(__d('croogo', '+ %s', $val));
+
             if ('y' == $this->in($ask, ['y', 'n'], 'n')) {
                 $keys = [
                     'title' => null, 'description' => null,
                     'input_type' => null, 'editable' => null, 'params' => null,
                 ];
                 $options = array_intersect_key($this->params, $keys);
+
+                if (isset($options['editable'])) {
+                    $options['editable'] = in_array(
+                        $options['editable'], ['y', 'Y', '1']
+                    );
+                }
+
                 $this->Settings->write($key, $val, $options);
                 $this->success(__d('croogo', 'Setting updated'));
             } else {
