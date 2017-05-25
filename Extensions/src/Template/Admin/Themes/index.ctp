@@ -7,7 +7,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 $this->assign('title', __d('croogo', 'Themes'));
 
 $this->Breadcrumbs->add(__d('croogo', 'Extensions'),
-        ['plugin' => 'Croogo/Extensions', 'controller' => 'extensionsPlugins', 'action' => 'index'])
+        ['plugin' => 'Croogo/Extensions', 'controller' => 'Plugins', 'action' => 'index'])
     ->add(__d('croogo', 'Themes'), $this->request->getUri()->getPath());
 
 $this->start('action-buttons');
