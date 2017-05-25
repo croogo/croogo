@@ -215,10 +215,11 @@ class TermsController extends AppController
         if (isset($vocabulary->types[0])) {
             $defaultType = $vocabulary->types[0];
         }
-        if (isset($this->params->query['type_id'])) {
-            if (isset($vocabulary['Type'][$this->request->query['type_id']])) {
-                $defaultType = $vocabulary['Type'][$this->request->query['type_id']];
-            }
+        $typeId = $this->request->query('type_id');
+        if ($typeId) {
+            $defaultType = collection($vocabulary['types'])->match([
+                'id' => $typeId,
+            ]);
         }
 
         return $defaultType;
