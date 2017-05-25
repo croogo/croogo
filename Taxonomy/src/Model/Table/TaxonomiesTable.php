@@ -69,11 +69,11 @@ class TaxonomiesTable extends CroogoTable
 
         $this->behaviors()->get('Tree')->config([
             'scope' => [
-                $this->alias() . '.vocabulary_id' => $vocabulary->id,
+                $this->aliasField('vocabulary_id') => $vocabulary->id,
             ]
         ]);
         $treeConditions = [
-            $this->alias() . '.vocabulary_id' => $vocabulary->id,
+            $this->aliasField('vocabulary_id') => $vocabulary->id,
         ];
         $tree = $this->find('treeList', [
             'keyPath' => 'term_id',
@@ -87,7 +87,9 @@ class TaxonomiesTable extends CroogoTable
             'keyField' => $options['key'],
             'valueField' => $options['value'],
             'groupField' => 'id',
-        ])->where(['id IN' => $termsIds])->toArray();
+        ])->where([
+            $this->Terms->aliasField('id') .' IN' => $termsIds,
+        ])->toArray();
 
         $termsTree = [];
         foreach ($tree as $termId => $tvId) {
@@ -131,8 +133,8 @@ class TaxonomiesTable extends CroogoTable
     public function termInVocabulary($termId, $vocabularyId)
     {
         $taxonomy = $this->find()->where([
-            $this->alias() . '.term_id' => $termId,
-            $this->alias() . '.vocabulary_id' => $vocabularyId,
+            $this->aliasField('term_id') => $termId,
+            $this->aliasField('vocabulary_id') => $vocabularyId,
         ])->first();
         if ($taxonomy) {
             return $taxonomy->id;

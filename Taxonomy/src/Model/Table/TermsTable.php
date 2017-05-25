@@ -221,7 +221,7 @@ class TermsTable extends CroogoTable
             ]);
         } else {
             $query->where([
-                $this->primaryKey() . ' IN' => array_keys($termsId)
+                $this->aliasField($this->primaryKey()) . ' IN' => array_keys($termsId)
             ]);
         }
 

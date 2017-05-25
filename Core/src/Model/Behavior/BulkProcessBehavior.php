@@ -166,7 +166,7 @@ class BulkProcessBehavior extends Behavior
                 $nodes = $this->_table
                     ->find()
                     ->where([
-                        'id IN' => $ids
+                        $this->_table->aliasField('id') . ' IN' => $ids
                     ])
                     ->toArray();
                 foreach ($nodes as $node) {
