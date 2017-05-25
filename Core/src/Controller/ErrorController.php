@@ -27,21 +27,6 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
 {
     use HookableComponentTrait;
 
-    /**
-     * Constructor
-     *
-     * @access public
-     * @param Request $request
-     * @param Response $response
-     * @param null $name
-     */
-    public function __construct(Request $request = null, Response $response = null, $name = null)
-    {
-        parent::__construct($request, $response, $name);
-        $this->eventManager()
-            ->dispatch(new Event('Controller.afterConstruct', $this));
-    }
-
     public function initialize()
     {
         $this->_dispatchBeforeInitialize();

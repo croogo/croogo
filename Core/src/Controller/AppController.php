@@ -74,7 +74,6 @@ class AppController extends \App\Controller\AppController implements HookableCom
                 'callback' => ['Croogo\\Core\\Router', 'isWhitelistedRequest'],
             ]);
         }
-        $this->eventManager()->dispatch(new Event('Controller.afterConstruct', $this));
     }
 
     public function initialize()

@@ -12,14 +12,6 @@ use Croogo\Core\Croogo;
  */
 class ContactsController extends AppController
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function afterConstruct()
-    {
-        parent::afterConstruct();
-        $this->_setupAclComponent();
-    }
 
     public function initialize()
     {
@@ -28,6 +20,8 @@ class ContactsController extends AppController
         $this->loadComponent('Croogo/Core.Recaptcha', [
             'actions' => ['view']
         ]);
+
+        $this->_setupAclComponent();
     }
 
     /**

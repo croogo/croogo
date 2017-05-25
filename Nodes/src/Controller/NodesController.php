@@ -33,15 +33,6 @@ class NodesController extends AppController
      */
     public $presetVars = true;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function afterConstruct()
-    {
-        parent::afterConstruct();
-        $this->_setupAclComponent();
-    }
-
     public function initialize()
     {
         parent::initialize();
@@ -54,6 +45,8 @@ class NodesController extends AppController
         $this->loadComponent('Croogo/Core.Recaptcha', [
             'actions' => ['view']
         ]);
+
+        $this->_setupAclComponent();
     }
 
     /**
