@@ -1,19 +1,24 @@
 <?php
 
-namespace Croogo\Taxonomy\Model;
+namespace Croogo\Taxonomy\Model\Table;
 
-use Taxonomy\Model\TaxonomyAppModel;
+use Croogo\Core\Model\Table\CroogoTable;
 
 /**
- * ModelTaxonomy
+ * ModelTaxonomies
  *
  * @category Taxonomy.Model
  * @package  Croogo.Taxonomy.Model
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ModelTaxonomy extends TaxonomyAppModel
+class ModelTaxonomiesTable extends CroogoTable
 {
 
-    public $useTable = 'model_taxonomies';
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->table('model_taxonomies');
+    }
+
 }

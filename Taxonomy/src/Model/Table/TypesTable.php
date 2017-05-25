@@ -3,6 +3,8 @@
 namespace Croogo\Taxonomy\Model\Table;
 
 use Cake\Database\Schema\TableSchema;
+use Cake\ORM\RulesChecker;
+use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
 class TypesTable extends CroogoTable
@@ -53,14 +55,35 @@ class TypesTable extends CroogoTable
         $this->addBehavior('Croogo/Core.Cached', [
             'groups' => ['nodes', 'taxonomy']
         ]);
+        $this->addBehavior('Croogo/Core.Trackable');
         $this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
             'joinTable' => 'types_vocabularies',
         ]);
     }
 
     /**
- * Get a list of relevant types for given plugin
- */
+     * @param \Cake\Validation\Validator $validator Validator
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notBlank('title', __d('croogo', 'Title cannot be empty.'));
+        $validator->notBlank('alias', __d('croogo', 'Alias cannot be empty.'));
+        return $validator;
+    }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(
+            ['alias'],
+            __d('croogo', 'That alias is already taken.')
+        ));
+        return $rules;
+    }
+
+    /**
+     * Get a list of relevant types for given plugin
+     */
     public function pluginTypes($plugin = null)
     {
         if ($plugin === null) {

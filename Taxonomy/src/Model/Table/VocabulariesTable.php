@@ -14,6 +14,7 @@ class VocabulariesTable extends CroogoTable
 
     public function initialize(array $config)
     {
+        parent::initialize($config);
         $this->addBehavior('ADmad/Sequence.Sequence', [
             'order' => 'weight',
         ]);
@@ -57,7 +58,10 @@ class VocabulariesTable extends CroogoTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->isUnique(['alias'], __d('croogo', 'That alias is already taken'));
+        $rules->add($rules->isUnique(
+            ['alias'],
+            __d('croogo', 'That alias is already taken')
+        ));
         return parent::buildRules($rules);
     }
 }
