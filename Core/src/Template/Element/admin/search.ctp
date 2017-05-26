@@ -39,7 +39,7 @@ if (!empty($searchFields)):
             $label = substr($label, 0, -3);
         }
         $label = __(Inflector::humanize(Inflector::underscore($label)));
-        $options['label'] = __d('croogo', $label);
+        $options['placeholder'] = __d('croogo', $label);
         $this->Form->unlockField($field);
         echo $this->Form->input($field, $options);
     }
