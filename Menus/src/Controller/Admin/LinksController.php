@@ -194,7 +194,7 @@ class LinksController extends AppController
         $conditions = [];
         if (isset($event->subject()->entity) && $event->subject()->entity->isNew() === false) {
             $menuId = $event->subject()->entity->menu_id;
-            $conditions['id !='] = $event->subject()->entity->id;
+            $conditions[$this->Links->aliasField('id') .' !='] = $event->subject()->entity->id;
         }
         if ($this->request->query('menu_id')) {
             $menuId = $this->request->query('menu_id');
