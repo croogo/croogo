@@ -25,7 +25,7 @@ Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
 
 Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('api', function (RouteBuilder $route) {
-        $route->scope('/v1.0', ['prefix' => 'api/v10'], function (RouteBuilder $route) {
+        $route->prefix('v10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->extensions(['json']);
 
             $route->scope('/nodes', [], function (RouteBuilder $route) {

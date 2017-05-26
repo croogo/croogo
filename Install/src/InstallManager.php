@@ -13,7 +13,7 @@ use Croogo\Core\Plugin;
 class InstallManager
 {
     const PHP_VERSION = '5.5.9';
-    const CAKE_VERSION = '3.3.6';
+    const CAKE_VERSION = '3.4.8';
 
     const DATASOURCE_REGEX = "/(\'Datasources'\s\=\>\s\[\n\s*\'default\'\s\=\>\s\[\n\X*\'__FIELD__\'\s\=\>\s\').*(\'\,)(?=\X*\'test\'\s\=\>\s)/";
 
