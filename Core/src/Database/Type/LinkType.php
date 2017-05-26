@@ -24,6 +24,14 @@ class LinkType extends Type
             return null;
         }
 
+        if (is_array($value)) {
+            if (count($value) === 1) {
+                $value = $value[0];
+            } else {
+                $value = implode('/', $value);
+            }
+        }
+
         if (strstr($value, 'controller:')) {
             return Link::createFromLinkString($value);
         } else {
