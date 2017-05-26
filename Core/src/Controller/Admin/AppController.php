@@ -123,15 +123,6 @@ class AppController extends CroogoAppController
         Croogo::dispatchEvent('Croogo.beforeSetupAdminData', $this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function render($view = null, $layout = null)
-    {
-        Croogo::dispatchEvent('Croogo.setupAdminData', $this->_View);
-        return parent::render($view, $layout);
-    }
-
     public function index()
     {
         return $this->Crud->execute();
