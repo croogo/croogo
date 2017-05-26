@@ -2,6 +2,7 @@
 
 namespace Croogo\Translate\Event;
 
+use Cake\Datasource\EntityInterface;
 use Cake\Event\EventListenerInterface;
 use Croogo\Translate\Translations;
 
@@ -22,6 +23,9 @@ class TranslateEventHandler implements EventListenerInterface
             'Croogo.bootstrapComplete' => [
                 'callable' => 'onCroogoBootstrapComplete',
             ],
+            'View.beforeRender' => [
+                'callable' => 'onBeforeRender',
+            ],
         ];
     }
 
@@ -29,4 +33,36 @@ class TranslateEventHandler implements EventListenerInterface
     {
         Translations::translateModels();
     }
+
+    public function onBeforeRender($event)
+    {
+        $View = $event->subject;
+        if ($View->request->param('prefix') !== 'admin') {
+            return;
+        }
+        if (empty($View->viewVars['viewVar'])) {
+            return;
+        }
+        $viewVar = $View->viewVars['viewVar'];
+        $entity = $View->viewVars[$viewVar];
+        if (!$entity instanceof EntityInterface) {
+            return;
+        }
+        if ($entity->isNew()) {
+            return;
+        }
+        $title = __d('croogo', 'Translate');
+        $View->append('action-buttons');
+            echo $event->subject->Croogo->adminAction($title, [
+                'plugin' => 'Croogo/Translate',
+                'controller' => 'Translate',
+                'action' => 'index',
+                'id' => $entity->get('id'),
+                'model' => $entity->source(),
+            ], [
+                'icon' => 'translate',
+            ]);
+        $View->end();
+    }
+
 }
