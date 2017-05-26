@@ -82,9 +82,11 @@ class TermsTable extends CroogoTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->isUnique(['alias'], __d('croogo', 'That slug is already taken'));
-
-        return parent::buildRules($rules);
+        $rules->add($rules->isUnique(
+            ['alias'],
+            __d('croogo', 'That alias is already taken')
+        ));
+        return $rules;
     }
 
     /**

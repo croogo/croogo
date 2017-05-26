@@ -29,8 +29,12 @@ echo $this->Form->input('title', [
 echo $this->Form->input('native', [
     'label' => __d('croogo', 'Native'),
 ]);
+echo $this->Form->input('locale', [
+    'label' => __d('croogo', 'Locale'),
+]);
 echo $this->Form->input('alias', [
     'label' => __d('croogo', 'Alias'),
+    'help' => __d('croogo', 'Locale alias, typically a two letter country/locale code'),
 ]);
 echo $this->Html->tabEnd();
 $this->end();

@@ -4,6 +4,8 @@ namespace Croogo\Settings\Model\Table;
 
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -18,28 +20,6 @@ use Croogo\Core\Model\Table\CroogoTable;
  */
 class LanguagesTable extends CroogoTable
 {
-    /**
-     * Validation
-     *
-     * @var array
-     * @access public
-     */
-    public $validate = [
-        'title' => [
-            'rule' => ['minLength', 1],
-            'message' => 'Title cannot be empty.',
-        ],
-        'alias' => [
-            'isUnique' => [
-                'rule' => 'isUnique',
-                'message' => 'This alias has already been taken.',
-            ],
-            'minLength' => [
-                'rule' => ['minLength', 1],
-                'message' => 'Alias cannot be empty.',
-            ],
-        ],
-    ];
 
 /**
  * Initialize
@@ -54,6 +34,28 @@ class LanguagesTable extends CroogoTable
         ]);
         $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp');
+    }
+
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
+            ->notBlank('native', __d('croogo', 'Native cannot be empty.'))
+            ->notBlank('alias', __d('croogo', 'Alias cannot be empty.'))
+            ->notBlank('locale', __d('croogo', 'Locale cannot be empty.'));
+        return $validator;
+    }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules
+            ->add($rules->isUnique(['locale'],
+                __d('croogo', 'That locale is already taken')
+            ))
+            ->add($rules->isUnique( ['alias'],
+                __d('croogo', 'That alias is already taken')
+            ));
+        return $rules;
     }
 
     public function findActive(Query $query)

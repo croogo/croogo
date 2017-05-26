@@ -1,5 +1,6 @@
 <?php
 
+use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 
 $this->extend('Croogo/Core./Common/admin_index');
@@ -50,6 +51,9 @@ $this->start('action-buttons');
     if (!empty($languages)):
         $out = null;
         foreach ($languages as $languageAlias => $languageDisplay):
+            if ($languageAlias == Configure::read('App.defaultLocale')):
+                continue;
+            endif;
             $out .= $this->Croogo->adminAction($languageDisplay, array(
                 'prefix' => 'admin',
                 'plugin' => 'Croogo/Translate',
