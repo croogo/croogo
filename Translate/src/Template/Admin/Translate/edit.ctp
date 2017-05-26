@@ -59,6 +59,7 @@ $this->append('tab-content');
             $name = '_original.' . $field;
             echo $this->Form->input($name, [
                 'value' => $entity->$field,
+                'readonly' => true,
             ]);
         endforeach;
     echo $this->Html->tabEnd();
