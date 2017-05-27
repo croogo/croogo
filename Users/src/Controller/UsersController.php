@@ -81,12 +81,15 @@ class UsersController extends AppController
     public function activate($username, $activationKey)
     {
         // Get the user with the activation key from the database
-        $user = $this->Users->find('byActivationKey', [
-            'username' => $username,
-            'activationKey' => $activationKey
-        ])->first();
+        $user = $this->Users
+            ->find()
+            ->where([
+                'username' => $username,
+                'activation_key' => $activationKey
+            ])
+            ->first();
         if (!$user) {
-            $this->Flash->error(__d('croogo', 'An error occurred.'));
+            $this->Flash->error(__d('croogo', 'Could not activate your account.'));
 
             return $this->redirect(['action' => 'login']);
         }
