@@ -79,7 +79,7 @@ class UsersInitialMigration extends AbstractMigration
             ->addColumn('activation_key', 'string', [
                 'default' => null,
                 'limit' => 60,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('image', 'string', [
                 'default' => null,
