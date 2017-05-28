@@ -129,6 +129,7 @@ class CommentsController extends AppController
         $continue = $this->_spamProtection($continue, $spamProtection, $entity);
         $continue = $this->_captcha($continue, $captchaProtection, $entity);
         $success = false;
+        $comment = null;
         if (!empty($this->request->data) && $continue === true) {
             $comment = $this->Comments->newEntity($this->request->data);
             $comment->ip = $this->request->clientIp();
@@ -156,7 +157,7 @@ class CommentsController extends AppController
             }
         }
 
-        $this->set(compact('success', 'entity', 'type', 'model', 'foreignKey', 'parentId'));
+        $this->set(compact('success', 'entity', 'type', 'model', 'foreignKey', 'parentId', 'comment'));
     }
 
 /**
@@ -201,9 +202,9 @@ class CommentsController extends AppController
         if (!empty($this->request->data) &&
             $captchaProtection &&
             $continue === true &&
-            !$this->Recaptcha->valid($this->request)) {
+            !$this->Recaptcha->verify($this->request)) {
             $continue = false;
-            $this->Flash->error(__d('croogo', 'Invalid captcha entry'));
+            $this->Flash->error(__d('croogo', 'Sorry, the comment did not pass the security challenge'));
         }
 
         return $continue;

@@ -10,6 +10,7 @@ use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cake\Validation\Validator;
 use Croogo\Comments\Model\Entity\Comment;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Core\Status;
@@ -38,40 +39,6 @@ class CommentsTable extends CroogoTable
  * @deprecated
  */
     const STATUS_PENDING = 0;
-
-/**
- * Validation
- *
- * @var array
- * @access public
- */
-    public $validate = [
-        'body' => [
-            'rule' => 'notEmpty',
-            'message' => 'This field cannot be left blank.',
-        ],
-        'name' => [
-            'rule' => 'notEmpty',
-            'message' => 'This field cannot be left blank.',
-        ],
-        'email' => [
-            'rule' => 'email',
-            'required' => true,
-            'message' => 'Please enter a valid email address.',
-        ],
-    ];
-
-/**
- * Model associations: belongsTo
- *
- * @var array
- * @access public
- */
-    public $belongsTo = [
-        'User' => [
-            'className' => 'Croogo/Users.Users',
-        ],
-    ];
 
 /**
  * Filter fields
@@ -116,7 +83,22 @@ class CommentsTable extends CroogoTable
         $this->eventManager()->on($this->getMailer('Croogo/Comments.Comment'));
     }
 
-/**
+    /**
+     * @param \Cake\Validation\Validator $validator Validator object
+     * @return void
+     */
+    public function validationDefault(Validator $validator)
+    {
+        return $validator
+            ->notBlank('body', 'You must write a comment.')
+
+            ->notBlank('name', 'You must supply a name.')
+
+            ->notBlank('email', 'Please supply an email address.')
+            ->email('email', false, 'Please supply a valid email address.');
+    }
+
+    /**
  * Add a new Comment
  *
  * Options:
@@ -159,7 +141,7 @@ class CommentsTable extends CroogoTable
             }
         }
 
-        if (is_array($userData)) {
+        if (!empty($userData)) {
             $comment->user_id = $userData['User']['id'];
             $comment->name = $userData['User']['name'];
             $comment->email = $userData['User']['email'];

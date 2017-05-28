@@ -4,6 +4,7 @@ namespace Croogo\Comments\View\Cell;
 
 use Cake\ORM\Query;
 use Cake\View\Cell;
+use Croogo\Comments\Model\Entity\Comment;
 use Croogo\Nodes\Model\Entity\Node;
 use Croogo\Taxonomy\Model\Entity\Type;
 
@@ -26,7 +27,7 @@ class CommentsCell extends Cell
         $this->set('node', $node);
     }
 
-    public function commentFormNode(Node $node, Type $type)
+    public function commentFormNode(Node $node, Type $type, Comment $comment = null)
     {
         $this->loadModel('Croogo/Comments.Comments');
 
@@ -45,7 +46,7 @@ class CommentsCell extends Cell
         $this->set('title', $node->title);
         $this->set('url', $node->url);
         $this->set('formUrl', $formUrl);
-        $this->set('comment', $this->Comments->newEntity());
+        $this->set('comment', $comment ?: $this->Comments->newEntity());
         $this->set('captcha', $type->comment_captcha);
         $this->set('loggedInUser', $this->request->session()->read('Auth.User'));
     }
