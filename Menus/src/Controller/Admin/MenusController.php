@@ -24,6 +24,14 @@ class MenusController extends AppController
         ];
     }
 
+    public function initialize()
+    {
+        parent::initialize();
+        if ($this->request->param('action') === 'toggle') {
+            $this->eventManager()->off($this->Csrf);
+        }
+    }
+
     /**
      * @param \Cake\Event\Event $event
      * @return void
