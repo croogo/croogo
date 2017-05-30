@@ -63,6 +63,7 @@ Links.setupSelect2 = function(selector) {
         tags: true,
         tokenSeparators: [' '],
         allowClear: true,
+        selectOnClose: true,
         theme: 'bootstrap',
         placeholder: {
           id: '-1',
