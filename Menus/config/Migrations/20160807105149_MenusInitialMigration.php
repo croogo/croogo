@@ -136,7 +136,7 @@ class MenusInitialMigration extends AbstractMigration
                 'null' => true,
             ])
             ->addColumn('link_count', 'integer', [
-                'default' => null,
+                'default' => 0,
                 'limit' => 11,
                 'null' => false,
             ])
