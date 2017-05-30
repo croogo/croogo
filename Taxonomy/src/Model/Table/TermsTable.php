@@ -23,25 +23,6 @@ use Croogo\Core\Model\Table\CroogoTable;
 class TermsTable extends CroogoTable
 {
 
-/**
- * Validation
- *
- * @var array
- * @access public
- */
-    public $validate = [
-        'slug' => [
-            'isUnique' => [
-                'rule' => 'isUnique',
-                'message' => 'This slug has already been taken.',
-            ],
-            'minLength' => [
-                'rule' => ['minLength', 1],
-                'message' => 'Slug cannot be empty.',
-            ],
-        ],
-    ];
-
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -70,10 +51,10 @@ class TermsTable extends CroogoTable
      */
     public function validationDefault(Validator $validator)
     {
-        $validator->notBlank('title', __d('croogo', 'The title cannot be empty'))
+        $validator
+            ->notBlank('title', __d('croogo', 'The title cannot be empty'))
             ->notBlank('slug', __d('croogo', 'The slug cannot be empty'));
-
-        return parent::validationDefault($validator);
+        return $validator;
     }
 
     /**
@@ -82,14 +63,15 @@ class TermsTable extends CroogoTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(
-            ['alias'],
-            __d('croogo', 'That alias is already taken')
-        ));
+        $rules
+            ->add($rules->isUnique(
+                ['alias'],
+                __d('croogo', 'That alias is already taken')
+            ));
         return $rules;
     }
 
-    /**
+/**
  * Save Term and return ID.
  * If another Term with same slug exists, return ID of that Term without saving.
  *

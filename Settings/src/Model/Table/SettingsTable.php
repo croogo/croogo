@@ -5,6 +5,8 @@ namespace Croogo\Settings\Model\Table;
 use Cake\Core\Configure;
 use Cake\Database\Schema\TableSchema;
 use Cake\Form\Schema;
+use Cake\ORM\RulesChecker;
+use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -20,31 +22,22 @@ use Croogo\Core\Model\Table\CroogoTable;
  */
 class SettingsTable extends CroogoTable
 {
-/**
- * Validation
- *
- * @var array
- * @access public
- */
-    public $validate = [
-        'key' => [
-            'isUnique' => [
-                'rule' => 'isUnique',
-                'message' => 'This key has already been taken.',
-            ],
-            'minLength' => [
-                'rule' => ['minLength', 1],
-                'message' => 'Key cannot be empty.',
-            ],
-        ],
-    ];
 
-/**
- * Filter search fields
- */
-    public $filterArgs = [
-        'key' => ['type' => 'like', 'field' => 'Settings.key'],
-    ];
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->notBlank('key', __d('croogo', 'Key cannot be empty.'));
+        return $validator;
+    }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules
+            ->add($rules->isUnique( ['key'],
+                __d('croogo', 'That key is already taken')
+            ));
+        return $rules;
+    }
 
 /**
  * @param array $config
@@ -64,6 +57,12 @@ class SettingsTable extends CroogoTable
             ],
         ]);
         $this->addBehavior('Search.Search');
+
+        $this->searchManager()
+            ->add('key', 'Search.Like', [
+                'after' => true,
+                'field' => $this->aliasField('key'),
+            ]);
     }
 
 /**

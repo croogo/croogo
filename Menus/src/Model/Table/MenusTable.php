@@ -4,6 +4,8 @@ namespace Croogo\Menus\Model\Table;
 
 use Cake\Event\Event;
 use Cake\ORM\Entity;
+use Cake\ORM\RulesChecker;
+use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -20,28 +22,22 @@ use Croogo\Core\Model\Table\CroogoTable;
 class MenusTable extends CroogoTable
 {
 
-/**
- * Validation
- *
- * @var array
- * @access public
- */
-    public $validate = [
-        'title' => [
-            'rule' => ['minLength', 1],
-            'message' => 'Title cannot be empty.',
-        ],
-        'alias' => [
-            'isUnique' => [
-                'rule' => 'isUnique',
-                'message' => 'This alias has already been taken.',
-            ],
-            'minLength' => [
-                'rule' => ['minLength', 1],
-                'message' => 'Alias cannot be empty.',
-            ],
-        ],
-    ];
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
+            ->notBlank('alias', __d('croogo', 'Alias cannot be empty.'));
+        return $validator;
+    }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules
+            ->add($rules->isUnique( ['alias'],
+                __d('croogo', 'That alias is already taken')
+            ));
+        return $rules;
+    }
 
     public function initialize(array $config)
     {

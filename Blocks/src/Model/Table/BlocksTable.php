@@ -5,6 +5,8 @@ namespace Croogo\Blocks\Model\Table;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchema;
 use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Core\Status;
 
@@ -22,45 +24,28 @@ class BlocksTable extends CroogoTable
 {
 
     /**
-     * Validation
-     *
-     * @var array
-     * @access public
-     */
-    public $validate = [
-        'title' => [
-            'rule' => ['minLength', 1],
-            'message' => 'Title cannot be empty.',
-        ],
-        'alias' => [
-            'isUnique' => [
-                'rule' => 'isUnique',
-                'message' => 'This alias has already been taken.',
-            ],
-            'minLength' => [
-                'rule' => ['minLength', 1],
-                'message' => 'Alias cannot be empty.',
-            ],
-        ],
-    ];
-
-    /**
-     * Filter search fields
-     *
-     * @var array
-     * @access public
-     */
-    public $filterArgs = [
-        'title' => ['type' => 'like', 'field' => ['title', 'alias']],
-        'region_id' => ['type' => 'value'],
-    ];
-
-    /**
      * Find methods
      */
     public $findMethods = [
         'published' => true,
     ];
+
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
+            ->notBlank('alias', __d('croogo', 'Alias cannot be empty.'));
+        return $validator;
+    }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules
+            ->add($rules->isUnique( ['alias'],
+                __d('croogo', 'That alias is already taken')
+            ));
+        return $rules;
+    }
 
     public function initialize(array $config)
     {

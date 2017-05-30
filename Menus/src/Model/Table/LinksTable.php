@@ -5,6 +5,7 @@ namespace Croogo\Menus\Model\Table;
 use Cake\Database\Schema\TableSchema;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
+use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -20,22 +21,21 @@ use Croogo\Core\Model\Table\CroogoTable;
 class LinksTable extends CroogoTable
 {
 
-    /**
-     * Validation
-     *
-     * @var array
-     * @access public
-     */
-    public $validate = [
-        'title' => [
-            'rule' => ['minLength', 1],
-            'message' => 'Title cannot be empty.',
-        ],
-        'link' => [
-            'rule' => ['minLength', 1],
-            'message' => 'Link cannot be empty.',
-        ],
-    ];
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->notBlank('title', __d('croogo', 'Title cannot be empty.'));
+
+        $validator
+            ->add('link', 'custom', [
+                'rule' => function($value, $context) {
+                    return !empty($value);
+                },
+                'message' => __d('croogo', 'Link cannot be empty.')
+            ]);
+
+        return $validator;
+    }
 
     public function initialize(array $config)
     {
