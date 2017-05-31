@@ -23,7 +23,7 @@ if ($this->request->params['action'] == 'add') {
 
 $this->set('cancelUrl', ['action' => 'index', $vocabularyId]);
 
-$this->assign('form-create', $this->Form->create($term));
+$this->assign('form-start', $this->Form->create($term));
 
 $this->start('tab-heading');
 echo $this->Croogo->adminTab(__d('croogo', 'Term'), '#term-basic');
