@@ -64,10 +64,11 @@ class MenuComponent extends Component
     protected function _adminData()
     {
         // menus
-        $menus = $this->Links->Menus->find('all', [
-            'recursive' => '-1',
-            'order' => 'Menus.id ASC',
-        ]);
+        $menus = $this->Links->Menus
+            ->find('all')
+            ->order([
+                $this->Links->Menus->aliasField('id') => 'ASC',
+            ]);
         $this->controller->set('menus_for_admin_layout', $menus);
     }
 
