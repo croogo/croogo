@@ -115,8 +115,6 @@ echo $this->Form->input('params', [
 ]);
 echo $this->Html->tabEnd();
 
-echo $this->Croogo->adminTabs();
-
 $this->end();
 
 $this->start('panels');
