@@ -76,7 +76,7 @@ if (preg_match('/(plugin:)|(controller:)|(action:)/', $linkString)):
         ];
     endforeach;
 else:
-    if (!$link->isNew()):
+    if (!$link->isNew() && $linkString):
         $linkOptions[] = [
             'value' => $linkString,
             'text' => $linkString,
