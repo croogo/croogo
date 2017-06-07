@@ -20,7 +20,7 @@ class TermAddAction extends BaseAction
     {
         $controller = $this->_controller();
         $request = $controller->request;
-        $vocabularyId = $request->param('pass')[0];
+        $vocabularyId = $request->query('vocabulary_id');
 
         $response = $controller->_ensureVocabularyIdExists($vocabularyId);
         if ($response instanceof Response) {
@@ -37,13 +37,20 @@ class TermAddAction extends BaseAction
 
             $taxonomy = $controller->Terms->add($term, $vocabularyId);
             if ($taxonomy) {
-                $this->Flash->success(__d('croogo', 'Term saved successfuly.'));
+                $controller->Flash->success(__d('croogo', 'Term saved successfuly.'));
 
-                return $this->redirect([
+                $redirectUrl = [
                     'action' => 'edit',
                     $taxonomy->term_id,
                     $vocabularyId,
-                ]);
+                ];
+                if (!$term->has('_apply')) {
+                    $redirectUrl = [
+                        'action' => 'index',
+                        'vocabulary_id' => $vocabularyId,
+                    ];
+                }
+                return $controller->redirect($redirectUrl);
             } else {
                 $controller->Flash->error(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'));
             }

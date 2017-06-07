@@ -8,8 +8,8 @@ $this->Breadcrumbs->add(__d('croogo', 'Content'),
 
 if ($this->request->param('action') === 'edit'):
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['controller' => 'Vocabularies', 'action' => 'index'])
-        ->add($vocabulary->title, ['action' => 'index', $vocabulary->id])
-        ->add($term->title);
+        ->add($vocabulary->title, ['action' => 'index', 'vocabulary_id' => $vocabulary->id])
+        ->add($term->title, $this->request->getRequestTarget());
 endif;
 
 if ($this->request->param('action') === 'add'):
@@ -17,13 +17,21 @@ if ($this->request->param('action') === 'add'):
 
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'),
         ['controller' => 'Vocabularies', 'action' => 'index', $vocabulary->id])
-        ->add($vocabulary->title, ['action' => 'index'])
+        ->add($vocabulary->title, ['action' => 'index', 'vocabulary_id' => $vocabulary->id])
         ->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 endif;
 
 $this->set('cancelUrl', ['action' => 'index', $vocabularyId]);
 
-$this->assign('form-start', $this->Form->create($term));
+$formUrl = [
+    'action' => $this->request->param('action'),
+    isset($this->request->pass[0]) ? $this->request->pass[0] : null,
+    'vocabulary_id' => $vocabulary->id,
+];
+
+$this->assign('form-start', $this->Form->create($term, [
+    'url' => $formUrl,
+]));
 
 $this->append('tab-heading');
     echo $this->Croogo->adminTab(__d('croogo', 'Term'), '#term-basic');

@@ -114,7 +114,7 @@ class TermsController extends AppController
      */
     public function delete($id = null, $vocabularyId = null)
     {
-        $redirectUrl = ['action' => 'index', $vocabularyId];
+        $redirectUrl = ['action' => 'index', 'vocabulary_id' => $vocabularyId];
         $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
         $this->_ensureTermExists($id, $redirectUrl);
         $taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
@@ -176,7 +176,7 @@ class TermsController extends AppController
      */
     private function __move($direction, $id, $vocabularyId, $step)
     {
-        $redirectUrl = ['action' => 'index', $vocabularyId];
+        $redirectUrl = ['action' => 'index', 'vocabulary_id' => $vocabularyId];
         $response = $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
         if ($response instanceof Response) {
             return $response;
