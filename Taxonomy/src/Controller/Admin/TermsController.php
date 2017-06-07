@@ -117,10 +117,10 @@ class TermsController extends AppController
         $redirectUrl = ['action' => 'index', 'vocabulary_id' => $vocabularyId];
         $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
         $this->_ensureTermExists($id, $redirectUrl);
-        $taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
+        $taxonomyId = $this->Terms->Taxonomies->termInVocabulary($id, $vocabularyId);
         $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
 
-        if ($this->Term->remove($id, $vocabularyId)) {
+        if ($this->Terms->remove($id, $vocabularyId)) {
             $messageFlash = __d('croogo', 'Term deleted');
             $cssClass = ['class' => 'success'];
         } else {

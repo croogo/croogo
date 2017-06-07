@@ -62,7 +62,7 @@ class TaxonomizableBehavior extends Behavior
             $this->_table->alias(),
             [
                 'targetTable' => $this->_table,
-                'through' => 'Croogo/Taxonomy.ModelTaxonomy',
+                'through' => 'Croogo/Taxonomy.ModelTaxonomies',
                 'foreignKey' => 'foreign_key',
                 'associationForeignKey' => 'taxonomy_id',
                 'conditions' => [
