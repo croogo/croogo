@@ -123,9 +123,9 @@ class TermsTable extends CroogoTable
 /**
  * Convenience method to check whether term exists within a vocabulary
  *
- * @param int$idTerm Id
- * @param int$vocabularyIdVocabulary Id
- * @param int$taxonomyIdTaxonomy Id
+ * @param int $id Term Id
+ * @param int $vocabularyId Vocabulary Id
+ * @param int $taxonomyId Taxonomy Id
  * @return bool True if Term exists in Vocabulary
  */
     public function isInVocabulary($id, $vocabularyId, $taxonomyId = null)
@@ -178,8 +178,8 @@ class TermsTable extends CroogoTable
 /**
  * Remove term
  *
- * @param int$idTerm Id
- * @param int$vocabularyIdVocabulary Id
+ * @param int $id Term Id
+ * @param int $vocabularyId Vocabulary Id
  */
     public function remove($id, $vocabularyId)
     {
@@ -223,9 +223,9 @@ class TermsTable extends CroogoTable
 /**
  * Save new/updated term data
  *
- * @param Entity $entity Term \\
- * @param int$vocabularyIdVocabulary Id
- * @param int$taxonomyIdTaxonomy Id
+ * @param Entity $entity Term
+ * @param int $vocabularyId Vocabulary Id
+ * @param int $taxonomyId Taxonomy Id
  */
     protected function _save(Entity $entity, $vocabularyId, $taxonomyId = null)
     {
@@ -250,7 +250,7 @@ class TermsTable extends CroogoTable
 /**
  * Set Scope
  *
- * @param int$vocabularyIdVocabulary Id
+ * @param int $vocabularyId Vocabulary Id
  */
     public function setScopeForTaxonomy($vocabularyId)
     {
@@ -263,4 +263,5 @@ class TermsTable extends CroogoTable
             $this->Vocabularies->Taxonomies->addBehavior('Tree', $scopeSettings);
         }
     }
+
 }
