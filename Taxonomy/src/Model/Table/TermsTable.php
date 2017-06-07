@@ -92,7 +92,7 @@ class TermsTable extends CroogoTable
             return $id;
         }
 
-        $savedEntity = $this->save($entity);
+        $savedEntity = $this->save($entity, ['associated' => false]);
         if ($savedEntity) {
             return $savedEntity->id;
         }
