@@ -122,17 +122,13 @@ class TermsController extends AppController
 
         if ($this->Terms->remove($id, $vocabularyId)) {
             $messageFlash = __d('croogo', 'Term deleted');
-            $cssClass = ['class' => 'success'];
+            $flashMethod = 'success';
         } else {
             $messageFlash = __d('croogo', 'Term could not be deleted. Please, try again.');
-            $cssClass = ['class' => 'error'];
+            $flashMethod = 'error';
         }
-        $options = [
-            'element' => 'flash',
-            'params' => $cssClass,
-        ];
 
-        $this->Flash->set($messageFlash, $options);
+        $this->Flash->{$flashMethod}($messageFlash);
 
         return $this->redirect($redirectUrl);
     }
