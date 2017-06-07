@@ -2,9 +2,13 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
@@ -105,15 +109,14 @@ class TermsTable extends CroogoTable
  *
  * @return bool
  */
-    public function beforeDelete($cascade = true)
+    public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        $Taxonomy = ClassRegistry::init('Taxonomy.Taxonomy');
-        $count = $Taxonomy->find('count', [
-            'recursive' => -1,
-            'conditions' => [
-                $Taxonomy->escapeField('term_id') => $this->id,
-            ],
-        ]);
+        $Taxonomies = TableRegistry::get('Croogo/Taxonomy.Taxonomies');
+        $count = $Taxonomies->find()
+            ->where([
+                $Taxonomies->aliasField('term_id') => $entity->id,
+            ])
+            ->count();
         return $count === 0;
     }
 
