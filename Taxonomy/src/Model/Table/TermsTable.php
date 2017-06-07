@@ -183,11 +183,16 @@ class TermsTable extends CroogoTable
  */
     public function remove($id, $vocabularyId)
     {
-        $taxonomyId = $this->Vocabulary->Taxonomy->field('id', [
-            'term_id' => $id, 'vocabulary_id' => $vocabularyId
-        ]);
+        $taxonomy = $this->Vocabularies->Taxonomies->find()
+            ->select(['id'])
+            ->where([
+                'term_id' => $id,
+                'vocabulary_id' => $vocabularyId,
+            ])
+            ->first();
         $this->setScopeForTaxonomy($vocabularyId);
-        return $this->Taxonomy->delete($taxonomyId) && $this->delete($id);
+        $term = $this->get($id);
+        return $this->Taxonomies->delete($taxonomy) && $this->delete($term);
     }
 
     public function findByVocabulary(Query $query, array $options)
