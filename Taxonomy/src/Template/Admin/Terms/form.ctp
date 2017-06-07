@@ -54,7 +54,8 @@ $this->append('tab-content');
             'label' => __d('croogo', 'Parent'),
             'class' => 'c-select',
         ]);
-        echo $this->Form->hidden('taxonomies.0.id', [
+        echo $this->Form->input('taxonomies.0.id');
+        echo $this->Form->hidden('taxonomies.0.vocabulary_id', [
             'value' => $vocabulary->id,
         ]);
         echo $this->Form->input('description', [
