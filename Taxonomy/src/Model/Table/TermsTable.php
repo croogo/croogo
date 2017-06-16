@@ -2,9 +2,13 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
@@ -92,7 +96,7 @@ class TermsTable extends CroogoTable
             return $id;
         }
 
-        $savedEntity = $this->save($entity);
+        $savedEntity = $this->save($entity, ['associated' => false]);
         if ($savedEntity) {
             return $savedEntity->id;
         }
@@ -105,24 +109,23 @@ class TermsTable extends CroogoTable
  *
  * @return bool
  */
-    public function beforeDelete($cascade = true)
+    public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        $Taxonomy = ClassRegistry::init('Taxonomy.Taxonomy');
-        $count = $Taxonomy->find('count', [
-            'recursive' => -1,
-            'conditions' => [
-                $Taxonomy->escapeField('term_id') => $this->id,
-            ],
-        ]);
+        $Taxonomies = TableRegistry::get('Croogo/Taxonomy.Taxonomies');
+        $count = $Taxonomies->find()
+            ->where([
+                $Taxonomies->aliasField('term_id') => $entity->id,
+            ])
+            ->count();
         return $count === 0;
     }
 
 /**
  * Convenience method to check whether term exists within a vocabulary
  *
- * @param int$idTerm Id
- * @param int$vocabularyIdVocabulary Id
- * @param int$taxonomyIdTaxonomy Id
+ * @param int $id Term Id
+ * @param int $vocabularyId Vocabulary Id
+ * @param int $taxonomyId Taxonomy Id
  * @return bool True if Term exists in Vocabulary
  */
     public function isInVocabulary($id, $vocabularyId, $taxonomyId = null)
@@ -175,16 +178,21 @@ class TermsTable extends CroogoTable
 /**
  * Remove term
  *
- * @param int$idTerm Id
- * @param int$vocabularyIdVocabulary Id
+ * @param int $id Term Id
+ * @param int $vocabularyId Vocabulary Id
  */
     public function remove($id, $vocabularyId)
     {
-        $taxonomyId = $this->Vocabulary->Taxonomy->field('id', [
-            'term_id' => $id, 'vocabulary_id' => $vocabularyId
-        ]);
+        $taxonomy = $this->Vocabularies->Taxonomies->find()
+            ->select(['id'])
+            ->where([
+                'term_id' => $id,
+                'vocabulary_id' => $vocabularyId,
+            ])
+            ->first();
         $this->setScopeForTaxonomy($vocabularyId);
-        return $this->Taxonomy->delete($taxonomyId) && $this->delete($id);
+        $term = $this->get($id);
+        return $this->Taxonomies->delete($taxonomy) && $this->delete($term);
     }
 
     public function findByVocabulary(Query $query, array $options)
@@ -215,9 +223,9 @@ class TermsTable extends CroogoTable
 /**
  * Save new/updated term data
  *
- * @param Entity $entity Term \\
- * @param int$vocabularyIdVocabulary Id
- * @param int$taxonomyIdTaxonomy Id
+ * @param Entity $entity Term
+ * @param int $vocabularyId Vocabulary Id
+ * @param int $taxonomyId Taxonomy Id
  */
     protected function _save(Entity $entity, $vocabularyId, $taxonomyId = null)
     {
@@ -242,7 +250,7 @@ class TermsTable extends CroogoTable
 /**
  * Set Scope
  *
- * @param int$vocabularyIdVocabulary Id
+ * @param int $vocabularyId Vocabulary Id
  */
     public function setScopeForTaxonomy($vocabularyId)
     {
@@ -255,4 +263,5 @@ class TermsTable extends CroogoTable
             $this->Vocabularies->Taxonomies->addBehavior('Tree', $scopeSettings);
         }
     }
+
 }

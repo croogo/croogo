@@ -25,7 +25,8 @@ class TermEditAction extends BaseAction
     {
         $controller = $this->_controller();
         $request = $controller->request;
-        list($id, $vocabularyId) = $request->param('pass');
+        list($id) = $request->param('pass');
+        $vocabularyId = $request->query('vocabulary_id');
 
         $response = $controller->_ensureVocabularyIdExists($vocabularyId);
         if ($response instanceof Response) {
@@ -60,11 +61,15 @@ class TermEditAction extends BaseAction
             if ($controller->Terms->edit($term, $vocabularyId)) {
                 $controller->Flash->success(__d('croogo', 'Term saved successfuly.'));
                 if (isset($request->data['_apply'])) {
-                    return $controller->redirect(['action' => 'edit', $term->id, $vocabularyId]);
+                    return $controller->redirect([
+                        'action' => 'edit',
+                        $term->id,
+                        'vocabulary_id' => $vocabularyId,
+                    ]);
                 } else {
                     return $controller->redirect([
                         'action' => 'index',
-                        $vocabularyId,
+                        'vocabulary_id' => $vocabularyId,
                     ]);
                 }
             } else {

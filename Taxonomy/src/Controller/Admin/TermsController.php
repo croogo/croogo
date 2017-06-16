@@ -114,25 +114,21 @@ class TermsController extends AppController
      */
     public function delete($id = null, $vocabularyId = null)
     {
-        $redirectUrl = ['action' => 'index', $vocabularyId];
+        $redirectUrl = ['action' => 'index', 'vocabulary_id' => $vocabularyId];
         $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
         $this->_ensureTermExists($id, $redirectUrl);
-        $taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
+        $taxonomyId = $this->Terms->Taxonomies->termInVocabulary($id, $vocabularyId);
         $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
 
-        if ($this->Term->remove($id, $vocabularyId)) {
+        if ($this->Terms->remove($id, $vocabularyId)) {
             $messageFlash = __d('croogo', 'Term deleted');
-            $cssClass = ['class' => 'success'];
+            $flashMethod = 'success';
         } else {
             $messageFlash = __d('croogo', 'Term could not be deleted. Please, try again.');
-            $cssClass = ['class' => 'error'];
+            $flashMethod = 'error';
         }
-        $options = [
-            'element' => 'flash',
-            'params' => $cssClass,
-        ];
 
-        $this->Flash->set($messageFlash, $options);
+        $this->Flash->{$flashMethod}($messageFlash);
 
         return $this->redirect($redirectUrl);
     }
@@ -176,7 +172,7 @@ class TermsController extends AppController
      */
     private function __move($direction, $id, $vocabularyId, $step)
     {
-        $redirectUrl = ['action' => 'index', $vocabularyId];
+        $redirectUrl = ['action' => 'index', 'vocabulary_id' => $vocabularyId];
         $response = $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
         if ($response instanceof Response) {
             return $response;
