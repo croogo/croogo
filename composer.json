@@ -28,9 +28,9 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "cakephp/cakephp": "^3.3.6",
+        "cakephp/cakephp": "^3.4.8",
         "cakephp/migrations": "~1.6",
-        "cakephp/acl": "^0.2",
+        "cakephp/acl": "^0.2.5",
         "cakephp/plugin-installer": "~1.0",
         "admad/cakephp-sequence": "^2.0.2",
         "friendsofcake/crud": "^4.3",
