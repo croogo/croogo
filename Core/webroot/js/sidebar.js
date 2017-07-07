@@ -79,9 +79,11 @@ Admin.navigation = function () {
       });
       dropdownOpen.call(this);
       if (window.innerWidth <= 979) {
-        $ul.css(
-          {'position': 'absolute', 'margin-left': sidebarWidth + 1 + 'px', 'margin-top': '-42px'});
-        $ul.css({'z-index': 99}).fadeIn('fast');
+        if (e.type == 'click') {
+          $ul.css(
+            {'position': 'absolute', 'margin-left': sidebarWidth + 1 + 'px', 'margin-top': '-42px'});
+          $ul.css({'z-index': 99}).fadeIn('fast');
+        }
       } else {
         $ul.css({'margin-left': 0, 'position': 'relative', 'margin-top': '0px'});
         $ul.slideDown('fast');
