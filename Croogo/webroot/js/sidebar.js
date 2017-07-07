@@ -83,8 +83,10 @@ Admin.navigation = function() {
 			});
 			dropdownOpen.call(this);
 			if (window.innerWidth <= 979) {
-				$ul.css({'position': 'absolute', 'margin-left': sidebarWidth + 1 + 'px', 'margin-top': '-42px'});
-				$ul.show('fade', 'fast');
+				if (e.type == 'click') {
+					$ul.css({'position': 'absolute', 'margin-left': sidebarWidth + 1 + 'px', 'margin-top': '-42px'});
+					$ul.show('fade', 'fast');
+				}
 			} else {
 				$ul.css({'margin-left': 0, 'position': 'relative'});
 				$ul.slideDown('fast');
