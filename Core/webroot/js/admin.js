@@ -132,6 +132,23 @@ Admin.processLink = function (event) {
   return false;
 }
 
+Admin.removeHash = function() {
+  var scrollV, scrollH, loc = window.location;
+  if ("pushState" in history)
+    history.pushState("", document.title, loc.pathname + loc.search);
+  else {
+    // Prevent scrolling by storing the page's current scroll offset
+    scrollV = document.body.scrollTop;
+    scrollH = document.body.scrollLeft;
+
+    loc.hash = "";
+
+    // Restore the scroll offset, should be flicker free
+    document.body.scrollTop = scrollV;
+    document.body.scrollLeft = scrollH;
+  }
+}
+
 /**
  * Extra stuff
  *
@@ -145,6 +162,7 @@ Admin.extra = function () {
   if (hash && hash.match("^#tab_")) {
     // Activates tab if hash starting with tab_* is given
     $tabs.find('a[href="' + hash.replace('tab_', '') + '"]').tab('show');
+    Admin.removeHash();
   } else {
     // Activates the first tab in #content by default
     $tabs.find('li:first-child a').tab('show');
