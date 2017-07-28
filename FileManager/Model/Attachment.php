@@ -52,7 +52,7 @@ class Attachment extends Node {
 		// check if file with same path exists
 		$destination = WWW_ROOT . $this->uploadsDir . DS . $file['name'];
 		if (file_exists($destination)) {
-			$newFileName = String::uuid() . '-' . $file['name'];
+			$newFileName = CakeText::uuid() . '-' . $file['name'];
 			$destination = WWW_ROOT . $this->uploadsDir . DS . $newFileName;
 		} else {
 			$newFileName = $file['name'];
