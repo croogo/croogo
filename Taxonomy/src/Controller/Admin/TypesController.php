@@ -34,6 +34,7 @@ class TypesController extends AppController
         return parent::implementedEvents() + [
             'Crud.beforePaginate' => 'beforePaginate',
             'Crud.beforeRedirect' => 'beforeCrudRedirect',
+            'Crud.beforeFind' => 'beforeCrudFind',
         ];
     }
 
@@ -44,6 +45,15 @@ class TypesController extends AppController
 
         $query->where([
             'plugin IS' => null
+        ]);
+    }
+
+    public function beforeCrudFind(Event $event)
+    {
+        /** @var \Cake\ORM\Query $query */
+        $query = $event->subject()->query;
+        $query->contain([
+            'Vocabularies',
         ]);
     }
 
