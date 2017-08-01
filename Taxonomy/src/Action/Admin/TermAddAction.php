@@ -42,7 +42,7 @@ class TermAddAction extends BaseAction
                 $redirectUrl = [
                     'action' => 'edit',
                     $taxonomy->term_id,
-                    $vocabularyId,
+                    'vocabulary_id' => $vocabularyId,
                 ];
                 if (!$term->has('_apply')) {
                     $redirectUrl = [
