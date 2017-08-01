@@ -129,7 +129,7 @@ class ImageHelper extends Helper {
 			//copy($url, $cachefile);
 		}
 
-		return $this->output(sprintf($this->Html->_tags['image'], $this->webroot($relfile), $this->Html->_parseAttributes($htmlAttributes, null, '', ' ')), $return);
+		return $this->output(sprintf($this->Html->_tags['image'], $this->webroot($relfile), $this->Html->_parseAttributes($htmlAttributes, null, ' ', ' ')), $return);
 	}
 
 /**
