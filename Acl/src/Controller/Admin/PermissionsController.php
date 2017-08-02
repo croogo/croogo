@@ -4,7 +4,6 @@ namespace Croogo\Acl\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Event\Event;
-use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
 
@@ -40,10 +39,7 @@ class PermissionsController extends AppController
     {
         parent::beforeFilter($event);
         if ($this->request->action == 'toggle') {
-            if (!$this->request->is('post')) {
-                throw new MethodNotAllowedException();
-            }
-            $this->eventManager()->off($this->Csrf);
+            $this->Croogo->protectToggleAction();
         }
     }
 
@@ -122,10 +118,10 @@ class PermissionsController extends AppController
     }
 
 /**
- * admin_toggle
+ * toggle
  *
- * @param int$acoId
- * @param int$aroId
+ * @param int $acoId
+ * @param int $aroId
  * @return void
  */
     public function toggle($acoId, $aroId)

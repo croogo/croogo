@@ -37,7 +37,7 @@ class NodesController extends AppController
         $this->loadComponent('Croogo/Core.BulkProcess');
 
         if ($this->request->param('action') == 'toggle') {
-            $this->eventManager()->off($this->Csrf);
+            $this->Croogo->protectToggleAction();
         }
 
         $this->_setupPrg();

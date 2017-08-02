@@ -9,8 +9,9 @@ use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
-
+use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\Table;
+
 use Croogo\Core\Exception\Exception;
 use Croogo\Core\Croogo;
 use Croogo\Core\Nav;
@@ -483,5 +484,18 @@ class CroogoComponent extends Component
             $viewPath = implode(DS, $prefixes) . DS . $viewPath;
         }
         return $viewPath;
+    }
+
+    public function protectToggleAction()
+    {
+        $controller = $this->getController();
+        if ($controller->request->action !== 'toggle') {
+            return;
+        }
+        if (!$controller->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+        $controller->eventManager()->off($controller->Csrf);
+        $controller->Security->config('validatePost', false);
     }
 }

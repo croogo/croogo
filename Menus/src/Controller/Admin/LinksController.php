@@ -33,7 +33,7 @@ class LinksController extends AppController
         $this->loadModel('Croogo/Users.Roles');
 
         if ($this->request->param('action') == 'toggle') {
-            $this->eventManager()->off($this->Csrf);
+            $this->Croogo->protectToggleAction();
         }
     }
 
