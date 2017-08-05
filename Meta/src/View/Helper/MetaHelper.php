@@ -4,6 +4,7 @@ namespace Croogo\Meta\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
 
@@ -99,7 +100,7 @@ class MetaHelper extends Helper
  *
  * @param string $key (optional) key
  * @param string $value (optional) value
- * @param int$id(optional) ID of Meta
+ * @param int $id (optional) ID of Meta
  * @param array $options (optional) options
  * @return string
  */
@@ -119,7 +120,16 @@ class MetaHelper extends Helper
         ];
         $options = Hash::merge($_options, $options);
         $uuid = Text::uuid();
+        $isTab = isset($options['tab']);
 
+        if ($isTab) {
+            if (empty($options['key']['type'])) {
+                $options['key']['type'] = 'hidden';
+            }
+            if (empty($options['value']['label'])) {
+                $options['value']['label'] = Inflector::humanize($key);
+            }
+        }
         $fields = '';
         if ($id != null) {
             $fields .= $this->Form->input('meta.' . $uuid . '.id', ['type' => 'hidden', 'value' => $id]);
@@ -132,14 +142,17 @@ class MetaHelper extends Helper
         $fields = $this->Html->tag('div', $fields, ['class' => 'fields']);
 
         $id = is_null($id) ? $uuid : $id;
-        $deleteUrl = $this->settings['deleteUrl'];
-        $deleteUrl[] = $id;
-        $actions = $this->Html->link(
-            __d('croogo', 'Remove'),
-            $deleteUrl,
-            ['class' => 'btn btn-danger-outline remove-meta', 'rel' => $id]
-        );
-        $actions = $this->Html->tag('div', $actions, ['class' => 'actions']);
+        $actions = null;
+        if (!$isTab) {
+            $deleteUrl = $this->settings['deleteUrl'];
+            $deleteUrl[] = $id;
+            $actions = $this->Html->link(
+                __d('croogo', 'Remove'),
+                $deleteUrl,
+                ['class' => 'btn btn-danger-outline remove-meta', 'rel' => $id]
+            );
+            $actions = $this->Html->tag('div', $actions, ['class' => 'actions']);
+        }
 
         $output = $this->Html->tag('div',  $fields . $actions, ['class' => 'meta']);
         return $output;
