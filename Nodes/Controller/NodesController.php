@@ -193,10 +193,11 @@ class NodesController extends NodesAppController {
  * @return void
  */
 	public function admin_moveup($id, $step = 1) {
-		$node = $this->Node->findById($id);
+		$this->Node->id = $id;
+		$type = $this->Node->field('type');
 		$this->Node->Behaviors->attach('Tree', array(
 			'scope' => array(
-				$this->Node->escapeField('type') => $node['Node']['type'],
+				$this->Node->escapeField('type') => $type,
 			),
 		));
 		if ($this->Node->moveUp($id, $step)) {
@@ -214,10 +215,11 @@ class NodesController extends NodesAppController {
  * @param integer $step Step
  */
 	public function admin_movedown($id, $step = 1) {
-		$node = $this->Node->findById($id);
+		$this->Node->id = $id;
+		$type = $this->Node->field('type');
 		$this->Node->Behaviors->attach('Tree', array(
 			'scope' => array(
-				$this->Node->escapeField('type') => $node['Node']['type'],
+				$this->Node->escapeField('type') => $type,
 			),
 		));
 		if ($this->Node->moveDown($id, $step)) {
