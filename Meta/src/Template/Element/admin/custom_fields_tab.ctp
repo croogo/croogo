@@ -2,7 +2,7 @@
 
 use \Cake\Utility\Text;
 
-$metaCollection = collection($entity->meta);
+$metaCollection = $entity->meta ? collection($entity->meta) : collection([]);
 
 foreach ($customFields as $customField => $customFieldOptions) {
     $selector = [
