@@ -7,6 +7,7 @@ namespace Croogo\Core\View\Widget;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
+use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\Routing\Router;
 use Cake\View\Form\ContextInterface;
@@ -47,6 +48,10 @@ class DateTimeWidget extends CakeDateTimeWidget
         if (!($val instanceof DateTime) && !empty($val)) {
             $val = $type === 'date' ? Time::parseDate($val) : Time::parseDateTime($val);
             $timestamp = $val->format('U');
+        }
+
+        if ($val instanceof DateTime) {
+            $val = new FrozenTime($val);
         }
 
         $request = Router::getRequest();
