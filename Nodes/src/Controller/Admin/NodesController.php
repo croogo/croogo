@@ -305,4 +305,10 @@ class NodesController extends AppController
         $users = $this->Nodes->Users->find('list')->toArray();
         $this->set(compact('roles', 'parents', 'users'));
     }
+
+    public function toggle()
+    {
+        return $this->Crud->execute();
+    }
+
 }
