@@ -193,6 +193,13 @@ class NodesController extends NodesAppController {
  * @return void
  */
 	public function admin_moveup($id, $step = 1) {
+		$this->Node->id = $id;
+		$type = $this->Node->field('type');
+		$this->Node->Behaviors->attach('Tree', array(
+			'scope' => array(
+				$this->Node->escapeField('type') => $type,
+			),
+		));
 		if ($this->Node->moveUp($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'flash', array('class' => 'success'));
 		} else {
@@ -208,6 +215,13 @@ class NodesController extends NodesAppController {
  * @param integer $step Step
  */
 	public function admin_movedown($id, $step = 1) {
+		$this->Node->id = $id;
+		$type = $this->Node->field('type');
+		$this->Node->Behaviors->attach('Tree', array(
+			'scope' => array(
+				$this->Node->escapeField('type') => $type,
+			),
+		));
 		if ($this->Node->moveDown($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'flash', array('class' => 'success'));
 		} else {
@@ -248,6 +262,11 @@ class NodesController extends NodesAppController {
 			return $this->redirect(array('action' => 'create'));
 		}
 
+		$Node->Behaviors->attach('Tree', array(
+			'scope' => array(
+				$Node->escapeField('type') => $type['Type']['alias'],
+			),
+		));
 		if (!empty($this->request->data)) {
 			if (isset($this->request->data[$Node->alias]['type'])) {
 				$typeAlias = $this->request->data[$Node->alias]['type'];
@@ -266,12 +285,6 @@ class NodesController extends NodesAppController {
 		}
 
 		$this->set('title_for_layout', __d('croogo', 'Create content: %s', $type['Type']['title']));
-		$Node->type = $type['Type']['alias'];
-		$Node->Behaviors->attach('Tree', array(
-			'scope' => array(
-				$Node->escapeField('type') => $Node->type,
-			),
-		));
 
 		$this->_setCommonVariables($type);
 	}
