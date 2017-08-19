@@ -23,6 +23,14 @@ class Message extends ContactsAppModel {
 	public $name = 'Message';
 
 /**
+ * Order
+ *
+ * @var string
+ * @access public
+ */
+	public $order = 'Message.id DESC';
+
+/**
  * Behaviors
  *
  * @var array
