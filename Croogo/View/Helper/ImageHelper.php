@@ -63,7 +63,7 @@ class ImageHelper extends Helper {
 
 		$sourcefile = WWW_ROOT . DS . $path;
 
-		if (!file_exists($sourcefile)) {
+		if (!file_exists($sourcefile) || filesize($sourcefile) == 0) {
 			return;
 		}
 
