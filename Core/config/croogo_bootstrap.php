@@ -43,14 +43,15 @@ EventManager::instance();
     /**
      * Cache configuration
      */
-    $defaultEngine = Cache::config('default')['className'];
-    $defaultPrefix = Hash::get(Cache::config('default'), 'prefix', 'cake_');
+    $defaultCacheConfig = Cache::config('default');
+    $defaultEngine = $defaultCacheConfig['className'];
+    $defaultPrefix = Hash::get($defaultCacheConfig, 'prefix', 'cake_');
     $cacheConfig = [
         'duration' => '+1 hour',
         'path' => CACHE . 'queries' . DS,
         'className' => $defaultEngine,
         'prefix' => $defaultPrefix,
-    ];
+    ] + $defaultCacheConfig;
     Configure::write('Croogo.Cache.defaultEngine', $defaultEngine);
     Configure::write('Croogo.Cache.defaultPrefix', $defaultPrefix);
     Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
