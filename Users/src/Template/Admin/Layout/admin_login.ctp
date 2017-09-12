@@ -28,7 +28,7 @@ use Cake\Core\Configure;
             <div class="card">
                 <div class="card-block">
                 <?php
-                echo $this->Flash->render('auth');
+                echo $this->Layout->sessionFlash();
                 echo $this->fetch('content');
                 ?>
                 </div>

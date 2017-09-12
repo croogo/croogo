@@ -5,7 +5,7 @@ $this->assign('title', __d('croogo', 'Registration'));
 ?>
 <div class="users form">
     <h2><?= $this->fetch('title') ?></h2>
-    <?= $this->Form->create('User') ?>
+    <?= $this->Form->create('User');?>
         <fieldset>
         <?php
             echo $this->Form->input('username');
@@ -15,7 +15,9 @@ $this->assign('title', __d('croogo', 'Registration'));
             echo $this->Form->input('email');
             echo $this->Form->input('website');
 
-            echo $this->Form->submit(__d('croogo', 'Register'));
+            echo $this->Form->submit(__d('croogo', 'Register'), [
+                'class' => 'btn btn-success',
+            ]);
         ?>
         </fieldset>
     <?= $this->Form->end() ?>

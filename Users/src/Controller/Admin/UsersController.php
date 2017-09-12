@@ -72,6 +72,8 @@ class UsersController extends AppController
         $this->Crud->addListener('Croogo/Core.Chooser');
 
         $this->_setupPrg();
+
+        $this->Auth->allow('add');
     }
 
 /**
@@ -355,4 +357,37 @@ class UsersController extends AppController
     {
         return 'croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
     }
+
+/**
+ * Add
+ *
+ * @return void
+ * @access public
+ */
+    public function add()
+    {
+        if ($this->Auth->user('id')) {
+            $this->Flash->error(__d('croogo', 'You are already logged in'));
+            return $this->redirect($this->referer());
+        }
+        $user = $this->Users->newEntity();
+
+        $this->set('user', $user);
+
+        if (!$this->request->is('post')) {
+            return;
+        }
+
+        $user = $this->Users->register($user, $this->request->data());
+        if (!$user) {
+            $this->Flash->error(__d('croogo', 'The User could not be saved. Please, try again.'));
+
+            return;
+        }
+
+        $this->Flash->success(__d('croogo', 'You have successfully registered an account. An email has been sent with further instructions.'));
+
+        return $this->redirect(['action' => 'login']);
+    }
+
 }
