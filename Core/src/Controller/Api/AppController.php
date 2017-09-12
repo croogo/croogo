@@ -2,9 +2,11 @@
 
 namespace Croogo\Core\Controller\Api;
 
+use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
 
 /**
@@ -13,6 +15,50 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+
+    protected function setupAuthConfig()
+    {
+        $authConfig = [
+            AuthComponent::ALL => [
+                'userModel' => 'Croogo/Users.Users',
+                'fields' => [
+                    'username' => 'username',
+                    'password' => 'password',
+                ],
+                'passwordHasher' => [
+                    'className' => 'Fallback',
+                    'hashers' => ['Default', 'Weak'],
+                ],
+                'scope' => [
+                    'Users.status' => true,
+                ],
+            ],
+        ];
+
+        $authConfig = [
+            'authenticate' => [
+                'Form',
+            ],
+        ];
+
+        if (Plugin::loaded('ADmad/JwtAuth')) {
+            $authConfig['authenticate']['ADmad/JwtAuth.Jwt'] = [
+                'fields' => [
+                    'username' => 'id',
+                ],
+                'parameter' => 'token',
+                'queryDatasource' => true,
+            ];
+
+            $authConfig += [
+                'unauthorizedRedirect' => false,
+                'checkAuthInd' => 'Controller.initialize',
+                'loginAction' => false,
+            ];
+        }
+
+        return $authConfig;
+    }
 
 /**
  * Initialize
@@ -23,9 +69,8 @@ class AppController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent('Auth');
+        $this->loadComponent('Auth', $this->setupAuthConfig());
         $this->loadComponent('RequestHandler');
-        $this->loadComponent('Croogo/Acl.Filter');
 
         $this->loadComponent('Crud.Crud', [
             'actions' => [
@@ -68,9 +113,6 @@ class AppController extends Controller
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Filter->auth();
-        $this->Auth->config('unauthorizedRedirect', false);
-        $this->Auth->config('loginRedirect', false);
 
         if (Configure::read('Site.status') == 0 &&
             $this->Auth->user('role_id') != 1
