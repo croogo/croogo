@@ -88,7 +88,6 @@ class UsersController extends AppController
             'Crud.beforePaginate' => 'beforePaginate',
             'Crud.beforeLookup' => 'beforeLookup',
             'Crud.beforeRedirect' => 'beforeCrudRedirect',
-            'Crud.beforeFind' => 'beforeCrudFind',
             'Crud.beforeSave' => 'beforeCrudSave',
             'Crud.afterSave' => 'afterCrudSave',
         ];
@@ -168,24 +167,6 @@ class UsersController extends AppController
         }
 
         $entity->activation_key = substr(bin2hex(Security::randomBytes(20)), 0, 60);
-    }
-
-    /**
-     * @param \Cake\Event\Event $event Event object
-     * @return void
-     */
-    public function beforeCrudFind(Event $event)
-    {
-        /**
-         * @var \Cake\ORM\Query
-         */
-        $query = $event->subject()->query
-            ->contain([
-                'Roles' => [
-                    'finder' => 'roleHierarchy',
-                ],
-            ]);
-        return $query;
     }
 
     public function afterCrudSave(Event $event) {
