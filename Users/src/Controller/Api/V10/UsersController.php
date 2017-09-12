@@ -4,6 +4,7 @@ namespace Croogo\Users\Controller\Api\V10;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Network\Exception\NotFoundException;
 use Cake\Utility\Security;
 use Croogo\Core\Controller\Api\AppController;
 use Firebase\JWT\JWT;
@@ -48,7 +49,11 @@ class UsersController extends AppController
     public function token()
     {
         $user = $this->Auth->identify();
-        $token = $this->generateToken($user);
+        if ($user) {
+            $token = $this->generateToken($user);
+        } else {
+            throw new NotFoundException();
+        }
 
         $this->set([
             'data' => [
