@@ -97,7 +97,7 @@ class AppController extends Controller
             'listeners' => [
                 'Crud.Search',
                 'Crud.RelatedModels',
-                'Crud.Api',
+                'CrudJsonApi.JsonApi',
             ]
         ]);
 

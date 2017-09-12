@@ -102,6 +102,7 @@
         ]
     },
     "suggest": {
+        "admad/cakephp-jwt-auth": "CakePHP JWT Authenticate plugin",
         "croogo/locale": "Localization for Croogo"
     },
     "minimum-stability": "dev",
