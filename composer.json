@@ -32,10 +32,10 @@
         "cakephp/migrations": "~1.6",
         "cakephp/acl": "^0.2.5",
         "cakephp/plugin-installer": "~1.0",
-        "admad/cakephp-sequence": "^2.0.2",
-        "friendsofcake/crud": "^4.3",
-        "friendsofcake/search": "^1.2",
-        "friendsofcake/bootstrap-ui": "^0.6"
+        "admad/cakephp-sequence": "^2.1",
+        "friendsofcake/crud": "^5.2",
+        "friendsofcake/search": "^4.0",
+        "friendsofcake/bootstrap-ui": "^1.2"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^2.1.3",
@@ -102,6 +102,7 @@
         ]
     },
     "suggest": {
+        "admad/cakephp-jwt-auth": "CakePHP JWT Authenticate plugin",
         "croogo/locale": "Localization for Croogo"
     },
     "minimum-stability": "dev",

@@ -2,18 +2,63 @@
 
 namespace Croogo\Core\Controller\Api;
 
+use Cake\Controller\Component\AuthComponent;
+use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
-use Croogo\Core\Croogo;
-use Croogo\Core\Controller\AppController as CroogoAppController;
 
 /**
  * Base Api Controller
  *
  */
-class AppController extends CroogoAppController
+class AppController extends Controller
 {
+
+    protected function setupAuthConfig()
+    {
+        $authConfig = [
+            AuthComponent::ALL => [
+                'userModel' => 'Croogo/Users.Users',
+                'fields' => [
+                    'username' => 'username',
+                    'password' => 'password',
+                ],
+                'passwordHasher' => [
+                    'className' => 'Fallback',
+                    'hashers' => ['Default', 'Weak'],
+                ],
+                'scope' => [
+                    'Users.status' => true,
+                ],
+            ],
+        ];
+
+        $authConfig = [
+            'authenticate' => [
+                'Form',
+            ],
+        ];
+
+        if (Plugin::loaded('ADmad/JwtAuth')) {
+            $authConfig['authenticate']['ADmad/JwtAuth.Jwt'] = [
+                'fields' => [
+                    'username' => 'id',
+                ],
+                'parameter' => 'token',
+                'queryDatasource' => true,
+            ];
+
+            $authConfig += [
+                'unauthorizedRedirect' => false,
+                'checkAuthInd' => 'Controller.initialize',
+                'loginAction' => false,
+            ];
+        }
+
+        return $authConfig;
+    }
 
 /**
  * Initialize
@@ -23,6 +68,9 @@ class AppController extends CroogoAppController
     public function initialize()
     {
         parent::initialize();
+
+        $this->loadComponent('Auth', $this->setupAuthConfig());
+        $this->loadComponent('RequestHandler');
 
         $this->loadComponent('Crud.Crud', [
             'actions' => [
@@ -49,7 +97,7 @@ class AppController extends CroogoAppController
             'listeners' => [
                 'Crud.Search',
                 'Crud.RelatedModels',
-                'Crud.Api',
+                'CrudJsonApi.JsonApi',
             ]
         ]);
 
@@ -65,8 +113,6 @@ class AppController extends CroogoAppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->config('unauthorizedRedirect', false);
-        $this->Auth->config('loginRedirect', false);
 
         if (Configure::read('Site.status') == 0 &&
             $this->Auth->user('role_id') != 1

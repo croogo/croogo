@@ -113,15 +113,33 @@
 						}
 					}
 					param[options.queryField] = q;
-					$.get(options.url, $.param(param), function (json) {
-						$.each(json.data, function (i, result) {
-							if (typeof map[result[options.displayField]] == 'undefined') {
-								map[result[options.displayField]] = result[options.primaryKey];
-								results.push(result[options.displayField]);
-							}
-						});
-						return process(results);
-					});
+					$.ajax({
+						url: options.url,
+						data: $.param(param),
+
+						converters: {
+							'text jsonapi': jQuery.parseJSON
+						},
+
+						accepts: {
+							jsonapi: 'application/vnd.api+json',
+						},
+						contentType: 'application/vnd.api+json',
+						dataType: 'jsonapi',
+
+						success: function(json) {
+							$.each(json.data, function (i, result) {
+								if (typeof map[result.attributes[options.displayField]] == 'undefined') {
+									map[result.attributes[options.displayField]] = result[options.primaryKey];
+									results.push(result.attributes[options.displayField]);
+								}
+							});
+							return process(results);
+						},
+						error: function(xhr, textStatus, e) {
+							console.log('typeahead', e)
+						}
+					})
 				}
 			});
 		}
