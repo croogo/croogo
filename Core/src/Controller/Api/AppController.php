@@ -2,17 +2,16 @@
 
 namespace Croogo\Core\Controller\Api;
 
+use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Croogo\Core\Croogo;
-use Croogo\Core\Controller\AppController as CroogoAppController;
 
 /**
  * Base Api Controller
  *
  */
-class AppController extends CroogoAppController
+class AppController extends Controller
 {
 
 /**
@@ -23,6 +22,10 @@ class AppController extends CroogoAppController
     public function initialize()
     {
         parent::initialize();
+
+        $this->loadComponent('Auth');
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Croogo/Acl.Filter');
 
         $this->loadComponent('Crud.Crud', [
             'actions' => [
@@ -65,6 +68,7 @@ class AppController extends CroogoAppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
+        $this->Filter->auth();
         $this->Auth->config('unauthorizedRedirect', false);
         $this->Auth->config('loginRedirect', false);
 
