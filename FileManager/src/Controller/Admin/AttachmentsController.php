@@ -95,7 +95,7 @@ class AttachmentsController extends AppController
     {
         $this
             ->viewBuilder()
-            ->layout('Croogo/Core.admin_popup');
+            ->setLayout('admin_popup');
         $this->Crud->action('index')->config('template', 'browse');
         return $this->Crud->execute('index');
     }

@@ -169,7 +169,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
         }
 
         if ($this->request->is('ajax')) {
-            $this->viewBuilder()->layout('ajax');
+            $this->viewBuilder()->setLayout('ajax');
         }
 
         if (isset($this->request->params['locale'])) {

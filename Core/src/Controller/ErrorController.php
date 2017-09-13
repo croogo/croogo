@@ -60,7 +60,7 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
             if ($adminTheme) {
                 $this->viewBuilder()->theme($adminTheme);
             }
-            $this->viewBuilder()->layout('admin_full');
+            $this->viewBuilder()->setLayout('admin_full');
         } elseif (Configure::read('Site.theme')) {
             $this->viewBuilder()
                ->theme(Configure::read('Site.theme'));

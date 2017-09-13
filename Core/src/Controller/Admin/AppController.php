@@ -104,7 +104,7 @@ class AppController extends CroogoAppController
  */
     public function beforeFilter(Event $event)
     {
-        $this->viewBuilder()->layout('Croogo/Core.admin');
+        $this->viewBuilder()->setLayout('admin');
 
         parent::beforeFilter($event);
 
@@ -112,7 +112,7 @@ class AppController extends CroogoAppController
             $this->Auth->user('role_id') != 1
         ) {
             if (!$this->request->is('whitelisted')) {
-                $this->viewBuilder()->layout('Croogo/Core.maintenance');
+                $this->viewBuilder()->setLayout('maintenance');
                 $this->response->statusCode(503);
                 $this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
                 $this->viewBuilder()->templatePath('Maintenance');

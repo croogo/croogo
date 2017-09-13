@@ -119,7 +119,7 @@ class NodesController extends AppController
      */
     public function add_meta()
     {
-        $this->layout = 'ajax';
+        $this->viewBuilder()->setLayout('ajax');
     }
 
     /**
@@ -185,7 +185,7 @@ class NodesController extends AppController
         }
 
         if (!empty($this->request->query('links')) || isset($this->request->query['chooser'])) {
-            $this->viewBuilder()->layout('admin_popup');
+            $this->viewBuilder()->setLayout('admin_popup');
             $this->Crud->action()->view('chooser');
         }
     }

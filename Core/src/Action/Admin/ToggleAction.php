@@ -28,7 +28,7 @@ class ToggleAction extends BaseAction
 
         $status = (int)!$status;
 
-        $this->_controller()->viewBuilder()->layout('Croogo/Core.ajax');
+        $this->_controller()->viewBuilder()->setLayout('ajax');
         $this->_controller()->viewBuilder()->template('Croogo/Core./Common/admin_toggle');
 
         $entity = $this->_table()->get($id);

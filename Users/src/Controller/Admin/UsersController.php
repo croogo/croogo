@@ -243,7 +243,7 @@ class UsersController extends AppController
  */
     public function login()
     {
-        $this->viewBuilder()->layout('admin_login');
+        $this->viewBuilder()->setLayout('admin_login');
 
         if ($this->Auth->user('id')) {
             if (!$this->request->session()->check('Flash.auth')) {

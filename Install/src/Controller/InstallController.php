@@ -67,7 +67,7 @@ class InstallController extends Controller
         parent::beforeFilter($event);
 
         $this->viewBuilder()->theme('Croogo/Core');
-        $this->viewBuilder()->layout('Croogo/Install.install');
+        $this->viewBuilder()->setLayout('install');
         $this->viewBuilder()->className('Croogo/Core.Croogo');
         $this->viewBuilder()->helpers([
             'Croogo/Core.Theme',

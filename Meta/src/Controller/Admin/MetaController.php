@@ -62,6 +62,6 @@ class MetaController extends AppController
  */
     public function addMeta()
     {
-        $this->viewBuilder()->layout('ajax');
+        $this->viewBuilder()->setLayout('ajax');
     }
 }
