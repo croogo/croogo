@@ -23,7 +23,7 @@ use Croogo\Extensions\ExtensionsInstaller;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class InstallShell extends CroogoAppShell
+class InstallShell extends AppShell
 {
 
 /**

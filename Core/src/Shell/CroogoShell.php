@@ -15,7 +15,7 @@ use Croogo\Install\AssetGenerator;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoShell extends CroogoAppShell
+class CroogoShell extends AppShell
 {
 
     public $tasks = [

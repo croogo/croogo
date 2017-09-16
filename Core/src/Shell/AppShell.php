@@ -9,7 +9,7 @@ use Cake\Console\Shell;
  *
  * @package Croogo.Console
  */
-class CroogoAppShell extends Shell
+class AppShell extends Shell
 {
 
 /**
