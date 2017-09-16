@@ -5,39 +5,28 @@
     <meta name="viewport" content="width=device-width">
     <title><?= $this->fetch('title') ?> - <?= $_siteTitle ?></title>
     <?php
-        echo $this->Html->css(array(
-            '/croogo/css/croogo-bootstrap',
-            '/croogo/css/croogo-bootstrap-responsive',
-        ));
-        echo $this->Layout->js();
-        echo $this->Html->script(array(
-            '/croogo/js/jquery/jquery.min',
-            '/croogo/js/jquery/jquery-ui.min',
-            '/croogo/js/jquery/jquery.hoverIntent.minified',
-            '/croogo/js/underscore-min',
-            '/croogo/js/admin',
-            '/croogo/js/croogo-bootstrap.js',
-        ));
-        echo $this->Blocks->get('css');
-        echo $this->Blocks->get('script');
+
+        echo $this->element('admin/stylesheets');
+        echo $this->element('admin/javascripts');
+
+        echo $this->fetch('script');
+        echo $this->fetch('css');
+
     ?>
 </head>
 
 <body>
 
-    <div id="wrap" class="full">
+    <div id="wrap">
         <?php echo $this->element('admin/header'); ?>
         <div id="push"></div>
-        <div id="content-container" class="<?php echo $this->Theme->getCssClass('container'); ?>">
+        <div id="content-container" class="content-container <?php echo $this->Theme->getCssClass('container'); ?>">
             <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
-                <div id="content" class="clearfix">
-                    <div id="inner-content" class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
-                    <?php
-                        echo $this->Layout->sessionFlash();
-                        echo $this->fetch('content');
-                    ?>
+                <div id="content" class="content">
+                    <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
+                        <?php echo $this->Layout->sessionFlash(); ?>
+                        <?php echo $this->fetch('content'); ?>
                     </div>
-                    &nbsp;
                 </div>
             </div>
         </div>
