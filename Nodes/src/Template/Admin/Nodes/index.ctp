@@ -83,6 +83,20 @@ $this->append('table-body');
                 <div class="item-actions">
                     <?php
                     echo $this->Croogo->adminRowActions($node->id);
+
+                    if ($this->request->query('type')):
+                        echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'move', $node->id, 'up'], [
+                                'method' => 'post',
+                                'icon' => $this->Theme->getIcon('move-up'),
+                                'tooltip' => __d('croogo', 'Move up'),
+                            ]);
+                        echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'move', $node->id, 'down'], [
+                                'method' => 'post',
+                                'icon' => $this->Theme->getIcon('move-down'),
+                                'tooltip' => __d('croogo', 'Move down'),
+                            ]);
+                    endif;
+
                     echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'edit', $node->id], [
                             'icon' => $this->Theme->getIcon('update'),
                             'tooltip' => __d('croogo', 'Edit this item'),

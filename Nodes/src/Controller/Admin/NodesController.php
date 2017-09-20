@@ -148,12 +148,20 @@ class NodesController extends AppController
 
     public function beforePaginate(Event $event)
     {
-        $this->paginate = [
-            'order' => ['created' => 'DESC']
-        ];
-
         /** @var \Cake\ORM\Query $query */
         $query = $event->subject()->query;
+
+        if (empty($this->request->query('sort'))) {
+            if ($this->request->query('type')) {
+                $this->paginate['order'] = [
+                    $this->Nodes->aliasField('lft') => 'ASC',
+                ];
+            } else {
+                $this->paginate['order'] = [
+                    $this->Nodes->aliasField('created') => 'DESC',
+                ];
+            };
+        }
 
         $query->contain([
             'Users'
@@ -309,6 +317,21 @@ class NodesController extends AppController
     public function toggle()
     {
         return $this->Crud->execute();
+    }
+
+    public function move($id, $direction = 'up', $step = '1') {
+        $node = $this->Nodes->get($id);
+        if ($direction == 'up') {
+            if ($this->Nodes->moveUp($node)) {
+                $this->Flash->success(__d('croogo', 'Content moved up'));
+                return $this->redirect($this->referer());
+            }
+        } else {
+            if ($this->Nodes->moveDown($node)) {
+                $this->Flash->success(__d('croogo', 'Content moved down'));
+                return $this->redirect($this->referer());
+            }
+        }
     }
 
 }
