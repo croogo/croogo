@@ -28,8 +28,9 @@ if (Configure::read('Access Control.autoLoginDuration')):
 endif;
 echo $this->Form->button(__d('croogo', 'Log In'), ['class' => 'btn btn-primary']);
 echo $this->Html->link(__d('croogo', 'Forgot password?'), [
-    'prefix' => false,
-    'controller' => 'users',
+    'prefix' => 'admin',
+    'plugin' => 'Croogo/Users',
+    'controller' => 'Users',
     'action' => 'forgot',
 ], [
     'class' => 'forgot',

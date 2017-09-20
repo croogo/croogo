@@ -1,6 +1,7 @@
 <?php
 
 $this->assign('title', __d('croogo', 'Registration'));
+$this->setLayout('admin_login');
 
 ?>
 <div class="users form">
