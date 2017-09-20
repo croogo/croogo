@@ -2,6 +2,8 @@
 
 use Cake\Routing\Router;
 
+$this->assign('title', $node->title);
+
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Html->script(array('Croogo/Nodes.admin'), ['block' => true]);
 

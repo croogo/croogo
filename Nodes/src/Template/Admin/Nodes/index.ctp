@@ -3,6 +3,8 @@
 use Cake\Utility\Hash;
 use Croogo\Core\Status;
 
+$this->assign('title', __d('croogo', 'Contents'));
+
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Croogo->adminScript('Croogo/Nodes.admin');
