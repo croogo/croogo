@@ -7,12 +7,11 @@ use Cake\Error\ExceptionRenderer as CakeExceptionRenderer;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Routing\Router;
-use CrudJsonApi\Error\JsonApiExceptionRenderer;
 
 /**
  * Class ExceptionRenderer
  */
-class ExceptionRenderer extends JsonApiExceptionRenderer
+class ExceptionRenderer extends CakeExceptionRenderer
 {
     protected function _getController()
     {
