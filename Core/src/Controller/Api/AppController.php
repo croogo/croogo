@@ -19,26 +19,36 @@ class AppController extends Controller
     protected function setupAuthConfig()
     {
         $authConfig = [
-            AuthComponent::ALL => [
-                'userModel' => 'Croogo/Users.Users',
-                'fields' => [
-                    'username' => 'username',
-                    'password' => 'password',
-                ],
-                'passwordHasher' => [
-                    'className' => 'Fallback',
-                    'hashers' => ['Default', 'Weak'],
-                ],
-                'scope' => [
-                    'Users.status' => true,
-                ],
-            ],
-        ];
-
-        $authConfig = [
             'authenticate' => [
+                AuthComponent::ALL => [
+                    'userModel' => 'Croogo/Users.Users',
+                    'fields' => [
+                        'username' => 'username',
+                        'password' => 'password',
+                    ],
+                    'passwordHasher' => [
+                        'className' => 'Fallback',
+                        'hashers' => ['Default', 'Weak'],
+                    ],
+                    'scope' => [
+                        'Users.status' => true,
+                    ],
+                ],
                 'Form',
             ],
+            'authorize' => [
+                AuthComponent::ALL => [
+                    'actionPath' => 'controllers',
+                    'userModel' => 'Croogo/Users.Users',
+                ],
+                'Croogo/Acl.AclCached' => [
+                    'actionPath' => 'controllers',
+                ]
+            ],
+
+            'unauthorizedRedirect' => false,
+            'checkAuthInd' => 'Controller.initialize',
+            'loginAction' => false,
         ];
 
         if (Plugin::loaded('ADmad/JwtAuth')) {
@@ -50,11 +60,6 @@ class AppController extends Controller
                 'queryDatasource' => true,
             ];
 
-            $authConfig += [
-                'unauthorizedRedirect' => false,
-                'checkAuthInd' => 'Controller.initialize',
-                'loginAction' => false,
-            ];
         }
 
         return $authConfig;
