@@ -24,6 +24,14 @@
 			"container" : "container-fluid",
 			"row" : "row",
 			"tableClass" : "table table-striped"
+		},
+		"prefixes": {
+			"": {
+				"helpers": {
+					"Html": { "className": "Croogo/Core.CroogoHtml" },
+					"Form": { "className": "Croogo/Core.CroogoForm" }
+				}
+			}
 		}
 	}
 }
