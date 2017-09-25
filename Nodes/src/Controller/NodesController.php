@@ -47,6 +47,7 @@ class NodesController extends AppController
         ]);
 
         $this->_setupAclComponent();
+        $this->Prg->config('actions', ['index', 'search', 'term']);
     }
 
     /**
@@ -277,7 +278,7 @@ class NodesController extends AppController
             $this->paginate['typeAlias'] = $typeAlias;
         }
 
-        $criteria = $Node->find('search', ['filter' => $q]);
+        $criteria = $Node->find('search', ['search' => $this->request->query]);
         $nodes = $this->paginate($criteria);
         $this->set(compact('q', 'nodes'));
         if (isset($type)) {
