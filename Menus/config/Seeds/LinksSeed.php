@@ -31,7 +31,7 @@ class LinksSeed extends AbstractSeed
             'title' => 'Contact',
             'class' => 'contact',
             'description' => '',
-            'link' => 'plugin:Croogo/Contacts/controller:Contacts/action:view/contact',
+            'link' => 'plugin:Croogo%2fContacts/controller:Contacts/action:view/contact',
             'target' => '',
             'rel' => '',
             'status' => '1',
