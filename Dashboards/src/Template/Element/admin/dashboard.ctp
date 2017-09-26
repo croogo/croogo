@@ -15,7 +15,7 @@ endif;
             <?php echo($dashboard['collapsed'] ? '<i class="fa fa-plus"></i>' : '<i class="fa fa-minus"></i>') ?>
         </a>
     </div>
-    <div class="card-block <?= $dashboard['collapsed'] ? 'collapse' : 'collapse show' ?>" id="<?php echo $alias ?>-content">
+    <div class="card-body <?= $dashboard['collapsed'] ? 'collapse' : 'collapse show' ?>" id="<?php echo $alias ?>-content">
         <?php $cell = $this->cell($dashboard['cell'], $dashboard['arguments'],
             ['cache' => $dashboard['cache'], 'alias' => $alias, 'dashboard' => $dashboard]); ?>
         <?= $cell; ?>

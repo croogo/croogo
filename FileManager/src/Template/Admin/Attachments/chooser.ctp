@@ -1,4 +1,4 @@
-<div class="navbar navbar-light bg-faded">
+<div class="navbar navbar-light bg-light">
     <div class="d-flex justify-content-between">
         <div>
         <?php

@@ -109,7 +109,7 @@ $tableFooters = trim($this->fetch('table-footer'));
 
             if (!empty($searchBlock)) :
             ?>
-            <div class="navbar navbar-light bg-faded">
+            <div class="navbar navbar-light bg-light">
                 <div class="float-right">
                     <?= $searchBlock; ?>
                 </div>

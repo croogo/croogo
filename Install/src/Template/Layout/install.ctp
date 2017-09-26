@@ -26,7 +26,7 @@
                 <h3 class="card-header">
                     <?= __d('croogo', 'Installation: %s', $this->fetch('title')) ?>
                 </h3>
-                <div class="card-block">
+                <div class="card-body">
                     <?php
                     echo $this->element('installer_steps');
                     echo $this->Layout->sessionFlash();

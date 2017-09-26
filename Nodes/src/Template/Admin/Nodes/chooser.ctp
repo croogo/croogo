@@ -1,4 +1,4 @@
-<div class="navbar navbar-light bg-faded">
+<div class="navbar navbar-light bg-light">
     <div class="float-left">
         <?php
         echo __d('croogo', 'Sort by:');

@@ -11,5 +11,5 @@ if (!empty($this->Breadcrumbs->getCrumbs()))
         'class' => 'breadcrumb',
     ]);
 
-    echo $this->Html->div('hidden-xs-down', $crumbs, ['id' => 'breadcrumb-container']);
+    echo $this->Html->div('d-none d-md-block', $crumbs, ['id' => 'breadcrumb-container']);
 }

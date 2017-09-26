@@ -6,7 +6,7 @@ use Croogo\Core\Nav;
 $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 
 ?>
-<header class="navbar navbar-toggleable navbar-inverse bg-black fixed-top">
+<header class="navbar navbar-expand-md navbar-dark bg-black fixed-top">
     <?= $this->Html->link(Configure::read('Site.title'), $dashboardUrl,
         ['class' => 'navbar-brand']); ?>
 
@@ -14,7 +14,7 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
         'type' => 'dropdown',
         'htmlAttributes' => [
             'id' => 'top-left-menu',
-            'class' => 'navbar-nav hidden-xs-down mr-auto',
+            'class' => 'navbar-nav d-none d-sm-block mr-auto',
         ],
     ]);
     ?>

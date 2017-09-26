@@ -1,7 +1,7 @@
 <?php
 $this->assign('title', __d('croogo', 'Create content'));
 ?>
-<h2 class="hidden-md-up"><?php echo $this->fetch('title'); ?></h2>
+<h2 class="d-md-none"><?php echo $this->fetch('title'); ?></h2>
 <?php
 $this->Breadcrumbs
     ->add(__d('croogo', 'Content'), ['action' => 'index'])
