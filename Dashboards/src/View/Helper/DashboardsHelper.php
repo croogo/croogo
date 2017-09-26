@@ -127,16 +127,16 @@ class DashboardsHelper extends Helper
 
         $dashboardTag = $this->settings['dashboardTag'];
         $columnDivs = [
-            0 => $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::LEFT]) . '&nbsp;', [
+            0 => $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::LEFT]) . ' ', [
                 'class' => $cssSetting['dashboardLeft'] . ' ' . $cssSetting['dashboardClass'],
                 'id' => 'column-0',
             ]),
-            1 => $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::RIGHT]) . '&nbsp;', [
+            1 => $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::RIGHT]) . ' ', [
                 'class' => $cssSetting['dashboardRight'] . ' ' . $cssSetting['dashboardClass'],
                 'id' => 'column-1'
             ]),
         ];
-        $fullDiv = $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::FULL]) . '&nbsp;', [
+        $fullDiv = $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::FULL]) . ' ', [
             'class' => $cssSetting['dashboardFull'] . ' ' . $cssSetting['dashboardClass'],
             'id' => 'column-2',
         ]);
