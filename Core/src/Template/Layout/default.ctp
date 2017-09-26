@@ -8,73 +8,115 @@
 
 use Cake\Core\Configure;
 
+$siteTitle = Configure::read('Site.title');
+$siteTagline = Configure::read('Site.tagline');
+
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html style='background: #0e0e0e;'>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title><?= $this->fetch('title'); ?> &raquo; <?= Configure::read('Site.title'); ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title><?= $this->fetch('title'); ?> - <?= $siteTitle; ?></title>
     <?php
 //    echo $this->Meta->meta();
     echo $this->Layout->feed();
-    echo $this->Html->css(array(
-        'Croogo/Core.reset',
-        'Croogo/Core.960',
-        'Croogo/Core.theme',
-    ));
+    $this->element('stylesheets');
     echo $this->Layout->js();
-    echo $this->Html->script(array(
-        'Croogo/Core.jquery/jquery.min',
-        'Croogo/Core.jquery/jquery.hoverIntent.minified',
-        'Croogo/Core.theme',
-    ));
     echo $this->Blocks->get('css');
     echo $this->Blocks->get('script');
     ?>
 </head>
-<body>
-    <div id="wrapper">
-        <div id="header" class="container_16">
-            <div class="grid_16">
-                <h1 class="site-title"><?= $this->Html->link(Configure::read('Site.title'), '/'); ?></h1>
-                <span class="site-tagline"><?= Configure::read('Site.tagline'); ?></span>
-            </div>
-            <div class="clear"></div>
-        </div>
+<body id="page-top">
 
-        <div id="nav">
-            <div class="container_16">
-                <?= $this->Menus->menu('main', array('dropdown' => true)); ?>
-            </div>
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                <?= $siteTitle ?>
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fa fa-bars"></i>
+            </button>
 
-        <div id="main" class="container_16">
-            <div id="content" class="grid_11">
-                <?php
-                echo $this->Layout->sessionFlash();
-                echo $this->fetch('content');
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <?=
+                    $this->Menus->menu('main', [
+                        'dropdown' => true,
+                        'dropdownClass' => 'navbar-nav ml-auto',
+                        'subTagAttributes' => [
+                            'class' => 'nav-item',
+                        ],
+                        'linkAttributes' => [
+                            'class' => 'nav-link js-scroll-trigger',
+                        ],
+                    ]);
                 ?>
             </div>
+    </nav>
 
-            <div id="sidebar" class="grid_5">
-                <?= $this->Regions->blocks('right'); ?>
-            </div>
+    <?= $this->element('masthead') ?>
 
-            <div class="clear"></div>
-        </div>
-
-        <div id="footer">
-            <div class="container_16">
-                <div class="grid_8 left">
-                    Powered by <a href="http://www.croogo.org">Croogo</a>.
+    <section id="main" class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <?php
+                        echo $this->Layout->sessionFlash();
+                        echo $this->fetch('content');
+                    ?>
                 </div>
-                <div class="grid_8 right">
-                    <a href="http://www.cakephp.org"><?= $this->Html->image('/img/cake.power.gif'); ?></a>
+                <div class="col-lg-4">
+                    <?= $this->Regions->blocks('right'); ?>
                 </div>
-                <div class="clear"></div>
             </div>
         </div>
-    </div>
-    <?= $this->Blocks->get('scriptBottom');?>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; <?= $siteTitle ?> <?= date('Y') ?></span>
+                </div>
+
+                <div class="col-md-4">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            Powered by <a href="http://www.croogo.org">Croogo</a>.
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="http://www.cakephp.org"><?= $this->Html->image('/img/cake.power.gif'); ?></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4">
+                    <?php
+                    echo $this->Menus->menu('footer', [
+                        'dropdown' => false,
+                        'tagAttributes' => [
+                            'class' => 'list-inline quicklinks',
+                        ],
+                        'subTagAttributes' => [
+                            'class' => 'list-inline-item',
+                        ],
+                        'linkAttributes' => [
+                            'class' => 'js-scroll-trigger',
+                        ],
+                    ]);
+                ?>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <?php
+    $this->element('javascripts');
+    echo $this->Blocks->get('scriptBottom');
+    ?>
 </body>
 </html>
