@@ -10,7 +10,7 @@ use Cake\Core\Configure;
         <title><?= $this->fetch('title'); ?> - <?= $_siteTitle ?></title>
         <?php
         echo $this->Html->css([
-            'Croogo/Core.croogo-admin',
+            'Croogo/Core.core/croogo-admin',
         ]);
         echo $this->Layout->js();
         echo $this->Html->script([]);

@@ -6,8 +6,8 @@ REPO_BOOTSTRAP=git://github.com/twbs/bootstrap
 
 CROOGO_SASS = ./webroot/scss/croogo-admin.scss
 
-CSS_DIR=$(CURDIR)/webroot/css
-JS_DIR=$(CURDIR)/webroot/js
+CSS_DIR=$(CURDIR)/webroot/css/core
+JS_DIR=$(CURDIR)/webroot/js/core
 FONT_DIR=$(CURDIR)/webroot/font
 
 CROOGO_CSS=croogo-admin.css
@@ -58,7 +58,7 @@ assets:
 		echo "Copied: webroot/fonts/`basename $${file}` ${CHECK}" ;\
 	done
 	@cp webroot/bootstrap/dist/js/bootstrap.min.js ${JS_DIR}/bootstrap.min.js
-	@echo "Copied: webroot/js/bootstrap.min.js ${CHECK}"
+	@echo "Copied: webroot/js/core/bootstrap.min.js ${CHECK}"
 
 clean:
 	@rm -f "${CSS_DIR}"/"${CROOGO_CSS}" "${CSS_DIR}"/"${CROOGO_RESPONSIVE_CSS}"
