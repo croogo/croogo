@@ -16,7 +16,7 @@
         ?>
     </head>
     <body class="installer">
-        <header class="navbar navbar-inverse bg-black navbar-fixed-top">
+        <header class="navbar navbar-dark bg-black navbar-fixed-top">
             <span class="navbar-brand"><?php echo __d('croogo', 'Install Croogo'); ?></span>
         </header>
 

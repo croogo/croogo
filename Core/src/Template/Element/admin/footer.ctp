@@ -1,4 +1,4 @@
-<footer class="navbar-inverse">
+<footer class="navbar-dark">
     <div class="navbar-inner">
 
         <div class="footer-content">

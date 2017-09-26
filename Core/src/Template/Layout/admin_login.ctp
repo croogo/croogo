@@ -20,7 +20,7 @@ use Cake\Core\Configure;
         ?>
     </head>
     <body class="admin-login">
-        <header class="navbar navbar-inverse bg-black">
+        <header class="navbar navbar-dark bg-black">
             <?= $this->Html->link(__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'), '/', ['class' => 'navbar-brand']); ?>
         </header>
 
