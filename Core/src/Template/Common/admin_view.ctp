@@ -23,7 +23,7 @@ if ($pageHeading = trim($this->fetch('page-heading'))):
 endif;
 ?>
 
-    <h2 class="hidden-md-up">
+    <h2 class="d-md-none">
         <?php if ($titleBlock = $this->fetch('title')): ?>
             <?php echo $titleBlock; ?>
         <?php else: ?>

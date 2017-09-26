@@ -37,7 +37,7 @@ class CroogoHtmlHelper extends HtmlHelper
                         <div class='card-header'>
                             {{icon}} {{title}}
                         </div>
-                        <div class='card-block'>";
+                        <div class='card-body'>";
         $this->_defaultConfig['templates']['endbox'] = '</div>
             </div>';
 

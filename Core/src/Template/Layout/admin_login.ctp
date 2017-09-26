@@ -26,7 +26,7 @@ use Cake\Core\Configure;
 
         <div id="wrap" class="d-flex justify-content-center align-items-center">
             <div class="card">
-                <div class="card-block">
+                <div class="card-body">
                 <?php
                 echo $this->Layout->sessionFlash();
                 echo $this->fetch('content');

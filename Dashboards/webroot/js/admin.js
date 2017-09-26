@@ -12,7 +12,7 @@ Dashboard.saveDashboard = function(e, ui) {
           'column': column,
           'weight': index,
           'alias': this.id,
-          'collapsed': !$this.find('.card-block').is(':visible') ? 1 : 0
+          'collapsed': !$this.find('.card-body').is(':visible') ? 1 : 0
         });
       }
     };
@@ -35,7 +35,7 @@ Dashboard.saveDashboard = function(e, ui) {
   }
 
   var saveUrl = $('#dashboard-url').text();
-  var collapsed = !box.find('.card-block').is(':visible') ? 1 : 0;
+  var collapsed = !box.find('.card-body').is(':visible') ? 1 : 0;
   var saveCallback = function(data, textStatus, jqXHR) {
     box
       .find('.toggle-icon .fa')
@@ -72,7 +72,7 @@ Dashboard.sortable = function(selector, saveDashboard) {
 };
 
 Dashboard.collapsable = function (saveDashboard) {
-  var selector = '.dashboard-card .card-block';
+  var selector = '.dashboard-card .card-body';
   $('body')
     .on('show.bs.collapse hide.bs.collapse', selector, function(e, ui) {
       if (ui) {
@@ -81,7 +81,7 @@ Dashboard.collapsable = function (saveDashboard) {
           box = $(this).closest('.dashboard-card');
       }
 
-      var collapsed = !box.find('.card-block').is(':visible') ? 1 : 0;
+      var collapsed = !box.find('.card-body').is(':visible') ? 1 : 0;
       box
         .find('.toggle-icon .fa')
         .removeClass(collapsed ? 'fa-plus' : 'fa-minus')

@@ -52,9 +52,9 @@ table {
       }
       &.icon-trash,
       &.delete {
-        color: $brand-danger;
+        color: theme-color("danger");
         &:hover {
-          color: darken($brand-danger, 25%);
+          color: darken(theme-color("danger"), 25%);
         }
       }
     }
@@ -63,6 +63,10 @@ table {
       vertical-align: middle;
       text-align: center;
       width: 1.25em;
+    }
+
+    .btn {
+      margin-right: $croogo-general-margin;
     }
   }
 }

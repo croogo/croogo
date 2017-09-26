@@ -6,7 +6,7 @@ if (!$this->request->is('ajax')):
     echo $this->Html->script([
         'Croogo/Core.jquery/jquery.min.js',
         'Croogo/Core.jquery/jquery-ui.min.js',
-        'Croogo/Core.tether.min.js',
+        'Croogo/Core.popper.min.js',
         'Croogo/Core.bootstrap.min.js',
         'Croogo/Core.jquery/jquery.slug',
         'Croogo/Core.jquery/jquery.hoverIntent.minified',

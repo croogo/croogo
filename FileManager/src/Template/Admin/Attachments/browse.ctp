@@ -23,7 +23,7 @@ $this->Html->script('Croogo/FileManager.attachments/browse', ['block' => true]);
         ]);
 
         $cardHeader = $this->Html->div('card-header', $attachment->title);
-        $cardBlock = $this->Html->div('card-block', $thumbnail);
+        $cardBlock = $this->Html->div('card-body', $thumbnail);
         $cardFooter = $this->Html->div('card-footer', $footerText);
         $card = $this->Html->div('card text-center selector',
             $cardHeader . $cardBlock . $cardFooter, [

@@ -1,9 +1,9 @@
 .green {
-  color: $brand-success;
+  color: theme-color("success");
 }
 
 .red {
-  color: $brand-danger;
+  color: theme-color("danger");
 }
 
 .bg-black {
