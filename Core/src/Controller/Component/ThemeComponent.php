@@ -27,12 +27,12 @@ class ThemeComponent extends Component
 
     public function beforeFilter(Event $event)
     {
+        $this->_controller = $event->subject();
         $theme = $this->config('theme');
         if (!$theme) {
+            $this->_controller->viewBuilder()->theme('Croogo/Core');
             return;
         }
-
-        $this->_controller = $event->subject();
 
         $this->_controller->viewBuilder()->theme($theme);
         $this->loadThemeSettings($theme);
