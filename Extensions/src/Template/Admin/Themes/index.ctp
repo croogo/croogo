@@ -62,14 +62,14 @@ $this->end(); ?>
                 $themeName = $theme['name'];
                 $isAdminOnly = (!isset($theme['adminOnly']) || $theme['adminOnly'] != 'true');
                 $isDefault = !($themeAlias == 'default' && !Configure::read('Site.theme'));
-                $display = $themeAlias != Configure::read('Site.theme') && $isAdminOnly && $isDefault;
+                $display = $themeAlias != $currentTheme['name'] && $isAdminOnly && $isDefault;
                 if (!$display):
                     continue;
                 endif;
                 echo '<div class="content ' . $this->Theme->getCssClass('row') . '">';
                 if (!empty($theme['screenshot'])):
                     $dataUri = $this->Croogo->dataUri($themeName, $theme['screenshot']);
-                    $thumbnail = $this->Html->thumbnail($dataUri);
+                    $thumbnail = '<img class="img-thumbnail" src="' . $dataUri . '">';
                     $image = sprintf('<a href="%s" %s>%s</a>',
                         $dataUri,
                         'data-toggle="lightbox"',
