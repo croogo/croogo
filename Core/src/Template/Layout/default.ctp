@@ -31,7 +31,7 @@ $siteTagline = Configure::read('Site.tagline');
 <body id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
+        <div class="<?= $this->Theme->getCssClass('container') ?>">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
                 <?= $siteTitle ?>
             </a>
@@ -60,15 +60,15 @@ $siteTagline = Configure::read('Site.tagline');
     <?= $this->element('masthead') ?>
 
     <section id="main" class="bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
+        <div class="<?= $this->Theme->getCssClass('container') ?>">
+            <div class="<?= $this->Theme->getCssClass('row') ?>">
+                <div class="<?= $this->Theme->getCssClass('columnLeft') ?>">
                     <?php
                         echo $this->Layout->sessionFlash();
                         echo $this->fetch('content');
                     ?>
                 </div>
-                <div class="col-lg-4">
+                <div class="<?= $this->Theme->getCssClass('columnRight') ?>">
                     <?= $this->Regions->blocks('right'); ?>
                 </div>
             </div>
@@ -76,8 +76,8 @@ $siteTagline = Configure::read('Site.tagline');
     </section>
 
     <footer>
-        <div class="container">
-            <div class="row">
+        <div class="<?= $this->Theme->getCssClass('container') ?>">
+            <div class="<?= $this->Theme->getCssClass('row') ?>">
                 <div class="col-md-4">
                     <span class="copyright">Copyright &copy; <?= $siteTitle ?> <?= date('Y') ?></span>
                 </div>

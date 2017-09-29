@@ -68,15 +68,15 @@ class CroogoTheme
                     'columnFull' => 'col-12',
                     'columnLeft' => 'col-md-8',
                     'columnRight' => 'col-md-4',
-                    'container' => 'container-fluid',
+                    'container' => 'container',
                     'dashboardFull' => 'col-12',
                     'dashboardLeft' => 'col-sm-6',
                     'dashboardRight' => 'col-sm-6',
                     'dashboardClass' => 'sortable-column',
                     'formInput' => 'input-block-level',
                     'imageClass' => '',
-                    'row' => 'row-fluid',
-                    'tableClass' => 'table table-striped',
+                    'row' => 'row',
+                    'tableClass' => 'table table-striped table-responsive',
                     'thumbnailClass' => 'img-thumbnail',
                 ],
                 'iconDefaults' => [
@@ -118,8 +118,12 @@ class CroogoTheme
                 'prefixes' => [
                     '' => [
                         'helpers' => [
-                            'Html' => [],
-                            'Form' => [],
+                            'Html' => [
+                                'className' => 'Croogo/Core.CroogoHtml',
+                            ],
+                            'Form' => [
+                                'className' => 'Croogo/Core.CroogoForm',
+                            ],
                         ],
                     ],
                     'admin' => [

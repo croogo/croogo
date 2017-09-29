@@ -1,37 +1,18 @@
 {
-	"name" : "Croogo/Core",
-	"description" : "Default theme for Croogo",
-	"screenshot" : "/img/screenshot.png",
+    "name" : "Croogo/Core",
+    "description" : "Default theme for Croogo (Based on StartBootstrap Agency)",
+    "screenshot" : "img/screenshot.jpg",
 
-	"author" : "Fahad Ibnay Heylaal",
-	"authorEmail" : "contact@fahad19.com",
-	"authorUrl" : "http://fahad19.com",
+    "author" : "Croogo Dev Team",
+    "authorEmail" : "team@croogo.org",
+    "authorUrl" : "http://croogo.org",
 
-	"menus" : [
-		"main",
-		"footer"
-	],
+    "menus" : [
+        "main",
+        "footer"
+    ],
 
-	"regions" : [
-		"right"
-	],
-
-	"settings" : {
-		"icons": {
-			"translate": "flag"
-		},
-		"css" : {
-			"container" : "container-fluid",
-			"row" : "row",
-			"tableClass" : "table table-striped"
-		},
-		"prefixes": {
-			"": {
-				"helpers": {
-					"Html": { "className": "Croogo/Core.CroogoHtml" },
-					"Form": { "className": "Croogo/Core.CroogoForm" }
-				}
-			}
-		}
-	}
+    "regions" : [
+        "right"
+    ]
 }
