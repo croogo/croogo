@@ -189,6 +189,9 @@ class CroogoTheme
             if ($json) {
                 $json['vendor'] = $json['name'];
                 unset($json['name']);
+                if (isset($manifestFile) && isset($themeData['description'])) {
+                    unset($json['description']);
+                }
                 $themeData = Hash::merge($themeData, $json);
             }
         }
