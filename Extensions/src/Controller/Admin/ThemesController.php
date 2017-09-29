@@ -50,7 +50,11 @@ class ThemesController extends AppController
             $themesData[$theme] = $this->_CroogoTheme->getData($theme, $path);
         }
 
-        $currentTheme = $this->_CroogoTheme->getData(Configure::read('Site.theme'));
+        $activeTheme = Configure::read('Site.theme');
+        if (empty($activeTheme)) {
+            $activeTheme = 'Croogo/Core';
+        }
+        $currentTheme = $this->_CroogoTheme->getData($activeTheme);
         $this->set(compact('themes', 'themesData', 'currentTheme'));
     }
 
