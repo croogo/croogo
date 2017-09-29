@@ -21,12 +21,7 @@ $this->end(); ?>
                 <h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
                 <?php
                 if (isset($currentTheme['screenshot'])):
-                    if (!Configure::read('Site.theme')) :
-                        $file = $currentTheme['screenshot'];
-                    else:
-                        $file = $this->Url->assetUrl(Configure::read('Site.theme') . '.' . $currentTheme['screenshot']);
-                    endif;
-                    $file = str_replace($this->request->base, '', $file);
+                    $file = $this->Url->assetUrl($currentTheme['name'] . '.' . $currentTheme['screenshot']);
                     $imgUrl = $this->Html->thumbnail($file);
                     $link = $this->Html->link($imgUrl, $file, [
                         'escape' => false,
