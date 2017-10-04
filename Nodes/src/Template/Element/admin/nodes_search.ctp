@@ -12,6 +12,7 @@ echo $this->Form->input('filter', [
     'title' => __d('croogo', 'Search'),
     'placeholder' => __d('croogo', 'Search...'),
     'tooltip' => false,
+    'default' => $this->request->query('filter'),
 ]);
 
 if (!isset($this->request->query['chooser'])):
@@ -20,6 +21,7 @@ if (!isset($this->request->query['chooser'])):
         'options' => $nodeTypes,
         'empty' => __d('croogo', 'Type'),
         'class' => 'c-select',
+        'default' => $this->request->query('type'),
     ]);
 
     echo $this->Form->input('status', [
@@ -29,6 +31,7 @@ if (!isset($this->request->query['chooser'])):
         ],
         'empty' => __d('croogo', 'Status'),
         'class' => 'c-select',
+        'default' => $this->request->query('status'),
     ]);
 
     echo $this->Form->input('promote', [
@@ -38,6 +41,7 @@ if (!isset($this->request->query['chooser'])):
         ],
         'empty' => __d('croogo', 'Promoted'),
         'class' => 'c-select',
+        'default' => $this->request->query('promote'),
     ]);
 
 endif;

@@ -38,6 +38,7 @@ if (!empty($searchFields)):
         if (substr($label, -3) === '_id') {
             $label = substr($label, 0, -3);
         }
+        $options['default'] = $this->request->query($field);
         $label = __(Inflector::humanize(Inflector::underscore($label)));
         $options['placeholder'] = __d('croogo', $label);
         $this->Form->unlockField($field);
