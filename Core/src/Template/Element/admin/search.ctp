@@ -46,5 +46,11 @@ if (!empty($searchFields)):
     }
 
     echo $this->Form->submit(__d('croogo', 'Filter'), ['type' => 'submit', 'class' => 'btn-outline-success']);
+    echo $this->Html->link('Reset', [
+        'action' => 'index',
+    ], [
+        'class' => 'btn btn-outline-secondary',
+    ]);
+
     echo $this->Form->end();
 endif;
