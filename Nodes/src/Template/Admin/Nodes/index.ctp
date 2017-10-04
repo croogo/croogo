@@ -44,11 +44,11 @@ $this->append('table-body');
             <td>
                 <span>
                 <?php
-                echo $this->Html->link($node->title,
+                echo $this->Html->link($this->Text->truncate($node->title, 40),
                     Hash::merge($node->url->getArrayCopy(), [
                         'prefix' => false,
                     ]),
-                    ['target' => '_blank']
+                    ['target' => '_blank', 'title' => $node->title]
                 );
                 ?>
                 </span>
