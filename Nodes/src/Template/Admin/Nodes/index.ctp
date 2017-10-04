@@ -29,6 +29,7 @@ echo $this->Html->tableHeaders([
     $this->Paginator->sort('title', __d('croogo', 'Title')),
     $this->Paginator->sort('type', __d('croogo', 'Type')),
     $this->Paginator->sort('user_id', __d('croogo', 'User')),
+    $this->Paginator->sort('updated', __d('croogo', 'Updated')),
     $this->Paginator->sort('status', __d('croogo', 'Status')),
     '',
 ]);
@@ -72,6 +73,9 @@ $this->append('table-body');
             </td>
             <td>
                 <?php echo $node->user->username; ?>
+            </td>
+            <td>
+                <?php echo h($node->updated); ?>
             </td>
             <td>
                 <?php
