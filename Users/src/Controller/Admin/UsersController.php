@@ -73,7 +73,7 @@ class UsersController extends AppController
 
         $this->_setupPrg();
 
-        $this->Auth->allow('add');
+        $this->Auth->allow(['add', 'forgot', 'reset']);
     }
 
 /**
@@ -386,6 +386,82 @@ class UsersController extends AppController
         }
 
         $this->Flash->success(__d('croogo', 'You have successfully registered an account. An email has been sent with further instructions.'));
+
+        return $this->redirect(['action' => 'login']);
+    }
+
+/**
+ * Forgot
+ *
+ * @return void
+ * @access public
+ */
+    public function forgot()
+    {
+        if (!$this->request->is('post')) {
+            return;
+        }
+
+        $user = $this->Users
+            ->findByUsername($this->request->data('username'))
+            ->first();
+        if (!$user) {
+            $this->Flash->error(__d('croogo', 'Invalid username.'));
+
+            return $this->redirect(['action' => 'forgot']);
+        }
+
+        $success = $this->Users->resetPassword($user);
+        if (!$success) {
+            $this->Flash->error(__d('croogo', 'An error occurred. Please try again.'));
+
+            return;
+        }
+
+        $this->Flash->success(__d('croogo', 'An email has been sent with instructions for resetting your password.'));
+
+        return $this->redirect(['action' => 'login']);
+    }
+
+/**
+ * Reset
+ *
+ * @param string $username
+ * @param string $activationKey
+ * @return void
+ * @access public
+ */
+    public function reset($username, $activationKey)
+    {
+        // Get the user with the activation key from the database
+        $user = $this->Users->find()->where([
+            'username' => $username,
+            'activation_key' => $activationKey
+        ])->first();
+        if (!$user) {
+            $this->Flash->error(__d('croogo', 'An error occurred.'));
+
+            return $this->redirect(['action' => 'login']);
+        }
+
+        $this->set('user', $user);
+
+        if (!$this->request->is('put')) {
+            return;
+        }
+
+        // Change the password of the user entity
+        $user = $this->Users->changePasswordFromReset($user, $this->request->data());
+
+        // Save the user with changed password
+        $user = $this->Users->save($user);
+        if (!$user) {
+            $this->Flash->error(__d('croogo', 'An error occurred. Please try again.'));
+
+            return;
+        }
+
+        $this->Flash->success(__d('croogo', 'Your password has been reset successfully.'));
 
         return $this->redirect(['action' => 'login']);
     }

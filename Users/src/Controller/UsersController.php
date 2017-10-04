@@ -138,7 +138,10 @@ class UsersController extends AppController
             return $this->redirect(['action' => 'forgot']);
         }
 
-        $success = $this->Users->resetPassword($user);
+        $options = [
+            'prefix' => $this->request->param('prefix'),
+        ];
+        $success = $this->Users->resetPassword($user, $options);
         if (!$success) {
             $this->Flash->error(__d('croogo', 'An error occurred. Please try again.'));
 
@@ -161,9 +164,9 @@ class UsersController extends AppController
     public function reset($username, $activationKey)
     {
         // Get the user with the activation key from the database
-        $user = $this->Users->find('byActivationKey', [
+        $user = $this->Users->find()->where([
             'username' => $username,
-            'activationKey' => $activationKey
+            'activation_key' => $activationKey
         ])->first();
         if (!$user) {
             $this->Flash->error(__d('croogo', 'An error occurred.'));

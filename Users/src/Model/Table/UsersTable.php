@@ -154,10 +154,10 @@ class UsersTable extends CroogoTable
      * @param User $user User to run the procedure for
      * @return bool Returns true when successful, false if not
      */
-    public function resetPassword(User $user)
+    public function resetPassword(User $user, array $options = [])
     {
         // Generate a unique activation key
-        $user->activation_key = Text::uuid();
+        $user->activation_key = bin2hex(random_bytes(16));
 
         $user = $this->save($user);
         if (!$user) {
@@ -167,6 +167,7 @@ class UsersTable extends CroogoTable
         // Send out an password reset email
         $email = $this
             ->getMailer('Croogo/Users.User')
+            ->viewVars(compact('options'))
             ->send('resetPassword', [$user]);
         if (!$email) {
             return false;
