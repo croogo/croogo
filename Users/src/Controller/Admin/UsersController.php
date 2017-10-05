@@ -262,6 +262,21 @@ class UsersController extends AppController
             Croogo::dispatchEvent('Controller.Users.beforeAdminLogin', $this);
             $user = $this->Auth->identify();
             if ($user) {
+
+                if ($session->check('Croogo.redirect')) {
+                    $redirectUrl = $session->read('Croogo.redirect');
+                    $session->delete('Croogo.redirect');
+                } else {
+                    $redirectUrl = $this->Auth->redirectUrl();
+                }
+
+                if (!$this->Access->isUrlAuthorized($user, $redirectUrl)) {
+                    Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);
+                    $this->Auth->authError = __d('croogo', 'Authorization error');
+                    $this->Flash->error($this->Auth->authError, ['key' => 'auth']);
+                    return $this->redirect($this->Auth->loginAction);
+                }
+
                 $this->Auth->setUser($user);
 
                 if ($this->Auth->authenticationProvider()->needsPasswordRehash()) {
@@ -271,12 +286,6 @@ class UsersController extends AppController
                 }
 
                 Croogo::dispatchEvent('Controller.Users.adminLoginSuccessful', $this);
-                if ($session->check('Croogo.redirect')) {
-                    $redirectUrl = $session->read('Croogo.redirect');
-                    $session->delete('Croogo.redirect');
-                } else {
-                    $redirectUrl = $this->Auth->redirectUrl();
-                }
                 return $this->redirect($redirectUrl);
             } else {
                 Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);

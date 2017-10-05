@@ -4,7 +4,9 @@ namespace Croogo\Acl\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Event\Event;
+use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Croogo\Core\Croogo;
 
 /**
@@ -109,4 +111,25 @@ class AccessComponent extends Component
         $Aco = TableRegistry::get('Croogo/Acl.Acos');
         $Aco->removeAco($action);
     }
+
+    public function isUrlAuthorized($user, $url)
+    {
+        if (is_string($url)) {
+            $parsedUrl = Router::parse($url);
+            unset($parsedUrl['_matchedRoute']);
+            $options = [
+                'params' => $parsedUrl,
+                'url' => $url,
+            ];
+        } else {
+            $reversedRoute = Router::reverse($url);
+            $options = [
+                'params' => $url,
+                'url' => $reversedRoute,
+            ];
+        }
+        $request = new ServerRequest($options);
+        return $this->getController()->Auth->isAuthorized($user, $request);
+    }
+
 }

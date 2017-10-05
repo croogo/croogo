@@ -224,16 +224,22 @@ class UsersController extends AppController
             return $this->redirect($this->Auth->loginAction);
         }
 
-        $this->Auth->setUser($user);
-
-        Croogo::dispatchEvent('Controller.Users.loginSuccessful', $this);
-
         if ($session->check('Croogo.redirect')) {
             $redirectUrl = $session->read('Croogo.redirect');
             $session->delete('Croogo.redirect');
         } else {
             $redirectUrl = $this->Auth->redirectUrl();
         }
+
+        if (!$this->Access->isUrlAuthorized($user, $redirectUrl)) {
+            Croogo::dispatchEvent('Controller.Users.loginFailure', $this);
+            $this->Flash->error($this->Auth->config('authError'));
+            return $this->redirect($this->Auth->loginRedirect);
+        }
+
+        $this->Auth->setUser($user);
+
+        Croogo::dispatchEvent('Controller.Users.loginSuccessful', $this);
 
         return $this->redirect($redirectUrl);
     }
