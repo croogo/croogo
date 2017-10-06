@@ -31,7 +31,12 @@ Admin.navigation = function () {
     $(this).siblings('a.sidebar-item').addClass('current')
   });
   if (window.innerWidth >= 979) {
-    $topLevelMenus.parent().find('> .current').next('ul').toggle();
+    $('.current', $sidebar)
+      .parents('.sub-nav')
+      .last()
+      .toggle()
+      .siblings('.sidebar-item')
+      .addClass('current')
   }
 
   var dropdownOpen = function () {
