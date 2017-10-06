@@ -126,8 +126,8 @@ class TaxonomiesTable extends CroogoTable
  * If yes, return Taxonomy ID
  * otherwise, return false
  *
- * @param int$termId
- * @param int$vocabularyId
+ * @param int $termId
+ * @param int $vocabularyId
  * @return boolean
  */
     public function termInVocabulary($termId, $vocabularyId)

@@ -68,7 +68,7 @@ class AliasableBehavior extends Behavior
  * byId
  *
  * @param
- * @param int$id
+ * @param int $id
  * @return boolean
  */
     public function byId($id)

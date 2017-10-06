@@ -142,7 +142,7 @@ class LayoutHelper extends Helper
  *
  * instead of 0/1, show tick/cross
  *
- * @param int$value or 1
+ * @param int $value or 1
  * @return string formatted img tag
  */
     public function status($value)
@@ -259,7 +259,7 @@ class LayoutHelper extends Helper
  *
  * RSS feeds
  *
- * @param bool$returnUrl true, only the URL will be returned
+ * @param bool $returnUrl true, only the URL will be returned
  * @return string
  */
     public function feed($returnUrl = false)

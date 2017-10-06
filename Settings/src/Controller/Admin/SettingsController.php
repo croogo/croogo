@@ -77,8 +77,8 @@ class SettingsController extends AppController
 /**
  * Admin moveup
  *
- * @param int$id
- * @param int$step
+ * @param int $id
+ * @param int $step
  * @return void
  * @access public
  */
@@ -104,8 +104,8 @@ class SettingsController extends AppController
 /**
  * Admin moveup
  *
- * @param int$id
- * @param int$step
+ * @param int $id
+ * @param int $step
  * @return void
  * @access public
  */

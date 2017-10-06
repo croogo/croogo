@@ -209,7 +209,7 @@ class MenusHelper extends Helper
  *
  * @param array $links model output (threaded)
  * @param array $options (optional)
- * @param int$depthdepth level
+ * @param int $depthdepth level
  * @return string
  */
     public function nestedLinks($links, $options = [], $depth = 1)

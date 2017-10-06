@@ -213,7 +213,7 @@ class UsersController extends AppController
 /**
  * Admin reset password
  *
- * @param int$id
+ * @param int $id
  * @return void
  * @access public
  */

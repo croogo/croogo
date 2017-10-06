@@ -87,7 +87,7 @@ class ActionsController extends AppController
 /**
  * admin_edit
  *
- * @param int$id
+ * @param int $id
  */
     public function edit($id = null)
     {
@@ -121,7 +121,7 @@ class ActionsController extends AppController
 /**
  * admin_delete
  *
- * @param int$id
+ * @param int $id
  */
     public function delete($id = null)
     {
@@ -136,7 +136,7 @@ class ActionsController extends AppController
 /**
  * admin_move
  *
- * @param int$id
+ * @param int $id
  * @param string $direction
  * @param string $step
  */

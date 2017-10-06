@@ -31,7 +31,7 @@ class TranslateController extends AppController
 /**
  * index
  *
- * @param int$id
+ * @param int $id
  * @param string $modelAlias
  * @return void
  */
@@ -93,7 +93,7 @@ class TranslateController extends AppController
 /**
  * edit
  *
- * @param int$id
+ * @param int $id
  * @param string $modelAlias
  * @return void
  */
@@ -194,7 +194,7 @@ class TranslateController extends AppController
 /**
  * delete
  *
- * @param int$id
+ * @param int $id
  * @param string $modelAlias
  * @param string $locale
  * @return void

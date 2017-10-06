@@ -31,7 +31,7 @@ class LanguagesController extends AppController
 /**
  * Admin select
  *
- * @param int$id
+ * @param int $id
  * @param string $modelAlias
  * @return void
  * @access public

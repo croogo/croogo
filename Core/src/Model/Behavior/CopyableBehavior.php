@@ -345,7 +345,7 @@ class CopyableBehavior extends Behavior
  *
  * @param Model $record
  * @param array $id
- * @param int$id
+ * @param int $id
  * @return array
  */
     protected function _masterKeyLoop($record, $id)

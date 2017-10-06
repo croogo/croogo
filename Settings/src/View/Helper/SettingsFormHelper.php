@@ -60,7 +60,6 @@ class SettingsFormHelper extends Helper
  *
  * @param Setting $setting setting data
  * @param string $label Input label
- * @param int$iindex
  * @return string
  */
     public function input(Setting $setting, $label)

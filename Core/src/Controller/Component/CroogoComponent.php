@@ -272,8 +272,8 @@ class CroogoComponent extends Component
  * If 'save' pressed, redirect to referer or $indexUrl instead of 'edit'
  *
  * @param string $url
- * @param int$status
- * @param bool$exit
+ * @param int $status
+ * @param bool $exit
  * @param array $indexUrl
  * @return void|\Cake\Network\Response
  * @see CroogoComponent::setReferer()

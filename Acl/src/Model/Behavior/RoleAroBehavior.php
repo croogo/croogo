@@ -138,7 +138,7 @@ class RoleAroBehavior extends Behavior
  * Retrieve a list of allowed parent roles
  *
  * @paraam integer $roleId
- * @param int$idRole id
+ * @param int $id Role id
  * @return array list of allowable parent roles in 'list' format
  */
     public function allowedParents($id = null)

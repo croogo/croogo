@@ -72,8 +72,8 @@ class CommentsController extends AppController
 /**
  * add
  *
- * @param int$foreignKey
- * @param int$parentId
+ * @param int $foreignKey
+ * @param int $parentId
  * @return \Cake\Network\Response|null
  * @access public
  * @throws UnexpectedValueException
@@ -163,8 +163,8 @@ class CommentsController extends AppController
 /**
  * Spam Protection
  *
- * @param bool$continue
- * @param bool$spamProtection
+ * @param bool $continue
+ * @param bool $spamProtection
  * @param array $node
  * @return boolean
  * @access protected
@@ -191,8 +191,8 @@ class CommentsController extends AppController
 /**
  * Captcha
  *
- * @param bool$continue
- * @param bool$captchaProtection
+ * @param bool $continue
+ * @param bool $captchaProtection
  * @param array $node
  * @return boolean
  * @access protected
@@ -213,7 +213,7 @@ class CommentsController extends AppController
 /**
  * delete
  *
- * @param int$id
+ * @param int $id
  * @return void
  * @access public
  */

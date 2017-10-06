@@ -34,7 +34,7 @@ class MetaController extends AppController
 /**
  * Admin delete meta
  *
- * @param int$id
+ * @param int $id
  * @return void
  * @access public
  */

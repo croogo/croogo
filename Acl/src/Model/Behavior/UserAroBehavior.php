@@ -51,7 +51,7 @@ class UserAroBehavior extends Behavior
      * afterSave
      *
      * @param Model $model
-     * @param bool$created
+     * @param bool $created
      * @return void
      */
     public function afterSave(Event $event, Entity $entity)

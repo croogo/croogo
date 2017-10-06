@@ -24,7 +24,7 @@ class ExampleBehavior extends Behavior
  *
  * @param Model $model
  * @param array $results
- * @param bool$primary
+ * @param bool $primary
  * @return array
  */
     public function beforeFind(Event $event, Query $query)

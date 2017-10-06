@@ -165,8 +165,8 @@ class CommentsTable extends CroogoTable
 /**
  * Checks wether comment has been approved
  *
- * @param int$commentIdcomment id
- * @param int$nodeIdnode id
+ * @param int $commentId comment id
+ * @param int $nodeId node id
  * @return boolean true if comment is approved
  */
     public function isApproved($commentId, $model, $foreignKey)
