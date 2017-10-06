@@ -123,13 +123,6 @@
     }
   }
 
-  .nav > li > a {
-    color: $navbar-dark-color;
-    &:hover {
-      color: $navbar-dark-hover-color;
-    }
-  }
-
   .nav {
     padding: 0;
     @include border-radius(0);
