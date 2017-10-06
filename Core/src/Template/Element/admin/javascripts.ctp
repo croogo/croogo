@@ -15,6 +15,7 @@ if (!$this->request->is('ajax')):
         'Croogo/Core.core/admin',
         'Croogo/Core.core/sidebar',
         'Croogo/Core.core/choose',
+        'Croogo/Core.core/modal',
         'Croogo/Core.core/moment-with-locales',
         'Croogo/Core.core/moment-timezone-with-data',
         'Croogo/Core.core/bootstrap-datetimepicker.min',

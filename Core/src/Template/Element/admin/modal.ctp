@@ -1,5 +1,4 @@
 <?php
-$this->Html->script('Croogo/Core.modal', ['block' => true]);
 $title = isset($title) ? $title : null;
 if (empty($id)) {
     $id = 'modal';
