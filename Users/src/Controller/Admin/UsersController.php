@@ -73,7 +73,7 @@ class UsersController extends AppController
 
         $this->_setupPrg();
 
-        $this->Auth->allow(['add', 'forgot', 'reset']);
+        $this->Auth->allow(['register', 'forgot', 'reset']);
     }
 
 /**
@@ -368,12 +368,12 @@ class UsersController extends AppController
     }
 
 /**
- * Add
+ * Register
  *
  * @return void
  * @access public
  */
-    public function add()
+    public function register()
     {
         if ($this->Auth->user('id')) {
             $this->Flash->error(__d('croogo', 'You are already logged in'));
