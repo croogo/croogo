@@ -149,13 +149,19 @@ class MenusHelper extends Helper
     {
         $_options = [
             'tag' => 'ul',
-            'tagAttributes' => [],
+            'tagAttributes' => [
+                'class' => 'dropdown-menu bg-dark',
+            ],
             'subTag' => 'li',
-            'subTagAttributes' => [],
-            'linkAttributes' => [],
+            'subTagAttributes' => [
+                'class' => 'nav-item',
+            ],
+            'linkAttributes' => [
+                'class' => 'nav-link js-scroll-trigger',
+            ],
             'selected' => 'selected',
             'dropdown' => false,
-            'dropdownClass' => 'sf-menu',
+            'dropdownClass' => 'navbar-nav ml-auto',
             'element' => 'Croogo/Menus.menu',
         ];
         $options = array_merge($_options, $options);
@@ -254,12 +260,26 @@ class MenusHelper extends Helper
                 continue;
             }
 
+            if (isset($link['children']) && count($link['children']) > 0) {
+                $linkAttr['class'] .= ' dropdown-toggle';
+                $linkAttr['data-toggle'] = 'dropdown';
+                $linkAttr['aria-haspopup'] = 'true';
+                $linkAttr['aria-expanded'] = 'false';
+            }
+
             $linkOutput = $this->Html->link($link->title, $link->link->getUrl(), $linkAttr);
             if (isset($link['children']) && count($link['children']) > 0) {
-                $linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
+                $childOptions = $options;
+                $childOptions['subTagAttributes']['class'] = 'dropdown-item bg-dark';
+                $linkOutput .= $this->nestedLinks($link['children'], $childOptions, $depth + 1);
             }
             $liAttr = $this->_mergeLinkParams($link, 'liAttr');
             $liAttr = !empty($liAttr) ? $liAttr : $options['subTagAttributes'];
+
+            if (isset($link['children']) && count($link['children']) > 0) {
+                $liAttr['class'] .= ' dropdown';
+            }
+
             $linkOutput = $this->Html->tag($options['subTag'], $linkOutput, $liAttr);
             $output .= $linkOutput;
         }
