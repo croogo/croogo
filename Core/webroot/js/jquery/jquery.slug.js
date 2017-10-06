@@ -308,7 +308,9 @@
           if (settings.editable && slug) {
             $slugEdit.show();
           } else {
-            $slugEdit.hide();
+            if ($target.data('slugEditLabel')) {
+              $slugEdit.hide();
+            }
           }
         });
 
