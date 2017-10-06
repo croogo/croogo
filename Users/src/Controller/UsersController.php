@@ -233,6 +233,7 @@ class UsersController extends AppController
 
         if (!$this->Access->isUrlAuthorized($user, $redirectUrl)) {
             Croogo::dispatchEvent('Controller.Users.loginFailure', $this);
+            $this->Auth->config('authError', __d('croogo', 'Authorization error'));
             $this->Flash->error($this->Auth->config('authError'));
             return $this->redirect($this->Auth->loginRedirect);
         }
