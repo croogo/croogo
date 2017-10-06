@@ -4,6 +4,7 @@ namespace Croogo\FileManager\Utility;
 
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 
 /**
  * FileManager Model
