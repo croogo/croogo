@@ -209,4 +209,56 @@ class CroogoNav {
 		return self::$_defaults;
 	}
 
+	private static function __getAdminGravatar($user) {
+		return '<img src="//www.gravatar.com/avatar/' . md5($user['email']) . '?s=23" class="img-rounded"/> ';
+	}
+
+	public static function addVisitWebsiteLink() {
+		CroogoNav::add('top-left', 'site', array(
+				'icon' => false,
+				'title' => __d('croogo', 'Visit website'),
+				'url' => '/',
+				'weight' => 0,
+				'htmlAttributes' => array(
+						'target' => '_blank',
+				),
+		));
+	}
+
+	public static function setAdminUserMenu() {
+		$user = CakeSession::read('Auth.User');
+		$gravatarUrl = self::__getAdminGravatar($user);
+		CroogoNav::add('top-right', 'user', array(
+			'icon' => false,
+			'title' => $user['username'],
+			'before' => $gravatarUrl,
+			'url' => '#',
+			'children' => array(
+				'profile' => array(
+					'title' => __d('croogo', 'Profile'),
+					'icon' => 'user',
+					'url' => array(
+						'admin' => true,
+						'plugin' => 'users',
+						'controller' => 'users',
+						'action' => 'edit',
+						$user['id'],
+					),
+				),
+				'separator-1' => array(
+					'separator' => true,
+				),
+				'logout' => array(
+					'icon' => 'off',
+					'title' => __d('croogo', 'Logout'),
+					'url' => array(
+						'admin' => true,
+						'plugin' => 'users',
+						'controller' => 'users',
+						'action' => 'logout',
+					),
+				),
+			),
+		));
+	}
 }
