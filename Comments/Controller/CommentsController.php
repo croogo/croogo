@@ -336,8 +336,7 @@ class CommentsController extends CommentsAppController {
 		$email = new CakeEmail();
 		$commentId = $this->Comment->id;
 		try {
-			$email->from(Configure::read('Site.title') . ' ' .
-				'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
+			$email->config('default')
 				->to(Configure::read('Site.email'))
 				->subject('[' . Configure::read('Site.title') . '] ' .
 					__d('croogo', 'New comment posted under') . ' ' . $node['Node']['title'])

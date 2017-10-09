@@ -141,7 +141,6 @@ class UsersController extends UsersAppController {
 			$user['activation_key'],
 		), true);
 		$this->_sendEmail(
-			array(Configure::read('Site.title'), $this->_getSenderEmail()),
 			$user['email'],
 			__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')),
 			'Users.register',
@@ -305,7 +304,6 @@ class UsersController extends UsersAppController {
 /**
  * Convenience method to send email
  *
- * @param string $from Sender email
  * @param string $to Receiver email
  * @param string $subject Subject
  * @param string $template Template to use
@@ -314,7 +312,7 @@ class UsersController extends UsersAppController {
  * @param string $emailType user activation, reset password, used in log message when failing.
  * @return boolean True if email was sent, False otherwise.
  */
-	protected function _sendEmail($from, $to, $subject, $template, $emailType, $theme = null, $viewVars = null) {
+	protected function _sendEmail($to, $subject, $template, $emailType, $theme = null, $viewVars = null) {
 		if (is_null($theme)) {
 			$theme = $this->theme;
 		}
@@ -322,7 +320,7 @@ class UsersController extends UsersAppController {
 
 		try {
 			$email = new CakeEmail();
-			$email->from($from[1], $from[0]);
+			$email->config('default');
 			$email->to($to);
 			$email->subject($subject);
 			$email->template($template);
@@ -358,7 +356,6 @@ class UsersController extends UsersAppController {
 				$this->request->data['User']['password'] = null;
 
 				$this->_sendEmail(
-					array(Configure::read('Site.title'), $this->_getSenderEmail()),
 					$this->request->data['User']['email'],
 					__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')),
 					'Users.register',
@@ -464,7 +461,6 @@ class UsersController extends UsersAppController {
 			$this->set(compact('user', 'activationKey'));
 
 			$emailSent = $this->_sendEmail(
-				array(Configure::read('Site.title'), $this->_getSenderEmail()),
 				$user['User']['email'],
 				__d('croogo', '[%s] Reset Password', Configure::read('Site.title')),
 				'Users.forgot_password',
@@ -580,10 +576,6 @@ class UsersController extends UsersAppController {
 
 		$this->set('title_for_layout', $user['User']['name']);
 		$this->set(compact('user'));
-	}
-
-	protected function _getSenderEmail() {
-		return 'croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
 	}
 
 }
