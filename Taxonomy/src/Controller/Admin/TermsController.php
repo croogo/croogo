@@ -96,7 +96,13 @@ class TermsController extends AppController
         ]);
         $defaultType = $this->__getDefaultType($vocabulary);
 
-        $terms = $this->Terms->find('byVocabulary', ['vocabulary_id' => $vocabularyId]);
+        $terms = $this->Terms->find()
+            ->innerJoinWith('Taxonomies', function($q) use ($vocabularyId) {
+                return $q->where([
+                    'vocabulary_id' => $vocabularyId,
+                ]);
+            })
+            ->orderAsc('lft');
         $this->set(compact('vocabulary', 'terms', 'defaultType'));
 
         if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
