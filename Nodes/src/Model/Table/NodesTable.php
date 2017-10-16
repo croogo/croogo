@@ -79,6 +79,11 @@ class NodesTable extends CroogoTable
                 'before' => true,
                 'after' => true
             ])
+            ->add('slug', 'Search.Like', [
+                'field' => $this->aliasField('slug'),
+                'before' => true,
+                'after' => true
+            ])
             ->add('type', 'Search.Value', [
                 'field' => $this->aliasField('type')
             ])
