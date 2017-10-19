@@ -30,7 +30,7 @@ Meta.addMeta = function () {
       .addClass('disabled')
       .prepend(Meta._spinner);
     $.get(aAddMeta.attr('href'), function (data) {
-      aAddMeta.closest('.card-block').find('.meta-fields').append(data);
+      aAddMeta.closest('.card-body').find('.meta-fields').append(data);
       $('div.meta a.remove-meta').unbind();
       Meta.removeMeta();
       aAddMeta
