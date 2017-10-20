@@ -17,7 +17,11 @@ if ($this->request->params['action'] == 'add') {
 }
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add($node->title, $this->request->getRequestTarget());
+    $this->Breadcrumbs->add($node->title, $this->request->getRequestTarget(), [
+        'innerAttrs' => [
+            'title' => $node->title,
+        ],
+    ]);
 }
 
 $this->append('form-start', $this->Form->create($node, [
