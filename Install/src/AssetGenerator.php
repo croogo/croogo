@@ -4,7 +4,7 @@ namespace Croogo\Install;
 
 use Cake\Core\Plugin;
 
-class AssetGenerator extends Object
+class AssetGenerator
 {
 
     protected $_croogoPath;
