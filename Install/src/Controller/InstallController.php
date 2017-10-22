@@ -87,7 +87,7 @@ class InstallController extends Controller
  */
     protected function _generateAssets()
     {
-        $file = Plugin::path('Croogo/Core') . 'webroot' . DS . 'css' . DS . 'croogo-admin.css';
+        $file = Plugin::path('Croogo/Core') . 'webroot' . DS . 'css' . DS . 'core' . DS . 'croogo-admin.css';
         if (!file_exists($file)) {
             $generator = new AssetGenerator();
             try {
