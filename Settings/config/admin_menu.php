@@ -99,5 +99,16 @@ Nav::add('sidebar', 'settings', [
             'weight' => 70,
         ],
 
+        'cache' => [
+            'title' => __d('croogo', 'Cache'),
+            'url' => [
+                'prefix' => 'admin',
+                'plugin' => 'Croogo/Settings',
+                'controller' => 'Caches',
+                'action' => 'index',
+            ],
+            'weight' => 70,
+        ],
+
     ],
 ]);

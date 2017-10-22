@@ -74,9 +74,6 @@ class MetaBehavior extends Behavior
                     $customFields = [];
                     if (!empty($entity->meta)) {
                         $customFields = Hash::combine($entity->meta, '{n}.key', '{n}.value');
-                        // Unset property so jsonapi does not complain:
-                        // Schema is not registered for a resource at path 'meta'
-                        $entity->unsetProperty('meta');
                     }
                     $entity->custom_fields = $customFields;
                     return $entity;
