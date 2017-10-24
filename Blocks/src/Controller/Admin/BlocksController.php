@@ -101,4 +101,9 @@ class BlocksController extends AppController
         }
     }
 
+    public function toggle()
+    {
+        return $this->Crud->execute();
+    }
+
 }
