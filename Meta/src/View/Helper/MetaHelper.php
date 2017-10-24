@@ -135,6 +135,7 @@ class MetaHelper extends Helper
             $fields .= $this->Form->input('meta.' . $uuid . '.id', ['type' => 'hidden', 'value' => $id]);
             $this->Form->unlockField('meta.' . $uuid . '.id');
         }
+        $options['value']['data-metafield'] = $key;
         $fields .= $this->Form->input('meta.' . $uuid . '.key', $options['key']);
         $fields .= $this->Form->input('meta.' . $uuid . '.value', $options['value']);
         $this->Form->unlockField('meta.' . $uuid . '.key');
