@@ -41,6 +41,10 @@ class BlocksController extends AppController
         $this->Crud->config('actions.moveDown', [
             'className' => 'Croogo/Core.Admin/MoveDown'
         ]);
+
+        if ($this->request->param('action') == 'toggle') {
+            $this->Croogo->protectToggleAction();
+        }
     }
 
 /**
