@@ -21,7 +21,6 @@ $this->append('tab-heading');
 echo $this->Croogo->adminTab(__d('croogo', 'Block'), '#block-basic');
 echo $this->Croogo->adminTab(__d('croogo', 'Visibilities'), '#block-visibilities');
 echo $this->Croogo->adminTab(__d('croogo', 'Params'), '#block-params');
-echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->append('tab-content');
@@ -60,7 +59,6 @@ echo $this->Html->tabStart('block-params') . $this->Form->input('params', [
     ]);
 echo $this->Html->tabEnd();
 
-echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->append('panels');
