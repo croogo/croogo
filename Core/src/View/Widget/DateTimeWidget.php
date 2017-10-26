@@ -46,7 +46,10 @@ class DateTimeWidget extends CakeDateTimeWidget
         }
 
         if (!($val instanceof DateTime) && !empty($val)) {
-            $val = $type === 'date' ? Time::parseDate($val) : Time::parseDateTime($val);
+            $sysDateFormat = 'yyyy-MM-dd HH:mm:SS';
+            $val = $type === 'date' ?
+                Time::parseDate($val, $sysDateFormat) :
+                Time::parseDateTime($val, $sysDateFormat);
             $timestamp = $val->format('U');
         }
 
