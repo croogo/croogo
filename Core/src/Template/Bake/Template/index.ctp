@@ -76,7 +76,12 @@ $this->append('table-body');
             }
         }
         if ($isKey !== true) {
-            if (!in_array($schema->columnType($field), ['integer', 'biginteger', 'decimal', 'float'])) {
+            $columnType = $schema->columnType($field);
+            if (in_array($columnType, ['date', 'datetime'])) {
+%>
+        <td><?= $this->Time->i18nFormat($<%= $singularVar %>-><%= $field %>) ?></td>
+<%
+            } else if (!in_array($columnType, ['integer', 'biginteger', 'decimal', 'float'])) {
 %>
         <td><?= h($<%= $singularVar %>-><%= $field %>) ?></td>
 <%
