@@ -44,8 +44,8 @@ foreach ($dashboards as $dashboard):
                 ));
             ?>
         </td>
-        <td><?php echo h($dashboard->updated); ?>&nbsp;</td>
-        <td><?php echo h($dashboard->created); ?>&nbsp;</td>
+        <td><?php echo $this->Time->i18nFormat($dashboard->updated); ?>&nbsp;</td>
+        <td><?php echo $this->Time->i18nFormat($dashboard->created); ?>&nbsp;</td>
         <td class="item-actions">
         <?php
             $actions = array();

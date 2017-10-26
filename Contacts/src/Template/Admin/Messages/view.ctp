@@ -57,11 +57,11 @@ $this->append('main');
         </tr>
         <tr>
             <th scope="row"><?= __('Updated') ?></th>
-            <td><?= h($message->updated) ?></td>
+            <td><?= $this->Time->i18nFormat($message->updated) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($message->created) ?></td>
+            <td><?= $this->Time->i18nFormat($message->created) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Status') ?></th>

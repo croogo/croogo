@@ -75,7 +75,7 @@ $this->append('table-body');
                 <?php echo $node->user->username; ?>
             </td>
             <td>
-                <?php echo h($node->updated); ?>
+                <?php echo $this->Time->i18nFormat($node->updated); ?>
             </td>
             <td>
                 <?php

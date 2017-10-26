@@ -48,11 +48,11 @@ $this->append('main');
         </tr>
         <tr>
             <th scope="row"><?= __('Updated') ?></th>
-            <td><?= h($user->updated) ?></td>
+            <td><?= $this->Time->i18nFormat($user->updated) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($user->created) ?></td>
+            <td><?= $this->Time->i18nFormat($user->created) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Status') ?></th>

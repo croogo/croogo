@@ -11,7 +11,7 @@ use Cake\Core\Configure;
                 <?= h($comment->name); ?>
             <?php endif; ?>
         </span>
-        <span class="date"><?= h(__d('croogo', 'said on %s', $comment->created->i18nFormat())); ?></span>
+        <span class="date"><?= h(__d('croogo', 'said on %s', $this->Time->i18nFormat($comment->created))); ?></span>
     </div>
     <div class="comment-body"><?= $this->Text->autoParagraph($this->Text->autoLink($comment->body)); ?></div>
     <div class="comment-reply">
