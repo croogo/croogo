@@ -135,6 +135,7 @@ class StringConverter
                     }
                 } else {
                     $linkArr[] = $linkElement;
+                    $pass[] = $linkElement;
                 }
             }
         }
@@ -144,6 +145,10 @@ class StringConverter
 
         if (isset($query)) {
             $linkArr['?'] = $query;
+        }
+
+        if (isset($pass)) {
+            $linkArr['pass'] = $pass;
         }
 
         $cached[$hash] = $linkArr;
