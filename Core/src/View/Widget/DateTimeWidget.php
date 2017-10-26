@@ -31,6 +31,7 @@ class DateTimeWidget extends CakeDateTimeWidget
         $name = $data['name'];
         $val = $data['val'];
         $type = $data['type'];
+        $class = isset($data['class']) ? $data['class'] : '';
         $required = $data['required'] ? 'required' : '';
         $role = isset($data['role']) ? $data['role'] : 'datetime-picker';
         $minDate = isset($data['data-mindate']) ? $data['data-mindate'] : null;
@@ -74,7 +75,7 @@ class DateTimeWidget extends CakeDateTimeWidget
                 value="$val"
                 id="$id"
             />
-            <div class="input-group $type">
+            <div class="input-group $type $class">
                 <input
                     type="text"
                     class="form-control"
