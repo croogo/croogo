@@ -91,9 +91,18 @@ class DateTimeWidget extends CakeDateTimeWidget
                     data-maxDate="$maxDate"
                     $required
                 />
+html;
+
+        $addon = isset($data['addon']) ? $data['addon'] : true;
+        if ($addon) {
+            $widget .= <<<html
                 <label for="$id" class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </label>
+html;
+        }
+
+        $widget .= <<<html
             </div>
 html;
 
