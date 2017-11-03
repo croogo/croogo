@@ -204,7 +204,7 @@ class UsersController extends AppController
         $email = new Email('default');
         $email->from([$this->_getSenderEmail() => Configure::read('Site.title')])
             ->to($user->email)
-            ->subject(__d('croogo', '[{0}] Please activate your account', Configure::read('Site.title')))
+            ->subject(__d('croogo', '[%s] Please activate your account'), Configure::read('Site.title'))
             ->template('Croogo/Users.register')
             ->viewVars(compact('url', 'user'))
             ->send();
