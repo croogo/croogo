@@ -108,7 +108,7 @@ class UsersShell extends Shell
             'role_id' => $roleId,
             'name' => $username,
             'email' => $username,
-            'activation_key' => bin2hex(openssl_random_pseudo_bytes(20)),
+            'activation_key' => $this->Users->generateActivationKey(),
             'status' => true,
         ]);
         $result = $this->Users->save($user);

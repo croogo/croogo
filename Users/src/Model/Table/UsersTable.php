@@ -114,7 +114,7 @@ class UsersTable extends CroogoTable
 
         $user->set([
             'role_id' => RolesTable::ROLE_REGISTERED,
-            'activation_key' => Text::uuid(),
+            'activation_key' => $this->generateActivationKey(),
         ]);
 
         if (!$this->save($user)) {
@@ -158,7 +158,7 @@ class UsersTable extends CroogoTable
     public function resetPassword(User $user, array $options = [])
     {
         // Generate a unique activation key
-        $user->activation_key = bin2hex(random_bytes(16));
+        $user->activation_key = $this->generateActivationKey();
 
         Croogo::dispatchEvent('Model.Users.beforeResetPassword', $this,
             compact('user')
@@ -295,6 +295,14 @@ class UsersTable extends CroogoTable
                 $this->Roles->aliasField('id') => $roleId,
             ]);
         return $query;
+    }
+
+    public function generateActivationKey($length = null)
+    {
+        if (!$length) {
+            $length = Configure::read('Croogo.activationKeyLength', 20);
+        }
+        return bin2hex(random_bytes($length));
     }
 
 }
