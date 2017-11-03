@@ -111,6 +111,13 @@ Admin.formFeedback = function () {
       }
     }
   });
+
+  var activateErrorTab = function(e) {
+    var pane = $(e.target).closest('.tab-pane').get(0);
+    var selector = 'a[href="#' + pane.attributes['id'].value + '"]';
+    $('#content .nav-tabs').find(selector).tab('show')
+  };
+  $('form input').on('invalid', _.debounce(activateErrorTab, 150))
 }
 
 /**
