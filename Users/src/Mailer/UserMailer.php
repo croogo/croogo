@@ -26,6 +26,7 @@ class UserMailer extends Mailer
             ->to($user->email)
             ->subject(__d('croogo', '[%s] Reset Password', Configure::read('Site.title')))
             ->template('Croogo/Users.forgot_password')
+            ->emailFormat('both')
             ->set([
                 'user' => $user
             ]);
@@ -38,6 +39,7 @@ class UserMailer extends Mailer
             ->to($user->email)
             ->subject(__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')))
             ->template('Croogo/Users.register')
+            ->emailFormat('both')
             ->set([
             'user' => $user
             ]);
