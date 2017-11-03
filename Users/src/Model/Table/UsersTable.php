@@ -9,6 +9,7 @@ use Cake\Mailer\MailerAwareTrait;
 use Cake\ORM\Query;
 use Cake\Utility\Text;
 use Cake\Validation\Validator;
+use Croogo\Core\Croogo;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Users\Model\Entity\User;
 
@@ -159,6 +160,9 @@ class UsersTable extends CroogoTable
         // Generate a unique activation key
         $user->activation_key = bin2hex(random_bytes(16));
 
+        Croogo::dispatchEvent('Model.Users.beforeResetPassword', $this,
+            compact('user')
+        );
         $user = $this->save($user);
         if (!$user) {
             return false;
@@ -173,7 +177,21 @@ class UsersTable extends CroogoTable
             return false;
         }
 
+        Croogo::dispatchEvent('Model.Users.afterResetPassword', $this,
+            compact('email', 'user')
+        );
         return true;
+    }
+
+    public function sendActivationEmail($user)
+    {
+        $email = $this->getMailer('Croogo/Users.User')
+            ->viewVars(compact('user'))
+            ->send('registrationActivation', [$user]);
+
+        Croogo::dispatchEvent('Model.Users.afterActivationEmail', $this,
+            compact('email', 'user')
+        );
     }
 
     public function changePasswordFromReset(User $user, array $data)

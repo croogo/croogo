@@ -174,7 +174,7 @@ class UsersController extends AppController
     public function afterCrudSave(Event $event) {
         if ($event->subject()->success && $event->subject()->created) {
             if ($this->request->data('notification') != null) {
-                $this->__sendActivationEmail($event->subject()->entity);
+                $this->Users->sendActivationEmail($event->subject()->entity);
             }
         }
     }
@@ -184,30 +184,6 @@ class UsersController extends AppController
         if ($this->redirectToSelf($event)) {
             return;
         }
-    }
-
-/**
- * Send activation email
- */
-    private function __sendActivationEmail(User $user)
-    {
-        $url = Router::url([
-            'prefix' => false,
-            'plugin' => 'Croogo/Users',
-            'controller' => 'Users',
-            'action' => 'activate',
-            $user->username,
-            $user->activation_key,
-        ], true);
-
-
-        $email = new Email('default');
-        $email->from([$this->_getSenderEmail() => Configure::read('Site.title')])
-            ->to($user->email)
-            ->subject(__d('croogo', '[%s] Please activate your account'), Configure::read('Site.title'))
-            ->template('Croogo/Users.register')
-            ->viewVars(compact('url', 'user'))
-            ->send();
     }
 
 /**
