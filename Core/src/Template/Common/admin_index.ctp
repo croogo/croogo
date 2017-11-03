@@ -129,6 +129,7 @@ $tableFooters = trim($this->fetch('table-footer'));
                     echo $mainBlock;
                 elseif ($tableBody):
                     ?>
+                    <div class="table-container">
                     <table class="<?php echo $tableClass; ?>">
                         <?php
                         echo $this->Html->tag('thead', $tableHeaders);
@@ -138,6 +139,7 @@ $tableFooters = trim($this->fetch('table-footer'));
                         endif;
                         ?>
                     </table>
+                    </div>
                 <?php endif; ?>
 
                 <?php if ($bulkAction = trim($this->fetch('bulk-action'))): ?>
