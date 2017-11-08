@@ -11,6 +11,9 @@ form .span8 + .span4 {
 .form-inline {
   .btn,
   .form-control {
+    &[role=datetime-picker] {
+      margin: 0;
+    }
     margin: 2px 2px 2px 0;
   }
 
