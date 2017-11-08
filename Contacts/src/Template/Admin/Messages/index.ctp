@@ -52,6 +52,7 @@ $tableHeaders = $this->Html->tableHeaders([
     $this->Paginator->sort('name', __d('croogo', 'Name')),
     $this->Paginator->sort('email', __d('croogo', 'Email')),
     $this->Paginator->sort('title', __d('croogo', 'Title')),
+    $this->Paginator->sort('created', __d('croogo', 'Created')),
     __d('croogo', 'Actions'),
 ]);
 echo $this->Html->tag('thead', $tableHeaders);
@@ -91,6 +92,7 @@ foreach ($messages as $message) {
             'data-title' => $message->title,
             'data-content' => $message->body,
         ]),
+        $this->Time->i18nFormat($message->created),
         $actions,
     ];
 }

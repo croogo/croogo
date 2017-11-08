@@ -23,6 +23,12 @@ class MessagesController extends AppController
         $this->_setupPrg();
 
         $this->_loadCroogoComponents(['BulkProcess']);
+
+        $this->Crud->config('actions.index', [
+            'searchFields' => [
+                'search', 'created' => ['type' => 'date'],
+            ],
+        ]);
     }
 
 /**
@@ -76,7 +82,7 @@ class MessagesController extends AppController
             $query = $event->subject()->query;
             if (empty($this->request->query('sort'))) {
                 $query->order([
-                    $this->Messages->aliasField('id') => 'desc',
+                    $this->Messages->aliasField('created') => 'desc',
                 ]);
             }
         });
