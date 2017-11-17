@@ -9,7 +9,7 @@ $this->assign('title', __d('croogo', 'Successful'));
 
 <p>
     <?= __d('croogo', 'Admin panel: %s',
-        $this->Html->link(\Croogo\Core\Router::url('/admin', true), \Croogo\Core\Router::url('/admin', true))); ?>
+        $this->Html->link(\Croogo\Core\Router::url('/admin', true), \Croogo\Core\Router::url('/admin', true))) ?>
 </p>
 
 <p>
@@ -32,12 +32,12 @@ $this->assign('title', __d('croogo', 'Successful'));
 </p>
 
 <blockquote>
-    <h3><?= __d('croogo', 'Resources'); ?></h3>
+    <h3><?= __d('croogo', 'Resources') ?></h3>
     <ul class="bullet">
-        <li><?= $this->Html->link('http://croogo.org'); ?></li>
-        <li><?= $this->Html->link('http://wiki.croogo.org/'); ?></li>
-        <li><?= $this->Html->link('http://github.com/croogo/croogo'); ?></li>
+        <li><?= $this->Html->link('http://croogo.org') ?></li>
+        <li><?= $this->Html->link('http://wiki.croogo.org/') ?></li>
+        <li><?= $this->Html->link('http://github.com/croogo/croogo') ?></li>
         <li><?= $this->Html->link('Croogo Google Group',
-                'https://groups.google.com/forum/#!forum/croogo'); ?></li>
+                'https://groups.google.com/forum/#!forum/croogo') ?></li>
     </ul>
 </blockquote>

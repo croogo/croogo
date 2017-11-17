@@ -6,7 +6,7 @@ $showActions = isset($showActions) ? $showActions : true;
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <title><?= $this->fetch('title'); ?> - <?= $_siteTitle ?></title>
+        <title><?= $this->fetch('title') ?> - <?= $_siteTitle ?></title>
         <?php
 
         echo $this->element('admin/stylesheets');
@@ -18,10 +18,10 @@ $showActions = isset($showActions) ? $showActions : true;
         ?>
     </head>
     <body>
-        <?= $this->element('Croogo/Core.admin/header'); ?>
+        <?= $this->element('Croogo/Core.admin/header') ?>
         <div id="wrap">
             <div class="nav-sidebar">
-                <?= $this->element('Croogo/Core.admin/navigation'); ?>
+                <?= $this->element('Croogo/Core.admin/navigation') ?>
             </div>
             <div id="content-container" class="content-container <?= $this->Theme->getCssClass('container') ?>">
                 <div id="content" class="content">
@@ -29,18 +29,18 @@ $showActions = isset($showActions) ? $showActions : true;
                         <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
                         <?php if ($showActions && $actionsBlock = $this->fetch('action-buttons')): ?>
                             <div class="actions ml-auto">
-                                <?= $actionsBlock; ?>
+                                <?= $actionsBlock ?>
                             </div>
-                        <?php endif; ?>
+                        <?php endif ?>
                     </div>
                     <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
-                        <?= $this->Layout->sessionFlash(); ?>
-                        <?= $this->fetch('content'); ?>
+                        <?= $this->Layout->sessionFlash() ?>
+                        <?= $this->fetch('content') ?>
                     </div>
                 </div>
             </div>
         </div>
-        <?= $this->element('Croogo/Core.admin/footer'); ?>
+        <?= $this->element('Croogo/Core.admin/footer') ?>
         <?php
         echo $this->element('Croogo/Core.admin/initializers');
         echo $this->fetch('body-footer');

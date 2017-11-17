@@ -3,7 +3,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 $this->Breadcrumbs
     ->add('Example', array('controller' => 'example', 'action' => 'index'));
 ?>
-<?php $this->start('actions'); ?>
+<?php $this->start('actions') ?>
 <?php
     echo $this->Croogo->adminAction(
         'New Tab',
@@ -14,6 +14,6 @@ $this->Breadcrumbs
         array('action' => 'chooser')
     );
 ?>
-<?php $this->end(); ?>
+<?php $this->end() ?>
 
-<p><?= 'content here'; ?></p>
+<p><?= 'content here' ?></p>

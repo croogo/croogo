@@ -26,9 +26,9 @@ $this->append('table-body');
 foreach ($dashboards as $dashboard):
 ?>
     <tr>
-        <td><?= h($dashboard->id); ?>&nbsp;</td>
-        <td><?= h($dashboard->alias); ?>&nbsp;</td>
-        <td><?= $this->Dashboards->columnName($dashboard->column); ?>&nbsp;</td>
+        <td><?= h($dashboard->id) ?>&nbsp;</td>
+        <td><?= h($dashboard->alias) ?>&nbsp;</td>
+        <td><?= $this->Dashboards->columnName($dashboard->column) ?>&nbsp;</td>
         <td>
             <?php
             if ($dashboard->collapsed):
@@ -44,8 +44,8 @@ foreach ($dashboards as $dashboard):
                 ));
             ?>
         </td>
-        <td><?= $this->Time->i18nFormat($dashboard->updated); ?>&nbsp;</td>
-        <td><?= $this->Time->i18nFormat($dashboard->created); ?>&nbsp;</td>
+        <td><?= $this->Time->i18nFormat($dashboard->updated) ?>&nbsp;</td>
+        <td><?= $this->Time->i18nFormat($dashboard->created) ?>&nbsp;</td>
         <td class="item-actions">
         <?php
             $actions = array();

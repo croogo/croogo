@@ -34,8 +34,8 @@ $this->Html->script('Croogo/FileManager.attachments/browse', ['block' => true]);
     ?>
 </div>
 
-<div class="<?= $this->Theme->getCssClass('row'); ?>">
-    <div class="<?= $this->Theme->getCssClass('columnFull'); ?>">
-        <?= $this->element('admin/pagination'); ?>
+<div class="<?= $this->Theme->getCssClass('row') ?>">
+    <div class="<?= $this->Theme->getCssClass('columnFull') ?>">
+        <?= $this->element('admin/pagination') ?>
     </div>
 </div>

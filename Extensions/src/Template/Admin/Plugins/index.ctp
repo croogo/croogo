@@ -9,7 +9,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Extensions'), $this->request->getUri()->g
 
 $this->start('action-buttons');
 echo $this->Croogo->adminAction(__d('croogo', 'Upload'), ['action' => 'add'], ['class' => 'btn btn-success']);
-$this->end(); ?>
+$this->end() ?>
 
 <table class="table table-striped">
     <?php
@@ -23,7 +23,7 @@ $this->end(); ?>
     ]);
     ?>
     <thead>
-        <?= $tableHeaders; ?>
+        <?= $tableHeaders ?>
     </thead>
 
     <?php

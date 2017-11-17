@@ -7,7 +7,7 @@ else:
 endif;
 
 ?>
-<div class="card card-<?= $alias; ?> dashboard-card" id="<?= $alias ?>" <?= $dataId ?>>
+<div class="card card-<?= $alias ?> dashboard-card" id="<?= $alias ?>" <?= $dataId ?>>
     <div class="card-header">
         <i class="fa fa-list move-handle"></i>
         <?= $dashboard['title'] ?>
@@ -17,7 +17,7 @@ endif;
     </div>
     <div class="card-body <?= $dashboard['collapsed'] ? 'collapse' : 'collapse show' ?>" id="<?= $alias ?>-content">
         <?php $cell = $this->cell($dashboard['cell'], $dashboard['arguments'],
-            ['cache' => $dashboard['cache'], 'alias' => $alias, 'dashboard' => $dashboard]); ?>
-        <?= $cell; ?>
+            ['cache' => $dashboard['cache'], 'alias' => $alias, 'dashboard' => $dashboard]) ?>
+        <?= $cell ?>
     </div>
 </div>

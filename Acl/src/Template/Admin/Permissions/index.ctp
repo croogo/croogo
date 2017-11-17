@@ -53,8 +53,8 @@ $this->end();
 $this->Js->buffer('AclPermissions.tabSwitcher();');
 
 ?>
-<div class="<?= $this->Theme->getCssClass('row'); ?>">
-    <div class="<?= $this->Theme->getCssClass('columnFull'); ?>">
+<div class="<?= $this->Theme->getCssClass('row') ?>">
+    <div class="<?= $this->Theme->getCssClass('columnFull') ?>">
 
         <ul id="permissions-tab" class="nav nav-tabs">
         <?php
@@ -63,7 +63,7 @@ $this->Js->buffer('AclPermissions.tabSwitcher();');
         </ul>
 
         <div class="tab-content">
-            <?= $this->Croogo->adminTabs(); ?>
+            <?= $this->Croogo->adminTabs() ?>
         </div>
 
     </div>

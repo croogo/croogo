@@ -7,7 +7,7 @@ use Cake\Core\Configure;
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <title><?= $this->fetch('title'); ?> - <?= $_siteTitle ?></title>
+        <title><?= $this->fetch('title') ?> - <?= $_siteTitle ?></title>
         <?php
         echo $this->Html->css([
             'Croogo/Core.core/croogo-admin',
@@ -21,7 +21,7 @@ use Cake\Core\Configure;
     </head>
     <body class="admin-login">
         <header class="navbar navbar-dark bg-black">
-            <?= $this->Html->link(__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'), '/', ['class' => 'navbar-brand']); ?>
+            <?= $this->Html->link(__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'), '/', ['class' => 'navbar-brand']) ?>
         </header>
 
         <div id="wrap" class="d-flex justify-content-center align-items-center">
@@ -34,6 +34,6 @@ use Cake\Core\Configure;
                 </div>
             </div>
         </div>
-        <?= $this->element('Croogo/Core.admin/footer'); ?>
+        <?= $this->element('Croogo/Core.admin/footer') ?>
     </body>
 </html>

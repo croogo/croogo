@@ -6,7 +6,7 @@ $showActions = isset($showActions) ? $showActions : true;
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <title><?= $this->fetch('title'); ?> - <?= $_siteTitle ?></title>
+        <title><?= $this->fetch('title') ?> - <?= $_siteTitle ?></title>
         <?php
 
         echo $this->element('admin/stylesheets');
@@ -17,20 +17,20 @@ $showActions = isset($showActions) ? $showActions : true;
         ?>
     </head>
     <body class="popup">
-        <div class="<?= $this->Theme->getCssClass('container'); ?>">
-            <div class="<?= $this->Theme->getCssClass('row'); ?>">
-                <div id="content" class="<?= $this->Theme->getCssClass('columnFull'); ?>">
+        <div class="<?= $this->Theme->getCssClass('container') ?>">
+            <div class="<?= $this->Theme->getCssClass('row') ?>">
+                <div id="content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
                     <div class="col-12 d-flex justify-content-between align-items-center">
                         <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
                         <?php if ($showActions && $actionsBlock = $this->fetch('action-buttons')): ?>
                             <div class="actions ml-auto">
-                                <?= $actionsBlock; ?>
+                                <?= $actionsBlock ?>
                             </div>
-                        <?php endif; ?>
+                        <?php endif ?>
                     </div>
                     <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
-                    <?= $this->Layout->sessionFlash(); ?>
-                    <?= $this->fetch('content'); ?>
+                    <?= $this->Layout->sessionFlash() ?>
+                    <?= $this->fetch('content') ?>
                     </div>
                 </div>
             </div>

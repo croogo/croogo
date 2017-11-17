@@ -8,10 +8,10 @@
         ?>
     </p>
     <ul class="pagination justify-content-center pagination-sm">
-        <?= $this->Paginator->first('< ' . __d('croogo', 'first')); ?>
-        <?= $this->Paginator->prev('< ' . __d('croogo', 'prev')); ?>
-        <?= $this->Paginator->numbers(); ?>
-        <?= $this->Paginator->next(__d('croogo', 'next') . ' >'); ?>
-        <?= $this->Paginator->last(__d('croogo', 'last') . ' >'); ?>
+        <?= $this->Paginator->first('< ' . __d('croogo', 'first')) ?>
+        <?= $this->Paginator->prev('< ' . __d('croogo', 'prev')) ?>
+        <?= $this->Paginator->numbers() ?>
+        <?= $this->Paginator->next(__d('croogo', 'next') . ' >') ?>
+        <?= $this->Paginator->last(__d('croogo', 'last') . ' >') ?>
     </ul>
 </div>

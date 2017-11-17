@@ -9,8 +9,8 @@ $this->end();
 ?>
 <?php if ($currentConfiguration['exists']): ?>
     <div class="alert alert-warning">
-        <strong><?= __d('croogo', 'Warning'); ?>:</strong>
-        <?= __d('croogo', 'A database configuration already exists.'); ?>
+        <strong><?= __d('croogo', 'Warning') ?>:</strong>
+        <?= __d('croogo', 'A database configuration already exists.') ?>
         <?php
         if ($currentConfiguration['valid']):
             $valid = __d('croogo', 'Valid');
@@ -27,10 +27,10 @@ $this->end();
             ?>
             or complete the form below to replace it.
         <?php else: ?>
-            <?= __d('croogo', 'This configuration will be replaced.'); ?>
-        <?php endif; ?>
+            <?= __d('croogo', 'This configuration will be replaced.') ?>
+        <?php endif ?>
     </div>
-<?php endif; ?>
+<?php endif ?>
 
 <?php
 echo $this->Form->input('driver', [

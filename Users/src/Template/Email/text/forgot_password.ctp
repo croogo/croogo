@@ -1,6 +1,6 @@
 <?php
 
-echo __d('croogo', 'Hello %s', $user->name); ?>,
+echo __d('croogo', 'Hello %s', $user->name) ?>,
 
 
 <?php
@@ -15,7 +15,7 @@ echo __d('croogo', 'Hello %s', $user->name); ?>,
 ?>
 
 
-<?= __d('croogo', 'If you did not request a password reset, then please ignore this email.'); ?>
+<?= __d('croogo', 'If you did not request a password reset, then please ignore this email.') ?>
 
 
-<?= __d('croogo', 'IP Address: %s', $_SERVER['REMOTE_ADDR']); ?>
+<?= __d('croogo', 'IP Address: %s', $_SERVER['REMOTE_ADDR']) ?>

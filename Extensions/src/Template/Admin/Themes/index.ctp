@@ -12,13 +12,13 @@ $this->Breadcrumbs->add(__d('croogo', 'Extensions'),
 
 $this->start('action-buttons');
 echo $this->Croogo->adminAction(__d('croogo', 'Upload'), ['action' => 'add'], ['class' => 'btn btn-success']);
-$this->end(); ?>
+$this->end() ?>
 
-<div class="<?= $this->Theme->getCssClass('row'); ?>">
-    <div class="extensions-themes <?= $this->Theme->getCssClass('columnFull'); ?>">
-        <div class="current-theme <?= $this->Theme->getCssClass('row'); ?>">
-            <div class="screenshot <?= $this->Theme->getCssClass('columnRight'); ?>">
-                <h3><?= __d('croogo', 'Current Theme'); ?></h3>
+<div class="<?= $this->Theme->getCssClass('row') ?>">
+    <div class="extensions-themes <?= $this->Theme->getCssClass('columnFull') ?>">
+        <div class="current-theme <?= $this->Theme->getCssClass('row') ?>">
+            <div class="screenshot <?= $this->Theme->getCssClass('columnRight') ?>">
+                <h3><?= __d('croogo', 'Current Theme') ?></h3>
                 <?php
                 if (isset($currentTheme['screenshot'])):
                     $file = $this->Url->assetUrl($currentTheme['name'] . '.' . $currentTheme['screenshot']);
@@ -32,7 +32,7 @@ $this->end(); ?>
                 ?>
             </div>
 
-            <div class="<?= $this->Theme->getCssClass('columnLeft'); ?>">
+            <div class="<?= $this->Theme->getCssClass('columnLeft') ?>">
                 <h3>
                     <?php
                     $author = isset($currentTheme['author']) ? $currentTheme['author'] : null;
@@ -45,16 +45,16 @@ $this->end(); ?>
                     endif;
                     ?>
                 </h3>
-                <p class="description"><?= $currentTheme['description']; ?></p>
+                <p class="description"><?= $currentTheme['description'] ?></p>
                 <?php if (isset($currentTheme['regions'])): ?>
                     <p class="regions"><?= __d('croogo', 'Regions supported: ') .
-                            implode(', ', $currentTheme['regions']); ?></p>
-                <?php endif; ?>
+                            implode(', ', $currentTheme['regions']) ?></p>
+                <?php endif ?>
             </div>
         </div>
 
         <div class="available-themes">
-            <h3><?= __d('croogo', 'Available Themes'); ?></h3>
+            <h3><?= __d('croogo', 'Available Themes') ?></h3>
 
             <?php
             $hasAvailable = false;

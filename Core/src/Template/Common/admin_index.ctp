@@ -99,8 +99,8 @@ endif;
 $tableFooters = trim($this->fetch('table-footer'));
 
 ?>
-    <div class="<?= $rowClass; ?>">
-        <div class="<?= $columnFull; ?>">
+    <div class="<?= $rowClass ?>">
+        <div class="<?= $columnFull ?>">
             <?php
             $searchBlock = $this->fetch('search');
             if (!$searchBlock):
@@ -111,7 +111,7 @@ $tableFooters = trim($this->fetch('table-footer'));
             ?>
             <div class="navbar navbar-light bg-light">
                 <div class="float-right">
-                    <?= $searchBlock; ?>
+                    <?= $searchBlock ?>
                 </div>
             </div>
             <?php
@@ -130,7 +130,7 @@ $tableFooters = trim($this->fetch('table-footer'));
                 elseif ($tableBody):
                     ?>
                     <div class="table-container">
-                    <table class="<?= $tableClass; ?>">
+                    <table class="<?= $tableClass ?>">
                         <?php
                         echo $this->Html->tag('thead', $tableHeaders);
                         echo $this->Html->tag('tbody', $tableBody);
@@ -140,13 +140,13 @@ $tableFooters = trim($this->fetch('table-footer'));
                         ?>
                     </table>
                     </div>
-                <?php endif; ?>
+                <?php endif ?>
 
                 <?php if ($bulkAction = trim($this->fetch('bulk-action'))): ?>
                 <div id="bulk-action">
-                    <?= $bulkAction; ?>
+                    <?= $bulkAction ?>
                 </div>
-                <?php endif; ?>
+                <?php endif ?>
 
                 <?php
                 if ($formEnd = trim($this->fetch('form-end'))):
@@ -156,12 +156,12 @@ $tableFooters = trim($this->fetch('table-footer'));
                 endif;
                 ?>
 
-            <?php endif; ?>
+            <?php endif ?>
         </div>
     </div>
 
-    <div class="<?= $rowClass; ?>">
-        <div class="<?= $columnFull; ?>">
+    <div class="<?= $rowClass ?>">
+        <div class="<?= $columnFull ?>">
             <?php
             if ($pagingBlock = $this->fetch('paging')):
                 echo $pagingBlock;

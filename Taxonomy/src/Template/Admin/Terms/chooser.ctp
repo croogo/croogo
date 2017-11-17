@@ -8,7 +8,7 @@
     ]);
     ?>
     <thead>
-        <?= $tableHeaders; ?>
+        <?= $tableHeaders ?>
     </thead>
     <?php
     $rows = [];

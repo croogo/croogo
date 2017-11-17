@@ -14,8 +14,8 @@ $this->assign('title', 'Home');
         foreach ($nodes as $node):
             $this->Nodes->set($node);
     ?>
-    <div id="node-<?= $this->Nodes->field('id'); ?>" class="node node-type-<?= $this->Nodes->field('type'); ?>">
-        <h2><?= $this->Html->link($this->Nodes->field('title'), $this->Nodes->field('url')->getUrl()); ?></h2>
+    <div id="node-<?= $this->Nodes->field('id') ?>" class="node node-type-<?= $this->Nodes->field('type') ?>">
+        <h2><?= $this->Html->link($this->Nodes->field('title'), $this->Nodes->field('url')->getUrl()) ?></h2>
         <?php
             echo $this->Nodes->info();
             echo $this->Nodes->body();
@@ -26,5 +26,5 @@ $this->assign('title', 'Home');
         endforeach;
     ?>
 
-    <div class="paging"><?= $this->Paginator->numbers(); ?></div>
+    <div class="paging"><?= $this->Paginator->numbers() ?></div>
 </div>

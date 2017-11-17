@@ -7,7 +7,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getReques
 
 ?>
 
-<?php $this->start('action-buttons'); ?>
+<?php $this->start('action-buttons') ?>
 <div class="btn-group">
     <?php
     echo $this->FileManager->adminAction(__d('croogo', 'Upload here'),
@@ -18,7 +18,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getReques
         ['controller' => 'FileManager', 'action' => 'create_file'], $path);
     ?>
 </div>
-<?php $this->end(); ?>
+<?php $this->end() ?>
 
 <?= $this->element('Croogo/FileManager.admin/breadcrumbs') ?>
 
@@ -32,7 +32,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getReques
         ]);
         ?>
         <thead>
-            <?= $tableHeaders; ?>
+            <?= $tableHeaders ?>
         </thead>
         <?php
         // directories
@@ -105,7 +105,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getReques
 
         ?>
         <thead>
-            <?= $tableHeaders; ?>
+            <?= $tableHeaders ?>
         </thead>
     </table>
 </div>

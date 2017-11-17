@@ -8,7 +8,7 @@
         ?>
     </div>
     <div class="float-right">
-        <?= $this->element('Croogo/Nodes.admin/nodes_search'); ?>
+        <?= $this->element('Croogo/Nodes.admin/nodes_search') ?>
     </div>
 </div>
 <hr>
@@ -32,7 +32,7 @@
             ]);
             ?>
         </li>
-        <?php endif; ?>
+        <?php endif ?>
         <?php foreach ($nodes as $node) : ?>
             <li>
                 <?php
@@ -72,9 +72,9 @@
                 echo $a;
                 ?>
             </li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
     </ul>
     <div class="pagination">
-        <ul><?= $this->Paginator->numbers(); ?></ul>
+        <ul><?= $this->Paginator->numbers() ?></ul>
     </div>
 </div>

@@ -1,7 +1,7 @@
-<div id="contact-<?= $contact->id; ?>" class="">
-    <h2><?= $contact->title; ?></h2>
+<div id="contact-<?= $contact->id ?>" class="">
+    <h2><?= $contact->title ?></h2>
     <div class="contact-body">
-        <?= $contact->body; ?>
+        <?= $contact->body ?>
     </div>
 
     <?php if ($contact->message_status): ?>
@@ -19,5 +19,5 @@
             echo $this->Form->end();
             ?>
         </div>
-    <?php endif; ?>
+    <?php endif ?>
 </div>
