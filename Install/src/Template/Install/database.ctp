@@ -40,7 +40,7 @@ echo $this->Form->input('driver', [
     'options' => [
         Cake\Database\Driver\Mysql::class => 'MySQL',
         Cake\Database\Driver\Sqlite::class => 'SQLite',
-        Cake\Database\Driver\Postgres::class => 'PostGresql',
+        Cake\Database\Driver\Postgres::class => 'PostgreSQL',
         Cake\Database\Driver\Sqlserver::class => 'Microsoft SQL Server',
     ],
 ]);
