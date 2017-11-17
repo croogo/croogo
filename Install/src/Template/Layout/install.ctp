@@ -10,7 +10,7 @@
         ]);
         echo $this->Html->script([
             'Croogo/Core.jquery/jquery.min',
-            'Croogo/Core.core/croogo-admin',
+            'Croogo/Core.core/admin',
         ]);
         echo $this->fetch('script');
         ?>
