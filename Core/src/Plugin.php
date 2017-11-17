@@ -584,9 +584,7 @@ class Plugin extends CakePlugin
      */
     protected function _getMigrations()
     {
-        if (!($this->_Migrations instanceof Migrations)) {
-            $this->_Migrations = new Migrations();
-        }
+        $this->_Migrations = new Migrations();
 
         return $this->_Migrations;
     }
