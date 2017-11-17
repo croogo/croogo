@@ -12,7 +12,6 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Utility\File;
 use Croogo\Core\Router;
-use Croogo\Install\AssetGenerator;
 use Croogo\Install\InstallManager;
 use Composer\IO\BufferIO;
 
@@ -78,25 +77,6 @@ class InstallController extends Controller
                 'className' => 'Croogo/Core.CroogoForm',
             ],
         ]);
-
-        $this->_generateAssets();
-    }
-
-/**
- * Generate assets
- */
-    protected function _generateAssets()
-    {
-        $file = Plugin::path('Croogo/Core') . 'webroot' . DS . 'css' . DS . 'core' . DS . 'croogo-admin.css';
-        if (!file_exists($file)) {
-            $generator = new AssetGenerator();
-            try {
-                $generator->generate();
-            } catch (\Exception $e) {
-                $this->log($e->getMessage());
-                $this->Flash->error('Asset generation failed. Please verify that dependencies exists and readable.');
-            }
-        }
     }
 
 /**

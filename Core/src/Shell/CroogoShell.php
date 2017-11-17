@@ -3,7 +3,6 @@
 namespace Croogo\Core\Shell;
 
 use Cake\Utility\Security;
-use Croogo\Install\AssetGenerator;
 
 /**
  * Croogo Shell
@@ -29,9 +28,6 @@ class CroogoShell extends AppShell
     {
         $parser = parent::getOptionParser();
         $parser->description(__d('croogo', 'Croogo Utilities'))
-            ->addSubCommand('make', [
-                'help' => __d('croogo', 'Compile/Generate CSS'),
-            ])
             ->addSubCommand('upgrade', [
                 'help' => __d('croogo', 'Upgrade Croogo'),
                 'parser' => $this->Upgrade->getOptionParser(),
@@ -62,20 +58,4 @@ class CroogoShell extends AppShell
         $this->out(Security::hash($value, null, true));
     }
 
-/**
- * Compile assets for admin ui
- */
-    public function make()
-    {
-        if (!Plugin::loaded('Install')) {
-            Plugin::load('Install');
-        }
-        $generator = new AssetGenerator();
-        try {
-            $generator->generate(['clone' => true]);
-        } catch (\Exception $e) {
-            $this->err('<error>' . $e->getMessage() . '</error>');
-        }
-        Plugin::unload('Install');
-    }
 }
