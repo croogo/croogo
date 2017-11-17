@@ -71,7 +71,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
                 'callback' => ['Croogo\\Core\\Router', 'isApiRequest'],
             ]);
             $request->addDetector('whitelisted', [
-                'callback' => ['Croogo\\Core\\Router', 'isWhitelistedRequest'],
+                'Croogo\\Core\\Router', 'isWhitelistedRequest',
             ]);
         }
     }
