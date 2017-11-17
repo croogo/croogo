@@ -99,8 +99,8 @@ endif;
 $tableFooters = trim($this->fetch('table-footer'));
 
 ?>
-    <div class="<?php echo $rowClass; ?>">
-        <div class="<?php echo $columnFull; ?>">
+    <div class="<?= $rowClass; ?>">
+        <div class="<?= $columnFull; ?>">
             <?php
             $searchBlock = $this->fetch('search');
             if (!$searchBlock):
@@ -130,7 +130,7 @@ $tableFooters = trim($this->fetch('table-footer'));
                 elseif ($tableBody):
                     ?>
                     <div class="table-container">
-                    <table class="<?php echo $tableClass; ?>">
+                    <table class="<?= $tableClass; ?>">
                         <?php
                         echo $this->Html->tag('thead', $tableHeaders);
                         echo $this->Html->tag('tbody', $tableBody);
@@ -144,7 +144,7 @@ $tableFooters = trim($this->fetch('table-footer'));
 
                 <?php if ($bulkAction = trim($this->fetch('bulk-action'))): ?>
                 <div id="bulk-action">
-                    <?php echo $bulkAction; ?>
+                    <?= $bulkAction; ?>
                 </div>
                 <?php endif; ?>
 
@@ -160,8 +160,8 @@ $tableFooters = trim($this->fetch('table-footer'));
         </div>
     </div>
 
-    <div class="<?php echo $rowClass; ?>">
-        <div class="<?php echo $columnFull; ?>">
+    <div class="<?= $rowClass; ?>">
+        <div class="<?= $columnFull; ?>">
             <?php
             if ($pagingBlock = $this->fetch('paging')):
                 echo $pagingBlock;

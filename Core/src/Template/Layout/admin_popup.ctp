@@ -17,20 +17,20 @@ $showActions = isset($showActions) ? $showActions : true;
         ?>
     </head>
     <body class="popup">
-        <div class="<?php echo $this->Theme->getCssClass('container'); ?>">
-            <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
-                <div id="content" class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
+        <div class="<?= $this->Theme->getCssClass('container'); ?>">
+            <div class="<?= $this->Theme->getCssClass('row'); ?>">
+                <div id="content" class="<?= $this->Theme->getCssClass('columnFull'); ?>">
                     <div class="col-12 d-flex justify-content-between align-items-center">
                         <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
                         <?php if ($showActions && $actionsBlock = $this->fetch('action-buttons')): ?>
                             <div class="actions ml-auto">
-                                <?php echo $actionsBlock; ?>
+                                <?= $actionsBlock; ?>
                             </div>
                         <?php endif; ?>
                     </div>
                     <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
-                    <?php echo $this->Layout->sessionFlash(); ?>
-                    <?php echo $this->fetch('content'); ?>
+                    <?= $this->Layout->sessionFlash(); ?>
+                    <?= $this->fetch('content'); ?>
                     </div>
                 </div>
             </div>

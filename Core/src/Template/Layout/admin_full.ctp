@@ -18,14 +18,14 @@
 <body>
 
     <div id="wrap">
-        <?php echo $this->element('admin/header'); ?>
+        <?= $this->element('admin/header'); ?>
         <div id="push"></div>
-        <div id="content-container" class="content-container <?php echo $this->Theme->getCssClass('container'); ?>">
-            <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+        <div id="content-container" class="content-container <?= $this->Theme->getCssClass('container'); ?>">
+            <div class="<?= $this->Theme->getCssClass('row'); ?>">
                 <div id="content" class="content">
                     <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
-                        <?php echo $this->Layout->sessionFlash(); ?>
-                        <?php echo $this->fetch('content'); ?>
+                        <?= $this->Layout->sessionFlash(); ?>
+                        <?= $this->fetch('content'); ?>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
 
     </div>
 
-    <?php echo $this->element('admin/footer'); ?>
+    <?= $this->element('admin/footer'); ?>
     <?php
         echo $this->element('admin/initializers');
         echo $this->Blocks->get('scriptBottom');

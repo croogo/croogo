@@ -5,9 +5,9 @@ if ($block->class != null) {
     $class .= ' ' . $block->class;
 }
 ?>
-<div id="block-<?php echo $block->id; ?>" class="<?php echo $class; ?>">
+<div id="block-<?= $block->id; ?>" class="<?= $class; ?>">
 <?php if ($block->show_title == 1): ?>
-    <h3><?php echo $block->title; ?></h3>
+    <h3><?= $block->title; ?></h3>
 <?php endif; ?>
     <div class="block-body">
 <?php

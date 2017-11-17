@@ -8,7 +8,7 @@
         ?>
     </div>
     <div class="float-right">
-        <?php echo $this->element('Croogo/Nodes.admin/nodes_search'); ?>
+        <?= $this->element('Croogo/Nodes.admin/nodes_search'); ?>
     </div>
 </div>
 <hr>
@@ -75,6 +75,6 @@
         <?php endforeach; ?>
     </ul>
     <div class="pagination">
-        <ul><?php echo $this->Paginator->numbers(); ?></ul>
+        <ul><?= $this->Paginator->numbers(); ?></ul>
     </div>
 </div>

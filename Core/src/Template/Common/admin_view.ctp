@@ -25,7 +25,7 @@ endif;
 
     <h2 class="d-md-none">
         <?php if ($titleBlock = $this->fetch('title')): ?>
-            <?php echo $titleBlock; ?>
+            <?= $titleBlock; ?>
         <?php else: ?>
             <?php
             echo !empty($title_for_layout) ? $title_for_layout : $this->name;
@@ -44,8 +44,8 @@ if (empty($this->fetch('action-buttons'))) {
 }
 ?>
 
-    <div class="<?php echo $rowClass; ?>">
-        <div class="<?php echo $columnFull; ?>">
+    <div class="<?= $rowClass; ?>">
+        <div class="<?= $columnFull; ?>">
             <?php
             if ($contentBlock = trim($this->fetch('content'))):
                 echo $this->element('admin/search');

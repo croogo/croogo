@@ -1,4 +1,4 @@
-<div id="node-list-<?php echo $alias; ?>" class="node-list">
+<div id="node-list-<?= $alias; ?>" class="node-list">
     <ul>
     <?php
         foreach ($nodesList as $node) {

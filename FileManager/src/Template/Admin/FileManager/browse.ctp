@@ -32,7 +32,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getReques
         ]);
         ?>
         <thead>
-            <?php echo $tableHeaders; ?>
+            <?= $tableHeaders; ?>
         </thead>
         <?php
         // directories
@@ -105,7 +105,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getReques
 
         ?>
         <thead>
-            <?php echo $tableHeaders; ?>
+            <?= $tableHeaders; ?>
         </thead>
     </table>
 </div>

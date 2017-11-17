@@ -8,7 +8,7 @@
         ?>
         </div>
         <button type="button" class="btn btn-primary add-image">Add images</button>
-        <?php echo $this->element('Croogo/Nodes.admin/nodes_search'); ?>
+        <?= $this->element('Croogo/Nodes.admin/nodes_search'); ?>
     </div>
 </div>
 
@@ -44,7 +44,7 @@
     endforeach;
     ?>
 </div>
-<?php echo $this->element('Croogo/Core.admin/pagination'); ?>
+<?= $this->element('Croogo/Core.admin/pagination'); ?>
 
 <?php
 echo $this->Html->script([

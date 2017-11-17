@@ -16,4 +16,4 @@ $this->Breadcrumbs
 ?>
 <?php $this->end(); ?>
 
-<p><?php echo 'content here'; ?></p>
+<p><?= 'content here'; ?></p>

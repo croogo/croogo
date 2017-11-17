@@ -1,7 +1,7 @@
-<div id="contact-<?php echo $contact->id; ?>" class="">
-    <h2><?php echo $contact->title; ?></h2>
+<div id="contact-<?= $contact->id; ?>" class="">
+    <h2><?= $contact->title; ?></h2>
     <div class="contact-body">
-        <?php echo $contact->body; ?>
+        <?= $contact->body; ?>
     </div>
 
     <?php if ($contact->message_status): ?>

@@ -34,6 +34,6 @@ use Cake\Core\Configure;
                 </div>
             </div>
         </div>
-        <?php echo $this->element('Croogo/Core.admin/footer'); ?>
+        <?= $this->element('Croogo/Core.admin/footer'); ?>
     </body>
 </html>

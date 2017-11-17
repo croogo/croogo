@@ -18,7 +18,7 @@ if (!isset($footer)) {
     $footer = '';
 }
 ?>
-<div id="<?php echo $id; ?>" class="<?php echo trim($class); ?>">
+<div id="<?= $id; ?>" class="<?= trim($class); ?>">
     <div class="modal-dialog <?= trim($modalSize) ?>">
         <div class="modal-content">
             <div class="modal-header">

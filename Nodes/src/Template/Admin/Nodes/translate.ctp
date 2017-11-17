@@ -6,7 +6,7 @@ if (Configure::read('Writing.wysiwyg')) {
 }
 ?>
 <div class="nodes form">
-    <h2><?php echo $title_for_layout; ?></h2>
+    <h2><?= $title_for_layout; ?></h2>
 
     <?php
         echo $this->Form->create('Node', array('url' => array(
@@ -17,7 +17,7 @@ if (Configure::read('Writing.wysiwyg')) {
     <fieldset>
         <div class="tabs">
             <ul>
-                <li><a href="#node-main"><span><?php echo __d('croogo', $type['Type']['title']); ?></span></a></li>
+                <li><a href="#node-main"><span><?= __d('croogo', $type['Type']['title']); ?></span></a></li>
             </ul>
 
             <div id="node-main">
@@ -29,5 +29,5 @@ if (Configure::read('Writing.wysiwyg')) {
             </div>
         </div>
     </fieldset>
-    <?php echo $this->Form->end('Submit');?>
+    <?= $this->Form->end('Submit');?>
 </div>

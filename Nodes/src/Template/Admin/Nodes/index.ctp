@@ -39,7 +39,7 @@ $this->append('table-body');
 ?>
     <?php foreach ($nodes as $node): ?>
         <tr>
-            <td><?php echo $this->Form->checkbox('Nodes.' . $node->id . '.id',
+            <td><?= $this->Form->checkbox('Nodes.' . $node->id . '.id',
                     ['class' => 'row-select', 'id' => 'Nodes' . $node->id . 'Id']); ?></td>
             <td>
                 <span>
@@ -54,11 +54,11 @@ $this->append('table-body');
                 </span>
 
                 <?php if ($node->promote == 1): ?>
-                    <span class="badge badge-info"><?php echo __d('croogo', 'promoted'); ?></span>
+                    <span class="badge badge-info"><?= __d('croogo', 'promoted'); ?></span>
                 <?php endif ?>
 
                 <?php if ($node->status == Status::PREVIEW): ?>
-                    <span class="badge badge-warning"><?php echo __d('croogo', 'preview'); ?></span>
+                    <span class="badge badge-warning"><?= __d('croogo', 'preview'); ?></span>
                 <?php endif ?>
             </td>
             <td>
@@ -72,10 +72,10 @@ $this->append('table-body');
                 ?>
             </td>
             <td>
-                <?php echo $node->user->username; ?>
+                <?= $node->user->username; ?>
             </td>
             <td>
-                <?php echo $this->Time->i18nFormat($node->updated); ?>
+                <?= $this->Time->i18nFormat($node->updated); ?>
             </td>
             <td>
                 <?php

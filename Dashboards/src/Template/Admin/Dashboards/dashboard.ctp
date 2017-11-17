@@ -9,4 +9,4 @@ echo $this->Dashboards->dashboards();
 
 $this->Html->scriptBlock('Dashboard.init();', ['block' => 'scriptBottom']);
 ?>
-<div id="dashboard-url" class="hidden"><?php echo $this->Url->build(array('action' => 'save'));?></div>
+<div id="dashboard-url" class="hidden"><?= $this->Url->build(array('action' => 'save'));?></div>

@@ -1,5 +1,5 @@
 <div class="nodes index">
-    <h2><?php echo $title_for_layout; ?></h2>
+    <h2><?= $title_for_layout; ?></h2>
 
     <div class="actions">
         <ul>
@@ -46,6 +46,6 @@
     ?>
     </table>
     <?php else: ?>
-        <p><?php echo __d('croogo', 'No translations available.'); ?></p>
+        <p><?= __d('croogo', 'No translations available.'); ?></p>
     <?php endif; ?>
 </div>

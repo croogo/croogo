@@ -2,13 +2,13 @@
 $this->assign('title', __d('croogo', 'Successful'));
 ?>
 <p class="success">
-    <?php echo __d('croogo', 'The user %s has been created with administrative rights.',
+    <?= __d('croogo', 'The user %s has been created with administrative rights.',
         sprintf('<strong>%s</strong>', $user['username']));
     ?>
 </p>
 
 <p>
-    <?php echo __d('croogo', 'Admin panel: %s',
+    <?= __d('croogo', 'Admin panel: %s',
         $this->Html->link(\Croogo\Core\Router::url('/admin', true), \Croogo\Core\Router::url('/admin', true))); ?>
 </p>
 
@@ -32,12 +32,12 @@ $this->assign('title', __d('croogo', 'Successful'));
 </p>
 
 <blockquote>
-    <h3><?php echo __d('croogo', 'Resources'); ?></h3>
+    <h3><?= __d('croogo', 'Resources'); ?></h3>
     <ul class="bullet">
-        <li><?php echo $this->Html->link('http://croogo.org'); ?></li>
-        <li><?php echo $this->Html->link('http://wiki.croogo.org/'); ?></li>
-        <li><?php echo $this->Html->link('http://github.com/croogo/croogo'); ?></li>
-        <li><?php echo $this->Html->link('Croogo Google Group',
+        <li><?= $this->Html->link('http://croogo.org'); ?></li>
+        <li><?= $this->Html->link('http://wiki.croogo.org/'); ?></li>
+        <li><?= $this->Html->link('http://github.com/croogo/croogo'); ?></li>
+        <li><?= $this->Html->link('Croogo Google Group',
                 'https://groups.google.com/forum/#!forum/croogo'); ?></li>
     </ul>
 </blockquote>

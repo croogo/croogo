@@ -12,7 +12,7 @@
     ?>
 
     <thead>
-        <?php echo $tableHeaders; ?>
+        <?= $tableHeaders; ?>
     </thead>
 
     <?php
@@ -57,7 +57,7 @@
     ?>
 
     <thead>
-        <?php echo $tableHeaders; ?>
+        <?= $tableHeaders; ?>
     </thead>
 
 </table>
