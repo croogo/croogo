@@ -1,11 +1,17 @@
+<?php
+
+$this->assign('title', __d('croogo', 'Forgot Password'));
+
+?>
 <div class="users form">
     <h2><?= $this->fetch('title') ?></h2>
-    <?= $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'forgot')));?>
+    <?= $this->Form->create('User', ['url' => ['controller' => 'users', 'action' => 'forgot']]);?>
         <fieldset>
-        <?php
-            echo $this->Form->input('username', array('label' => __d('croogo', 'Username')));
-        ?>
+        <?= $this->Form->input('username', [
+            'label' => __d('croogo', 'Username'),
+            'required' => true,
+        ]) ?>
         </fieldset>
         <?= $this->Form->submit(__d('croogo', 'Submit')) ?>
-    <?= $this->Form->end();?>
+    <?= $this->Form->end() ?>
 </div>

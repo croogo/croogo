@@ -387,21 +387,25 @@ class UsersController extends AppController
             return;
         }
 
+        $username = $this->request->data('username');
+        if (!$username) {
+            $this->Flash->error(__d('croogo', 'Invalid username.'));
+            return $this->redirect(['action' => 'forgot']);
+        }
+
         $user = $this->Users
             ->find()
-            ->where(['username' => $this->request->data('username')])
-            ->orWhere(['email' => $this->request->data('username')])
+            ->where(['username' => $username])
+            ->orWhere(['email' => $username])
             ->first();
         if (!$user) {
             $this->Flash->error(__d('croogo', 'Invalid username.'));
-
             return $this->redirect(['action' => 'forgot']);
         }
 
         $success = $this->Users->resetPassword($user);
         if (!$success) {
             $this->Flash->error(__d('croogo', 'An error occurred. Please try again.'));
-
             return;
         }
 

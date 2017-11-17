@@ -138,6 +138,11 @@ class UsersController extends AppController
             return $this->redirect(['action' => 'forgot']);
         }
 
+        if (empty($user->email)) {
+            $this->Flash->error(__d('croogo', 'Invalid email.'));
+            return;
+        }
+
         $options = [
             'prefix' => $this->request->param('prefix'),
         ];

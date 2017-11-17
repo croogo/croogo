@@ -16,6 +16,7 @@ echo $this->Form->create('Users', [
         'label' => false,
         'placeholder' => __d('croogo', 'Username/Email'),
         'prepend' => $this->Html->icon('user', ['class' => 'fa-fw']),
+        'required' => true,
     ]);
     echo $this->Form->input(__d('croogo', 'Submit'), [
         'type' => 'submit',
