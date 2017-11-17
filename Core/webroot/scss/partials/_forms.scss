@@ -20,6 +20,9 @@ form .span8 + .span4 {
 }
 
 .file {
+  label {
+    margin-right: .25rem;
+  }
   .form-control {
     display: inline-block;
     width: auto;
