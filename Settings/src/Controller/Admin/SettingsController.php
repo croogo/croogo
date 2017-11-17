@@ -47,7 +47,8 @@ class SettingsController extends AppController
     public function prefix($prefix = null)
     {
         if ($this->request->is('post')) {
-            foreach ($this->request->data() as $id => $value) {
+            foreach ($this->request->data() as $inputName => $value) {
+                $id = str_replace('setting-', '', $inputName);
                 if ($id == '_apply') {
                     continue;
                 }

@@ -39,14 +39,14 @@ class SettingsFormHelper extends Helper
             'data-title' => $setting->description,
         ];
         if ($setting->value == 1) {
-            $output = $this->Form->input($setting->id, [
+            $output = $this->Form->input('setting-' . $setting->id, [
                 'type' => $setting->input_type,
                 'checked' => 'checked',
                 'tooltip' => $tooltip,
                 'label' => $label
             ]);
         } else {
-            $output = $this->Form->input($setting->id, [
+            $output = $this->Form->input('setting-' . $setting->id, [
                 'type' => $setting->input_type,
                 'tooltip' => $tooltip,
                 'label' => $label
@@ -73,7 +73,7 @@ class SettingsFormHelper extends Helper
             };
             $selected = json_decode($setting->value);
             $options = $setting->options;
-            $output = $this->Form->input($setting->id, [
+            $output = $this->Form->input('setting-' . $setting->id, [
                 'label' => $setting->title,
                 'multiple' => $multiple,
                 'options' => $options,
@@ -83,7 +83,7 @@ class SettingsFormHelper extends Helper
             $output = $this->_inputCheckbox($setting, $label);
         } elseif ($setting->input_type == 'radio') {
             $options = $setting->options;
-            $output = $this->Form->input($setting->id, [
+            $output = $this->Form->input('setting-' . $setting->id, [
                 'label' => $setting->title,
                 'type' => 'radio',
                 'options' => $options,
@@ -109,7 +109,7 @@ class SettingsFormHelper extends Helper
                 $options['options'] = $setting->options;
             }
 
-            $output = $this->Form->input($setting->id, $options);
+            $output = $this->Form->input('setting-' . $setting->id, $options);
         }
         return $output;
     }
