@@ -19,11 +19,7 @@ $this->append('tab-content');
 echo $this->Html->tabStart('attachment-upload');
 echo $this->Form->input('file', [
         'type' => 'file',
-        'label' => __d('croogo', 'Upload'),
-        'nestedInput' => true,
-        'templates' => [
-            'formGroup' => '{{label}}',
-        ]
+        'label' => false,
     ]);
 echo $this->Html->tabEnd();
 
