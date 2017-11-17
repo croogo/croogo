@@ -32,6 +32,7 @@ class Link extends ArrayObject
             }
             return urldecode($val);
         }, $this->getArrayCopy());
+        unset($copy['pass']);
         return (isset($this->controller)) ? $copy : $this->url;
     }
 
