@@ -21,12 +21,19 @@ else:
     $mastheadWrapperClass = "";
 endif;
 
+if (!isset($bgImagePath)):
+    $bgImagePath = Configure::read('Theme.bgImagePath') ?: 'img/header-bg.jpg';
+endif;
 
-$bgImage = $this->Url->webroot('img/header-bg.jpg');
-
-$mastheadAttrs = $bgImage ? [
-    "background-image: url($bgImage)",
-] : [];
+$mimeType = mime_content_type(WWW_ROOT . $bgImagePath);
+if (strpos($mimeType, 'image') === 0):
+    $bgImageUrl = $this->Url->webroot($bgImagePath);
+    $mastheadAttrs = $bgImageUrl ? [
+        "background-image: url($bgImageUrl)",
+    ] : [];
+else:
+    $mastheadAttrs = [];
+endif;
 
 if (isset($contact)):
     $mastheadAttrs[] = 'background-color: #222';
