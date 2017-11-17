@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <?= echo $this->element('admin/footer') ?>
+        <?= $this->element('admin/footer') ?>
         <?php
         $script = <<<EOF
 $('[rel=tooltip],input[data-title]').tooltip();
