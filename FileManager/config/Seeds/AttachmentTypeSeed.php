@@ -9,6 +9,7 @@ class AttachmentTypeSeed extends AbstractSeed
     {
         $records = [
             [
+                'id' => 3,
                 'title' => 'Attachment',
                 'alias' => 'attachment',
                 'plugin' => 'Croogo/FileManager',
