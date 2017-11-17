@@ -161,6 +161,18 @@ class AppController extends \App\Controller\AppController implements HookableCom
         }
         $this->{$aclFilterComponent}->auth();
 
+        if (Configure::read('Site.status') == 0 &&
+            $this->Auth->user('role_id') != 1
+        ) {
+            if (!$this->request->is('whitelisted')) {
+                $this->viewBuilder()->setLayout('maintenance');
+                $this->response->statusCode(503);
+                $this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
+                $this->viewBuilder()->templatePath('Maintenance');
+                $this->render('Croogo/Core.blank');
+            }
+        }
+
         if (!$this->request->is('api')) {
             $this->Security->blackHoleCallback = '_securityError';
             if ($this->request->param('action') == 'delete' && $this->request->param('prefix') == 'admin') {

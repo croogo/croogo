@@ -108,18 +108,6 @@ class AppController extends CroogoAppController
 
         parent::beforeFilter($event);
 
-        if (Configure::read('Site.status') == 0 &&
-            $this->Auth->user('role_id') != 1
-        ) {
-            if (!$this->request->is('whitelisted')) {
-                $this->viewBuilder()->setLayout('maintenance');
-                $this->response->statusCode(503);
-                $this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
-                $this->viewBuilder()->templatePath('Maintenance');
-                $this->render('Croogo/Core.blank');
-            }
-        }
-
         Croogo::dispatchEvent('Croogo.beforeSetupAdminData', $this);
     }
 
