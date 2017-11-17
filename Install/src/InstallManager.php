@@ -9,6 +9,7 @@ use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
 use Croogo\Acl\AclGenerator;
 use Croogo\Core\Plugin;
+use Croogo\Core\Database\SequenceFixer;
 
 class InstallManager
 {
@@ -156,6 +157,11 @@ class InstallManager
             if (!$migrationsSucceed) {
                 break;
             }
+        }
+
+        if ($migrationsSucceed) {
+            $fixer = new SequenceFixer();
+            $fixer->fix('default');
         }
 
         return $migrationsSucceed;
