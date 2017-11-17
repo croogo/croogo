@@ -164,7 +164,12 @@ class AppController extends \App\Controller\AppController implements HookableCom
         if (Configure::read('Site.status') == 0 &&
             $this->Auth->user('role_id') != 1
         ) {
-            if (!$this->request->is('whitelisted')) {
+            if (!$this->request->is('whitelisted') &&
+                !(
+                    $this->request->param('prefix') == 'admin' &&
+                    $this->request->param('action') === 'login'
+                )
+            ) {
                 $this->viewBuilder()->setLayout('maintenance');
                 $this->response->statusCode(503);
                 $this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
