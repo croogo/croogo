@@ -170,6 +170,7 @@ class InstallController extends Controller
                 __d('croogo', 'Warning: Database "%s" is not empty.', $connection->config()['database'])
             );
 
+            $this->set('onStep', 2);
             return;
         }
 
