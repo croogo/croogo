@@ -1,10 +1,10 @@
 <?php
 
-$title_for_layout = __d('croogo', 'Search Results: %s', h($q));
+$this->assign('title', __d('croogo', 'Search Results: %s', h($q)));
 
 ?>
 <div class="nodes search">
-    <h2><?= $title_for_layout ?></h2>
+    <h2><?= $this->fetch('title') ?></h2>
 
     <?php
         if (count($nodes) == 0) {
