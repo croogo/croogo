@@ -79,6 +79,12 @@ class InstallManager
     {
         $config += $this->defaultConfig;
 
+        if ($config['driver'] === 'Cake\Database\Driver\Postgres') {
+            if (empty($config['port'])) {
+                $config['port'] = 5432;
+            }
+        }
+
         ConnectionManager::drop('default');
         ConnectionManager::config('default', $config);
 
