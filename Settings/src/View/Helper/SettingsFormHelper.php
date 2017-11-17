@@ -72,12 +72,13 @@ class SettingsFormHelper extends Helper
                 $multiple = $setting->params['multiple'];
             };
             $selected = json_decode($setting->value);
+
             $options = $setting->options;
             $output = $this->Form->input('setting-' . $setting->id, [
                 'label' => $setting->title,
                 'multiple' => $multiple,
                 'options' => $options,
-                'selected' => $selected,
+                'default' => $selected,
             ]);
         } elseif ($setting->input_type == 'checkbox') {
             $output = $this->_inputCheckbox($setting, $label);
@@ -89,6 +90,22 @@ class SettingsFormHelper extends Helper
                 'options' => $options,
                 'value' => $setting->value,
             ]);
+        } elseif ($setting->input_type == 'file') {
+            $output = $this->Form->input('setting-' . $setting->id, [
+                'label' => $setting->title,
+                'type' => 'file',
+            ]);
+            if (!empty($setting->value)) {
+                $output .= $this->_View->Html->link(
+                    $this->_View->Html->image($setting->value, [
+                        'class' => 'img-thumbnail',
+                        'style' => 'max-width: 400px',
+                    ]),
+                    $setting->value, [
+                        'data-toggle' => 'lightbox',
+                    ]
+                );
+            }
         } else {
             $options = [
                 'type' => $inputType,

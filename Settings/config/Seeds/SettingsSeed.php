@@ -366,6 +366,16 @@ options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "M
             'weight' => '31',
             'params' => ''
         ],
+        [
+            'key' => 'Theme.bgImagePath',
+            'value' => '',
+            'title' => 'Background Image',
+            'description' => '',
+            'input_type' => 'file',
+            'editable' => '1',
+            'weight' => '32',
+            'params' => ''
+        ],
     ];
 
     public function run()

@@ -3,6 +3,7 @@
 namespace Croogo\Settings\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\Utility\Inflector;
 
 /**
  * Settings Controller
@@ -53,6 +54,15 @@ class SettingsController extends AppController
                     continue;
                 }
                 $setting = $this->Settings->get($id);
+
+                if (is_array($value)) {
+                    if (isset($value['tmp_name'])) {
+                        $value = $this->_handleUpload($setting, $value);
+                    } else {
+                        $value = json_encode($value);
+                    }
+                }
+
                 $setting->value = $value;
                 $this->Settings->save($setting);
             }
@@ -73,6 +83,32 @@ class SettingsController extends AppController
         }
 
         $this->set(compact('prefix', 'settings'));
+    }
+
+    protected function _handleUpload($setting, $value)
+    {
+        $name = $value['name'];
+
+        $currentBg = WWW_ROOT . $setting->value;
+        if (file_exists($currentBg) && is_file($currentBg)) {
+            unlink($currentBg);
+        }
+
+        $dotPosition = strripos($name, '.');
+        $filename = strtolower(substr($name, 0, $dotPosition));
+        $ext = strtolower(substr($name, $dotPosition + 1));
+
+        $relativePath = DS . 'uploads' . DS .
+            Inflector::slug($filename, '-') . '.' .
+            $ext;
+        $targetDir = WWW_ROOT . 'uploads';
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777);
+        }
+        $targetFile = WWW_ROOT . $relativePath;
+        move_uploaded_file($value['tmp_name'], $targetFile);
+        $value = str_replace('\\', '/', $relativePath);
+        return $value;
     }
 
 /**

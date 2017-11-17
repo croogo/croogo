@@ -10,6 +10,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Settings'),
 
 $this->assign('form-start', $this->Form->create(null, [
     'class' => 'protected-form',
+    'type' => 'file',
 ]));
 
 $this->append('tab-heading');

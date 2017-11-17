@@ -82,7 +82,10 @@ class SettingsShell extends Shell
                             'short' => 'd',
                         ],
                         'input_type' => [
-                            'choices' => ['text', 'textarea', 'checkbox', 'multiple', 'radio'],
+                            'choices' => [
+                                'text', 'textarea', 'checkbox', 'multiple',
+                                'radio', 'file',
+                            ],
                             'short' => 'i',
                         ],
                         'editable' => [

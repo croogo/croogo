@@ -28,6 +28,18 @@ Nav::add('sidebar', 'settings', [
             'weight' => 10,
         ],
 
+        'theme' => [
+            'title' => __d('croogo', 'Theme'),
+            'url' => [
+                'prefix' => 'admin',
+                'plugin' => 'Croogo/Settings',
+                'controller' => 'Settings',
+                'action' => 'prefix',
+                'Theme',
+            ],
+            'weight' => 15,
+        ],
+
         'meta' => [
             'title' => __d('croogo', 'Meta'),
             'url' => [
