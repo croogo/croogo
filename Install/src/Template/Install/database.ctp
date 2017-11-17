@@ -2,7 +2,7 @@
 $this->assign('title', __d('croogo', 'Database'));
 
 $this->start('before');
-echo $this->Form->create(null, [
+echo $this->Form->create($context, [
     'align' => ['left' => 4, 'middle' => 8, 'right' => 0],
 ]);
 $this->end();
@@ -35,7 +35,6 @@ $this->end();
 <?php
 echo $this->Form->input('driver', [
     'placeholder' => __d('croogo', 'Database'),
-    'default' => Cake\Database\Driver\Mysql::class,
     'empty' => false,
     'options' => [
         Cake\Database\Driver\Mysql::class => 'MySQL',
@@ -46,14 +45,12 @@ echo $this->Form->input('driver', [
 ]);
 echo $this->Form->input('host', [
     'placeholder' => __d('croogo', 'Host'),
-    'default' => 'localhost',
     'tooltip' => __d('croogo', 'Database hostname or IP Address'),
     'prepend' => $this->Html->icon('home'),
     'label' => __d('croogo', 'Host'),
 ]);
 echo $this->Form->input('username', [
     'placeholder' => __d('croogo', 'Login'),
-    'default' => 'root',
     'tooltip' => __d('croogo', 'Database login/username'),
     'prepend' => $this->Html->icon('user'),
     'label' => __d('croogo', 'Login'),
@@ -66,7 +63,6 @@ echo $this->Form->input('password', [
 ]);
 echo $this->Form->input('database', [
     'placeholder' => __d('croogo', 'Name'),
-    'default' => 'croogo',
     'tooltip' => __d('croogo', 'Database name'),
     'prepend' => $this->Html->icon('briefcase'),
     'label' => __d('croogo', 'Name'),

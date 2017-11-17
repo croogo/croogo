@@ -141,14 +141,27 @@ class InstallController extends Controller
             'exists' => false,
             'valid' => false,
         ];
+        $context = [
+            'schema' => true,
+            'defaults' => [
+                'driver' => 'Cake\Database\Driver\Mysql',
+                'host' => 'localhost',
+                'username' => 'root',
+                'database' => 'croogo',
+            ],
+        ];
         try {
             $connection = ConnectionManager::get('default');
             $config = $connection->config();
             $currentConfiguration['exists'] = !empty($config) && !($config['username'] === 'my_app' && $config['database'] === 'my_app');
             $currentConfiguration['valid'] = $connection->connect();
+            $context = [
+                'schema' => true,
+                'defaults' => $config,
+            ];
         } catch (\Exception $e) {
         }
-        $this->set(compact('currentConfiguration'));
+        $this->set(compact('context', 'currentConfiguration'));
         $this->set('onStep', 2);
     }
 
