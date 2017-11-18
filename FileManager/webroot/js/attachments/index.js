@@ -16,13 +16,14 @@ jQuery(function ($) {
   var $body = $('body');
   var baseUrl = $('#base-url').text();
   var $tokenFields = $('#tokens').find('input');
+  var $dropzoneTarget = $('#dropzone-target');
   var tokens = {};
   $tokenFields.each(function () {
     tokens[this.name] = this.value;
   });
 
   var dropzone = new Dropzone(document.body, {
-    url: $('#dropzone-url').text(),
+    url: $dropzoneTarget.data('url'),
     previewsContainer: ".table tbody",
     clickable: false,
     previewTemplate: $('#dropzone-preview').html(),
