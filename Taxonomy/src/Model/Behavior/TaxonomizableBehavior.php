@@ -3,6 +3,7 @@
 namespace Croogo\Taxonomy\Model\Behavior;
 
 use Cake\Event\Event;
+use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
@@ -228,6 +229,22 @@ class TaxonomizableBehavior extends Behavior
             return $query;
         }
         $term = $options['term'];
+
+        if (is_string($term)) {
+            $locale = I18n::locale();
+            $cacheKeys = ['term', $locale, $term];
+            $cacheKey = implode('_', $cacheKeys);
+            $term = $this->_table->Taxonomies->Terms->find()
+                ->where([
+                    'Terms.slug' => $term
+                ])
+                ->cache($cacheKey, 'nodes_term')
+                ->first();
+        }
+
+        if (!$term) {
+            return $query;
+        }
 
         $query
             ->matching('Taxonomies', function (Query $q) use ($term) {
