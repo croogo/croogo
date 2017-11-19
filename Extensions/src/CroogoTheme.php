@@ -69,6 +69,7 @@ class CroogoTheme
                     'columnLeft' => 'col-md-8',
                     'columnRight' => 'col-md-4',
                     'container' => 'container',
+                    'containerFluid' => 'container-fluid',
                     'dashboardFull' => 'col-12',
                     'dashboardLeft' => 'col-sm-6',
                     'dashboardRight' => 'col-sm-6',
@@ -76,7 +77,7 @@ class CroogoTheme
                     'formInput' => 'input-block-level',
                     'imageClass' => '',
                     'row' => 'row',
-                    'tableClass' => 'table table-striped table-responsive',
+                    'tableClass' => 'table table-striped',
                     'thumbnailClass' => 'img-thumbnail',
                 ],
                 'iconDefaults' => [

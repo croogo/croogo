@@ -23,7 +23,7 @@ $showActions = isset($showActions) ? $showActions : true;
             <div class="nav-sidebar">
                 <?= $this->element('Croogo/Core.admin/navigation') ?>
             </div>
-            <div id="content-container" class="content-container <?= $this->Theme->getCssClass('container') ?>">
+            <div id="content-container" class="content-container <?= $this->Theme->getCssClass('containerFluid') ?>">
                 <div id="content" class="content">
                     <div class="col-12 d-flex justify-content-between align-items-center">
                         <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
