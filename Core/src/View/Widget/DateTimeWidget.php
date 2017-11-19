@@ -6,13 +6,14 @@
 namespace Croogo\Core\View\Widget;
 
 use Cake\Core\Configure;
+use Cake\Database\Type;
 use Cake\I18n\I18n;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\Routing\Router;
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
-use DateTime;
+use DateTimeInterface;
 
 class DateTimeWidget extends CakeDateTimeWidget
 {
@@ -46,16 +47,23 @@ class DateTimeWidget extends CakeDateTimeWidget
             $format = $this->_convertPHPToMomentFormat($data['data-format']);
         }
 
-        if (!($val instanceof DateTime) && !empty($val)) {
-            $sysDateFormat = 'yyyy-MM-dd HH:mm:SS';
-            $val = $type === 'date' ?
-                Time::parseDate($val, $sysDateFormat) :
-                Time::parseDateTime($val, $sysDateFormat);
-            $timestamp = $val->format('U');
+        if (!($val instanceof DateTimeInterface) && !empty($val)) {
+            switch ($type) {
+                case 'date':
+                case 'time':
+                    $val = Type::build($type)->marshal($val);
+                    break;
+                default:
+                    $val = Type::build('datetime')->marshal($val);
+            }
         }
 
-        if ($val instanceof DateTime) {
+        if ($val instanceof DateTimeInterface) {
             $val = new FrozenTime($val);
+        }
+
+        if (!empty($val)) {
+            $timestamp = $val->format('U');
         }
 
         $request = Router::getRequest();
