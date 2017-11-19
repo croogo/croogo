@@ -73,6 +73,7 @@ class NodesComponent extends Component
         $nodes = $this->controller->BlocksHook->blocksData['nodes'];
         $_nodeOptions = [
             'find' => 'all',
+            'findOptions' => [],
             'conditions' => [],
             'order' => 'Nodes.created DESC',
             'limit' => 5,
@@ -81,7 +82,7 @@ class NodesComponent extends Component
         foreach ($nodes as $alias => $options) {
             $options = Hash::merge($_nodeOptions, $options);
             $options['limit'] = str_replace('"', '', $options['limit']);
-            $node = $this->Nodes->find($options['find'])
+            $node = $this->Nodes->find($options['find'], $options['findOptions'])
                 ->where($options['conditions'])
                 ->order($options['order'])
                 ->limit($options['limit'])
