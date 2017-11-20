@@ -35,7 +35,17 @@ class DatabaseConfig implements ConfigEngineInterface
                 }
             ])->cache('configure-settings-query-' . $key, 'cached_settings')->toArray();
 
-            return Hash::expand($settings);
+            $settings = Hash::expand($settings);
+
+            if (empty($setting['Meta'])) {
+                $settings['Meta'] = TableRegistry::get('Croogo/Meta.Meta')
+                    ->find('list', ['keyField' => 'key', 'valueField' => 'value'])
+                    ->where(['model' => ''])
+                    ->cache('configure-settings-query-' . $key . '-meta', 'cached_settings')
+                    ->toArray();
+            }
+
+            return $settings;
         }, 'cached_settings');
 
         \Croogo\Core\timerStop('Loading settings from database');

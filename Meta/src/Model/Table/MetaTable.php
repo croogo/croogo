@@ -33,6 +33,11 @@ class MetaTable extends CroogoTable
         $this->table('meta');
         $this->addBehavior('Timestamp');
         $this->addBehavior('Croogo/Core.Trackable');
+        $this->addBehavior('Croogo/Core.Cached', [
+            'groups' => [
+                'settings',
+            ],
+        ]);
         $this->addBehavior('Search.Search');
 
         parent::initialize($config);
