@@ -7,9 +7,9 @@ use Crud\Action\EditAction as CrudEditAction;
 
 class EditAction extends CrudEditAction
 {
-    protected function _handle()
+    protected function _get()
     {
-        parent::_handle();
+        parent::_get();
 
         $this->_controller()->set([
             'editFields' => $this->config('editFields'),

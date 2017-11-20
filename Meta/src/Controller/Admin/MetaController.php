@@ -2,6 +2,7 @@
 
 namespace Croogo\Meta\Controller\Admin;
 
+use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Croogo\Meta\Controller\AppController;
 
@@ -28,10 +29,43 @@ class MetaController extends AppController
     {
         parent::initialize();
 
+        $this->components()->unload('Meta');
+        unset($this->Meta);
+        $this->loadModel('Croogo/Meta.Meta');
+
+        $this->Crud->config('actions.index', [
+            'displayFields' => $this->Meta->displayFields(),
+            'searchFields' => ['key', 'value'],
+            'relatedModels' => false
+        ]);
+        $this->Crud->config('actions.edit', [
+            'editFields' => $this->Meta->editFields(),
+            'relatedModels' => false
+        ]);
+        $this->Crud->config('actions.add', [
+            'editFields' => $this->Meta->editFields(),
+            'relatedModels' => false
+        ]);
+
         $this->_setupPrg();
     }
 
-/**
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+
+        $this->Crud->on('Crud.beforePaginate', function (Event $event) {
+           $event->subject()->query->where(['model' => '']);
+        });
+        $this->Crud->on('Crud.beforeSave', function (Event $event) {
+            $entity = $event->subject()->entity;
+            if (empty($entity->model)) {
+                $entity->model = '';
+            }
+        });
+    }
+
+    /**
  * Admin delete meta
  *
  * @param int $id

@@ -18,11 +18,22 @@ class MetaTable extends CroogoTable
 {
     protected $_quoted;
 
+    protected $_displayFields = [
+        'key',
+        'value',
+    ];
+
+    protected $_editFields = [
+        'key',
+        'value',
+    ];
+
     public function initialize(array $config)
     {
         $this->table('meta');
         $this->addBehavior('Timestamp');
         $this->addBehavior('Croogo/Core.Trackable');
+        $this->addBehavior('Search.Search');
 
         parent::initialize($config);
     }
