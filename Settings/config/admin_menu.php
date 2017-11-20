@@ -40,18 +40,6 @@ Nav::add('sidebar', 'settings', [
             'weight' => 15,
         ],
 
-        'meta' => [
-            'title' => __d('croogo', 'Meta'),
-            'url' => [
-                'prefix' => 'admin',
-                'plugin' => 'Croogo/Settings',
-                'controller' => 'Settings',
-                'action' => 'prefix',
-                'Meta',
-            ],
-            'weight' => 20,
-        ],
-
         'reading' => [
             'title' => __d('croogo', 'Reading'),
             'url' => [

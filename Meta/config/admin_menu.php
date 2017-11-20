@@ -4,26 +4,13 @@ namespace Croogo\Menus\Config;
 
 use Croogo\Core\Nav;
 
-Nav::add('sidebar', 'menus', [
-    'icon' => 'sitemap',
-    'title' => __d('croogo', 'Menus'),
+Nav::add('sidebar', 'settings.children.meta', [
+    'title' => __d('croogo', 'Meta'),
     'url' => [
         'prefix' => 'admin',
-        'plugin' => 'Croogo/Menus',
-        'controller' => 'Menus',
+        'plugin' => 'Croogo/Meta',
+        'controller' => 'Meta',
         'action' => 'index',
     ],
     'weight' => 20,
-    'children' => [
-        'menus' => [
-            'title' => __d('croogo', 'Menus'),
-            'url' => [
-                'prefix' => 'admin',
-                'plugin' => 'Croogo/Menus',
-                'controller' => 'Menus',
-                'action' => 'index',
-            ],
-            'weight' => 10,
-        ],
-    ],
 ]);
