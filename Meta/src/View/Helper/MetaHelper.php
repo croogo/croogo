@@ -17,6 +17,8 @@ use Cake\View\Helper;
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ *
+ * @property \Croogo\Core\View\Helper\CroogoHtmlHelper $Html
  */
 class MetaHelper extends Helper
 {
@@ -89,7 +91,10 @@ class MetaHelper extends Helper
                 $attrValue = $name;
                 $value = $content;
             }
-            $output .= '<meta ' . $attr . '="' . $attrValue . '" content="' . $value . '" />';
+            $output .= $this->Html->meta([
+                $attr => $attrValue,
+                'content' => $value
+            ]);
         }
 
         return $output;
