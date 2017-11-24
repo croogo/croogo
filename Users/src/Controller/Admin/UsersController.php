@@ -222,7 +222,9 @@ class UsersController extends AppController
         $this->viewBuilder()->setLayout('admin_login');
 
         if ($this->Auth->user('id')) {
-            if (!$this->request->session()->check('Flash.auth')) {
+            if (!$this->request->session()->check('Flash.auth') &&
+                !$this->request->session()->check('Flash.flash')
+            ) {
                 $this->Flash->error(__d('croogo', 'You are already logged in'), ['key' => 'auth']);
             }
             return $this->redirect($this->Auth->redirectUrl());
@@ -352,7 +354,11 @@ class UsersController extends AppController
     public function register()
     {
         if ($this->Auth->user('id')) {
-            $this->Flash->error(__d('croogo', 'You are already logged in'));
+            if (!$this->request->session()->check('Flash.auth') &&
+                !$this->request->session()->check('Flash.flash')
+            ) {
+                $this->Flash->error(__d('croogo', 'You are already logged in'));
+            }
             return $this->redirect($this->referer());
         }
         $user = $this->Users->newEntity();
