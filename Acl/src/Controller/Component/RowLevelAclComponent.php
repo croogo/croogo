@@ -17,15 +17,16 @@ use Croogo\Core\Croogo;
  *
  * ```
  *      class ItemsController extends AppController {
- *          public $components = array(
- *              'RowLevelAcl' => array(
- *                  'className' => 'Acl.RowLevelAcl',
- *                  'settings' => array(
- *                      'actionMap' => array(
- *                          'admin_reserve' => 'update', // action map
- *                      ),
- *                  ),
- *              ));
+ *          public $components = [
+ *              'RowLevelAcl' => [
+ *                  'className' => 'Croogo/Acl.RowLevelAcl',
+ *                  'settings' => [
+ *                      'actionMap' => [
+ *                          'reserve' => 'update', // action map
+ *                      ],
+ *                  ],
+ *              ]
+ *         ];
  *      }
  * ```
  *
