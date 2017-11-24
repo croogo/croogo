@@ -29,60 +29,30 @@ use Psr\Log\LogLevel;
 class AclCachedAuthorize extends BaseAuthorize
 {
 
+    protected $_defaultConfig = [
+        'actionMap' => [
+            'toggle' => 'update',
+            'moveup' => 'update',
+            'movedown' => 'update',
+            'process' => 'delete',
+            'index' => 'read',
+            'add' => 'create',
+            'edit' => 'update',
+            'view' => 'read',
+            'remove' => 'delete',
+            'create' => 'create',
+            'read' => 'read',
+            'update' => 'update',
+            'delete' => 'delete',
+        ],
+    ];
+
 /**
  * Constructor
  */
     public function __construct(ComponentRegistry $registry, $config = [])
     {
         parent::__construct($registry, $config);
-        $this->_setPrefixMappings();
-    }
-
-/**
- * sets the crud mappings for prefix routes.
- *
- * @return void
- */
-    protected function _setPrefixMappings()
-    {
-        if (!Configure::read('Access Control.rowLevel')) {
-            return;
-        }
-
-        $crud = ['create', 'read', 'update', 'delete'];
-        $map = array_combine($crud, $crud);
-
-        $Controller = $this->_registry->getController();
-        if ($Controller->components()->has('RowLevelAcl')) {
-            $settings = $Controller->components()->get('RowLevelAcl')->config();
-            if (isset($settings['actionMap'])) {
-                $map = array_merge($map, $settings['actionMap']);
-            }
-        }
-
-/*
-        $prefixes = Router::prefixes();
-        if (!empty($prefixes)) {
-            foreach ($prefixes as $prefix) {
-                $map = array_merge($map, [
-                    $prefix . '_moveup' => 'update',
-                    $prefix . '_movedown' => 'update',
-                    $prefix . '_process' => 'delete',
-                    $prefix . '_index' => 'read',
-                    $prefix . '_add' => 'create',
-                    $prefix . '_edit' => 'update',
-                    $prefix . '_view' => 'read',
-                    $prefix . '_remove' => 'delete',
-                    $prefix . '_create' => 'create',
-                    $prefix . '_read' => 'read',
-                    $prefix . '_update' => 'update',
-                    $prefix . '_delete' => 'delete'
-                ]);
-            }
-        }
-*/
-
-        $this->mapActions($map);
     }
 
 /**

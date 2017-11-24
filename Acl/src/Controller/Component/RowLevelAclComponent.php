@@ -45,12 +45,6 @@ class RowLevelAclComponent extends Component
  */
     protected $_controller;
 
-    protected $_defaultConfig = [
-        'actionMap' => [
-            'toggle' => 'update',
-        ],
-    ];
-
 /**
  * initialize
  *
