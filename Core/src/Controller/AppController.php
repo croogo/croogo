@@ -81,6 +81,8 @@ class AppController extends \App\Controller\AppController implements HookableCom
         $this->_dispatchBeforeInitialize();
 
         parent::initialize();
+
+        $this->_setupAclComponent();
     }
 
     /**
@@ -232,10 +234,10 @@ class AppController extends \App\Controller\AppController implements HookableCom
     {
         $config = Configure::read('Access Control');
         if (isset($config['rowLevel']) && $config['rowLevel'] == true) {
-            if (strpos($config['models'], $this->plugin . '.' . $this->modelClass) === false) {
+            if (strpos($config['models'], str_replace('/', '\/', $this->modelClass)) === false) {
                 return;
             }
-            $this->Components->load(Configure::read('Site.acl_plugin') . '.RowLevelAcl');
+            $this->loadComponent('Croogo/Acl.RowLevelAcl');
         }
     }
 
