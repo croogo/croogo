@@ -2,11 +2,16 @@
 
 namespace Croogo\Settings\Model\Table;
 
+use ArrayObject;
+
 use Cake\Core\Configure;
 use Cake\Database\Schema\TableSchema;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\Form\Schema;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
+use Croogo\Acl\AclGenerator;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -86,9 +91,16 @@ class SettingsTable extends CroogoTable
 /**
  * afterSave callback
  */
-    public function afterSave()
+    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
+
         $this->connection()->driver()->autoQuoting(false);
+        if ($entity->key == 'Access Control.rowLevel') {
+            if ($entity->value == true && $entity->_original['value'] == false) {
+                $aclGenerator = new AclGenerator();
+                $aclGenerator->syncContentAcos();
+            }
+        }
     }
 
 /**
