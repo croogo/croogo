@@ -7,10 +7,11 @@ foreach ($rolePermissions as $role) {
         continue;
     }
     $field = 'RolePermission.' . $role['Role']['id'];
-    $input = $this->Form->checkbox($field, array(
-        'checked' => $role['Role']['allowed'] ? 'checked' : null
-    ));
-    $input .= $this->Form->label($field, $role['Role']['title']);
-    $out .= $this->Html->div('checkbox', $input);
+    $input = $this->Form->input($field, [
+        'type' => 'checkbox',
+        'checked' => $role['Role']['allowed'] ? true : false,
+        'label' => $role['Role']['title'],
+    ]);
+    $out .= $input;
 }
-echo $this->Html->div('input select', $out);
+echo $out;

@@ -13,6 +13,8 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 
+use Psr\Log\LogLevel;
+
 /**
  * An authentication adapter for AuthComponent. Provides similar functionality
  * to ActionsAuthorize class from CakePHP core _with_ caching capability.
@@ -50,14 +52,15 @@ class AclCachedAuthorize extends BaseAuthorize
         $crud = ['create', 'read', 'update', 'delete'];
         $map = array_combine($crud, $crud);
 
-        $Controller = $this->Controller();
-        if ($Controller->Components->attached('RowLevelAcl')) {
-            $settings = $Controller->Components->RowLevelAcl->settings;
+        $Controller = $this->_registry->getController();
+        if ($Controller->components()->has('RowLevelAcl')) {
+            $settings = $Controller->components()->get('RowLevelAcl')->config();
             if (isset($settings['actionMap'])) {
                 $map = array_merge($map, $settings['actionMap']);
             }
         }
 
+/*
         $prefixes = Router::prefixes();
         if (!empty($prefixes)) {
             foreach ($prefixes as $prefix) {
@@ -77,6 +80,8 @@ class AclCachedAuthorize extends BaseAuthorize
                 ]);
             }
         }
+*/
+
         $this->mapActions($map);
     }
 
@@ -183,26 +188,36 @@ class AclCachedAuthorize extends BaseAuthorize
         }
 
         // bail out when controller's primary model does not want row level acl
-        $controller = $this->controller();
-        $model = $controller->modelClass;
+        $controller = $this->_registry->getController();
+        $model = $controller->name;
         $Model = $controller->{$model};
-        if ($Model && !$Model->Behaviors->attached('RowLevelAcl')) {
+        if ($Model && !$Model->behaviors()->has('RowLevelAcl')) {
             return $allowed;
         }
 
-        $primaryKey = $Model->primaryKey;
+        $primaryKey = $Model->primaryKey();
         $ids = [];
-        if ($request->is('get') && !empty($request->params['pass'][0])) {
+        if ($request->is('get') && $request->param('pass.0')) {
             // collect id from actions such as: Nodes/admin_edit/1
-            $ids[] = $request->params['pass'][0];
-        } elseif (($request->is('post') || $request->is('put')) && isset($request->data[$model]['action'])) {
-            // collect ids from 'bulk' processing action such as: Nodes/admin_process
-            foreach ($request->data[$model] as $id => $flag) {
-                if (isset($flag[$primaryKey]) && $flag[$primaryKey] == 1) {
-                    $ids[] = $id;
+            $ids[] = $request->param('pass.0');
+        } elseif ($request->is('post') || $request->is('put')) {
+
+            $action = $request->data('action');
+            if ($action) {
+                // collect ids from 'bulk' processing action
+                foreach ($request->data[$model] as $id => $flag) {
+                    if (isset($flag[$primaryKey]) && $flag[$primaryKey] == 1) {
+                        $ids[] = $id;
+                    }
                 }
             }
+
+            $id = $request->param('pass.0');
+            if ($id) {
+                $ids[] = $id;
+            }
         }
+
         foreach ($ids as $id) {
             if (is_numeric($id)) {
                 try {
@@ -221,31 +236,32 @@ class AclCachedAuthorize extends BaseAuthorize
         return $allowed;
     }
 
+use \Cake\Log\LogTrait;
+
 /**
  * Checks authorization by content
  *
- * @throws CakeException
+ * @throws Exception
  */
     protected function _authorizeByContent($user, Request $request, $id)
     {
         if (!isset($this->config('actionMap')[$request->params['action']])) {
-            throw new Exception(
-                __d(
-                    'croogo',
-                    '_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
-                    $request->action,
-                    $request->controller
-                )
+            $message = __d('croogo',
+                '_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
+                $request->action,
+                $request->controller
             );
+            $this->log($message, LogLevel::CRITICAL);
+            throw new Exception($message);
         }
 
         list($plugin, $userModel) = pluginSplit($this->config('userModel'));
         $acoNode = [
-            'model' => $this->_Controller->modelClass,
+            'model' => $this->_registry->getController()->name,
             'foreign_key' => $id,
         ];
         $alias = sprintf('%s.%s', $acoNode['model'], $acoNode['foreign_key']);
-        $action = $this->config('actionMap')[$request->params['action']];
+        $action = $this->config('actionMap')[$request->param('action')];
 
         $cacheName = 'permissions_content_' . strval($user['id']);
         if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
