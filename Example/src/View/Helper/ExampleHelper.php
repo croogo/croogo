@@ -27,7 +27,7 @@ class ExampleHelper extends AppHelper
     public $helpers = [
         'Html',
         'Croogo.Layout',
-        'Nodes' => ['className' => 'Nodes.Nodes'],
+        'Nodes' => ['className' => 'Croogo/Nodes.Nodes'],
     ];
 
 /**
