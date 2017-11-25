@@ -4,12 +4,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width">
         <title><?= __d('croogo', 'Installation: %s', $this->fetch('title')) ?> - <?= __d('croogo', 'Croogo') ?></title>
+        <style>
+            .fa { min-width: 16px; }
+        </style>
         <?php
         echo $this->Html->css([
             'Croogo/Core.core/croogo-admin',
+            'Croogo/Core.core/select2.min',
+            'Croogo/Core.core/select2-bootstrap.min',
         ]);
         echo $this->Html->script([
             'Croogo/Core.jquery/jquery.min',
+            'Croogo/Core.core/croogo-bootstrap',
+            'Croogo/Core.core/select2.full.min',
             'Croogo/Core.core/admin',
         ]);
         echo $this->fetch('script');
@@ -46,6 +53,10 @@
         <?php
         $script = <<<EOF
 $('[rel=tooltip],input[data-title]').tooltip();
+$('select:not(".no-select2")').select2({
+    dropdownAutoWidth: true,
+    theme: 'bootstrap'
+});
 EOF;
         $this->Js->buffer($script);
 
