@@ -237,7 +237,9 @@ class AppController extends \App\Controller\AppController implements HookableCom
             if (strpos($config['models'], str_replace('/', '\/', $this->modelClass)) === false) {
                 return;
             }
-            $this->loadComponent('Croogo/Acl.RowLevelAcl');
+            if ($this->request->param('controller')) {
+                $this->loadComponent('Croogo/Acl.RowLevelAcl');
+            }
         }
     }
 
