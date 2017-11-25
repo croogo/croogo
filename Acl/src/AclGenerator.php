@@ -45,7 +45,12 @@ class AclGenerator extends AclExtras
     {
         $models = Configure::read('Access Control.models');
         if (!$models) {
-            return $this->out('No models are configured for row level access control');
+            $message = 'No models are configured for row level access control';
+            if (isset($this->Shell) || isset($this->controller)) {
+                $this->out($message);
+            } else {
+                \Cake\Log\Log::warning($message);
+            }
         }
         $models = json_decode($models, true);
 
