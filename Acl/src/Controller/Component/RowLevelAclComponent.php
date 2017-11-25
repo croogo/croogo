@@ -110,10 +110,12 @@ class RowLevelAclComponent extends Component
             } catch (\Exception $e) {
                 $allowed = false;
             }
-            $rolePermissions[] = [
+            $tmp[] = [
                 'id' => $roleId, 'title' => $role, 'allowed' => $allowed
             ];
         }
+        $sorted = collection($tmp)->sortBy('title', SORT_ASC, SORT_NATURAL);
+        $rolePermissions = $sorted->toArray();
         $controller->set(compact('rolePermissions'));
     }
 
