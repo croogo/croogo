@@ -313,7 +313,7 @@ class SettingsSeed extends AbstractSeed
             'editable' => '1',
             'weight' => '26',
             'params' => 'multiple=checkbox
-options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
+options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croogo/Menus.Menus": "Menus", "Croogo/Menus.Links": "Links"}'
         ],
         [
             'id' => '38',

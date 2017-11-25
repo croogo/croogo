@@ -3,6 +3,7 @@
 namespace Croogo\Acl;
 
 use Acl\AclExtras;
+use Cake\Core\Configure;
 use Cake\Database\Exception;
 use Cake\Datasource\ConnectionInterface;
 use Cake\ORM\TableRegistry;
@@ -39,4 +40,45 @@ class AclGenerator extends AclExtras
 
         return false;
     }
+
+    public function syncContentAcos()
+    {
+        $models = Configure::read('Access Control.models');
+        if (!$models) {
+            return $this->out('No models are configured for row level access control');
+        }
+        $models = json_decode($models, true);
+
+        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $query = $Acos->node('contents');
+        if ($query) {
+            $parent = $query->first();
+        } else {
+            $entity = $Acos->newEntity([
+                'parent_id' => null,
+                'alias' => 'contents',
+            ]);
+            $parent = $Acos->save($entity);
+        }
+        foreach ($models as $model) {
+            $Model = TableRegistry::get($model);
+            $rows = $Model->find()
+                ->select('id')
+                ->all();
+            foreach ($rows as $row) {
+                try {
+                    $node = $Acos->node($row);
+                } catch (\Exception $e) {
+                    $aco = $Acos->newEntity([
+                        'model' => $Model->alias(),
+                        'foreign_key' => $row->id,
+                        'alias' => sprintf('%s.%s', $Model->alias(), $row->id),
+                        'parent_id' => $parent->id,
+                    ]);
+                    $saved = $Acos->save($aco);
+                }
+            }
+        }
+    }
+
 }

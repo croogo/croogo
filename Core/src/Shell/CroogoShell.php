@@ -2,7 +2,11 @@
 
 namespace Croogo\Core\Shell;
 
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
+
+use Croogo\Acl\AclGenerator;
 
 /**
  * Croogo Shell
@@ -43,6 +47,11 @@ class CroogoShell extends AppShell
                         ],
                     ],
                 ],
+            ])->addSubcommand('sync_content_acos', [
+                'help' => 'Sync content acos',
+                'parser' => [
+                    'description' => 'Populate acos of existing contents',
+                ],
             ]);
         return $parser;
     }
@@ -56,6 +65,12 @@ class CroogoShell extends AppShell
     {
         $value = trim($this->args['0']);
         $this->out(Security::hash($value, null, true));
+    }
+
+    public function syncContentAcos()
+    {
+        $aclGenerator = new AclGenerator();
+        return $aclGenerator->syncContentAcos();
     }
 
 }

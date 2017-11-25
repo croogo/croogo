@@ -3,6 +3,9 @@
 namespace Croogo\Acl\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+use Croogo\Core\Croogo;
 
 /**
  * When "Access Control.rowLevel" Setting is active, this component will perform
@@ -14,15 +17,16 @@ use Cake\Controller\Component;
  *
  * ```
  *      class ItemsController extends AppController {
- *          public $components = array(
- *              'RowLevelAcl' => array(
- *                  'className' => 'Acl.RowLevelAcl',
- *                  'settings' => array(
- *                      'actionMap' => array(
- *                          'admin_reserve' => 'update', // action map
- *                      ),
- *                  ),
- *              ));
+ *          public $components = [
+ *              'RowLevelAcl' => [
+ *                  'className' => 'Croogo/Acl.RowLevelAcl',
+ *                  'settings' => [
+ *                      'actionMap' => [
+ *                          'reserve' => 'update', // action map
+ *                      ],
+ *                  ],
+ *              ]
+ *         ];
  *      }
  * ```
  *
@@ -47,36 +51,36 @@ class RowLevelAclComponent extends Component
  * attaches Acl and RowLevelAcl behavior to the controller's primary model and
  * hook the appropriate admin tabs
  */
-    public function initialize(Controller $controller)
+    public function initialize(array $settings)
     {
-        $this->_controller = $controller;
-        $Model = $controller->{$controller->modelClass};
-        $Model->Behaviors->load('Acl', [
-            'className' => 'Croogo.CroogoAcl', 'type' => 'controlled',
+        parent::initialize($settings);
+        $controller = $this->getController();
+        $Model = $controller->{$controller->name};
+        $Model->addBehavior('Acl', [
+            'className' => 'Croogo/Core.CroogoAcl', 'type' => 'controlled',
         ]);
-        $Model->Behaviors->load('RowLevelAcl', [
-            'className' => 'Acl.RowLevelAcl'
-        ]);
+        $Model->addBehavior('Croogo/Acl.RowLevelAcl');
 
         $name = $controller->name;
-        $element = 'Acl.admin/row_acl';
+        $element = 'Croogo/Acl.admin/row_acl';
         if (!empty($this->settings['adminTabElement'])) {
             $element = $this->settings['adminTabElement'];
         }
-        $adminTabActions = ['admin_add', 'admin_edit'];
-        if (!empty($this->settings['adminTabActions'])) {
-            $adminTabActions += $this->settings['adminTabActions'];
+        $adminTabActions = ['add', 'edit'];
+        if (!empty($this->_config['adminTabActions'])) {
+            $adminTabActions += $this->_config['adminTabActions'];
         }
         foreach ($adminTabActions as $action) {
-            Croogo::hookAdminTab("$name/$action", __d('croogo', 'Permissions'), $element);
+            Croogo::hookAdminTab("Admin/$name/$action", __d('croogo', 'Permissions'), $element);
         }
     }
 
 /**
  * startup
  */
-    public function startup(Controller $controller)
+    public function startup(Event $event)
     {
+        $controller = $this->getController();
         if (!empty($controller->request->params['pass'][0])) {
             $id = $controller->request->params['pass'][0];
             $this->_rolePermissions($id);
@@ -91,26 +95,28 @@ class RowLevelAclComponent extends Component
  */
     protected function _rolePermissions($id)
     {
-        $Permission = $this->_controller->Acl->Aro->Permission;
-        $Role = ClassRegistry::init('Users.Role');
+        $controller = $this->getController();
+        $Permission = $controller->Acl->adapter()->Permission;
+        $Role = TableRegistry::get('Croogo/Users.Roles');
         $roles = $Role->find('list', [
             'cache' => ['name' => 'roles', 'config' => 'permissions'],
         ]);
-        $modelClass = $this->_controller->modelClass;
+        $modelClass = $controller->name;
         $aco = ['model' => $modelClass, 'foreign_key' => $id];
         foreach ($roles as $roleId => $role) {
-            $aro = ['model' => 'Role', 'foreign_key' => $roleId];
+            $aro = ['model' => 'Roles', 'foreign_key' => $roleId];
             try {
                 $allowed = $Permission->check($aro, $aco);
-            } catch (CakeException $e) {
+            } catch (\Exception $e) {
                 $allowed = false;
             }
-            $rolePermissions[] = [
-                'Role' => [
-                    'id' => $roleId, 'title' => $role, 'allowed' => $allowed
-                ]
+            $tmp[] = [
+                'id' => $roleId, 'title' => $role, 'allowed' => $allowed
             ];
         }
-        $this->_controller->set(compact('rolePermissions'));
+        $sorted = collection($tmp)->sortBy('title', SORT_ASC, SORT_NATURAL);
+        $rolePermissions = $sorted->toArray();
+        $controller->set(compact('rolePermissions'));
     }
+
 }

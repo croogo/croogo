@@ -1,16 +1,17 @@
 <?php
 
 $rolePermissions = empty($rolePermissions) ? array() : $rolePermissions;
-$out = $this->Form->label('RolePermission', __d('croogo', 'Edit Permissions'));
+$out = $this->Form->label('rolePermissions', __d('croogo', 'Edit Permissions'));
 foreach ($rolePermissions as $role) {
-    if ($role['Role']['id'] == 1) {
+    if ($role['id'] == 1) {
         continue;
     }
-    $field = 'RolePermission.' . $role['Role']['id'];
-    $input = $this->Form->checkbox($field, array(
-        'checked' => $role['Role']['allowed'] ? 'checked' : null
-    ));
-    $input .= $this->Form->label($field, $role['Role']['title']);
-    $out .= $this->Html->div('checkbox', $input);
+    $field = 'rolePermissions.' . $role['id'];
+    $input = $this->Form->input($field, [
+        'type' => 'checkbox',
+        'checked' => $role['allowed'] ? true : false,
+        'label' => $role['title'],
+    ]);
+    $out .= $input;
 }
-echo $this->Html->div('input select', $out);
+echo $out;
