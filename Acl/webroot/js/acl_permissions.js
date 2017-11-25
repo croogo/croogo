@@ -46,15 +46,16 @@ AclPermissions.tabLoad = function(e) {
 	var matches = (e.target.toString().match(/#.+/gi));
 	var pane = matches[0];
 	var alias = $target.data('alias');
-	var $span = $('.' + Admin.iconClass('spinner', false), $target);
+	var $span = $('span:first-child', $target);
 	var spinnerClass = Admin.spinnerClass();
 	if ($span.length > 0) {
 		$span.addClass(spinnerClass);
 	} else {
 		$target.append(' <span class="' + spinnerClass + '"></span>');
 	};
+
 	$(pane).load(
-		Croogo.basePath + 'admin/acl/acl_permissions/',
+		Croogo.basePath + 'admin/acl/permissions/',
 		$.param({ root: alias }),
 		function(responseText, textStatus, xhr) {
 			$('span', $target).removeClass(spinnerClass);
@@ -94,7 +95,7 @@ AclPermissions.permissionToggle = function() {
 			.addClass(spinnerClass);
 
 		// prepare loadUrl
-		var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
+		var loadUrl = Croogo.basePath+'admin/acl/permissions/toggle/';
 		loadUrl    += acoId+'/'+aroId+'/';
 
 		// now load it
@@ -135,7 +136,7 @@ AclPermissions.tableToggle = function() {
 					level: data.level,
 					classes: classes.trim()
 				});
-				if (Croogo.params.controller == 'acl_permissions') {
+				if (Croogo.params.controller == 'Permissions') {
 					text += renderRoles(data.aros, acoId, aco);
 				} else {
 					text += AclPermissions.templates.editLinks(aco['url']);
@@ -198,6 +199,11 @@ AclPermissions.tableToggle = function() {
 			var children = $('tr[data-parent_id=' + id + ']');
 			children.each(function() {
 				var childId = $('.controller', this).data('id')
+				var grandchildren = $('tr[data-parent_id=' + childId + ']');
+				grandchildren.each(function() {
+					var grandchildId = $('.controller', this).data('id');
+					$('tr[data-parent_id=' + grandchildId + ']').remove();
+				})
 				$('tr[data-parent_id=' + childId + ']').remove();
 			}).remove();
 			$el.removeClass('perm-collapse').addClass('perm-expand')
@@ -208,14 +214,14 @@ AclPermissions.tableToggle = function() {
 		var params = {
 			perms: true
 		};
-		if (Croogo.params.controller == 'acl_actions') {
+		if (Croogo.params.controller == 'Actions') {
 			params = $.extend(params, {
 				urls: true,
 				perms: false
 			});
 		}
 
-		var url = Croogo.basePath + 'admin/acl/acl_permissions/index/';
+		var url = Croogo.basePath + 'admin/acl/permissions/index/';
 		$.getJSON(url + id + '/' + level, params, function(data, textStatus) {
 			renderPermissions.call($el[0], data, textStatus);
 		});
@@ -228,7 +234,7 @@ AclPermissions.tableToggle = function() {
  * @return void
  */
 $(document).ready(function() {
-	if (Croogo.params.controller == 'acl_permissions') {
+	if (Croogo.params.controller == 'permissions') {
 		AclPermissions.documentReady();
 	}
 });

@@ -1,0 +1,12 @@
+.green {
+  color: theme-color("success");
+}
+
+.red {
+  color: theme-color("danger");
+}
+
+.bg-black {
+  color: $gray-lighter;
+  background-color: $nearly-black;
+}

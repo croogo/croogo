@@ -2,21 +2,23 @@ Authors ordered by contribution
 
 Rachman Chavik <rchavik@xintesa.com>
 Fahad Ibnay Heylaal <fahad19@gmail.com>
-Kyle Robinson Young <kyle@dontkry.com>
+Marlin Cremers <m.cremers@cvo-technologies.com>
+Walther Lalk <dakota@users.noreply.github.com>
+Wouter van Os <wouter@wouter0100.nl>
 Damien Biasotto <damien@occi-tech.com>
+Kyle Robinson Young <kyle@dontkry.com>
 Derbois Aymeric <aymeric@occi-tech.com>
 Pierre Martin <pierre@occi-tech.com>
 chadrien <chadrien@chadrien.fr>
-Paul Gardner <phpmagpie@webbedit.co.uk>
-Walther Lalk <dakota@users.noreply.github.com>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
-Marlin Cremers <m.cremers@cvo-technologies.com>
+Paul Gardner <phpmagpie@webbedit.co.uk>
+Christopher M. Depré <mail@chris-depre.de>
+Dimas Abdul Aziiz <dimas@xintesa.com>
+Jose Diaz-Gonzalez <josegonzalez@users.noreply.github.com>
 euromark <euromark@web.de>
 Eko Tristiyono <eko@xintesa.com>
 Yuan Chavik <yuan@xintesa.com>
 Appsbender <regz24@gmail.com>
-Damien Biasotto <damien@occitech.fr>
-Dimas Abdul Aziiz <dimas@xintesa.com>
 AD7six <andydawson76@gmail.com>
 Mike Tallroth <mike.tallroth@gmail.com>
 Elias Coronado <ecor.rck@hotmail.com>
@@ -26,6 +28,7 @@ SCV Geo <scv@scvgeo.com>
 Heiner Gassen <hg@dynweb.net>
 Paulino Calderon <paulino@calder0n.com>
 pinchsoftware <contact@pinchsoft.com>
+ADmad <ADmad@users.noreply.github.com>
 Ceeram <c33ram@gmail.com>
 Grégory Salvan <gregory@occi-tech.com>
 Hadrien Collongues <chadrien@chadrien.fr>
@@ -36,10 +39,11 @@ Lukas Strassel <lukasstrassel@googlemail.com>
 Vitor Pacheco <vitor-p.c@hotmail.com>
 elbakai <m.elbakai@gmail.com>
 primeminister <primeminister@mowd.nl>
-ADmad <admad.coder@gmail.com>
 James Sapara <james.sapara@gmail.com>
+Livia Scapin <livia.scapin@bluewin.ch>
 Matt Curry <matt@pseudocoder.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
+Rakesh Tembhurne <rakesh@tembhurne.com>
 thoth <thomas.rader@tigerclawtech.com>
 Jeremy Harris <jeremy@someguyjeremy.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
@@ -48,6 +52,8 @@ cdbruin <casper@ectrader.nl>
 daniel <daniel@daniels-MacBook-Air.local>
 roland-w <roland-w@users.noreply.github.com>
 tmaiaroto <tom@shift8creative.com>
+yudapc <yudapc@gmail.com>
+Вадим <vadimushka.d@gmail.com>
 Adam Taylor <ataylor32@gmail.com>
 Adrien Louis-Rossignol <adrien.louis.r@gmail.com>
 Andrea de la Huerta <info@metamorfosys.de>
@@ -68,12 +74,12 @@ Marek Sebera <marek.sebera@gmail.com>
 Mike Pagé <mike@nedwave.com>
 Nicholas Craig <nick@threadgroup.com>
 Paulo Pinto <paulorpinto@gmail.com>
-Rakesh Tembhurne <rakesh@tembhurne.com>
 Robbert Noordzij <robbert@xseeding.nl>
 Sam Bernard <sam@sambernard.net>
 SplicePHP <admin@splicephp.com>
+The Gitter Badger <badger@gitter.im>
 Wiena Lorentz <lorentz@xintesa.com>
-Wouter van Os <wouter@wouter0100.nl>
+Zuhair AlSader <zuhair.alsadder@hotmail.com>
 alevilar <alevilar@gmail.com>
 avra911 <razvan@magnify.ro>
 damarev <damarev@gmail.com>

@@ -4,6 +4,7 @@ Config/settings.json
 Vendor/Simpletest/
 View/Themed/
 webroot/uploads/
+*/config/Migrations/*.lock
 *.bak
 *.swp
 
@@ -18,3 +19,6 @@ tmp/
 !./Plugin/Example
 !./Plugin/Install
 !./Plugin/Translate
+Core/webroot/bootstrap/
+Core/webroot/fontAwesome/
+Core/.sass-cache/

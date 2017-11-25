@@ -1,0 +1,44 @@
+.btn {
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
+
+.box .btn {
+  margin: 4px 4px 0 4px;
+}
+
+.nav-buttons {
+  .btn-group {
+    li {
+      margin: 0;
+      width: 100%;
+    }
+  }
+}
+
+.actions,
+.card-buttons {
+  .btn {
+    margin-right: 4px;
+  }
+  .fa {
+    margin-right: 2px;
+  }
+}
+
+.card-buttons {
+  margin-bottom: 10px;
+}
+
+#breadcrumb-container + .actions {
+  .btn-group,
+  .btn {
+    margin-right: 2px;
+  }
+}
+
+.toggle-icon {
+  cursor: pointer;
+}

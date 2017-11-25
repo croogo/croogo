@@ -1,0 +1,24 @@
+//
+// Breadcrumbs
+// --------------------------------------------------
+
+#breadcrumb-container {
+  background: $body-bg;
+  flex: 1;
+}
+
+.breadcrumb {
+  z-index: $zindex-dropdown;
+  margin-bottom: $croogo-breadcrumb-margin;
+
+  background-color: $gray-lightest;
+
+  li:last-child {
+    @extend .active;
+
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "name" : "Croogo/Core",
+    "description" : "Default theme for Croogo (Based on StartBootstrap Agency)",
+    "screenshot" : "img/screenshot.jpg",
+
+    "author" : "Croogo Dev Team",
+    "authorEmail" : "team@croogo.org",
+    "authorUrl" : "http://croogo.org",
+
+    "menus" : [
+        "main",
+        "footer"
+    ],
+
+    "regions" : [
+        "right"
+    ]
+}

@@ -1,0 +1,43 @@
+// Override bootstrap vars
+$font-family-sans-serif: "Helvetica Neue", "Ubuntu", Helvetica, Arial, sans-serif;
+$font-family-serif: Georgia, "Ubuntu", "Times New Roman", Times, serif;
+$font-family-monospace: Monaco, Menlo, Consolas, "Ubuntu Mono", "Courier New", monospace;
+
+//Colors
+$black: #000;
+$white: #fff;
+
+$gray-base: #000;
+$gray-darker: lighten($gray-base, 13.5);
+$gray-dark: lighten($gray-base, 20);
+$gray: lighten($gray-base, 33.5);
+$gray-light: lighten($gray-base, 46.7);
+$gray-lighter: lighten($gray-base, 75);
+$gray-lightest: lighten($gray-base, 93.5);
+$nearly-black: #1b1b1b;
+
+// Croogo
+$croogo-general-margin: 10px;
+$croogo-content-padding: 10px;
+$croogo-background-color: lighten($gray-lighter, 5);
+$croogo-main-bg: $gray;
+$croogo-nav-width: 170px;
+$croogo-md-nav-width: 42px;
+$croogo-container-margin-top: 50px;
+$croogo-nav-border-color: darken($gray-light, 25);
+$croogo-breadcrumb-margin: 8px;
+$croogo-navbar-height: 56px;
+
+// Box
+$crBoxMarginVertical: 10px;
+$crBoxMarginLeftRight: 5px;
+
+// Tables
+$crTableTheadBackground: $gray-lighter;
+$actionsButtonsWidth: 70px; // ~= size of 2 buttons with only an icon inside (For Edit and Delete buttons)
+
+// Filter
+$crFilterBackground: $crTableTheadBackground;
+
+// Login
+$croogo-login-box-width: 350px;

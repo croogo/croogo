@@ -1,0 +1,84 @@
+.label-hidden {
+  label {
+    display: none;
+  }
+}
+
+form .span8 + .span4 {
+  margin-top: 37px;
+}
+
+.form-inline {
+  .btn,
+  .form-control {
+    &[role=datetime-picker] {
+      margin: 0;
+    }
+    margin: 2px 2px 2px 0;
+  }
+
+}
+
+.file {
+  label {
+    margin-right: .25rem;
+  }
+  .form-control {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+span.slug {
+  font-weight: bold;
+  padding: 10px;
+}
+
+.input-group {
+  span.slug {
+    border-top: $input-btn-border-width solid $input-border-color;
+    border-bottom: $input-btn-border-width solid $input-border-color;
+  }
+
+  .editable.btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 13px 6px;
+  }
+}
+
+.editable.btn {
+}
+
+.radio,
+.checkbox {
+  input {
+    margin-right: .25rem;
+  }
+  label {
+    width: 100%;
+  }
+}
+
+.input-group-addon {
+  background: $gray-lightest;
+}
+
+.form-control {
+  transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
+}
+
+.form-control:focus {
+  border: 1px solid darken($gray-lightest, 25);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+  0 1px 5px 0 rgba(0, 0, 0, .12),
+  0 3px 1px -2px rgba(0, 0, 0, .2);
+}
+
+#bulk-action {
+  display: flex;
+
+  .select2-container {
+    margin-top: 2px;
+  }
+}

@@ -1,0 +1,219 @@
+.content {
+  padding: 0 $croogo-content-padding;
+  margin-top: $croogo-container-margin-top; // For breadcrumb when it is fixed
+
+  table {
+    margin: $croogo-general-margin 0;
+  }
+}
+
+h2.hidden-md-up {
+  margin-top: 0;
+}
+
+// For Filter box
+.filter {
+  form {
+    margin: 10px 10px 0;
+  }
+  background-color: $crFilterBackground;
+  @include border-top-radius($border-radius-sm);
+  text-align: left;
+  .input {
+    label {
+      margin: 0 10px 0 0;
+    }
+    display: inline-block;
+  }
+  input, select {
+    width: auto;
+  }
+}
+
+.loading {
+  background: url('/img/ajax/circle_ball.gif') no-repeat scroll 100% 0 transparent;
+}
+
+.ajax-toggle:hover {
+  text-decoration: none;
+}
+
+// For "Boxes" on form.
+.box {
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: $crBoxMarginVertical;
+  @include border-radius(2px);
+  .box-title {
+    padding-left: $croogo-content-padding;
+    font-weight: bold;
+    color: lighten($gray, 2%);
+    color: $black;
+    cursor: pointer;
+  }
+
+  .box-content {
+    margin: $croogo-general-margin;
+    .submit {
+      display: inline-block;
+    }
+
+    .input {
+      clear: both;
+      margin-top: $croogo-general-margin;
+    }
+  }
+}
+
+// Actions in admin_index
+#breadcrumb-container + .actions {
+  margin-top: -$croogo-breadcrumb-margin;
+  margin-left: -$croogo-breadcrumb-margin * 2 !important;
+  padding: 5px 5px 6px;
+  background-color: $gray-lightest;
+  border-radius: 0.25rem;
+}
+
+@include media-breakpoint-down(xs) {
+  #breadcrumb-container + .actions {
+    margin-left: auto !important;
+  }
+}
+
+.tab-content {
+  background-color: $white;
+  padding: 20px 0;
+  min-height: 200px;
+}
+
+.navbar-dark .brand,
+.navbar-dark .nav > li > a.brand {
+  color: #fff;
+}
+
+.navbar-dark .nav > li > a {
+  font-size: 12px;
+}
+
+dl.inline {
+  float: left;
+  margin: 1em 0;
+
+  dt {
+    clear: left;
+    float: left;
+    padding: 4px;
+    min-width: 100px;
+  }
+
+  dd {
+    float: left;
+    padding: 4px;
+    min-width: 300px;
+    max-width: 800px;
+  }
+}
+
+a {
+  &.sort {
+    @include sortDirections();
+  }
+
+  &.action:hover {
+    text-decoration: none;
+  }
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 250px;
+}
+
+#dropzone-target {
+  position: fixed;
+  left: -10000px;
+  top: -10000px;
+  background: rgba(0, 0, 0, .5);
+  border: 5px dashed;
+  opacity: 0;
+  z-index: 10000;
+  overflow: hidden;
+  transition: opacity .5s ease-in-out;
+
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    text-align: center;
+    font-size: $h1-font-size;
+    font-weight: 800;
+    max-width: 500px;
+    height: 60px;
+    margin: -30px 0 0 -250px;
+  }
+}
+
+.dragging {
+  overflow: hidden;
+
+  #dropzone-target {
+    opacity: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.dropdown-scrollable {
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+  min-width: 19em;
+  width: inherit !important;
+}
+
+.wizard-row {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+
+  &:before {
+    top: 14px;
+    left: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    z-order: 0;
+  }
+
+  .wizard-step {
+    text-align: center;
+    position: relative;
+
+    p {
+      margin-top: 10px;
+    }
+  }
+
+  .btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+  }
+}

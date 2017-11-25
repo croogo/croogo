@@ -1,0 +1,191 @@
+//
+// Layouts
+// --------------------------------------------------
+
+// For top and bottom navbar
+body {
+  padding: 0;
+  margin: 0;
+  background-color: $croogo-background-color;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &.admin-login, &.installer {
+    background-color: $gray-light;
+    #wrap {
+      @extend .d-flex;
+      @extend .justify-content-center;
+      @extend .align-items-center;
+      margin-top: 0;
+      background-color: $gray-light;
+    }
+  }
+}
+
+#wrap {
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  background: $croogo-main-bg;
+
+  .full {
+    #content {
+      margin: 0 $croogo-general-margin;
+    }
+  }
+}
+
+#content-container {
+  padding: 0;
+  // expands downwards for matching background color
+  padding: 20px 0 0;
+  flex: 1;
+}
+
+#content {
+  background: #fff;
+  border: 1px solid #fff;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  margin-bottom: $croogo-general-margin;
+  padding: 20px;
+  min-height: 90%;
+}
+
+#inner-content {
+  margin: 0;
+}
+
+.content {
+  padding: 0 $croogo-content-padding;
+
+  table {
+    margin: $croogo-general-margin 0;
+  }
+}
+
+header {
+  border-bottom: 1px solid #707070;
+
+  &.navbar {
+    height: $croogo-navbar-height;
+    flex-flow: row;
+  }
+
+  .navbar-nav:last-child {
+    text-align: right;
+  }
+}
+
+footer {
+  height: 40px;
+  width: 100%;
+
+  background: $gray-dark;
+  .navbar-inner {
+    @include border-radius(0);
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .footer-content {
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+  }
+
+  border-top: 1px solid #707070;
+
+  color: #fff;
+  a {
+    color: #fff;
+  }
+  a:hover {
+    color: #fff;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.modal {
+  .navbar + .card-columns {
+    margin-top: 1rem;
+  }
+}
+
+.selector {
+  position: relative;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(150, 150, 150, .5);
+    opacity: 0;
+    transition: opacity .1s linear;
+  }
+  &:hover:before {
+    opacity: 1;
+  }
+
+  .card-header {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .progress {
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+.card-column {
+  .card {
+    margin-bottom: $card-columns-margin;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+    0 1px 5px 0 rgba(0, 0, 0, .12),
+    0 3px 1px -2px rgba(0, 0, 0, .2);
+  }
+}
+
+.admin-login, .installer {
+  .card {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+    0 1px 5px 0 rgba(0, 0, 0, .12),
+    0 3px 1px -2px rgba(0, 0, 0, .2);
+  }
+
+  #authMessage {
+    margin-bottom: $croogo-content-padding;
+  }
+
+  .input-prepend {
+    margin-bottom: $croogo-content-padding;
+  }
+
+  .forgot {
+    vertical-align: middle;
+    margin: 0 $croogo-content-padding * 2;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+
+  .admin-login, .installer {
+    .card {
+      max-width: 800px;
+      min-width: 500px;
+    }
+  }
+
+}

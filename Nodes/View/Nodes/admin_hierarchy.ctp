@@ -4,8 +4,7 @@ $this->extend('/Common/admin_index');
 $this->Croogo->adminScript(array('Nodes.admin'));
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
-	->addCrumb(__d('croogo', 'Content'), array(
+	->add(__d('croogo', 'Content'), array(
 		'admin' => true,
 		'plugin' => 'nodes',
 		'controller' => 'nodes',
@@ -15,7 +14,7 @@ $this->Html
 if (isset($type) && $this->request->query):
 	$typeUrl = '/' . $this->request->url;
 	$typeUrl .= '?' . http_build_query($this->request->query);
-	$this->Html->addCrumb($type['Type']['title'], $typeUrl);
+	$this->Breadcrumbs->add($type['Type']['title'], $typeUrl);
 endif;
 
 $this->set('showActions', false);
@@ -64,11 +63,11 @@ $this->append('table-body');
 			</span>
 
 			<?php if ($node['Node']['promote'] == 1): ?>
-			<span class="label label-info"><?php echo __d('croogo', 'promoted'); ?></span>
+			<span class="badge badge-info"><?php echo __d('croogo', 'promoted'); ?></span>
 			<?php endif ?>
 
 			<?php if ($node['Node']['status'] == CroogoStatus::PREVIEW): ?>
-			<span class="label label-warning"><?php echo __d('croogo', 'preview'); ?></span>
+			<span class="badge badge-warning"><?php echo __d('croogo', 'preview'); ?></span>
 			<?php endif ?>
 		</td>
 		<td>

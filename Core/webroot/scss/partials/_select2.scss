@@ -1,0 +1,21 @@
+.form-inline {
+  .select2-container--bootstrap {
+    margin-right: 2px;
+  }
+}
+
+.form-group {
+  .select2-container--bootstrap {
+    min-width: 100%; // make select in inactive tab pane has 100% width
+  }
+}
+
+.link-chooser {
+  &+ .select2-container {
+    padding-right: 60px;
+    min-width: 100%;
+  }
+  &~ .input-group-btn {
+    margin-left: -60px;
+  }
+}

@@ -1,0 +1,7 @@
+$fa-font-path: '../../fonts' !default;
+
+@import "../../fontAwesome/scss/font-awesome.scss";
+
+.fa-white {
+  color: lighten($gray-light, 20);
+}

@@ -1,0 +1,287 @@
+<?php
+
+namespace Croogo\Core\Shell;
+
+use App\Controller\AppController;
+use Cake\Controller\Controller;
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Network\Request;
+use Cake\Network\Response;
+use Cake\Utility\Inflector;
+use Croogo\Extensions\CroogoPlugin;
+use Croogo\Extensions\CroogoTheme;
+
+/**
+ * Ext Shell
+ *
+ * Activate/Deactivate Plugins/Themes
+ *  ./Console/croogo ext activate plugin Example
+ *  ./Console/croogo ext activate theme minimal
+ *  ./Console/croogo ext deactivate plugin Example
+ *  ./Console/croogo ext deactivate theme
+ *
+ * @category Shell
+ * @package  Croogo.Croogo.Console.Command
+ * @version  1.0
+ * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
+ */
+class ExtShell extends AppShell
+{
+
+/**
+ * Models we use
+ *
+ * @var array
+ */
+    public $uses = ['Settings.Setting'];
+
+/**
+ * CroogoPlugin class
+ *
+ * @var CroogoPlugin
+ */
+    protected $_CroogoPlugin = null;
+
+/**
+ * CroogoTheme class
+ *
+ * @var CroogoTheme
+ */
+    protected $_CroogoTheme = null;
+
+/**
+ * Controller
+ *
+ * @var Controller
+ * @todo Remove this when PluginActivation dont need controllers
+ */
+    protected $_Controller = null;
+
+/**
+ * Initialize
+ *
+ * @param type $stdout
+ * @param type $stderr
+ * @param type $stdin
+ */
+    public function __construct($stdout = null, $stderr = null, $stdin = null)
+    {
+        parent::__construct($stdout, $stderr, $stdin);
+        $this->_CroogoPlugin = new CroogoPlugin();
+        $this->_CroogoTheme = new CroogoTheme();
+        $Request = new Request();
+        $Response = new Response();
+        $this->_Controller = new AppController($Request, $Response);
+        $this->_Controller->startupProcess();
+        $this->_CroogoPlugin->setController($this->_Controller);
+        $this->initialize();
+    }
+
+/**
+ * Call the appropriate command
+ *
+ * @return void
+ */
+    public function main()
+    {
+        $args = $this->args;
+        $this->args = array_map('strtolower', $this->args);
+        $method = $this->args[0];
+        $type = $this->args[1];
+        $ext = isset($args[2]) ? $args[2] : null;
+        $force = isset($this->params['force']) ? $this->params['force'] : false;
+        if ($type == 'theme') {
+            $extensions = $this->_CroogoTheme->getThemes();
+            $theme = Configure::read('Site.theme');
+            $active = !empty($theme) ? $theme == 'default' : true;
+        } elseif ($type == 'plugin') {
+            $extensions = $this->_CroogoPlugin->getPlugins();
+            if ($force) {
+                $plugins = array_combine($p = Plugin::loaded(), $p);
+                $extensions += $plugins;
+            }
+            $active = Plugin::loaded($ext);
+        }
+        if ($type == 'theme' && $method == 'deactivate') {
+            $this->err(__d('croogo', 'Theme cannot be deactivated, instead activate another theme.'));
+            return false;
+        }
+        if (!empty($ext) && !isset($extensions[$ext]) && !$active && !$force) {
+            $this->err(__d('croogo', '%s "%s" not found.', ucfirst($type), $ext));
+            return false;
+        }
+        switch ($method) {
+            case 'list':
+                $call = Inflector::pluralize($type);
+                return $this->{$call}($ext);
+            default:
+                if (empty($ext)) {
+                    $this->err(__d('croogo', '%s name must be provided.', ucfirst($type)));
+                    return false;
+                }
+                return $this->{'_' . $method . ucfirst($type)}($ext);
+        }
+    }
+
+/**
+ * Display help/options
+ */
+    public function getOptionParser()
+    {
+        return parent::getOptionParser()
+            ->description(__d('croogo', 'Activate Plugins & Themes'))
+            ->addArguments([
+                'method' => [
+                    'help' => __d('croogo', 'Method to perform'),
+                    'required' => true,
+                    'choices' => ['list', 'activate', 'deactivate'],
+                ],
+                'type' => [
+                    'help' => __d('croogo', 'Extension type'),
+                    'required' => true,
+                    'choices' => ['plugin', 'theme'],
+                ],
+                'extension' => [
+                    'help' => __d('croogo', 'Name of extension'),
+                ],
+            ])
+            ->addOption('all', [
+                'short' => 'a',
+                'boolean' => true,
+                'help' => 'List all extensions',
+            ])
+            ->addOption('force', [
+                'short' => 'f',
+                'boolean' => true,
+                'help' => 'Force method operation even when plugin does not provide a `plugin.json` file.'
+            ]);
+    }
+
+/**
+ * Activate a plugin
+ *
+ * @param string $plugin
+ * @return boolean
+ */
+    protected function _activatePlugin($plugin)
+    {
+        $result = $this->_CroogoPlugin->activate($plugin);
+        if ($result === true) {
+            $this->out(__d('croogo', 'Plugin "%s" activated successfully.', $plugin));
+            return true;
+        } elseif (is_string($result)) {
+            $this->err($result);
+        } else {
+            $this->err(__d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin));
+        }
+        return false;
+    }
+
+/**
+ * Deactivate a plugin
+ *
+ * @param string $plugin
+ * @return boolean
+ */
+    protected function _deactivatePlugin($plugin)
+    {
+        $usedBy = $this->_CroogoPlugin->usedBy($plugin);
+        if ($usedBy === false) {
+            $result = $this->_CroogoPlugin->deactivate($plugin);
+            if ($result === false) {
+                $this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
+            } elseif (is_string($result)) {
+                $this->err($result);
+            }
+        } else {
+            $result = false;
+            if ($usedBy !== false) {
+                if ($this->params['force'] === false) {
+                    $this->err(__d('croogo', 'Plugin "%s" could not be deactivated since "%s" depends on it.', $plugin, implode(', ', $usedBy)));
+                } else {
+                    $result = true;
+                }
+            }
+        }
+        if ($this->params['force'] === true || $result === true) {
+            $this->_CroogoPlugin->removeBootstrap($plugin);
+            $result = true;
+        }
+        if ($result === true) {
+            $this->out(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin));
+            return true;
+        }
+        return false;
+    }
+
+/**
+ * Activate a theme
+ *
+ * @param string $theme Name of theme
+ * @return boolean
+ */
+    protected function _activateTheme($theme)
+    {
+        if ($this->_CroogoTheme->activate($theme)) {
+            $this->out(__d('croogo', 'Theme "%s" activated successfully.', $theme));
+        } else {
+            $this->err(__d('croogo', 'Theme "%s" activation failed.', $theme));
+        }
+        return true;
+    }
+
+/**
+ * List plugins
+ */
+    public function plugins($plugin = null)
+    {
+        $all = $this->params['all'];
+        $plugins = $plugin == null ? array_keys(Configure::read('plugins')) : [$plugin];
+        $loaded = Plugin::loaded();
+        $CroogoPlugin = new CroogoPlugin();
+        $this->out(__d('croogo', 'Plugins:'), 2);
+        $this->out(__d('croogo', '%-20s%-50s%s', __d('croogo', 'Plugin'), __d('croogo', 'Author'), __d('croogo', 'Status')));
+        $this->out(str_repeat('-', 80));
+        foreach ($plugins as $plugin) {
+            $status = '<info>inactive</info>';
+            if ($active = in_array($plugin, $loaded)) {
+                $status = '<success>active</success>';
+            }
+            if (!$active && !$all) {
+                continue;
+            }
+            $data = $CroogoPlugin->getPluginData($plugin);
+            $author = isset($data['author']) ? $data['author'] : '';
+            $this->out(__d('croogo', '%-20s%-50s%s', $plugin, $author, $status));
+        }
+    }
+
+/**
+ * List themes
+ */
+    public function themes($theme = null)
+    {
+        $CroogoTheme = new CroogoTheme();
+        $all = $this->params['all'];
+        $current = Configure::read('Site.theme');
+        $themes = $theme == null ? $CroogoTheme->getThemes() : [$theme];
+        $this->out("Themes:", 2);
+        $default = empty($current) || $current == 'default';
+        $this->out(__d('croogo', '%-20s%-50s%s', __d('croogo', 'Theme'), __d('croogo', 'Author'), __d('croogo', 'Status')));
+        $this->out(str_repeat('-', 80));
+        foreach ($themes as $theme) {
+            $active = $theme == $current || $default && $theme == 'default';
+            $status = $active ? '<success>active</success>' : '<info>inactive</info>';
+            if (!$active && !$all) {
+                continue;
+            }
+            $data = $CroogoTheme->getThemeData($theme);
+            $author = isset($data['author']) ? $data['author'] : '';
+            $this->out(__d('croogo', '%-20s%-50s%s', $theme, $author, $status));
+        }
+    }
+}

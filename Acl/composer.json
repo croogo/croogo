@@ -1,0 +1,22 @@
+{
+    "name": "croogo/acl",
+    "description": "Croogo Acl Plugin",
+    "require": {
+        "cakephp/acl": "dev-master",
+        "croogo/core": "3.0.x-dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Croogo Development Team",
+            "email": "team@croogo.org"
+        }
+    ],
+    "type": "cakephp-plugin",
+    "autoload": {
+        "psr-4": {
+            "Croogo\\Acl\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}

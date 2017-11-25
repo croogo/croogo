@@ -1,0 +1,41 @@
+{
+    "name": "croogo/core",
+    "description": "Croogo Core Plugin",
+    "require": {
+        "cakephp/cakephp": "~3.0"
+    },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "dev-master",
+        "phpunit/phpunit": "4.1.*",
+        "friendsofcake/cakephp-test-utilities": "dev-master"
+    },
+    "suggest": {
+        "croogo/example": "Example Croogo plugin"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Croogo Development Team",
+            "email": "team@croogo.org"
+        }
+    ],
+    "type": "cakephp-plugin",
+    "autoload": {
+        "psr-4": {
+            "Croogo\\Core\\": "src"
+        },
+        "files": [
+			"src/functions.php"
+		]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Croogo\\Core\\Test\\": "tests",
+            "Croogo\\Core\\Test\\App\\": "tests/test_app/src",
+            "App\\": "tests/test_app/src",
+            "Shops\\": "tests/test_app/plugins/Shops/src",
+            "Suppliers\\": "tests/test_app/plugins/Suppliers/src"
+        }
+    },
+    "minimum-stability": "dev"
+}

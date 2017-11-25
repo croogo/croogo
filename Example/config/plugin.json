@@ -1,0 +1,15 @@
+{
+	"name": "Example",
+	"description": "Example plugin for demonstrating hook system",
+
+	"author": "Author Name",
+	"authorEmail": "author@example.com",
+	"authorUrl": "http://example.com",
+
+	"dependencies": {
+		"plugins": [
+			"Croogo/Acl",
+			"Croogo/Extensions"
+		]
+	}
+}
