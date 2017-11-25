@@ -43,7 +43,7 @@ css: deps
 	@[ "$$?" -eq 0 ] && echo "bootstrap branch/tag: ${BOOTSTRAP_TAG} ${CHECK}"
 	@echo "${HR}"
 	@echo "Compiling..."
-	@${COMPILE} ${CROOGO_SASS} --output :"${CSS_DIR}"/"${CROOGO_CSS}"
+	@${COMPILE} ${CROOGO_SASS} > "${CSS_DIR}"/"${CROOGO_CSS}"
 	@DIR=${CSS_DIR} && echo "File: $${DIR#${CURDIR}/}/${CROOGO_CSS} ${CHECK}"
 
 assets:
