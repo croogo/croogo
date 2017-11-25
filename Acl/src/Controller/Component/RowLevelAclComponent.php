@@ -101,21 +101,20 @@ class RowLevelAclComponent extends Component
         $roles = $Role->find('list', [
             'cache' => ['name' => 'roles', 'config' => 'permissions'],
         ]);
-        $modelClass = $controller->modelClass;
+        $modelClass = $controller->name;
         $aco = ['model' => $modelClass, 'foreign_key' => $id];
         foreach ($roles as $roleId => $role) {
-            $aro = ['model' => 'Role', 'foreign_key' => $roleId];
+            $aro = ['model' => 'Roles', 'foreign_key' => $roleId];
             try {
                 $allowed = $Permission->check($aro, $aco);
             } catch (\Exception $e) {
                 $allowed = false;
             }
             $rolePermissions[] = [
-                'Role' => [
-                    'id' => $roleId, 'title' => $role, 'allowed' => $allowed
-                ]
+                'id' => $roleId, 'title' => $role, 'allowed' => $allowed
             ];
         }
         $controller->set(compact('rolePermissions'));
     }
+
 }

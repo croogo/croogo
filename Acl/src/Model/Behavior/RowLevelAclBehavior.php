@@ -29,25 +29,26 @@ class RowLevelAclBehavior extends Behavior
             return;
         }
         $Table = $event->subject();
+        $alias = $Table->alias();
         $aco = $Table->node($entity)->firstOrFail();
-        $aco->alias = sprintf('%s.%s', $Table->alias(), $entity->id);
+        $aco->alias = sprintf('%s.%s', $alias, $entity->id);
         $saved = $Table->Aco->save($aco);
 
         $user = $_SESSION['Auth']['User'];
+        $Permissions = TableRegistry::get('Permissions');
         if ($entity->isNew() && !empty($user['id'])) {
             $aro = ['Users' => $user];
-            $Permissions = TableRegistry::get('Permissions');
             $Permissions->allow($aro, $aco->alias);
         }
 
-        /* FIXME
-        if (!empty($model->data['RolePermission'])) {
-            foreach ($model->data['RolePermission'] as $roleId => $checked) {
-                $aro = ['model' => 'Role', 'foreign_key' => $roleId];
-                $aco = ['model' => $model->alias, 'foreign_key' => $model->id];
-                $model->Aco->Permission->allow($aro, $aco, '*', $checked ? 1 : 0);
+        if (!empty($entity->rolePermissions)) {
+            foreach ($entity->rolePermissions as $roleId => $checked) {
+                $aro = ['model' => 'Roles', 'foreign_key' => $roleId];
+                $aco = ['model' => $alias, 'foreign_key' => $entity->id];
+                $allowed = $checked ? 1 : 0;
+                $Permissions->allow($aro, $aco, '*', $allowed);
             }
         }
-        */
     }
+
 }
