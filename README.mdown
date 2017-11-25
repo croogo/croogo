@@ -10,8 +10,8 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
 
 ## Requirements
   * Apache with `mod_rewrite`
-  * PHP 5.3 or higher
-  * MySQL 4.1 or higher
+  * PHP 5.5 or higher
+  * MySQL 5.7 or higher
 
 ## Installation
 
@@ -23,48 +23,23 @@ The preferred way to install Croogo is by using [composer](http://getcomposer.or
     cd myapp
     composer install
 
+If you want hack on croogo, you can use the `--prefer-source` flag, ie:
+
+    `composer create-project --prefer-source croogo/app myapp`
+
 #### Web based installer
 
   * Extract the archive. Upload the content to your server.
   * Create a new MySQL database (`utf8_unicode_ci` collation)
-  * visit http://your-site.com/ from your browser and follow the instructions.
+  * Visit http://your-site.com/ from your browser and follow the instructions.
 
 #### Manual installation
 
   * Extract the archive. Upload the content to your server.
-  * Locate your `app` directory, and rename the following files:
-    * `config/database.php.install` to `database.php`, and edit the details.
-    * `config/croogo.php.install` to `croogo.php`, and edit the details.
-    * `config/settings.json.install` to `settings.json`
-  * You can access your admin panel at http://your-site.com/admin. The installer should
-    display a page for you to create the administrative user.
-
-#### Installation using git
-
-Beginning version 2.0.0, Croogo has been updated to be installed as a vendor
-package. This is intended to ease integration with an existing cakephp
-application.
-
-  * Ensure you have a recent cakephp version 2.5
-  * Run the following commands:
-
-    git clone git://github.com/croogo/app app &&
-    cd app && Console/add_submodule
-
-  * If you intend to modify the default administration theme, you will need
-    to regenerate the assets by running the following command from the
-    application root directory:
-
-    `Console/cake croogo make`
-
-    The above command will fetch twitter bootstrap and FontAwesome
-    and subsequently compile the CSS assets using lessphp.
-
-    Alternatively, you could use `lessc` or `recess` as the compiler as they
-    generate a better result.  Edit the `COMPILE` value in the `Makefile`
-    accordingly and run:
-
-    `( cd Vendor/croogo/croogo/Croogo ; make )`
+  * Locate your `config` directory, and rename the following files:
+    * `config/app.default.php ` to `config/app.php`, and edit the details.
+  * You can access your admin panel at http://your-site.com/admin. The installer
+    should display a page for you to create the administrative user.
 
 ## Links
 
