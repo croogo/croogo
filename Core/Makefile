@@ -15,9 +15,9 @@ BOOTSTRAP_JS=admin.js
 
 DATE=$(shell date +%I:%M%p)
 ifeq ($(RELEASE), true)
-	COMPILE=scss -t compressed
+	COMPILE=node-sass --output-style compressed
 else
-	COMPILE=scss -l # for debugging as it provides better error messages
+	COMPILE=node-sass
 endif
 
 CHECK=\033[32m✔\033[39m
@@ -43,7 +43,7 @@ css: deps
 	@[ "$$?" -eq 0 ] && echo "bootstrap branch/tag: ${BOOTSTRAP_TAG} ${CHECK}"
 	@echo "${HR}"
 	@echo "Compiling..."
-	@${COMPILE} ${CROOGO_SASS}:"${CSS_DIR}"/"${CROOGO_CSS}"
+	@${COMPILE} ${CROOGO_SASS} --output :"${CSS_DIR}"/"${CROOGO_CSS}"
 	@DIR=${CSS_DIR} && echo "File: $${DIR#${CURDIR}/}/${CROOGO_CSS} ${CHECK}"
 
 assets:
