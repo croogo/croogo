@@ -50,7 +50,16 @@ class AclGenerator extends AclExtras
         $models = json_decode($models, true);
 
         $Acos = TableRegistry::get('Croogo/Acl.Acos');
-        $parent = $Acos->node('contents')->firstOrFail();
+        $query = $Acos->node('contents');
+        if ($query) {
+            $parent = $query->first();
+        } else {
+            $entity = $Acos->newEntity([
+                'parent_id' => null,
+                'alias' => 'contents',
+            ]);
+            $parent = $Acos->save($entity);
+        }
         foreach ($models as $model) {
             $Model = TableRegistry::get($model);
             $rows = $Model->find()
