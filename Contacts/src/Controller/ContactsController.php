@@ -20,8 +20,6 @@ class ContactsController extends AppController
         $this->loadComponent('Croogo/Core.Recaptcha', [
             'actions' => ['view']
         ]);
-
-        $this->_setupAclComponent();
     }
 
     /**

@@ -46,7 +46,6 @@ class NodesController extends AppController
             'actions' => ['view']
         ]);
 
-        $this->_setupAclComponent();
         $this->Prg->config('actions', ['index', 'search', 'term']);
     }
 
