@@ -37,9 +37,7 @@ class AclEventHandler implements EventListenerInterface
         }
         $request = $event->data['request'];
         $cookiePath = $request->base . '/' . $request->param('prefix');
-        Croogo::mergeConfig('Session.ini', [
-            'session.cookie_path' => $cookiePath,
-        ]);
+        ini_set('session.cookie_path', $cookiePath);
     }
 
 }

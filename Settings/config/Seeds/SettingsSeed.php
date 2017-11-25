@@ -376,6 +376,16 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'weight' => '32',
             'params' => ''
         ],
+        [
+            'key' => 'Access Control.splitSession',
+            'value' => '',
+            'title' => 'Separate front-end and admin session',
+            'description' => '',
+            'input_type' => 'checkbox',
+            'editable' => '1',
+            'weight' => '32',
+            'params' => ''
+        ],
     ];
 
     public function run()
