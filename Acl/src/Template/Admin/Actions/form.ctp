@@ -18,7 +18,6 @@ $this->assign('form-start', $this->Form->create($aco));
 
 $this->append('tab-heading');
     echo $this->Croogo->adminTab(__d('croogo', 'Action'), '#action-main');
-    echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->append('tab-content');
@@ -34,7 +33,5 @@ $this->append('tab-content');
     echo $this->Form->input('alias', array(
         'label' => __d('croogo', 'Alias'),
     ));
-
-    echo $this->Croogo->adminTabs();
 
 $this->end();

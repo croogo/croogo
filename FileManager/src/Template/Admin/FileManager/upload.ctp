@@ -27,7 +27,6 @@ echo $this->Form->input('file', [
 ]);
 echo $this->Html->tabEnd();
 
-echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->append('panels');

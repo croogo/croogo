@@ -18,7 +18,6 @@ $this->append('form-start', $this->Form->create('Locale', array(
 
 $this->append('tab-heading');
     echo $this->Croogo->adminTab(__d('croogo', 'Content'), '#locale-content');
-    echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->append('tab-content');
@@ -31,7 +30,6 @@ $this->append('tab-content');
         ));
     echo $this->Html->tabEnd();
 
-    echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->append('panels');
