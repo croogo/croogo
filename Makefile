@@ -161,8 +161,8 @@ plugin-split:
 		echo "\nPlease specify release tag, eg: RELEASE_TAG=3.0.0 make plugin-split\n" ; \
 		exit 1 ; \
 	fi
-	echo git subsplit update
-	echo git subsplit publish "\
+	git subsplit update
+	git subsplit publish "\
 		Acl:$(GITHUB_ROOT)/acl \
 		Blocks:$(GITHUB_ROOT)/blocks \
 		Comments:$(GITHUB_ROOT)/comments \
