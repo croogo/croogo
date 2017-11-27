@@ -27,8 +27,8 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "cakephp/cakephp": "^3.4.8",
+        "php": ">=5.6.0",
+        "cakephp/cakephp": "^3.5.5",
         "cakephp/migrations": "~1.6",
         "cakephp/acl": "^0.2.6",
         "cakephp/plugin-installer": "~1.0",
