@@ -25,9 +25,9 @@ if (!isset($bgImagePath)):
     $bgImagePath = Configure::read('Theme.bgImagePath') ?: 'img/header-bg.jpg';
 endif;
 
-$mimeType = mime_content_type(WWW_ROOT . $bgImagePath);
+$bgImageUrl = $this->Url->webroot($bgImagePath);
+$mimeType = mime_content_type(WWW_ROOT . $bgImageUrl);
 if (strpos($mimeType, 'image') === 0):
-    $bgImageUrl = $this->Url->webroot($bgImagePath);
     $mastheadAttrs = $bgImageUrl ? [
         "background-image: url($bgImageUrl)",
     ] : [];
