@@ -1,5 +1,7 @@
 <?php
 
+use Cake\Core\Configure;
+
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->assign('title', __d('croogo', 'Locales'));
@@ -18,6 +20,7 @@ $this->start('table-heading');
     $tableHeaders = $this->Html->tableHeaders(array(
         '',
         __d('croogo', 'Locale'),
+        __d('croogo', 'Name'),
         __d('croogo', 'Default'),
         __d('croogo', 'Actions'),
     ));
@@ -26,7 +29,8 @@ $this->end();
 
 $this->append('table-body');
     $rows = array();
-    foreach ($locales as $locale):
+    $vendorDir = ROOT . DS . 'vendor' . DS . 'croogo' . DS . 'locale' . DS;
+    foreach ($locales as $locale => $data):
         $actions = array();
 
         $actions[] = $this->Croogo->adminRowAction('',
@@ -37,12 +41,17 @@ $this->append('table-body');
             array('action' => 'edit', $locale),
             array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
         );
-        $actions[] = $this->Croogo->adminRowAction('',
-            array('action' => 'delete', $locale),
-            array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')),
-            __d('croogo', 'Are you sure?')
-        );
 
+        if (strpos($data['path'], $vendorDir) !== 0):
+            $actions[] = $this->Croogo->adminRowAction('',
+                ['action' => 'delete', $locale],
+                [
+                    'icon' => $this->Theme->getIcon('delete'),
+                    'tooltip' => __d('croogo', 'Remove this item'),
+                ],
+                __d('croogo', 'Are you sure?')
+            );
+        endif;
         $actions = $this->Html->div('item-actions', implode(' ', $actions));
         if ($locale == Configure::read('Site.locale')) {
             $status = $this->Html->status(1);
@@ -53,6 +62,7 @@ $this->append('table-body');
         $rows[] = array(
             '',
             $locale,
+            $data['name'],
             $status,
             $actions,
         );

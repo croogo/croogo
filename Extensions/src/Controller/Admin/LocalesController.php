@@ -5,6 +5,9 @@ namespace Croogo\Extensions\Controller\Admin;
 use Cake\Core\App;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
+use Cake\I18n\I18n;
+
+use Locale;
 
 /**
  * Extensions Locales Controller
@@ -26,8 +29,8 @@ class LocalesController extends AppController
  * @access public
  */
     public $uses = [
-        'Croogo/Settings.Setting',
-        'Croogo/Users.User',
+        'Croogo/Settings.Settings',
+        'Croogo/Users.Users',
     ];
 
 /**
@@ -49,11 +52,16 @@ class LocalesController extends AppController
                 if (strstr($locale, '.') !== false) {
                     continue;
                 }
-                if (!file_exists($path . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po')) {
+                $fullpath = $path . $locale . DS . 'croogo.po';
+                if (!file_exists($fullpath)) {
                     continue;
                 }
 
-                $locales[] = $locale;
+                $name = Locale::getDisplayLanguage($locale);
+                $locales[$locale] = [
+                    'path' => $fullpath,
+                    'name' => $name,
+                ];
             }
         }
 
@@ -74,7 +82,7 @@ class LocalesController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $result = $this->Setting->write('Site.locale', $locale);
+        $result = $this->Settings->write('Site.locale', $locale);
         if ($result) {
             $this->Flash->success(__d('croogo', "Locale '%s' set as default", $locale));
         } else {
@@ -186,9 +194,15 @@ class LocalesController extends AppController
         $file = new File($poFile, true);
         $content = $file->read();
 
+        $locale = [
+            'locale' => $locale,
+            'content' => $content,
+            'schema' => true,
+        ];
+
         if (!empty($this->request->data)) {
             // save
-            if ($file->write($this->request->data['Locale']['content'])) {
+            if ($file->write($this->request->data('content'))) {
                 $this->Flash->success(__d('croogo', 'Locale updated successfully'));
                 return $this->redirect(['action' => 'index']);
             }
@@ -231,7 +245,7 @@ class LocalesController extends AppController
     {
         $paths = App::path('Locale');
         foreach ($paths as $path) {
-            $poFile = $path . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po';
+            $poFile = $path . $locale . DS . 'croogo.po';
 
             if (file_exists($poFile)) {
                 return $poFile;

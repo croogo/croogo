@@ -7,12 +7,12 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Locales'), array('plugin' => 'Croogo/Extensions', 'controller' => 'Locales', 'action' => 'index'))
     ->add($this->request->params['pass'][0], $this->request->getRequestTarget());
 
-$this->append('form-start', $this->Form->create('Locale', array(
+$this->append('form-start', $this->Form->create($locale, array(
     'url' => array(
         'plugin' => 'Croogo/Extensions',
         'controller' => 'Locales',
         'action' => 'edit',
-        $locale
+        $locale['locale'],
     ),
 )));
 
@@ -22,7 +22,7 @@ $this->end();
 
 $this->append('tab-content');
     echo $this->Html->tabStart('locale-content') .
-        $this->Form->input('Locale.content', array(
+        $this->Form->input('content', array(
             'label' => __d('croogo', 'Content'),
             'data-placement' => 'top',
             'value' => $content,
