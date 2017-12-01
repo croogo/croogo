@@ -66,7 +66,7 @@ class TokenAuthenticate extends BaseAuthenticate
     {
         parent::__construct($collection, $settings);
         if (empty($this->settings['parameter']) && empty($this->settings['header'])) {
-            throw new CakeException(__d('authenticate', 'You need to specify token parameter and/or header'));
+            throw new CakeException(__d('croogo', 'You need to specify token parameter and/or header'));
         }
     }
 
