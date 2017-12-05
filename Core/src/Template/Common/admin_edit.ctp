@@ -67,7 +67,6 @@ if (!$this->exists('left-column')):
             if (is_string($opts)) {
                 $field = $opts;
                 $opts = [
-                    'class' => 'span10',
                     'label' => false,
                     'tooltip' => ucfirst($field),
                 ];
