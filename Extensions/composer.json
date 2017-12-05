@@ -2,7 +2,7 @@
     "name": "croogo/extensions",
     "description": "Croogo Extensions Plugin",
     "require": {
-        "croogo/core": "3.0.x-dev"
+        "croogo/core": "^3.0.1"
     },
     "license": "MIT",
     "authors": [

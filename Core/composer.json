@@ -2,7 +2,7 @@
     "name": "croogo/core",
     "description": "Croogo Core Plugin",
     "require": {
-        "cakephp/cakephp": "~3.0"
+        "cakephp/cakephp": "^3.5.5"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "dev-master",
