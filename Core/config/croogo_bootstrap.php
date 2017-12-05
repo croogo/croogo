@@ -8,6 +8,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\I18n\I18n;
+use Cake\I18n\MessagesFileLoader;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -79,8 +80,9 @@ EventManager::instance();
     /**
      * Locale
      */
-    Configure::write('App.defaultLocale', Configure::read('Site.locale'));
-    I18n::locale(Configure::read('App.defaultLocale'));
+    $siteLocale = Configure::read('Site.locale');
+    Configure::write('App.defaultLocale', $siteLocale);
+    I18n::setLocale($siteLocale);
 
     /**
      * Assets
@@ -107,11 +109,15 @@ EventManager::instance();
 /**
  * Use old translation format for the croogo domain
  */
-I18n::config('croogo', function ($domain, $locale) {
-    return new Package(
-        'sprintf'
-    );
-});
+$siteLocale = Configure::read('App.defaultLocale');
+if ($siteLocale) {
+    I18n::config('croogo', function ($domain, $locale) {
+        $loader = new MessagesFileLoader($domain, $locale, 'po');
+        $package = $loader();
+        $package->setFormatter('sprintf');
+        return $package;
+    });
+}
 
 /**
  * Timezone
