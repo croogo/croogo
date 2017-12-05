@@ -49,7 +49,7 @@ class MetaHelper extends Helper
  */
     public function beforeRender($viewFile)
     {
-        if ($this->_View->Layout->isLoggedIn()) {
+        if ($this->Layout->isLoggedIn()) {
             return $this->Croogo->adminScript('Croogo/Meta.admin');
         }
     }
