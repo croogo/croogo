@@ -15,7 +15,11 @@ if (!isset($className)) {
 if (isset(${Inflector::variable(Inflector::singularize($this->name))})):
     $entity = ${Inflector::variable(Inflector::singularize($this->name))};
 
-    $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
+    if (!is_array($entity)):
+        $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
+    else:
+        $what = __d('croogo', 'Edit');
+    endif;
 endif;
 
 $title = $this->fetch('title');
