@@ -110,14 +110,19 @@ EventManager::instance();
  * Use old translation format for the croogo domain
  */
 $siteLocale = Configure::read('App.defaultLocale');
-if ($siteLocale) {
-    I18n::config('croogo', function ($domain, $locale) {
-        $loader = new MessagesFileLoader($domain, $locale, 'po');
-        $package = $loader();
-        $package->setFormatter('sprintf');
-        return $package;
-    });
-}
+I18n::config('croogo', function ($domain, $locale) {
+    $loader = new MessagesFileLoader($domain, $locale, 'po');
+    $package = new Package('sprintf', 'default');
+    $localePackage = $loader();
+    if ($localePackage) {
+        $package->setMessages($localePackage->getMessages());
+    }
+    return $package;
+});
+
+I18n::config('_fallback', function ($domain, $locale) {
+    return new Package('sprintf');
+});
 
 /**
  * Timezone
