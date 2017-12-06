@@ -10,6 +10,7 @@ $tableHeaders = $this->Html->tableHeaders([
     $this->Paginator->sort('title', __d('croogo', 'Title')),
     $this->Paginator->sort('native', __d('croogo', 'Native')),
     $this->Paginator->sort('alias', __d('croogo', 'Alias')),
+    $this->Paginator->sort('locale', __d('croogo', 'Locale')),
     $this->Paginator->sort('status', __d('croogo', 'Status')),
     __d('croogo', 'Actions'),
 ]);
@@ -35,6 +36,7 @@ foreach ($languages as $language) {
         $language->title,
         $language->native,
         $language->alias,
+        $language->locale,
         $this->Html->status($language->status),
         $actions,
     ];

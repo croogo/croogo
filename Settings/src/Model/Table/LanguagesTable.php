@@ -34,6 +34,15 @@ class LanguagesTable extends CroogoTable
         ]);
         $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp');
+
+        $likeOptions = [
+            'before' => true,
+            'after' => true,
+        ];
+        $this->searchManager()
+            ->add('title', 'Search.Like', $likeOptions)
+            ->add('alias', 'Search.Like', $likeOptions)
+            ->add('locale', 'Search.Like', $likeOptions);
     }
 
     public function validationDefault(Validator $validator)

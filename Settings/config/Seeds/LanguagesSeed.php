@@ -1,6 +1,7 @@
 <?php
 
 use Phinx\Seed\AbstractSeed;
+use Cake\I18n\I18n;
 
 class LanguagesSeed extends AbstractSeed
 {
@@ -33,7 +34,31 @@ class LanguagesSeed extends AbstractSeed
     public function run()
     {
         $Table = $this->table('languages');
-        $Table->insert($this->records)->save();
+
+        $locales = ResourceBundle::getLocales('');
+        $weight = 1;
+        $records = [];
+        $now = new DateTime();
+        I18n::setLocale('en_US');
+
+        foreach ($locales as $locale) {
+            I18n::setLocale('en_US');
+            $parsed = Locale::parseLocale($locale);
+            $data = [
+                'title' => Locale::getDisplayName($locale),
+                'alias' => $parsed['language'],
+                'locale' => $locale,
+                'status' => true,
+                'weight' => $weight++,
+                'created' => $now->format('Y-m-d H:i:s'),
+                'updated' => $now->format('Y-m-d H:i:s'),
+            ];
+            I18n::setLocale($locale);
+            $data['native'] = Locale::getDisplayRegion($locale);
+            $records[] = $data;
+        }
+
+        $Table->insert($records)->save();
     }
 
 }

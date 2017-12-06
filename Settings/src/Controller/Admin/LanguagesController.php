@@ -26,6 +26,15 @@ class LanguagesController extends AppController
         $this->Crud->config('actions.moveDown', [
             'className' => 'Croogo/Core.Admin/MoveDown'
         ]);
+        $this->Crud->config('actions.index', [
+            'searchFields' => [
+                'title',
+                'alias',
+                'locale',
+            ],
+        ]);
+
+        $this->_setupPrg();
     }
 
 /**
