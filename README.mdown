@@ -10,7 +10,7 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
 
 ## Requirements
   * Apache with `mod_rewrite`
-  * PHP 5.5 or higher
+  * PHP 5.6 or higher
   * MySQL 5.7 or higher
 
 ## Installation
@@ -30,7 +30,7 @@ If you want hack on croogo, you can use the `--prefer-source` flag, ie:
 #### Web based installer
 
   * Extract the archive. Upload the content to your server.
-  * Create a new MySQL database (`utf8_unicode_ci` collation)
+  * Create a new MySQL database (charset `utf8mb4` with `utf8m4_unicode_ci` collation)
   * Visit http://your-site.com/ from your browser and follow the instructions.
 
 #### Manual installation
