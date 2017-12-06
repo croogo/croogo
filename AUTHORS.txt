@@ -9,18 +9,18 @@ Damien Biasotto <damien@occi-tech.com>
 Kyle Robinson Young <kyle@dontkry.com>
 Derbois Aymeric <aymeric@occi-tech.com>
 Pierre Martin <pierre@occi-tech.com>
+Paul Gardner <phpmagpie@webbedit.co.uk>
 chadrien <chadrien@chadrien.fr>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
-Paul Gardner <phpmagpie@webbedit.co.uk>
 Christopher M. Depré <mail@chris-depre.de>
 Dimas Abdul Aziiz <dimas@xintesa.com>
+Eko Tristiyono <eko@xintesa.com>
 Jose Diaz-Gonzalez <josegonzalez@users.noreply.github.com>
 euromark <euromark@web.de>
-Eko Tristiyono <eko@xintesa.com>
 Yuan Chavik <yuan@xintesa.com>
 Appsbender <regz24@gmail.com>
-AD7six <andydawson76@gmail.com>
 Mike Tallroth <mike.tallroth@gmail.com>
+AD7six <andydawson76@gmail.com>
 Elias Coronado <ecor.rck@hotmail.com>
 Jonas <fwd_github@jonas-hartmann.com>
 Liam Keily <liam@simplywebsites.com>
@@ -38,6 +38,7 @@ Lukas Marks <lukas.marks@lumax-web.de>
 Lukas Strassel <lukasstrassel@googlemail.com>
 Vitor Pacheco <vitor-p.c@hotmail.com>
 elbakai <m.elbakai@gmail.com>
+mustapha elbakai <m.elbakai@gmail.com>
 primeminister <primeminister@mowd.nl>
 James Sapara <james.sapara@gmail.com>
 Livia Scapin <livia.scapin@bluewin.ch>
@@ -45,6 +46,7 @@ Matt Curry <matt@pseudocoder.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
 Rakesh Tembhurne <rakesh@tembhurne.com>
 thoth <thomas.rader@tigerclawtech.com>
+Вадим <vadimushka.d@gmail.com>
 Jeremy Harris <jeremy@someguyjeremy.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
 Marek Rodkiewicz <marek.rodkiewicz@infraredgroup.pl>
@@ -53,7 +55,6 @@ daniel <daniel@daniels-MacBook-Air.local>
 roland-w <roland-w@users.noreply.github.com>
 tmaiaroto <tom@shift8creative.com>
 yudapc <yudapc@gmail.com>
-Вадим <vadimushka.d@gmail.com>
 Adam Taylor <ataylor32@gmail.com>
 Adrien Louis-Rossignol <adrien.louis.r@gmail.com>
 Andrea de la Huerta <info@metamorfosys.de>
@@ -77,7 +78,6 @@ Paulo Pinto <paulorpinto@gmail.com>
 Robbert Noordzij <robbert@xseeding.nl>
 Sam Bernard <sam@sambernard.net>
 SplicePHP <admin@splicephp.com>
-The Gitter Badger <badger@gitter.im>
 Wiena Lorentz <lorentz@xintesa.com>
 Zuhair AlSader <zuhair.alsadder@hotmail.com>
 alevilar <alevilar@gmail.com>
@@ -87,7 +87,6 @@ eryw <kristeryw@gmail.com>
 ingvaar <igorpletenev@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
 kareypowell <kareyp9@gmail.com>
-mustapha elbakai <m.elbakai@gmail.com>
 romaing <pourri@dixit-productions.com>
 sherwinrobles <sherwinrobles@gmail.com>
 stefanozoffoli <stefano.zoffoli@librasoftsnc.it>
