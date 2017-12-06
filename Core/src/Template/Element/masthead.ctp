@@ -26,14 +26,9 @@ if (!isset($bgImagePath)):
 endif;
 
 $bgImageUrl = $this->Url->webroot($bgImagePath);
-$mimeType = mime_content_type(WWW_ROOT . $bgImageUrl);
-if (strpos($mimeType, 'image') === 0):
-    $mastheadAttrs = $bgImageUrl ? [
-        "background-image: url($bgImageUrl)",
-    ] : [];
-else:
-    $mastheadAttrs = [];
-endif;
+$mastheadAttrs = [
+    "background-image: url($bgImageUrl)",
+];
 
 if (isset($contact)):
     $mastheadAttrs[] = 'background-color: #222';
