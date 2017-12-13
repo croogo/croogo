@@ -190,6 +190,10 @@ class NodesController extends AppController
                 ->findByAlias($this->request->query('type'))
                 ->first();
             $this->set('type', $type);
+
+            $this->Nodes->behaviors()->Tree->config('scope', [
+                'type' => $type->alias,
+            ]);
         }
 
         if (!empty($this->request->query('links')) || isset($this->request->query['chooser'])) {
@@ -269,9 +273,14 @@ class NodesController extends AppController
                 'type' => $entity->type,
                 'slug' => $entity->slug
             ]);
+
         }
 
         $this->Crud->action()->config('name', $entity->type);
+
+        $this->Nodes->behaviors()->Tree->config('scope', [
+            'type' => $entity->type,
+        ]);
     }
 
     /**
