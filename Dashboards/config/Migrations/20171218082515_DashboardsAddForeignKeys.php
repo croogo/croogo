@@ -1,14 +1,14 @@
 <?php
 use Migrations\AbstractMigration;
 
-class AddForeignKeys extends AbstractMigration
+class DashboardsAddForeignKeys extends AbstractMigration
 {
 
     public function up()
     {
-        $this->table('nodes')
+        $this->table('dashboards')
             ->addForeignKey('user_id', 'users', ['id'], [
-                'constraint' => 'fk_nodes2users',
+                'constraint' => 'fk_dashboards2users',
                 'delete' => 'RESTRICT',
             ])
             ->save();
@@ -16,7 +16,7 @@ class AddForeignKeys extends AbstractMigration
 
     public function down()
     {
-        $this->table('nodes')
+        $this->table('dashboards')
             ->dropForeignKey('user_id')
             ->save();
     }
