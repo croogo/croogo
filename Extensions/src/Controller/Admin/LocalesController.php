@@ -46,6 +46,7 @@ class LocalesController extends AppController
         $locales = [];
         $folder = new Folder;
         $paths = App::path('Locale');
+        $currentLocale = I18n::getLocale();
         foreach ($paths as $path) {
             $folder->path = $path;
             $content = $folder->read();
@@ -58,7 +59,9 @@ class LocalesController extends AppController
                     continue;
                 }
 
+                I18n::setLocale($locale);
                 $name = Locale::getDisplayLanguage($locale);
+                I18n::setLocale($currentLocale);
                 $locales[$locale] = [
                     'path' => $fullpath,
                     'name' => $name,
