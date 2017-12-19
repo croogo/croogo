@@ -120,10 +120,6 @@ I18n::config('croogo', function ($domain, $locale) {
     return $package;
 });
 
-I18n::config('_fallback', function ($domain, $locale) {
-    return new Package('sprintf');
-});
-
 /**
  * Timezone
  */
