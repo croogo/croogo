@@ -4,10 +4,12 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
+use Cake\Utility\Security;
 use Croogo\Core\Croogo;
 
 \Croogo\Core\timerStart('Croogo bootstrap');
 $dbConfigExists = false;
+$salted = Security::getSalt() !== '__SALT__';
 
 if (file_exists(ROOT . DS . 'config' . DS . 'database.php')) {
     Configure::load('database', 'default');
@@ -57,11 +59,7 @@ Croogo::hookHelper('*', 'Croogo/Core.Js');
 Croogo::hookHelper('*', 'Croogo/Core.Layout');
 \Croogo\Core\timerStop('Croogo bootstrap');
 
-if (Configure::read('Croogo.installed')) {
-    return;
-}
-
 // Load Install plugin
-if (!Configure::read('Croogo.installed')) {
+if (!Configure::read('Croogo.installed') && !$salted) {
     Plugin::load('Croogo/Install', ['routes' => true, 'bootstrap' => true]);
 }
