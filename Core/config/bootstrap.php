@@ -7,10 +7,9 @@ use Cake\Datasource\ConnectionManager;
 use Croogo\Core\Croogo;
 
 \Croogo\Core\timerStart('Croogo bootstrap');
-$dbConfigFileExists = file_exists(ROOT . DS . 'config' . DS . 'database.php');
 $dbConfigExists = false;
 
-if ($dbConfigFileExists) {
+if (file_exists(ROOT . DS . 'config' . DS . 'database.php')) {
     Configure::load('database', 'default');
     ConnectionManager::drop('default');
     ConnectionManager::config(Configure::consume('Datasources'));
@@ -58,11 +57,11 @@ Croogo::hookHelper('*', 'Croogo/Core.Js');
 Croogo::hookHelper('*', 'Croogo/Core.Layout');
 \Croogo\Core\timerStop('Croogo bootstrap');
 
-if (Configure::read('Croogo.installed') && $dbConfigExists) {
+if (Configure::read('Croogo.installed')) {
     return;
 }
 
 // Load Install plugin
-if (!Configure::read('Croogo.installed') || !$dbConfigExists) {
+if (!Configure::read('Croogo.installed')) {
     Plugin::load('Croogo/Install', ['routes' => true, 'bootstrap' => true]);
 }
