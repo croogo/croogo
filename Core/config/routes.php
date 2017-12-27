@@ -3,11 +3,17 @@
 use Cake\Core\Configure;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
+use Croogo\Core\Utility\StringConverter;
 
 Router::prefix('admin', function (RouteBuilder $routeBuilder) {
     $dashboardUrl = Configure::read('Croogo.dashboardUrl');
     if (!$dashboardUrl) {
         return;
+    }
+
+    if (is_string($dashboardUrl)) {
+        $converter = new StringConverter();
+        $dashboardUrl = $converter->linkStringToArray($dashboardUrl);
     }
 
     $routeBuilder->connect('/', $dashboardUrl);

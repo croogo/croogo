@@ -12,6 +12,7 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
+use Croogo\Core\Utility\StringConverter;
 
 /**
  * AclFilter Component
@@ -165,7 +166,12 @@ class FilterComponent extends Component
             'action' => 'login',
         ]);
         if ($this->_controller->request->param('prefix') == 'admin') {
-            $loginRedirect = Configure::read('Croogo.dashboardUrl') ?: '/admin';
+            $dashboardUrl = Configure::read('Croogo.dashboardUrl');
+            if (is_string($dashboardUrl)) {
+                $converter = new StringConverter();
+                $dashboardUrl = $converter->linkStringToArray($dashboardUrl);
+            }
+            $loginRedirect = $dashboardUrl ?: '/admin';
             $this->_controller->Auth->config('loginRedirect', $loginRedirect);
         } else {
             $loginRedirect = Configure::read('Croogo.homeUrl') ?: '/';
