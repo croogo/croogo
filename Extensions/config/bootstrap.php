@@ -4,16 +4,6 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Croogo\Extensions\CroogoPlugin;
 
-/**
- * Dashboard URL
- */
-Configure::write('Croogo.dashboardUrl', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Extensions',
-    'controller' => 'Dashboard',
-    'action' => 'index',
-]);
-
 if (!Plugin::loaded('Migrations')) {
     Plugin::load('Migrations', ['autoload' => true, 'classBase' => false]);
 }
