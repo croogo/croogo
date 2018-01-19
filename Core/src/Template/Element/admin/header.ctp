@@ -2,8 +2,11 @@
 
 use Cake\Core\Configure;
 use Croogo\Core\Nav;
+use Croogo\Core\Utility\StringConverter;
 
-$dashboardUrl = Configure::read('Site.dashboard_url');
+$dashboardUrl = (new StringConverter())->linkStringToArray(
+    Configure::read('Site.dashboard_url')
+);
 
 ?>
 <header class="navbar navbar-expand-md navbar-dark bg-black fixed-top">
