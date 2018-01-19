@@ -3,7 +3,7 @@
 use Cake\Core\Configure;
 use Croogo\Core\Nav;
 
-$dashboardUrl = Configure::read('Croogo.dashboardUrl');
+$dashboardUrl = Configure::read('Site.dashboard_url');
 
 ?>
 <header class="navbar navbar-expand-md navbar-dark bg-black fixed-top">

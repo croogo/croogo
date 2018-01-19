@@ -166,7 +166,7 @@ class FilterComponent extends Component
             'action' => 'login',
         ]);
         if ($this->_controller->request->param('prefix') == 'admin') {
-            $dashboardUrl = Configure::read('Croogo.dashboardUrl');
+            $dashboardUrl = Configure::read('Site.dashboard_url');
             if (is_string($dashboardUrl)) {
                 $converter = new StringConverter();
                 $dashboardUrl = $converter->linkStringToArray($dashboardUrl);

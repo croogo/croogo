@@ -6,7 +6,7 @@ use Cake\Routing\Router;
 use Croogo\Core\Utility\StringConverter;
 
 Router::prefix('admin', function (RouteBuilder $routeBuilder) {
-    $dashboardUrl = Configure::read('Croogo.dashboardUrl');
+    $dashboardUrl = Configure::read('Site.dashboard_url');
     if (!$dashboardUrl) {
         return;
     }
