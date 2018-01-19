@@ -206,8 +206,6 @@ class AclCachedAuthorize extends BaseAuthorize
         return $allowed;
     }
 
-use \Cake\Log\LogTrait;
-
 /**
  * Checks authorization by content
  *
@@ -221,7 +219,7 @@ use \Cake\Log\LogTrait;
                 $request->action,
                 $request->controller
             );
-            $this->log($message, LogLevel::CRITICAL);
+            Log::critical($message);
             throw new Exception($message);
         }
 
