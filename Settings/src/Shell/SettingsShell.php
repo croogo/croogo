@@ -109,6 +109,9 @@ class SettingsShell extends Shell
                     ],
                 ]
             ])
+            ->addSubcommand('update_app_version_info', [
+                'help' => __d('croogo', 'Update app version string from git tag information'),
+            ])
             ->addSubcommand('update_version_info', [
                 'help' => __d('croogo', 'Update version string from git tag information'),
             ]);
@@ -225,7 +228,7 @@ class SettingsShell extends Shell
     }
 
 /**
- * Update Croogo.version in settings.json
+ * Update Croogo.version in settings
  */
     public function updateVersionInfo()
     {
@@ -250,4 +253,32 @@ class SettingsShell extends Shell
             $this->runCommand(['write', 'Croogo.version', $version]);
         }
     }
+
+/**
+ * Update Croogo.appVersion in settings
+ */
+    public function updateAppVersionInfo()
+    {
+        $gitDir = realpath(ROOT . DS . '.git');
+        if (!file_exists($gitDir)) {
+            $this->err('Git repository not found');
+            return false;
+        }
+        if (!is_dir($gitDir)) {
+            $gitDir = dirname($gitDir);
+        }
+
+        $git = trim(shell_exec('which git'));
+        if (empty($git)) {
+            $this->err('Git executable not found');
+            return false;
+        }
+
+        chdir($gitDir);
+        $version = trim(shell_exec('git describe --tags'));
+        if ($version) {
+            $this->runCommand(['write', 'Croogo.appVersion', $version]);
+        }
+    }
+
 }
