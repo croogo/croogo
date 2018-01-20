@@ -367,6 +367,16 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'params' => ''
         ],
         [
+            'key' => 'Croogo.appVersion',
+            'value' => '',
+            'title' => 'App Version',
+            'description' => '',
+            'input_type' => 'text',
+            'editable' => '0',
+            'weight' => '31',
+            'params' => ''
+        ],
+        [
             'key' => 'Theme.bgImagePath',
             'value' => '',
             'title' => 'Background Image',
