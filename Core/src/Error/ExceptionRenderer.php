@@ -29,8 +29,18 @@ class ExceptionRenderer extends CakeExceptionRenderer
             $startup = false;
         }
 
+        // Retry RequestHandler, as another aspect of startupProcess()
+        // could have failed. Ignore any exceptions out of startup, as
+        // there could be userland input data parsers.
         if ($startup === false && !empty($controller) && isset($controller->RequestHandler)) {
-            $controller = parent::_getController();
+            try {
+                $event = new Event('Controller.startup', $controller);
+                $controller->RequestHandler->startup($event);
+            } catch (Exception $e) {
+            }
+        }
+        if (empty($controller)) {
+            $controller = new Controller($request, $response);
         }
 
         return $controller;
