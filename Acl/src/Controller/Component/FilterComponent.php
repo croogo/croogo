@@ -177,11 +177,16 @@ class FilterComponent extends Component
             $loginRedirect = Configure::read('Croogo.homeUrl') ?: '/';
             $this->_controller->Auth->config('loginRedirect', $loginRedirect);
         }
-        $this->_controller->Auth->config('unauthorizedRedirect', [
-            'plugin' => 'Croogo/Users',
-            'controller' => 'Users',
-            'action' => 'login',
-        ]);
+
+        if ($this->_controller->request->is('ajax')) {
+            $this->_controller->Auth->config('unauthorizedRedirect', false);
+        } else {
+            $this->_controller->Auth->config('unauthorizedRedirect', [
+                'plugin' => 'Croogo/Users',
+                'controller' => 'Users',
+                'action' => 'login',
+            ]);
+        }
 
         $config = Configure::read('Acl');
         if (!empty($config['Auth']) && is_array($config['Auth'])) {
