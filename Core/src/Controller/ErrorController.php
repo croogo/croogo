@@ -64,7 +64,9 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
             if ($adminTheme) {
                 $viewBuilder->setTheme($adminTheme);
             }
-            $viewBuilder->setLayout('admin_full');
+            if (!$this->request->is('ajax')) {
+                $viewBuilder->setLayout('admin_full');
+            }
         } elseif (Configure::read('Site.theme')) {
             $viewBuilder->setTheme(Configure::read('Site.theme'));
         }
