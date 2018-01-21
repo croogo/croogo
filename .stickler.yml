@@ -1,6 +1,7 @@
 linters:
   phpcs:
-    standard: PSR2
+    standard: CakePHP
+    extensions: 'php,ctp'
   csslint: {  }
 files:
   ignore:
