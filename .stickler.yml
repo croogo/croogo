@@ -1,0 +1,10 @@
+linters:
+  phpcs:
+    standard: CakePHP
+    extensions: 'php,ctp'
+  csslint: {  }
+files:
+  ignore:
+    - 'vendor/*'
+    - 'bower_components/*'
+    - 'node_modules/*'
