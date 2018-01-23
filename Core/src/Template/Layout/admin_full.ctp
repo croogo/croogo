@@ -16,26 +16,22 @@
 </head>
 
 <body>
-
+    <?= $this->element('Croogo/Core.admin/header') ?>
     <div id="wrap">
-        <?= $this->element('admin/header') ?>
-        <div id="push"></div>
-        <div id="content-container" class="content-container <?= $this->Theme->getCssClass('container') ?>">
-            <div class="<?= $this->Theme->getCssClass('row') ?>">
-                <div id="content" class="content">
-                    <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
-                        <?= $this->Layout->sessionFlash() ?>
-                        <?= $this->fetch('content') ?>
-                    </div>
+        <div id="content-container" class="content-container <?= $this->Theme->getCssClass('containerFluid') ?>">
+            <div id="content" class="content">
+                <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
+                    <?= $this->Layout->sessionFlash() ?>
+                    <?= $this->fetch('content') ?>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <?= $this->element('admin/footer') ?>
+    <?= $this->element('Croogo/Core.admin/footer') ?>
     <?php
-        echo $this->element('admin/initializers');
+        echo $this->element('Croogo/Core.admin/initializers');
         echo $this->Blocks->get('scriptBottom');
         echo $this->Js->writeBuffer();
     ?>
