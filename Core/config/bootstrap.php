@@ -60,6 +60,6 @@ Croogo::hookHelper('*', 'Croogo/Core.Layout');
 \Croogo\Core\timerStop('Croogo bootstrap');
 
 // Load Install plugin
-if (!Configure::read('Croogo.installed') && !$salted) {
+if (!Configure::read('Croogo.installed') || !$salted) {
     Plugin::load('Croogo/Install', ['routes' => true, 'bootstrap' => true]);
 }
