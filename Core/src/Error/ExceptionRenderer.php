@@ -3,6 +3,8 @@
 namespace Croogo\Core\Error;
 
 use Cake\Core\App;
+use Cake\Controller\Controller;
+use Cake\Event\Event;
 use Cake\Error\ExceptionRenderer as CakeExceptionRenderer;
 use Cake\Network\Request;
 use Cake\Network\Response;
@@ -41,6 +43,7 @@ class ExceptionRenderer extends CakeExceptionRenderer
         }
         if (empty($controller)) {
             $controller = new Controller($request, $response);
+            $controller->viewBuilder()->className('Croogo/Core.Croogo');
         }
 
         return $controller;
