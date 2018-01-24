@@ -2,7 +2,12 @@ linters:
   phpcs:
     standard: CakePHP
     extensions: 'php,ctp'
+    enabled: true
   csslint: {  }
+
+fixers:
+  enabled: true
+
 files:
   ignore:
     - 'vendor/*'
