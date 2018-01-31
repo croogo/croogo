@@ -21,8 +21,8 @@ class StorageManager {
     protected $_adapterConfig = array(
         'Local' => array(
             'adapterOptions' => array(TMP, true),
-            'adapterClass' => '\Gaufrette\Adapter\Local',
-            'class' => '\Gaufrette\Filesystem'));
+            'adapterClass' => '\League\Flysystem\Adapter\Local',
+            'class' => '\League\Flysystem\Filesystem'));
 
 /**
  * Sets the default or active adapter that is used
@@ -119,7 +119,7 @@ class StorageManager {
  * @param mixed $adapterName string of adapter configuration or array of settings
  * @param boolean $renewObject Creates a new instance of the given adapter in the configuration
  * @throws RuntimeException
- * @return Gaufrette object as configured by first arg
+ * @return Flysystem object as configured by first arg
  */
     public static function adapter($adapterName = null, $renewObject = false) {
         $_this = StorageManager::getInstance();

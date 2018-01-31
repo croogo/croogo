@@ -35,7 +35,8 @@
         "admad/cakephp-sequence": "^2.1",
         "friendsofcake/crud": "^5.2",
         "friendsofcake/search": "^4.0",
-        "friendsofcake/bootstrap-ui": "^1.2"
+        "friendsofcake/bootstrap-ui": "^1.2",
+        "league/flysystem": "^1.0"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^2.1.3",

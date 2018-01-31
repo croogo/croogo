@@ -11,23 +11,6 @@ namespace Croogo\FileManager\Utility;
  */
 
 class FileStorageUtils {
-/**
- * Gaufrette Vendor Classloader
- *
- * @param string $class Classname to be loaded
- * @return void
- */
-    public static function gaufretteLoader($class) {
-        $base = Configure::read('FileStorage.GaufretteLib');
-        if (empty($base)) {
-            $base = Plugin::path('FileStorage') . 'Vendor' . DS . 'Gaufrette' . DS . 'src' . DS;
-        }
-
-        $class = str_replace('\\', DS, $class);
-        if (file_exists($base . $class . '.php')) {
-            include ($base . $class . '.php');
-        }
-    }
 
 /**
  * Return file extension from a given filename

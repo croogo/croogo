@@ -29,14 +29,14 @@ Configure::write('FileManager', [
 StorageManager::config('LocalAttachment', array(
     'description' => 'Local Attachment',
     'adapterOptions' => array(WWW_ROOT . 'assets', true),
-    'adapterClass' => '\Gaufrette\Adapter\Local',
-    'class' => '\Gaufrette\Filesystem',
+    'adapterClass' => '\League\Flysystem\Adapter\Local',
+    'class' => '\League\Flysystem\Filesystem',
 ));
 StorageManager::config('LegacyLocalAttachment', array(
     'description' => 'Local Attachment (Legacy)',
     'adapterOptions' => array(WWW_ROOT . 'uploads', true),
-    'adapterClass' => '\Gaufrette\Adapter\Local',
-    'class' => '\Gaufrette\Filesystem',
+    'adapterClass' => '\League\Flysystem\Adapter\Local',
+    'class' => '\League\Flysystem\Filesystem',
 ));
 
 // TODO: make this configurable via backend
