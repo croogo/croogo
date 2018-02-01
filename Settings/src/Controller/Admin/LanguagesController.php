@@ -2,6 +2,7 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
+use Cake\Event\Event;
 use Croogo\Core\Event\EventManager;
 
 /**
@@ -62,5 +63,16 @@ class LanguagesController extends AppController
             'order' => 'weight ASC',
         ]);
         $this->set(compact('id', 'modelAlias', 'languages'));
+    }
+
+    public function index()
+    {
+        $this->Crud->on('beforePaginate', function(Event $e) {
+            if (empty($this->request->query('sort'))) {
+                $e->subject()->query
+                    ->orderDesc('status');
+            }
+        });
+        return $this->Crud->execute();
     }
 }
