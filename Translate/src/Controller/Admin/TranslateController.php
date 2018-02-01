@@ -81,7 +81,9 @@ class TranslateController extends AppController
 
         $languages = $this->Languages->find('list', [
             'keyField' => 'locale',
-            'valueField' => 'native',
+            'valueField' => function($language) {
+                return $language->get('label');
+            },
             'conditions' => [
                 $this->Languages->aliasField('status') => true,
             ],
