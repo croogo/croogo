@@ -271,7 +271,7 @@ class AttachmentsController extends AppController {
     public function edit($id = null) {
         $this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
 
-        if (isset($this->request->params['named']['editor'])) {
+        if (isset($this->request->query['editor'])) {
             $this->layout = 'admin_popup';
         }
 

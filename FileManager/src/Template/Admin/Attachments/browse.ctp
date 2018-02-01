@@ -16,10 +16,8 @@ $this->end();
 $this->Breadcrumbs->add(__d('croogo', 'Attachments'));
 
 $this->Croogo->adminScript([
-    'Croogo/Wysiwyg.wysiwyg',
-    'Croogo/Ckeditor.wysiwyg',
     'Croogo/FileManager.admin',
-    'Croogo/FileManager.asset',
+    'Croogo/FileManager.assets',
 ]);
 
 $assetId = $filter = $filename = $type = $all = null;
@@ -99,20 +97,13 @@ $this->append('table-body');
         $mimeType = $mimeType['0'];
 
         if (isset($this->request->query['editor'])):
-            if ($this->request->query('func')) {
-                $jActions = $this->request->query['func'];
-                $actions[] = $this->Html->link('', '#', array(
-                    'onclick' => $jActions . "('" . $attachment['AssetsAsset']['path'] . "');",
-                    'icon' => 'attach',
-                    'tooltip' => __d('croogo', 'Insert')
-                ));
-            } else {
-                $actions[] = $this->Html->link('', '#', array(
-                    'onclick' => "Croogo.Wysiwyg.choose('" . $attachment->slug . "');",
-                    'icon' => 'attach',
-                    'tooltip' => __d('croogo', 'Insert')
-                ));
-            }
+
+            $actions[] = $this->Html->link('', 'javascript:void(0)', array(
+                'onclick' => "Croogo.Wysiwyg.choose('" . $attachment->asset->path . "');",
+                'icon' => 'attach',
+                'tooltip' => __d('croogo', 'Insert')
+            ));
+
         endif;
 
         $deleteUrl = Hash::merge($query, array(
