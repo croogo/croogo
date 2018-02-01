@@ -36,6 +36,7 @@
         "friendsofcake/crud": "^5.2",
         "friendsofcake/search": "^4.0",
         "friendsofcake/bootstrap-ui": "^1.2",
+        "intervention/image": "^2.4.1",
         "league/flysystem": "^1.0"
     },
     "require-dev": {
