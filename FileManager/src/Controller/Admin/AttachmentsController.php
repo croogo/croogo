@@ -46,6 +46,8 @@ class AttachmentsController extends AppController {
                 'index', 'browse', 'listings',
             ],
         ]);
+
+        $this->_loadCroogoComponents(['BulkProcess']);
         $this->loadModel('Croogo/FileManager.Attachments');
     }
 
@@ -379,5 +381,19 @@ class AttachmentsController extends AppController {
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
     }
+
+    public function process()
+    {
+        $Attachments = $this->Attachments;
+        list($action, $ids) = $this->BulkProcess->getRequestVars($Attachments->alias());
+
+        $messageMap = [
+            'delete' => __d('croogo', 'Attachments deleted'),
+        ];
+        return $this->BulkProcess->process($Attachments, $action, $ids, [
+            'messageMap' => $messageMap,
+        ]);
+    }
+
 
 }

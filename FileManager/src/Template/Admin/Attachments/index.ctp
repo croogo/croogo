@@ -33,8 +33,14 @@ $detailUrl = array(
     ),
 );
 
+$this->append('form-start', $this->Form->create(null, [
+    'url' => ['action' => 'process'],
+    'align' => 'inline',
+]));
+
 $this->append('table-heading');
     $tableHeaders = $this->Html->tableHeaders(array(
+        $this->Form->checkbox('checkAll', ['id' => 'AttachmentsCheckAll']),
         $this->Paginator->sort('id', __d('croogo', 'Id')),
         '&nbsp;',
         $this->Paginator->sort('title', __d('croogo', 'Title')),
@@ -130,6 +136,7 @@ $this->append('table-body');
         $actions = $this->Html->div('item-actions', implode(' ', $actions));
 
         $rows[] = array(
+            $this->Form->checkbox('Attachments.' . $attachment->id . '.id', ['class' => 'row-select']),
             $attachment->id,
             $thumbnail,
             [
@@ -149,6 +156,22 @@ $this->append('table-body');
     }
 
     echo $this->Html->tableCells($rows);
+$this->end();
+
+$this->start('bulk-action');
+echo $this->Form->input('action', [
+    'label' => __d('croogo', 'Bulk action'),
+    'class' => 'c-select',
+    'options' => [
+        'delete' => __d('croogo', 'Delete'),
+    ],
+    'empty' => __d('croogo', 'Bulk action'),
+]);
+echo $this->Form->button(__d('croogo', 'Apply'), [
+    'type' => 'submit',
+    'value' => 'submit',
+    'class' => 'bulk-process btn-outline-primary',
+]);
 $this->end();
 
 $this->append('page-footer');
