@@ -9,4 +9,4 @@ $adminThemeScripts = <<<EOF
     Admin.dateTimeFields();
 EOF;
 
-$this->Html->scriptBlock($adminThemeScripts, ['block' => 'scriptBottom']);
+$this->Js->buffer($adminThemeScripts);
