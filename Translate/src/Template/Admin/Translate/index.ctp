@@ -10,9 +10,11 @@ $modelPath = $this->request->query('model');
 list($plugin, $model) = pluginSplit($modelPath);
 $controller = $model;
 
+$crumbLabel = $model == 'Nodes' ? __d('croogo', 'Content') : Inflector::pluralize($model);
+
 $this->Breadcrumbs
     ->add(
-        Inflector::pluralize($model),
+        $crumbLabel,
         array(
             'plugin' => Inflector::underscore($plugin),
             'controller' => Inflector::underscore($controller),
