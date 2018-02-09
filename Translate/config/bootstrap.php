@@ -11,7 +11,7 @@ DispatcherFactory::add('Croogo/Translate.LocaleSelector');
 $Languages = TableRegistry::get('Croogo/Settings.Languages');
 $languages = $Languages->find('active')->toArray();
 Configure::write('I18n.languages', array_keys($languages));
-I18n::locale(Configure::read('App.defaultLocale'));
+I18n::setLocale(Configure::read('App.defaultLocale'));
 
 EventManager::instance()->on(
     'Server.buildMiddleware',
