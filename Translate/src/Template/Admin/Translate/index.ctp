@@ -63,7 +63,7 @@ $this->start('action-buttons');
                 'action' => 'edit',
                 '?' => [
                     'id' => $id,
-                    'model' => urlencode($modelAlias),
+                    'model' => $modelAlias,
                     'locale' => $languageAlias,
                 ],
             ), array(
