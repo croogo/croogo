@@ -68,6 +68,10 @@ $this->append('table-body');
         );
     endforeach;
 
+    usort($rows, function($a, $b) {
+        return strcmp($a[3], $b[3]);
+    });
+
     echo $this->Html->tableCells($rows);
 $this->end();
 ?>
