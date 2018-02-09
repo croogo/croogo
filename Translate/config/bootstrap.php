@@ -11,13 +11,14 @@ DispatcherFactory::add('Croogo/Translate.LocaleSelector');
 $Languages = TableRegistry::get('Croogo/Settings.Languages');
 $languages = $Languages->find('active')->toArray();
 Configure::write('I18n.languages', array_keys($languages));
-I18n::setLocale(Configure::read('App.defaultLocale'));
+$siteLocale = Configure::read('Site.locale');
+I18n::setLocale($siteLocale);
 
 EventManager::instance()->on(
     'Server.buildMiddleware',
-    function($event, $stack) use ($languages) {
+    function($event, $stack) use ($siteLocale, $languages) {
         $stack->add(new I18nMiddleware([
-            'defaultLanguage' => 'en',
+            'defaultLanguage' => $siteLocale,
             'languages' => $languages,
         ]));
     }
