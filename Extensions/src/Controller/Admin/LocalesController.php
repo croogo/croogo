@@ -98,6 +98,29 @@ class LocalesController extends AppController
     }
 
 /**
+ * Deactivate locale
+ *
+ * @param string $locale
+ * @return void
+ */
+    public function deactivate($locale = null)
+    {
+        if ($locale == null) {
+            $this->Flash->error(__d('croogo', 'Invalid locale.'));
+            return $this->redirect(['action' => 'index']);
+        }
+        $result = $this->Settings->write('Site.locale', '');
+        if ($result) {
+            Cache::clear(false, '_cake_core_');
+            Cache::clear(false, 'croogo_menus');
+            $this->Flash->success(__d('croogo', "Locale '%s' deactivated", $locale));
+        } else {
+            $this->Flash->error(__d('croogo', 'Could not save Locale setting.'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+
+/**
  * Admin add
  *
  * @return void
