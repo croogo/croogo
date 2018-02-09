@@ -16,7 +16,7 @@ Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
 
     Router::build($route, '/', ['controller' => 'Nodes', 'action' => 'promoted']);
     Router::build($route, '/promoted/*', ['controller' => 'Nodes', 'action' => 'promoted']);
-    Router::build($route, '/search/*', ['controller' => 'Nodes', 'action' => 'search']);
+    Router::build($route, '/search', ['controller' => 'Nodes', 'action' => 'search']);
 
     // Content types
     Router::routableContentTypes($route);
