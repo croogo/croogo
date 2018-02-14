@@ -205,7 +205,7 @@ class TaxonomizableBehavior extends Behavior
      */
     public function beforeSave(Event $event, Entity $entity)
     {
-        if (!$entity->has('taxonomies')) {
+        if (!$entity->has('taxonomy_data')) {
             return;
         }
 
