@@ -28,5 +28,5 @@ $this->assign('title', __d('croogo', 'Search Results: %s', h($q)));
         endforeach;
     ?>
 
-    <div class="paging"><?= $this->Paginator->numbers() ?></div>
+    <div class="paging"><?= $this->Paginator->numbers(["url" => ["type" => $type->alias]]) ?></div>
 </div>
