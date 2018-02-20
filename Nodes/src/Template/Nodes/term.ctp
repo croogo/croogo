@@ -34,5 +34,5 @@ $this->assign('title', implode (' | ', $titles));
         endforeach;
     ?>
 
-    <div class="paging"><?= $this->Paginator->numbers(["url" => ["term" => $term->slug, "type" => $type->alias]]) ?></div>
+    <div class="paging"><?= $this->Paginator->numbers(["url" => ["slug" => $term->slug, "type" => $type->alias]]) ?></div>
 </div>
