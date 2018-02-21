@@ -2,16 +2,16 @@
 
 namespace Croogo\Nodes\View\Helper;
 
+use Cake\Collection\Collection;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
+use Cake\Utility\Hash;
 use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\Croogo;
 use Croogo\Core\Utility\StringConverter;
 use Croogo\Nodes\Model\Entity\Node;
-use Cake\Utility\Hash;
-use Cake\Core\Configure;
-use Cake\Collection\Collection;
-use Cake\Core\Plugin;
 
 /**
  * Nodes Helper
@@ -205,6 +205,7 @@ class NodesHelper extends Helper
         $options = array_merge($_options, $options);
 
         $excerpt = $this->node->excerpt;
+
         if ($options['body'] && empty($excerpt)) {
             $excerpt = $this->_converter->firstPara(
                 $this->node->body,
@@ -275,7 +276,7 @@ class NodesHelper extends Helper
     /**
      * Return formatted date
      *
-     * @param \Cake\I18n\FrozenTime $date
+     * @param \Cake\I18n\FrozenTime $date date to format
      * @return string
      */
     public function date($date)
@@ -291,13 +292,13 @@ class NodesHelper extends Helper
     public function nodeTermLinks()
     {
         return (new Collection($this->node->taxonomies))->map(function ($taxonomy) {
-            return $this->Html->link($taxonomy->term->title, array(
+            return $this->Html->link($taxonomy->term->title, [
                 'plugin' => 'Croogo/Nodes',
                 'controller' => 'Nodes',
                 'action' => 'term',
                 'type' => $this->field('type'),
                 'slug' => $taxonomy->term->slug,
-            ));
+            ]);
         })->toArray();
     }
 
