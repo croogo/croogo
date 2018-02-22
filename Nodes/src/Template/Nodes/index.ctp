@@ -26,5 +26,5 @@ endif;
         endforeach;
     ?>
 
-    <div class="paging"><?= $this->Paginator->numbers() ?></div>
+    <?= $this->element('pagination', compact('nodes', 'type')) ?>
 </div>
