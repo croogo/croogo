@@ -281,7 +281,8 @@ class NodesHelper extends Helper
      */
     public function date($date)
     {
-        return $this->Time->format($date, Configure::read('Reading.date_time_format'), null, Configure::read('Site.timezone'));
+        $tz = $this->request->session()->read('Auth.User.timezone') ?: Configure::read('Site.timezone');
+        return $this->Time->format($date, Configure::read('Reading.date_time_format'), null, $tz);
     }
 
     /**
