@@ -18,8 +18,9 @@
         ));
     }
     if ($type->format_show_date) {
+        $nodeDate = $this->Nodes->field('publish_start') ?: $this->Nodes->field('created');
         echo ' ' . __d('croogo', 'on') . ' ';
-        echo $this->Html->tag('span', $this->Nodes->date($this->Nodes->field('publish_start')), array('class' => 'date'));
+        echo $this->Html->tag('span', $this->Nodes->date($nodeDate), ['class' => 'date']);
     }
 ?>
 </div>
