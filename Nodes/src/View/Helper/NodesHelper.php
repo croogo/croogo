@@ -2,7 +2,11 @@
 
 namespace Croogo\Nodes\View\Helper;
 
+use Cake\Collection\Collection;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
+use Cake\Utility\Hash;
 use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\Croogo;
@@ -31,6 +35,8 @@ class NodesHelper extends Helper
     public $helpers = [
         'Croogo/Core.Url',
         'Croogo/Core.Layout',
+        'Croogo/Core.Html',
+        'Time',
     ];
 
 /**
@@ -158,7 +164,7 @@ class NodesHelper extends Helper
             return $this->node->set($field, $value);
         }
 
-        return $this->node->get($field);
+        return Hash::get($this->node, $field);
     }
 
 /**
@@ -199,6 +205,7 @@ class NodesHelper extends Helper
         $options = array_merge($_options, $options);
 
         $excerpt = $this->node->excerpt;
+
         if ($options['body'] && empty($excerpt)) {
             $excerpt = $this->_converter->firstPara(
                 $this->node->body,
@@ -264,5 +271,44 @@ class NodesHelper extends Helper
         }
 
         return $this->Url->build($node->url, $full);
+    }
+
+    /**
+     * Return formatted date
+     *
+     * @param \Cake\I18n\FrozenTime $date date to format
+     * @return string
+     */
+    public function date($date)
+    {
+        return $this->Time->format($date, Configure::read('Reading.date_time_format'), null, Configure::read('Site.timezone'));
+    }
+
+    /**
+     * Return all term links
+     *
+     * @return array
+     */
+    public function nodeTermLinks()
+    {
+        return (new Collection($this->node->taxonomies))->map(function ($taxonomy) {
+            return $this->Html->link($taxonomy->term->title, [
+                'plugin' => 'Croogo/Nodes',
+                'controller' => 'Nodes',
+                'action' => 'term',
+                'type' => $this->field('type'),
+                'slug' => $taxonomy->term->slug,
+            ]);
+        })->toArray();
+    }
+
+    /**
+     * Check if comments plugin is enable
+     *
+     * @return bool
+     */
+    public function commentsEnabled()
+    {
+        return Plugin::loaded('Croogo/Comments');
     }
 }
