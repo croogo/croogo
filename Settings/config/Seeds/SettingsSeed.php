@@ -218,7 +218,7 @@ class SettingsSeed extends AbstractSeed
         [
             'id' => '27',
             'key' => 'Reading.date_time_format',
-            'value' => 'D, M d Y H:i:s',
+            'value' => 'EEE, MMM dd yyyy HH:mm:ss',
             'title' => '',
             'description' => '',
             'input_type' => '',
@@ -229,7 +229,7 @@ class SettingsSeed extends AbstractSeed
         [
             'id' => '28',
             'key' => 'Comment.date_time_format',
-            'value' => 'M d, Y',
+            'value' => 'MMM dd, yyyy',
             'title' => '',
             'description' => '',
             'input_type' => '',
