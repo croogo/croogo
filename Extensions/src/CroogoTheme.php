@@ -125,6 +125,9 @@ class CroogoTheme
                             'Form' => [
                                 'className' => 'Croogo/Core.CroogoForm',
                             ],
+                            'Paginator' => [
+                                'className' => 'Croogo/Core.CroogoPaginator',
+                            ],
                         ],
                     ],
                     'admin' => [
