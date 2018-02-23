@@ -1,4 +1,4 @@
-<div class="node-info">
+<div class="node-info text-muted">
 <?php
     $type = $typesForLayout[$this->Nodes->field('type')];
 
