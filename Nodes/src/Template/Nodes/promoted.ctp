@@ -18,7 +18,7 @@ $this->assign('title', 'Home');
         <h2><?= $this->Html->link($this->Nodes->field('title'), $this->Nodes->field('url')->getUrl()) ?></h2>
         <?php
             echo $this->Nodes->info();
-            echo $this->Nodes->body();
+            echo $this->Nodes->excerpt(['body' => true]);
             echo $this->Nodes->moreInfo();
         ?>
     </div>

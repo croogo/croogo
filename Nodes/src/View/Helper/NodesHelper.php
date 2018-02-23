@@ -205,6 +205,7 @@ class NodesHelper extends Helper
         $options = array_merge($_options, $options);
 
         $excerpt = $this->node->excerpt;
+        $node = $this->node;
 
         if ($options['body'] && empty($excerpt)) {
             $excerpt = $this->_converter->firstPara(
@@ -214,7 +215,7 @@ class NodesHelper extends Helper
         }
 
         $output = $this->Layout->hook('beforeNodeExcerpt');
-        $output .= $this->_View->element($options['element'], compact('excerpt'));
+        $output .= $this->_View->element($options['element'], compact('excerpt', 'node'));
         $output .= $this->Layout->hook('afterNodeExcerpt');
         return $output;
     }
