@@ -7,7 +7,8 @@ use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
 use Croogo\Translate\Middleware\I18nMiddleware;
 
-DispatcherFactory::add('Croogo/Translate.LocaleSelector');
+// Uncomment if to enable locale detection via Accept-Language header
+// DispatcherFactory::add('Croogo/Translate.LocaleSelector');
 $Languages = TableRegistry::get('Croogo/Settings.Languages');
 $languages = $Languages->find('active')->toArray();
 Configure::write('I18n.languages', array_keys($languages));
