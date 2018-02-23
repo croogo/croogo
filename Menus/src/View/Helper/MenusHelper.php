@@ -229,7 +229,7 @@ class MenusHelper extends Helper
                 'class' => $link->class,
             ];
 
-            $linkAttr = $this->_mergeLinkParams($link, 'linkAttr', $linkAttr);
+            $linkAttr = $this->_mergeLinkParams($link, 'liAttr', $linkAttr);
 
             if (!empty($link->class) && strpos($linkAttr['class'], $link->class)) {
                 $linkAttr['class'] = $this->addClass($linkAttr['class'], $link->class);
