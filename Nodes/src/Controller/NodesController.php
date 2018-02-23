@@ -277,7 +277,10 @@ class NodesController extends AppController
             $this->paginate['typeAlias'] = $typeAlias;
         }
 
-        $criteria = $Node->find('published', ['search' => $this->request->query]);
+        $criteria = $Node
+            ->find('published')
+            ->find('search', ['search' => $this->request->query]);
+
         $nodes = $this->paginate($criteria);
         $this->set(compact('q', 'nodes'));
         if (isset($type)) {
