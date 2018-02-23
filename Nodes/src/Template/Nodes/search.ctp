@@ -20,7 +20,12 @@ $this->assign('title', __d('croogo', 'Search Results: %s', h($q)));
         <h2><?= $this->Html->link($this->Nodes->field('title'), $this->Nodes->field('url')->getUrl()) ?></h2>
         <?php
             echo $this->Nodes->info();
-            echo $this->Nodes->body();
+            echo $this->Text->highlight(
+                $this->Nodes->excerpt(['body' => true]),
+                $q,
+                [
+                    'format' => '<span class="text-info">\1</span>',
+                ]);
             echo $this->Nodes->moreInfo();
         ?>
     </div>
