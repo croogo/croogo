@@ -57,7 +57,7 @@ class NodesController extends AppController
      */
     public function index()
     {
-        $locale = I18n::locale();
+        $locale = I18n::getLocale();
         if (!$this->request->param('type')) {
             $this->request->params['type'] = 'node';
         }
@@ -133,7 +133,7 @@ class NodesController extends AppController
      */
     public function term()
     {
-        $locale = I18n::locale();
+        $locale = I18n::getLocale();
         $cacheKeys = ['term', $locale, $this->request->param('slug')];
         $cacheKey = implode('_', $cacheKeys);
         $term = $this->Nodes->Taxonomies->Terms->find()
@@ -299,7 +299,7 @@ class NodesController extends AppController
      */
     public function view($id = null)
     {
-        $locale = I18n::locale();
+        $locale = I18n::getLocale();
         if ($this->request->param('slug') && $this->request->param('type')) {
             $cacheKeys = ['type', $locale, $this->request->param('type')];
             $cacheKey = implode('_', $cacheKeys);

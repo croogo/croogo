@@ -30,13 +30,24 @@ $this->end();
 $this->append('table-body');
     $rows = array();
     $vendorDir = ROOT . DS . 'vendor' . DS . 'croogo' . DS . 'locale' . DS;
+    $siteLocale = Configure::read('Site.locale');
     foreach ($locales as $locale => $data):
         $actions = array();
 
-        $actions[] = $this->Croogo->adminRowAction('',
-            array('action' => 'activate', $locale),
-            array('icon' => $this->Theme->getIcon('power-on'), 'tooltip' => __d('croogo', 'Activate'), 'method' => 'post')
-        );
+        if ($locale == $siteLocale) {
+            $status = $this->Html->status(1);
+            $actions[] = $this->Croogo->adminRowAction('',
+                array('action' => 'deactivate', $locale),
+                array('icon' => $this->Theme->getIcon('power-off'), 'tooltip' => __d('croogo', 'Deactivate'), 'method' => 'post')
+            );
+        } else {
+            $status = $this->Html->status(0);
+            $actions[] = $this->Croogo->adminRowAction('',
+                array('action' => 'activate', $locale),
+                array('icon' => $this->Theme->getIcon('power-on'), 'tooltip' => __d('croogo', 'Activate'), 'method' => 'post')
+            );
+        }
+
         $actions[] = $this->Croogo->adminRowAction('',
             array('action' => 'edit', $locale),
             array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
@@ -53,11 +64,6 @@ $this->append('table-body');
             );
         endif;
         $actions = $this->Html->div('item-actions', implode(' ', $actions));
-        if ($locale == Configure::read('Site.locale')) {
-            $status = $this->Html->status(1);
-        } else {
-            $status = $this->Html->status(0);
-        }
 
         $rows[] = array(
             '',
@@ -67,6 +73,10 @@ $this->append('table-body');
             $actions,
         );
     endforeach;
+
+    usort($rows, function($a, $b) {
+        return strcmp($a[3], $b[3]);
+    });
 
     echo $this->Html->tableCells($rows);
 $this->end();

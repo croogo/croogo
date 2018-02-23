@@ -56,7 +56,7 @@ class I18nMiddleware
     }
 
     /**
-     * Sets appropriate locale and lang to I18n::locale() and App.language config
+     * Sets appropriate locale and lang to I18n::getLocale() and App.language config
      * respectively based on "lang" request param.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request The request.
@@ -74,9 +74,9 @@ class I18nMiddleware
         $requestParams = $request->getAttribute('params');
         $lang = isset($requestParams['lang']) ? $requestParams['lang'] : $config['defaultLanguage'];
         if (isset($langs[$lang])) {
-            I18n::locale($langs[$lang]['locale']);
+            I18n::setLocale($langs[$lang]['locale']);
         } else {
-            I18n::locale($lang);
+            I18n::setLocale($lang);
         }
 
         Configure::write('App.language', $lang);

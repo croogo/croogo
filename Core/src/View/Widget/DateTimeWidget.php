@@ -38,7 +38,7 @@ class DateTimeWidget extends CakeDateTimeWidget
         $minDate = isset($data['data-mindate']) ? $data['data-mindate'] : null;
         $maxDate = isset($data['data-maxdate']) ? $data['data-maxdate'] : null;
         $format = null;
-        $locale = I18n::locale();
+        $locale = I18n::getLocale();
 
         $timestamp = null;
         $timezoneOffset = null;

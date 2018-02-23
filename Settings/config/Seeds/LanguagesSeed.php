@@ -44,11 +44,15 @@ class LanguagesSeed extends AbstractSeed
         foreach ($locales as $locale) {
             I18n::setLocale('en_US');
             $parsed = Locale::parseLocale($locale);
+            $status = in_array($locale, [
+                'ar', 'bg', 'cs', 'de', 'el', 'en', 'es', 'fa', 'fr', 'hu',
+                'id', 'it', 'ja', 'nl', 'pl', 'pt', 'pt-BR', 'ru', 'sk', 'zh',
+            ]);
             $data = [
                 'title' => Locale::getDisplayName($locale),
                 'alias' => $parsed['language'],
                 'locale' => $locale,
-                'status' => true,
+                'status' => intval($status),
                 'weight' => $weight++,
                 'created' => $now->format('Y-m-d H:i:s'),
                 'updated' => $now->format('Y-m-d H:i:s'),

@@ -49,7 +49,7 @@ class WysiwygHelper extends Helper
             $this->Url->build(Configure::read('Wysiwyg.attachmentBrowseUrl'))
         );
 
-        $actions = Configure::read('Wysiwyg.actions');
+        $actions = array_keys(Configure::read('Wysiwyg.actions'));
         $currentAction = Router::getActionPath($this->request, true);
         $included = in_array($currentAction, $actions);
         if ($included) {

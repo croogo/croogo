@@ -12,8 +12,8 @@ Cache::config('contacts_view', array_merge(
 
 Croogo::translateModel('Croogo/Contacts.Contacts', [
     'fields' => [
-        'title' => 'titleTranslation',
-        'body' => 'bodyTranslation',
+        'title',
+        'body',
     ],
 ]);
 
