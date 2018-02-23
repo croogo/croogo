@@ -124,7 +124,7 @@ $this->append('table-body');
         $actions = $this->Html->div('item-actions', implode(' ', $actions));
         $rows[] = array(
             '',
-            $translations->title,
+            $record->title,
             $entity->title,
             $locale,
             $actions,
