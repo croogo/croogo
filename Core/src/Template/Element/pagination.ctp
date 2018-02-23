@@ -1,4 +1,4 @@
-<ul class="pagination">
+<ul class="pagination justify-content-center my-5">
 <?php
     $requestAttributes = $this->request->getAttributes();
     $options = [
