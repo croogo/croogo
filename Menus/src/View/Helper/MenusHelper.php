@@ -133,9 +133,32 @@ class MenusHelper extends Helper
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
             $options = Hash::expand($options);
-            $data['content'] = str_replace($tagMatches[0][$i], $this->menu($menuAlias, $options), $data['content']);
+            $data['content'] = str_replace($tagMatches[0][$i], $this->verticalNav($menuAlias, $options), $data['content']);
         }
         return $event->data;
+    }
+
+    /**
+     * Output simple vertical nav
+     */
+    protected function verticalNav($menuAlias, $options = [])
+    {
+        $menu = Hash::get($this->_View->viewVars, "menusForLayout.$menuAlias");
+        if (!$menu) {
+            return false;
+        }
+        $items = [];
+        foreach ($menu['threaded'] as $item) {
+            $items[] = $this->Html->link($item->title, $item->link->getUrl(), [
+                'class' => 'nav-link',
+            ]);
+        }
+        if (!$items) {
+            return null;
+        }
+        return $this->Html->tag('nav', implode('', $items), [
+            'class' => 'nav flex-column',
+        ]);
     }
 
 /**
