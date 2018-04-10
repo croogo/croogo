@@ -149,7 +149,11 @@ class MenusHelper extends Helper
         }
         $items = [];
         foreach ($menu['threaded'] as $item) {
-            $items[] = $this->Html->link($item->title, $item->link->getUrl(), [
+            $url = $item->link->getUrl();
+            if (Router::normalize($url) === '/.rss') {
+                $url = '/.rss';
+            }
+            $items[] = $this->Html->link($item->title, $url, [
                 'class' => 'nav-link',
             ]);
         }
