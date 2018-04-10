@@ -21,7 +21,7 @@ $this->end() ?>
                 <h3><?= __d('croogo', 'Current Theme') ?></h3>
                 <?php
                 if (isset($currentTheme['screenshot'])):
-                    $file = $this->Url->assetUrl($currentTheme['name'] . '.' . $currentTheme['screenshot']);
+                    $file = $this->Url->assetUrl($currentTheme['name'] . '.' . $currentTheme['screenshot'], ['fullBase' => true]);
                     $imgUrl = $this->Html->thumbnail($file);
                     $link = $this->Html->link($imgUrl, $file, [
                         'escape' => false,
