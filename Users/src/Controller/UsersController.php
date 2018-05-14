@@ -270,8 +270,7 @@ class UsersController extends AppController
     /**
      * View
      *
-     * @param string $username
-     * @return void
+     * @param string $username username field
      * @access public
      */
     public function view($username = null)
