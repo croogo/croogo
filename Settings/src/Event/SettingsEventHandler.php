@@ -2,7 +2,7 @@
 
 namespace Croogo\Settings\Event;
 
-use Cake\Event\EventListener;
+use Cake\Event\EventListenerInterface;
 
 /**
  * Settings Event Handler
@@ -12,7 +12,7 @@ use Cake\Event\EventListener;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class SettingsEventHandler implements EventListener
+class SettingsEventHandler implements EventListenerInterface
 {
 
 /**

@@ -21,7 +21,7 @@ class I18nSeed extends AbstractSeed
         $data = [
             [
                 'id' => '1',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Nodes',
                 'foreign_key' => '1',
                 'field' => 'title',
@@ -33,7 +33,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '2',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Nodes',
                 'foreign_key' => '1',
                 'field' => 'excerpt',
@@ -45,7 +45,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '3',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Nodes',
                 'foreign_key' => '1',
                 'field' => 'body',
@@ -57,7 +57,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '4',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Nodes',
                 'foreign_key' => '2',
                 'field' => 'title',
@@ -69,7 +69,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '5',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Nodes',
                 'foreign_key' => '2',
                 'field' => 'excerpt',
@@ -81,7 +81,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '6',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Nodes',
                 'foreign_key' => '2',
                 'field' => 'body',
@@ -93,7 +93,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '7',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Links',
                 'foreign_key' => '8',
                 'field' => 'title',
@@ -105,7 +105,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '8',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Links',
                 'foreign_key' => '8',
                 'field' => 'description',
@@ -117,7 +117,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '9',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Links',
                 'foreign_key' => '7',
                 'field' => 'title',
@@ -129,7 +129,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '10',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Links',
                 'foreign_key' => '7',
                 'field' => 'description',
@@ -141,7 +141,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '11',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Links',
                 'foreign_key' => '15',
                 'field' => 'title',
@@ -153,7 +153,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '12',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Links',
                 'foreign_key' => '15',
                 'field' => 'description',
@@ -165,7 +165,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '13',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Blocks',
                 'foreign_key' => '7',
                 'field' => 'title',
@@ -177,7 +177,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '14',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Blocks',
                 'foreign_key' => '7',
                 'field' => 'body',
@@ -189,7 +189,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '15',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Blocks',
                 'foreign_key' => '3',
                 'field' => 'title',
@@ -201,7 +201,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '16',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Blocks',
                 'foreign_key' => '3',
                 'field' => 'body',
@@ -213,7 +213,7 @@ class I18nSeed extends AbstractSeed
             ],
             [
                 'id' => '17',
-                'locale' => 'id_ID',
+                'locale' => 'id',
                 'model' => 'Blocks',
                 'foreign_key' => '9',
                 'field' => 'title',

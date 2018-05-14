@@ -189,11 +189,11 @@ class PluginsController extends AppController
         $result = $this->_CroogoPlugin->move('up', $plugin);
         if ($result === true) {
             $message = __d('croogo', 'Plugin %s has been moved up', $plugin);
+            $this->Flash->success($message);
         } else {
             $message = $result;
-            $class = 'error';
+            $this->Flash->error($message);
         }
-        $this->Flash->set($message, ['params' => compact('class')]);
 
         return $this->redirect($this->referer());
     }

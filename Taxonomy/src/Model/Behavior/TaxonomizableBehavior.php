@@ -231,7 +231,7 @@ class TaxonomizableBehavior extends Behavior
         $term = $options['term'];
 
         if (is_string($term)) {
-            $locale = I18n::locale();
+            $locale = I18n::getLocale();
             $cacheKeys = ['term', $locale, $term];
             $cacheKey = implode('_', $cacheKeys);
             $term = $this->_table->Taxonomies->Terms->find()

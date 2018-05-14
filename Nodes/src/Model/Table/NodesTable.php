@@ -265,7 +265,7 @@ class NodesTable extends CroogoTable
         $options += $defaults;
         $cacheKeys = [
             'node',
-            I18n::locale(),
+            I18n::getLocale(),
             $options['roleId'],
             $options['type'],
             $options['slug'],
@@ -290,7 +290,7 @@ class NodesTable extends CroogoTable
         $options += $defaults;
         $cacheKeys = [
             'node',
-            I18n::locale(),
+            I18n::getLocale(),
             $options['roleId'],
             $options['id'],
         ];

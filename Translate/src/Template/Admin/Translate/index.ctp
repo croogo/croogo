@@ -10,9 +10,11 @@ $modelPath = $this->request->query('model');
 list($plugin, $model) = pluginSplit($modelPath);
 $controller = $model;
 
+$crumbLabel = $model == 'Nodes' ? __d('croogo', 'Content') : Inflector::pluralize($model);
+
 $this->Breadcrumbs
     ->add(
-        Inflector::pluralize($model),
+        $crumbLabel,
         array(
             'plugin' => Inflector::underscore($plugin),
             'controller' => Inflector::underscore($controller),
@@ -61,7 +63,7 @@ $this->start('action-buttons');
                 'action' => 'edit',
                 '?' => [
                     'id' => $id,
-                    'model' => urlencode($modelAlias),
+                    'model' => $modelAlias,
                     'locale' => $languageAlias,
                 ],
             ), array(
@@ -122,7 +124,7 @@ $this->append('table-body');
         $actions = $this->Html->div('item-actions', implode(' ', $actions));
         $rows[] = array(
             '',
-            $translations->title,
+            $record->title,
             $entity->title,
             $locale,
             $actions,

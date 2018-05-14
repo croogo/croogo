@@ -6,8 +6,10 @@ $this->extend('/Common/admin_edit');
 $this->assign('title', sprintf(__d('croogo', 'Translate content: %s (%s)'), $language->title, $language->native));
 $this->set('className', 'translate');
 
+$crumbLabel = $model == 'Nodes' ? __d('croogo', 'Content') : Inflector::pluralize($model);
+
 $this->Breadcrumbs
-    ->add(Inflector::humanize(Inflector::pluralize($model)))
+    ->add($crumbLabel)
     ->add($entity->get($displayField))
     ->add(
         __d('croogo', 'Translations'),

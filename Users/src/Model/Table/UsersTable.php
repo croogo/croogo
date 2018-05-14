@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\ORM\Query;
+use Cake\Utility\Security;
 use Cake\Utility\Text;
 use Cake\Validation\Validator;
 use Croogo\Core\Croogo;
@@ -302,7 +303,7 @@ class UsersTable extends CroogoTable
         if (!$length) {
             $length = Configure::read('Croogo.activationKeyLength', 20);
         }
-        return bin2hex(random_bytes($length));
+        return bin2hex(Security::randomBytes($length));
     }
 
 }

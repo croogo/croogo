@@ -26,7 +26,7 @@ $this->assign('title', implode (' | ', $titles));
         <h2><?= $this->Html->link($this->Nodes->field('title'), $this->Nodes->field('url')->getUrl()) ?></h2>
         <?php
             echo $this->Nodes->info();
-            echo $this->Nodes->body();
+            echo $this->Nodes->excerpt(['body' => true]);
             echo $this->Nodes->moreInfo();
         ?>
     </div>
@@ -34,5 +34,5 @@ $this->assign('title', implode (' | ', $titles));
         endforeach;
     ?>
 
-    <div class="paging"><?= $this->Paginator->numbers() ?></div>
+    <?= $this->element('pagination', compact('nodes', 'type')) ?>
 </div>

@@ -40,6 +40,7 @@ Vitor Pacheco <vitor-p.c@hotmail.com>
 elbakai <m.elbakai@gmail.com>
 mustapha elbakai <m.elbakai@gmail.com>
 primeminister <primeminister@mowd.nl>
+Giovanni Olivera <giovanni@commit42.fr>
 James Sapara <james.sapara@gmail.com>
 Livia Scapin <livia.scapin@bluewin.ch>
 Matt Curry <matt@pseudocoder.com>
@@ -50,6 +51,7 @@ thoth <thomas.rader@tigerclawtech.com>
 Jeremy Harris <jeremy@someguyjeremy.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
 Marek Rodkiewicz <marek.rodkiewicz@infraredgroup.pl>
+Ozee31 <flavien@commit42.fr>
 cdbruin <casper@ectrader.nl>
 daniel <daniel@daniels-MacBook-Air.local>
 roland-w <roland-w@users.noreply.github.com>
@@ -63,6 +65,7 @@ Arie Sutanto <asutanto@xintesa.com>
 Cezary Nowak <korpirkor@users.noreply.github.com>
 Dirk Brünsicke <d1rk@gmx.de>
 DirtyF <frank.taillandier@gmail.com>
+Flavien Beninca <flavien.beninca@gmail.com>
 Gilles Bedel <gilles@occi-tech.com>
 HT-Studios <github@ht-studios.de>
 Joachim Nyqvist <Joachim@JNyqvist.se>
@@ -91,4 +94,5 @@ romaing <pourri@dixit-productions.com>
 sherwinrobles <sherwinrobles@gmail.com>
 stefanozoffoli <stefano.zoffoli@librasoftsnc.it>
 stelioschar <stelioschar@gmail.com>
+stickler-ci <support@stickler-ci.com>
 webdevan <github@webdevan.co.za>
