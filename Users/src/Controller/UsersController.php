@@ -267,25 +267,24 @@ class UsersController extends AppController
         return $this->redirect($logoutUrl);
     }
 
-/**
- * View
- *
- * @param string $username
- * @return void
- * @access public
- */
+    /**
+     * View
+     *
+     * @param string $username
+     * @return void
+     * @access public
+     */
     public function view($username = null)
     {
         if ($username == null) {
             $username = $this->Auth->user('username');
         }
-        $user = $this->User->findByUsername($username);
-        if (!isset($user['User']['id'])) {
+        $user = $this->Users->findByUsername($username)->first();
+        if (!$user) {
             $this->Flash->error(__d('croogo', 'Invalid User.'));
             return $this->redirect('/');
         }
-
-        $this->set('title_for_layout', $user['User']['name']);
+        $this->set('title_for_layout', $user->name);
         $this->set(compact('user'));
     }
 
