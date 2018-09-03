@@ -32,7 +32,6 @@ ADmad <ADmad@users.noreply.github.com>
 Ceeram <c33ram@gmail.com>
 Grégory Salvan <gregory@occi-tech.com>
 Hadrien Collongues <chadrien@chadrien.fr>
-Ivan <gsitex@gmail.com>
 John <john@midianegocios.com.br>
 Lukas Marks <lukas.marks@lumax-web.de>
 Lukas Strassel <lukasstrassel@googlemail.com>
