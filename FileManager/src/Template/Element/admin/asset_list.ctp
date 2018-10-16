@@ -186,7 +186,7 @@ foreach ($attachments as $attachment):
     endif;
 
     $action[] = $this->Croogo->adminRowAction('', $unregisterUsageUrl, array(
-        'icon' => 'delete',
+        'icon' => 'minus',
         'class' => 'unregister-usage red',
         'data-id' => $attachment->asset_usage->id,
         'tooltip' => __d('assets', 'Unregister asset from this resource'),
