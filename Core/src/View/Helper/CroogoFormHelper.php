@@ -255,7 +255,7 @@ class CroogoFormHelper extends FormHelper
         if (!empty($options['fieldAccess'])) {
             $this->_fieldAccess = $this->_setupFieldAccess($options['fieldAccess']);
             $this->_currentRoleId = $this->_View->Layout->getRoleId();
-            unset($options['fieldAcess']);
+            unset($options['fieldAccess']);
         }
         return parent::create($model, $options);
     }
