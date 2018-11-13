@@ -98,7 +98,7 @@ $this->end() ?>
                 endif;
                 $out .= $this->Html->tag('div', $this->Form->postLink(__d('croogo', 'Activate'), [
                         'action' => 'activate',
-                        urlencode($themeName),
+                        urlencode(base64_encode($themeName)),
                     ], [
                         'button' => 'secondary',
                         'icon' => $this->Theme->getIcon('power-on'),
