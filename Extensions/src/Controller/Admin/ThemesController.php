@@ -66,6 +66,7 @@ class ThemesController extends AppController
     public function activate($theme = null)
     {
         try {
+            $theme = base64_decode(urldecode($theme));
             $this->_CroogoTheme->activate($theme);
 
             $this->Flash->success(__d('croogo', 'Theme activated.'));
