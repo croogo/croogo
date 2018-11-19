@@ -263,6 +263,8 @@ $script =<<<EOF
     }
 EOF;
 if ($this->request->is('ajax')):
+    // re-initialize the tooltips on an ajax reload
+    $script .= "\n    Admin.form();\n";
     echo $this->Html->scriptBlock($script);
 else:
     $this->Js->buffer($script);
