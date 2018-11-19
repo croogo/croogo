@@ -45,6 +45,9 @@ endif;
 if (!empty($this->request->query['editor'])):
     $editor = $this->request->query['editor'];
 endif;
+if (empty($editor) && !empty($this->request->query['CKEditor'])):
+    $editor = $this->request->query['CKEditor'];
+endif;
 if (!empty($this->request->query['manage'])):
     $manage = $this->request->query['manage'];
 endif;
