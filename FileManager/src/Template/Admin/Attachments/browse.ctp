@@ -42,6 +42,12 @@ endif;
 if (!empty($this->request->query['all'])):
     $all = $this->request->query['all'];
 endif;
+if (!empty($this->request->query['editor'])):
+    $editor = $this->request->query['editor'];
+endif;
+if (!empty($this->request->query['manage'])):
+    $manage = $this->request->query['manage'];
+endif;
 
 $this->append('action-buttons');
     echo $this->Croogo->adminAction(
@@ -96,7 +102,7 @@ $this->append('table-body');
         $mimeType = explode('/', $attachment->asset->mime_type);
         $mimeType = $mimeType['0'];
 
-        if (isset($this->request->query['editor'])):
+        if (isset($editor)):
 
             $actions[] = $this->Html->link('', 'javascript:void(0)', array(
                 'onclick' => "Croogo.Wysiwyg.choose('" . $attachment->asset->path . "');",
@@ -106,9 +112,7 @@ $this->append('table-body');
 
         endif;
 
-        if (!isset($this->request->query['all']) &&
-            !isset($this->request->query['asset_id'])
-        ) {
+        if (!isset($all) && !isset($assetId)) {
             $deleteUrl = Hash::merge($query, array(
                 'controller' => 'Attachments',
                 'action' => 'delete',
@@ -121,9 +125,7 @@ $this->append('table-body');
                 ),
                 __d('croogo', 'Are you sure?')
             );
-        } elseif (isset($this->request->query['manage']) &&
-            isset($this->request->query['asset_id'])
-        ) {
+        } elseif (isset($manage) && isset($assetId)) {
             $deleteAssetUrl = Hash::merge($query, array(
                 'controller' => 'Assets',
                 'action' => 'delete',
@@ -153,9 +155,7 @@ $this->append('table-body');
             ));
         }
 
-        if (isset($this->request->query['asset_id']) ||
-            isset($this->request->query['all'])
-        ):
+        if (isset($assetId) || isset($all)):
             unset($query['?']['asset_id']);
 
             if (isset($model) && isset($foreignKey)):
@@ -281,7 +281,7 @@ $this->append('table-body');
             'Size: ' . $this->Number->toReadableSize($attachment->asset->filesize)
         );
 
-        if (empty($this->request->query['all']) && empty($this->request->query['asset_id'])) {
+        if (empty($all) && empty($assetId)) {
             $title .= $this->Html->para('small',
                 'Number of versions: ' . $attachment->asset_count
             );
