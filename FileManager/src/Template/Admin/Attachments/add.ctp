@@ -114,6 +114,7 @@ $this->append('panels');
             array('action' => 'browse'),
             array('?' => $this->request->query)
         );
+        unset($redirect['?']['editor']);
     }
     echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
         $this->Form->button(__d('croogo', 'Upload'), array(
