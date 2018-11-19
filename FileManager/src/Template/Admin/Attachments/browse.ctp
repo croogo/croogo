@@ -106,27 +106,15 @@ $this->append('table-body');
 
         endif;
 
-        $deleteUrl = Hash::merge($query, array(
-            'controller' => 'Attachments',
-            'action' => 'delete',
-            $attachment->id,
-            'editor' => 1,
-        ));
-
-        $deleteAssetUrl = Hash::merge($query, array(
-            'controller' => 'Assets',
-            'action' => 'delete',
-            $attachment->asset->id,
-        ));
-
-        $resizeUrl = array_merge(
-            array('action' => 'resize', $attachment->id, 'ext' => 'json'),
-            array('?' => $query)
-        );
-
         if (!isset($this->request->query['all']) &&
             !isset($this->request->query['asset_id'])
         ) {
+            $deleteUrl = Hash::merge($query, array(
+                'controller' => 'Attachments',
+                'action' => 'delete',
+                $attachment->id,
+                'editor' => 1,
+            ));
             $actions[] = $this->Croogo->adminRowAction('', $deleteUrl, array(
                 'icon' => $this->Theme->getIcon('delete'),
                 'tooltip' => __d('croogo', 'Delete Attachment')
@@ -136,6 +124,11 @@ $this->append('table-body');
         } elseif (isset($this->request->query['manage']) &&
             isset($this->request->query['asset_id'])
         ) {
+            $deleteAssetUrl = Hash::merge($query, array(
+                'controller' => 'Assets',
+                'action' => 'delete',
+                $attachment->asset->id,
+            ));
             $actions[] = $this->Croogo->adminRowAction('', $deleteAssetUrl, array(
                 'icon' => 'delete',
                 'icon' => $this->Theme->getIcon('delete'),
@@ -148,10 +141,11 @@ $this->append('table-body');
         if ($mimeType === 'image' &&
             $attachment->hash == $attachment->asset->hash
         ) {
-            $resizeUrl = array_merge(
-                array('action' => 'resize', $attachment->id, 'ext' => 'json'),
-                array('?' => $query)
-            );
+            $resizeUrl = Hash::merge($query, array(
+                'action' => 'resize',
+                $attachment->id,
+                'ext' => 'json'
+            ));
             $actions[] = $this->Croogo->adminRowAction('', $resizeUrl, array(
                 'icon' => $this->Theme->getIcon('resize'),
                 'tooltip' => __d('croogo', 'Resize this item'),
