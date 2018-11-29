@@ -86,8 +86,8 @@ class ThemesController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Upload a new theme'));
 
         if (!empty($this->request->data)) {
-            $file = $this->request->data['file'];
-            unset($this->request->data['file']);
+            $file = $this->request->data['Theme']['file'];
+            unset($this->request->data['Theme']['file']);
 
             $Installer = new ExtensionsInstaller;
             try {
