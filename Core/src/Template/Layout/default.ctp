@@ -24,6 +24,7 @@ $siteTagline = Configure::read('Site.tagline');
     echo $this->Layout->feed();
     $this->element('stylesheets');
     echo $this->Layout->js();
+    $this->element('javascripts');
     echo $this->Blocks->get('css');
     echo $this->Blocks->get('script');
     ?>
@@ -115,7 +116,6 @@ $siteTagline = Configure::read('Site.tagline');
 
 
     <?php
-    $this->element('javascripts');
     echo $this->Blocks->get('scriptBottom');
     ?>
 </body>

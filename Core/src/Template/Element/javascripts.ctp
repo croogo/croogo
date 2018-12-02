@@ -7,5 +7,5 @@ $this->Html->script([
     'jquery-easing/jquery.easing.min',
     'theme',
 ], [
-    'block' => 'scriptBottom',
+    'block' => true,
 ]);
