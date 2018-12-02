@@ -20,6 +20,7 @@ $siteTagline = Configure::read('Site.tagline');
 
     <title><?= $this->fetch('title'); ?> - <?= $siteTitle; ?></title>
     <?php
+    $rightRegionBlocks = $this->Regions->blocks('right');
 //    echo $this->Meta->meta();
     echo $this->Layout->feed();
     $this->element('stylesheets');
@@ -70,7 +71,7 @@ $siteTagline = Configure::read('Site.tagline');
                     ?>
                 </div>
                 <div class="<?= $this->Theme->getCssClass('columnRight') ?>">
-                    <?= $this->Regions->blocks('right'); ?>
+                    <?= $rightRegionBlocks; ?>
                 </div>
             </div>
         </div>
