@@ -39,16 +39,6 @@ class WysiwygHelper extends Helper
  */
     public function beforeRender($viewFile)
     {
-        $uploadsPath = Configure::read('Wysiwyg.uploadsPath');
-        if ($uploadsPath) {
-            $uploadsPath = Router::url($uploadsPath);
-        }
-        Configure::write('Js.Wysiwyg.uploadsPath', $uploadsPath);
-        Configure::write(
-            'Js.Wysiwyg.attachmentsPath',
-            $this->Url->build(Configure::read('Wysiwyg.attachmentBrowseUrl'))
-        );
-
         $actions = array_keys(Configure::read('Wysiwyg.actions'));
         $currentAction = Router::getActionPath($this->request, true);
         $included = in_array($currentAction, $actions);

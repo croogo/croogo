@@ -8,7 +8,7 @@ if (typeof Croogo.Wysiwyg == 'undefined') {
 	// Croogo.uploadsPath and Croogo.attachmentsPath is set from Helper anyways
 	Croogo.Wysiwyg = {
 		uploadsPath: Croogo.basePath + 'uploads/',
-		attachmentsPath: Croogo.basePath + 'file_manager/attachments/browse'
+		attachmentsPath: Croogo.basePath + 'admin/file-manager/attachments/browse'
 	};
 }
 

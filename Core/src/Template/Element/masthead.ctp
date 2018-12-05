@@ -7,10 +7,16 @@ if (isset($node)):
     $mastheadTitle = $node->title;
     $mastheadSubheading = $node->excerpt;
     $mastheadWrapperClass = "post-heading";
+    if (isset($node->linked_assets['FeaturedImage'][0])):
+        $bgImagePath = $node->linked_assets['FeaturedImage'][0]->path;
+    endif;
 elseif (isset($contact)):
     $mastheadTitle = $contact->title;
     $mastheadSubheading = null;
     $mastheadWrapperClass = "post-heading";
+    if (isset($contact->linked_assets['FeaturedImage'][0])):
+        $bgImagePath = $contact->linked_assets['FeaturedImage'][0]->path;
+    endif;
 elseif ($this->request->param('action') === 'index' && isset($type)):
     $mastheadTitle = $type->title;
     $mastheadSubheading = $type->description;

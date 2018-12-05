@@ -1,54 +1,72 @@
-<div class="navbar navbar-light bg-light">
-    <div class="d-flex justify-content-between">
-        <div>
-        <?php
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+    <div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
+    <?php
         echo __d('croogo', 'Sort by:');
-        echo ', ' . $this->Paginator->sort('title', __d('croogo', 'Title'), ['class' => 'sort']);
-        echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), ['class' => 'sort']);
-        ?>
-        </div>
-        <button type="button" class="btn btn-primary add-image">Add images</button>
-        <?= $this->element('Croogo/Nodes.admin/nodes_search') ?>
+        echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), array('class' => 'sort'));
+        echo ', ' . $this->Paginator->sort('title', __d('croogo', 'Title'), array('class' => 'sort'));
+        echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), array('class' => 'sort'));
+    ?>
     </div>
 </div>
 
-<div class="card-columns" id="dropzone-previews">
-    <?php
-    $rows = [];
-    foreach ($attachments as $attachment):
-        list($mimeType, $imageType) = explode('/', $attachment->mime_type);
-        $imagecreatefrom = ['gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm'];
-        if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
-            $thumbnail = $this->Image->resize($attachment->path, 500, 500, [], ['class' => 'card-img-bottom img-fluid']);
-        } else {
-            $thumbnail = $this->Html->image(
-                '/croogo/img/icons/page_white.png',
-                ['class' => 'card-img-bottom img-fluid']
-            );
-        }
-
-        $headerText = $this->Html->div('', $attachment->title);
-        $cardHeader = $this->Html->div('card-header', $headerText);
-        $card = $this->Html->div(
-            'card text-xs-center selector item-choose',
-            $cardHeader . $thumbnail,
-            [
-                'data-slug' => $attachment->slug,
-                'data-chooser-type' => 'Node',
-                'data-chooser-id' => $attachment->id,
-                'data-chooser-title' => $attachment->title,
-                'rel' => $attachment->path,
-            ]
-        );
-        echo $card;
-    endforeach;
-    ?>
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+    <div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
+        <?php //echo $this->element('FileManager.admin/attachments_search'); ?>
+        <hr />
+    </div>
 </div>
-<?= $this->element('Croogo/Core.admin/pagination') ?>
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+    <div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
+        <ul id="attachments-for-links">
+        <?php foreach ($attachments as $attachment): ?>
+            <li>
+            <?php
+                echo $this->Html->link($attachment->asset->filename,
+                    $attachment->asset->path,
+                array(
+                    'class' => 'item-choose',
+                    'data-chooser_type' => 'Node',
+                    'data-chooser_id' => $attachment->asset->id,
+                    'data-chooser_title' => $attachment->asset->filename,
+                    'rel' => $attachment->asset->path,
+                ));
 
+                $popup = array();
+                $type = __d('croogo', $attachment->asset->mime_type);
+
+                if (preg_match('/^image/', $attachment->asset->mime_type)):
+                    $popup[] = array(
+                        __d('croogo', 'Preview'),
+                        [$this->Html->image($attachment->asset->path, ['class' => 'img-thumbnail']), ['class' => 'nowrap']]
+                    );
+                endif;
+                $popup[] = array(
+                    __d('croogo', 'Created'),
+                    [$this->Time->nice($attachment->asset->created), ['class' => 'nowrap']]
+                );
+                $popup = $this->Html->tag('table', $this->Html->tableCells($popup), array(
+                    'class' => 'table table-condensed',
+                ));
+                $a = $this->Html->link('', '#', array(
+                    'class' => 'popovers action',
+                    'icon' => $this->Theme->getIcon('info-sign'),
+                    'data-title' => $type,
+                    'data-trigger' => 'click|focus',
+                    'data-placement' => 'right',
+                    'data-html' => 'true',
+                    'data-content' => h($popup),
+                ));
+                echo '&nbsp;' . $a;
+            ?>
+            </li>
+        <?php endforeach; ?>
+        </ul>
+        <?php echo $this->element('admin/pagination'); ?>
+    </div>
+</div>
 <?php
-echo $this->Html->script([
-    'Croogo/FileManager.lib/dropzone',
-    'Croogo/FileManager.attachments/chooser'
-]);
-echo $this->element('Croogo/FileManager.admin/dropzone_setup', ['type' => 'card']);
+
+$script =<<<EOF
+$('.popovers').popover().on('click', function() { return false; });
+EOF;
+$this->Js->buffer($script);
