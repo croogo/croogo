@@ -224,7 +224,7 @@ class CroogoHtmlHelper extends HtmlHelper
      */
     public function link($title, $url = null, array $options = [], $confirmMessage = false)
     {
-        $defaults = ['escape' => false];
+        $defaults = ['escape' => true];
         $options = is_null($options) ? [] : $options;
         $options = array_merge($defaults, $options);
         $iconDefaults = $this->config('iconDefaults');
