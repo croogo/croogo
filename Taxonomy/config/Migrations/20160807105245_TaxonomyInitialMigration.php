@@ -73,7 +73,10 @@ class TaxonomyInitialMigration extends AbstractMigration
                 [
                     'slug',
                 ],
-                ['unique' => true]
+                [
+                    'unique' => true,
+                    'limit' => 190,
+                ]
             )
             ->create();
 
@@ -162,7 +165,10 @@ class TaxonomyInitialMigration extends AbstractMigration
                 [
                     'alias',
                 ],
-                ['unique' => true]
+                [
+                    'unique' => true,
+                    'limit' => 190,
+                ]
             )
             ->create();
 
@@ -231,7 +237,10 @@ class TaxonomyInitialMigration extends AbstractMigration
                 [
                     'alias',
                 ],
-                ['unique' => true]
+                [
+                    'unique' => true,
+                    'limit' => 190,
+                ]
             )
             ->create();
 

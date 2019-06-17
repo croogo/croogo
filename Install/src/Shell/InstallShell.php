@@ -145,10 +145,13 @@ class InstallShell extends Shell
         $install['port'] = $this->_in(__d('croogo', 'Port'), null, null, 'port');
 
         $InstallManager = new InstallManager();
-        $InstallManager->createDatabaseFile($install);
+        $isFileCreated = $InstallManager->createDatabaseFile($install);
+        if ($isFileCreated !== true) {
+            $this->err($isFileCreated);
+            return $this->_stop();
+        }
 
         $this->out('Setting up database objects. Please wait...');
-        $Install = TableRegistry::get('Croogo/Install.Install');
         try {
             $result = $InstallManager->setupDatabase();
             if ($result !== true) {
@@ -206,6 +209,7 @@ class InstallShell extends Shell
 
         try {
             $this->out('Setting up admin user. Please wait...');
+            $Install = TableRegistry::get('Croogo/Install.Install');
             $Install->addAdminUser($user);
             $InstallManager->installCompleted();
         } catch (\Exception $e) {
