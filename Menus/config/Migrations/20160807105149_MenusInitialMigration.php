@@ -179,7 +179,10 @@ class MenusInitialMigration extends AbstractMigration
                 [
                     'alias',
                 ],
-                ['unique' => true]
+                [
+                    'unique' => true,
+                    'limit' => 190,
+                ]
             )
             ->create();
     }
