@@ -26,10 +26,12 @@ Jonas <fwd_github@jonas-hartmann.com>
 Liam Keily <liam@simplywebsites.com>
 SCV Geo <scv@scvgeo.com>
 Heiner Gassen <hg@dynweb.net>
+Neeraj Garg <gargneeraj98@gmail.com>
 Paulino Calderon <paulino@calder0n.com>
 pinchsoftware <contact@pinchsoft.com>
 ADmad <ADmad@users.noreply.github.com>
 Ceeram <c33ram@gmail.com>
+Giovanni Olivera <giovanni@commit42.fr>
 Grégory Salvan <gregory@occi-tech.com>
 Hadrien Collongues <chadrien@chadrien.fr>
 John <john@midianegocios.com.br>
@@ -39,7 +41,6 @@ Vitor Pacheco <vitor-p.c@hotmail.com>
 elbakai <m.elbakai@gmail.com>
 mustapha elbakai <m.elbakai@gmail.com>
 primeminister <primeminister@mowd.nl>
-Giovanni Olivera <giovanni@commit42.fr>
 James Sapara <james.sapara@gmail.com>
 Livia Scapin <livia.scapin@bluewin.ch>
 Matt Curry <matt@pseudocoder.com>
@@ -69,12 +70,15 @@ Gilles Bedel <gilles@occi-tech.com>
 HT-Studios <github@ht-studios.de>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
+Livia Scapin <livia.scapin@orca-services.ch>
 Léo Haddad <scoup001@gmail.com>
 Manuel Tancoigne <m.tancoigne@gmail.com>
 Marce Romagnoli <marce.romagnoli@gmail.com>
 Marcin Jóźwikowski <marcin@jozwikowski.pl>
 Marek Sebera <marek.sebera@gmail.com>
+Michael Tallroth <miket@localhost.localdomain>
 Mike Pagé <mike@nedwave.com>
+Mohammed Mahgoub <mmahgoub@gmail.com>
 Nicholas Craig <nick@threadgroup.com>
 Paulo Pinto <paulorpinto@gmail.com>
 Robbert Noordzij <robbert@xseeding.nl>
