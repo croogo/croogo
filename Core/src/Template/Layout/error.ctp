@@ -11,6 +11,10 @@ use Cake\Core\Configure;
 $siteTitle = Configure::read('Site.title');
 $siteTagline = Configure::read('Site.tagline');
 
+$this->loadHelper('Croogo/Core.Layout');
+$this->loadHelper('Croogo/Core.Theme');
+$this->loadHelper('Croogo/Menus.Menus');
+
 ?>
 <!DOCTYPE html>
 <html style='background: #0e0e0e;'>
