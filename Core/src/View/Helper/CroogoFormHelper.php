@@ -40,6 +40,7 @@ class CroogoFormHelper extends FormHelper
         'staticControl' => '<p class="form-control-static">{{content}}</p>',
         'inputGroupAddon' => '<span class="{{class}}">{{content}}</span>',
         'inputGroupContainer' => '<div class="input-group">{{prepend}}{{content}}{{append}}</div>',
+        'inputGroupText' => '<span class="input-group-text">{{content}}</span>',
     ];
 
     /**
