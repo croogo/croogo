@@ -71,7 +71,6 @@ $this->start('panels');
 
     echo $this->Form->input('promote', [
         'label' => __d('croogo', 'Promoted to front page'),
-        'class' => false,
     ]);
     echo $this->Html->endBox();
 

@@ -50,8 +50,8 @@ class CroogoFormHelper extends FormHelper
      */
     protected $_templateSet = [
         'default' => [
-            'checkboxContainer' => '<div class="checkbox">{{content}}{{help}}</div>',
-            'checkboxContainerError' => '<div class="checkbox has-error">{{content}}{{error}}{{help}}</div>',
+            'checkboxContainer' => '<div class="form-check">{{content}}{{help}}</div>',
+            'checkboxContainerError' => '<div class="form-check has-error">{{content}}{{error}}{{help}}</div>',
         ],
         'inline' => [
             'label' => '<label class="sr-only"{{attrs}}>{{text}}</label>',
