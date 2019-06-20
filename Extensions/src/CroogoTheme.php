@@ -78,6 +78,7 @@ class CroogoTheme
                     'imageClass' => '',
                     'row' => 'row',
                     'tableClass' => 'table table-striped',
+                    'tableContainerClass' => 'table-container',
                     'thumbnailClass' => 'img-thumbnail',
                 ],
                 'iconDefaults' => [
