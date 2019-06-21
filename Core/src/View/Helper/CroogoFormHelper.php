@@ -24,49 +24,6 @@ class CroogoFormHelper extends FormHelper
         'Croogo/Core.CroogoHtml',
     ];
 
-    /**
-     * Default Bootstrap string templates.
-     *
-     * @var array
-     */
-    protected $_templates = [
-        'dateWidget' => '<ul class="list-inline"><li class="year">{{year}}</li><li class="month">{{month}}</li><li class="day">{{day}}</li><li class="hour">{{hour}}</li><li class="minute">{{minute}}</li><li class="second">{{second}}</li><li class="meridian">{{meridian}}</li></ul>',
-        'error' => '<div class="help-block">{{content}}</div>',
-        'help' => '<div class="help-block">{{content}}</div>',
-        'inputContainer' => '<div class="form-group {{type}}{{required}}">{{content}}{{help}}</div>',
-        'inputContainerError' => '<div class="form-group {{type}}{{required}} has-error">{{content}}{{error}}{{help}}</div>',
-        'radioInlineFormGroup' => '{{label}}<div class="radio-inline-wrapper">{{input}}</div>',
-        'radioNestingLabel' => '<div class="radio">{{hidden}}<label{{attrs}}>{{input}}{{text}}</label></div>',
-        'staticControl' => '<p class="form-control-static">{{content}}</p>',
-        'inputGroupAddon' => '<span class="{{class}}">{{content}}</span>',
-        'inputGroupContainer' => '<div class="input-group">{{prepend}}{{content}}{{append}}</div>',
-        'inputGroupText' => '<span class="input-group-text">{{content}}</span>',
-    ];
-
-    /**
-     * Templates set per alignment type
-     *
-     * @var array
-     */
-    protected $_templateSet = [
-        'default' => [
-            'checkboxContainer' => '<div class="form-check">{{content}}{{help}}</div>',
-            'checkboxContainerError' => '<div class="form-check has-error">{{content}}{{error}}{{help}}</div>',
-        ],
-        'inline' => [
-            'label' => '<label class="sr-only"{{attrs}}>{{text}}</label>',
-            'inputContainer' => '{{content}}'
-        ],
-        'horizontal' => [
-            'label' => '<label class="control-label %s"{{attrs}}>{{text}}</label>',
-            'formGroup' => '{{label}}<div class="%s">{{input}}{{error}}{{help}}</div>',
-            'checkboxFormGroup' => '<div class="%s"><div class="checkbox">{{label}}</div>{{error}}{{help}}</div>',
-            'submitContainer' => '<div class="%s">{{content}}</div>',
-            'inputContainer' => '<div class="form-group row {{type}}{{required}}">{{content}}</div>',
-            'inputContainerError' => '<div class="form-group row {{type}}{{required}} has-error">{{content}}</div>',
-        ]
-    ];
-
 /**
  * Constructor
  */
@@ -89,12 +46,6 @@ class CroogoFormHelper extends FormHelper
             $themeSettings = $themeConfig['settings'];
             $settings = Hash::merge($themeSettings, $settings);
         }
-
-        $this->_templates['dateWidget'] = '<ul class="list-inline"><li class="year list-inline-item">{{year}}</li><li class="month list-inline-item">{{month}}</li><li class="day list-inline-item">{{day}}</li><li class="hour list-inline-item">{{hour}}</li><li class="minute list-inline-item">{{minute}}</li><li class="second list-inline-item">{{second}}</li><li class="meridian list-inline-item">{{meridian}}</li></ul>';
-        $this->_templates['file'] = '<input type="file" name="{{name}}"{{attrs}}><span class="file-custom"></span>';
-        $this->_templates['inputContainerError'] = '<div class="form-group {{type}}{{required}} has-danger">{{content}}{{help}}{{error}}</div>';
-        $this->_templates['error'] = '<p class="text-danger">{{content}}</p>';
-        $this->_templates['help'] = '<small class="text-muted help-text">{{content}}</small>';
 
         parent::__construct($View, $settings);
     }
