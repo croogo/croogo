@@ -4,11 +4,6 @@ use Cake\Core\Configure;
 $this->assign('title', __d('croogo', 'Login'));
 
 echo $this->Form->create(false, ['url' => ['action' => 'login']]);
-$this->Form->templates([
-    'label' => false,
-    'textContainer' => '<div class="input-prepend {{type}}"><span class="add-on"><i class="icon-user"></i></span>{{content}}</div>',
-    'passwordContainer' => '<div class="input-prepend {{type}}"><span class="add-on"><i class="icon-key"></i></span>{{content}}</div>',
-]);
 echo $this->Form->input('username', [
     'placeholder' => __d('croogo', 'Username'),
     'label' => false,
