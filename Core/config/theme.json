@@ -14,5 +14,12 @@
 
     "regions" : [
         "right"
-    ]
+    ],
+
+    "settings": {
+        "select2Defaults": {
+            "dropdownAutoWidth": true,
+            "theme": "bootstrap"
+        }
+    }
 }

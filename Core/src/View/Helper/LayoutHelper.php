@@ -118,6 +118,7 @@ class LayoutHelper extends Helper
             'css' => null,
             'icons' => null,
             'iconDefaults' => null,
+            'select2Defaults' => null,
         ];
         $croogoSetting['themeSettings'] = array_intersect_key(
             array_merge($validKeys, $themeSettings),

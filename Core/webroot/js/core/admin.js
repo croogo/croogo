@@ -197,10 +197,7 @@ Admin.extra = function () {
   }
 
   if (typeof $.fn.select2 !== 'undefined') {
-    $('select:not(".no-select2")').select2({
-      dropdownAutoWidth: true,
-      theme: 'bootstrap'
-    });
+    $('select:not(".no-select2")').select2(Croogo.themeSettings.select2Defaults);
   }
 }
 
