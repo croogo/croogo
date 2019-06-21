@@ -82,7 +82,7 @@ class CroogoTheme
                     'thumbnailClass' => 'img-thumbnail',
                 ],
                 'iconDefaults' => [
-                    'iconSet' => 'fa',
+                    'iconSet' => 'fas',
                     'largeIconClass' => 'fa-xl',
                     'smallIconClass' => 'fa-sm',
                 ],

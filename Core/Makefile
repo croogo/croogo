@@ -1,5 +1,5 @@
 BOOTSTRAP_TAG=v4.3.1
-FONTAWESOME_TAG=v4.7.0
+FONTAWESOME_TAG=5.9.0
 
 REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
 REPO_BOOTSTRAP=git://github.com/twbs/bootstrap
@@ -8,7 +8,7 @@ CROOGO_SASS = ./webroot/scss/croogo-admin.scss
 
 CSS_DIR=$(CURDIR)/webroot/css/core
 JS_DIR=$(CURDIR)/webroot/js/core
-FONT_DIR=$(CURDIR)/webroot/font
+FONT_DIR=$(CURDIR)/webroot/fonts
 
 CROOGO_CSS=croogo-admin.css
 BOOTSTRAP_JS=admin.js
@@ -52,10 +52,16 @@ assets:
 	@if [ ! -d ${FONT_DIR} ] ; then \
 		mkdir "${FONT_DIR}"; \
 	fi
-	@for file in webroot/fontAwesome/fonts/* ; do \
+	@for file in webroot/fontAwesome/webfonts/* ; do \
 		cp $${file} webroot/fonts/ ; \
 		chmod 644 webroot/fonts/`basename $${file}` ; \
 		echo "Copied: webroot/fonts/`basename $${file}` ${CHECK}" ;\
+	done
+	@for file in webroot/fontAwesome/otfs/* ; do \
+		cp "$${file}" webroot/fonts/ ; \
+		f=`basename "$${file}"` ; \
+		chmod 644 "webroot/fonts/$${f}" ; \
+		echo "Copied: webroot/fonts/$${f} ${CHECK}" ;\
 	done
 	@cp webroot/bootstrap/dist/js/bootstrap.min.js ${JS_DIR}/bootstrap.min.js
 	@echo "Copied: webroot/js/core/bootstrap.min.js ${CHECK}"
