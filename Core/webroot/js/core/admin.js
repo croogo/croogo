@@ -244,7 +244,7 @@ Admin.iconClass = function (icon, includeDefault) {
     includeDefault = true;
   }
   if (includeDefault) {
-    result = Croogo.themeSettings.iconDefaults['prefix'] + ' ';
+    result = Croogo.themeSettings.iconDefaults['iconSet'] + ' ';
   }
   result += Croogo.themeSettings.iconDefaults['prefix'] + '-' + icon;
   return result.trim();
@@ -281,22 +281,22 @@ Admin.dateTimeFields = function(datePickers) {
       format: picker.data('format'),
       date: date ? date : picker.val(),
       icons: {
-        time: 'fa fa-clock-o',
-        date: 'fa fa-calendar',
-        up: 'fa fa-chevron-up',
-        down: 'fa fa-chevron-down',
-        previous: 'fa fa-chevron-left',
-        next: 'fa fa-chevron-right',
-        today: 'fa fa-screenshot',
-        clear: 'fa fa-trash',
-        close: 'fa fa-remove'
+        time: Admin.iconClass('clock'),
+        date: Admin.iconClass('calendar'),
+        up: Admin.iconClass('chevron-up'),
+        down: Admin.iconClass('chevron-down'),
+        previous: Admin.iconClass('chevron-left'),
+        next: Admin.iconClass('chevron-right'),
+        today: Admin.iconClass('screenshot'),
+        clear: Admin.iconClass('trash'),
+        close: Admin.iconClass('remove')
       }
     }
     if (picker.data('mindate')) {
       dpOptions.minDate = picker.data('mindate');
     }
     if (picker.data('maxdate')) {
-      dpOptions.maxDate =  picker.data('maxdate');
+      dpOptions.maxDate = picker.data('maxdate');
     }
     picker.datetimepicker(dpOptions);
   });

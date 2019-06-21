@@ -11,8 +11,10 @@ use Cake\I18n\I18n;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\Routing\Router;
+use Cake\Utility\Hash;
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
+use Croogo\Extensions\CroogoTheme;
 use DateTimeInterface;
 
 class DateTimeWidget extends CakeDateTimeWidget
@@ -104,10 +106,14 @@ html;
 
         $addon = isset($data['addon']) ? $data['addon'] : true;
         if ($addon) {
+            $themeData = CroogoTheme::config(Configure::read('Site.admin_theme'));
+            $iconSet = Hash::extract($themeData, 'settings.iconDefaults.iconSet')[0];
             $widget .= <<<html
-                <label for="$id" class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
-                </label>
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                    <i class="$iconSet fa-calendar"></i>
+                    </span>
+                </div>
 html;
         }
 
