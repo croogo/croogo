@@ -244,9 +244,9 @@ Admin.iconClass = function (icon, includeDefault) {
     includeDefault = true;
   }
   if (includeDefault) {
-    result = Croogo.themeSettings.iconDefaults['iconSet'] + ' ';
+    result = Croogo.themeSettings.iconDefaults['prefix'] + ' ';
   }
-  result += Croogo.themeSettings.iconDefaults['iconSet'] + '-' + icon;
+  result += Croogo.themeSettings.iconDefaults['prefix'] + '-' + icon;
   return result.trim();
 }
 

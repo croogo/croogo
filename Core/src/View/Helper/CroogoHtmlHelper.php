@@ -243,15 +243,15 @@ class CroogoHtmlHelper extends HtmlHelper
         }
 
         if (isset($options['icon'])) {
-            $iconSize = $iconDefaults['largeIconClass'];
+            $iconSize = $iconDefaults['size'];
             if (isset($options['iconSize']) && $options['iconSize'] === 'small') {
-                $iconSize = $iconDefaults['smallIconClass'];
+                $iconSize = $iconDefaults['size'];
                 unset($options['iconSize']);
             }
             if (empty($options['iconInline'])) {
                 $title = $this->icon($options['icon'], ['class' => $iconSize]) . $title;
             } else {
-                $icon = trim($iconSize . ' ' . $iconDefaults['classPrefix'] . $this->Theme->getIcon($options['icon']));
+                $icon = trim($iconSize . ' ' . $iconDefaults['prefix'] . $this->Theme->getIcon($options['icon']));
                 if (isset($options['class'])) {
                     $options['class'] .= ' ' . $icon;
                 } else {

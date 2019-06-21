@@ -83,8 +83,8 @@ class CroogoTheme
                 ],
                 'iconDefaults' => [
                     'iconSet' => 'fas',
-                    'largeIconClass' => 'fa-xl',
-                    'smallIconClass' => 'fa-sm',
+                    'prefix' => 'fa',
+                    'size' => 'sm',
                 ],
                 'icons' => [
                     'attach' => 'paperclip',
@@ -96,7 +96,7 @@ class CroogoTheme
                     'error-sign' => 'exclamation-sign',
                     'home' => 'home',
                     'info-sign' => 'info-circle',
-                    'inspect' => 'zoom-in',
+                    'inspect' => 'search',
                     'link' => 'link',
                     'move-down' => 'chevron-down',
                     'move-up' => 'chevron-up',
@@ -109,10 +109,10 @@ class CroogoTheme
                     'search' => 'search',
                     'success-sign' => 'ok-sign',
                     'translate' => 'flag',
-                    'update' => 'pencil',
+                    'update' => 'edit',
                     'upload' => 'upload',
                     'warning-sign' => 'warning-sign',
-                    'x-mark' => 'remove',
+                    'x-mark' => 'times',
                     'user' => 'user',
                     'key' => 'key',
                     'view' => 'eye'
