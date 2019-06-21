@@ -38,7 +38,7 @@ Dashboard.saveDashboard = function(e, ui) {
   var collapsed = !box.find('.card-body').is(':visible') ? 1 : 0;
   var saveCallback = function(data, textStatus, jqXHR) {
     box
-      .find('.toggle-icon .fa')
+      .find('.toggle-icon .' + Croogo.themeSettings.iconDefaults.iconSet)
       .removeClass('fa-spinner fa-spin')
       .addClass(collapsed ? 'fa-plus' : 'fa-minus')
 
@@ -83,7 +83,7 @@ Dashboard.collapsable = function (saveDashboard) {
 
       var collapsed = !box.find('.card-body').is(':visible') ? 1 : 0;
       box
-        .find('.toggle-icon .fa')
+        .find('.toggle-icon .' + Croogo.themeSettings.iconDefaults.iconSet)
         .removeClass(collapsed ? 'fa-plus' : 'fa-minus')
         .addClass('fa-spinner fa-spin');
     });

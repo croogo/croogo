@@ -9,10 +9,10 @@ endif;
 ?>
 <div class="card card-<?= $alias ?> dashboard-card" id="<?= $alias ?>" <?= $dataId ?>>
     <div class="card-header">
-        <i class="fa fa-list move-handle"></i>
+        <?= $this->Html->icon('list', ['class' => 'move-handle']) ?>
         <?= $dashboard['title'] ?>
         <a class="toggle-icon float-right" data-toggle="collapse" data-target="#<?= $alias ?>-content">
-            <?=($dashboard['collapsed'] ? '<i class="fa fa-plus"></i>' : '<i class="fa fa-minus"></i>') ?>
+            <?=($dashboard['collapsed'] ? $this->Html->icon('plus') : $this->Html->icon('minus')) ?>
         </a>
     </div>
     <div class="card-body <?= $dashboard['collapsed'] ? 'collapse' : 'collapse show' ?>" id="<?= $alias ?>-content">
