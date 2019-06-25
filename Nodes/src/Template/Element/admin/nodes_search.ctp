@@ -12,6 +12,7 @@ echo $this->Form->input('filter', [
     'title' => __d('croogo', 'Search'),
     'placeholder' => __d('croogo', 'Search...'),
     'tooltip' => false,
+    'class' => 'mr-1',
     'default' => $this->request->query('filter'),
 ]);
 
@@ -47,7 +48,7 @@ if (!isset($this->request->query['chooser'])):
 endif;
 
 echo $this->Form->submit(__d('croogo', 'Filter'), [
-    'class' => 'btn-outline-success',
+    'class' => 'btn-outline-success mr-1',
 ]);
 echo $this->Html->link('Reset', [
     'action' => 'index',

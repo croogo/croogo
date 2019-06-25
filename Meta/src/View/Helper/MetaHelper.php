@@ -155,9 +155,9 @@ class MetaHelper extends Helper
             $actions = $this->Html->link(
                 __d('croogo', 'Remove'),
                 $deleteUrl,
-                ['class' => 'btn btn-danger-outline remove-meta', 'rel' => $id]
+                ['class' => 'btn btn-outline-danger remove-meta', 'rel' => $id]
             );
-            $actions = $this->Html->tag('div', $actions, ['class' => 'actions']);
+            $actions = $this->Html->tag('div', $actions, ['class' => 'actions my-3']);
         }
 
         $output = $this->Html->tag('div',  $fields . $actions, ['class' => 'meta']);

@@ -402,6 +402,7 @@ class CroogoHelper extends Helper
     {
         $options = Hash::merge([
             'button' => 'secondary',
+            'class' => 'mx-1',
             'list' => false,
             'confirm' => $confirmMessage,
         ], $options);
