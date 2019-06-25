@@ -69,7 +69,7 @@ class AssetsFilterHelper extends Helper {
                 continue;
             }
 
-            $options = isset($assets[$assetId]) ? $assets[$assetId] : array();
+            $options = !empty($assets[$assetId]) ? $assets[$assetId] : ['class' => $this->_View->Theme->getCssClass('thumbnailClass')];
             $img = $this->Html->image($assetUsage->asset->path, $options);
             $regex = '/' . preg_quote($tagMatches[0][$i]) . '/';
             $content = preg_replace($regex, $img, $content);

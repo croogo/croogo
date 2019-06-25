@@ -75,7 +75,7 @@ class CroogoTheme
                     'dashboardRight' => 'col-sm-6',
                     'dashboardClass' => 'sortable-column',
                     'formInput' => 'input-block-level',
-                    'imageClass' => '',
+                    'imageClass' => 'img-fluid',
                     'row' => 'row',
                     'tableClass' => 'table table-striped',
                     'tableContainerClass' => 'table-container',
