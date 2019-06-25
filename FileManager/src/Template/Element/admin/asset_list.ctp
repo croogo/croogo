@@ -158,7 +158,7 @@ foreach ($attachments as $attachment):
         'data-pk' => $attachment->asset_usage->id,
         'data-url' => $this->Url->build($changeTypeUrl),
         'data-name' => 'type',
-        'data-theme' => 'bootstrap',
+        'data-theme' => $this->Theme->settings('select2Defaults.theme'),
         'data-width' => '150px',
         'data-tags' => 'true',
         'data-placeholder' => '',
