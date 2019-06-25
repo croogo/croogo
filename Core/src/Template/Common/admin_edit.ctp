@@ -31,6 +31,7 @@ $rowClass = $this->Theme->getCssClass('row');
 $columnLeft = $this->Theme->getCssClass('columnLeft');
 $columnRight = $this->Theme->getCssClass('columnRight');
 $columnFull = $this->Theme->getCssClass('columnFull');
+$tabContentClass = $this->Theme->getCssClass('tabContentClass');
 
 if ($pageHeading = trim($this->fetch('page-heading'))):
     echo $pageHeading;
@@ -84,7 +85,7 @@ if (!$this->exists('left-column')):
 
     $this->start('left-column');
     echo $this->Html->tag('ul', $tabHeading, ['class' => 'nav nav-tabs']);
-    echo $this->Html->div('tab-content', $tabContent);
+    echo $this->Html->div($tabContentClass, $tabContent);
     $this->end();
 endif;
 

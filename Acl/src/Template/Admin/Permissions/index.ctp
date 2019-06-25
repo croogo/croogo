@@ -1,5 +1,7 @@
 <?php
 
+$tabContentClass = $this->Theme->getCssClass('tabContentClass');
+
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Croogo->adminScript('Croogo/Acl.acl_permissions');
@@ -62,7 +64,7 @@ $this->Js->buffer('AclPermissions.tabSwitcher();');
         ?>
         </ul>
 
-        <div class="tab-content">
+        <div class="<?= $tabContentClass ?>">
             <?= $this->Croogo->adminTabs() ?>
         </div>
 

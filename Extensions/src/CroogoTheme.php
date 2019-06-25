@@ -80,6 +80,7 @@ class CroogoTheme
                     'tableClass' => 'table table-striped',
                     'tableContainerClass' => 'table-container',
                     'thumbnailClass' => 'img-thumbnail',
+                    'tabContentClass' => 'tab-content',
                 ],
                 'iconDefaults' => [
                     'iconSet' => 'fas',
