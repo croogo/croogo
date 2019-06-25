@@ -4,7 +4,7 @@ Assets.reloadAssetsTab = function(e) {
   e && e.preventDefault();
   var $tab = $('a[data-toggle="tab"][href$="-assets"]');
   var url = $('.asset-list').data('url');
-  var loadingMsg = '<span><i class="fa fa-spin fa-spinner"></i> Loading. Please wait...</span>';
+  var loadingMsg = '<span><i class="' + Admin.iconClass('spinner') + ' fa-spin"></i> Loading. Please wait...</span>';
   $tab.tab('show');
   $($tab.attr('href'))
     .html(loadingMsg)
