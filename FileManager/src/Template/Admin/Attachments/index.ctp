@@ -18,8 +18,7 @@ $this->append('action-buttons');
 
 echo $this->Croogo->adminAction(
     __d('croogo', 'New ' . __d('croogo', 'Attachment')),
-    array_merge(array('?' => $query), array('action' => 'add')),
-    array('button' => 'success')
+    array_merge(['?' => $query], ['action' => 'add'])
 );
 
 $this->end();

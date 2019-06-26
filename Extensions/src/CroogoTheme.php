@@ -105,7 +105,7 @@ class CroogoTheme
                     'power-on' => 'bolt',
                     'question-sign' => 'question-sign',
                     'read' => 'eye',
-                    'refresh' => 'refresh',
+                    'refresh' => 'sync',
                     'resize' => 'arrows-alt',
                     'search' => 'search',
                     'success-sign' => 'ok-sign',

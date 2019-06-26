@@ -118,7 +118,7 @@ if (!$chooser):
     echo $this->Form->button(__d('croogo', 'Submit'), [
         'type' => 'submit',
         'value' => 'submit',
-        'class' => 'btn-primary-ouline'
+        'class' => 'btn-outline-primary'
     ]);
     $this->end();
 endif;

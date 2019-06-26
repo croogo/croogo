@@ -12,7 +12,6 @@ echo $this->Form->input('filter', [
     'title' => __d('croogo', 'Search'),
     'placeholder' => __d('croogo', 'Search...'),
     'tooltip' => false,
-    'class' => 'mr-1',
     'default' => $this->request->query('filter'),
 ]);
 

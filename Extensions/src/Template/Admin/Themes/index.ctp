@@ -11,7 +11,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Extensions'),
     ->add(__d('croogo', 'Themes'), $this->request->getUri()->getPath());
 
 $this->start('action-buttons');
-echo $this->Croogo->adminAction(__d('croogo', 'Upload'), ['action' => 'add'], ['class' => 'btn btn-success']);
+echo $this->Croogo->adminAction(__d('croogo', 'Upload'), ['action' => 'add']);
 $this->end() ?>
 
 <div class="<?= $this->Theme->getCssClass('row') ?>">
@@ -100,13 +100,13 @@ $this->end() ?>
                         'action' => 'activate',
                         urlencode(base64_encode($themeName)),
                     ], [
-                        'button' => 'secondary',
+                        'button' => 'outline-secondary',
                         'icon' => $this->Theme->getIcon('power-on'),
                     ]) . $this->Form->postLink(__d('croogo', 'Delete'), [
                         'action' => 'delete',
                         urlencode($themeName),
                     ], [
-                        'button' => 'danger',
+                        'button' => 'outline-danger',
                         'escape' => true,
                         'escapeTitle' => false,
                         'icon' => $this->Theme->getIcon('delete'),

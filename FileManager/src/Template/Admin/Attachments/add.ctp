@@ -120,13 +120,13 @@ $this->append('panels');
         $this->Form->button(__d('croogo', 'Upload'), array(
             'icon' => 'upload',
             'button' => 'primary',
-            'class' => 'start btn-success',
+            'class' => 'start btn-outline-success',
             'type' => 'submit',
             'id' => 'start_upload',
         )) .
         $this->Form->end() . ' ' .
         $this->Html->link(__d('croogo', 'Cancel'), $redirect, array(
-            'class' => 'btn btn-danger',
+            'class' => 'btn btn-outline-danger',
         ));
     echo $this->Html->endBox();
     echo $this->Croogo->adminBoxes();

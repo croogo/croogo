@@ -33,7 +33,7 @@ if (empty($this->fetch('action-buttons'))) {
         $entityName = __($humanName);
     }
     $actionTitle = __d('croogo', 'New %s', $entityName);
-    $this->assign('action-buttons', $this->Croogo->adminAction($actionTitle, ['action' => 'add'], ['button' => 'btn btn-success']));
+    $this->assign('action-buttons', $this->Croogo->adminAction($actionTitle, ['action' => 'add']));
 }
 
 $tableHeaders = trim($this->fetch('table-heading'));

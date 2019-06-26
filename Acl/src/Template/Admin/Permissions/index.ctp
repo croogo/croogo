@@ -12,7 +12,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Users'),
 
 $this->append('action-buttons');
 $toolsButton = $this->Html->link(__d('croogo', 'Tools'), '#', [
-        'button' => 'secondary',
+        'button' => 'outline-secondary btn-sm',
         'class' => 'dropdown-toggle',
         'data-toggle' => 'dropdown',
         'escape' => false,

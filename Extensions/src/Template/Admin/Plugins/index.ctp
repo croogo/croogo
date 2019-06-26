@@ -8,7 +8,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Extensions'), $this->request->getUri()->g
     ->add(__d('croogo', 'Plugins'), $this->request->getUri()->getPath());
 
 $this->start('action-buttons');
-echo $this->Croogo->adminAction(__d('croogo', 'Upload'), ['action' => 'add'], ['class' => 'btn btn-success']);
+echo $this->Croogo->adminAction(__d('croogo', 'Upload'), ['action' => 'add']);
 $this->end() ?>
 
 <table class="table table-striped">

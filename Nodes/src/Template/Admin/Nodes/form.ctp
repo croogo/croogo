@@ -39,7 +39,7 @@ $this->start('tab-content');
             'placeholder' => __d('croogo', '%s title', $type->title),
             'data-slug' => '#slug',
             'data-slug-editable' => true,
-            'data-slug-edit-class' => 'btn btn-secondary btn-sm',
+            'data-slug-edit-class' => 'btn btn-outline-secondary',
         ]);
         echo $this->Form->input('slug', [
             'class' => 'slug',

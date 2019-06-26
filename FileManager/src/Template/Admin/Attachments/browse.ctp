@@ -79,7 +79,7 @@ $this->append('action-buttons');
         $listTitle = __d('assets', 'List Attachments');
     endif;
     echo $this->Croogo->adminAction($listTitle, $listUrl, array(
-        'button' => 'success',
+        'button' => 'outline-success',
     ));
 $this->end();
 

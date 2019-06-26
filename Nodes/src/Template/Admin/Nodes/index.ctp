@@ -13,7 +13,7 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Content'), $this->request->getUri()->getPath());
 
 $this->append('action-buttons');
-echo $this->Croogo->adminAction(__d('croogo', 'Create content'), ['action' => 'create'], ['button' => 'success']);
+echo $this->Croogo->adminAction(__d('croogo', 'Create content'), ['action' => 'create']);
 $this->end();
 
 $this->append('search', $this->element('admin/nodes_search'));

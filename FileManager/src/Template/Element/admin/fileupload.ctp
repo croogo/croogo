@@ -11,7 +11,7 @@ $cancelIcon = $this->Html->icon('delete');
     <div class="col-8">
 
         <!-- The fileinput-button span is used to style the file input field as button -->
-        <span class="btn btn-success fileinput-button">
+        <span class="btn btn-outline-success fileinput-button">
             <?php echo $addIcon; ?>
             <span><?php echo __d('assets', 'Add files'); ?></span>
             <?php echo $this->Form->input('asset.file', [
@@ -26,7 +26,7 @@ $cancelIcon = $this->Html->icon('delete');
             ]); ?>
         </span>
 
-        <button type="reset" class="btn btn-warning cancel">
+        <button type="reset" class="btn btn-outline-warning cancel">
             <?php echo $cancelIcon; ?>
             <span>Cancel</span>
         </button>

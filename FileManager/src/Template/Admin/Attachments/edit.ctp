@@ -65,11 +65,12 @@ $this->append('panels');
         );
     }
     echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-        $this->Form->button(__d('croogo', 'Save'), [
+        $this->Form->button($this->Html->icon('save') . __d('croogo', 'Save'), [
+            'icon' => 'save',
             'class' => 'btn-outline-success',
         ]) . ' ' .
         $this->Html->link(
-            __d('croogo', 'Cancel'),
+            $this->Html->icon('times') . __d('croogo', 'Cancel'),
             $redirect,
             ['class' => 'cancel btn btn-outline-danger']
         );
