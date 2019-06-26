@@ -1,0 +1,9 @@
+#bulk-action .form-group,
+.table-search .form-group {
+  margin-right: 0.25rem;
+}
+
+#top-right-menu .fas,
+.btn .fas {
+  margin-right: 0.5rem;
+}
