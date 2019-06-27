@@ -81,6 +81,9 @@ class CroogoTheme
                     'tableContainerClass' => 'table-container',
                     'thumbnailClass' => 'img-thumbnail',
                     'tabContentClass' => 'tab-content',
+                    'boxContainerClass' => 'card',
+                    'boxHeaderClass' => 'card-header',
+                    'boxBodyClass' => 'card-body',
                 ],
                 'iconDefaults' => [
                     'iconSet' => 'fas',
