@@ -65,21 +65,6 @@ h2.hidden-md-up {
   }
 }
 
-// Actions in admin_index
-#breadcrumb-container + .actions {
-  margin-top: -$croogo-breadcrumb-margin;
-  margin-left: -$croogo-breadcrumb-margin * 2 !important;
-  padding: 5px 5px 6px;
-  background-color: $gray-lightest;
-  border-radius: 0.25rem;
-}
-
-@include media-breakpoint-down(xs) {
-  #breadcrumb-container + .actions {
-    margin-left: auto !important;
-  }
-}
-
 .tab-content {
   background-color: $white;
   padding: 20px 0;

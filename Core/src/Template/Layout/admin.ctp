@@ -25,15 +25,15 @@ $showActions = isset($showActions) ? $showActions : true;
             </div>
             <div id="content-container" class="content-container <?= $this->Theme->getCssClass('containerFluid') ?>">
                 <div id="content" class="content">
-                    <div class="col-12 d-flex justify-content-between align-items-center">
+                    <div id="breadcrumb-container" class="col-12 p-0 d-flex justify-content-between align-items-center">
                         <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
                         <?php if ($showActions && $actionsBlock = $this->fetch('action-buttons')): ?>
-                            <div class="actions ml-auto">
+                            <div class="actions m-2 ml-auto">
                                 <?= $actionsBlock ?>
                             </div>
                         <?php endif ?>
                     </div>
-                    <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
+                    <div id="inner-content" class="p-0 mt-2 <?= $this->Theme->getCssClass('columnFull') ?>">
                         <?= $this->Layout->sessionFlash() ?>
                         <?= $this->fetch('content') ?>
                     </div>

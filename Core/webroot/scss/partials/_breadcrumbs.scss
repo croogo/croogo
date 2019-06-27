@@ -3,15 +3,12 @@
 // --------------------------------------------------
 
 #breadcrumb-container {
-  background: $body-bg;
-  flex: 1;
+  background: $gray-lightest;
+  border-radius: 0.25rem;
 }
 
 .breadcrumb {
   z-index: $zindex-dropdown;
-  margin-bottom: $croogo-breadcrumb-margin;
-
-  background-color: $gray-lightest;
 
   li:last-child {
     @extend .active;
