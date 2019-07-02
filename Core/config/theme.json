@@ -7,6 +7,9 @@
     "authorEmail" : "team@croogo.org",
     "authorUrl" : "http://croogo.org",
 
+    "isFrontendTheme": true,
+    "isBackendTheme": true,
+
     "menus" : [
         "main",
         "footer"

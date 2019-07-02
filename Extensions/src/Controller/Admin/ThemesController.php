@@ -3,6 +3,7 @@
 namespace Croogo\Extensions\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Network\Exception\BadRequestException;
 use Croogo\Extensions\CroogoTheme;
 use Croogo\Extensions\Exception\MissingThemeException;
 use Croogo\Extensions\ExtensionsInstaller;
@@ -55,7 +56,14 @@ class ThemesController extends AppController
             $activeTheme = 'Croogo/Core';
         }
         $currentTheme = $this->_CroogoTheme->getData($activeTheme);
-        $this->set(compact('themes', 'themesData', 'currentTheme'));
+
+        $activeBackendTheme = Configure::read('Site.admin_theme');
+        if (empty($activeBackendTheme)) {
+            $activeBackendTheme = 'Croogo/Core';
+        }
+        $currentBackendTheme = $this->_CroogoTheme->getData($activeBackendTheme);
+
+        $this->set(compact('themes', 'themesData', 'currentTheme', 'currentBackendTheme'));
     }
 
     /**
@@ -63,11 +71,11 @@ class ThemesController extends AppController
      *
      * @param string $theme
      */
-    public function activate($theme = null)
+    public function activate($theme = null, $type = 'theme')
     {
         try {
             $theme = base64_decode(urldecode($theme));
-            $this->_CroogoTheme->activate($theme);
+            $this->_CroogoTheme->activate($theme, $type);
 
             $this->Flash->success(__d('croogo', 'Theme activated.'));
         } catch (MissingThemeException $exception) {

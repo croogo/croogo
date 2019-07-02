@@ -54,6 +54,8 @@ class CroogoTheme
     {
         $themeData = [
             'name' => $theme,
+            'isFrontendTheme' => true,
+            'isBackendTheme' => false,
             'regions' => [],
             'screenshot' => null,
             'settings' => [
@@ -226,17 +228,20 @@ class CroogoTheme
      * @param $theme theme alias
      * @return mixed On success Setting::$data or true, false on failure
      */
-    public function activate($theme)
+    public function activate($theme, $type = 'theme')
     {
+        if (!in_array($type, ['theme', 'admin_theme'])) {
+            throw new BadRequestException('Invalid theme type');
+        }
         $themes = $this->getThemes();
         if (!$this->getData($theme, isset($themes[$theme]) ? $themes[$theme] : null)) {
             return false;
         }
 
-        Cache::delete('file_map', '_cake_core_');
+        Cache::clearAll();
         $settings = TableRegistry::get('Croogo/Settings.Settings');
 
-        return $settings->write('Site.theme', $theme);
+        return $settings->write('Site.' . $type, $theme);
     }
 
     /**

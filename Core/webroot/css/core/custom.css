@@ -7,3 +7,7 @@
 .btn .fas {
   margin-right: 0.5rem;
 }
+
+.extensions-themes .badge {
+  margin: 0 8px 8px 0;
+}
