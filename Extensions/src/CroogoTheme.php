@@ -79,6 +79,7 @@ class CroogoTheme
                     'formInput' => 'input-block-level',
                     'imageClass' => 'img-fluid',
                     'row' => 'row',
+                    'tableHeaderClass' => 'thead-light',
                     'tableClass' => 'table table-striped',
                     'tableContainerClass' => 'table-responsive',
                     'thumbnailClass' => 'img-thumbnail',

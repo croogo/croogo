@@ -47,7 +47,7 @@ $this->append('table-heading');
         __d('croogo', 'Actions'),
     ));
 
-    echo $this->Html->tag('thead', $tableHeaders);
+    echo $tableHeaders;
 $this->end();
 
 $this->append('search', $this->element('Croogo/Core.admin/search'));

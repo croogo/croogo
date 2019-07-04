@@ -5,6 +5,8 @@ use Cake\Utility\Inflector;
 use Cake\ORM\TableRegistry;
 use Cake\view\Form\NullContext;
 
+$tableHeaderClass = $this->Theme->getCssClass('tableHeaderClass');
+
 $this->Html->script([
     'Croogo/FileManager.admin.js',
     'Croogo/FileManager.assets.js',
@@ -252,7 +254,7 @@ $this->set('_assetButtons', true);
 endif;
 ?>
 <table class="<?php echo $this->Theme->getCssClass('tableClass'); ?> asset-list" data-url="<?php echo $assetListUrl; ?>">
-    <thead><?php echo $this->Html->tableHeaders($headers); ?></thead>
+    <thead class="<?= $tableHeaderClass ?>"><?php echo $this->Html->tableHeaders($headers); ?></thead>
     <tbody><?php echo $this->Html->tableCells($rows); ?></tbody>
 </table>
 <?php

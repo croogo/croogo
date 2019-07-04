@@ -12,6 +12,7 @@ $i18nDomain = $this->request->param('plugin') ? 'croogo' : $this->request->param
 
 $rowClass = $this->Theme->getCssClass('row');
 $columnFull = $this->Theme->getCssClass('columnFull');
+$tableHeaderClass = isset($tableHeaderClass) ? $tableHeaderClass : $this->Theme->getCssClass('tableHeaderClass');
 $tableClass = isset($tableClass) ? $tableClass : $this->Theme->getCssClass('tableClass');
 $tableContainerClass = $this->Theme->getCssClass('tableContainerClass');
 
@@ -133,7 +134,9 @@ $tableFooters = trim($this->fetch('table-footer'));
                     <div class="<?= $tableContainerClass ?>">
                     <table class="<?= $tableClass ?>">
                         <?php
-                        echo $this->Html->tag('thead', $tableHeaders);
+                        echo $this->Html->tag('thead', $tableHeaders, [
+                            'class' => $tableHeaderClass,
+                        ]);
                         echo $this->Html->tag('tbody', $tableBody);
                         if ($tableFooters):
                             echo $this->Html->tag('tfoot', $tableFooters);

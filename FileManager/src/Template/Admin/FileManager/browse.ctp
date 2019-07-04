@@ -1,6 +1,7 @@
 <?php
 
 $this->extend('Croogo/Core./Common/admin_index');
+$tableHeaderClass = $this->Theme->getCssClass('tableHeaderClass');
 
 $this->assign('title', __d('croogo', 'File Manager'));
 $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getRequestTarget());
@@ -31,7 +32,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getReques
             __d('croogo', 'Actions'),
         ]);
         ?>
-        <thead>
+        <thead class="<?= $tableHeaderClass ?>">
             <?= $tableHeaders ?>
         </thead>
         <?php
@@ -104,7 +105,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getReques
         echo $this->Html->tableCells($rows, ['class' => 'file-listing'], ['class' => 'file-listing']);
 
         ?>
-        <thead>
+        <thead class="<?= $tableHeaderClass ?>">
             <?= $tableHeaders ?>
         </thead>
     </table>
