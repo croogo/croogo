@@ -13,8 +13,8 @@ use Croogo\Core\Database\SequenceFixer;
 
 class InstallManager
 {
-    const PHP_VERSION = '5.5.9';
-    const CAKE_VERSION = '3.4.8';
+    const PHP_VERSION = '7.1.30';
+    const CAKE_VERSION = '3.8.0';
 
     const DATASOURCE_REGEX = "/(\'Datasources'\s\=\>\s\[\n\s*\'default\'\s\=\>\s\[\n\X*\'__FIELD__\'\s\=\>\s\').*(\'\,)(?=\X*\'test\'\s\=\>\s)/";
 
