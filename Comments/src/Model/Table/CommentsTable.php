@@ -31,16 +31,6 @@ class CommentsTable extends CroogoTable
     use MailerAwareTrait;
 
 /**
- * @deprecated
- */
-    const STATUS_APPROVED = 1;
-
-/**
- * @deprecated
- */
-    const STATUS_PENDING = 0;
-
-/**
  * Filter fields
  *
  * @var array

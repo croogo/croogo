@@ -86,43 +86,6 @@ class NodesController extends AppController
     }
 
     /**
-     * Admin delete meta
-     *
-     * @param integer $id
-     * @return void
-     * @access public
-     * @deprecated Use MetaController::admin_delete_meta()
-     */
-    public function delete_meta($id = null)
-    {
-        $success = false;
-        $Node = $this->{$this->modelClass};
-        if ($id != null && $Node->Meta->delete($id)) {
-            $success = true;
-        } else {
-            if (!$Node->Meta->exists($id)) {
-                $success = true;
-            }
-        }
-
-        $success = array('success' => $success);
-        $this->set(compact('success'));
-        $this->set('_serialize', 'success');
-    }
-
-    /**
-     * Admin add meta
-     *
-     * @return void
-     * @access public
-     * @deprecated Use MetaController::admin_add_meta()
-     */
-    public function add_meta()
-    {
-        $this->viewBuilder()->setLayout('ajax');
-    }
-
-    /**
      * Admin process
      *
      * @return void

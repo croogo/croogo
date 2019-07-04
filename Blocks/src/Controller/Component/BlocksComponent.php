@@ -169,44 +169,4 @@ class BlocksComponent extends Component
         }
     }
 
-/**
- * Parses bb-code like string.
- *
- * Example: string containing [menu:main option1="value"] will return an array like
- *
- * Array
- * (
- *     [main] => Array
- *         (
- *             [option1] => value
- *         )
- * )
- *
- * @deprecated Use StringConverter::parseString()
- * @see StringConverter::parseString()
- * @param string $exp
- * @param string $text
- * @param array  $options
- * @return array
- */
-    public function parseString($exp, $text, $options = [])
-    {
-        return $this->_stringConverter->parseString($exp, $text, $options);
-    }
-
-/**
- * Converts formatted string to array
- *
- * A string formatted like 'Nodes.type:blog;' will be converted to
- * array('Nodes.type' => 'blog');
- *
- * @deprecated Use StringConverter::stringToArray()
- * @see StringConverter::stringToArray()
- * @param string $string in this format: Nodes.type:blog;Nodes.user_id:1;
- * @return array
- */
-    public function stringToArray($string)
-    {
-        return $this->_stringConverter->stringToArray($string);
-    }
 }

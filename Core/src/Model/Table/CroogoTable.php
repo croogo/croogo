@@ -193,26 +193,6 @@ class CroogoTable extends Table
 
 /**
  * Validation method for alias field
- * @return bool true when validation successful
- * @deprecated Protected validation methods are no longer supported
- */
-    protected function _validAlias($check)
-    {
-        return $this->validAlias($check);
-    }
-
-/**
- * Validation method for name or title fields
- * @return bool true when validation successful
- * @deprecated Protected validation methods are no longer supported
- */
-    protected function _validName($check)
-    {
-        return $this->validName($check);
-    }
-
-/**
- * Validation method for alias field
  *
  * @return bool true when validation successful
  */

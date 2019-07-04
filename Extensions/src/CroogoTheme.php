@@ -212,18 +212,6 @@ class CroogoTheme
     }
 
     /**
-     * Get the content of theme.json file from a theme
-     *
-     * @param string $alias theme folder name
-     * @return array
-     * @deprecated use getData()
-     */
-    public function getThemeData($alias = null)
-    {
-        return $this->getData($alias);
-    }
-
-    /**
      * Activate theme $alias
      *
      * @param $theme theme alias

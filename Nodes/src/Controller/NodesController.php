@@ -354,19 +354,6 @@ class NodesController extends AppController
     }
 
     /**
-     * View Fallback
-     *
-     * @param mixed $views The fallback views
-     * @return string
-     * @access protected
-     * @deprecated Use CroogoComponent::viewFallback()
-     */
-    protected function _viewFallback($views)
-    {
-        return $this->Croogo->viewFallback($views);
-    }
-
-    /**
      * Set common form variables to views
      *
      * @param array $type Type data

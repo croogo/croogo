@@ -189,38 +189,6 @@ class CroogoComponent extends Component
     }
 
 /**
- * Extracts parameters from 'filter' named parameter.
- *
- * @return array
- * @deprecated use Search plugin to perform filtering
- */
-    public function extractFilter()
-    {
-        $filter = explode(';', $this->_controller->request->params['named']['filter']);
-        $filterData = [];
-        foreach ($filter as $f) {
-            $fData = explode(':', $f);
-            $fKey = $fData['0'];
-            if ($fKey != null) {
-                $filterData[$fKey] = $fData['1'];
-            }
-        }
-        return $filterData;
-    }
-
-/**
- * Get URL relative to the app
- *
- * @param array $url
- * @return array
- * @deprecated Use Croogo::getRelativePath
- */
-    public function getRelativePath($url = '/')
-    {
-        return Croogo::getRelativePath($url);
-    }
-
-/**
  * ACL: add ACO
  *
  * Creates ACOs with permissions for roles.
@@ -245,54 +213,6 @@ class CroogoComponent extends Component
     public function removeAco($action)
     {
         $this->_controller->CroogoAccess->removeAco($action);
-    }
-
-/**
- * Sets the referer page
- *
- * We need to know where were you, to get you back there
- *
- * @return void
- * @see CroogoComponent::redirect()
- * @deprecated Use Crud.beforeRedirect event and AppController::redirectToSelf
- */
-    public function setReferer()
-    {
-        $default = [
-            'controller' => $this->_controller->request->params['controller'],
-            'action' => 'index',
-        ];
-        $referer = $this->_controller->referer($default, true);
-        $this->_controller->request->session()->write('Croogo.referer', ['url' => $referer]);
-    }
-
-/**
- * Croogo flavored redirect
- *
- * If 'save' pressed, redirect to referer or $indexUrl instead of 'edit'
- *
- * @param string $url
- * @param int $status
- * @param bool $exit
- * @param array $indexUrl
- * @return void|\Cake\Network\Response
- * @see CroogoComponent::setReferer()
- * @deprecated Use Crud.beforeRedirect event and AppController::redirectToSelf
- */
-    public function redirect($url, $status = null, $exit = true, $indexUrl = [])
-    {
-        $referer = $this->_controller->request->session()->read('Croogo.referer');
-        $this->_controller->request->session()->delete('Croogo.referer');
-        if (is_array($url)) {
-            if (isset($url['action']) && $url['action'] === 'edit') {
-                if (!isset($this->_controller->request->data['_apply'])) {
-                    $url = !empty($indexUrl) ? $indexUrl : ['action' => 'index'];
-                }
-            } elseif (isset($referer['url'])) {
-                $url = $referer['url'];
-            }
-        }
-        return $this->_controller->redirect($url, $status);
     }
 
 /**
@@ -321,89 +241,6 @@ class CroogoComponent extends Component
         } else {
             throw new Exception(__d('croogo', 'Failed toggling field %s to %s', $field, $status));
         }
-    }
-
-/**
- * Loads plugin's bootstrap.php file
- *
- * @param string $plugin Plugin name (underscored)
- * @return void
- * @deprecated use CroogoPlugin::addBootstrap()
- */
-    public function addPluginBootstrap($plugin)
-    {
-        $this->_CroogoPlugin->addBootstrap($plugin);
-    }
-
-/**
- * Plugin name will be removed from Hook.bootstraps
- *
- * @param string $plugin Plugin name (underscored)
- * @return void
- * @deprecated use CroogoPlugin::removeBootstrap()
- */
-    public function removePluginBootstrap($plugin)
-    {
-        $this->_CroogoPlugin->removeBootstrap($plugin);
-    }
-
-/**
- * Get theme aliases (folder names)
- *
- * @return array
- * @deprecated use CroogoTheme::getThemes()
- */
-    public function getThemes()
-    {
-        return $this->_CroogoTheme->getThemes();
-    }
-
-/**
- * Get the content of theme.json file from a theme
- *
- * @param string $alias theme folder name
- * @return array
- * @deprecated use CroogoTheme::getData()
- */
-    public function getThemeData($alias = null)
-    {
-        return $this->_CroogoTheme->getData($alias);
-    }
-
-/**
- * Get plugin alises (folder names)
- *
- * @return array
- * @deprecated use CroogoPlugin::getPlugins()
- */
-    public function getPlugins()
-    {
-        return $this->_CroogoPlugin->getPlugins();
-    }
-
-/**
- * Get the content of plugin.json file of a plugin
- *
- * @param string $alias plugin folder name
- * @return array
- * @deprecated use CroogoPlugin::getData
- */
-    public function getPluginData($alias = null)
-    {
-        return $this->_CroogoPlugin->getData($alias);
-    }
-
-/**
- * Check if plugin is dependent on any other plugin.
- * If yes, check if that plugin is available in plugins directory.
- *
- * @param  string $plugin plugin alias (underscrored)
- * @return boolean
- * @deprecated use CroogoPlugin::checkDependency()
- */
-    public function checkPluginDependency($plugin = null)
-    {
-        return $this->_CroogoPlugin->checkDependency($plugin);
     }
 
 /**

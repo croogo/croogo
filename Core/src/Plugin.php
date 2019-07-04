@@ -347,18 +347,6 @@ class Plugin extends CakePlugin
     }
 
     /**
-     * Get the content of plugin.json file of a plugin
-     *
-     * @param string $alias plugin folder name
-     * @return array
-     * @deprecated use getData()
-     */
-    public function getPluginData($alias = null)
-    {
-        return $this->getData($alias);
-    }
-
-    /**
      * Get a list of plugins available with all available meta data including migration status.
      * Plugin without metadata are excluded.
      *
@@ -485,18 +473,6 @@ class Plugin extends CakePlugin
     }
 
     /**
-     * Check if plugin is active
-     *
-     * @param  string $plugin Plugin name (underscored)
-     * @return boolean
-     * @deprecated use isActive()
-     */
-    public function pluginIsActive($plugin)
-    {
-        return $this->isActive($plugin);
-    }
-
-    /**
      * Check if a plugin need a database migration
      *
      * @param string $plugin Plugin name or 'app'
@@ -617,18 +593,6 @@ class Plugin extends CakePlugin
     }
 
     /**
-     * Loads plugin's bootstrap.php file
-     *
-     * @param string $plugin Plugin name
-     * @return void
-     * @deprecated use addBootstrap($plugin)
-     */
-    public function addPluginBootstrap($plugin)
-    {
-        $this->addBootstrap($plugin);
-    }
-
-    /**
      * Plugin name will be removed from Hook.bootstraps
      *
      * @param string $plugin Plugin name
@@ -650,18 +614,6 @@ class Plugin extends CakePlugin
         }
 
         $this->_saveBootstraps($plugins);
-    }
-
-    /**
-     * Plugin name will be removed from Hook.bootstraps
-     *
-     * @param string $plugin Plugin name
-     * @return void
-     * @deprecated use removeBootstrap()
-     */
-    public function removePluginBootstrap($plugin)
-    {
-        $this->removeBootstrap($plugin);
     }
 
     /**

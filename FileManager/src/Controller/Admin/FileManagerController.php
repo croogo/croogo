@@ -56,43 +56,6 @@ class FileManagerController extends AppController
     }
 
     /**
-     * Checks wether given $path is editable.
-     * A file is editable when it resides under the APP directory
-     *
-     * @param string $path Path to check
-     * @return boolean true if file is editable
-     * @deprecated Use FileManager::isEditable()
-     */
-    protected function _isEditable($path)
-    {
-        $path = realpath($path);
-        $regex = '/^' . preg_quote(realpath(ROOT), '/') . '/';
-
-        return preg_match($regex, $path) > 0;
-    }
-
-    /**
-     * Checks wether given $path is editable.
-     * A file is deleteable when it resides under directories registered in
-     * FileManagerController::deletablePaths
-     *
-     * @param string $path Path to check
-     * @return boolean true when file is deletable
-     * @deprecated Use FileManager::isDeletable()
-     */
-    protected function _isDeletable($path)
-    {
-        $path = realpath($path);
-        $regex = [];
-        for ($i = 0, $ii = count($this->deletablePaths); $i < $ii; $i++) {
-            $regex[] = '(^' . preg_quote(realpath($this->deletablePaths[$i]), '/') . ')';
-        }
-        $regex = '/' . join($regex, '|') . '/';
-
-        return preg_match($regex, $path) > 0;
-    }
-
-    /**
      * Helper to generate a browse url for $path
      *
      * @param string $path Path

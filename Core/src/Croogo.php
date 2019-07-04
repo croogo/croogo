@@ -23,24 +23,6 @@ class Croogo
 {
 
     /**
-     * Loads plugin's routes.php from app/config/routes.php.
-     *
-     * Plugin name is added to Hook.routes key of Configure object.
-     *
-     * @param string $pluginName plugin name
-     * @deprecated Will be removed in the future.
-     */
-    public static function hookRoutes($pluginName)
-    {
-        $hooks = Configure::read('Hook.routes');
-        if (!$hooks || !is_array($hooks)) {
-            $hooks = [];
-        }
-        $hooks[] = $pluginName;
-        Configure::write('Hook.routes', $hooks);
-    }
-
-    /**
      * Loads as a normal component from controller.
      *
      * @param string $controllerName Controller Name

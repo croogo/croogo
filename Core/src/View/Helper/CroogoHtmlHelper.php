@@ -287,23 +287,6 @@ class CroogoHtmlHelper extends HtmlHelper
     }
 
     /**
-     * @deprecated Use FileManagerHelper::breadcrumb()
-     */
-    public function addPath($path, $separator)
-    {
-        $path = explode($separator, $path);
-        $currentPath = '';
-        foreach ($path as $p) {
-            if (!is_null($p)) {
-                $currentPath .= $p . $separator;
-                $this->add($p, $currentPath);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * Starts a new tab pane
      *
      * @param string $id Tab pane id

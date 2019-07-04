@@ -48,21 +48,6 @@ class CroogoHelper extends Helper
     protected $_ParamsType;
 
     /**
-     * Provides backward compatibility for deprecated methods
-     */
-    public function __call($method, $params)
-    {
-        if ($method == 'settingsInput') {
-            if (!$this->_View->Helpers->loaded('SettingsForm')) {
-                $this->_View->Helpers->load('Settings.SettingsForm');
-            }
-            $callable = [$this->_View->SettingsForm, 'input'];
-
-            return call_user_func_array($callable, $params);
-        }
-    }
-
-    /**
      * Default Constructor
      *
      * @param View $View The View this helper is being attached to.
