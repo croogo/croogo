@@ -11,6 +11,7 @@ Derbois Aymeric <aymeric@occi-tech.com>
 Pierre Martin <pierre@occi-tech.com>
 Paul Gardner <phpmagpie@webbedit.co.uk>
 chadrien <chadrien@chadrien.fr>
+Mike Tallroth <mike.tallroth@gmail.com>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 Christopher M. Depré <mail@chris-depre.de>
 Dimas Abdul Aziiz <dimas@xintesa.com>
@@ -19,7 +20,6 @@ Jose Diaz-Gonzalez <josegonzalez@users.noreply.github.com>
 euromark <euromark@web.de>
 Yuan Chavik <yuan@xintesa.com>
 Appsbender <regz24@gmail.com>
-Mike Tallroth <mike.tallroth@gmail.com>
 AD7six <andydawson76@gmail.com>
 Elias Coronado <ecor.rck@hotmail.com>
 Jonas <fwd_github@jonas-hartmann.com>
