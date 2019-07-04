@@ -7,7 +7,6 @@ use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
-use Cake\Core\Plugin as CakePlugin;
 use Cake\Datasource\ConnectionInterface;
 use Cake\Datasource\ConnectionManager;
 use Cake\Datasource\Exception\MissingDatasourceConfigException;
@@ -22,7 +21,7 @@ use InvalidArgumentException;
 use Migrations\Migrations;
 
 /**
- * Plugin utility class
+ * PluginManager utility class
  *
  * @category Component
  * @package  Croogo.Extensions.Lib
@@ -32,7 +31,7 @@ use Migrations\Migrations;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Plugin extends CakePlugin
+class PluginManager
 {
 
     use LogTrait;
