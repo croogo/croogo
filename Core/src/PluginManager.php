@@ -2,21 +2,36 @@
 
 namespace Croogo\Core;
 
+use Aura\Intl\Package;
 use App\Controller\AppController;
 use Cake\Cache\Cache;
 use Cake\Core\App;
+use Cake\Core\BasePlugin;
+use Cake\Core\ClassLoader;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Core\PluginApplicationInterface;
 use Cake\Core\Exception\MissingPluginException;
+use Cake\Database\Type;
 use Cake\Datasource\ConnectionInterface;
 use Cake\Datasource\ConnectionManager;
 use Cake\Datasource\Exception\MissingDatasourceConfigException;
 use Cake\Filesystem\Folder;
+use Cake\I18n\I18n;
+use Cake\I18n\MessagesFileLoader;
+use Cake\Log\Log;
 use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\DispatcherFactory;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
+
+use Croogo\Core\Croogo;
 use Croogo\Core\Event\EventManager;
+use Croogo\Core\PluginManager;
+use Croogo\Settings\Configure\Engine\DatabaseConfig;
+
 use InvalidArgumentException;
 use Migrations\Migrations;
 
@@ -31,7 +46,7 @@ use Migrations\Migrations;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class PluginManager
+class PluginManager extends Plugin
 {
 
     use LogTrait;
@@ -463,7 +478,7 @@ class PluginManager
 
         // check for manually loaded plugins
         foreach ($plugin as $item) {
-            if ($loaded = static::loaded($item)) {
+            if ($loaded = Plugin::isLoaded($item)) {
                 return $loaded;
             }
         }
@@ -670,7 +685,7 @@ class PluginManager
      */
     public function activate($plugin, $dependencyList = [])
     {
-        if (Plugin::loaded($plugin)) {
+        if (Plugin::isLoaded($plugin)) {
             return true;
         }
         $pluginActivation = $this->getActivator($plugin);
@@ -684,7 +699,7 @@ class PluginManager
             if (!empty($pluginData['dependencies']['plugins'])) {
                 foreach ($pluginData['dependencies']['plugins'] as $requiredPlugin) {
                     $requiredPlugin = ucfirst($requiredPlugin);
-                    if (!Plugin::loaded($requiredPlugin)) {
+                    if (!Plugin::isLoaded($requiredPlugin)) {
                         $dependencyList[] = $plugin;
                         if ($this->activate($requiredPlugin, $dependencyList) !== true) {
                             $missingPlugins[] = $requiredPlugin;
@@ -748,7 +763,7 @@ class PluginManager
      */
     public function deactivate($plugin)
     {
-        if (!Plugin::loaded($plugin)) {
+        if (!Plugin::isLoaded($plugin)) {
             return __d('croogo', 'Plugin "%s" is not active.', $plugin);
         }
         $pluginActivation = $this->getActivator($plugin);
@@ -794,6 +809,22 @@ class PluginManager
         Configure::write('pluginDeps', $pluginDeps);
     }
 
+    public static function bootstrap($name)
+    {
+        $plugin = static::getCollection()->get($name);
+        if (!$plugin->isEnabled('bootstrap')) {
+            return false;
+        }
+        // Disable bootstrapping for this plugin as it will have
+        // been bootstrapped.
+        $plugin->disable('bootstrap');
+
+        return static::_includeFile(
+            $plugin->getConfigPath() . 'bootstrap.php',
+            true
+        );
+    }
+
     /**
      * Loads a plugin and optionally loads bootstrapping and routing files.
      *
@@ -808,17 +839,59 @@ class PluginManager
     {
         if (is_array($plugin)) {
             foreach ($plugin as $name => $conf) {
-                list($name, $conf) = (is_numeric($name)) ? [$conf, $config] : [$name, $conf];
+                list($name, $conf) = is_numeric($name) ? [$conf, $config] : [$name, $conf];
                 static::load($name, $conf);
             }
+
             return;
         }
 
         $config += [
+            'autoload' => false,
+            'bootstrap' => false,
+            'routes' => false,
+            'console' => true,
+            'classBase' => 'src',
+            'ignoreMissing' => false,
             'events' => false,
+            'name' => $plugin
         ];
 
-        parent::load($plugin, $config);
+        if (!isset($config['path'])) {
+            $config['path'] = static::getCollection()->findPath($plugin);
+        }
+
+        $config['classPath'] = $config['path'] . $config['classBase'] . DIRECTORY_SEPARATOR;
+        if (!isset($config['configPath'])) {
+            $config['configPath'] = $config['path'] . 'config' . DIRECTORY_SEPARATOR;
+        }
+        $pluginClass = str_replace('/', '\\', $plugin) . '\\Plugin';
+        if (class_exists($pluginClass)) {
+            $instance = new $pluginClass($config);
+        } else {
+            // Use stub plugin as this method will be removed long term.
+            $instance = new BasePlugin($config);
+        }
+        static::getCollection()->add($instance);
+
+        if ($config['autoload'] === true) {
+            if (empty(static::$_loader)) {
+                static::$_loader = new ClassLoader();
+                static::$_loader->register();
+            }
+            static::$_loader->addNamespace(
+                str_replace('/', '\\', $plugin),
+                $config['path'] . $config['classBase'] . DIRECTORY_SEPARATOR
+            );
+            static::$_loader->addNamespace(
+                str_replace('/', '\\', $plugin) . '\Test',
+                $config['path'] . 'tests' . DIRECTORY_SEPARATOR
+            );
+        }
+
+        if ($config['bootstrap'] === true) {
+            static::bootstrap($plugin);
+        }
 
         if (in_array('cached_settings', Cache::configured())) {
             Cache::delete('EventHandlers', 'cached_settings');
@@ -839,7 +912,11 @@ class PluginManager
     {
         if (is_array($plugin)) {
             foreach ($plugin as $name) {
-                static::unload($name);
+                if ($name === null) {
+                    static::getCollection()->clear();
+                } else {
+                    static::getCollection()->remove($plugin);
+                }
             }
 
             return;
@@ -856,7 +933,7 @@ class PluginManager
                 $eventManager->detachPluginSubscribers($plugin);
             }
         }
-        parent::unload($plugin);
+        static::unload($plugin);
         Cache::delete('EventHandlers', 'cached_settings');
     }
 
@@ -1018,17 +1095,18 @@ class PluginManager
     public static function events($plugin = null)
     {
         if ($plugin === null) {
-            foreach (static::loaded() as $p) {
+            foreach (Plugin::loaded() as $p) {
                 static::events($p);
             }
             return true;
         }
-        $config = static::$_plugins[$plugin];
-        if ((!isset($config['events'])) || ($config['events'] === false)) {
-            return false;
-        }
+        $instance = static::$plugins->get($plugin);
+        //debug($instance);
+        //if ((!isset($instance->events)) || ($instance->events === false)) {
+        //    return false;
+        //}
 
-        if (($config['ignoreMissing']) && (!file_exists($config['configPath'] . 'events.php'))) {
+        if (!file_exists($instance->getConfigPath() . 'events.php')) {
             return false;
         }
 
@@ -1043,7 +1121,7 @@ class PluginManager
      */
     public static function available($plugin)
     {
-        if (static::loaded($plugin)) {
+        if (Plugin::isLoaded($plugin)) {
             return true;
         }
 
@@ -1077,4 +1155,250 @@ class PluginManager
 
         return false;
     }
+
+    public static function setup(PluginApplicationInterface $app)
+    {
+        $dbConfigExists = false;
+
+        if (file_exists(ROOT . DS . 'config' . DS . 'database.php')) {
+            Configure::load('database', 'default');
+            ConnectionManager::drop('default');
+            ConnectionManager::config(Configure::consume('Datasources'));
+        }
+
+        try {
+            $defaultConnection = ConnectionManager::get('default');
+            $dbConfigExists = $defaultConnection->connect();
+        } catch (\Exception $e) {
+            $dbConfigExists = false;
+        }
+
+        // Map our custom types
+        Type::map('params', 'Croogo\Core\Database\Type\ParamsType');
+        Type::map('encoded', 'Croogo\Core\Database\Type\EncodedType');
+        Type::map('link', 'Croogo\Core\Database\Type\LinkType');
+
+        Configure::write(
+            'DebugKit.panels',
+            array_merge((array)Configure::read('DebugKit.panels'), [
+                'Croogo/Core.Plugins',
+                'Croogo/Core.ViewHelpers',
+                'Croogo/Core.Components',
+            ])
+        );
+
+        Croogo::hookComponent('*', [
+            'Croogo' => [
+                'className' => 'Croogo/Core.Croogo',
+                'priority' => 5
+            ]
+        ]);
+        Croogo::hookComponent('*', 'Croogo/Acl.Filter');
+        Croogo::hookComponent('*', 'Security');
+        Croogo::hookComponent('*', 'Csrf');
+        Croogo::hookComponent('*', 'Acl.Acl');
+        Croogo::hookComponent('*', 'Auth');
+        Croogo::hookComponent('*', 'Flash');
+        //Croogo::hookComponent('*', 'RequestHandler');
+        Croogo::hookComponent('*', 'Croogo/Core.Theme');
+
+        Croogo::hookHelper('*', 'Croogo/Core.Js');
+        Croogo::hookHelper('*', 'Croogo/Core.Layout');
+    }
+
+    public static function croogoBootstrap($app) {
+
+        // Make sure that the Croogo event manager is the global one
+        EventManager::instance();
+
+        \Croogo\Core\time(function () {
+            /**
+             * Default Acl plugin.  Custom Acl plugin should override this value.
+             */
+            Configure::write('Site.acl_plugin', 'Croogo/Acl');
+
+            /**
+             * Default API Route Prefix. This can be overriden in settings.
+             */
+            Configure::write('Croogo.Api.path', 'api');
+
+            /**
+             * Admin theme
+             */
+            Configure::write('Site.admin_theme', 'Croogo/Core');
+
+            /**
+             * Cache configuration
+             */
+            $defaultCacheConfig = Cache::getConfig('default');
+            $defaultEngine = $defaultCacheConfig['className'];
+            $defaultPrefix = Hash::get($defaultCacheConfig, 'prefix', 'cake_');
+            $cacheConfig = [
+                'duration' => '+1 hour',
+                'path' => CACHE . 'queries' . DS,
+                'className' => $defaultEngine,
+                'prefix' => $defaultPrefix,
+            ] + $defaultCacheConfig;
+            Configure::write('Croogo.Cache.defaultEngine', $defaultEngine);
+            Configure::write('Croogo.Cache.defaultPrefix', $defaultPrefix);
+            Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
+
+            $configured = Cache::configured();
+            if (!in_array('cached_settings', $configured)) {
+                Cache::setConfig('cached_settings', array_merge(
+                    Configure::read('Croogo.Cache.defaultConfig'),
+                    ['groups' => ['settings']]
+                ));
+            }
+
+            /**
+             * Settings
+             */
+            Configure::config('settings', new DatabaseConfig());
+            try {
+                Configure::load('settings', 'settings');
+            }
+            catch (\Exception $e) {
+                Log::error($e->getMessage());
+                Log::error('You can ignore the above error during installation');
+            }
+
+            /**
+             * Locale
+             */
+            $siteLocale = Configure::read('Site.locale');
+            Configure::write('App.defaultLocale', $siteLocale);
+            I18n::setLocale($siteLocale);
+
+            /**
+             * Assets
+             */
+            if (Configure::check('Site.asset_timestamp')) {
+                $timestamp = Configure::read('Site.asset_timestamp');
+                Configure::write(
+                    'Asset.timestamp',
+                    is_numeric($timestamp) ? (bool)$timestamp : $timestamp
+                );
+                unset($timestamp);
+            }
+
+            /**
+             * List of core plugins
+             */
+            $corePlugins = [
+                'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Croogo/Comments', 'Croogo/Contacts', 'Croogo/Menus', 'Croogo/Meta',
+                'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',  'Croogo/Dashboards',
+            ];
+            Configure::write('Core.corePlugins', $corePlugins);
+        }, 'Setting base configuration');
+
+        /**
+         * Use old translation format for the croogo domain
+         */
+        $siteLocale = Configure::read('App.defaultLocale');
+        I18n::config('croogo', function ($domain, $locale) {
+            $loader = new MessagesFileLoader($domain, $locale, 'po');
+            $package = new Package('sprintf', 'default');
+            $localePackage = $loader();
+            if ($localePackage) {
+                $package->setMessages($localePackage->getMessages());
+            }
+            return $package;
+        });
+
+        /**
+         * Timezone
+         */
+        $timezone = Configure::read('Site.timezone');
+        if (!$timezone) {
+            $timezone = 'UTC';
+        }
+        date_default_timezone_set($timezone);
+
+        \Croogo\Core\time(function () use ($app) {
+            /**
+             * Load required plugins
+             */
+            if (!Plugin::isLoaded('Acl')) {
+                $app->addPlugin('Acl', ['bootstrap' => true]);
+            }
+            if (!Plugin::isLoaded('BootstrapUI')) {
+                $app->addPlugin('BootstrapUI');
+            }
+
+            /**
+             * Extensions
+             */
+            $app->addPlugin('Croogo/Extensions', [
+                'autoload' => true,
+                'bootstrap' => true,
+                'routes' => true,
+                'events' => true
+            ]);
+        }, 'Loading dependencies');
+
+        /**
+         * Plugins
+         */
+        $aclPlugin = Configure::read('Site.acl_plugin');
+        $pluginBootstraps = Configure::read('Hook.bootstraps');
+        $plugins = array_filter(explode(',', $pluginBootstraps));
+
+        //debug($pluginBootstraps); die();
+
+        if (!in_array($aclPlugin, $plugins)) {
+            $plugins = Hash::merge((array)$aclPlugin, $plugins);
+        }
+        $themes = [Configure::read('Site.theme'), Configure::read('Site.admin_theme')];
+        \Croogo\Core\time(function () use ($app, $plugins, $themes) {
+            $option = [
+                'autoload' => true,
+                'bootstrap' => true,
+                'ignoreMissing' => true,
+                'routes' => true,
+                'events' => true
+            ];
+            foreach ($plugins as $plugin) {
+                $plugin = Inflector::camelize($plugin);
+                if (Plugin::isLoaded($plugin)) {
+                    continue;
+                }
+
+                try {
+                    PluginManager::load($plugin, $option);
+                } catch (MissingPluginException $e) {
+                    Log::error('Plugin not found during bootstrap: ' . $plugin);
+                    continue;
+                }
+            }
+
+
+            foreach ($themes as $theme) {
+                if ($theme && !Plugin::isLoaded($theme) && PluginManager::available($theme)) {
+                    PluginManager::load($theme, [
+                        'autoload' => true,
+                        'bootstrap' => true,
+                        'routes' => true,
+                        'events' => true,
+                        'ignoreMissing' => true
+                    ]);
+                }
+            }
+        }, 'plugins-loading-configured', 'Loading configured plugins: ' . implode(', ', $plugins + $themes));
+
+        // FIXME DispatcherFactory::add('Croogo/Core.HomePage');
+
+        \Croogo\Core\time(function () {
+            PluginManager::events();
+
+            EventManager::loadListeners();
+        }, 'Registering plugin listeners');
+
+
+        \Croogo\Core\time(function () {
+            Croogo::dispatchEvent('Croogo.bootstrapComplete');
+        }, 'event-Croogo.bootstrapComplete', 'Event: Croogo.bootstrapComplete');
+
+    }
+
 }
