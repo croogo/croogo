@@ -32,7 +32,7 @@ if (!function_exists('\Croogo\Core\link')) {
 if (!function_exists('\Croogo\Core\timerStart')) {
     function timerStart($name, $message = null)
     {
-        if (!Plugin::available('DebugKit')) {
+        if (!PluginManager::available('DebugKit')) {
             return;
         }
 
@@ -43,7 +43,7 @@ if (!function_exists('\Croogo\Core\timerStart')) {
 if (!function_exists('\Croogo\Core\timerStop')) {
     function timerStop($name)
     {
-        if (!Plugin::available('DebugKit')) {
+        if (!PluginManager::available('DebugKit')) {
             return;
         }
 

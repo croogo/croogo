@@ -37,13 +37,13 @@ class AccessComponent extends Component
  */
     public function startup(Event $event)
     {
-        $controller = $event->subject();
+        $controller = $event->getSubject();
         $this->_controller = $controller;
-        if ($controller->request->param('prefix') != 'admin') {
+        if ($controller->request->getParam('prefix') != 'admin') {
             return;
         }
 
-        switch ($controller->name) {
+        switch ($controller->getName()) {
             case 'Roles':
                 $this->_setupRole();
                 break;
@@ -61,8 +61,8 @@ class AccessComponent extends Component
         Croogo::hookAdminTab('Admin/Roles/edit', $title, $element);
 
         $id = null;
-        if (!empty($this->_controller->request->params['pass'][0])) {
-            $id = $this->_controller->request->params['pass'][0];
+        if (!empty($this->_controller->request->getParam('pass')[0])) {
+            $id = $this->_controller->request->getParam('pass')[0];
         }
         $this->_controller->set('parents', $this->_controller->Roles->allowedParents($id));
     }
@@ -115,7 +115,7 @@ class AccessComponent extends Component
     public function isUrlAuthorized($user, $url)
     {
         if (is_string($url)) {
-            $parsedUrl = Router::parse($url);
+            $parsedUrl = Router::parseRequest($this->request);
             unset($parsedUrl['_matchedRoute']);
             $options = [
                 'params' => $parsedUrl,

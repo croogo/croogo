@@ -6,13 +6,13 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Content'), ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'])
     ->add(__d('croogo', 'Types'), ['plugin' => 'Croogo/Taxonomy', 'controller' => 'Types', 'action' => 'index']);
 
-if ($this->request->params['action'] == 'edit') {
+if ($this->request->getParam('action') == 'edit') {
     $this->assign('title', __d('croogo', 'Edit Type'));
 
     $this->Breadcrumbs->add($type->title, $this->request->getRequestTarget());
 }
 
-if ($this->request->params['action'] == 'add') {
+if ($this->request->getParam('action') == 'add') {
     $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 }
 

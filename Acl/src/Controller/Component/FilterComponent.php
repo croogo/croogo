@@ -42,7 +42,7 @@ class FilterComponent extends Component
  */
     public function beforeFilter(Event $event)
     {
-        $this->_controller = $event->subject();
+        $this->_controller = $event->getSubject();
 
         if ($this->_config('multiRole')) {
             Croogo::hookAdminTab('Admin/Users/add', 'Roles', 'Croogo/Acl.admin/roles');
@@ -83,7 +83,7 @@ class FilterComponent extends Component
         }
 
         //Configure AuthComponent
-        $this->_controller->Auth->config('authenticate', [
+        $this->_controller->Auth->setConfig('authenticate', [
             AuthComponent::ALL => [
                 'userModel' => 'Croogo/Users.Users',
                 'fields' => [
@@ -94,16 +94,14 @@ class FilterComponent extends Component
                     'className' => 'Fallback',
                     'hashers' => ['Default', 'Weak']
                 ],
-                'scope' => [
-                    'Users.status' => 1,
-                ],
+                'finder' => 'authUser',
             ],
         ]);
         if ($this->_config('autoLoginDuration')) {
             if (!function_exists('mcrypt_encrypt')) {
                 $notice = __d('croogo', '"AutoLogin" (Remember Me) disabled since mcrypt_encrypt is not available');
                 $this->log($notice, LOG_CRIT);
-                if (isset($this->_controller->request->params['admin'])) {
+                if ($this->_controller->request->getParam('prefix') == 'admin') {
                     $this->_controller->Flash->error($notice);
                 }
                 if (isset($this->_controller->Settings)) {
@@ -116,12 +114,12 @@ class FilterComponent extends Component
             $this->_controller->Auth->config('authenticate', ['Croogo/Acl.Cookie']);
         }
         if ($this->_config('multiColumn')) {
-            $this->_controller->Auth->config('authenticate', ['Croogo/Acl.MultiColumn']);
+            $this->_controller->Auth->setConfig('authenticate', ['Croogo/Acl.MultiColumn']);
         } else {
-            $this->_controller->Auth->config('authenticate', ['Form']);
+            $this->_controller->Auth->setConfig('authenticate', ['Form']);
         }
 
-        $this->_controller->Auth->config('authorize', [
+        $this->_controller->Auth->setConfig('authorize', [
             AuthComponent::ALL => [
                 'actionPath' => 'controllers',
                 'userModel' => 'Croogo/Users.Users',
@@ -131,9 +129,9 @@ class FilterComponent extends Component
             ]
         ]);
 
-        if ($this->_controller->request->param('prefix') == 'admin' &&
+        if ($this->_controller->request->getParam('prefix') == 'admin' &&
             !$this->_controller->Auth->user()) {
-            $this->_controller->Auth->config('authError', false);
+            $this->_controller->Auth->setConfig('authError', false);
         }
 
         $this->configureLoginActions();
@@ -146,42 +144,42 @@ class FilterComponent extends Component
  */
     public function configureLoginActions()
     {
-        $this->_controller->Auth->config('loginAction', [
+        $this->_controller->Auth->setConfig('loginAction', [
             'prefix' => false,
             'plugin' => 'Croogo/Users',
             'controller' => 'Users',
             'action' => 'login',
         ]);
-        if ($this->request->param('prefix') === 'admin') {
-            $this->_controller->Auth->config('loginAction', [
+        if ($this->request->getParam('prefix') === 'admin') {
+            $this->_controller->Auth->setConfig('loginAction', [
                 'prefix' => 'admin',
                 'plugin' => 'Croogo/Users',
                 'controller' => 'Users',
                 'action' => 'login',
             ]);
         }
-        $this->_controller->Auth->config('logoutRedirect', [
+        $this->_controller->Auth->setConfig('logoutRedirect', [
             'plugin' => 'Croogo/Users',
             'controller' => 'Users',
             'action' => 'login',
         ]);
-        if ($this->_controller->request->param('prefix') == 'admin') {
+        if ($this->_controller->request->getParam('prefix') == 'admin') {
             $dashboardUrl = Configure::read('Site.dashboard_url');
             if (is_string($dashboardUrl)) {
                 $converter = new StringConverter();
                 $dashboardUrl = $converter->linkStringToArray($dashboardUrl);
             }
             $loginRedirect = $dashboardUrl ?: '/admin';
-            $this->_controller->Auth->config('loginRedirect', $loginRedirect);
+            $this->_controller->Auth->setConfig('loginRedirect', $loginRedirect);
         } else {
             $loginRedirect = Configure::read('Croogo.homeUrl') ?: '/';
-            $this->_controller->Auth->config('loginRedirect', $loginRedirect);
+            $this->_controller->Auth->setConfig('loginRedirect', $loginRedirect);
         }
 
         if ($this->_controller->request->is('ajax')) {
-            $this->_controller->Auth->config('unauthorizedRedirect', false);
+            $this->_controller->Auth->setConfig('unauthorizedRedirect', false);
         } else {
-            $this->_controller->Auth->config('unauthorizedRedirect', [
+            $this->_controller->Auth->setConfig('unauthorizedRedirect', [
                 'plugin' => 'Croogo/Users',
                 'controller' => 'Users',
                 'action' => 'login',
@@ -190,7 +188,7 @@ class FilterComponent extends Component
 
         $config = Configure::read('Acl');
         if (!empty($config['Auth']) && is_array($config['Auth'])) {
-            $isAdminRequest = !empty($this->_controller->request->params['admin']);
+            $isAdminRequest = !empty($this->_controller->request->getParam('admin'));
             $authActions = [
                 'loginAction', 'loginRedirect', 'logoutRedirect',
                 'unauthorizedRedirect',
@@ -225,7 +223,7 @@ class FilterComponent extends Component
 
         if ($this->_controller->Acl->check('Role-public', $authorizer->action($this->_controller->request))) {
             $this->_controller->Auth->allow(
-                $this->_controller->request->action
+                $this->_controller->request->getParam('action')
             );
         }
     }

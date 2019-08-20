@@ -54,11 +54,11 @@ class AliasableBehavior extends Behavior
     {
         $this->_byIds = $this->_table
             ->find('list', [
-                'keyField' => $this->config('id'),
-                'valueField' => $this->config('alias'),
+                'keyField' => $this->getConfig('id'),
+                'valueField' => $this->getConfig('alias'),
             ])
             ->where([
-                $this->_table->aliasField($this->config('alias')) . ' !=' => '',
+                $this->_table->aliasField($this->getConfig('alias')) . ' !=' => '',
             ])
             ->toArray();
         $this->_byAlias = array_flip($this->_byIds);

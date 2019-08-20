@@ -90,7 +90,7 @@ $this->append('table-body');
                     <?php
                     echo $this->Croogo->adminRowActions($node->id);
 
-                    if ($this->request->query('type')):
+                    if ($this->request->getQuery('type')):
                         echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'move', $node->id, 'up'], [
                                 'method' => 'post',
                                 'icon' => $this->Theme->getIcon('move-up'),

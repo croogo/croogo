@@ -24,7 +24,7 @@ class TypesController extends AppController
     {
         parent::initialize();
 
-        $this->Crud->config('actions.index', [
+        $this->Crud->setConfig('actions.index', [
             'displayFields' => $this->Types->displayFields(),
         ]);
     }
@@ -41,7 +41,7 @@ class TypesController extends AppController
     public function beforePaginate(Event $event)
     {
         /** @var \Cake\ORM\Query $query */
-        $query = $event->subject()->query;
+        $query = $event->getSubject()->query;
 
         $query->where([
             'plugin IS' => null
@@ -51,7 +51,7 @@ class TypesController extends AppController
     public function beforeCrudFind(Event $event)
     {
         /** @var \Cake\ORM\Query $query */
-        $query = $event->subject()->query;
+        $query = $event->getSubject()->query;
         $query->contain([
             'Vocabularies',
         ]);

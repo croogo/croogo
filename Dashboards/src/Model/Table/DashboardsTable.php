@@ -21,7 +21,7 @@ class DashboardsTable extends CroogoTable
     {
         parent::initialize($config);
 
-        $this->table('dashboards');
+        $this->setTable('dashboards');
 		$this->addBehavior('Timestamp');
 		$this->addBehavior('ADmad/Sequence.Sequence', [
 			'order' => 'weight',
@@ -30,6 +30,6 @@ class DashboardsTable extends CroogoTable
         $this->belongsTo('Users', [
             'className' => 'Croogo/Users.Users'
         ]);
-        $this->connection()->getDriver()->enableAutoQuoting();
+        $this->getConnection()->getDriver()->enableAutoQuoting();
     }
 }

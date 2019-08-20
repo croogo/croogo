@@ -32,14 +32,14 @@ class LinksController extends AppController
         $this->loadComponent('Croogo/Core.BulkProcess');
         $this->loadModel('Croogo/Users.Roles');
 
-        if ($this->request->param('action') == 'toggle') {
+        if ($this->request->getParam('action') == 'toggle') {
             $this->Croogo->protectToggleAction();
         }
     }
 
     public function index()
     {
-        $menuId = $this->request->query('menu_id');
+        $menuId = $this->request->getQuery('menu_id');
         $menu = $this->Links->Menus->get($menuId);
         $this->set('title_for_layout', __d('croogo', 'Links: %s', $menu->title));
         $linksTree = $this->Links->find('treeList')
@@ -192,12 +192,12 @@ class LinksController extends AppController
     {
         $menuId = null;
         $conditions = [];
-        if (isset($event->subject()->entity) && $event->subject()->entity->isNew() === false) {
-            $menuId = $event->subject()->entity->menu_id;
-            $conditions[$this->Links->aliasField('id') .' !='] = $event->subject()->entity->id;
+        if (isset($event->getSubject()->entity) && $event->getSubject()->entity->isNew() === false) {
+            $menuId = $event->getSubject()->entity->menu_id;
+            $conditions[$this->Links->aliasField('id') .' !='] = $event->getSubject()->entity->id;
         }
-        if ($this->request->query('menu_id')) {
-            $menuId = $this->request->query('menu_id');
+        if ($this->request->getQuery('menu_id')) {
+            $menuId = $this->request->getQuery('menu_id');
         }
         if (!$menuId) {
             return;
@@ -217,8 +217,8 @@ class LinksController extends AppController
             return;
         }
 
-        $entity = $event->subject()->entity;
-        $event->subject()->url['menu_id'] = $entity->menu_id;
+        $entity = $event->getSubject()->entity;
+        $event->getSubject()->url['menu_id'] = $entity->menu_id;
     }
 
     public function implementedEvents()

@@ -30,8 +30,8 @@ class HomePageFilter extends DispatcherFilter
      */
     public function beforeDispatch(Event $event)
     {
-        $request = $event->data['request'];
-        if ($request->here !== $request->webroot || $request->param('prefix') === 'admin') {
+        $request = $event->getData('request');
+        if ($request->getAttribute('here') !== $request->getAttribute('webroot') || $request->getParam('prefix') === 'admin') {
             return;
         }
 

@@ -29,7 +29,7 @@ class LinkedAssetsBehavior extends Behavior {
                     'foreignKey' => 'foreign_key',
                     'dependent' => true,
                     'conditions' => [
-                        'AssetUsages.model' => $this->_table->alias(),
+                        'AssetUsages.model' => $this->_table->getAlias(),
                     ],
                 ],
             ],

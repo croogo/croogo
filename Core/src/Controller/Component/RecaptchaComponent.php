@@ -44,15 +44,15 @@ class RecaptchaComponent extends Component
     {
         $controller = $this->_registry->getController();
         $this->_controller = $controller;
-        if ($controller->name === 'CakeError') {
+        if ($controller->getName() === 'CakeError') {
             return;
         }
 
-        if (in_array($this->request->param('action'), $this->config('actions'))) {
+        if (in_array($this->request->getParam('action'), $this->getConfig('actions'))) {
             $controller->Security->validatePost = false;
         }
 
-        $controller->viewBuilder()->helpers(['Croogo/Core.Recaptcha']);
+        $controller->viewBuilder()->getHelpers(['Croogo/Core.Recaptcha']);
     }
 
     /**

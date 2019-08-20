@@ -8,11 +8,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 $this->Breadcrumbs
     ->add(__d('croogo', 'Attachments'), $this->request->getUri()->getPath());
 
-if (!empty($this->request->query)) {
-    $query = $this->request->query;
-} else {
-    $query = array();
-}
+$query = (array)$this->request->getAttribute('query');
 
 $this->append('action-buttons');
 
@@ -47,7 +43,7 @@ $this->append('table-heading');
         __d('croogo', 'Actions'),
     ));
 
-    echo $this->Html->tag('thead', $tableHeaders);
+    echo $tableHeaders;
 $this->end();
 
 $this->append('search', $this->element('Croogo/Core.admin/search'));

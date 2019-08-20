@@ -6,7 +6,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Breadcrumbs->add(__d('croogo', 'Contacts'), ['controller' => 'contacts', 'action' => 'index']);
 
-$status = $this->request->query('status');
+$status = $this->request->getQuery('status');
 
 if (isset($status)) {
     $this->Breadcrumbs->add(__d('croogo', 'Messages'), ['action' => 'index']);
@@ -55,7 +55,7 @@ $tableHeaders = $this->Html->tableHeaders([
     $this->Paginator->sort('created', __d('croogo', 'Created')),
     __d('croogo', 'Actions'),
 ]);
-echo $this->Html->tag('thead', $tableHeaders);
+echo $tableHeaders;
 $this->end();
 
 $this->append('table-body');

@@ -5,7 +5,7 @@ namespace Croogo\Core\Shell;
 use Cake\Console\Exception\ConsoleException;
 use Cake\Utility\Inflector;
 use Croogo\Core\Shell\CroogoAppShell;
-use Croogo\Extensions\CroogoPlugin;
+use Croogo\Core\PluginManager;
 use Croogo\Extensions\CroogoTheme;
 use Croogo\Extensions\ExtensionsInstaller;
 
@@ -65,7 +65,7 @@ class InstallShell extends AppShell
     {
         parent::__construct($stdout, $stderr, $stdin);
         $this->_ExtensionsInstaller = new ExtensionsInstaller();
-        $this->_CroogoPlugin = new CroogoPlugin();
+        $this->_CroogoPlugin = new PluginManager();
         $this->_CroogoTheme = new CroogoTheme();
     }
 
@@ -138,7 +138,7 @@ class InstallShell extends AppShell
     public function getOptionParser()
     {
         return parent::getOptionParser()
-            ->description(__d('croogo', 'Download, Install & Activate Plugins & Themes'))
+            ->setDescription(__d('croogo', 'Download, Install & Activate Plugins & Themes'))
             ->addArguments([
                 'type' => [
                     'help' => __d('croogo', 'Extension type'),

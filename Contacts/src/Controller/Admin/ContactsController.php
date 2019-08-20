@@ -22,7 +22,7 @@ class ContactsController extends AppController
     {
         parent::initialize();
 
-        $this->Crud->config('actions.index', [
+        $this->Crud->setConfig('actions.index', [
             'displayFields' => $this->Contacts->displayFields()
         ]);
     }

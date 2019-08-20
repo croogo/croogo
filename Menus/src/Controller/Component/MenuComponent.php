@@ -45,15 +45,15 @@ class MenuComponent extends Component
  */
     public function startup(Event $event)
     {
-        $this->controller = $event->subject();
+        $this->controller = $event->getSubject();
         if (isset($this->controller->Link)) {
             $this->Links = $this->controller->Links;
         } else {
             $this->Links = TableRegistry::get('Croogo/Menus.Links');
         }
 
-        $controller = $event->subject();
-        if (($controller->request->param('prefix') !== 'admin') && !isset($controller->request->params['requested'])) {
+        $controller = $event->getSubject();
+        if (($controller->request->getParam('prefix') !== 'admin') && !$controller->request->getParam('requested')) {
             $this->menus();
 
         } else {
@@ -79,7 +79,7 @@ class MenuComponent extends Component
      */
     public function beforeRender(Event $event)
     {
-        $event->subject()->set('menusForLayout', $this->menusForLayout);
+        $event->getSubject()->set('menusForLayout', $this->menusForLayout);
     }
 
 /**

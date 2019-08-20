@@ -4,7 +4,7 @@ namespace Croogo\Extensions\Event;
 
 use Cake\Core\Plugin;
 use Cake\Event\EventListenerInterface;
-use Croogo\Extensions\CroogoPlugin;
+use Croogo\Core\PluginManager;
 
 /**
  * ExtensionsEventHandler
@@ -70,6 +70,6 @@ class ExtensionsEventHandler implements EventListenerInterface
  */
     public function onBootstrapComplete($event)
     {
-        CroogoPlugin::cacheDependencies();
+        PluginManager::cacheDependencies();
     }
 }

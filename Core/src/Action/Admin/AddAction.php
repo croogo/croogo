@@ -12,7 +12,7 @@ class AddAction extends CrudAddAction
         parent::_get();
 
         $this->_controller()->set([
-            'editFields' => $this->config('editFields'),
+            'editFields' => $this->getConfig('editFields'),
         ]);
     }
 }

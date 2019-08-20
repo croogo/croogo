@@ -92,10 +92,10 @@ class CroogoComponent extends Component
  */
     public function startup(Event $event)
     {
-        $this->_controller = $event->subject();
+        $this->_controller = $event->getSubject();
 
-        if ($this->_controller->request->param('prefix') == 'admin') {
-            if (!isset($this->_controller->request->params['requested'])) {
+        if ($this->_controller->request->getParam('prefix') == 'admin') {
+            if (!$this->_controller->request->getParam('requested')) {
                 $this->_adminData();
             }
         }
@@ -109,8 +109,9 @@ class CroogoComponent extends Component
     protected function _adminData()
     {
         if (!Configure::read('Croogo.version')) {
-            if (Plugin::loaded('Settings')) {
-                if ($this->_controller->Setting instanceof Model) {
+            if (Plugin::isLoaded('Croogo/Settings')) {
+                /* FIXME
+                if ($this->getController()->Settings instanceof Model) {
                     if (file_exists(APP . 'VERSION.txt')) {
                         $file = APP . 'VERSION.txt';
                     } else {
@@ -119,6 +120,7 @@ class CroogoComponent extends Component
                     $version = trim(file_get_contents($file));
                     $this->_controller->Setting->write('Croogo.version', $version);
                 }
+                */
             }
         }
         $_siteTitle = Configure::read('Site.title');
@@ -141,7 +143,7 @@ class CroogoComponent extends Component
             ],
         ]);
 
-        $user = $this->request->session()->read('Auth.User');
+        $user = $this->request->getSession()->read('Auth.User');
         $gravatarUrl = '<img src="//www.gravatar.com/avatar/' . md5($user['email']) . '?s=23" class="rounded mx-auto"/> ';
         Nav::add('top-right', 'user', [
             'icon' => false,
@@ -184,40 +186,8 @@ class CroogoComponent extends Component
  */
     public function roleId()
     {
-        $roleId = $this->_controller->request->session()->read('Auth.User.role_id');
+        $roleId = $this->_controller->request->getSession()->read('Auth.User.role_id');
         return $roleId ? $roleId : $this->_defaultRoleId;
-    }
-
-/**
- * Extracts parameters from 'filter' named parameter.
- *
- * @return array
- * @deprecated use Search plugin to perform filtering
- */
-    public function extractFilter()
-    {
-        $filter = explode(';', $this->_controller->request->params['named']['filter']);
-        $filterData = [];
-        foreach ($filter as $f) {
-            $fData = explode(':', $f);
-            $fKey = $fData['0'];
-            if ($fKey != null) {
-                $filterData[$fKey] = $fData['1'];
-            }
-        }
-        return $filterData;
-    }
-
-/**
- * Get URL relative to the app
- *
- * @param array $url
- * @return array
- * @deprecated Use Croogo::getRelativePath
- */
-    public function getRelativePath($url = '/')
-    {
-        return Croogo::getRelativePath($url);
     }
 
 /**
@@ -245,54 +215,6 @@ class CroogoComponent extends Component
     public function removeAco($action)
     {
         $this->_controller->CroogoAccess->removeAco($action);
-    }
-
-/**
- * Sets the referer page
- *
- * We need to know where were you, to get you back there
- *
- * @return void
- * @see CroogoComponent::redirect()
- * @deprecated Use Crud.beforeRedirect event and AppController::redirectToSelf
- */
-    public function setReferer()
-    {
-        $default = [
-            'controller' => $this->_controller->request->params['controller'],
-            'action' => 'index',
-        ];
-        $referer = $this->_controller->referer($default, true);
-        $this->_controller->request->session()->write('Croogo.referer', ['url' => $referer]);
-    }
-
-/**
- * Croogo flavored redirect
- *
- * If 'save' pressed, redirect to referer or $indexUrl instead of 'edit'
- *
- * @param string $url
- * @param int $status
- * @param bool $exit
- * @param array $indexUrl
- * @return void|\Cake\Network\Response
- * @see CroogoComponent::setReferer()
- * @deprecated Use Crud.beforeRedirect event and AppController::redirectToSelf
- */
-    public function redirect($url, $status = null, $exit = true, $indexUrl = [])
-    {
-        $referer = $this->_controller->request->session()->read('Croogo.referer');
-        $this->_controller->request->session()->delete('Croogo.referer');
-        if (is_array($url)) {
-            if (isset($url['action']) && $url['action'] === 'edit') {
-                if (!isset($this->_controller->request->data['_apply'])) {
-                    $url = !empty($indexUrl) ? $indexUrl : ['action' => 'index'];
-                }
-            } elseif (isset($referer['url'])) {
-                $url = $referer['url'];
-            }
-        }
-        return $this->_controller->redirect($url, $status);
     }
 
 /**
@@ -324,89 +246,6 @@ class CroogoComponent extends Component
     }
 
 /**
- * Loads plugin's bootstrap.php file
- *
- * @param string $plugin Plugin name (underscored)
- * @return void
- * @deprecated use CroogoPlugin::addBootstrap()
- */
-    public function addPluginBootstrap($plugin)
-    {
-        $this->_CroogoPlugin->addBootstrap($plugin);
-    }
-
-/**
- * Plugin name will be removed from Hook.bootstraps
- *
- * @param string $plugin Plugin name (underscored)
- * @return void
- * @deprecated use CroogoPlugin::removeBootstrap()
- */
-    public function removePluginBootstrap($plugin)
-    {
-        $this->_CroogoPlugin->removeBootstrap($plugin);
-    }
-
-/**
- * Get theme aliases (folder names)
- *
- * @return array
- * @deprecated use CroogoTheme::getThemes()
- */
-    public function getThemes()
-    {
-        return $this->_CroogoTheme->getThemes();
-    }
-
-/**
- * Get the content of theme.json file from a theme
- *
- * @param string $alias theme folder name
- * @return array
- * @deprecated use CroogoTheme::getData()
- */
-    public function getThemeData($alias = null)
-    {
-        return $this->_CroogoTheme->getData($alias);
-    }
-
-/**
- * Get plugin alises (folder names)
- *
- * @return array
- * @deprecated use CroogoPlugin::getPlugins()
- */
-    public function getPlugins()
-    {
-        return $this->_CroogoPlugin->getPlugins();
-    }
-
-/**
- * Get the content of plugin.json file of a plugin
- *
- * @param string $alias plugin folder name
- * @return array
- * @deprecated use CroogoPlugin::getData
- */
-    public function getPluginData($alias = null)
-    {
-        return $this->_CroogoPlugin->getData($alias);
-    }
-
-/**
- * Check if plugin is dependent on any other plugin.
- * If yes, check if that plugin is available in plugins directory.
- *
- * @param  string $plugin plugin alias (underscrored)
- * @return boolean
- * @deprecated use CroogoPlugin::checkDependency()
- */
-    public function checkPluginDependency($plugin = null)
-    {
-        return $this->_CroogoPlugin->checkDependency($plugin);
-    }
-
-/**
  * Get a list of possible view paths for current request
  *
  * The default view paths are retrieved view App::path('View').  This method
@@ -432,17 +271,17 @@ class CroogoComponent extends Component
         } else {
             $viewPaths = $defaultViewPaths;
         }
-        if ($controller->viewBuilder()->theme()) {
-            $themePaths = App::path('Template', $controller->viewBuilder()->theme());
+        if ($controller->viewBuilder()->getTheme()) {
+            $themePaths = App::path('Template', $controller->viewBuilder()->getTheme());
             foreach ($themePaths as $themePath) {
                 $viewPaths[] = $themePath;
-                if ($controller->plugin) {
-                    $viewPaths[] = $themePath . 'Plugin' . DS . $controller->plugin . DS;
+                if ($controller->getPlugin()) {
+                    $viewPaths[] = $themePath . 'Plugin' . DS . $controller->getPlugin() . DS;
                 }
             }
         }
-        if ($controller->plugin) {
-            $viewPaths = array_merge($viewPaths, App::path('Template', $controller->plugin));
+        if ($controller->getPlugin()) {
+            $viewPaths = array_merge($viewPaths, App::path('Template', $controller->getPlugin()));
         }
         $viewPaths = array_merge($viewPaths, $defaultViewPaths);
         return $viewPaths;
@@ -475,8 +314,8 @@ class CroogoComponent extends Component
 
     protected function _viewPath()
     {
-        $viewPath = $this->_controller->name;
-        if (!empty($this->request->params['prefix'])) {
+        $viewPath = $this->_controller->getName();
+        if (!empty($this->request->getParam('prefix'))) {
             $prefixes = array_map(
                 'Cake\Utility\Inflector::camelize',
                 explode('/', $this->_controller->request->params['prefix'])
@@ -489,13 +328,13 @@ class CroogoComponent extends Component
     public function protectToggleAction()
     {
         $controller = $this->getController();
-        if ($controller->request->action !== 'toggle') {
+        if ($controller->request->getParam('action') !== 'toggle') {
             return;
         }
         if (!$controller->request->is('post')) {
             throw new MethodNotAllowedException();
         }
-        $controller->eventManager()->off($controller->Csrf);
-        $controller->Security->config('validatePost', false);
+        $controller->getEventManager()->off($controller->Csrf);
+        $controller->Security->setConfig('validatePost', false);
     }
 }

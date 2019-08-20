@@ -67,7 +67,7 @@ class TaxonomiesTable extends CroogoTable
             return false;
         }
 
-        $this->behaviors()->get('Tree')->config([
+        $this->behaviors()->get('Tree')->setConfig([
             'scope' => [
                 $this->aliasField('vocabulary_id') => $vocabulary->id,
             ]

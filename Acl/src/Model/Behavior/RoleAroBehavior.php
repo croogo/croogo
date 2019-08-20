@@ -10,6 +10,7 @@ use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 
 /**
  * RoleAro Behavior
@@ -67,13 +68,13 @@ class RoleAroBehavior extends Behavior
  */
     public function afterSave(Event $event, Entity $entity)
     {
-        $model = $event->subject();
-        $ref = ['model' => $model->alias(), 'foreign_key' => $entity->id];
+        $model = $event->getSubject();
+        $ref = ['model' => $model->getAlias(), 'foreign_key' => $entity->id];
         $aro = $model->node($ref)->firstOrFail();
         if (!empty($entity->alias)) {
             $aro->alias = sprintf(
                 'Role-%s',
-                Inflector::slug($entity->alias)
+                Text::slug($entity->alias)
             );
         }
         if (!empty($entity->parent_id)) {
@@ -91,8 +92,8 @@ class RoleAroBehavior extends Behavior
     public function findRoleHierarchy(Query $query, array $options)
     {
 
-        $alias = $this->_table->alias();
-        $primaryKey = $this->_table->primaryKey();
+        $alias = $this->_table->getAlias();
+        $primaryKey = $this->_table->getPrimaryKey();
         $this->_table->hasOne('ParentAro', [
             'className' => 'Aros',
             'bindingKey' => 'id',

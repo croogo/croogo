@@ -25,7 +25,7 @@ $tableHeaders = $this->Html->tableHeaders([
     __d('croogo', 'Slug'),
     __d('croogo', 'Actions'),
 ]);
-echo $this->Html->tag('thead', $tableHeaders);
+echo $tableHeaders;
 $this->end();
 
 $this->append('table-body');

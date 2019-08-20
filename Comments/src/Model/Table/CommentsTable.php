@@ -31,16 +31,6 @@ class CommentsTable extends CroogoTable
     use MailerAwareTrait;
 
 /**
- * @deprecated
- */
-    const STATUS_APPROVED = 1;
-
-/**
- * @deprecated
- */
-    const STATUS_PENDING = 0;
-
-/**
  * Filter fields
  *
  * @var array
@@ -52,7 +42,7 @@ class CommentsTable extends CroogoTable
     public function initialize(array $config)
     {
         parent::initialize($config);
-        $this->entityClass('Croogo/Comments.Comment');
+        $this->setEntityClass('Croogo/Comments.Comment');
 
         $this->belongsTo('Users', [
             'className' => 'Croogo/Users.Users',
@@ -80,7 +70,7 @@ class CommentsTable extends CroogoTable
                 'field' => 'status'
             ]);
 
-        $this->eventManager()->on($this->getMailer('Croogo/Comments.Comment'));
+        $this->getEventManager()->on($this->getMailer('Croogo/Comments.Comment'));
     }
 
     /**

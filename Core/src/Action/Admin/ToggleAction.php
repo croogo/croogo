@@ -29,10 +29,10 @@ class ToggleAction extends BaseAction
         $status = (int)!$status;
 
         $this->_controller()->viewBuilder()->setLayout('ajax');
-        $this->_controller()->viewBuilder()->template('Croogo/Core./Common/admin_toggle');
+        $this->_controller()->viewBuilder()->setTemplate('Croogo/Core./Common/admin_toggle');
 
         $entity = $this->_table()->get($id);
-        $entity->set($this->config('field'), $status);
+        $entity->set($this->getConfig('field'), $status);
         if (!$this->_table()->save($entity)) {
             throw new Exception(__d('croogo', 'Failed toggling field %s to %s', $this->config('field'), $status));
         }

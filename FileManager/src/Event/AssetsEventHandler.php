@@ -36,9 +36,9 @@ class AssetsEventHandler implements EventListenerInterface {
  * Registers usage when new attachment is created and attached to a resource
  */
     public function onNewAttachment($event) {
-        $controller = $event->subject;
+        $controller = $event->getSubject();
         $request = $controller->request;
-        $attachment = $event->data['attachment'];
+        $attachment = $event->getData('attachment');
 
         if (empty($attachment->asset->asset_usage)) {
             Log::error('No asset usage record to register');

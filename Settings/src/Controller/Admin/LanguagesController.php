@@ -69,7 +69,7 @@ class LanguagesController extends AppController
     {
         $this->Crud->on('beforePaginate', function(Event $e) {
             if (empty($this->request->query('sort'))) {
-                $e->subject()->query
+                $e->getSubject()->query
                     ->orderDesc('status');
             }
         });

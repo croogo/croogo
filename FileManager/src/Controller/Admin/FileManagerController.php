@@ -33,7 +33,7 @@ class FileManagerController extends AppController
         parent::initialize();
         $this->FileManager = new FileManager();
         $this->viewBuilder()
-            ->helpers([
+            ->setHelpers([
                 'Croogo/Core.Image',
                 'Croogo/FileManager.FileManager',
             ]);
@@ -53,43 +53,6 @@ class FileManagerController extends AppController
             WWW_ROOT,
         ];
         $this->set('deletablePaths', $this->deletablePaths);
-    }
-
-    /**
-     * Checks wether given $path is editable.
-     * A file is editable when it resides under the APP directory
-     *
-     * @param string $path Path to check
-     * @return boolean true if file is editable
-     * @deprecated Use FileManager::isEditable()
-     */
-    protected function _isEditable($path)
-    {
-        $path = realpath($path);
-        $regex = '/^' . preg_quote(realpath(ROOT), '/') . '/';
-
-        return preg_match($regex, $path) > 0;
-    }
-
-    /**
-     * Checks wether given $path is editable.
-     * A file is deleteable when it resides under directories registered in
-     * FileManagerController::deletablePaths
-     *
-     * @param string $path Path to check
-     * @return boolean true when file is deletable
-     * @deprecated Use FileManager::isDeletable()
-     */
-    protected function _isDeletable($path)
-    {
-        $path = realpath($path);
-        $regex = [];
-        for ($i = 0, $ii = count($this->deletablePaths); $i < $ii; $i++) {
-            $regex[] = '(^' . preg_quote(realpath($this->deletablePaths[$i]), '/') . ')';
-        }
-        $regex = '/' . join($regex, '|') . '/';
-
-        return preg_match($regex, $path) > 0;
     }
 
     /**
@@ -130,11 +93,7 @@ class FileManagerController extends AppController
     {
         $this->folder = new Folder;
 
-        if (isset($this->request->query['path'])) {
-            $path = $this->request->query['path'];
-        } else {
-            $path = APP;
-        }
+        $path = $this->request->getQuery('path') ?: APP;
 
         $path = realpath($path) . DS;
         $regex = '/^' . preg_quote(realpath(ROOT), '/') . '/';
@@ -165,8 +124,8 @@ class FileManagerController extends AppController
      */
     public function editFile()
     {
-        if (isset($this->request->query['path'])) {
-            $path = $this->request->query['path'];
+        if (!empty($this->request->getQuery('path'))) {
+            $path = $this->request->getQuery('path');
             $absolutefilepath = $path;
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
@@ -183,8 +142,8 @@ class FileManagerController extends AppController
         $path = implode(DS, $pathE);
         $this->file = new File($absolutefilepath, true);
 
-        if (!empty($this->request->data)) {
-            if ($this->file->write($this->request->data['content'])) {
+        if (!empty($this->request->getData())) {
+            if ($this->file->write($this->request->getData('content'))) {
                 $this->Flash->success(__d('croogo', 'File saved successfully'));
             }
         }
@@ -204,11 +163,7 @@ class FileManagerController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Upload'));
 
-        if (isset($this->request->query['path'])) {
-            $path = $this->request->query['path'];
-        } else {
-            $path = APP;
-        }
+        $path = $this->request->getQuery('path') ?: APP;
         $this->set(compact('path'));
 
         if (isset($path) && !$this->FileManager->isDeletable($path)) {
@@ -217,11 +172,12 @@ class FileManagerController extends AppController
             return $this->redirect($this->referer());
         }
 
-        if (isset($this->request->data['file']['tmp_name']) &&
-            is_uploaded_file($this->request->data['file']['tmp_name'])
+        $postFile = $this->request->getData('file');
+        if (isset($postFile['tmp_name']) &&
+            is_uploaded_file($postFile['tmp_name'])
         ) {
-            $destination = $path . $this->request->data['file']['name'];
-            move_uploaded_file($this->request->data['file']['tmp_name'], $destination);
+            $destination = $path . $postFile['name'];
+            move_uploaded_file($postFile['tmp_name'], $destination);
             $this->Flash->success(__d('croogo', 'File uploaded successfully.'));
             $redirectUrl = $this->_browsePathUrl($path);
 

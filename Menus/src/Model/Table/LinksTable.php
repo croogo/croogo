@@ -73,8 +73,8 @@ class LinksTable extends CroogoTable
 
     protected function _initializeSchema(TableSchema $table)
     {
-        $table->columnType('visibility_roles', 'encoded');
-        $table->columnType('link', 'link');
+        $table->setColumnType('visibility_roles', 'encoded');
+        $table->setColumnType('link', 'link');
 
         return parent::_initializeSchema($table);
     }
@@ -93,7 +93,7 @@ class LinksTable extends CroogoTable
         if ($this->hasBehavior('Tree')) {
             $this->behaviors()
                 ->get('Tree')
-                ->config($settings);
+                ->setConfig($settings);
         } else {
             $this->addBehavior('Tree', $settings);
         }
@@ -107,7 +107,7 @@ class LinksTable extends CroogoTable
         if ($entity->isNew()) {
             return;
         }
-        if ($entity->dirty('menu_id')) {
+        if ($entity->isDirty('menu_id')) {
             $this->setTreeScope($entity->menu_id);
             $this->recover();
             $this->setTreeScope($entity->getOriginal('menu_id'));

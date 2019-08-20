@@ -65,10 +65,10 @@ class InstallController extends Controller
     {
         parent::beforeFilter($event);
 
-        $this->viewBuilder()->theme('Croogo/Core');
+        $this->viewBuilder()->setTheme('Croogo/Core');
         $this->viewBuilder()->setLayout('install');
-        $this->viewBuilder()->className('Croogo/Core.Croogo');
-        $this->viewBuilder()->helpers([
+        $this->viewBuilder()->setClassName('Croogo/Core.Croogo');
+        $this->viewBuilder()->setHelpers([
             'Croogo/Core.Theme',
             'Html' => [
                 'className' => 'Croogo/Core.CroogoHtml',
@@ -177,7 +177,7 @@ class InstallController extends Controller
 
         $connection = ConnectionManager::get('default');
         $connection->cacheMetadata(false);
-        $schemaCollection = $connection->schemaCollection();
+        $schemaCollection = $connection->getSchemaCollection();
         if (!empty($schemaCollection->listTables())) {
             $this->Flash->error(
                 __d('croogo', 'Warning: Database "%s" is not empty.', $connection->config()['database'])
@@ -232,7 +232,7 @@ class InstallController extends Controller
     public function adminUser()
     {
         $this->_check();
-        if (!Plugin::loaded('Croogo/Users')) {
+        if (!Plugin::isLoaded('Croogo/Users')) {
             Plugin::load('Croogo/Users');
         }
         $this->loadModel('Croogo/Users.Users');
@@ -240,11 +240,11 @@ class InstallController extends Controller
         $user = $this->Users->newEntity();
 
         if ($this->request->is('post')) {
-            $this->Users->patchEntity($user, $this->request->data());
+            $this->Users->patchEntity($user, $this->request->getData());
             $install = new InstallManager();
             $result = $install->createAdminUser($user);
             if ($result === true) {
-                $this->request->session()->write('Install.user', $user);
+                $this->request->getSession()->write('Install.user', $user);
 
                 return $this->redirect(['action' => 'finish']);
             }
@@ -270,8 +270,8 @@ class InstallController extends Controller
         $install = new InstallManager();
         $install->installCompleted();
 
-        $this->set('user', $this->request->session()->read('Install.user'));
-        $this->request->session()->destroy();
+        $this->set('user', $this->request->getSession()->read('Install.user'));
+        $this->request->getSession()->destroy();
         $this->set('onStep', 4);
     }
 }

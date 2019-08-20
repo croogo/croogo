@@ -51,10 +51,11 @@ class AutoLoginComponent extends Component
      */
     public function startup(Event $event)
     {
-        $this->_Controller = $controller = $event->subject();
-        $controller->eventManager()->attach(
-            [$this, 'onAdminLogoutSuccessful'],
-            'Controller.Users.adminLogoutSuccessful'
+        $this->_Controller = $controller = $event->getSubject();
+        $controller->getEventManager()->on(
+            'Controller.Users.adminLogoutSuccessful',
+            [],
+            [$this, 'onAdminLogoutSuccessful']
         );
 
         // skip autologin when mcrypt is not available
@@ -62,15 +63,16 @@ class AutoLoginComponent extends Component
             return;
         }
 
-        $this->_registry->Cookie->configKey($this->config('cookieName'), $this->config('cookieConfig'));
+        $this->_registry->Cookie->configKey($this->getConfig('cookieName'), $this->getConfig('cookieConfig'));
 
-        $setting = $this->_registry->Auth->config('authenticate.all');
+        $setting = $this->_registry->Auth->getConfig('authenticate.all');
         list(, $this->_userModel) = pluginSplit($setting['userModel']);
         $this->_fields = $setting['fields'];
 
-        $controller->eventManager()->attach(
-            [$this, 'onAdminLoginSuccessful'],
+        $controller->eventManager()->on(
             'Controller.Users.adminLoginSuccessful'
+            [],
+            [$this, 'onAdminLoginSuccessful']
         );
     }
 
@@ -101,7 +103,7 @@ class AutoLoginComponent extends Component
      */
     public function onAdminLoginSuccessful(Event $event)
     {
-        $request = $event->subject()->request;
+        $request = $event->getSubject()->request;
         $remember = $request->data('remember');
         $expires = Configure::read('Access Control.autoLoginDuration');
         if (strtotime($expires) === false) {
@@ -109,7 +111,7 @@ class AutoLoginComponent extends Component
         }
         if ($request->is('post') && $remember) {
             $data = $this->_cookie($request);
-            $this->_registry->Cookie->write($this->config('cookieName'), $data);
+            $this->_registry->Cookie->write($this->getConfig('cookieName'), $data);
         }
         return true;
     }
@@ -121,7 +123,7 @@ class AutoLoginComponent extends Component
      */
     public function onAdminLogoutSuccessful($event)
     {
-        $this->_registry->Cookie->delete($this->config('cookieName'));
+        $this->_registry->Cookie->delete($this->getConfig('cookieName'));
         return true;
     }
 

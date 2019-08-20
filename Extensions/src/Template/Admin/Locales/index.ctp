@@ -24,7 +24,7 @@ $this->start('table-heading');
         __d('croogo', 'Default'),
         __d('croogo', 'Actions'),
     ));
-    echo $this->Html->tag('thead', $tableHeaders);
+    echo $tableHeaders;
 $this->end();
 
 $this->append('table-body');

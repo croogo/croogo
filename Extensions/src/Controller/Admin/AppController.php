@@ -26,7 +26,7 @@ class AppController extends CroogoController
     {
         parent::initialize();
 
-        if (in_array($this->request->param('action'), ['admin_delete', 'admin_toggle', 'admin_activate'])) {
+        if (in_array($this->request->getParam('action'), ['admin_delete', 'admin_toggle', 'admin_activate'])) {
             $this->request->allowMethod('post');
         }
     }

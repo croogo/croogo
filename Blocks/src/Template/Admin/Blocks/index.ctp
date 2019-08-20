@@ -13,7 +13,7 @@ $this->append('form-start', $this->Form->create(null, [
     'align' => 'inline'
 ]));
 
-$chooser = isset($this->request->query['chooser']);
+$chooser = $this->request->getQuery('chooser');
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([
     $this->Form->checkbox('checkAll', ['id' => 'BlocksCheckAll']),
@@ -24,7 +24,7 @@ $tableHeaders = $this->Html->tableHeaders([
     $this->Paginator->sort('status', __d('croogo', 'Status')),
     __d('croogo', 'Actions'),
 ]);
-echo $this->Html->tag('thead', $tableHeaders);
+echo $tableHeaders;
 $this->end();
 
 $this->append('table-body');

@@ -51,7 +51,7 @@ class AppController extends Controller
             'loginAction' => false,
         ];
 
-        if (Plugin::loaded('ADmad/JwtAuth')) {
+        if (Plugin::isLoaded('ADmad/JwtAuth')) {
             $authConfig['authenticate']['ADmad/JwtAuth.Jwt'] = [
                 'fields' => [
                     'username' => 'id',

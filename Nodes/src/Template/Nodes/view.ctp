@@ -13,7 +13,7 @@ $this->Nodes->set($node);
     ?>
 </div>
 
-<?php if (Plugin::loaded('Croogo/Comments')): ?>
+<?php if (Plugin::isLoaded('Croogo/Comments')): ?>
 <div id="comments" class="node-comments">
 <?php
     $type = $typesForLayout[$this->Nodes->field('type')];

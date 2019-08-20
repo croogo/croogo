@@ -93,11 +93,11 @@ class EventManager extends CakeEventManager
         }
         foreach ($cached as $cache) {
             extract($cache);
-            if (Plugin::loaded($plugin)) {
+            if (Plugin::isLoaded($plugin)) {
                 $class = App::className($class, 'Event');
                 $settings = isset($eventOptions['options']) ? $eventOptions['options'] : [];
                 $listener = new $class($settings);
-                $eventManager->attach($listener, $eventKey, $eventOptions);
+                $eventManager->on($listener, $eventKey, $eventOptions);
             }
         }
     }
@@ -109,7 +109,7 @@ class EventManager extends CakeEventManager
  */
     public function attach($callable, $eventKey = null, array $options = [])
     {
-        parent::on($callable, $eventKey, $options);
+        parent::on($eventKey, $options, $callable);
         if (is_object($callable)) {
             $key = get_class($callable);
             $this->_listenersMap[$key] = $callable;

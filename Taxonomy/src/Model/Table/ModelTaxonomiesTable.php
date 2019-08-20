@@ -18,7 +18,7 @@ class ModelTaxonomiesTable extends CroogoTable
     public function initialize(array $config)
     {
         parent::initialize($config);
-        $this->table('model_taxonomies');
+        $this->setTable('model_taxonomies');
     }
 
 }

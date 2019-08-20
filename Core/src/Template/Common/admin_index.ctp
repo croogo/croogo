@@ -8,10 +8,11 @@ if (!isset($className)) {
     $className = lcfirst($this->name);
 }
 $humanName = Inflector::humanize(Inflector::underscore($modelClass));
-$i18nDomain = $this->request->param('plugin') ? 'croogo' : $this->request->param('plugin');
+$i18nDomain = $this->request->getParam('plugin') ? 'croogo' : $this->request->getParam('plugin');
 
 $rowClass = $this->Theme->getCssClass('row');
 $columnFull = $this->Theme->getCssClass('columnFull');
+$tableHeaderClass = isset($tableHeaderClass) ? $tableHeaderClass : $this->Theme->getCssClass('tableHeaderClass');
 $tableClass = isset($tableClass) ? $tableClass : $this->Theme->getCssClass('tableClass');
 $tableContainerClass = $this->Theme->getCssClass('tableContainerClass');
 
@@ -58,7 +59,7 @@ if (!$tableBody && isset($displayFields)):
         foreach (${lcfirst($this->name)} as $item):
             $actions = [];
 
-            if (isset($this->request->query['chooser'])):
+            if ($this->request->getQuery('chooser')):
                 $title = isset($item->title) ? $item->title : null;
                 $actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', [
                     'class' => 'item-choose',
@@ -133,7 +134,9 @@ $tableFooters = trim($this->fetch('table-footer'));
                     <div class="<?= $tableContainerClass ?>">
                     <table class="<?= $tableClass ?>">
                         <?php
-                        echo $this->Html->tag('thead', $tableHeaders);
+                        echo $this->Html->tag('thead', $tableHeaders, [
+                            'class' => $tableHeaderClass,
+                        ]);
                         echo $this->Html->tag('tbody', $tableBody);
                         if ($tableFooters):
                             echo $this->Html->tag('tfoot', $tableFooters);
@@ -167,7 +170,7 @@ $tableFooters = trim($this->fetch('table-footer'));
             if ($pagingBlock = $this->fetch('paging')):
                 echo $pagingBlock;
             else:
-                if (isset($this->Paginator) && isset($this->request['paging'])):
+                if (isset($this->Paginator) && $this->request->getParam('paging')):
                     echo $this->element('Croogo/Core.admin/pagination');
                 endif;
             endif;

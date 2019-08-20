@@ -9,10 +9,9 @@ $this->Breadcrumbs->add(__d('croogo', 'Extensions'), $this->request->getUri()->g
 
 $this->start('action-buttons');
 echo $this->Croogo->adminAction(__d('croogo', 'Upload'), ['action' => 'add']);
-$this->end() ?>
+$this->end();
 
-<table class="table table-striped">
-    <?php
+$this->append('table-heading');
     $tableHeaders = $this->Html->tableHeaders([
         '',
         __d('croogo', 'Alias'),
@@ -21,12 +20,11 @@ $this->end() ?>
         __d('croogo', 'Active'),
         __d('croogo', 'Actions'),
     ]);
-    ?>
-    <thead>
-        <?= $tableHeaders ?>
-    </thead>
+    echo $tableHeaders;
+$this->end();
 
-    <?php
+$this->append('table-body');
+
     $rows = [];
     foreach ($plugins as $pluginAlias => $pluginData):
         $toggleText = $pluginData['active'] ? __d('croogo', 'Deactivate') : __d('croogo', 'Activate');
@@ -78,5 +76,4 @@ $this->end() ?>
     endforeach;
 
     echo $this->Html->tableCells($rows);
-    ?>
-</table>
+$this->end();

@@ -21,35 +21,35 @@ $this->Croogo->adminScript([
 ]);
 
 $assetId = $filter = $filename = $type = $all = null;
-if (empty($model) && !empty($this->request->query['model'])):
-    $model = $this->request->query['model'];
+if (empty($model) && !empty($this->request->getQuery('model'))):
+    $model = $this->request->getQuery('model');
 endif;
-if (empty($foreignKey) && !empty($this->request->query['foreign_key'])):
-    $foreignKey = $this->request->query['foreign_key'];
+if (empty($foreignKey) && !empty($this->request->getQuery('foreign_key'))):
+    $foreignKey = $this->request->getQuery('foreign_key');
 endif;
-if (!empty($this->request->query['asset_id'])):
-    $assetId = $this->request->query['asset_id'];
+if (!empty($this->request->getQuery('asset_id'))):
+    $assetId = $this->request->getQuery('asset_id');
 endif;
-if (!empty($this->request->query['type'])):
-    $type = $this->request->query['type'];
+if (!empty($this->request->getQuery('type'))):
+    $type = $this->request->getQuery('type');
 endif;
-if (!empty($this->request->query['filter'])):
-    $filter = $this->request->query['filter'];
+if (!empty($this->request->getQuery('filter'))):
+    $filter = $this->request->getQuery('filter');
 endif;
-if (!empty($this->request->query['filename'])):
-    $filename = $this->request->query['filename'];
+if (!empty($this->request->getQuery('filename'))):
+    $filename = $this->request->getQuery('filename');
 endif;
-if (!empty($this->request->query['all'])):
-    $all = $this->request->query['all'];
+if (!empty($this->request->getQuery('all'))):
+    $all = $this->request->getQuery('all');
 endif;
-if (!empty($this->request->query['editor'])):
-    $editor = $this->request->query['editor'];
+if (!empty($this->request->getQuery('editor'))):
+    $editor = $this->request->getQuery('editor');
 endif;
-if (empty($editor) && !empty($this->request->query['CKEditor'])):
-    $editor = $this->request->query['CKEditor'];
+if (empty($editor) && !empty($this->request->getQuery('CKEditor'))):
+    $editor = $this->request->getQuery('CKEditor');
 endif;
-if (!empty($this->request->query['manage'])):
-    $manage = $this->request->query['manage'];
+if (!empty($this->request->getQuery('manage'))):
+    $manage = $this->request->getQuery('manage');
 endif;
 
 $this->append('action-buttons');
@@ -57,7 +57,7 @@ $this->append('action-buttons');
         __d('croogo', 'New Attachment'),
         array_merge(
             array('controller' => 'Attachments', 'action' => 'add', 'editor' => 1),
-            array('?' => $this->request->query)
+            array('?' => (array)$this->request->getAttribute('query'))
         )
     ) . ' ';
 
@@ -98,7 +98,7 @@ $this->append('table-heading');
 $this->end();
 
 $this->append('table-body');
-    $query = array('?' => $this->request->query);
+    $query = array('?' => (array)$this->request->getAttribute('query'));
     $rows = array();
     foreach ($attachments as $attachment):
         $actions = array();
@@ -183,7 +183,7 @@ $this->append('table-body');
             endif;
         elseif ($mimeType === 'image'):
 
-            if (!$this->request->query('manage')):
+            if (!$this->request->getQuery('manage')):
                 $detailUrl = Hash::merge(array(
                     'action' => 'browse',
                     '?' => array(

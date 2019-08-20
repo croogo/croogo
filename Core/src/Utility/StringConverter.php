@@ -83,7 +83,7 @@ class StringConverter
                     if (strpos($value, ',') !== false) {
                         $value = explode(',', $value);
                     }
-                    $stringArr[$stringElementE['0']] = $value;
+                    $stringArr[$stringElementE['0'] . ' IN'] = $value;
                 } else {
                     $stringArr[] = $stringElement;
                 }

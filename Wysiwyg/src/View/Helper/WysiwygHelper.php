@@ -40,7 +40,7 @@ class WysiwygHelper extends Helper
     public function beforeRender($viewFile)
     {
         $actions = array_keys(Configure::read('Wysiwyg.actions'));
-        $currentAction = Router::getActionPath($this->request, true);
+        $currentAction = Router::getActionPath($this->getView()->getRequest(), true);
         $included = in_array($currentAction, $actions);
         if ($included) {
             $this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => 'script']);

@@ -23,7 +23,7 @@ class DashboardsController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($event->subject()->request->param('action') === 'save') {
+        if ($event->getSubject()->request->getParam('action') === 'save') {
             $this->components()->unload('Csrf');
             $this->components()->unload('Security');
         }
@@ -38,7 +38,7 @@ class DashboardsController extends AppController
     {
         parent::beforeRender($event);
 
-        $this->viewBuilder()->helpers([
+        $this->viewBuilder()->setHelpers([
             'Croogo/Dashboards.Dashboards',
         ]);
     }

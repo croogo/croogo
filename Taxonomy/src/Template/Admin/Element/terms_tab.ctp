@@ -5,7 +5,7 @@ if (count($taxonomies) > 0):
     $taxonomyIds = Hash::extract((array)$entity->taxonomies, '{n}.id');
 
     foreach ($taxonomies as $vocabularyId => $taxonomyTree):
-        $error = implode('', $entity->errors('taxonomy_data.' . $vocabularyId));
+        $error = implode('', $entity->getErrors('taxonomy_data.' . $vocabularyId));
         $templates = [];
         if ($error) {
             $allTemplates = $this->Form->templates();

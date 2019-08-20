@@ -80,8 +80,9 @@ class LayoutHelper extends Helper
     public function js()
     {
         $croogo = $this->_mergeThemeSettings();
-        if ($this->request->param('locale')) {
-            $croogo['basePath'] = Router::url('/' . $this->request->param('locale') . '/');
+        $request = $this->getView()->getRequest();
+        if ($request->getParam('locale')) {
+            $croogo['basePath'] = Router::url('/' . $request->getParam('locale') . '/');
         } else {
             $croogo['basePath'] = Router::url('/');
         }
@@ -93,7 +94,7 @@ class LayoutHelper extends Helper
             'named' => null,
         ];
         $croogo['params'] = array_intersect_key(
-            array_merge($validKeys, $this->request->params),
+            array_merge($validKeys, $request->getAttribute('params')),
             $validKeys
         );
         if (is_array(Configure::read('Js'))) {
@@ -229,7 +230,7 @@ class LayoutHelper extends Helper
  */
     public function sessionFlash()
     {
-        $messages = $this->request->session()->read('Flash');
+        $messages = $this->getView()->getRequest()->getSession()->read('Flash');
         $output = '';
         if (is_array($messages)) {
             foreach (array_keys($messages) as $key) {
@@ -248,7 +249,7 @@ class LayoutHelper extends Helper
  */
     public function isLoggedIn()
     {
-        if ($this->request->session()->check('Auth.User.id')) {
+        if ($this->getView()->getRequest()->getSession()->check('Auth.User.id')) {
             return true;
         } else {
             return false;
@@ -296,7 +297,7 @@ class LayoutHelper extends Helper
     public function getRoleId()
     {
         if ($this->isLoggedIn()) {
-            $roleId = $this->request->session()->read('Auth.User.role_id');
+            $roleId = $this->getView()->getRequest()->getSession()->read('Auth.User.role_id');
         } else {
             // Public
             $roleId = 3;
@@ -379,7 +380,7 @@ class LayoutHelper extends Helper
     public function hook($methodName)
     {
         $output = '';
-        foreach ($this->_View->helpers as $helper => $settings) {
+        foreach ($this->_View->helpers() as $helper => $settings) {
             if (!is_string($helper) || in_array($helper, $this->coreHelpers)) {
                 continue;
             }

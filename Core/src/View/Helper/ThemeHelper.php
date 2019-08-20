@@ -35,11 +35,11 @@ class ThemeHelper extends Helper
 
     public function __construct(View $View, $settings = [])
     {
-        $themeConfig = CroogoTheme::config($View->theme);
+        $themeConfig = CroogoTheme::config($View->getTheme());
         $this->_themeSettings = $themeConfig['settings'];
 
         $this->_iconMap = $this->_themeSettings['icons'];
-        $prefix = $View->request->param('prefix');
+        $prefix = $View->getRequest()->getParam('prefix');
         if (isset($this->_themeSettings['prefixes'][$prefix]['helpers']['Html']['icons'])) {
             $this->_iconMap = Hash::merge(
                 $this->_iconMap,
@@ -72,7 +72,7 @@ class ThemeHelper extends Helper
  */
     public function settings($key = null)
     {
-        $theme = $this->_View->theme ? $this->_View->theme : 'default';
+        $theme = $this->_View->getTheme() ?: 'default';
         if (empty($this->_themeSettings)) {
             Log::debug(sprintf('Invalid settings for theme "%s"', $theme));
             return [];

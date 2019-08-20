@@ -9,14 +9,14 @@ $this->Html->script(array('Croogo/Nodes.admin'), ['block' => true]);
 
 $this->Breadcrumbs->add(__d('croogo', 'Content'), ['action' => 'index']);
 
-if ($this->request->params['action'] == 'add') {
+if ($this->request->getParam('action') == 'add') {
     $this->assign('title', __d('croogo', 'Create content: %s', $type->title));
 
     $this->Breadcrumbs->add(__d('croogo', 'Create'), ['action' => 'create'])
         ->add($type->title, $this->request->getRequestTarget());
 }
 
-if ($this->request->params['action'] == 'edit') {
+if ($this->request->getParam('action') == 'edit') {
     $this->Breadcrumbs->add($node->title, $this->request->getRequestTarget(), [
         'innerAttrs' => [
             'title' => $node->title,
@@ -63,7 +63,7 @@ $this->start('tab-content');
 $this->end();
 
 $this->start('panels');
-    $username = isset($node->user->username) ? $node->user->username : $this->request->session()
+    $username = isset($node->user->username) ? $node->user->username : $this->request->getSession()
         ->read('Auth.User.username');
     echo $this->Html->beginBox(__d('croogo', 'Publishing'));
     echo $this->element('Croogo/Core.admin/buttons', ['type' => $type->title]);

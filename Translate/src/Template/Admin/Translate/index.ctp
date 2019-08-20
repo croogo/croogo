@@ -92,7 +92,7 @@ $this->append('table-heading');
         __d('croogo', 'Locale'),
         __d('croogo', 'Actions'),
     ));
-    echo $this->Html->tag('thead', $tableHeaders);
+    echo $tableHeaders;
 $this->end();
 
 $this->append('table-body');

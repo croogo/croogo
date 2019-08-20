@@ -36,7 +36,8 @@ class TaxonomiesHelper extends Helper
      */
     public function beforeRender($viewFile)
     {
-        if ($this->request->param('prefix') === 'admin' && !$this->request->is('ajax')) {
+        $request = $this->getView()->getRequest();
+        if ($request->getParam('prefix') === 'admin' && !$request->is('ajax')) {
             $this->_adminTabs();
         }
     }
@@ -46,8 +47,9 @@ class TaxonomiesHelper extends Helper
      */
     protected function _adminTabs()
     {
-        $controller = $this->request->params['controller'];
-        if (empty($this->_View->viewVars['taxonomies']) || $controller == 'Terms') {
+        $request = $this->getView()->getRequest();
+        $controller = $request->getParam('controller');
+        if (empty($this->getView()->viewVars['taxonomies']) || $controller == 'Terms') {
             return;
         }
         $title = __d('croogo', 'Terms');
@@ -83,7 +85,7 @@ class TaxonomiesHelper extends Helper
             );
         }
 
-        return $event->data;
+        return $event->getData();
     }
 
     /**

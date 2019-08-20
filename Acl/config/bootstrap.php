@@ -16,7 +16,7 @@ if (Configure::read('Site.acl_plugin') == 'Croogo/Acl') {
     Croogo::hookBehavior('Croogo/Users.Roles', 'Croogo/Acl.RoleAro', ['priority' => 20]);
 
     $defaultCacheConfig = Configure::read('Croogo.Cache.defaultConfig');
-    Cache::config('permissions', [
+    Cache::setConfig('permissions', [
         'duration' => '+1 hour',
         'path' => CACHE . 'acl' . DS,
         'groups' => ['acl']

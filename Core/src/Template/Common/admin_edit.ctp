@@ -4,6 +4,7 @@
  */
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 
 if (empty($modelClass)) {
     $modelClass = Inflector::singularize($this->name);
@@ -52,7 +53,7 @@ else:
     endif;
 endif;
 
-$tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
+$tabId = 'tabitem-' . Text::slug(strtolower($modelClass), '-');
 
 if (!$this->exists('left-column')):
     $tabHeading = $this->fetch('tab-heading');

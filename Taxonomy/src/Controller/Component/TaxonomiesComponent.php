@@ -8,6 +8,7 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Croogo\Core\Core\Exception\Exception;
+use Croogo\Extensions\CroogoTheme;
 use Croogo\Taxonomy\Model\Entity\Type;
 use Croogo\Taxonomy\Model\Entity\Vocabulary;
 use Croogo\Taxonomy\Model\Table\TaxonomiesTable;
@@ -64,15 +65,15 @@ class TaxonomiesComponent extends Component
      */
     public function startup(Event $event)
     {
-        $this->controller = $event->subject();
+        $this->controller = $event->getSubject();
         if ((isset($this->controller->Taxonomies)) && ($this->controller->Taxonomies instanceof TaxonomiesTable)) {
             $this->Taxonomies = $this->controller->Taxonomies;
         } else {
             $this->Taxonomies = TableRegistry::get('Croogo/Taxonomy.Taxonomies');
         }
 
-        if ($this->controller->request->param('prefix') !== 'admin' &&
-            !isset($this->controller->request->params['requested'])
+        if ($this->controller->request->getParam('prefix') !== 'admin' &&
+            !$this->controller->request->getParam('requested')
         ) {
             $this->types();
             $this->vocabularies();
@@ -83,7 +84,7 @@ class TaxonomiesComponent extends Component
 
     public function beforeRender(Event $event)
     {
-        $this->controller = $event->subject();
+        $this->controller = $event->getSubject();
         $this->controller->set('typesForLayout', $this->typesForLayout);
         $this->controller->set('vocabulariesForLayout', $this->vocabulariesForLayout);
     }
@@ -139,7 +140,8 @@ class TaxonomiesComponent extends Component
         $vocabularies = [];
 
         if (Configure::read('Site.theme')) {
-            $themeData = $this->Croogo->getThemeData(Configure::read('Site.theme'));
+            $croogoTheme = new CroogoTheme();
+            $themeData = $croogoTheme->getData(Configure::read('Site.theme'));
             if (isset($themeData['vocabularies']) && is_array($themeData['vocabularies'])) {
                 $vocabularies = Hash::merge($vocabularies, $themeData['vocabularies']);
             }

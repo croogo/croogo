@@ -46,7 +46,7 @@ class NodesController extends AppController
             'actions' => ['view']
         ]);
 
-        $this->Prg->config('actions', ['index', 'search', 'term']);
+        $this->Prg->getConfig('actions', ['index', 'search', 'term']);
     }
 
     /**
@@ -58,7 +58,7 @@ class NodesController extends AppController
     public function index()
     {
         $locale = I18n::getLocale();
-        if (!$this->request->param('type')) {
+        if (!$this->request->getParam('type')) {
             $this->request->params['type'] = 'node';
         }
 
@@ -66,20 +66,20 @@ class NodesController extends AppController
             'roleId' => $this->Croogo->roleId()
         ]);
 
-        if (!$this->request->query('limit')) {
+        if (!$this->request->getQuery('limit')) {
             $limit = Configure::read('Reading.nodes_per_page');
         }
 
-        if ($this->request->param('type')) {
-            $cacheKeys = ['type', $locale, $this->request->param('type')];
+        if ($this->request->getParam('type')) {
+            $cacheKeys = ['type', $locale, $this->request->getParam('type')];
             $cacheKey = implode('_', $cacheKeys);
             $type = $this->Nodes->Taxonomies->Vocabularies->Types->find()
                 ->where([
-                    'Types.alias' => $this->request->param('type'),
+                    'Types.alias' => $this->request->getParam('type'),
                 ])
                 ->cache($cacheKey, 'nodes_index')
                 ->firstOrFail();
-            if (isset($type->params['nodes_per_page']) && !$this->request->query('limit')) {
+            if (isset($type->params['nodes_per_page']) && !$this->request->getQuery('limit')) {
                 $limit = $type->params['nodes_per_page'];
             }
             $query->andWhere([
@@ -98,10 +98,10 @@ class NodesController extends AppController
             }
             $cacheName = $cacheNamePrefix .
                 '_' .
-                $this->request->query('type') .
-                '_' . ($this->request->query('page') ?: 1) .
+                $this->request->getQuery('type') .
+                '_' . ($this->request->getQuery('page') ?: 1) .
                 '_' .
-                ($this->request->query('limit') ? $this->request->query('limit') : $limit);
+                ($this->request->getQuery('limit') ? $this->request->getQuery('limit') : $limit);
             $cacheConfig = 'nodes_index';
             $query->cache($cacheName, $cacheConfig);
         }
@@ -134,38 +134,38 @@ class NodesController extends AppController
     public function term()
     {
         $locale = I18n::getLocale();
-        $cacheKeys = ['term', $locale, $this->request->param('slug')];
+        $cacheKeys = ['term', $locale, $this->request->getParam('slug')];
         $cacheKey = implode('_', $cacheKeys);
         $term = $this->Nodes->Taxonomies->Terms->find()
             ->where([
-                'Terms.slug' => $this->request->param('slug')
+                'Terms.slug' => $this->request->getParam('slug')
             ])
             ->cache($cacheKey, 'nodes_term')
             ->firstOrFail();
 
-        if (!$this->request->param('type')) {
-            $this->request->param('type', 'node');
+        if (!$this->request->getParam('type')) {
+            $this->request->setParam('type', 'node');
         }
 
-        if ($this->request->param('limit')) {
-            $limit = $this->request->param('limit');
+        if ($this->request->getParam('limit')) {
+            $limit = $this->request->getParam('limit');
         } else {
             $limit = Configure::read('Reading.nodes_per_page');
         }
 
         $query = $this->Nodes->find('view', ['roleId' => $this->Croogo->roleId()]);
 
-        if ($this->request->param('type')) {
-            $cacheKeys = ['type', $locale, $this->request->param('type')];
+        if ($this->request->getParam('type')) {
+            $cacheKeys = ['type', $locale, $this->request->getParam('type')];
             $cacheKey = implode('_', $cacheKeys);
             $type = $this->Nodes->Taxonomies->Vocabularies->Types->find()
             ->where([
-                'Types.alias' => $this->request->param('type'),
+                'Types.alias' => $this->request->getParam('type'),
             ])
             ->cache($cacheKey, 'nodes_term')
             ->firstOrFail();
 
-            if (isset($type->params['nodes_per_page']) && empty($this->request->param('limit'))) {
+            if (isset($type->params['nodes_per_page']) && empty($this->request->getParam('limit'))) {
                 $limit = $type->params['nodes_per_page'];
             }
             $query
@@ -180,13 +180,13 @@ class NodesController extends AppController
             $cacheNamePrefix = 'nodes_term_' .
                 $this->Croogo->roleId() .
                 '_' .
-                $this->request->param('slug') .
+                $this->request->getParam('slug') .
                 '_' .
                 $locale;
             if (isset($type)) {
                 $cacheNamePrefix .= '_' . $type->alias;
             }
-            $this->paginate['page'] = $this->request->param('page') ?: 1;
+            $this->paginate['page'] = $this->request->getParam('page') ?: 1;
             $cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit;
             $cacheConfig = 'nodes_term';
             $query->cache($cacheName, $cacheConfig);
@@ -229,9 +229,9 @@ class NodesController extends AppController
             ->find('byAccess', [
                 'roleId' => $this->Croogo->roleId(),
             ])
-            ->find('search', ['search' => $this->request->query]);
+            ->find('search', ['search' => $this->request->getQuery()]);
 
-        if (!$this->request->query('sort')) {
+        if (!$this->request->getQuery('sort')) {
             $query->order([
                 $this->Nodes->aliasField('created') => 'desc',
             ]);
@@ -259,8 +259,8 @@ class NodesController extends AppController
         ];
 
         $q = null;
-        if (isset($this->request->query['q'])) {
-            $q = $this->request->query['q'];
+        if ($this->request->getQuery('q')) {
+            $q = $this->request->getQuery('q');
             $this->paginate['q'] = $q;
         }
 
@@ -279,7 +279,7 @@ class NodesController extends AppController
 
         $criteria = $Node
             ->find('published')
-            ->find('search', ['search' => $this->request->query]);
+            ->find('search', ['search' => $this->request->getAttribute('query')]);
 
         $nodes = $this->paginate($criteria);
         $this->set(compact('q', 'nodes'));
@@ -303,18 +303,18 @@ class NodesController extends AppController
     public function view($id = null)
     {
         $locale = I18n::getLocale();
-        if ($this->request->param('slug') && $this->request->param('type')) {
-            $cacheKeys = ['type', $locale, $this->request->param('type')];
+        if ($this->request->getParam('slug') && $this->request->getParam('type')) {
+            $cacheKeys = ['type', $locale, $this->request->getParam('type')];
             $cacheKey = implode('_', $cacheKeys);
             $type = $this->Nodes->Taxonomies->Vocabularies->Types->find()
                 ->cache($cacheKey, 'nodes_view')
                 ->where([
-                    'alias' => $this->request->param('type'),
+                    'alias' => $this->request->getParam('type'),
                 ])
                 ->firstOrFail();
             $node = $this->Nodes->find('viewBySlug', [
-                'slug' => $this->request->param('slug'),
-                'type' => $this->request->param('type'),
+                'slug' => $this->request->getParam('slug'),
+                'type' => $this->request->getParam('type'),
                 'roleId' => $this->Croogo->roleId(),
             ])
                 ->firstOrFail();
@@ -351,19 +351,6 @@ class NodesController extends AppController
             'view/' . str_replace('-', '_', $node->slug),
             $camelizedType . '/view',
         ]);
-    }
-
-    /**
-     * View Fallback
-     *
-     * @param mixed $views The fallback views
-     * @return string
-     * @access protected
-     * @deprecated Use CroogoComponent::viewFallback()
-     */
-    protected function _viewFallback($views)
-    {
-        return $this->Croogo->viewFallback($views);
     }
 
     /**

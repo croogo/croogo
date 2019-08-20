@@ -95,7 +95,7 @@ class CroogoTable extends Table
 //		if ($output) {
 //			$created = false;
 //			$options = array();
-//			$field = sprintf('%s.%s', $this->alias(), $this->primaryKey);
+//			$field = sprintf('%s.%s', $this->getAlias(), $this->primaryKey);
 //			if (!empty($args[1][$field])) {
 //				foreach ((array)$args[1][$field] as $id) {
 //					$this->id = $id;
@@ -189,26 +189,6 @@ class CroogoTable extends Table
             }
         }
         return $out;
-    }
-
-/**
- * Validation method for alias field
- * @return bool true when validation successful
- * @deprecated Protected validation methods are no longer supported
- */
-    protected function _validAlias($check)
-    {
-        return $this->validAlias($check);
-    }
-
-/**
- * Validation method for name or title fields
- * @return bool true when validation successful
- * @deprecated Protected validation methods are no longer supported
- */
-    protected function _validName($check)
-    {
-        return $this->validName($check);
     }
 
 /**

@@ -92,9 +92,9 @@ class AppController extends \App\Controller\AppController implements HookableCom
     {
         parent::beforeRender($event);
 
-        if (empty($this->viewBuilder()->className()) || $this->viewBuilder()->className() === 'App\View\AjaxView') {
+        if (empty($this->viewBuilder()->getClassName()) || $this->viewBuilder()->getClassName() === 'App\View\AjaxView') {
             unset($this->viewClass);
-            $this->viewBuilder()->className('Croogo/Core.Croogo');
+            $this->viewBuilder()->setClassName('Croogo/Core.Croogo');
         }
     }
 
@@ -103,12 +103,12 @@ class AppController extends \App\Controller\AppController implements HookableCom
      */
     public function render($view = null, $layout = null)
     {
-        if ($this->request->param('prefix') === 'admin') {
+        if ($this->request->getParam('prefix') === 'admin') {
             Croogo::dispatchEvent('Croogo.setupAdminData', $this);
         }
 
         // Just render normal when we aren't in a edit or add action
-        if (!in_array($this->request->param('action'), ['edit', 'add'])) {
+        if (!in_array($this->request->getParam('action'), ['edit', 'add'])) {
             return parent::render($view, $layout);
         }
 
@@ -182,7 +182,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
 
         if (!$this->request->is('api')) {
             $this->Security->blackHoleCallback = '_securityError';
-            if ($this->request->param('action') == 'delete' && $this->request->param('prefix') == 'admin') {
+            if ($this->request->getParam('action') == 'delete' && $this->request->getParam('prefix') == 'admin') {
                 $this->request->allowMethod('post');
             }
         }
@@ -191,8 +191,8 @@ class AppController extends \App\Controller\AppController implements HookableCom
             $this->viewBuilder()->setLayout('ajax');
         }
 
-        if (isset($this->request->params['locale'])) {
-            Configure::write('Config.language', $this->request->params['locale']);
+        if ($this->request->getParam('locale')) {
+            Configure::write('Config.language', $this->request->getParam('locale'));
         }
     }
 

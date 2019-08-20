@@ -55,19 +55,19 @@ class TaxonomizableBehavior extends Behavior
                 'foreignKey' => 'foreign_key',
                 'associationForeignKey' => 'taxonomy_id',
                 'conditions' => [
-                    'model' => $this->_table->registryAlias(),
+                    'model' => $this->_table->getRegistryAlias(),
                 ],
             ]
         );
         $this->_table->Taxonomies->belongsToMany(
-            $this->_table->alias(),
+            $this->_table->getAlias(),
             [
                 'targetTable' => $this->_table,
                 'through' => 'Croogo/Taxonomy.ModelTaxonomies',
                 'foreignKey' => 'foreign_key',
                 'associationForeignKey' => 'taxonomy_id',
                 'conditions' => [
-                    'model' => $this->_table->registryAlias(),
+                    'model' => $this->_table->getRegistryAlias(),
                 ],
             ]
         );
@@ -95,7 +95,7 @@ class TaxonomizableBehavior extends Behavior
         if ($entity->has($typeField)) {
             $typeAlias = $entity->{$typeField};
         } else {
-            Log::error('Unable to determine type for model ' . $this->_table->alias());
+            Log::error('Unable to determine type for model ' . $this->_table->getAlias());
 
             return false;
         }
@@ -189,7 +189,7 @@ class TaxonomizableBehavior extends Behavior
                     $taxonomies[] = [
                         'id' => $taxonomyId,
                         '_joinData' => [
-                            'model' => $entity->source(),
+                            'model' => $entity->getSource(),
                         ],
                     ];
                 }

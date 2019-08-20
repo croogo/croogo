@@ -51,7 +51,7 @@ class MenusHelper extends Helper
                 'callable' => 'filter', 'passParams' => true,
             ],
         ];
-        $eventManager = $this->_View->eventManager();
+        $eventManager = $this->_View->getEventManager();
         foreach ($events as $name => $config) {
             $eventManager->on($name, $config, [$this, 'filter']);
         }
@@ -62,7 +62,8 @@ class MenusHelper extends Helper
  */
     public function beforeRender($viewFile)
     {
-        if (($this->request->param('prefix') === 'admin') && (!$this->request->is('ajax'))) {
+        $request = $this->getView()->getRequest();
+        if (($request->getParam('prefix') === 'admin') && (!$request->is('ajax'))) {
             $this->_adminMenu();
         }
     }
@@ -135,7 +136,7 @@ class MenusHelper extends Helper
             $options = Hash::expand($options);
             $data['content'] = str_replace($tagMatches[0][$i], $this->verticalNav($menuAlias, $options), $data['content']);
         }
-        return $event->data;
+        return $event->getData();
     }
 
     /**
@@ -263,10 +264,10 @@ class MenusHelper extends Helper
             }
 
             // Remove locale part before comparing links
-            if ($this->_View->request->param('locale')) {
-                $currentUrl = substr($this->_View->request->url, strlen($this->_View->request->param('locale') . '/'));
+            if ($this->getView()->getRequest()->getParam('locale')) {
+                $currentUrl = substr($this->getView()->getRequest()->url, strlen($this->getView()->getRequest()->getParam('locale') . '/'));
             } else {
-                $currentUrl = $this->_View->request->url;
+                $currentUrl = $this->getView()->getRequest()->getPath();
             }
 
             try {

@@ -6,6 +6,7 @@ use Cake\Core\Configure\ConfigEngineInterface;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 
 /**
  * DashboardsConfigReader
@@ -42,7 +43,7 @@ class DashboardsConfigReader extends PhpConfig implements ConfigEngineInterface
         ];
         $settings = [];
         foreach ($config as $alias => $setting) {
-            $alias = Inflector::slug($alias, '-');
+            $alias = Text::slug($alias, '-');
             $setting = Hash::merge($defaults, $setting);
             $settings[$alias] = $setting;
         }

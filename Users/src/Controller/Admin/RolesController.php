@@ -22,7 +22,7 @@ class RolesController extends AppController
     {
         parent::initialize();
 
-        $this->Crud->config('actions.index', [
+        $this->Crud->setConfig('actions.index', [
             'displayFields' => $this->Roles->displayFields()
         ]);
     }
@@ -44,7 +44,7 @@ class RolesController extends AppController
     public function index()
     {
         $this->Crud->on('beforePaginate', function(Event $event) {
-            $event->subject()->query
+            $event->getSubject()->query
                 ->find('roleHierarchy')
                 ->order(['ParentAro.lft' => 'DESC']);
         });

@@ -6,10 +6,11 @@ use App\Console\Installer;
 use App\Controller\Component\AuthComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\Console\Shell;
+use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 use Croogo\Acl\AclGenerator;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Install\InstallManager;
 use Croogo\Install\Model\Table\InstallTable;
 use Composer\IO\BufferIO;
@@ -30,7 +31,7 @@ class InstallShell extends Shell
     public function startup()
     {
         $options = ['bootstrap' => true, 'routes' => true];
-        $plugins = array_merge(Plugin::$corePlugins, Plugin::$bundledPlugins);
+        $plugins = array_merge(PluginManager::$corePlugins, PluginManager::$bundledPlugins);
         foreach ($plugins as $plugin) {
             if (!Plugin::loaded($plugin)) {
                 Plugin::load($plugin, $options);

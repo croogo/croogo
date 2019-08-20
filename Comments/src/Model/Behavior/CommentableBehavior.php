@@ -41,7 +41,7 @@ class CommentableBehavior extends Behavior
             'dependent' => true,
             'cascadeCallbacks' => true
         ]);
-        $this->_table->Comments->belongsTo($this->_table->alias(), [
+        $this->_table->Comments->belongsTo($this->_table->getAlias(), [
             'className' => App::shortName(get_class($this->_table), 'Model/Table', 'Table'),
             'foreignKey' => 'foreign_key'
         ]);
@@ -54,7 +54,7 @@ class CommentableBehavior extends Behavior
  */
     public function setup(Model $model, $config = [])
     {
-        $this->settings[$model->alias] = $config;
+        $this->settings[$model->getAlias()] = $config;
 
         $this->_setupRelationships($model);
     }
@@ -74,7 +74,7 @@ class CommentableBehavior extends Behavior
                     'dependent' => true,
                     'limit' => 5,
                     'conditions' => [
-                        'model' => $model->alias,
+                        'model' => $model->getAlias(),
                         'status' => (bool)1,
                     ],
                 ],
@@ -97,7 +97,7 @@ class CommentableBehavior extends Behavior
             'spamProtection' => false,
             'captchaProtection' => false,
         ];
-        if (!Plugin::loaded('Croogo/Taxonomy')) {
+        if (!Plugin::isLoaded('Croogo/Taxonomy')) {
             return $defaultSetting;
         }
         if (empty($node->type)) {

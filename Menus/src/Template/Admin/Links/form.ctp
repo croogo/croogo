@@ -7,7 +7,7 @@ $this->Croogo->adminScript('Croogo/Menus.admin');
 
 $this->Breadcrumbs->add(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index']);
 
-if ($this->request->params['action'] == 'add') {
+if ($this->request->getParam('action') == 'add') {
     $this->Breadcrumbs->add($menu->title, [
                 'action' => 'index',
                 '?' => ['menu_id' => $menu->id],
@@ -19,7 +19,7 @@ if ($this->request->params['action'] == 'add') {
     ];
 }
 
-if ($this->request->params['action'] == 'edit') {
+if ($this->request->getParam('action') == 'edit') {
     $this->Breadcrumbs->add($menu->title, [
             'action' => 'index',
             '?' => ['menu_id' => $menu->id],
@@ -38,8 +38,8 @@ $this->append('form-start', $this->Form->create($link, [
     'class' => 'protected-form',
 ]));
 
-$inputDefaults = $this->Form->templates();
-$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
+//$inputDefaults = $this->Form->getTemplates();
+//$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
 $this->append('tab-heading');
     echo $this->Croogo->adminTab(__d('croogo', 'Link'), '#link-basic');

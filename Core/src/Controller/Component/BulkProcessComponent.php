@@ -39,10 +39,10 @@ class BulkProcessComponent extends Component
  */
     public function beforeFilter(Event $event)
     {
-        $this->_controller = $event->subject();
-        if ($this->_controller->request->param('action') == 'process') {
-            $this->_controller->Security->config('validatePost', false);
-            $this->_controller->eventManager()->off($this->_controller->Csrf);
+        $this->_controller = $event->getSubject();
+        if ($this->_controller->request->getParam('action') == 'process') {
+            $this->_controller->Security->getConfig('validatePost', false);
+            $this->_controller->getEventManager()->off($this->_controller->Csrf);
         }
 
     }
@@ -57,8 +57,8 @@ class BulkProcessComponent extends Component
  */
     public function getRequestVars($model, $primaryKey = 'id')
     {
-        $data = $this->_controller->request->data($model);
-        $action = $this->_controller->request->data('action');
+        $data = $this->_controller->request->getData($model);
+        $action = $this->_controller->request->getData('action');
         $ids = [];
         foreach ($data as $id => $value) {
             if (is_array($value) && !empty($value[$primaryKey])) {
@@ -138,7 +138,7 @@ class BulkProcessComponent extends Component
         }
 
         $processed = $table->processAction($action, $ids);
-        $eventName = 'Controller.' . $Controller->name . '.after' . ucfirst($action);
+        $eventName = 'Controller.' . $Controller->getName() . '.after' . ucfirst($action);
 
         if ($processed) {
             if (!empty($messageMap[$action])) {

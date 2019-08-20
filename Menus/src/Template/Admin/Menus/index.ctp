@@ -14,7 +14,7 @@ $tableHeaders = $this->Html->tableHeaders([
     $this->Paginator->sort('status', __d('croogo', 'Status')),
     __d('croogo', 'Actions'),
 ]);
-echo $this->Html->tag('thead', $tableHeaders);
+echo $tableHeaders;
 $this->end();
 
 $this->start('table-body');

@@ -74,7 +74,7 @@ class NodesHelper extends Helper
                 'callable' => 'filter', 'passParams' => true,
             ],
         ];
-        $eventManager = $this->_View->eventManager();
+        $eventManager = $this->_View->getEventManager();
         foreach ($events as $name => $config) {
             $eventManager->on($name, $config, [$this, 'filter']);
         }
@@ -131,7 +131,7 @@ class NodesHelper extends Helper
             }
             $data['content'] = str_replace($tagMatches[0][$i], $this->nodeList($alias, $options), $data['content']);
         }
-        return $event->data;
+        return $event->getData();
     }
 
 /**
@@ -145,7 +145,7 @@ class NodesHelper extends Helper
         $event = Croogo::dispatchEvent('Helper.Nodes.beforeSetNode', $this->_View, [
             'node' => $node,
         ]);
-        $this->node = $event->data['node'];
+        $this->node = $event->getData('node');
         $this->Layout->hook('afterSetNode');
         Croogo::dispatchEvent('Helper.Nodes.afterSetNode', $this->_View, [
             'node' => $this->node
@@ -282,7 +282,7 @@ class NodesHelper extends Helper
      */
     public function date($date)
     {
-        $tz = $this->request->session()->read('Auth.User.timezone') ?: Configure::read('Site.timezone');
+        $tz = $this->getView()->getRequest()->getSession()->read('Auth.User.timezone') ?: Configure::read('Site.timezone');
         return $this->Time->format($date, Configure::read('Reading.date_time_format'), null, $tz);
     }
 
@@ -311,6 +311,6 @@ class NodesHelper extends Helper
      */
     public function commentsEnabled()
     {
-        return Plugin::loaded('Croogo/Comments');
+        return Plugin::isLoaded('Croogo/Comments');
     }
 }
