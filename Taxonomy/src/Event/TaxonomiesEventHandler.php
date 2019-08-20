@@ -38,7 +38,7 @@ class TaxonomiesEventHandler implements EventListenerInterface
  */
     public function onSetupAdminData($event)
     {
-        $View = $event->subject;
+        $View = $event->getSubject();
 
         if (empty($View->viewVars['vocabulariesForAdminLayout'])) {
             $vocabularies = [];

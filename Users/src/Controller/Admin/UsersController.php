@@ -44,14 +44,14 @@ class UsersController extends AppController
     {
         parent::initialize();
 
-        $this->loadComponent('RequestHandler');
+        //$this->loadComponent('RequestHandler');
 
-        $this->Crud->config('actions.index', [
+        $this->Crud->setConfig('actions.index', [
             'displayFields' => $this->Users->displayFields(),
             'searchFields' => ['role_id', 'name']
         ]);
 
-        $this->Crud->config('actions.edit', [
+        $this->Crud->setConfig('actions.edit', [
             'editfields' => $this->Users->editFields(),
             'saveOptions' => [
                 'associated' => [
@@ -60,7 +60,7 @@ class UsersController extends AppController
             ],
         ]);
 
-        $this->Crud->config('actions.add', [
+        $this->Crud->setConfig('actions.add', [
             'saveOptions' => [
                 'associated' => [
                     'Roles',
@@ -99,8 +99,8 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         $this->Crud->on('relatedModel', function(Event $event) {
-            if ($event->subject()->name == 'Roles') {
-                $event->subject()->query = $this->Users->Roles
+            if ($event->getSubject()->name == 'Roles') {
+                $event->getSubject()->query = $this->Users->Roles
                     ->find('roleHierarchy')
                     ->order([
                         'ParentAro.lft' => 'DESC',
@@ -123,15 +123,16 @@ class UsersController extends AppController
  */
     public function onBeforeAdminLogin()
     {
-        $field = $this->Auth->config('authenticate.all.fields.username');
-        if (empty($this->request->data)) {
+        $field = $this->Auth->getConfig('authenticate.all.fields.username');
+        $data = $this->request->getData();
+        if (empty($data)) {
             return true;
         }
-        $cacheName = 'auth_failed_' . $this->request->data[$field];
+        $cacheName = 'auth_failed_' . $data[$field];
         $cacheValue = Cache::read($cacheName, 'users_login');
         if ($cacheValue >= Configure::read('User.failed_login_limit')) {
             $this->Flash->error(__d('croogo', 'You have reached maximum limit for failed login attempts. Please try again after a few minutes.'));
-            return $this->redirect(['action' => $this->request->param('action')]);
+            return $this->redirect(['action' => $this->request->getParam('action')]);
         }
         return true;
     }
@@ -144,7 +145,7 @@ class UsersController extends AppController
  */
     public function onAdminLoginFailure()
     {
-        $field = $this->Auth->config('authenticate.all.fields.username');
+        $field = $this->Auth->getConfig('authenticate.all.fields.username');
         if (empty($this->request->data)) {
             return true;
         }
@@ -163,7 +164,7 @@ class UsersController extends AppController
         /**
          * @var \Croogo\Users\Model\Entity\User
          */
-        $entity = $event->subject()->entity;
+        $entity = $event->getSubject()->entity;
         if (!$entity->isNew() && $entity->has('activation_key')) {
             return;
         }
@@ -172,9 +173,9 @@ class UsersController extends AppController
     }
 
     public function afterCrudSave(Event $event) {
-        if ($event->subject()->success && $event->subject()->created) {
+        if ($event->getSubject()->success && $event->getSubject()->created) {
             if ($this->request->data('notification') != null) {
-                $this->Users->sendActivationEmail($event->subject()->entity);
+                $this->Users->sendActivationEmail($event->getSubject()->entity);
             }
         }
     }
@@ -222,15 +223,15 @@ class UsersController extends AppController
         $this->viewBuilder()->setLayout('admin_login');
 
         if ($this->Auth->user('id')) {
-            if (!$this->request->session()->check('Flash.auth') &&
-                !$this->request->session()->check('Flash.flash')
+            if (!$this->request->getSession()->check('Flash.auth') &&
+                !$this->request->getSession()->check('Flash.flash')
             ) {
                 $this->Flash->error(__d('croogo', 'You are already logged in'), ['key' => 'auth']);
             }
             return $this->redirect($this->Auth->redirectUrl());
         }
 
-        $session = $this->request->session();
+        $session = $this->request->getSession();
         $redirectUrl = $this->Auth->redirectUrl();
         if ($redirectUrl && !$session->check('Croogo.redirect')) {
             $session->write('Croogo.redirect', $redirectUrl);
@@ -269,7 +270,7 @@ class UsersController extends AppController
                 Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);
                 $this->Auth->authError = __d('croogo', 'Incorrect username or password');
                 $this->Flash->error($this->Auth->authError, ['key' => 'auth']);
-                return $this->redirect($this->Auth->config('loginAction'));
+                return $this->redirect($this->Auth->getConfig('loginAction'));
             }
         }
     }
@@ -290,7 +291,7 @@ class UsersController extends AppController
     public function beforeLookup(Event $event)
     {
         /** @var \Cake\ORM\Query $query */
-        $query = $event->subject()->query;
+        $query = $event->getSubject()->query;
 
         $query
             ->select([
@@ -319,7 +320,7 @@ class UsersController extends AppController
     public function beforePaginate(Event $event)
     {
         /** @var \Cake\ORM\Query $query */
-        $query = $event->subject()->query;
+        $query = $event->getSubject()->query;
 
         $multiRole = Configure::read('Access Control.multiRole');
         if ($multiRole) {
@@ -354,8 +355,8 @@ class UsersController extends AppController
     public function register()
     {
         if ($this->Auth->user('id')) {
-            if (!$this->request->session()->check('Flash.auth') &&
-                !$this->request->session()->check('Flash.flash')
+            if (!$this->request->getSession()->check('Flash.auth') &&
+                !$this->request->getSession()->check('Flash.flash')
             ) {
                 $this->Flash->error(__d('croogo', 'You are already logged in'));
             }

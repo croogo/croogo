@@ -59,7 +59,7 @@ class NodesEventHandler implements EventListenerInterface
      */
     public function onSetupAdminData($event)
     {
-        $View = $event->subject;
+        $View = $event->getSubject();
 
         if (!isset($View->viewVars['typesForAdminLayout'])) {
             return;
@@ -88,7 +88,7 @@ class NodesEventHandler implements EventListenerInterface
      */
     public function onBootstrapComplete($event)
     {
-        if (Plugin::loaded('Comments')) {
+        if (Plugin::isLoaded('Comments')) {
             Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Comments.Commentable');
             Croogo::hookComponent('Croogo/Nodes.Nodes', 'Comments.Comments');
             Croogo::hookModelProperty('Croogo/Comments.Comments', 'belongsTo', [
@@ -103,10 +103,10 @@ class NodesEventHandler implements EventListenerInterface
                 ],
             ]);
         }
-        if (Plugin::loaded('Croogo/Taxonomy')) {
+        if (Plugin::isLoaded('Croogo/Taxonomy')) {
             Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Croogo/Taxonomy.Taxonomizable');
         }
-        if (Plugin::loaded('Croogo/Meta')) {
+        if (Plugin::isLoaded('Croogo/Meta')) {
             Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Croogo/Meta.Meta');
         }
     }

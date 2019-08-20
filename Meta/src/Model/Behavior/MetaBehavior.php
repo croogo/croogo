@@ -40,18 +40,18 @@ class MetaBehavior extends Behavior
             'foreignKey' => 'foreign_key',
             'dependent' => true,
             'conditions' => [
-                'Meta.model' => $this->_table->registryAlias(),
+                'Meta.model' => $this->_table->getRegistryAlias(),
             ],
             'order' => 'Meta.key ASC',
             'cascadeCallbacks' => true
         ]);
 
         $this->_table->Meta
-            ->belongsTo($this->_table->alias(), [
+            ->belongsTo($this->_table->getAlias(), [
                 'targetTable' => $this->_table,
                 'foreignKey' => 'foreign_key',
                 'conditions' => [
-                    'Meta.model' => $this->_table->registryAlias(),
+                    'Meta.model' => $this->_table->getRegistryAlias(),
                 ],
             ]);
     }
@@ -133,7 +133,7 @@ class MetaBehavior extends Behavior
      */
     public function beforeMarshal(Event $event)
     {
-        $this->_prepareMeta($event->data['data'], $event->data['options']);
+        $this->_prepareMeta($event->getData('data'), $event->getData('options'));
     }
 
     public function beforeSave(Event $event, Entity $entity, \ArrayObject $options)
@@ -149,7 +149,7 @@ class MetaBehavior extends Behavior
         }
 
         foreach ($entity->meta as &$meta) {
-            $meta->model = $entity->source();
+            $meta->model = $entity->getSource();
         }
     }
 }

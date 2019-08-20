@@ -25,9 +25,9 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
         if (!$this->_check($event)) {
             return true;
         }
-        $model = $event->subject();
+        $model = $event->getSubject();
 
-        $storage = $event->data['record'];
+        $storage = $event->getData('record');
 
         if (empty($storage->file)) {
             if (isset($storage->path) && empty($storage->filename)) {
@@ -80,21 +80,21 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
             $storage['extension'] = $extension;
             return $result;
         } catch (\Exception $e) {
-            $event->data['record']->setErrors(['path' => $e->getMessage()]);
+            $event->getData('record')->setErrors(['path' => $e->getMessage()]);
             $this->log($e->getMessage());
             return false;
         }
     }
 
     public function onBeforeDelete($event) {
-        $model = $event->subject();
+        $model = $event->getSubject();
         if (!$this->_check($event)) {
             return true;
         }
 
-        $entity = $event->data['record'];
+        $entity = $event->getData('record');
 
-        $model = $event->subject();
+        $model = $event->getSubject();
         $fields = array('adapter', 'path');
         $data = $model->get($entity->id, compact('fields'));
 

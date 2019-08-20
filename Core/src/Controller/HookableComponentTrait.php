@@ -9,7 +9,7 @@ trait HookableComponentTrait
 
     public function _dispatchBeforeInitialize()
     {
-        $this->eventManager()->dispatch(new Event('Controller.beforeInitialize', $this));
+        $this->getEventManager()->dispatch(new Event('Controller.beforeInitialize', $this));
     }
 
     public function _loadHookableComponent($name, array $config)

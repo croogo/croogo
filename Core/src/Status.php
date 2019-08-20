@@ -106,8 +106,8 @@ class Status implements ArrayAccess
         $values = $this->_defaultStatus($roleId, $statusType);
         $data = compact('statusType', 'accessType', 'values');
         $event = Croogo::dispatchEvent('Croogo.Status.status', null, $data);
-        if (array_key_exists('values', $event->data)) {
-            return $event->data['values'];
+        if (array_key_exists('values', $event->getData())) {
+            return $event->getData('values');
         } else {
             return $values;
         }

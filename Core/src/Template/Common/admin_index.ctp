@@ -8,7 +8,7 @@ if (!isset($className)) {
     $className = lcfirst($this->name);
 }
 $humanName = Inflector::humanize(Inflector::underscore($modelClass));
-$i18nDomain = $this->request->param('plugin') ? 'croogo' : $this->request->param('plugin');
+$i18nDomain = $this->request->getParam('plugin') ? 'croogo' : $this->request->getParam('plugin');
 
 $rowClass = $this->Theme->getCssClass('row');
 $columnFull = $this->Theme->getCssClass('columnFull');
@@ -59,7 +59,7 @@ if (!$tableBody && isset($displayFields)):
         foreach (${lcfirst($this->name)} as $item):
             $actions = [];
 
-            if (isset($this->request->query['chooser'])):
+            if ($this->request->getQuery('chooser')):
                 $title = isset($item->title) ? $item->title : null;
                 $actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', [
                     'class' => 'item-choose',
@@ -170,7 +170,7 @@ $tableFooters = trim($this->fetch('table-footer'));
             if ($pagingBlock = $this->fetch('paging')):
                 echo $pagingBlock;
             else:
-                if (isset($this->Paginator) && isset($this->request['paging'])):
+                if (isset($this->Paginator) && $this->request->getParam('paging')):
                     echo $this->element('Croogo/Core.admin/pagination');
                 endif;
             endif;

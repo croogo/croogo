@@ -21,7 +21,7 @@ class MessagesTable extends CroogoTable
     public function initialize(array $config)
     {
         parent::initialize($config);
-        $this->entityClass('Croogo/Contacts.Message');
+        $this->setEntityClass('Croogo/Contacts.Message');
         $this->belongsTo('Contacts', [
             'className' => 'Croogo/Contacts.Contacts',
             'foreignKey' => 'contact_id',

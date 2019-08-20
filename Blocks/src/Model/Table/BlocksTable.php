@@ -50,7 +50,7 @@ class BlocksTable extends CroogoTable
     public function initialize(array $config)
     {
         parent::initialize($config);
-        $this->entityClass('Croogo/Blocks.Block');
+        $this->setEntityClass('Croogo/Blocks.Block');
 
         $this->belongsTo('Regions', [
             'className' => 'Croogo/Blocks.Regions',
@@ -96,9 +96,9 @@ class BlocksTable extends CroogoTable
 
     protected function _initializeSchema(TableSchema $table)
     {
-        $table->columnType('visibility_roles', 'encoded');
-        $table->columnType('visibility_paths', 'encoded');
-        $table->columnType('params', 'params');
+        $table->setColumnType('visibility_roles', 'encoded');
+        $table->setColumnType('visibility_paths', 'encoded');
+        $table->setColumnType('params', 'params');
 
         return parent::_initializeSchema($table);
     }

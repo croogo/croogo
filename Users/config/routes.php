@@ -5,7 +5,7 @@ use Croogo\Core\Router;
 
 Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('admin', function (RouteBuilder $route) {
-        $route->extensions(['json']);
+        $route->setExtensions(['json']);
 
         $route->scope('/users', [], function (RouteBuilder $route) {
             $route->fallbacks();
@@ -22,7 +22,7 @@ Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
 Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('api', function (RouteBuilder $route) {
         $route->prefix('v10', ['path' => '/v1.0'], function (RouteBuilder $route) {
-            $route->extensions(['json']);
+            $route->setExtensions(['json']);
 
             $route->scope('/users', [], function (RouteBuilder $route) {
                 $route->fallbacks();

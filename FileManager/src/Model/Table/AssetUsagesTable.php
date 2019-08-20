@@ -16,7 +16,7 @@ class AssetUsagesTable extends CroogoTable {
 
     public function initialize(array $config) {
         parent::initialize($config);
-        $this->table('asset_usages');
+        $this->setTable('asset_usages');
 
         $this->belongsTo('Assets', [
             'className' => 'Croogo/FileManager.Assets',

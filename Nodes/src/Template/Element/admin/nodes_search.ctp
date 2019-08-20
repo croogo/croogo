@@ -3,7 +3,7 @@ echo $this->Form->create(null, [
     'align' => 'inline',
 ]);
 
-$this->Form->templates([
+$this->Form->setTemplates([
     'label' => false,
     'submitContainer' => '{{content}}',
 ]);
@@ -12,16 +12,16 @@ echo $this->Form->input('filter', [
     'title' => __d('croogo', 'Search'),
     'placeholder' => __d('croogo', 'Search...'),
     'tooltip' => false,
-    'default' => $this->request->query('filter'),
+    'default' => $this->request->getQuery('filter'),
 ]);
 
-if (!isset($this->request->query['chooser'])):
+if (!$this->request->getQuery('chooser')):
 
     echo $this->Form->input('type', [
         'options' => $nodeTypes,
         'empty' => __d('croogo', 'Type'),
         'class' => 'c-select',
-        'default' => $this->request->query('type'),
+        'default' => $this->request->getQuery('type'),
     ]);
 
     echo $this->Form->input('status', [
@@ -31,7 +31,7 @@ if (!isset($this->request->query['chooser'])):
         ],
         'empty' => __d('croogo', 'Status'),
         'class' => 'c-select',
-        'default' => $this->request->query('status'),
+        'default' => $this->request->getQuery('status'),
     ]);
 
     echo $this->Form->input('promote', [
@@ -41,7 +41,7 @@ if (!isset($this->request->query['chooser'])):
         ],
         'empty' => __d('croogo', 'Promoted'),
         'class' => 'c-select',
-        'default' => $this->request->query('promote'),
+        'default' => $this->request->getQuery('promote'),
     ]);
 
 endif;

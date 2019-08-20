@@ -28,9 +28,9 @@ class AssetsFilterHelper extends Helper {
                 'callable' => 'filter', 'passParams' => true,
             ),
         );
-        $eventManager = $this->_View->eventManager();
+        $eventManager = $this->_View->getEventManager();
         foreach ($events as $name => $config) {
-            $eventManager->attach(array($this, 'filter'), $name, $config);
+            $eventManager->on($name, $config, [$this, 'filter']);
         }
     }
 
@@ -80,9 +80,15 @@ class AssetsFilterHelper extends Helper {
 
     public function afterSetNode() {
         $body = $this->Nodes->field('body');
-        $body = $this->filter($body, array(
-            'model' => 'Node', 'id' => $this->Nodes->field('id')
-        ));
+        //$body = $this->filter($body, array(
+        //    'model' => 'Node', 'id' => $this->Nodes->field('id')
+        //));
+        $body = $this->filter(new Event('Helper.Layout.beforeFilter', $this, [
+            'content' => $body,
+            'model' => 'Node',
+            'id' => $this->Nodes->field('id'),
+        ]));
+
         $this->Nodes->field('body', $body);
     }
 

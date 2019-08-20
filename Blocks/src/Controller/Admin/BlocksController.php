@@ -32,17 +32,17 @@ class BlocksController extends AppController
         $this->_loadCroogoComponents(['BulkProcess']);
         $this->_setupPrg();
 
-        $this->Crud->config('actions.index', [
+        $this->Crud->setConfig('actions.index', [
             'searchFields' => ['region_id', 'title']
         ]);
-        $this->Crud->config('actions.moveUp', [
+        $this->Crud->setConfig('actions.moveUp', [
             'className' => 'Croogo/Core.Admin/MoveUp'
         ]);
-        $this->Crud->config('actions.moveDown', [
+        $this->Crud->setConfig('actions.moveDown', [
             'className' => 'Croogo/Core.Admin/MoveDown'
         ]);
 
-        if ($this->request->param('action') == 'toggle') {
+        if ($this->request->getParam('action') == 'toggle') {
             $this->Croogo->protectToggleAction();
         }
     }
@@ -72,7 +72,7 @@ class BlocksController extends AppController
 
     public function beforePaginate(Event $event)
     {
-        $query = $event->subject()->query;
+        $query = $event->getSubject()->query;
         $query->contain([
             'Regions'
         ]);

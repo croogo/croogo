@@ -35,7 +35,7 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
             $this->loadComponent('RequestHandler');
         }
 
-        $eventManager = $this->eventManager();
+        $eventManager = $this->getEventManager();
         if (isset($this->Auth)) {
             $eventManager->off($this->Auth);
         }
@@ -58,8 +58,8 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
             return;
         }
         $viewBuilder = $this->viewBuilder();
-        $viewBuilder->className('Croogo/Core.Croogo');
-        if ($this->request->param('prefix') === 'admin') {
+        $viewBuilder->setClassName('Croogo/Core.Croogo');
+        if ($this->request->getParam('prefix') === 'admin') {
             $adminTheme = Configure::read('Site.admin_theme');
             if ($adminTheme) {
                 $viewBuilder->setTheme($adminTheme);

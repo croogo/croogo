@@ -69,7 +69,7 @@ class DateTimeWidget extends CakeDateTimeWidget
         }
 
         $request = Router::getRequest();
-        $timezone = $request->session()->read('Auth.User.timezone');
+        $timezone = $request->getSession()->read('Auth.User.timezone');
         if (!$timezone) {
             $timezone = 'UTC';
         }

@@ -55,10 +55,10 @@ class MetaController extends AppController
         parent::beforeFilter($event);
 
         $this->Crud->on('Crud.beforePaginate', function (Event $event) {
-           $event->subject()->query->where(['model' => '']);
+           $event->getSubject()->query->where(['model' => '']);
         });
         $this->Crud->on('Crud.beforeSave', function (Event $event) {
-            $entity = $event->subject()->entity;
+            $entity = $event->getSubject()->entity;
             if (empty($entity->model)) {
                 $entity->model = '';
             }

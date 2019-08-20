@@ -33,7 +33,7 @@ class CommentsController extends AppController
      */
     public function process()
     {
-        list($action, $ids) = $this->BulkProcess->getRequestVars($this->Comments->alias());
+        list($action, $ids) = $this->BulkProcess->getRequestVars($this->Comments->getAlias());
 
         $options = [
             'messageMap' => [
@@ -48,7 +48,7 @@ class CommentsController extends AppController
 
     public function beforePaginate(Event $event)
     {
-        $query = $event->subject()->query;
+        $query = $event->getSubject()->query;
 
         $query->find('relatedEntity');
     }

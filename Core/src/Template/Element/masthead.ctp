@@ -17,7 +17,7 @@ elseif (isset($contact)):
     if (isset($contact->linked_assets['FeaturedImage'][0])):
         $bgImagePath = $contact->linked_assets['FeaturedImage'][0]->path;
     endif;
-elseif ($this->request->param('action') === 'index' && isset($type)):
+elseif ($this->request->getParam('action') === 'index' && isset($type)):
     $mastheadTitle = $type->title;
     $mastheadSubheading = $type->description;
     $mastheadWrapperClass = "page-heading";

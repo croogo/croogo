@@ -95,7 +95,7 @@ class CroogoTable extends Table
 //		if ($output) {
 //			$created = false;
 //			$options = array();
-//			$field = sprintf('%s.%s', $this->alias(), $this->primaryKey);
+//			$field = sprintf('%s.%s', $this->getAlias(), $this->primaryKey);
 //			if (!empty($args[1][$field])) {
 //				foreach ((array)$args[1][$field] as $id) {
 //					$this->id = $id;

@@ -20,19 +20,19 @@ class MetaComponent extends Component
     public function startup()
     {
         $controller = $this->_registry->getController();
-        if ($controller->request->param('prefix') === 'admin') {
+        if ($controller->request->getParam('prefix') === 'admin') {
             $this->_adminTabs();
 
-            if (empty($controller->request->data['meta'])) {
+            if (empty($controller->getRequest()->getData('meta'))) {
                 return;
             }
             $unlockedFields = [];
-            foreach ($controller->request->data['meta'] as $uuid => $fields) {
+            foreach ($controller->request->getData('meta') as $uuid => $fields) {
                 foreach ($fields as $field => $vals) {
                     $unlockedFields[] = 'meta.' . $uuid . '.' . $field;
                 }
             }
-            $controller->Security->config('unlockedFields', $unlockedFields);
+            $controller->Security->setConfig('unlockedFields', $unlockedFields);
         }
     }
 
@@ -51,7 +51,7 @@ class MetaComponent extends Component
         }
         $title = __d('croogo', 'Custom Fields');
         $element = 'Croogo/Meta.admin/meta_tab';
-        $controllerName = $this->request->param('controller');
+        $controllerName = $this->request->getParam('controller');
         Croogo::hookAdminBox("Admin/$controllerName/add", $title, $element);
         Croogo::hookAdminBox("Admin/$controllerName/edit", $title, $element);
     }

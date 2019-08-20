@@ -8,11 +8,11 @@ $this->Breadcrumbs
         'action' => 'index',
     ]);
 
-if ($this->request->param('action') == 'edit') {
+if ($this->request->getParam('action') == 'edit') {
     $this->Breadcrumbs->add($setting->key, $this->request->getRequestTarget());
 }
 
-if ($this->request->param('action') == 'add') {
+if ($this->request->getParam('action') == 'add') {
     $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 }
 

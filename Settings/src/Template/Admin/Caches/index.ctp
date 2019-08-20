@@ -53,7 +53,7 @@ foreach ($caches as $cache => $engine):
     $rows[] = [
         $cache,
         App::shortName(get_class($engine), 'Cache/Engine', 'Engine'),
-        $engine->config('duration'),
+        $engine->getConfig('duration'),
         $actions,
     ];
 endforeach;

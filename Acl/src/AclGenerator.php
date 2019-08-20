@@ -19,7 +19,7 @@ class AclGenerator extends AclExtras
 
     public function insertAcos(ConnectionInterface $connection)
     {
-        $this->Aco->connection($connection);
+        $this->Aco->setConnection($connection);
         $this->acoUpdate();
     }
 

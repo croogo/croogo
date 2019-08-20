@@ -27,17 +27,17 @@ class ThemeComponent extends Component
 
     public function beforeFilter(Event $event)
     {
-        $this->_controller = $event->subject();
-        $theme = $this->config('theme');
+        $this->_controller = $event->getSubject();
+        $theme = $this->getConfig('theme');
         if (!$theme) {
-            $this->_controller->viewBuilder()->theme('Croogo/Core');
+            $this->_controller->viewBuilder()->setTheme('Croogo/Core');
             return;
         }
 
-        $this->_controller->viewBuilder()->theme($theme);
+        $this->_controller->viewBuilder()->setTheme($theme);
         $this->loadThemeSettings($theme);
 
-        $this->_controller->viewBuilder()->helpers(['Croogo/Core.Theme']);
+        $this->_controller->viewBuilder()->setHelpers(['Croogo/Core.Theme']);
     }
 
     /**
@@ -47,7 +47,7 @@ class ThemeComponent extends Component
      */
     public function loadThemeSettings($theme)
     {
-        $prefix = $this->request->param('prefix');
+        $prefix = $this->request->getParam('prefix');
         $croogoTheme = new CroogoTheme();
         $settings = $croogoTheme->getData($theme)['settings'];
 
@@ -60,6 +60,6 @@ class ThemeComponent extends Component
             }
         }
 
-        $this->_controller->viewBuilder()->helpers($themeHelpers);
+        $this->_controller->viewBuilder()->setHelpers($themeHelpers);
     }
 }

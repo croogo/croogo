@@ -61,11 +61,11 @@ class AttachmentsController extends AppController {
         parent::beforeFilter($event);
 
         $noCsrfCheck = array('add', 'resize');
-        if (in_array($this->request->action, $noCsrfCheck)) {
-            $this->eventManager()->off($this->Csrf);
+        if (in_array($this->request->getParam('action'), $noCsrfCheck)) {
+            $this->getEventManager()->off($this->Csrf);
         }
-        if ($this->request->action == 'resize') {
-            $this->Security->config('validatePost', false);
+        if ($this->request->getParam('action') == 'resize') {
+            $this->Security->setConfig('validatePost', false);
         }
     }
 
@@ -95,16 +95,16 @@ class AttachmentsController extends AppController {
 
         $isChooser = false;
 
-        if ($this->request->query('links') || $this->request->query('chooser')) {
+        if ($this->request->getQuery('links') || $this->request->getQuery('chooser')) {
             $isChooser = true;
         }
 
-        $model = $this->request->query('model');
-        $foreignKey = $this->request->query('foreign_key');
+        $model = $this->request->getQuery('model');
+        $foreignKey = $this->request->getQuery('foreign_key');
         $this->set(compact('model', 'foreignKey'));
-        $httpQuery = $this->request->query();
+        $httpQuery = (array)$this->request->getAttribute('query');
 
-        if ($this->request->query('manage')) {
+        if ($this->request->getQuery('manage')) {
             $finder = 'versions';
             unset($httpQuery['model']);
             unset($httpQuery['foreign_key']);
@@ -116,12 +116,12 @@ class AttachmentsController extends AppController {
             unset($httpQuery['model']);
             unset($httpQuery['foreign_key']);
 
-            if (!$this->request->query('sort')) {
+            if (!$this->request->getQuery('sort')) {
                 $query->order([
                     $this->Attachments->aliasField('id') => 'desc',
                 ]);
             }
-        } elseif ($this->request->query('search')) {
+        } elseif ($this->request->getQuery('search')) {
             $finder = null;
         } else {
             if (empty($model) || empty($foreignKey)) {
@@ -134,12 +134,12 @@ class AttachmentsController extends AppController {
             ]);
         }
 
-        if (!$this->request->query('sort')) {
+        if (!$this->request->getQuery('sort')) {
             $query->order(['Attachments.created' => 'DESC']);
         }
 
         if ($isChooser) {
-            if ($this->request->query['chooser_type'] == 'image') {
+            if ($this->request->getQuery['chooser_type'] == 'image') {
                 $query->where([
                     'Assets.mime_type LIKE' => 'image/%',
                 ]);
@@ -150,6 +150,7 @@ class AttachmentsController extends AppController {
             }
         }
 
+$this->log($httpQuery);
         $query->find('search', [
             'search' => $httpQuery,
         ]);
@@ -160,7 +161,7 @@ class AttachmentsController extends AppController {
 
         $this->set('attachments', $this->paginate($query));
 
-        if ($this->request->query('links') || $this->request->query('chooser')) {
+        if ($this->request->getQuery('links') || $this->request->getQuery('chooser')) {
             $this->viewBuilder()->setLayout('admin_popup');
             $this->render('chooser');
         }
@@ -175,7 +176,7 @@ class AttachmentsController extends AppController {
     public function add() {
         $this->set('title_for_layout', __d('croogo', 'Add Attachment'));
 
-        if ($this->request->query('editor')) {
+        if ($this->request->getQuery('editor')) {
             $this->viewBuilder()->setLayout('admin_popup');
         }
 
@@ -184,7 +185,7 @@ class AttachmentsController extends AppController {
             $data = $this->request->getData();
             if (!empty($data)) {
                 $entity = $this->Attachments->newEntity($data);
-                $errors = $entity->errors();
+                $errors = $entity->getErrors();
             } else {
                 $errors = [
                     'file' => __d('croogo', 'Upload failed. Please ensure size does not exceed the server limit.')
@@ -194,7 +195,7 @@ class AttachmentsController extends AppController {
             if (empty($errors)) {
                 $attachment = $this->Attachments->save($entity);
 
-                $errors = $entity->errors();
+                $errors = $entity->getErrors();
                 if (empty($errors) && $attachment) {
                     $eventKey = 'Controller.AssetsAttachment.newAttachment';
                     Croogo::dispatchEvent($eventKey, $this, compact('attachment'));
@@ -212,7 +213,7 @@ class AttachmentsController extends AppController {
                 $error = false;
 
                 if (empty($errors)) {
-                    $this->viewBuilder()->className('Json');
+                    $this->viewBuilder()->setClassName('Json');
                     $files = array(array(
                         'url' => $attachment->asset->path,
                         'thumbnail_url' => $attachment->asset->path,
@@ -244,7 +245,7 @@ class AttachmentsController extends AppController {
                         $url['?']['foreign_key'] = $usage->foreign_key;
                     }
                 }
-                if ($this->request->query('editor')) {
+                if ($this->request->getQuery('editor')) {
                     $url = array_merge($url, array('action' => 'browse'));
                 } else {
                     $url = array_merge($url, array('action' => 'index'));
@@ -271,19 +272,19 @@ class AttachmentsController extends AppController {
     public function edit($id = null) {
         $this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
 
-        if (isset($this->request->query['editor'])) {
+        if ($this->request->getQuery('editor')) {
             $this->layout = 'admin_popup';
         }
 
         $redirect = array('action' => 'index');
-        if (!empty($this->request->query)) {
+        if (!empty($this->request->getAttribute('query'))) {
             $redirect = array_merge(
                 $redirect,
-                array('action' => 'browse', '?' => $this->request->query)
+                array('action' => 'browse', '?' => $this->request->getAttribute('query'))
             );
         }
 
-        if (!$id && empty($this->request->data)) {
+        if (!$id && empty($this->request->getData())) {
             $this->Flash->error(__d('croogo', 'Invalid Attachment'));
             return $this->redirect($redirect);
         }
@@ -292,8 +293,8 @@ class AttachmentsController extends AppController {
                 'Assets',
             ],
         ]);
-        if (!empty($this->request->data)) {
-            $attachment = $this->Attachments->patchEntity($attachment, $this->request->data());
+        if (!empty($this->request->getData())) {
+            $attachment = $this->Attachments->patchEntity($attachment, $this->request->getData());
             if ($this->Attachments->save($attachment)) {
                 $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
                 return $this->redirect($redirect);
@@ -318,17 +319,17 @@ class AttachmentsController extends AppController {
         }
 
         $redirect = array('action' => 'index');
-        if (!empty($this->request->query)) {
+        if (!empty($this->request->getAttribute('query'))) {
             $redirect = array_merge(
                 $redirect,
-                array('action' => 'browse', '?' => $this->request->query)
+                array('action' => 'browse', '?' => $this->request->getAttribute('query'))
             );
         }
 
         $attachment = $this->Attachments->get($id);
-        $this->Attachments->connection()->begin();
+        $this->Attachments->getConnection()->begin();
         if ($this->Attachments->delete($attachment)) {
-            $this->Attachments->connection()->commit();
+            $this->Attachments->getConnection()->commit();
             $this->Flash->success(__d('croogo', 'Attachment deleted'));
             return $this->redirect($redirect);
         } else {
@@ -356,7 +357,7 @@ class AttachmentsController extends AppController {
 
         $query = $this->Attachments
             ->find('search', [
-                'search' => $this->request->query,
+                'search' => (array)$this->request->getAttribute('query'),
             ])
             ->find('modelAttachments');
         $attachments = $this->paginate($query);
@@ -369,8 +370,8 @@ class AttachmentsController extends AppController {
         }
 
         $result = false;
-        if (!empty($this->request->data)) {
-            $width = $this->request->data['width'];
+        if (!empty($this->request->getData('width'))) {
+            $width = $this->request->getData('width');
             try {
                 $result = $this->Attachments->createResized($id, $width, null);
             } catch (Exception $e) {

@@ -28,14 +28,19 @@ class CroogoHtmlHelper extends HtmlHelper
      */
     public function __construct(View $View, $settings = [])
     {
-        if ($View->theme) {
-            $themeConfig = CroogoTheme::config($View->theme);
+        if ($View->getTheme()) {
+            $themeConfig = CroogoTheme::config($View->getTheme());
             $themeSettings = $themeConfig['settings'];
             $settings = Hash::merge($themeSettings, $settings);
         }
-        $boxContainerClass = $settings['css']['boxContainerClass'];
-        $boxHeaderClass = $settings['css']['boxHeaderClass'];
-        $boxBodyClass = $settings['css']['boxBodyClass'];
+        $boxContainerClass = 'card';
+        $boxHeaderClass = 'card-header';
+        $boxBodyClass = 'card-body';
+        if (isset($settings['css'])) {
+            $boxContainerClass = $settings['css']['boxContainerClass'];
+            $boxHeaderClass = $settings['css']['boxHeaderClass'];
+            $boxBodyClass = $settings['css']['boxBodyClass'];
+        }
         $this->_defaultConfig['templates']['beginbox'] = "<div class='$boxContainerClass'>
                         <div class='$boxHeaderClass'>
                             {{icon}} {{title}}
@@ -46,7 +51,7 @@ class CroogoHtmlHelper extends HtmlHelper
 
         parent::__construct($View, $settings);
 
-        if (!$View->theme) {
+        if (!$View->getTheme()) {
             return;
         }
     }
@@ -74,7 +79,7 @@ class CroogoHtmlHelper extends HtmlHelper
      */
     public function filter(Event $event)
     {
-        preg_match_all('/\[(script|css):([^] ]*)(.*?)\]/i', $event->data['content'], $tagMatches);
+        preg_match_all('/\[(script|css):([^] ]*)(.*?)\]/i', $event->getData('content'), $tagMatches);
         for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
             preg_match_all($regex, $tagMatches[3][$i], $attributes);
@@ -93,7 +98,7 @@ class CroogoHtmlHelper extends HtmlHelper
             $event->data['content'] = str_replace($tagMatches[0][$i], '', $event->data['content']);
         }
 
-        return $event->data;
+        return $event->getData();
     }
 
     /**
@@ -176,7 +181,7 @@ class CroogoHtmlHelper extends HtmlHelper
      */
     public function icon($name, array $options = [])
     {
-        $iconDefaults = $this->config('iconDefaults');
+        $iconDefaults = $this->getConfig('iconDefaults');
 
         $defaults = [
             'iconSet' => $iconDefaults['iconSet'],
@@ -230,7 +235,7 @@ class CroogoHtmlHelper extends HtmlHelper
         $defaults = ['escape' => false];
         $options = is_null($options) ? [] : $options;
         $options = array_merge($defaults, $options);
-        $iconDefaults = $this->config('iconDefaults');
+        $iconDefaults = $this->getConfig('iconDefaults');
 
         if (!empty($options['button'])) {
             if (!empty($options['class'])) {

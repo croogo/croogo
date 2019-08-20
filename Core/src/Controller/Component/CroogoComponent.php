@@ -92,10 +92,10 @@ class CroogoComponent extends Component
  */
     public function startup(Event $event)
     {
-        $this->_controller = $event->subject();
+        $this->_controller = $event->getSubject();
 
-        if ($this->_controller->request->param('prefix') == 'admin') {
-            if (!isset($this->_controller->request->params['requested'])) {
+        if ($this->_controller->request->getParam('prefix') == 'admin') {
+            if (!$this->_controller->request->getParam('requested')) {
                 $this->_adminData();
             }
         }
@@ -109,8 +109,9 @@ class CroogoComponent extends Component
     protected function _adminData()
     {
         if (!Configure::read('Croogo.version')) {
-            if (Plugin::loaded('Settings')) {
-                if ($this->_controller->Setting instanceof Model) {
+            if (Plugin::isLoaded('Croogo/Settings')) {
+                /* FIXME
+                if ($this->getController()->Settings instanceof Model) {
                     if (file_exists(APP . 'VERSION.txt')) {
                         $file = APP . 'VERSION.txt';
                     } else {
@@ -119,6 +120,7 @@ class CroogoComponent extends Component
                     $version = trim(file_get_contents($file));
                     $this->_controller->Setting->write('Croogo.version', $version);
                 }
+                */
             }
         }
         $_siteTitle = Configure::read('Site.title');
@@ -141,7 +143,7 @@ class CroogoComponent extends Component
             ],
         ]);
 
-        $user = $this->request->session()->read('Auth.User');
+        $user = $this->request->getSession()->read('Auth.User');
         $gravatarUrl = '<img src="//www.gravatar.com/avatar/' . md5($user['email']) . '?s=23" class="rounded mx-auto"/> ';
         Nav::add('top-right', 'user', [
             'icon' => false,
@@ -184,7 +186,7 @@ class CroogoComponent extends Component
  */
     public function roleId()
     {
-        $roleId = $this->_controller->request->session()->read('Auth.User.role_id');
+        $roleId = $this->_controller->request->getSession()->read('Auth.User.role_id');
         return $roleId ? $roleId : $this->_defaultRoleId;
     }
 
@@ -269,17 +271,17 @@ class CroogoComponent extends Component
         } else {
             $viewPaths = $defaultViewPaths;
         }
-        if ($controller->viewBuilder()->theme()) {
-            $themePaths = App::path('Template', $controller->viewBuilder()->theme());
+        if ($controller->viewBuilder()->getTheme()) {
+            $themePaths = App::path('Template', $controller->viewBuilder()->getTheme());
             foreach ($themePaths as $themePath) {
                 $viewPaths[] = $themePath;
-                if ($controller->plugin) {
-                    $viewPaths[] = $themePath . 'Plugin' . DS . $controller->plugin . DS;
+                if ($controller->getPlugin()) {
+                    $viewPaths[] = $themePath . 'Plugin' . DS . $controller->getPlugin() . DS;
                 }
             }
         }
-        if ($controller->plugin) {
-            $viewPaths = array_merge($viewPaths, App::path('Template', $controller->plugin));
+        if ($controller->getPlugin()) {
+            $viewPaths = array_merge($viewPaths, App::path('Template', $controller->getPlugin()));
         }
         $viewPaths = array_merge($viewPaths, $defaultViewPaths);
         return $viewPaths;
@@ -312,8 +314,8 @@ class CroogoComponent extends Component
 
     protected function _viewPath()
     {
-        $viewPath = $this->_controller->name;
-        if (!empty($this->request->params['prefix'])) {
+        $viewPath = $this->_controller->getName();
+        if (!empty($this->request->getParam('prefix'))) {
             $prefixes = array_map(
                 'Cake\Utility\Inflector::camelize',
                 explode('/', $this->_controller->request->params['prefix'])
@@ -326,13 +328,13 @@ class CroogoComponent extends Component
     public function protectToggleAction()
     {
         $controller = $this->getController();
-        if ($controller->request->action !== 'toggle') {
+        if ($controller->request->getParam('action') !== 'toggle') {
             return;
         }
         if (!$controller->request->is('post')) {
             throw new MethodNotAllowedException();
         }
-        $controller->eventManager()->off($controller->Csrf);
-        $controller->Security->config('validatePost', false);
+        $controller->getEventManager()->off($controller->Csrf);
+        $controller->Security->setConfig('validatePost', false);
     }
 }

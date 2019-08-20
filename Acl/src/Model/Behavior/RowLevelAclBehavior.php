@@ -29,7 +29,7 @@ class RowLevelAclBehavior extends Behavior
             return;
         }
         $Table = $event->subject();
-        $alias = $Table->alias();
+        $alias = $Table->getAlias();
         $aco = $Table->node($entity)->firstOrFail();
         $aco->alias = sprintf('%s.%s', $alias, $entity->id);
         $saved = $Table->Aco->save($aco);

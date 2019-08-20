@@ -61,7 +61,7 @@ class BulkProcessBehavior extends Behavior
     {
         $table = $this->_table;
 
-        $actionsMap = $this->config('actionsMap');
+        $actionsMap = $this->getConfig('actionsMap');
 
         if (empty($actionsMap[$action])) {
             throw new InvalidArgumentException(__d('croogo', 'Invalid action to perform'));
@@ -113,7 +113,7 @@ class BulkProcessBehavior extends Behavior
  */
     public function bulkPublish($ids)
     {
-        $field = $this->config('fields.status');
+        $field = $this->getConfig('fields.status');
         return $this->_saveStatus($ids, $field, Status::PUBLISHED);
     }
 
@@ -125,7 +125,7 @@ class BulkProcessBehavior extends Behavior
  */
     public function bulkUnpublish($ids)
     {
-        $field = $this->config('fields.status');
+        $field = $this->getConfig('fields.status');
         return $this->_saveStatus($ids, $field, Status::UNPUBLISHED);
     }
 
@@ -162,7 +162,7 @@ class BulkProcessBehavior extends Behavior
     public function bulkDelete($ids)
     {
         try {
-            return $this->_table->connection()->transactional(function () use ($ids) {
+            return $this->_table->getConnection()->transactional(function () use ($ids) {
                 $nodes = $this->_table
                     ->find()
                     ->where([

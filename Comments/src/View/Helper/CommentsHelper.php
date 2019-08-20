@@ -24,7 +24,8 @@ class CommentsHelper extends Helper
      */
     public function beforeRender($viewFile)
     {
-        if ($this->request->param('prefix') === 'admin' && !$this->request->is('ajax')) {
+        $request = $this->getView()->getRequest();
+        if ($request->getParam('prefix') === 'admin' && !$request->is('ajax')) {
             $this->_adminTabs();
         }
     }
@@ -34,7 +35,8 @@ class CommentsHelper extends Helper
      */
     protected function _adminTabs()
     {
-        $controller = $this->request->param('controller');
+        $request = $this->getView()->getRequest();
+        $controller = $request->getParam('controller');
         if ($controller === 'Types' || empty($this->_View->viewVars['type']->comment_status)) {
             return;
         }

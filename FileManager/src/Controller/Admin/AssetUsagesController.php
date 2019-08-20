@@ -16,18 +16,18 @@ class AssetUsagesController extends AppController {
         $excludeActions = array(
             'changeType', 'unregister',
         );
-        if (in_array($this->request->param('action'), $excludeActions)) {
-            $this->Security->config('validatePost', false);
-            $this->eventManager()->off($this->Csrf);
+        if (in_array($this->request->getParam('action'), $excludeActions)) {
+            $this->Security->setConfig('validatePost', false);
+            $this->getEventManager()->off($this->Csrf);
         }
     }
 
     public function add() {
-        if (isset($this->request->query)) {
-            $assetId = $this->request->query('asset_id');
-            $model = $this->request->query('model');
-            $foreignKey = $this->request->query('foreign_key');
-            $type = $this->request->query('type');
+        if ($this->request->getAttribute('query')) {
+            $assetId = $this->request->getQuery('asset_id');
+            $model = $this->request->getQuery('model');
+            $foreignKey = $this->request->getQuery('foreign_key');
+            $type = $this->request->getQuery('type');
 
             $conditions = array(
                 'asset_id' => $assetId,
@@ -78,7 +78,7 @@ class AssetUsagesController extends AppController {
     }
 
     public function unregister() {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
         $result = false;
         if ($id = $this->request->getData('id')) {
             $assetUsage = $this->AssetUsages->get($id);

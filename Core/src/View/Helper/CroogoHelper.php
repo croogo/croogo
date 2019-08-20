@@ -7,12 +7,13 @@ use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
 use Croogo\Core\Croogo;
 use Croogo\Core\Database\Type\ParamsType;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Core\Status;
 
 /**
@@ -79,7 +80,8 @@ class CroogoHelper extends Helper
     public function adminScript($url, $options = [])
     {
         $options = Hash::merge(['block' => 'scriptBottom'], $options);
-        if ($this->request->is('ajax') || $this->request->param('prefix') !== 'admin') {
+        $request = $this->getView()->getRequest();
+        if ($request->is('ajax') || $request->getParam('prefix') !== 'admin') {
             return;
         }
 
@@ -109,7 +111,7 @@ class CroogoHelper extends Helper
         //		if (empty($userId)) {
         //			return '';
         //		}
-        $userId = $this->request->session()->read('Auth.User.id');
+        $userId = $this->getView()->getRequest()->getSession()->read('Auth.User.id');
         if (empty($userId)) {
             return '';
         }
@@ -140,7 +142,7 @@ class CroogoHelper extends Helper
             }
 
             if (empty($menu['htmlAttributes']['class'])) {
-                $menuClass = Inflector::slug(strtolower('menu-' . $menu['title']), '-');
+                $menuClass = Text::slug(strtolower('menu-' . $menu['title']), '-');
                 $menu['htmlAttributes'] = Hash::merge([
                     'class' => $menuClass,
                 ], $menu['htmlAttributes']);
@@ -164,7 +166,7 @@ class CroogoHelper extends Helper
                     $itemTag = 'li';
                     $listTag = 'ul';
                     $childClass = 'nav flex-column sub-nav ';
-                    $childClass .= ' submenu-' . Inflector::slug(strtolower($menu['title']), '-');
+                    $childClass .= ' submenu-' . Text::slug(strtolower($menu['title']), '-');
                     if ($depth > 0) {
                         $childClass .= ' dropdown-menu';
                     }
@@ -257,17 +259,18 @@ class CroogoHelper extends Helper
      */
     public function adminRowActions($id, $options = [])
     {
+        $request = $this->getView()->getRequest();
         $key = $output = '';
-        $plugin = $this->request->param('plugin');
+        $plugin = $request->getParam('plugin');
         if ($plugin) {
             $key .= $plugin . '.';
         }
-        $prefix = $this->request->param('prefix');
+        $prefix = $request->getParam('prefix');
         if ($prefix) {
             $key .= Inflector::camelize($prefix) . '/';
         }
-        $key .= Inflector::camelize($this->request->param('controller')) . '/';
-        $key .= $this->request->param('action');
+        $key .= Inflector::camelize($this->getView()->getRequest()->getParam('controller')) . '/';
+        $key .= $request->getParam('action');
         $encodedKey = base64_encode($key);
         $rowActions = Configure::read('Admin.rowActions.' . $encodedKey);
         if (is_array($rowActions)) {
@@ -439,10 +442,11 @@ class CroogoHelper extends Helper
 
         $output = '';
         $actions = '';
-        if ($this->request->param('prefix')) {
-            $actions .= Inflector::camelize($this->request->param('prefix')) . '/';
+        $request = $this->getView()->getRequest();
+        if ($request->getParam('prefix')) {
+            $actions .= Inflector::camelize($request->getParam('prefix')) . '/';
         }
-        $actions .= Inflector::camelize($this->request->param('controller')) . '/' . $this->request->param('action');
+        $actions .= Inflector::camelize($request->getParam('controller')) . '/' . $request->getParam('action');
         $tabs = Configure::read('Admin.tabs.' . $actions);
         if (is_array($tabs)) {
             foreach ($tabs as $title => $tab) {
@@ -458,9 +462,9 @@ class CroogoHelper extends Helper
                     (isset($tab['options']['type']) &&
                         (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))
                 ) {
-                    $domId = strtolower(Inflector::singularize($this->request->params['controller'])) .
+                    $domId = strtolower(Inflector::singularize($request->getParam('controller'))) .
                         '-' .
-                        strtolower(Inflector::slug($title, '-'));
+                        strtolower(Text::slug($title, '-'));
                     if ($this->adminTabs) {
                         if (isset($this->_View->viewVars['viewVar'])) {
                             $entity = $this->_View->viewVars[$this->_View->viewVars['viewVar']];
@@ -493,9 +497,10 @@ class CroogoHelper extends Helper
         }
 
         $output = '';
-        $box = $this->request->param('controller') . '/' . $this->request->param('action');
-        if ($this->request->param('prefix')) {
-            $box = Inflector::camelize($this->request->param('prefix')) . '/' . $box;
+        $request = $this->getView()->getRequest();
+        $box = $request->getParam('controller') . '/' . $request->getParam('action');
+        if ($request->getParam('prefix')) {
+            $box = Inflector::camelize($request->getParam('prefix')) . '/' . $box;
         }
         $allBoxes = Configure::read('Admin.boxes.' . $box);
         $allBoxes = empty($allBoxes) ? [] : $allBoxes;
@@ -558,7 +563,7 @@ class CroogoHelper extends Helper
             'image/png',
         ], (array)$allowedMimeTypes));
         if ($theme) {
-            $file = Plugin::path($theme) . '/webroot/' . $path;
+            $file = PluginManager::path($theme) . '/webroot/' . $path;
         } else {
             $file = WWW_ROOT . $path;
         }

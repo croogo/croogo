@@ -103,7 +103,7 @@ class TypesTable extends CroogoTable
 
     protected function _initializeSchema(TableSchema $table)
     {
-        $table->columnType('params', 'params');
+        $table->setColumnType('params', 'params');
         return parent::_initializeSchema($table);
     }
 

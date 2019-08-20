@@ -38,7 +38,7 @@ class SettingsShell extends Shell
     public function getOptionParser()
     {
         return parent::getOptionParser()
-            ->description('Croogo Settings utility')
+            ->setDescription('Croogo Settings utility')
             ->addSubCommand('read', [
                 'help' => __d('croogo', 'Displays setting values'),
                 'parser' => [

@@ -166,8 +166,8 @@ class ContactsController extends AppController
                     'contact' => $contact,
                     'message' => $message,
                 ]);
-            if ($this->viewBuilder()->theme()) {
-                $email->theme($this->viewBuilder()->theme());
+            if ($this->viewBuilder()->getTheme()) {
+                $email->theme($this->viewBuilder()->getTheme());
             }
             if (!$email->send()) {
                 $continue = false;

@@ -22,9 +22,9 @@ class CachesController extends AppController
     {
         $caches = [];
         $configured = Cache::configured();
-        if ($this->request->query('sort') === 'title') {
+        if ($this->request->getquery('sort') === 'title') {
             sort($configured);
-            if ($this->request->query('direction') !== 'asc') {
+            if ($this->request->getQuery('direction') !== 'asc') {
                 $configured = array_reverse($configured);
             }
         }
@@ -37,7 +37,7 @@ class CachesController extends AppController
 
     public function clear()
     {
-        $config = $this->request->query('config') ?: 'all';
+        $config = $this->request->getQuery('config') ?: 'all';
         if ($config === 'all') {
             $result = Cache::clearAll();
         } else {

@@ -24,7 +24,7 @@ class RegionsController extends AppController
 
         $this->_setupPrg();
 
-        $this->Crud->config('actions.index', [
+        $this->Crud->setConfig('actions.index', [
             'displayFields' => $this->Regions->displayFields(),
             'searchFields' => ['title']
         ]);

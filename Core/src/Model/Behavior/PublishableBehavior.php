@@ -70,7 +70,7 @@ class PublishableBehavior extends Behavior
     public function beforeFind(Event $event, Query $query, $options)
     {
         $table = $this->_table;
-        $config = $this->config();
+        $config = $this->getConfig();
         if (!empty($config['enabled'])) {
             return $query;
         }

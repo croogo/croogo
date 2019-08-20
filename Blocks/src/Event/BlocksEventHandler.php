@@ -28,7 +28,7 @@ class BlocksEventHandler implements EventListenerInterface
      */
     public function __construct()
     {
-        $this->modelFactory('Table', [$this->tableLocator(), 'get']);
+        $this->modelFactory('Table', [$this->getTableLocator(), 'get']);
     }
 
     /**
@@ -78,7 +78,7 @@ class BlocksEventHandler implements EventListenerInterface
             $converter = new StringConverter();
         }
 
-        $View = $event->subject;
+        $View = $event->getSubject();
         $body = null;
         $data = $event->getData();
         if (isset($data['content'])) {

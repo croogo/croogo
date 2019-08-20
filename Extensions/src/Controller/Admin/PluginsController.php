@@ -3,7 +3,7 @@
 namespace Croogo\Extensions\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Extensions\ExtensionsInstaller;
 use Cake\Core\Exception\Exception;
 
@@ -39,7 +39,7 @@ class PluginsController extends AppController
     {
         parent::beforeFilter($event);
 
-        $this->_CroogoPlugin = new Plugin();
+        $this->_CroogoPlugin = new PluginManager();
         $this->_CroogoPlugin->setController($this);
     }
 
@@ -53,8 +53,8 @@ class PluginsController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Plugins'));
 
         $plugins = $this->_CroogoPlugin->plugins(false);
-        $this->set('corePlugins', Plugin::$corePlugins);
-        $this->set('bundledPlugins', Plugin::$bundledPlugins);
+        $this->set('corePlugins', PluginManager::$corePlugins);
+        $this->set('bundledPlugins', PluginManager::$bundledPlugins);
         $this->set(compact('plugins'));
     }
 
@@ -118,7 +118,7 @@ class PluginsController extends AppController
  */
     public function toggle()
     {
-        $plugin = $this->request->query('name');
+        $plugin = $this->request->getQuery('name');
         if (!$plugin) {
             $this->Flash->error(__d('croogo', 'Invalid plugin'));
             return $this->redirect(['action' => 'index']);

@@ -10,6 +10,7 @@ use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
+use Croogo\Core\PluginManager;
 use Croogo\Extensions\Exception\MissingThemeException;
 
 /**
@@ -40,7 +41,7 @@ class CroogoTheme
      */
     public function getThemes()
     {
-        return CroogoPlugin::instance()
+        return PluginManager::instance()
             ->getPlugins('theme');
     }
 
@@ -286,7 +287,7 @@ class CroogoTheme
             $data = $croogoTheme->getData($theme);
             $request = Router::getRequest();
             if ($request) {
-                $prefix = $request->param('prefix');
+                $prefix = $request->getParam('prefix');
                 if (isset($data['settings']['prefixes'][$prefix]['css'])) {
                     $data['settings']['css'] = Hash::merge($data['settings']['prefixes'][$prefix]['css'],
                         $data['settings']['css']);

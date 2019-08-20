@@ -104,7 +104,7 @@ class ExtShell extends AppShell
                 $plugins = array_combine($p = Plugin::loaded(), $p);
                 $extensions += $plugins;
             }
-            $active = Plugin::loaded($ext);
+            $active = Plugin::isLoaded($ext);
         }
         if ($type == 'theme' && $method == 'deactivate') {
             $this->err(__d('croogo', 'Theme cannot be deactivated, instead activate another theme.'));

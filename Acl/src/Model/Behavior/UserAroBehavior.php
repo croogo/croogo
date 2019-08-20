@@ -58,10 +58,10 @@ class UserAroBehavior extends Behavior
     {
         // update ACO alias
         if (!empty($entity->username)) {
-            $model = $event->subject();
+            $model = $event->getSubject();
             $arosTable = TableRegistry::get('Aros');
 
-            $ref = ['model' => $model->alias(), 'foreign_key' => $entity->id];
+            $ref = ['model' => $model->getAlias(), 'foreign_key' => $entity->id];
             $node = $model->node($ref);
             $aro = $node->firstOrFail();
 

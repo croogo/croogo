@@ -32,7 +32,7 @@ class Router extends CakeRouter
  */
     public static function build(RouteBuilder $builder, $path, $defaults, $options = [])
     {
-        if (Plugin::loaded('Croogo/Translate')) {
+        if (PluginManager::isLoaded('Croogo/Translate')) {
             $languages = Configure::read('I18n.languages');
             $i18nPath = '/:lang' . $path;
             $i18nOptions = array_merge($options, ['lang' => implode('|', $languages)]);
@@ -109,7 +109,7 @@ class Router extends CakeRouter
  */
     public static function localize()
     {
-        if (Plugin::loaded('Croogo/Translate')) {
+        if (PluginManager::isLoaded('Croogo/Translate')) {
             static::connect('/:locale/:plugin/:controller/:action/*', [], ['locale' => '[a-z]{3}']);
             static::connect('/:locale/:controller/:action/*', [], ['locale' => '[a-z]{3}']);
         }
@@ -176,11 +176,11 @@ class Router extends CakeRouter
 
     public static function getActionPath(Request $request, $encode = false)
     {
-        $plugin = $request->param('plugin');
-        $prefix = $request->param('prefix');
+        $plugin = $request->getParam('plugin');
+        $prefix = $request->getParam('prefix');
         $val  = $plugin ? $plugin . '.' : null;
         $val .= $prefix ? Inflector::camelize($prefix) . '/' : null;
-        $val .= $request->param('controller') . '/' . $request->param('action');
+        $val .= $request->getParam('controller') . '/' . $request->getParam('action');
         if ($encode) {
             $val = base64_encode($val);
         }

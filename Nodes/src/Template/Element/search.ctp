@@ -16,7 +16,7 @@ echo $this->Form->create(false, [
     <?=
         $this->Form->input('q', [
             'label' => false,
-            'default' => $this->request->query('q'),
+            'default' => $this->request->getQuery('q'),
             'templates' => [
                 'inputContainer' => '{{content}}',
             ],

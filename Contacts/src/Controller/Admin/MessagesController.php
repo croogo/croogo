@@ -24,7 +24,7 @@ class MessagesController extends AppController
 
         $this->_loadCroogoComponents(['BulkProcess']);
 
-        $this->Crud->config('actions.index', [
+        $this->Crud->setConfig('actions.index', [
             'searchFields' => [
                 'search', 'created' => ['type' => 'date'],
             ],
@@ -54,7 +54,7 @@ class MessagesController extends AppController
 
     public function beforePaginate(Event $event)
     {
-        $query = $event->subject()->query;
+        $query = $event->getSubject()->query;
 
         $query->contain([
             'Contacts'
@@ -79,8 +79,8 @@ class MessagesController extends AppController
     public function index()
     {
         $this->Crud->on('beforePaginate', function(Event $event) {
-            $query = $event->subject()->query;
-            if (empty($this->request->query('sort'))) {
+            $query = $event->getSubject()->query;
+            if (empty($this->request->getQuery('sort'))) {
                 $query->order([
                     $this->Messages->aliasField('created') => 'desc',
                 ]);

@@ -36,10 +36,10 @@ class UrlBehavior extends Behavior
                     return $row;
                 }
                 // Base URL
-                $url = $this->config('url');
+                $url = $this->getConfig('url');
 
                 // Add named fields
-                $fields = $this->config('fields');
+                $fields = $this->getConfig('fields');
                 if (is_array($fields)) {
                     foreach ($fields as $named => $field) {
                         if (is_numeric($named)) {
@@ -52,7 +52,7 @@ class UrlBehavior extends Behavior
                 }
 
                 // Add passed fields
-                $passed = $this->config('pass');
+                $passed = $this->getConfig('pass');
                 if (is_array($passed)) {
                     foreach ($passed as $field) {
                         if ($row->get($field)) {
@@ -62,7 +62,7 @@ class UrlBehavior extends Behavior
                 }
 
                 $row->set('url', new Link($url));
-                $row->dirty('url', false);
+                $row->setDirty('url', false);
 
                 return $row;
             });

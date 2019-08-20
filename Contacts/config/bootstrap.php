@@ -5,7 +5,7 @@ use Cake\Cache\Cache;
 use Croogo\Core\Croogo;
 use Croogo\Wysiwyg\Wysiwyg;
 
-Cache::config('contacts_view', array_merge(
+Cache::setConfig('contacts_view', array_merge(
     Configure::read('Croogo.Cache.defaultConfig'),
     ['groups' => ['contacts']]
 ));

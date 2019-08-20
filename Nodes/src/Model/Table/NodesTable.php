@@ -97,7 +97,7 @@ class NodesTable extends CroogoTable
 
     protected function _initializeSchema(TableSchema $table)
     {
-        $table->columnType('visibility_roles', 'encoded');
+        $table->setColumnType('visibility_roles', 'encoded');
 
         return parent::_initializeSchema($table);
     }
@@ -337,7 +337,7 @@ class NodesTable extends CroogoTable
 
     public function beforeSave(Event $event)
     {
-        $node = $event->data()['entity'];
+        $node = $event->getData()['entity'];
         $event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, [
             'node' => $node,
             'typeAlias' => $node->type
@@ -349,7 +349,7 @@ class NodesTable extends CroogoTable
 
     public function afterSave(Event $event)
     {
-        $node = $event->data()['entity'];
+        $node = $event->getData()['entity'];
         $event = Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, [
             'node' => $node,
             'typeAlias' => $node->type

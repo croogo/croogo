@@ -4,11 +4,11 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Users'), ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'])
     ->add(__d('croogo', 'Roles'), ['plugin' => 'Croogo/Users', 'controller' => 'Roles', 'action' => 'index']);
 
-if ($this->request->param('action') == 'edit') {
+if ($this->request->getParam('action') == 'edit') {
     $this->Breadcrumbs->add($role->title, $this->request->getRequestTarget());
 }
 
-if ($this->request->param('action') == 'add') {
+if ($this->request->getParam('action') == 'add') {
     $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 }
 

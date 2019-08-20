@@ -261,16 +261,16 @@ class Croogo
         } elseif ($object instanceof Request) {
             $pluginPath = $controller = null;
             $namespace = 'Controller';
-            if (!empty($object->params['plugin'])) {
-                $pluginPath = $object->params['plugin'] . '.';
+            if (!empty($object->getParam('plugin'))) {
+                $pluginPath = $object->getParam('plugin') . '.';
             }
-            if (!empty($object->params['controller'])) {
-                $controller = $object->params['controller'];
+            if (!empty($object->getParam('controller'))) {
+                $controller = $object->getParam('controller');
             }
-            if (!empty($object->params['prefix'])) {
+            if (!empty($object->getParam('prefix'))) {
                 $prefixes = array_map(
                     'Cake\Utility\Inflector::camelize',
-                    explode('/', $object->params['prefix'])
+                    explode('/', $object->getParam('prefix'))
                 );
                 $namespace .= '/' . implode('/', $prefixes);
             }
@@ -342,7 +342,7 @@ class Croogo
     {
         $event = new Event($name, $subject, $data);
         if ($subject) {
-            $event = $subject->eventManager()->dispatch($event);
+            $event = $subject->getEventManager()->dispatch($event);
         } else {
             $event = EventManager::instance()->dispatch($event);
         }

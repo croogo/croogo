@@ -56,7 +56,7 @@ class BlocksComponent extends Component
  */
     public function beforeFilter(Event $event)
     {
-        $this->controller = $event->subject();
+        $this->controller = $event->getSubject();
         $this->_stringConverter = new StringConverter();
         if (isset($this->controller->Blocks)) {
             $this->Blocks = $this->controller->Blocks;
@@ -73,7 +73,7 @@ class BlocksComponent extends Component
  */
     public function startup(Event $event)
     {
-        if ($this->request->param('prefix') !== 'admin' && !$this->request->param('requested')) {
+        if ($this->request->getParam('prefix') !== 'admin' && !$this->request->getParam('requested')) {
             $this->blocks();
         }
     }
@@ -86,7 +86,7 @@ class BlocksComponent extends Component
  */
     public function beforeRender(Event $event)
     {
-        $event->subject()->set('blocksForLayout', $this->blocksForLayout);
+        $event->getSubject()->set('blocksForLayout', $this->blocksForLayout);
     }
 
 /**
@@ -103,11 +103,11 @@ class BlocksComponent extends Component
             'valueField' => 'alias'
         ]);
 
-        $alias = $this->Blocks->alias();
+        $alias = $this->Blocks->getAlias();
         $roleId = $this->controller->Croogo->roleId();
         $status = $this->Blocks->status();
         $request = $this->controller->request;
-        $slug = Text::slug(strtolower($request->url));
+        $slug = Text::slug(strtolower($request->getPath()));
         $Filter = new VisibilityFilter($request);
         foreach ($regions as $regionId => $regionAlias) {
             $cacheKey = $regionAlias . '_' . $roleId;

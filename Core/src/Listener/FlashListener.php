@@ -17,7 +17,7 @@ class FlashListener extends BaseListener
 
     public function onSetFlash(Event $event)
     {
-        $subject = $event->subject();
+        $subject = $event->getSubject();
         $type = !empty($subject->params['type']) ? $subject->params['type'] : 'error';
 
         $plugin = Configure::read('Site.admin_theme');

@@ -38,7 +38,7 @@ class PermissionsController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        if ($this->request->action == 'toggle') {
+        if ($this->request->getParam('action') == 'toggle') {
             $this->Croogo->protectToggleAction();
         }
     }
@@ -51,8 +51,8 @@ class PermissionsController extends AppController
  */
     public function index($id = null, $level = null)
     {
-        if (isset($this->request->query['root'])) {
-            $query = strtolower($this->request->query('root'));
+        if ($this->request->getQuery('root')) {
+            $query = strtolower($this->request->getQuery('root'));
         }
 
         if ($id == null) {
@@ -77,7 +77,7 @@ class PermissionsController extends AppController
         $aros = $this->Aros->getRoles($roles);
         if ($root && $this->RequestHandler->ext == 'json') {
             $options = array_intersect_key(
-                $this->request->query,
+                $this->request->getQuery(),
                 ['perms' => null, 'urls' => null]
             );
             $cacheName = 'permissions_aco_' . $root->id;

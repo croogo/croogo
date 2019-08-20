@@ -5,7 +5,7 @@ use Croogo\Core\Router;
 
 Router::plugin('Croogo/Contacts', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('admin', function (RouteBuilder $route) {
-        $route->extensions(['json']);
+        $route->setExtensions(['json']);
 
         $route->scope('/contacts', [], function (RouteBuilder $route) {
             $route->fallbacks();

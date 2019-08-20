@@ -35,10 +35,10 @@ class CroogoAclBehavior extends AclBehavior
             unset($config[0]);
         }
 
-        $this->config($table->alias(), array_merge(['type' => 'controlled'], $config));
-        $this->config($table->alias() . '.type', strtolower($this->config($table->alias() . '.type')));
+        $this->setConfig($table->getAlias(), array_merge(['type' => 'controlled'], $config));
+        $this->setConfig($table->getAlias() . '.type', strtolower($this->getConfig($table->getAlias() . '.type')));
 
-        $types = $this->_typeMaps[$this->config($table->alias() . '.type')];
+        $types = $this->_typeMaps[$this->getConfig($table->getAlias() . '.type')];
 
         if (!is_array($types)) {
             $types = [$types];

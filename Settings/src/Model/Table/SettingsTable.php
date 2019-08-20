@@ -76,7 +76,7 @@ class SettingsTable extends CroogoTable
  */
     protected function _initializeSchema(TableSchema $schema)
     {
-        $schema->columnType('params', 'params');
+        $schema->setColumnType('params', 'params');
         return $schema;
     }
 
@@ -85,7 +85,7 @@ class SettingsTable extends CroogoTable
  */
     public function beforeSave()
     {
-        $this->connection()->driver()->autoQuoting(true);
+        $this->getConnection()->getDriver()->enableAutoQuoting();
     }
 
 /**
@@ -94,7 +94,7 @@ class SettingsTable extends CroogoTable
     public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
 
-        $this->connection()->driver()->autoQuoting(false);
+        $this->getConnection()->getDriver()->enableAutoQuoting(false);
         if ($entity->key == 'Access Control.rowLevel') {
             if ($entity->value == true && $entity->_original['value'] == false) {
                 $aclGenerator = new AclGenerator();

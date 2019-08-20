@@ -13,7 +13,7 @@ class LoggedInUserComponent extends Component
     public function beforeFilter(Event $event)
     {
         /** @var Controller $controller */
-        $controller = $event->subject();
+        $controller = $event->getSubject();
 
         $controller->set('loggedIn', (bool)$controller->Auth->user());
 

@@ -41,8 +41,8 @@ class CroogoFormHelper extends FormHelper
             ],
         ], $settings);
 
-        if ($View->theme) {
-            $themeConfig = CroogoTheme::config($View->theme);
+        if ($View->getTheme()) {
+            $themeConfig = CroogoTheme::config($View->getTheme());
             $themeSettings = $themeConfig['settings'];
             $settings = Hash::merge($themeSettings, $settings);
         }
@@ -236,8 +236,9 @@ class CroogoFormHelper extends FormHelper
     protected function _acDefaults($field, $config)
     {
         $displayKey = $displayValue = null;
-        if (isset($this->request->data[$this->defaultModel][$field])) {
-            $displayKey = $this->request->data[$this->defaultModel][$field];
+        $request = $this->getView()->getRequest();
+        if (isset($request->getData($this->defaultModel)[$field])) {
+            $displayKey = $request->data[$this->defaultModel][$field];
         }
 
         if (substr($field, -3) === '_id') {
@@ -302,7 +303,7 @@ class CroogoFormHelper extends FormHelper
         $label = isset($options['label']) ? $options['label'] : Inflector::humanize($field);
 
         $default = isset($autocomplete['default']) ? $autocomplete['default'] : array_shift($defaults);
-        $inputDefaults = $this->_View->Form->templates();
+        $inputDefaults = $this->_View->Form->getTemplates();
         $class = null;
         if (!empty($inputDefaults['class'])) {
             $class = $inputDefaults['class'];

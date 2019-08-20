@@ -74,7 +74,7 @@ class UsersTable extends CroogoTable
             'groups' => ['users']
         ]);
 
-        $this->eventManager()->on($this->getMailer('Croogo/Users.User'));
+        $this->getEventManager()->on($this->getMailer('Croogo/Users.User'));
 
         $this->searchManager()
             ->add('name', 'Search.Like', [
@@ -304,6 +304,12 @@ class UsersTable extends CroogoTable
             $length = Configure::read('Croogo.activationKeyLength', 20);
         }
         return bin2hex(Security::randomBytes($length));
+    }
+
+    public function findAuthUser(Query $query, array $options)
+    {
+        return $query
+            ->where([$this->aliasField('status') => 1]);
     }
 
 }

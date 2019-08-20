@@ -47,7 +47,7 @@ class CachedBehavior extends Behavior
      */
     protected function _deleteCachedFiles()
     {
-        foreach ($this->config('groups') as $group) {
+        foreach ($this->getConfig('groups') as $group) {
             try {
                 $configs = Cache::groupConfigs($group);
                 foreach ($configs[$group] as $config) {

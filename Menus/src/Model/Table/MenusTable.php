@@ -76,7 +76,7 @@ class MenusTable extends CroogoTable
     {
         // Set tree scope for Links association
         $settings = [
-            'scope' => [$this->Links->alias() . '.menu_id' => $entity->id],
+            'scope' => [$this->Links->getAlias() . '.menu_id' => $entity->id],
         ];
         if ($this->Links->hasBehavior('Tree')) {
             $this->Links->behaviors()->get('Tree')->config($settings);

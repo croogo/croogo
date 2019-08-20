@@ -5,7 +5,7 @@ use Croogo\Core\Router;
 
 Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('admin', function (RouteBuilder $route) {
-        $route->extensions(['json']);
+        $route->setExtensions(['json']);
 
         $route->scope('/comments', [], function (RouteBuilder $route) {
             $route->fallbacks();
@@ -13,7 +13,7 @@ Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route
 
     });
 
-    $route->extensions(['rss']);
+    $route->setExtensions(['rss']);
 
     $route->scope('/comments', [], function (RouteBuilder $route) {
         Router::build($route, '/', ['controller' => 'Comments']);

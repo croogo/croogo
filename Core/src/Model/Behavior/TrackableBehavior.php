@@ -61,7 +61,7 @@ class TrackableBehavior extends Behavior
  */
     protected function _hasTrackableFields()
     {
-        $fields = $this->config('fields');
+        $fields = $this->getConfig('fields');
         return
             $this->_table->hasField($fields['created_by']) &&
             $this->_table->hasField($fields['updated_by']);
@@ -76,7 +76,7 @@ class TrackableBehavior extends Behavior
             return;
         }
 
-        $config = $this->config();
+        $config = $this->getConfig();
         $this->_table->addAssociations([
             'belongsTo' => [
                 'TrackableCreator' => [
@@ -107,11 +107,11 @@ class TrackableBehavior extends Behavior
         if (!$this->_hasTrackableFields()) {
             return true;
         }
-        $config = $this->config();
+        $config = $this->getConfig();
 
         $User = TableRegistry::get($config['userModel']);
-        $userAlias = $User->alias();
-        $userPk = $User->primaryKey();
+        $userAlias = $User->getAlias();
+        $userPk = $User->getPrimaryKey();
 
         $user = Configure::read('Trackable.Auth.User');
         if (!$user && session_status() === \PHP_SESSION_ACTIVE) {
@@ -129,7 +129,7 @@ class TrackableBehavior extends Behavior
         $createdByField = $config['fields']['created_by'];
         $updatedByField = $config['fields']['updated_by'];
 
-        $entity = $event->data['entity'];
+        $entity = $event->getData('entity');
         if (empty($entity->{$createdByField})) {
             if ($entity->isNew()) {
                 $entity->{$createdByField} = $user[$userPk];

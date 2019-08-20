@@ -26,7 +26,7 @@ if (!$model):
 endif;
 $primaryKey = isset($primaryKey) ? $primaryKey : 'id';
 
-$varName = Inflector::variable(Inflector::singularize($this->request->param('controller')));
+$varName = Inflector::variable(Inflector::singularize($this->request->getParam('controller')));
 if (isset(${$varName})):
     $data = ${$varName};
 endif;

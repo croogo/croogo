@@ -42,10 +42,10 @@ abstract class BaseStorageHandler {
     protected abstract function _parentAsset($attachment);
 
     protected function _check($event) {
-        if (empty($event->data['record']['adapter'])) {
+        if (empty($event->getData('record')['adapter'])) {
             return false;
         }
-        $return = $this->_storage == $event->data['record']['adapter'];
+        $return = $this->_storage == $event->getData('record')['adapter'];
         return $return;
     }
 
@@ -105,18 +105,18 @@ abstract class BaseStorageHandler {
         if (!$this->_check($Event)) {
             return true;
         }
-        if (!$Event->data['record']) {
+        if (!$Event->getData('record')) {
             return true;
         }
 
-        $src = $this->_pathFromHtml($Event->data['record']['result']);
+        $src = $this->_pathFromHtml($Event->getData('record')['result']);
 
         if (!$src){
             return false;
         }
 
         try {
-            $base = $Event->subject()->request->base;
+            $base = $Event->getSubject()->getRequest()->getAttribute('base');
             $filename = rtrim(WWW_ROOT, '/') . preg_replace(
                 '/^' . preg_quote($base, '/') . '/', '', $src
             );

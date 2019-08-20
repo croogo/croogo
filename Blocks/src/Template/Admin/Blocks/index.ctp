@@ -13,7 +13,7 @@ $this->append('form-start', $this->Form->create(null, [
     'align' => 'inline'
 ]));
 
-$chooser = isset($this->request->query['chooser']);
+$chooser = $this->request->getQuery('chooser');
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([
     $this->Form->checkbox('checkAll', ['id' => 'BlocksCheckAll']),

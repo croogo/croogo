@@ -6,8 +6,8 @@ use Cake\Core\App;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Error\ExceptionRenderer as CakeExceptionRenderer;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\Response;
+use Cake\Http\ServerRequestFactory;
 use Cake\Routing\Router;
 
 /**
@@ -18,7 +18,7 @@ class ExceptionRenderer extends CakeExceptionRenderer
     protected function _getController()
     {
         if (!$request = Router::getRequest(true)) {
-            $request = Request::createFromGlobals();
+            $request = ServerRequestFactory::fromGlobals();
         }
         $response = new Response();
 

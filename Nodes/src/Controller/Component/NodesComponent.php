@@ -37,7 +37,7 @@ class NodesComponent extends Component
  */
     public function beforeFilter(Event $event)
     {
-        $this->controller = $event->subject;
+        $this->controller = $event->getSubject();
         if (isset($this->controller->Nodes)) {
             $this->Nodes = $this->controller->Nodes;
         } else {
@@ -53,8 +53,8 @@ class NodesComponent extends Component
  */
     public function startup(Event $event)
     {
-        $controller = $event->subject();
-        if (($controller->request->param('prefix') !== 'admin') && !isset($controller->request->params['requested'])) {
+        $controller = $event->getSubject();
+        if (($controller->request->getParam('prefix') !== 'admin') && !$controller->request->getParam('requested')) {
             $this->nodes();
         }
     }
@@ -105,6 +105,6 @@ class NodesComponent extends Component
  */
     public function beforeRender(Event $event)
     {
-        $event->subject()->set('nodesForLayout', $this->nodesForLayout);
+        $event->getSubject()->set('nodesForLayout', $this->nodesForLayout);
     }
 }

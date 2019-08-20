@@ -11,11 +11,11 @@ $this->Breadcrumbs->add(__d('croogo', 'Blocks'), [
         'action' => 'index',
     ]);
 
-if ($this->request->params['action'] == 'edit') {
+if ($this->request->getParam('action ')== 'edit') {
     $this->Breadcrumbs->add($region->title, $this->request->getRequestTarget());
 }
 
-if ($this->request->params['action'] == 'add') {
+if ($this->request->getParam('action') == 'add') {
     $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 }
 

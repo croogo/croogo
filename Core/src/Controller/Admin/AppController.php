@@ -94,7 +94,7 @@ class AppController extends CroogoAppController
             ]
         ]);
 
-        $this->Theme->config('theme', Configure::read('Site.admin_theme'));
+        $this->Theme->setConfig('theme', Configure::read('Site.admin_theme'));
     }
 
 /**
@@ -138,9 +138,9 @@ class AppController extends CroogoAppController
 
     protected function redirectToSelf(Event $event)
     {
-        $subject = $event->subject();
+        $subject = $event->getSubject();
         if ($subject->success) {
-            if (isset($this->request->data['_apply'])) {
+            if ($this->request->getData('_apply')) {
                 $entity = $subject->entity;
                 return $this->redirect(['action' => 'edit', $entity->id]);
             }
