@@ -151,12 +151,16 @@ class MenusHelper extends Helper
         $items = [];
         foreach ($menu['threaded'] as $item) {
             $url = $item->link->getUrl();
-            if (Router::normalize($url) === '/.rss') {
-                $url = '/.rss';
+            try {
+                if (Router::normalize($url) === '/.rss') {
+                    $url = '/.rss';
+                }
+                $items[] = $this->Html->link($item->title, $url, [
+                    'class' => 'nav-link',
+                ]);
+            } catch (MissingRouteException $e) {
+                $this->log('Cannot normalize url: ' . print_r($url, true), LOG_WARNING);
             }
-            $items[] = $this->Html->link($item->title, $url, [
-                'class' => 'nav-link',
-            ]);
         }
         if (!$items) {
             return null;
