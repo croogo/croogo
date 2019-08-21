@@ -40,7 +40,7 @@ class NodesController extends AppController
         $this->loadComponent('Paginator', [
             'limit' => Configure::read('Reading.nodes_per_page'),
         ]);
-        $this->loadComponent('Search.Prg');
+        $this->loadComponent('Search.Prg', ['actions' => true]);
         $this->loadComponent('Croogo/Core.BulkProcess');
         $this->loadComponent('Croogo/Core.Recaptcha', [
             'actions' => ['view']
@@ -279,7 +279,7 @@ class NodesController extends AppController
 
         $criteria = $Node
             ->find('published')
-            ->find('search', ['search' => $this->request->getAttribute('query')]);
+            ->find('search', ['search' => $this->request->getQuery()]);
 
         $nodes = $this->paginate($criteria);
         $this->set(compact('q', 'nodes'));
