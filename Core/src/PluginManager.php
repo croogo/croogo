@@ -904,7 +904,6 @@ class PluginManager extends Plugin
      * This method is identical to Plugin::load() with extra functionality
      * that unregister event listeners when a plugin in unloaded.
      *
-     * @see Plugin::unload()
      * @param string $plugin name of the plugin to forget
      * @return void
      */
@@ -933,7 +932,6 @@ class PluginManager extends Plugin
                 $eventManager->detachPluginSubscribers($plugin);
             }
         }
-        static::unload($plugin);
         Cache::delete('EventHandlers', 'cached_settings');
     }
 
