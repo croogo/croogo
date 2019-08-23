@@ -51,50 +51,6 @@ class SettingsSeed extends AbstractSeed
             'params' => ''
         ],
         [
-            'id' => '12',
-            'key' => 'Meta.robots',
-            'value' => 'index, follow',
-            'title' => '',
-            'description' => '',
-            'input_type' => '',
-            'editable' => '1',
-            'weight' => '6',
-            'params' => ''
-        ],
-        [
-            'id' => '13',
-            'key' => 'Meta.keywords',
-            'value' => 'croogo, Croogo',
-            'title' => '',
-            'description' => '',
-            'input_type' => 'textarea',
-            'editable' => '1',
-            'weight' => '7',
-            'params' => ''
-        ],
-        [
-            'id' => '14',
-            'key' => 'Meta.description',
-            'value' => 'Croogo - A CakePHP powered Content Management System',
-            'title' => '',
-            'description' => '',
-            'input_type' => 'textarea',
-            'editable' => '1',
-            'weight' => '8',
-            'params' => ''
-        ],
-        [
-            'id' => '15',
-            'key' => 'Meta.generator',
-            'value' => 'Croogo - Content Management System',
-            'title' => '',
-            'description' => '',
-            'input_type' => '',
-            'editable' => '0',
-            'weight' => '9',
-            'params' => ''
-        ],
-        [
             'id' => '16',
             'key' => 'Service.akismet_key',
             'value' => 'your-key',
