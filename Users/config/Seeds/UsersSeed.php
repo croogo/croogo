@@ -20,9 +20,11 @@ class UsersSeed extends AbstractSeed
 
     public function run()
     {
+        $this->getAdapter()->commitTransaction();
         $Users = TableRegistry::get('Croogo/Users.Users');
         $entity = $Users->newEntity($this->record);
         $result = $Users->save($entity);
+        $this->getAdapter()->beginTransaction();
     }
 
 }
