@@ -44,19 +44,20 @@ class InstallTable extends Table
         $Users->removeBehavior('Cached');
         $Roles = TableRegistry::get('Croogo/Users.Roles');
         $Roles->addBehavior('Croogo/Core.Aliasable');
-        $Users->validator('default')->remove('email')->remove('password');
+        $Users->getValidator('default')->remove('email')->remove('password');
         $user['name'] = $user['username'];
         $user['email'] = '';
         $user['timezone'] = 'UTC';
         $user['role_id'] = $Roles->byAlias('superadmin');
         $user['status'] = true;
         $user['activation_key'] = md5(uniqid());
-        $data = $Users->newEntity($user);
-        if ($data->errors()) {
+        $entity = $Users->get(1);
+        $entity = $Users->patchEntity($entity, $user);
+        if ($entity->getErrors()) {
             $this->err('Unable to create administrative user. Validation errors:');
-            return $this->err($data->errors());
+            return $this->err($entity->getErrors());
         }
-        $saved = $Users->save($data);
+        $saved = $Users->save($entity);
         return $saved;
     }
 }

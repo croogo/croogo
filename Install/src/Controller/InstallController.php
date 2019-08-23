@@ -237,9 +237,9 @@ class InstallController extends Controller
         }
         $this->loadModel('Croogo/Users.Users');
 
-        $user = $this->Users->newEntity();
+        $user = $this->Users->get(1);
 
-        if ($this->request->is('post')) {
+        if ($this->request->is('put')) {
             $this->Users->patchEntity($user, $this->request->getData());
             $install = new InstallManager();
             $result = $install->createAdminUser($user);

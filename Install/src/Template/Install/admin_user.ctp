@@ -8,6 +8,7 @@ echo $this->Form->input('username', [
     'placeholder' => __d('croogo', 'Username'),
     'prepend' => $this->Html->icon('user'),
     'label' => __d('croogo', 'Username'),
+    'value' => '',
 ]);
 echo $this->Form->input('password', [
     'placeholder' => __d('croogo', 'New Password'),
