@@ -9,9 +9,9 @@ $this->Breadcrumbs
         'controller' => 'Settings',
         'action' => 'index',
     ));
-if (!empty($this->request->params['named']['p'])) {
-    $this->Breadcrumbs->add($this->request->params['named']['p']);
-}
+if ($this->request->getQuery('key')):
+    $this->Breadcrumbs->add(h($this->request->getQuery('key')));
+endif;
 $this->start('table-heading');
     $tableHeaders = $this->Html->tableHeaders(array(
         $this->Paginator->sort('id', __d('croogo', 'Id')),
@@ -57,7 +57,7 @@ $this->append('table-body');
         $rows[] = array(
             $setting->id,
             $this->Html->link($keyPrefix, array('controller' => 'Settings', 'action' => 'index', '?' => array('key' => $keyPrefix))) . $keyTitle,
-            $this->Text->truncate($setting->value, 20),
+            $this->Text->truncate(h($setting->value), 20),
             $this->Html->status($setting->editable),
             $actions,
         );

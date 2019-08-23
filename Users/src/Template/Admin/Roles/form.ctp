@@ -5,7 +5,7 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Roles'), ['plugin' => 'Croogo/Users', 'controller' => 'Roles', 'action' => 'index']);
 
 if ($this->request->param('action') == 'edit') {
-    $this->Breadcrumbs->add($role->title, $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(h($role->title), $this->request->getRequestTarget());
 }
 
 if ($this->request->param('action') == 'add') {

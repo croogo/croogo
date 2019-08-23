@@ -13,15 +13,11 @@ if ($this->request->params['action'] == 'add') {
     $this->assign('title', __d('croogo', 'Create content: %s', $type->title));
 
     $this->Breadcrumbs->add(__d('croogo', 'Create'), ['action' => 'create'])
-        ->add($type->title, $this->request->getRequestTarget());
+        ->add(h($type->title), $this->request->getRequestTarget());
 }
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add($node->title, $this->request->getRequestTarget(), [
-        'innerAttrs' => [
-            'title' => $node->title,
-        ],
-    ]);
+    $this->Breadcrumbs->add(h($node->title), $this->request->getRequestTarget());
 }
 
 $this->append('form-start', $this->Form->create($node, [
@@ -29,14 +25,14 @@ $this->append('form-start', $this->Form->create($node, [
 ]));
 
 $this->start('tab-heading');
-    echo $this->Croogo->adminTab(__d('croogo', $type->title), '#node-main');
+    echo $this->Croogo->adminTab(__d('croogo', h($type->title)), '#node-main');
 $this->end();
 
 $this->start('tab-content');
     echo $this->Html->tabStart('node-main');
         echo $this->Form->input('title', [
             'label' => false,
-            'placeholder' => __d('croogo', '%s title', $type->title),
+            'placeholder' => __d('croogo', '%s title', h($type->title)),
             'data-slug' => '#slug',
             'data-slug-editable' => true,
             'data-slug-edit-class' => 'btn btn-secondary btn-sm',
@@ -66,7 +62,7 @@ $this->start('panels');
     $username = isset($node->user->username) ? $node->user->username : $this->request->session()
         ->read('Auth.User.username');
     echo $this->Html->beginBox(__d('croogo', 'Publishing'));
-    echo $this->element('Croogo/Core.admin/buttons', ['type' => $type->title]);
+    echo $this->element('Croogo/Core.admin/buttons', ['type' => h($type->title)]);
     echo $this->element('Croogo/Core.admin/publishable');
 
     echo $this->Form->input('promote', [
@@ -75,7 +71,7 @@ $this->start('panels');
     ]);
     echo $this->Html->endBox();
 
-    echo $this->Html->beginBox(__d('croogo', '%s attributes', $type->title));
+    echo $this->Html->beginBox(__d('croogo', '%s attributes', h($type->title)));
         echo $this->Form->autocomplete('user_id', [
             'label' => __d('croogo', 'Author'),
             'options' => $users,
@@ -100,7 +96,7 @@ $this->start('panels');
             'options' => $parents,
             'default' => $node->parent_id,
             'autocomplete' => [
-                'default' => $node->parent ? $node->parent->title : null,
+                'default' => $node->parent ? h($node->parent->title) : null,
                 'data-displayField' => 'title',
                 'data-queryField' => 'title',
                 'data-relatedElement' => '#parent-id',

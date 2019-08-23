@@ -22,7 +22,7 @@ $this->Html->script('Croogo/FileManager.attachments/browse', ['block' => true]);
             'class' => 'text-muted',
         ]);
 
-        $cardHeader = $this->Html->div('card-header', $attachment->title);
+        $cardHeader = $this->Html->div('card-header', h($attachment->title));
         $cardBlock = $this->Html->div('card-body', $thumbnail);
         $cardFooter = $this->Html->div('card-footer', $footerText);
         $card = $this->Html->div('card text-center selector',

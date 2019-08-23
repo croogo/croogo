@@ -78,7 +78,7 @@ foreach ($attachments as $attachment) {
         $this->Form->checkbox('Attachments.' . $attachment->id . '.id', ['class' => 'row-select']),
         $attachment->id,
         $thumbnail,
-        $this->Html->tag('div', $attachment->title, ['class' => 'ellipsis']),
+        $this->Html->tag('div', h($attachment->title), ['class' => 'ellipsis']),
         $this->Html->tag('div',
             $this->Html->link($this->Url->build($attachment->path, true), $attachment->path, ['target' => '_blank']),
             ['class' => 'ellipsis']),

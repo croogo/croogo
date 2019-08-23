@@ -5,7 +5,7 @@ $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Breadcrumbs->add(__d('croogo', 'Attachments'),
         ['plugin' => 'Croogo/FileManager', 'controller' => 'attachments', 'action' => 'index'])
-    ->add($attachment->title, $this->request->getRequestTarget());
+    ->add(h($attachment->title), $this->request->getRequestTarget());
 
 $this->append('form-start', $this->Form->create($attachment));
 
@@ -52,6 +52,7 @@ else:
 endif;
 $preview = $this->Html->link($imgUrl, $attachment->path, [
     'data-toggle' => 'lightbox',
+    'escape' => false,
 ]);
 echo $this->Html->beginBox(__d('croogo', 'Preview')) . $preview;
 echo $this->Html->endBox();

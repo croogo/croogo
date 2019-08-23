@@ -7,7 +7,7 @@ $this->extend('Croogo/Core./Common/admin_edit');
 $this->Breadcrumbs->add(__d('croogo', 'Blocks'), ['action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add($block->title, $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(h($block->title), $this->request->getRequestTarget());
 }
 if ($this->request->params['action'] == 'add') {
     $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());

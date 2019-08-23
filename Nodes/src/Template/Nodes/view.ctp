@@ -5,7 +5,7 @@ $this->assign('title', $node->title);
 $this->Nodes->set($node);
 ?>
 <div id="node-<?= $this->Nodes->field('id') ?>" class="node node-type-<?= $this->Nodes->field('type') ?>">
-    <h2><?= $this->Nodes->field('title') ?></h2>
+    <h2><?= h($this->Nodes->field('title')) ?></h2>
     <?php
         echo $this->Nodes->info();
         echo $this->Nodes->body();
