@@ -33,8 +33,8 @@ class InstallShell extends Shell
         $options = ['bootstrap' => true, 'routes' => true];
         $plugins = array_merge(PluginManager::$corePlugins, PluginManager::$bundledPlugins);
         foreach ($plugins as $plugin) {
-            if (!Plugin::loaded($plugin)) {
-                Plugin::load($plugin, $options);
+            if (!Plugin::isLoaded($plugin)) {
+                PluginManager::load($plugin, $options);
             }
         }
     }
@@ -46,7 +46,7 @@ class InstallShell extends Shell
     {
         $drivers = ['Mysql', 'Postgres', 'Sqlite', 'Sqlserver'];
         $parser = parent::getOptionParser();
-        $parser->description(__d('croogo', 'Install Utilities'))
+        $parser->setDescription(__d('croogo', 'Install Utilities'))
             ->addSubcommand('main', [
                 'help' => 'Generate database.php and create admin user.',
                 'parser' => [
@@ -168,7 +168,7 @@ class InstallShell extends Shell
         try {
             $this->out('Setting up access control objects. Please wait...');
             $generator = new AclGenerator();
-            $generator->Shell = $this;
+            $generator->setShell($this);
             $generator->insertAcos(ConnectionManager::get('default'));
             $InstallManager->setupGrants();
         } catch (\Exception $e) {

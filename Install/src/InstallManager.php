@@ -88,7 +88,7 @@ class InstallManager
         }
 
         ConnectionManager::drop('default');
-        ConnectionManager::config('default', $config);
+        ConnectionManager::setConfig('default', $config);
 
         try {
             $db = ConnectionManager::get('default');
