@@ -9,6 +9,7 @@ class TaxonomiesTable extends CroogoTable
 
     public function initialize(array $config)
     {
+        parent::initialize($config);
         $this->belongsTo('Croogo/Taxonomy.Terms');
         $this->belongsTo('Croogo/Taxonomy.Vocabularies');
         $this->addBehavior('Tree');
