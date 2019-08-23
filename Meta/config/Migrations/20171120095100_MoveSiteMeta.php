@@ -9,7 +9,6 @@ class MoveSiteMeta extends AbstractMigration
     public function up()
     {
         if (Configure::check('Meta')) {
-            $settingsTable = TableRegistry::get('Croogo/Settings.Settings');
             $meta = Configure::read('Meta');
             $settingsTable = TableRegistry::get('Croogo/Settings.Settings');
             $metaTable = TableRegistry::get('Croogo/Meta.Meta');
