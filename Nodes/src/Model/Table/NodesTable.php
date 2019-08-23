@@ -61,7 +61,7 @@ class NodesTable extends CroogoTable
         ]);
 
         $this->belongsTo('Types', [
-            'className' => 'Croogo/Nodes.Types',
+            'className' => 'Croogo/Taxonomy.Types',
             'foreignKey' => 'type',
             'bindingKey' => 'alias',
             'propertyName' => 'node_type',
