@@ -139,6 +139,7 @@ class InstallManager
         $plugins = [
             'Croogo/Users',
             'Croogo/Acl',
+            'Croogo/Settings',
             'Croogo/Blocks',
             'Croogo/Taxonomy',
             'Croogo/FileManager',
@@ -148,7 +149,6 @@ class InstallManager
             'Croogo/Contacts',
             'Croogo/Menus',
             'Croogo/Dashboards',
-            'Croogo/Settings',
         ];
 
         $migrationsSucceed = true;
