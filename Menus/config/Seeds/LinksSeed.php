@@ -224,6 +224,12 @@ class LinksSeed extends AbstractSeed
         ],
     ];
 
+    public function getDependencies() {
+        return [
+            'MenusSeed',
+        ];
+    }
+
     public function run()
     {
         $Table = $this->table('links');

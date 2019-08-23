@@ -116,6 +116,12 @@ class BlocksSeed extends AbstractSeed
         ],
     ];
 
+    public function getDependencies() {
+        return [
+            'RegionsSeed',
+        ];
+    }
+
     public function run()
     {
         $Table = $this->table('blocks');

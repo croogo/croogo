@@ -16,6 +16,13 @@ class ModelTaxonomiesSeed extends AbstractSeed
         ],
     ];
 
+    public function getDependencies() {
+        return [
+            'NodesSeed',
+            'TaxonomiesSeed',
+        ];
+    }
+
     public function run()
     {
         $Table = $this->table('model_taxonomies');
