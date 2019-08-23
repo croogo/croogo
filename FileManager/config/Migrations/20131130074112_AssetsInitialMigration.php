@@ -64,8 +64,8 @@ class AssetsInitialMigration extends AbstractMigration {
             ->addColumn('parent_asset_id', 'integer', [
                 'null' => true, 'default' => null,
             ])
-            ->addColumn('foreign_key', 'string', [
-                'null' => true, 'default' => null, 'length' => 36,
+            ->addColumn('foreign_key', 'integer', [
+                'null' => true, 'default' => null,
             ])
             ->addColumn('model', 'string', [
                 'null' => true, 'default' => null, 'length' => 64,
