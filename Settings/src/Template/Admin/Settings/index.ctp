@@ -60,7 +60,7 @@ $this->append('table-body');
         $rows[] = array(
             $setting->id,
             $this->Html->link($keyPrefix, array('controller' => 'Settings', 'action' => 'index', '?' => array('key' => $keyPrefix))) . $keyTitle,
-            $this->Text->truncate($setting->value, 20),
+            $this->Text->truncate(h($setting->value), 20),
             $this->Html->status($setting->editable),
             $actions,
         );

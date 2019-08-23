@@ -5,7 +5,7 @@ $this->extend('Croogo/Core./Common/admin_edit');
 $this->Breadcrumbs->add(__d('croogo', 'Contacts'), ['controller' => 'contacts', 'action' => 'index']);
 
 if ($this->request->getParam('action') == 'edit') {
-    $this->Breadcrumbs->add($contact->title, $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(h($contact->title), $this->request->getRequestTarget());
 }
 
 if ($this->request->getParam('action') == 'add') {

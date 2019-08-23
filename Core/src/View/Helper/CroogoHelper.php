@@ -155,7 +155,7 @@ class CroogoHelper extends Helper
                 $menu['htmlAttributes'] += ['icon' => $menu['icon']];
             }
             if ($sidebar) {
-                $title .= '<span>' . $menu['title'] . '</span>';
+                $title .= '<span>' . h($menu['title']) . '</span>';
             } else {
                 $title .= $menu['title'];
             }

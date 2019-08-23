@@ -9,7 +9,7 @@ $this->Breadcrumbs
     ]);
 
 if ($this->request->getParam('action') == 'edit') {
-    $this->Breadcrumbs->add($setting->key, $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(h($setting->key), $this->request->getRequestTarget());
 }
 
 if ($this->request->getParam('action') == 'add') {

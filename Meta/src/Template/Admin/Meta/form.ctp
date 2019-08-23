@@ -8,7 +8,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Settings'), ['plugin' => 'Croogo/Settings
 $this->Breadcrumbs->add(__d('croogo', 'Meta'), ['action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add($$viewVar->key, $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(h($$viewVar->key), $this->request->getRequestTarget());
 
     $this->assign('title', __d('croogo', 'Edit Meta'));
 }

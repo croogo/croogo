@@ -267,7 +267,7 @@ $this->append('table-body');
             'data-content' => $url,
         ));
 
-        $title = $this->Html->para(null, $attachment->title);
+        $title = $this->Html->para(null, h($attachment->title));
         $title .= $this->Html->para('small',
             $this->Text->truncate(
                 $attachment->asset->filename, 30

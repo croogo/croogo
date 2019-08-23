@@ -6,7 +6,7 @@ $this->extend('/Common/admin_edit');
 
 $this->Breadcrumbs
     ->add(__d('croogo', 'Attachments'), array('plugin' => 'Croogo/FileManager', 'controller' => 'Attachments', 'action' => 'index'))
-    ->add($attachment->title, $this->request->getUri()->getPath());
+    ->add(h($attachment->title), $this->request->getUri()->getPath());
 
 if ($this->layout === 'admin_popup'):
     $this->append('title', ' ');

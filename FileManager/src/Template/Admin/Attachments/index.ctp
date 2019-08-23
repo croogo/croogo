@@ -135,7 +135,7 @@ $this->append('table-body');
             $attachment->id,
             $thumbnail,
             [
-                $this->Html->div(null, $attachment->title) .
+                $this->Html->div(null, h($attachment->title)) .
                 $this->Html->link(
                     $this->Url->build($path, true),
                     $path,

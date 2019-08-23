@@ -8,7 +8,7 @@ $this->Croogo->adminScript('Croogo/Menus.admin');
 $this->Breadcrumbs->add(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index']);
 
 if ($this->request->getParam('action') == 'add') {
-    $this->Breadcrumbs->add($menu->title, [
+    $this->Breadcrumbs->add(h($menu->title), [
                 'action' => 'index',
                 '?' => ['menu_id' => $menu->id],
             ])
@@ -20,7 +20,7 @@ if ($this->request->getParam('action') == 'add') {
 }
 
 if ($this->request->getParam('action') == 'edit') {
-    $this->Breadcrumbs->add($menu->title, [
+    $this->Breadcrumbs->add(h($menu->title), [
             'action' => 'index',
             '?' => ['menu_id' => $menu->id],
         ])

@@ -12,7 +12,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Blocks'), [
     ]);
 
 if ($this->request->getParam('action ')== 'edit') {
-    $this->Breadcrumbs->add($region->title, $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(h($region->title), $this->request->getRequestTarget());
 }
 
 if ($this->request->getParam('action') == 'add') {

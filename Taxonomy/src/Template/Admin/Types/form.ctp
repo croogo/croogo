@@ -9,7 +9,7 @@ $this->Breadcrumbs
 if ($this->request->getParam('action') == 'edit') {
     $this->assign('title', __d('croogo', 'Edit Type'));
 
-    $this->Breadcrumbs->add($type->title, $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(h($type->title), $this->request->getRequestTarget());
 }
 
 if ($this->request->getParam('action') == 'add') {
