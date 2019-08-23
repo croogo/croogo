@@ -24,6 +24,7 @@ $cancelLabel = $this->Html->icon('times') . $cancelText;
             ]);
         endif;
         echo $this->Html->link($cancelLabel, $cancelUrl, [
+            'escapeTitle' => false,
             'class' => 'cancel btn btn-outline-danger'
         ]);
     ?>

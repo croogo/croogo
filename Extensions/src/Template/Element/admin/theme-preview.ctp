@@ -65,6 +65,7 @@ $activeThemes = [$currentTheme['name'], $currentBackendTheme['name']];
             ], [
                 'button' => 'outline-secondary btn-sm',
                 'icon' => $this->Theme->getIcon('power-on'),
+                'escape' => false,
             ]);
     endif;
 
@@ -76,6 +77,7 @@ $activeThemes = [$currentTheme['name'], $currentBackendTheme['name']];
             ], [
                 'button' => 'outline-secondary btn-sm',
                 'icon' => $this->Theme->getIcon('power-on'),
+                'escape' => false,
             ]);
     endif;
 

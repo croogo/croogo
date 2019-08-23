@@ -393,6 +393,7 @@ class CroogoHelper extends Helper
             'class' => 'btn-sm',
             'list' => false,
             'confirm' => $confirmMessage,
+            'escape' => false,
         ], $options);
         if ($options['list'] === true) {
             $list = true;
