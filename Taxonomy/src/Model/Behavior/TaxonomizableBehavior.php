@@ -47,6 +47,12 @@ class TaxonomizableBehavior extends Behavior
      */
     protected function _setupRelationships()
     {
+        $this->_table->belongsTo('Types', [
+            'className' => 'Croogo/Taxonomy.Types',
+            'foreignKey' => 'type',
+            'bindingKey' => 'alias',
+            'propertyName' => 'node_type',
+        ]);
         $this->_table->belongsToMany(
             'Taxonomies',
             [
@@ -220,7 +226,13 @@ class TaxonomizableBehavior extends Behavior
 
     public function beforeFind(Event $event, Query $query)
     {
-        $query->contain(['Taxonomies']);
+        return $query->contain([
+            'Taxonomies' => [
+                'Terms',
+                'Vocabularies',
+            ],
+            'Types',
+        ]);
     }
 
     public function findWithTerm(Query $query, array $options)
@@ -256,4 +268,5 @@ class TaxonomizableBehavior extends Behavior
 
         return $query;
     }
+
 }
