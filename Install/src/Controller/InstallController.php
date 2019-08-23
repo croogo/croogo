@@ -273,5 +273,6 @@ class InstallController extends Controller
         $this->set('user', $this->request->getSession()->read('Install.user'));
         $this->request->getSession()->destroy();
         $this->set('onStep', 4);
+        Cache::clearAll();
     }
 }
