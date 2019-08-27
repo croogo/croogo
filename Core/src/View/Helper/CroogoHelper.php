@@ -291,6 +291,9 @@ class CroogoHelper extends Helper
                     $link = key($link);
                 }
                 $link = $this->Menus->linkStringToArray(str_replace(':id', $id, $link));
+                if (isset($linkOptions['icon'])) {
+                    $linkOptions['escapeTitle'] = false;
+                }
                 $output .= $this->adminRowAction($title, $link, $linkOptions);
             }
         }
@@ -317,7 +320,7 @@ class CroogoHelper extends Helper
     {
         $action = false;
         $options = Hash::merge([
-            'escapeTitle' => false,
+            'escapeTitle' => true,
             'escape' => true,
             'confirm' => $confirmMessage,
         ], $options);

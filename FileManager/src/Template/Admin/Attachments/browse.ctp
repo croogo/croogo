@@ -107,9 +107,10 @@ $this->append('table-body');
 
         if (isset($editor)):
 
-            $actions[] = $this->Html->link('', 'javascript:void(0)', array(
+            $actions[] = $this->Croogo->adminRowAction('', 'javascript:void(0)', array(
                 'onclick' => "Croogo.Wysiwyg.choose('" . $attachment->asset->path . "');",
                 'icon' => 'attach',
+                'escapeTitle' => false,
                 'tooltip' => __d('croogo', 'Insert')
             ));
 
@@ -124,6 +125,7 @@ $this->append('table-body');
             ));
             $actions[] = $this->Croogo->adminRowAction('', $deleteUrl, array(
                 'icon' => $this->Theme->getIcon('delete'),
+                'escapeTitle' => false,
                 'tooltip' => __d('croogo', 'Delete Attachment')
                 ),
                 __d('croogo', 'Are you sure?')
@@ -135,8 +137,8 @@ $this->append('table-body');
                 $attachment->asset->id,
             ));
             $actions[] = $this->Croogo->adminRowAction('', $deleteAssetUrl, array(
-                'icon' => 'delete',
                 'icon' => $this->Theme->getIcon('delete'),
+                'escapeTitle' => false,
                 'tooltip' => __d('croogo', 'Delete Attachment version')
                 ),
                 __d('croogo', 'Are you sure?')
@@ -153,6 +155,7 @@ $this->append('table-body');
             ));
             $actions[] = $this->Croogo->adminRowAction('', $resizeUrl, array(
                 'icon' => $this->Theme->getIcon('resize'),
+                'escapeTitle' => false,
                 'tooltip' => __d('croogo', 'Resize this item'),
                 'data-toggle' => 'resize-asset'
             ));
@@ -190,8 +193,9 @@ $this->append('table-body');
                         'asset_id' => $attachment->asset->id,
                     )
                 ), $query);
-                $actions[] = $this->Html->link('', $detailUrl, array(
+                $actions[] = $this->Croogo->adminRowAction('', $detailUrl, array(
                     'icon' => 'suitcase',
+                    'escapeTitle' => false,
                     'tooltip' => __d('assets', 'View other sizes'),
                 ));
             endif;
@@ -259,6 +263,7 @@ $this->append('table-body');
         $urlPopover = $this->Croogo->adminRowAction('', '#', array(
             'class' => 'popovers',
             'icon' => 'link',
+            'escapeTitle' => false,
             'iconSize' => 'small',
             'data-title' => __d('croogo', 'URL'),
             'data-html' => 'true',

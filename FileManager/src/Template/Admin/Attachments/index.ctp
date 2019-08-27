@@ -60,6 +60,7 @@ $this->append('table-body');
             $detailUrl['?']['id'] = $attachment->id;
             $actions[] = $this->Croogo->adminRowAction('', $detailUrl, array(
                 'icon' => 'suitcase',
+                'escapeTitle' => false,
                 'data-toggle' => 'browse',
                 'tooltip' => __d('assets', 'View other sizes'),
             ));
@@ -76,6 +77,7 @@ $this->append('table-body');
 
             $actions[] = $this->Croogo->adminRowAction('', $resizeUrl, array(
                 'icon' => $this->Theme->getIcon('resize'),
+                'escapeTitle' => false,
                 'tooltip' => __d('croogo', 'Resize this item'),
                 'data-toggle' => 'resize-asset'
             ));
@@ -87,12 +89,14 @@ $this->append('table-body');
         );
         $actions[] = $this->Croogo->adminRowAction('', $editUrl, array(
             'icon' => 'update',
+            'escapeTitle' => false,
             'tooltip' => __d('croogo', 'Edit this item'),
         ));
         $deleteUrl = array('action' => 'delete', $attachment->id);
         $deleteUrl = array_merge(array('?' => $query), $deleteUrl);
         $actions[] = $this->Croogo->adminRowAction('', $deleteUrl, array(
             'icon' => 'delete',
+            'escapeTitle' => false,
             'tooltip' => __d('croogo', 'Remove this item'),
             'escapeTitle' => false,
         ), __d('croogo', 'Are you sure?'));

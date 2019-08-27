@@ -23,12 +23,12 @@ foreach ($menus as $menu):
     $actions = [];
     $actions[] = $this->Croogo->adminRowAction('',
         ['controller' => 'Links', 'action' => 'index', '?' => ['menu_id' => $menu->id]],
-        ['icon' => $this->Theme->getIcon('inspect'), 'tooltip' => __d('croogo', 'View links')]);
+        ['icon' => $this->Theme->getIcon('inspect'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'View links')]);
     $actions[] = $this->Croogo->adminRowActions($menu->id);
     $actions[] = $this->Croogo->adminRowAction('', ['controller' => 'Menus', 'action' => 'edit', $menu->id],
-        ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);
+        ['icon' => $this->Theme->getIcon('update'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Edit this item')]);
     $actions[] = $this->Croogo->adminRowAction('', ['controller' => 'Menus', 'action' => 'delete', $menu->id],
-        ['icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')],
+        ['icon' => $this->Theme->getIcon('delete'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Remove this item')],
         __d('croogo', 'Are you sure?'));
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
 

@@ -35,9 +35,9 @@ $this->append('table-body');
         if (!in_array($pluginAlias, $bundledPlugins) && !in_array($pluginAlias, $corePlugins)):
             $icon = $pluginData['active'] ? $this->Theme->getIcon('power-off') : $this->Theme->getIcon('power-on');
             $actions[] = $this->Croogo->adminRowAction('', ['action' => 'toggle', '?' => $queryString],
-                ['icon' => $icon, 'tooltip' => $toggleText, 'method' => 'post']);
+                ['icon' => $icon, 'escapeTitle' => false, 'tooltip' => $toggleText, 'method' => 'post']);
             $actions[] = $this->Croogo->adminRowAction('', ['action' => 'delete', '?' => $queryString],
-                ['icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Delete')],
+                ['icon' => $this->Theme->getIcon('delete'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Delete')],
                 __d('croogo', 'Are you sure?'));
         endif;
 
@@ -46,11 +46,12 @@ $this->append('table-body');
             !in_array($pluginAlias, $corePlugins)
         ) {
             $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveup', '?' => $queryString],
-                ['icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post'],
+                ['icon' => $this->Theme->getIcon('move-up'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post'],
                 __d('croogo', 'Are you sure?'));
 
             $actions[] = $this->Croogo->adminRowAction('', ['action' => 'movedown', '?' => $queryString], [
                     'icon' => $this->Theme->getIcon('move-down'),
+                    'escapeTitle' => false,
                     'tooltip' => __d('croogo', 'Move down'),
                     'method' => 'post',
                 ], __d('croogo', 'Are you sure?'));

@@ -33,24 +33,28 @@ foreach ($blocks as $block) {
     $actions = [];
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveUp', $block->id], [
             'icon' => $this->Theme->getIcon('move-up'),
+            'escapeTitle' => false,
             'tooltip' => __d('croogo', 'Move up'),
             'method' => 'post',
         ]);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveDown', $block->id], [
             'icon' => $this->Theme->getIcon('move-down'),
+            'escapeTitle' => false,
             'tooltip' => __d('croogo', 'Move down'),
             'method' => 'post',
         ]);
     $actions[] = $this->Croogo->adminRowActions($block->id);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $block->id],
-        ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);
+        ['icon' => $this->Theme->getIcon('update'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Edit this item')]);
     $actions[] = $this->Croogo->adminRowAction('', '#Blocks' . $block->id . 'Id', [
             'icon' => $this->Theme->getIcon('copy'),
+            'escapeTitle' => false,
             'tooltip' => __d('croogo', 'Create a copy'),
             'rowAction' => 'copy',
         ], __d('croogo', 'Create a copy of this Block?'));
     $actions[] = $this->Croogo->adminRowAction('', '#Blocks' . $block->id . 'Id', [
             'icon' => $this->Theme->getIcon('delete'),
+            'escapeTitle' => false,
             'class' => 'delete',
             'tooltip' => __d('croogo', 'Remove this item'),
             'rowAction' => 'delete',

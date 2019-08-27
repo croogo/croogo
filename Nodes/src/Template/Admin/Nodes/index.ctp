@@ -94,26 +94,31 @@ $this->append('table-body');
                         echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'move', $node->id, 'up'], [
                                 'method' => 'post',
                                 'icon' => $this->Theme->getIcon('move-up'),
+                                'escapeTitle' => false,
                                 'tooltip' => __d('croogo', 'Move up'),
                             ]);
                         echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'move', $node->id, 'down'], [
                                 'method' => 'post',
                                 'icon' => $this->Theme->getIcon('move-down'),
+                                'escapeTitle' => false,
                                 'tooltip' => __d('croogo', 'Move down'),
                             ]);
                     endif;
 
                     echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'edit', $node->id], [
                             'icon' => $this->Theme->getIcon('update'),
+                            'escapeTitle' => false,
                             'tooltip' => __d('croogo', 'Edit this item'),
                         ]);
                     echo ' ' . $this->Croogo->adminRowAction('', '#Nodes' . $node->id . 'Id', [
                             'icon' => $this->Theme->getIcon('copy'),
+                            'escapeTitle' => false,
                             'tooltip' => __d('croogo', 'Create a copy'),
                             'rowAction' => 'copy',
                         ]);
                     echo ' ' . $this->Croogo->adminRowAction('', '#Nodes' . $node->id . 'Id', [
                             'icon' => $this->Theme->getIcon('delete'),
+                            'escapeTitle' => false,
                             'class' => 'delete',
                             'tooltip' => __d('croogo', 'Remove this item'),
                             'rowAction' => 'delete',

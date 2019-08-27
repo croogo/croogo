@@ -68,13 +68,14 @@ if (!$tableBody && isset($displayFields)):
                 ]);
             else:
                 $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $item->id],
-                    ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);
+                    ['icon' => $this->Theme->getIcon('update'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Edit this item')]);
                 $actions[] = $this->Croogo->adminRowActions($item->id);
                 $actions[] = $this->Croogo->adminRowAction('', [
                     'action' => 'delete',
                     $item->id,
                 ], [
                     'icon' => $this->Theme->getIcon('delete'),
+                    'escapeTitle' => false,
                     'tooltip' => __d('croogo', 'Remove this item'),
                 ], __d('croogo', 'Are you sure?'));
             endif;

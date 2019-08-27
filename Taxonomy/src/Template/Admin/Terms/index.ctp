@@ -35,13 +35,13 @@ foreach ($terms as $term):
     $actions = [];
     $actions[] = $this->Croogo->adminRowActions($term->id);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveUp', $term->id, $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post']);
+        ['icon' => $this->Theme->getIcon('move-up'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post']);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveDown', $term->id, $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'), 'method' => 'post']);
+        ['icon' => $this->Theme->getIcon('move-down'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Move down'), 'method' => 'post']);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $term->id, 'vocabulary_id' => $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);
+        ['icon' => $this->Theme->getIcon('update'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Edit this item')]);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'delete', $term->id, $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')],
+        ['icon' => $this->Theme->getIcon('delete'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Remove this item')],
         __d('croogo', 'Are you sure?'));
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
 

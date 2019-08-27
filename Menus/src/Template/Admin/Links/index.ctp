@@ -41,6 +41,7 @@ foreach ($linksTree as $linkId => $linkTitle):
         $linkId,
     ], [
         'icon' => $this->Theme->getIcon('move-up'),
+        'escapeTitle' => false,
         'tooltip' => __d('croogo', 'Move up'),
     ]);
     $actions[] = $this->Croogo->adminRowAction('', [
@@ -48,6 +49,7 @@ foreach ($linksTree as $linkId => $linkTitle):
         $linkId,
     ], [
         'icon' => $this->Theme->getIcon('move-down'),
+        'escapeTitle' => false,
         'tooltip' => __d('croogo', 'Move down'),
     ]);
     $actions[] = $this->Croogo->adminRowActions($linkId);
@@ -56,15 +58,18 @@ foreach ($linksTree as $linkId => $linkTitle):
         $linkId,
     ], [
         'icon' => $this->Theme->getIcon('update'),
+        'escapeTitle' => false,
         'tooltip' => __d('croogo', 'Edit this item'),
     ]);
     $actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id', [
         'icon' => $this->Theme->getIcon('copy'),
+        'escapeTitle' => false,
         'tooltip' => __d('croogo', 'Create a copy'),
         'rowAction' => 'copy',
     ], __d('croogo', 'Create a copy of this Link?'));
     $actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id', [
         'icon' => $this->Theme->getIcon('delete'),
+        'escapeTitle' => false,
         'class' => 'delete',
         'tooltip' => __d('croogo', 'Delete this item'),
         'rowAction' => 'delete',
