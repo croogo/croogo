@@ -36,7 +36,7 @@
         $rows[] = [
             '',
             $term->id,
-            $titleCol,
+            h($titleCol),
             $term->slug,
         ];
 

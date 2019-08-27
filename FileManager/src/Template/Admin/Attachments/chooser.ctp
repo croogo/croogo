@@ -27,7 +27,7 @@
             );
         }
 
-        $headerText = $this->Html->div('', $attachment->title);
+        $headerText = $this->Html->div('', h($attachment->title));
         $cardHeader = $this->Html->div('card-header', $headerText);
         $card = $this->Html->div(
             'card text-xs-center selector item-choose',
@@ -36,7 +36,7 @@
                 'data-slug' => $attachment->slug,
                 'data-chooser-type' => 'Node',
                 'data-chooser-id' => $attachment->id,
-                'data-chooser-title' => $attachment->title,
+                'data-chooser-title' => h($attachment->title),
                 'rel' => $attachment->path,
             ]
         );

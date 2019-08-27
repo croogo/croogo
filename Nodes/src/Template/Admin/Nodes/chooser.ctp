@@ -17,7 +17,7 @@
         <?php if (isset($type)) : ?>
         <li>
             <?php
-            echo $this->Html->link(__d('croogo', '%s archive/index', $type->title), [
+            echo $this->Html->link(__d('croogo', '%s archive/index', h($type->title)), [
                 'prefix' => 'admin',
                 'plugin' => 'Croogo/Nodes',
                 'controller' => 'Nodes',
@@ -27,7 +27,7 @@
                 'class' => 'item-choose',
                 'data-chooser-type' => 'Node',
                 'data-chooser-id' => $type->id,
-                'data-chooser-title' => $type->title,
+                'data-chooser-title' => h($type->title),
                 'rel' => $type->url->toLinkString(),
             ]);
             ?>
@@ -47,7 +47,7 @@
                     'class' => 'item-choose',
                     'data-chooser-type' => 'Node',
                     'data-chooser-id' => $node->id,
-                    'data-chooser-title' => $node->title,
+                    'data-chooser-title' => h($node->title),
                     'rel' => $node->url->toLinkString(),
                 ]);
 
@@ -63,7 +63,7 @@
                 $a = $this->Html->link('', '#', [
                     'class' => 'popovers action',
                     'icon' => 'info-sign',
-                    'data-title' => $type,
+                    'data-title' => h($type),
                     'data-trigger' => 'click',
                     'data-placement' => 'right',
                     'data-html' => true,

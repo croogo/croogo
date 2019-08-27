@@ -125,7 +125,7 @@ class NodesEventHandler implements EventListenerInterface
         $linkChoosers = [];
         foreach ($types as $type) {
             $linkChoosers[$type->title ] = [
-                'title' => $type->title,
+                'title' => h($type->title),
                 'description' => $type->description,
                 'url' => [
                     'prefix' => 'admin',
