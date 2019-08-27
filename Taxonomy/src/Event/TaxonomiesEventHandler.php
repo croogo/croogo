@@ -78,9 +78,9 @@ class TaxonomiesEventHandler implements EventListenerInterface
         $linkChoosers = [];
         foreach ($vocabularies as $vocabulary) {
             foreach ($vocabulary->types as $type) {
-                $title = $type->title . ' ' . $vocabulary->title;
+                $title = h($type->title . ' ' . $vocabulary->title);
                 $linkChoosers[$title] = [
-                    'description' => $vocabulary->description,
+                    'description' => h($vocabulary->description),
                     'url' => [
                         'prefix' => 'admin',
                         'plugin' => 'Croogo/Taxonomy',
