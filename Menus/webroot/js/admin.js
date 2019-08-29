@@ -84,6 +84,7 @@ Links.setupSelect2 = function(selector) {
       var values = [];
       var rel = $(data).attr('rel');
       if (
+        rel.indexOf('prefix:') >= 0 ||
         rel.indexOf('plugin:') >= 0 ||
         rel.indexOf('controller:') >= 0 ||
         rel.indexOf('action:') >= 0

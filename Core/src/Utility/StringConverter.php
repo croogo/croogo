@@ -139,6 +139,9 @@ class StringConverter
                 }
             }
         }
+        if (!isset($linkArr['prefix'])) {
+            $linkArr['prefix'] = false;
+        }
         if (!isset($linkArr['plugin'])) {
             $linkArr['plugin'] = false;
         }
@@ -166,7 +169,7 @@ class StringConverter
         $result = [];
         $actions = array_merge(
             [
-            'admin' => false, 'plugin' => false,
+            'prefix' => false, 'plugin' => false,
             'controller' => false, 'action' => false
             ],
             $url
