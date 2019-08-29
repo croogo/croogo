@@ -29,7 +29,6 @@ use Cake\Utility\Text;
 
 use Croogo\Core\Croogo;
 use Croogo\Core\Event\EventManager;
-use Croogo\Core\PluginManager;
 use Croogo\Settings\Configure\Engine\DatabaseConfig;
 
 use InvalidArgumentException;
