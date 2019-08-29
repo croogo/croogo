@@ -88,6 +88,7 @@ class AppController extends CroogoAppController
                 ]
             ],
             'listeners' => [
+                'Crud.Redirect',
                 'Crud.Search',
                 'Crud.RelatedModels',
                 'Croogo/Core.Flash',
@@ -140,7 +141,8 @@ class AppController extends CroogoAppController
     {
         $subject = $event->getSubject();
         if ($subject->success) {
-            if ($this->request->getData('_apply')) {
+            $data = $this->request->getData();
+            if (isset($data['_apply'])) {
                 $entity = $subject->entity;
                 return $this->redirect(['action' => 'edit', $entity->id]);
             }
