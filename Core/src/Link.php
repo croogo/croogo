@@ -29,17 +29,20 @@ class Link extends ArrayObject
 
     public function getUrl()
     {
-        $copy = array_map(function ($val) {
-            if (is_array($val)) {
-                return $val;
-            }
-            $decoded = urldecode($val);
-            if (boolval($decoded) === false) {
-                $decoded = false;
-            }
-            return $decoded;
-        }, $this->getArrayCopy());
+        $copy = $this->getArrayCopy();
         unset($copy['pass']);
+        foreach ($copy as $key => $val) {
+            if (is_array($val)) {
+                continue;
+            }
+            $val = urldecode($val);
+            if (boolval($val) === false) {
+                $val = false;
+            } elseif ($val[0] == '#') {
+                unset($copy[$key]);
+                $copy['#'] = mb_substr($val, 1);
+            }
+        }
         return (isset($this->controller)) ? $copy : $this->url;
     }
 
