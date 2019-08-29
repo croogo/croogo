@@ -57,7 +57,7 @@ $this->append('action-buttons');
         __d('croogo', 'New Attachment'),
         array_merge(
             array('controller' => 'Attachments', 'action' => 'add', 'editor' => 1),
-            array('?' => (array)$this->request->getAttribute('query'))
+            array('?' => (array)$this->request->getQuery())
         )
     ) . ' ';
 
@@ -98,7 +98,7 @@ $this->append('table-heading');
 $this->end();
 
 $this->append('table-body');
-    $query = array('?' => (array)$this->request->getAttribute('query'));
+    $query = array('?' => (array)$this->request->getQuery());
     $rows = array();
     foreach ($attachments as $attachment):
         $actions = array();

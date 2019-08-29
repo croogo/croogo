@@ -8,7 +8,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 $this->Breadcrumbs
     ->add(__d('croogo', 'Attachments'), $this->request->getUri()->getPath());
 
-$query = (array)$this->request->getAttribute('query');
+$query = (array)$this->request->getQuery();
 
 $this->append('action-buttons');
 

@@ -23,7 +23,7 @@ class AssetUsagesController extends AppController {
     }
 
     public function add() {
-        if ($this->request->getAttribute('query')) {
+        if ($this->request->getQuery()) {
             $assetId = $this->request->getQuery('asset_id');
             $model = $this->request->getQuery('model');
             $foreignKey = $this->request->getQuery('foreign_key');

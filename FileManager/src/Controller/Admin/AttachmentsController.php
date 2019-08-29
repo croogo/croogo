@@ -102,7 +102,7 @@ class AttachmentsController extends AppController {
         $model = $this->request->getQuery('model');
         $foreignKey = $this->request->getQuery('foreign_key');
         $this->set(compact('model', 'foreignKey'));
-        $httpQuery = (array)$this->request->getAttribute('query');
+        $httpQuery = (array)$this->request->getQuery();
 
         if ($this->request->getQuery('manage')) {
             $finder = 'versions';
@@ -277,10 +277,10 @@ $this->log($httpQuery);
         }
 
         $redirect = array('action' => 'index');
-        if (!empty($this->request->getAttribute('query'))) {
+        if (!empty($this->request->getQuery())) {
             $redirect = array_merge(
                 $redirect,
-                array('action' => 'browse', '?' => $this->request->getAttribute('query'))
+                array('action' => 'browse', '?' => $this->request->getQuery())
             );
         }
 
@@ -319,10 +319,10 @@ $this->log($httpQuery);
         }
 
         $redirect = array('action' => 'index');
-        if (!empty($this->request->getAttribute('query'))) {
+        if (!empty($this->request->getQuery())) {
             $redirect = array_merge(
                 $redirect,
-                array('action' => 'browse', '?' => $this->request->getAttribute('query'))
+                array('action' => 'browse', '?' => $this->request->getQuery())
             );
         }
 
@@ -357,7 +357,7 @@ $this->log($httpQuery);
 
         $query = $this->Attachments
             ->find('search', [
-                'search' => (array)$this->request->getAttribute('query'),
+                'search' => (array)$this->request->getQuery(),
             ])
             ->find('modelAttachments');
         $attachments = $this->paginate($query);

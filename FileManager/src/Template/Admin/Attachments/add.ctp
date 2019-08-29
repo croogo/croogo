@@ -112,7 +112,7 @@ $this->append('panels');
     if ($this->request->getQuery('model')) {
         $redirect = array_merge(
             array('action' => 'browse'),
-            array('?' => $this->request->getAttribute('query'))
+            array('?' => $this->request->getQuery())
         );
         unset($redirect['?']['editor']);
     }

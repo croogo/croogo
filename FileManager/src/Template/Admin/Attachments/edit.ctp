@@ -13,8 +13,8 @@ if ($this->layout === 'admin_popup'):
 endif;
 
 $formUrl = array('controller' => 'Attachments', 'action' => 'edit');
-if ($this->request->getAttribute('query')) {
-    $formUrl = array_merge($formUrl, $this->request->getAttribute('query'));
+if ($this->request->getQuery()) {
+    $formUrl = array_merge($formUrl, $this->request->getQuery());
 }
 
 $this->append('form-start', $this->Form->create($attachment, array(
@@ -61,7 +61,7 @@ $this->append('panels');
     if ($this->request->getQuery('model')) {
         $redirect = array_merge(
             array('action' => 'browse'),
-            array('?' => $this->request->getAttribute('query'))
+            array('?' => $this->request->getQuery())
         );
     }
     echo $this->Html->beginBox(__d('croogo', 'Publishing')) .

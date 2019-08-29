@@ -1,6 +1,6 @@
 <?php
 
-extract((array)$this->request->getAttribute('query'));
+extract((array)$this->request->getQuery());
 if (empty($model) || empty($foreign_key)):
     return;
 endif;
