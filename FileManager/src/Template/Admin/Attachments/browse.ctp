@@ -179,6 +179,7 @@ $this->append('table-body');
                     ), $query);
                     $actions[] = $this->Croogo->adminRowAction('', $addUrl, array(
                         'icon' => 'create',
+                        'escapeTitle' => false,
                         'tooltip' => __d('croogo', 'Register asset with this resource'),
                         'method' => 'post',
                     ));
