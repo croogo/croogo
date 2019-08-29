@@ -175,12 +175,14 @@ foreach ($attachments as $attachment):
     if ($mimeType === 'image'):
         $action[] = $this->Croogo->adminRowAction('', $detailUrl, array(
             'icon' => 'suitcase',
+            'escapeTitle' => false,
             'data-toggle' => 'browse',
             'tooltip' => __d('assets', 'View other sizes'),
         ));
 
         $action[] = $this->Croogo->adminRowAction('', $changeTypeUrl, array(
             'icon' => 'star',
+            'escapeTitle' => false,
             'class' => 'set-featured-image',
             'data-pk' => $attachment->asset_usage->id,
             'tooltip' => __d('assets', 'Set as FeaturedImage'),
@@ -189,6 +191,7 @@ foreach ($attachments as $attachment):
 
     $action[] = $this->Croogo->adminRowAction('', $unregisterUsageUrl, array(
         'icon' => 'minus',
+        'escapeTitle' => false,
         'class' => 'unregister-usage red',
         'data-id' => $attachment->asset_usage->id,
         'tooltip' => __d('assets', 'Unregister asset from this resource'),
