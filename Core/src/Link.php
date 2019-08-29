@@ -3,6 +3,9 @@
 namespace Croogo\Core;
 
 use ArrayObject;
+use Cake\Routing\Router;
+use Cake\Routing\Exception\MissingRouteException;
+use Cake\Log\Log;
 use Croogo\Core\Utility\StringConverter;
 
 class Link extends ArrayObject
@@ -34,6 +37,17 @@ class Link extends ArrayObject
         }, $this->getArrayCopy());
         unset($copy['pass']);
         return (isset($this->controller)) ? $copy : $this->url;
+    }
+
+    public function getPath()
+    {
+        try {
+            return Router::url($this->getUrl());
+        } catch (MissingRouteException $e) {
+            Log::error('Croogo/Core.Link::getPath() cannot get url');
+            Log::error($e->getMessage());
+            return '/';
+        }
     }
 
     public function toLinkString()

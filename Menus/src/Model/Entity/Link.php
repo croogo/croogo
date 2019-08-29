@@ -13,4 +13,11 @@ class Link extends Entity
 
     use TranslateTrait;
 
+    protected $_virtual = ['path'];
+
+    protected function _getPath()
+    {
+        return $this->link->getPath();
+    }
+
 }
