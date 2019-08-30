@@ -1175,6 +1175,45 @@ class PluginManager extends Plugin
         Type::map('encoded', 'Croogo\Core\Database\Type\EncodedType');
         Type::map('link', 'Croogo\Core\Database\Type\LinkType');
 
+        /**
+         * Cache configuration
+         */
+        $defaultCacheConfig = Cache::getConfig('default');
+        $defaultEngine = $defaultCacheConfig['className'];
+        $defaultPrefix = Hash::get($defaultCacheConfig, 'prefix', 'cake_');
+        $cacheConfig = [
+            'duration' => '+1 hour',
+            'path' => CACHE . 'queries' . DS,
+            'className' => $defaultEngine,
+            'prefix' => $defaultPrefix,
+        ] + $defaultCacheConfig;
+        Configure::write('Croogo.Cache.defaultEngine', $defaultEngine);
+        Configure::write('Croogo.Cache.defaultPrefix', $defaultPrefix);
+        Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
+
+        $configured = Cache::configured();
+        if (!in_array('cached_settings', $configured)) {
+            Cache::setConfig('cached_settings', array_merge(
+                Configure::read('Croogo.Cache.defaultConfig'),
+                ['groups' => ['settings']]
+            ));
+        }
+
+        /**
+         * Settings
+         */
+        Configure::config('settings', new DatabaseConfig());
+        try {
+            Configure::load('settings', 'settings');
+        }
+        catch (\Exception $e) {
+            Log::error($e->getMessage());
+            Log::error('You can ignore the above error during installation');
+        }
+    }
+
+    public static function croogoBootstrap($app)
+    {
         Configure::write(
             'DebugKit.panels',
             array_merge((array)Configure::read('DebugKit.panels'), [
@@ -1201,9 +1240,6 @@ class PluginManager extends Plugin
 
         Croogo::hookHelper('*', 'Croogo/Core.Js');
         Croogo::hookHelper('*', 'Croogo/Core.Layout');
-    }
-
-    public static function croogoBootstrap($app) {
 
         // Make sure that the Croogo event manager is the global one
         EventManager::instance();
@@ -1223,42 +1259,6 @@ class PluginManager extends Plugin
              * Admin theme
              */
             Configure::write('Site.admin_theme', 'Croogo/Core');
-
-            /**
-             * Cache configuration
-             */
-            $defaultCacheConfig = Cache::getConfig('default');
-            $defaultEngine = $defaultCacheConfig['className'];
-            $defaultPrefix = Hash::get($defaultCacheConfig, 'prefix', 'cake_');
-            $cacheConfig = [
-                'duration' => '+1 hour',
-                'path' => CACHE . 'queries' . DS,
-                'className' => $defaultEngine,
-                'prefix' => $defaultPrefix,
-            ] + $defaultCacheConfig;
-            Configure::write('Croogo.Cache.defaultEngine', $defaultEngine);
-            Configure::write('Croogo.Cache.defaultPrefix', $defaultPrefix);
-            Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
-
-            $configured = Cache::configured();
-            if (!in_array('cached_settings', $configured)) {
-                Cache::setConfig('cached_settings', array_merge(
-                    Configure::read('Croogo.Cache.defaultConfig'),
-                    ['groups' => ['settings']]
-                ));
-            }
-
-            /**
-             * Settings
-             */
-            Configure::config('settings', new DatabaseConfig());
-            try {
-                Configure::load('settings', 'settings');
-            }
-            catch (\Exception $e) {
-                Log::error($e->getMessage());
-                Log::error('You can ignore the above error during installation');
-            }
 
             /**
              * Locale
