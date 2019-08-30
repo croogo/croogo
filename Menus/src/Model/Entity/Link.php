@@ -17,7 +17,7 @@ class Link extends Entity
 
     protected function _getPath()
     {
-        return $this->link->getPath();
+        return $this->link ? $this->link->getPath() : null;
     }
 
 }
