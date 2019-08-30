@@ -30,10 +30,13 @@ class TermAddAction extends BaseAction
         $vocabulary = $controller->Terms->Vocabularies->get($vocabularyId);
 
         $term = $controller->Terms->newEntity();
-        $controller->set('term', $term);
 
         if ($request->is('post')) {
-            $term = $controller->Terms->patchEntity($term, $request->data);
+            $existingTerm = $controller->Terms->find()
+                ->where(['slug' => $request->getData('slug')])
+                ->first();
+
+            $term = $existingTerm ?: $controller->Terms->patchEntity($term, $request->data);
 
             $taxonomy = $controller->Terms->add($term, $vocabularyId);
             if ($taxonomy) {
@@ -55,8 +58,9 @@ class TermAddAction extends BaseAction
                 $controller->Flash->error(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'));
             }
         }
+
         $parentTree = $controller->Terms->Taxonomies->getTree($vocabulary->alias, ['taxonomyId' => true]);
-        $controller->set(compact('vocabulary', 'parentTree', 'vocabularyId'));
+        $controller->set(compact('vocabulary', 'term', 'parentTree', 'vocabularyId'));
     }
 
 }
