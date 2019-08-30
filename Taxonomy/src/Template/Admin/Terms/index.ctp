@@ -14,8 +14,6 @@ $this->append('action-buttons');
 echo $this->Croogo->adminAction(__d('croogo', 'Create term'), [
     'action' => 'add',
     'vocabulary_id' => $vocabulary->id,
-], [
-    'class' => 'btn btn-success',
 ]);
 $this->end();
 
