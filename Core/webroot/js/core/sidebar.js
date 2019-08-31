@@ -105,12 +105,3 @@ Admin.navigation = function () {
     });
   });
 }
-
-/**
- * Document ready
- *
- * @return void
- */
-$(document).ready(function () {
-  Admin.navigation();
-});

@@ -7,6 +7,11 @@ $adminThemeScripts = <<<EOF
     Admin.extra();
     Admin.slideBoxToggle();
     Admin.dateTimeFields();
+    Admin.navigation();
+    Admin.modal();
+
 EOF;
 
-$this->Js->buffer($adminThemeScripts);
+if (!$this->request->is('ajax')):
+    $this->Js->buffer($adminThemeScripts);
+endif;

@@ -1,4 +1,6 @@
-$(function () {
+var Admin = typeof Admin == 'undefined' ? {} : Admin;
+
+Admin.modal = function() {
   $(document).on('show.bs.modal', function (e) {
     var $button = $(e.relatedTarget);
     var $modal = $(e.target);
@@ -13,4 +15,4 @@ $(function () {
         $modal.data('bs.modal').handleUpdate();
       });
   });
-});
+};
