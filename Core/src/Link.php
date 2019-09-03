@@ -49,7 +49,11 @@ class Link extends ArrayObject
     public function getPath()
     {
         try {
-            return Router::url($this->getUrl());
+            $url = $this->getUrl();
+            if (is_string($url)) {
+                return urldecode($url);
+            }
+            return Router::url($url);
         } catch (MissingRouteException $e) {
             Log::error('Croogo/Core.Link::getPath() cannot get url');
             Log::error($e->getMessage());
