@@ -79,7 +79,7 @@ $this->append('tab-content');
             if (!$link->isNew() && $linkString):
                 $linkOptions[] = [
                     'value' => $linkString,
-                    'text' => $linkString,
+                    'text' => urldecode($linkString),
                     'selected' => true,
                     'data-select2-tag' => "true",
                 ];
