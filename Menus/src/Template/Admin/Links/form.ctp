@@ -112,6 +112,7 @@ $this->append('tab-content');
         ]);
         echo $this->Form->input('params', [
             'label' => __d('croogo', 'Params'),
+            'type' => 'stringlist',
         ]);
     echo $this->Html->tabEnd();
 
