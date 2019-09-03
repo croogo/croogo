@@ -68,6 +68,11 @@ class LinksTable extends CroogoTable
         $this->searchManager()
             ->add('menu_id', 'Search.Value', [
                 'field' => 'menu_id'
+            ])
+            ->add('title', 'Search.Like', [
+                'field' => 'title',
+                'before' => true,
+                'after' => true
             ]);
     }
 
@@ -75,7 +80,7 @@ class LinksTable extends CroogoTable
     {
         $table->setColumnType('visibility_roles', 'encoded');
         $table->setColumnType('link', 'link');
-
+        $table->setColumnType('params', 'params');
         return parent::_initializeSchema($table);
     }
 

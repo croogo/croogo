@@ -2,6 +2,7 @@
 
 namespace Croogo\Menus\Model\Table;
 
+use Cake\Database\Schema\TableSchema;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\RulesChecker;
@@ -67,6 +68,12 @@ class MenusTable extends CroogoTable
                 'lft' => 'ASC'
             ],
         ]);
+    }
+
+    protected function _initializeSchema(TableSchema $table)
+    {
+        $table->setColumnType('params', 'params');
+        return parent::_initializeSchema($table);
     }
 
 /**
