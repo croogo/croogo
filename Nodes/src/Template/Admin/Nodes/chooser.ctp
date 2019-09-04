@@ -59,17 +59,20 @@
                 ];
                 $popup[] = [__d('croogo', 'Status'), $this->Layout->status($node->status)];
                 $popup[] = [__d('croogo', 'Created'), $node->created];
-                $popup = $this->Html->tag('table', $this->Html->tableCells($popup));
+                $popup = implode('<br>', array_map(function($el) {
+                    return implode(': ', $el);
+                }, $popup));
                 $a = $this->Html->link('', '#', [
                     'class' => 'popovers action',
                     'icon' => 'info-sign',
+                    'escapeTitle' => false,
                     'data-title' => h($type),
                     'data-trigger' => 'click',
                     'data-placement' => 'right',
-                    'data-html' => true,
-                    'data-content' => h($popup),
+                    'data-html' => 'true',
+                    'data-content' => $popup,
                 ]);
-                echo $a;
+                echo "&nbsp; " . $a;
                 ?>
             </li>
         <?php endforeach ?>
@@ -78,3 +81,6 @@
         <ul><?= $this->Paginator->numbers() ?></ul>
     </div>
 </div>
+<script>
+$('.popovers').popover();
+</script>
