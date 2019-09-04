@@ -15,14 +15,14 @@ echo $this->Form->input('filter', [
     'default' => $this->request->getQuery('filter'),
 ]);
 
-if (!$this->request->getQuery('chooser')):
+echo $this->Form->input('type', [
+    'options' => $nodeTypes,
+    'empty' => __d('croogo', 'Type'),
+    'class' => 'c-select',
+    'default' => $this->request->getQuery('type'),
+]);
 
-    echo $this->Form->input('type', [
-        'options' => $nodeTypes,
-        'empty' => __d('croogo', 'Type'),
-        'class' => 'c-select',
-        'default' => $this->request->getQuery('type'),
-    ]);
+if (!$this->request->getQuery('chooser')):
 
     echo $this->Form->input('status', [
         'options' => [
@@ -49,9 +49,13 @@ endif;
 echo $this->Form->submit(__d('croogo', 'Filter'), [
     'class' => 'btn-outline-success mr-1',
 ]);
-echo $this->Html->link('Reset', [
+echo $this->Html->link('Reset', array_merge([
     'action' => 'index',
 ], [
+    '?' => [
+        'chooser' => $this->request->query('chooser')
+    ],
+]), [
     'class' => 'btn btn-outline-secondary',
 ]);
 echo $this->Form->end();
