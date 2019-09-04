@@ -38,19 +38,33 @@ $this->append('table-body');
             $status = $this->Html->status(1);
             $actions[] = $this->Croogo->adminRowAction('',
                 array('action' => 'deactivate', $locale),
-                array('icon' => $this->Theme->getIcon('power-off'), 'tooltip' => __d('croogo', 'Deactivate'), 'method' => 'post')
+                [
+                    'icon' => $this->Theme->getIcon('power-off'),
+                    'escapeTitle' => false,
+                    'tooltip' => __d('croogo', 'Deactivate'),
+                    'method' => 'post'
+                ]
             );
         } else {
             $status = $this->Html->status(0);
             $actions[] = $this->Croogo->adminRowAction('',
                 array('action' => 'activate', $locale),
-                array('icon' => $this->Theme->getIcon('power-on'), 'tooltip' => __d('croogo', 'Activate'), 'method' => 'post')
+                [
+                    'icon' => $this->Theme->getIcon('power-on'),
+                    'escapeTitle' => false,
+                    'tooltip' => __d('croogo', 'Activate'),
+                    'method' => 'post'
+                ]
             );
         }
 
         $actions[] = $this->Croogo->adminRowAction('',
             array('action' => 'edit', $locale),
-            array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
+            [
+                'icon' => $this->Theme->getIcon('update'),
+                'escapeTitle' => false,
+                'tooltip' => __d('croogo', 'Edit this item')
+            ]
         );
 
         if (strpos($data['path'], $vendorDir) !== 0):
