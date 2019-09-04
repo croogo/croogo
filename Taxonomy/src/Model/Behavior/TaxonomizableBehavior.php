@@ -2,6 +2,7 @@
 
 namespace Croogo\Taxonomy\Model\Behavior;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
 use Cake\Log\Log;
@@ -166,14 +167,14 @@ class TaxonomizableBehavior extends Behavior
      * @param \Cake\ORM\Entity $entity Entity being saved
      * @param string $typeAlias string Node type alias
      * @return void
-     * @throws InvalidArgumentException
+     * @throws RecordNotFoundException
      */
     public function formatTaxonomyData(Entity $entity, $typeAlias)
     {
         $type = $this->_table->Taxonomies->Vocabularies->Types->findByAlias($typeAlias)
             ->first();
         if (empty($type)) {
-            throw new InvalidArgumentException(__d('croogo', 'Invalid Content Type'));
+            throw new RecordNotFoundException(__d('croogo', 'Invalid Content Type'));
         }
         $entity->type = $type->alias;
         if (!$this->_table->behaviors()
@@ -258,7 +259,7 @@ class TaxonomizableBehavior extends Behavior
         }
 
         if (!$entity) {
-            return $query;
+            throw new RecordNotFoundException(__d('croogo', 'Term not found: %s', $term));
         }
 
         $query
