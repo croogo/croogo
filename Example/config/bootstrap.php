@@ -43,7 +43,7 @@ CroogoNav::add('sidebar', 'extensions.children.example', [
         'example1' => [
             'title' => 'Example 1',
             'url' => [
-                'admin' => true,
+                'prefix' => 'admin',
                 'plugin' => 'Croogo/Example',
                 'controller' => 'Example',
                 'action' => 'index',
