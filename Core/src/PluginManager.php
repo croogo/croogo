@@ -1200,6 +1200,30 @@ class PluginManager extends Plugin
         }
 
         /**
+         * Default Acl plugin.  Custom Acl plugin should override this value.
+         */
+        Configure::write('Site.acl_plugin', 'Croogo/Acl');
+
+        /**
+         * Default API Route Prefix. This can be overriden in settings.
+         */
+        Configure::write('Croogo.Api.path', 'api');
+
+        /**
+         * Admin theme
+         */
+        Configure::write('Site.admin_theme', 'Croogo/Core');
+
+        /**
+         * Timezone
+         */
+        $timezone = Configure::read('Site.timezone');
+        if (!$timezone) {
+            $timezone = 'UTC';
+        }
+        date_default_timezone_set($timezone);
+
+        /**
          * Settings
          */
         Configure::config('settings', new DatabaseConfig());
@@ -1245,20 +1269,6 @@ class PluginManager extends Plugin
         EventManager::instance();
 
         \Croogo\Core\time(function () {
-            /**
-             * Default Acl plugin.  Custom Acl plugin should override this value.
-             */
-            Configure::write('Site.acl_plugin', 'Croogo/Acl');
-
-            /**
-             * Default API Route Prefix. This can be overriden in settings.
-             */
-            Configure::write('Croogo.Api.path', 'api');
-
-            /**
-             * Admin theme
-             */
-            Configure::write('Site.admin_theme', 'Croogo/Core');
 
             /**
              * Locale
@@ -1302,15 +1312,6 @@ class PluginManager extends Plugin
             }
             return $package;
         });
-
-        /**
-         * Timezone
-         */
-        $timezone = Configure::read('Site.timezone');
-        if (!$timezone) {
-            $timezone = 'UTC';
-        }
-        date_default_timezone_set($timezone);
 
         \Croogo\Core\time(function () use ($app) {
             /**
