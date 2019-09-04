@@ -139,7 +139,7 @@ class AttachmentsController extends AppController {
         }
 
         if ($isChooser) {
-            if ($this->request->getQuery['chooser_type'] == 'image') {
+            if ($this->request->getQuery('chooser_type') == 'image') {
                 $query->where([
                     'Assets.mime_type LIKE' => 'image/%',
                 ]);
@@ -150,7 +150,6 @@ class AttachmentsController extends AppController {
             }
         }
 
-$this->log($httpQuery);
         $query->find('search', [
             'search' => $httpQuery,
         ]);
