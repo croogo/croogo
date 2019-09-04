@@ -2,6 +2,7 @@
 
 namespace Croogo\Core\Model\Table;
 
+use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -65,12 +66,16 @@ class CroogoTable extends Table
         parent::__construct($config);
     }
 
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+    public function implementedEvents() {
+        return parent::implementedEvents() + [
+            'Model.initialize' => 'onModelInitialized',
+        ];
+    }
 
+    public function onModelInitialized(Event $event)
+    {
         foreach ($this->hookedBehaviors as $behavior => $config) {
-            $this->behaviors()->load($behavior, $config);
+            $this->addBehavior($behavior, $config);
         }
     }
 
