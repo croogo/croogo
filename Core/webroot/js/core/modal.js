@@ -15,4 +15,31 @@ Admin.modal = function() {
         $modal.data('bs.modal').handleUpdate();
       });
   });
+
+  $('body').on('click', '.modal-dialog a', function(event) {
+    var $el = $(event.target);
+    var href = $el.attr('href')
+    $($el.closest('.modal-body')).load(href);
+    event.preventDefault();
+    return false;
+  });
+
+  $('body').on('submit', '.modal-dialog form', function(event) {
+    var $el = $(event.target);
+    var $form = $el.closest('form');
+    $form.submit(function(ev) {
+      ev.preventDefault();
+      var opts = {
+        type: 'POST',
+        url: $form.attr('action'),
+        data: $form.serialize(),
+        success: function(data) {
+          $el.closest('.modal-body').html(data);
+        }
+      };
+      $.ajax(opts);
+    });
+    event.preventDefault();
+    return false;
+  });
 };
