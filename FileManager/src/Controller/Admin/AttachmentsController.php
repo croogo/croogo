@@ -197,7 +197,7 @@ $this->log($httpQuery);
 
                 $errors = $entity->getErrors();
                 if (empty($errors) && $attachment) {
-                    $eventKey = 'Controller.AssetsAttachment.newAttachment';
+                    $eventKey = 'Controller.FileManager/Attachment.newAttachment';
                     Croogo::dispatchEvent($eventKey, $this, compact('attachment'));
                 } else {
                     Log::error('Failed saving attachments:');

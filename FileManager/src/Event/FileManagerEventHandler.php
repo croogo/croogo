@@ -2,8 +2,11 @@
 
 namespace Croogo\FileManager\Event;
 
+use Cake\Log\Log;
 use Cake\Event\EventListenerInterface;
+use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
+use Croogo\Core\Nav;
 
 /**
  * FileManagerEventHandler
@@ -22,10 +25,45 @@ class FileManagerEventHandler implements EventListenerInterface
     public function implementedEvents()
     {
         return [
+            'Controller.FileManager/Attachment.newAttachment' => [
+                'callable' => 'onNewAttachment',
+            ],
+            'Croogo.setupAdminData' => [
+                'callable' => 'onSetupAdminData',
+            ],
             'Controller.Links.setupLinkChooser' => [
                 'callable' => 'onSetupLinkChooser',
             ],
         ];
+    }
+
+    /**
+     * Registers usage when new attachment is created and attached to a resource
+     */
+    public function onNewAttachment($event) {
+        $controller = $event->getSubject();
+        $request = $controller->request;
+        $attachment = $event->getData('attachment');
+
+        if (empty($attachment->asset->asset_usage)) {
+            Log::error('No asset usage record to register');
+            return;
+        }
+
+        $usage = $attachment->asset->asset_usage[0];
+        $Usage = TableRegistry::get('Croogo/FileManager.AssetUsages');
+        $data = $Usage->newEntity([
+            'asset_id' => $attachment->asset->id,
+            'model' => $usage['model'],
+            'foreign_key' => $usage['foreign_key'],
+            'featured_image' => $usage['featured_image'],
+        ]);
+        $result = $Usage->save($data);
+        if (!$result) {
+            Log::error('Asset Usage registration failed');
+            Log::error(print_r($Usage->validationErrors, true));
+        }
+        $event->result = $result;
     }
 
 /**
@@ -72,4 +110,20 @@ class FileManagerEventHandler implements EventListenerInterface
         ];
         Croogo::mergeConfig('Croogo.linkChoosers', $linkChoosers);
     }
+
+    /**
+     * Setup admin data
+     */
+    public function onSetupAdminData($event) {
+        Nav::add('media.children.attachments', array(
+            'title' => __d('croogo', 'Attachments'),
+            'url' => array(
+                'prefix' => 'admin',
+                'plugin' => 'Croogo/FileManager',
+                'controller' => 'Attachments',
+                'action' => 'index',
+            ),
+        ));
+    }
+
 }
