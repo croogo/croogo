@@ -150,10 +150,6 @@ class StringConverter
             $linkArr['?'] = $query;
         }
 
-        if (isset($pass)) {
-            $linkArr['pass'] = $pass;
-        }
-
         $cached[$hash] = $linkArr;
         return $linkArr;
     }
