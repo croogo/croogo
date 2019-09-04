@@ -31,9 +31,8 @@ class AttachmentsTable extends CroogoTable {
         'versions' => true,
     );
 
-    public function initialize(array $config) {
-        parent::initialize($config);
-
+    public function initialize(array $config)
+    {
         $this->setTable('attachments');
 
         $this->hasOne('Assets', [

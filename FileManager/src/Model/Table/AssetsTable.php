@@ -15,9 +15,8 @@ class AssetsTable extends CroogoTable {
         'file' => 'checkFileUpload'
     );
 
-    public function initialize(array $config) {
-        parent::initialize($config);
-
+    public function initialize(array $config)
+    {
         $this->setTable('assets');
 
         $this->hasMany('AssetUsages', [

@@ -26,8 +26,6 @@ class LanguagesTable extends CroogoTable
  */
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('ADmad/Sequence.Sequence', [
             'order' => 'weight',

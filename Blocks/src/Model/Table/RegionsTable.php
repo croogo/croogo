@@ -57,7 +57,6 @@ class RegionsTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        parent::initialize($config);
         $this->setEntityClass('Croogo/Blocks.Region');
         $this->addAssociations([
             'hasMany' => [

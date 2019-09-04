@@ -19,8 +19,6 @@ class DashboardsTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
         $this->setTable('dashboards');
 		$this->addBehavior('Timestamp');
 		$this->addBehavior('ADmad/Sequence.Sequence', [

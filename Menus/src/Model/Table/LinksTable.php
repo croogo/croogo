@@ -39,8 +39,6 @@ class LinksTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
         $this->addBehavior('Tree');
         $this->addBehavior('Croogo/Core.Cached', [
             'groups' => ['menus']

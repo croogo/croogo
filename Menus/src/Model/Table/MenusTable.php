@@ -42,8 +42,6 @@ class MenusTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
 		$this->addBehavior('Croogo/Core.Cached', [
 			'groups' => [
 				'menus',

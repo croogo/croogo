@@ -41,7 +41,6 @@ class CommentsTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        parent::initialize($config);
         $this->setEntityClass('Croogo/Comments.Comment');
 
         $this->belongsTo('Users', [

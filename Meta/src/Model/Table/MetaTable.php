@@ -39,8 +39,6 @@ class MetaTable extends CroogoTable
             ],
         ]);
         $this->addBehavior('Search.Search');
-
-        parent::initialize($config);
     }
 
     /**

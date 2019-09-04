@@ -49,7 +49,6 @@ class BlocksTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        parent::initialize($config);
         $this->setEntityClass('Croogo/Blocks.Block');
 
         $this->belongsTo('Regions', [

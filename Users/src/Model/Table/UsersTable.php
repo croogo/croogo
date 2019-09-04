@@ -43,8 +43,6 @@ class UsersTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
         $multiRole = Configure::read('Access Control.multiRole');
 
         if ($multiRole) {

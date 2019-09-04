@@ -39,7 +39,6 @@ class ContactsTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        parent::initialize($config);
         $this->setDisplayField('title');
         $this->setEntityClass('Croogo/Contacts.Contact');
         $this->hasMany('Messages', [

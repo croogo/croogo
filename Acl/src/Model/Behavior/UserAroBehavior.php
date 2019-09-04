@@ -28,8 +28,6 @@ class UserAroBehavior extends Behavior
  */
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
         $this->_setupMultirole($this->_table);
     }
 

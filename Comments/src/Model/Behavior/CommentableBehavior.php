@@ -20,8 +20,6 @@ class CommentableBehavior extends Behavior
 {
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
         $this->_table->hasMany('Comments', [
             'className' => 'Croogo/Comments.Comments',
             'foreignKey' => 'foreign_key',

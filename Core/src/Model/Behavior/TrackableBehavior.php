@@ -48,7 +48,6 @@ class TrackableBehavior extends Behavior
  */
     public function initialize(array $config)
     {
-        parent::initialize($config);
         if ($this->_hasTrackableFields()) {
             $this->_setupBelongsTo();
         }

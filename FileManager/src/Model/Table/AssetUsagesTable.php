@@ -15,7 +15,6 @@ use Croogo\Core\Model\Table\CroogoTable;
 class AssetUsagesTable extends CroogoTable {
 
     public function initialize(array $config) {
-        parent::initialize($config);
         $this->setTable('asset_usages');
 
         $this->belongsTo('Assets', [

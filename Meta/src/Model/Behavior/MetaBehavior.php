@@ -33,8 +33,6 @@ class MetaBehavior extends Behavior
      */
     public function initialize(array $config = [])
     {
-        parent::initialize($config);
-
         $this->_table->hasMany('Meta', [
             'className' => 'Croogo/Meta.Meta',
             'foreignKey' => 'foreign_key',

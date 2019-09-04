@@ -18,7 +18,6 @@ class LinkedAssetsBehavior extends Behavior {
     ];
 
     public function initialize(array $config = array()) {
-        parent::initialize($config);
         $this->_table->addAssociations([
             'hasMany' => [
                 'AssetUsages' => [

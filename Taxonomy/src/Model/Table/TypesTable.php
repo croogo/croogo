@@ -32,7 +32,6 @@ class TypesTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        parent::initialize($config);
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
