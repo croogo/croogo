@@ -17,50 +17,43 @@
 </div>
 <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
     <div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
-        <ul id="attachments-for-links">
+        <div id="attachments-for-links" class="card-deck">
         <?php foreach ($attachments as $attachment): ?>
-            <li>
-            <?php
-                echo $this->Html->link($attachment->asset->filename,
-                    $attachment->asset->path,
-                array(
-                    'class' => 'item-choose',
-                    'data-chooser_type' => 'Node',
-                    'data-chooser_id' => $attachment->asset->id,
-                    'data-chooser_title' => $attachment->asset->filename,
-                    'rel' => $attachment->asset->path,
-                ));
-
-                $popup = array();
-                $type = __d('croogo', $attachment->asset->mime_type);
-
+            <div class="card">
+                <?php
                 if (preg_match('/^image/', $attachment->asset->mime_type)):
-                    $popup[] = array(
-                        __d('croogo', 'Preview'),
-                        [$this->Html->image($attachment->asset->path, ['class' => 'img-thumbnail']), ['class' => 'nowrap']]
-                    );
+                    echo $this->Html->image($attachment->asset->path, [
+                        'class' => 'card-img-top',
+                    ]);
                 endif;
-                $popup[] = array(
-                    __d('croogo', 'Created'),
-                    [$this->Time->nice($attachment->asset->created), ['class' => 'nowrap']]
+                ?>
+
+                <div class="card-body">
+                <?php
+
+                echo $this->Html->para(null,
+                    $this->Html->link(
+                        $attachment->asset->filename,
+                        $attachment->asset->path,
+                        [
+                            'class' => 'item-choose',
+                            'data-chooser_type' => 'Attachment',
+                            'data-chooser_id' => $attachment->asset->id,
+                            'data-chooser_title' => $attachment->asset->filename,
+                            'rel' => $attachment->asset->path,
+                        ]
+                    )
                 );
-                $popup = $this->Html->tag('table', $this->Html->tableCells($popup), array(
-                    'class' => 'table table-condensed',
-                ));
-                $a = $this->Html->link('', '#', array(
-                    'class' => 'popovers action',
-                    'icon' => $this->Theme->getIcon('info-sign'),
-                    'data-title' => $type,
-                    'data-trigger' => 'click|focus',
-                    'data-placement' => 'right',
-                    'data-html' => 'true',
-                    'data-content' => h($popup),
-                ));
-                echo '&nbsp;' . $a;
-            ?>
-            </li>
+
+                echo $this->Html->para(null,
+                    __d('croogo', 'Created') . ': ' .
+                    $this->Time->nice($attachment->asset->created)
+                );
+                ?>
+                </div>
+            </div>
         <?php endforeach; ?>
-        </ul>
+        </div>
         <?php echo $this->element('admin/pagination'); ?>
     </div>
 </div>
