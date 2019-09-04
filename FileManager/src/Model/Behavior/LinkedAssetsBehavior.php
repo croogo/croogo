@@ -6,15 +6,12 @@ use ArrayObject;
 use Cake\Collection\Collection;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\Log\LogTrait;
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use Cake\ORM\TableRegistry;
 
 class LinkedAssetsBehavior extends Behavior {
-
-    use LogTrait;
 
     protected $_defaultConfig = [
         'key' => 'LinkedAsset',
