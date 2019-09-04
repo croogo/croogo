@@ -192,7 +192,6 @@ class NodesController extends AppController
             $query->cache($cacheName, $cacheConfig);
         }
 
-        $query->find('withTerm', ['term' => $term]);
         $query->orderDesc($query->newExpr()
             ->addCase([
                 $query->newExpr()

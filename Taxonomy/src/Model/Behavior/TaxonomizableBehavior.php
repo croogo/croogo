@@ -24,9 +24,12 @@ class TaxonomizableBehavior extends Behavior
 {
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
         $this->_setupRelationships();
+
+        $this->_table->searchManager()
+            ->add('term', 'Search.Finder', [
+                'finder' => 'withTerm',
+            ]);
     }
 
     /**
@@ -246,7 +249,7 @@ class TaxonomizableBehavior extends Behavior
             $locale = I18n::getLocale();
             $cacheKeys = ['term', $locale, $term];
             $cacheKey = implode('_', $cacheKeys);
-            $term = $this->_table->Taxonomies->Terms->find()
+            $entity = $this->_table->Taxonomies->Terms->find()
                 ->where([
                     'Terms.slug' => $term
                 ])
@@ -254,15 +257,15 @@ class TaxonomizableBehavior extends Behavior
                 ->first();
         }
 
-        if (!$term) {
+        if (!$entity) {
             return $query;
         }
 
         $query
-            ->matching('Taxonomies', function (Query $q) use ($term) {
+            ->matching('Taxonomies', function (Query $q) use ($entity) {
                return $q
                    ->where([
-                       'term_id' => $term->id
+                       'term_id' => $entity->id
                    ]);
             });
 
