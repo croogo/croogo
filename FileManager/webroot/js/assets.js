@@ -114,6 +114,9 @@ Assets.resizeAsset = function(e) {
     method: 'post',
     url: $target.attr('href'),
     data: postData,
+    accepts: {
+      'json': 'application/json',
+    },
     success: function(data, textStatus) {
       if (textStatus === 'success') {
         if (typeof data === 'string') {
