@@ -63,7 +63,7 @@ Admin.protectForms = function () {
         })
         .on('click', whitelist, function (e) {
           $form.data('dirty', false);
-          if (typeof Croogo.Wysiwyg.resetDirty == 'function') {
+          if (typeof Croogo.Wysiwyg !== 'undefined' && typeof Croogo.Wysiwyg.resetDirty == 'function') {
             Croogo.Wysiwyg.resetDirty();
           }
         });
@@ -78,7 +78,7 @@ Admin.protectForms = function () {
         }
       }
       if (!dirty) {
-        if (typeof Croogo.Wysiwyg.isDirty == 'function' && !Croogo.Wysiwyg.isDirty()) {
+        if (typeof Croogo.Wysiwyg !== 'undefined' && typeof Croogo.Wysiwyg.isDirty == 'function' && !Croogo.Wysiwyg.isDirty()) {
           return;
         } else {
           return;
