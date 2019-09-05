@@ -310,4 +310,8 @@ $this->append('table-body');
 $this->end();
 $this->set('tableFooter', $tableHeaders);
 
-$this->Js->buffer("$('.popovers').popover().on('click', function() { return false; });");
+$script =<<<EOF
+    $('.popovers').popover().on('click', function() { return false; });
+    Assets.init();
+EOF;
+$this->Js->buffer($script);

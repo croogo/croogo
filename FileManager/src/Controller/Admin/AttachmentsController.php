@@ -373,7 +373,7 @@ class AttachmentsController extends AppController {
             $width = $this->request->getData('width');
             try {
                 $result = $this->Attachments->createResized($id, $width, null);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $result = $e->getMessage();
             }
         }
