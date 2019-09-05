@@ -18,11 +18,10 @@ Wysiwyg::setActions([
 
 Configure::write('FileManager', [
     'editablePaths' => [
-        APP,
+        WWW_ROOT . 'assets',
     ],
     'deletablePaths' => [
-        APP . 'View' . DS . 'Themed' . DS,
-        WWW_ROOT,
+        WWW_ROOT . 'assets',
     ],
 ]);
 
