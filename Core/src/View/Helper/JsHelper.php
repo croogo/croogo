@@ -103,6 +103,7 @@ class JsHelper extends Helper
     public function writeBuffer($options = [])
     {
         $defaults = [
+            'onDomReady' => !$this->_View->getRequest()->is('ajax'),
             'cache' => false, 'clear' => true, 'safe' => true
         ];
         $options += $defaults;
@@ -118,6 +119,11 @@ class JsHelper extends Helper
         if (isset($opts['inline'])) {
             unset($opts['inline']);
         }
+
+        if ($opts['onDomReady'] === true) {
+            $script = "$(function() { $script });";
+        }
+        unset($opts['onDomReady']);
         $return = $this->Html->scriptBlock($script, $opts);
 
         return $return;
