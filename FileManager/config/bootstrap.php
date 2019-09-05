@@ -43,8 +43,11 @@ StorageManager::config('LegacyLocalAttachment', array(
 $actions = [
     'Admin/Blocks/edit',
     'Admin/Contacts/edit',
+    'Admin/Links/edit',
     'Admin/Nodes/edit',
+    'Admin/Terms/edit',
     'Admin/Types/edit',
+    'Admin/Vocabularies/edit',
 ];
 $tabTitle = __d('assets', 'Assets');
 foreach ($actions as $action):
@@ -57,8 +60,11 @@ endforeach;
 $models = [
     'Croogo/Blocks.Blocks',
     'Croogo/Contacts.Contacts',
+    'Croogo/Menus.Links',
     'Croogo/Nodes.Nodes',
+    'Croogo/Taxonomy.Terms',
     'Croogo/Taxonomy.Types',
+    'Croogo/Taxonomy.Vocabularies',
 ];
 foreach ($models as $model) {
     Croogo::hookBehavior($model, 'Croogo/FileManager.LinkedAssets', ['priority' => 9]);
