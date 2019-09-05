@@ -2,27 +2,32 @@
 
 use Cake\Routing\Router;
 
-$this->assign('title', $node->title);
-
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Html->script(array('Croogo/Nodes.admin'), ['block' => true]);
 
 $this->Breadcrumbs->add(__d('croogo', 'Content'), ['action' => 'index']);
 
-if ($this->request->getParam('action') == 'add') {
+if ($this->request->getParam('action') == 'add'):
     $this->assign('title', __d('croogo', 'Create content: %s', $type->title));
 
     $this->Breadcrumbs->add(__d('croogo', 'Create'), ['action' => 'create'])
         ->add(h($type->title), $this->request->getRequestTarget());
-}
+endif;
 
-if ($this->request->getParam('action') == 'edit') {
-    $this->Breadcrumbs->add(h($node->title), $this->request->getRequestTarget(), [
-        'innerAttrs' => [
-            'title' => h($node->title),
-        ],
-    ]);
-}
+if ($this->request->getParam('action') == 'edit'):
+    $this->assign('title', __d('croogo', 'Edit %s: %s', $node->type, $node->title));
+
+    $this->Breadcrumbs
+        ->add(h($type->title), [
+            'action' => 'index',
+            '?' => ['type' => $type->alias],
+        ])
+        ->add(h($node->title), $this->request->getRequestTarget(), [
+            'innerAttrs' => [
+                'title' => h($node->title),
+            ],
+        ]);
+endif;
 
 $this->append('form-start', $this->Form->create($node, [
     'class' => 'protected-form',
