@@ -15,10 +15,12 @@ $this->end();
 
 $this->Breadcrumbs->add(__d('croogo', 'Attachments'));
 
-$this->Croogo->adminScript([
-    'Croogo/FileManager.admin',
-    'Croogo/FileManager.assets',
-]);
+if (!$this->request->is('ajax')):
+    $this->Croogo->adminScript([
+        'Croogo/FileManager.admin',
+        'Croogo/FileManager.assets',
+    ]);
+endif;
 
 $assetId = $filter = $filename = $type = $all = null;
 if (empty($model) && !empty($this->request->getQuery('model'))):
