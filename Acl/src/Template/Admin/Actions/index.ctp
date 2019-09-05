@@ -102,16 +102,28 @@ $this->append('table-body');
         $actions = array();
         $actions[] = $this->Croogo->adminRowAction('',
             array('action' => 'move', $id, 'up'),
-            array('icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'))
+            [
+                'icon' => $this->Theme->getIcon('move-up'),
+                'escapeTitle' => false,
+                'tooltip' => __d('croogo', 'Move up')
+            ]
         );
         $actions[] = $this->Croogo->adminRowAction('',
             array('action' => 'move', $id, 'down'),
-            array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'))
+            [
+                'icon' => $this->Theme->getIcon('move-down'),
+                'escapeTitle' => false,
+                'tooltip' => __d('croogo', 'Move down')
+            ]
         );
 
         $actions[] = $this->Croogo->adminRowAction('',
             array('action' => 'edit', $id),
-            array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
+            [
+                'icon' => $this->Theme->getIcon('update'),
+                'escapeTitle' => false,
+                'tooltip' => __d('croogo', 'Edit this item')
+            ]
         );
         $actions[] = $this->Croogo->adminRowAction('',
             array('action' => 'delete', $id),
