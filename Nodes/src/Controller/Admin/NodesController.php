@@ -39,6 +39,7 @@ class NodesController extends AppController
         if ($this->getRequest()->getParam('action') == 'toggle') {
             $this->Croogo->protectToggleAction();
         }
+        $this->Crud->mapAction('hierarchy', 'Crud.Index');
 
         $this->_setupPrg();
     }
@@ -304,6 +305,30 @@ class NodesController extends AppController
                 return $this->redirect($this->referer());
             }
         }
+    }
+
+    public function hierarchy()
+    {
+        $typeAlias = $this->request->getQuery('type');
+        if ($typeAlias) {
+            $type = $this->Nodes->Types->findByAlias($typeAlias)->first();
+            $this->set(compact('type'));
+        }
+        $this->Crud->on('beforePaginate', function(Event $event) {
+            $event->getSubject()->query->find('treelist');
+        });
+        $this->Crud->on('afterPaginate', function(Event $event) {
+            $subject = $event->getSubject();
+            $nodes = [];
+            foreach ($subject->entities as $id => $title) {
+                $node = $this->Nodes->find()->where(['Nodes.id' => $id])->first();
+                $node->depth = substr_count($title, '_', 0);
+                $node->clean();
+                $nodes[] = $node;
+            }
+            $subject->entities = $nodes;
+        });
+        return $this->Crud->execute();
     }
 
 }
