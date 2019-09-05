@@ -133,7 +133,7 @@ Assets.resizeAsset = function(e) {
   return false;
 }
 
-$(function() {
+Assets.init = function() {
   var $body = $('body');
   $body.on('click', 'a[data-toggle=browse]', Assets.popup);
   $body.on('click', 'a[data-toggle=refresh]', Assets.reloadAssetsTab);
@@ -141,4 +141,4 @@ $(function() {
   $body.on('change', '.change-usage-type', Assets.changeUsageType);
   $body.on('click', 'a.unregister-usage', Assets.unregisterAssetUsage);
   $body.on('click', 'a.set-featured-image', Assets.setFeaturedImage);
-});
+};

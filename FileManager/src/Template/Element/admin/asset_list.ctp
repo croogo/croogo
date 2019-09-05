@@ -266,6 +266,7 @@ $script =<<<EOF
     if (typeof $.fn.select2 == 'function') {
         $('.change-usage-type').select2();
     }
+    Assets.init();
 EOF;
 if ($this->request->is('ajax')):
     // re-initialize the tooltips on an ajax reload

@@ -2,7 +2,9 @@
 
 $this->loadHelper('Croogo/FileManager.Filemanager');
 
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
+
+$this->Croogo->adminScript(['Croogo/FileManager.admin', 'Croogo/FileManager.assets']);
 
 $this->Breadcrumbs
     ->add(__d('croogo', 'Attachments'), array('plugin' => 'Croogo/FileManager', 'controller' => 'Attachments', 'action' => 'index'))
@@ -72,7 +74,10 @@ $this->append('panels');
         $this->Html->link(
             $this->Html->icon('times') . __d('croogo', 'Cancel'),
             $redirect,
-            ['class' => 'cancel btn btn-outline-danger']
+            [
+                'class' => 'cancel btn btn-outline-danger',
+                'escapeTitle' => false,
+            ]
         );
     echo $this->Html->endBox();
 
@@ -91,6 +96,7 @@ $this->append('panels');
         echo $this->Html->beginBox(__d('croogo', 'Preview')) .
             $this->Html->link($imgUrl, $attachment->asset->path, array(
                 'data-toggle' => 'lightbox',
+                'escapeTitle' => false,
             ));
         echo $this->Html->endBox();
     endif;
