@@ -65,6 +65,9 @@ class MenusHelper extends Helper
         $request = $this->getView()->getRequest();
         if (($request->getParam('prefix') === 'admin') && (!$request->is('ajax'))) {
             $this->_adminMenu();
+            if ($request->getParam('plugin') == 'Croogo/Menus') {
+                $this->_View->Js->buffer('Links.init();');
+            }
         }
     }
 

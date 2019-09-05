@@ -99,17 +99,12 @@ Links.setupSelect2 = function(selector) {
         values.push(rel);
       }
       initSelect2(link, opt, values);
-    })
+    });
 
-    initSelect2(link);
+  initSelect2(link);
 };
 
-/**
- * document ready
- *
- * @return void
- */
-$(function() {
+Links.init = function() {
   if (Croogo.params.controller == 'links') {
     if (['admin_add', 'admin_edit'].indexOf(Croogo.params.action) >= 0) {
       Links.slug();
@@ -120,4 +115,4 @@ $(function() {
   Links.setupSelect2('#link')
 
   Admin.toggleRowSelection('#LinksCheckAll');
-});
+};
