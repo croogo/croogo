@@ -127,7 +127,7 @@ $this->append('table-body');
                         'alt' => $mimeType,
                     ]),
                     $mimeType,
-                    $this->Assets->filename2ext($attachment->asset->path)
+                    $this->FileManager->filename2ext($attachment->asset->path)
                 );
             break;
         }
@@ -185,3 +185,5 @@ $this->append('page-footer');
 </style>
 <?php
 $this->end();
+
+$this->Js->buffer('Attachments.init();');

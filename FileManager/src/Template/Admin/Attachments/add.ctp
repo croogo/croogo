@@ -24,6 +24,7 @@ $this->Croogo->adminScript(array(
     'Croogo/FileManager.fileupload/jquery.fileupload-video',
     'Croogo/FileManager.fileupload/jquery.fileupload-validate',
     'Croogo/FileManager.fileupload/jquery.fileupload-ui',
+    'Croogo/FileManager.assets',
 ));
 
 $indexUrl = [
