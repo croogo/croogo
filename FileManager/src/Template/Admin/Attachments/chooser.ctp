@@ -57,9 +57,3 @@
         <?php echo $this->element('admin/pagination'); ?>
     </div>
 </div>
-<?php
-
-$script =<<<EOF
-$('.popovers').popover().on('click', function() { return false; });
-EOF;
-$this->Js->buffer($script);
