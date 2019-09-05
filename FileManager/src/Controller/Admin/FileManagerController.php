@@ -299,19 +299,13 @@ class FileManagerController extends AppController
                     }
                 } else {
                     $message = __d('croogo', 'Name has not changed');
-                    $alertType = 'alert';
+                    $alertType = 'warning';
                 }
-                $this->Flash->set($message, [
-                    'element' => 'Croogo/Core.flash',
-                    'params' => [
-                        'class' => $alertType,
-                    ],
-                ]);
+                $this->Flash->{$alertType}($message);
             }
 
-            return $this->Croogo->redirect(['controller' => 'FileManager', 'action' => 'browse']);
-        } else {
-            $this->Croogo->setReferer();
+            $redirectUrl = ['controller' => 'FileManager', 'action' => 'browse'];
+            return $this->redirect($redirectUrl);
         }
         $this->request->data('name', array_pop($pathFragments));
         $this->set('path', $path);
