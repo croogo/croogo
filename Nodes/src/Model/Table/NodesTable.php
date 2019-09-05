@@ -145,9 +145,9 @@ class NodesTable extends CroogoTable
         $rules->isUnique(['slug', 'type'], __d('croogo', 'The slug has already been taken.'));
         $rules->add(function (Node $node) {
             if (($node->type === '') || ($node->type === null)) {
-                $node->type = 'node';
+                $node->type = 'post';
             }
-            if ($node->type === 'node') {
+            if ($node->type === 'post') {
                 return true;
             }
 

@@ -42,8 +42,8 @@ class TypesSeed extends AbstractSeed
         ],
         [
             'id' => '4',
-            'title' => 'Node',
-            'alias' => 'node',
+            'title' => 'Post',
+            'alias' => 'post',
             'description' => 'Default content type.',
             'format_show_author' => '1',
             'format_show_date' => '1',

@@ -93,7 +93,7 @@ class NodesInitialMigration extends AbstractMigration
                 'null' => true,
             ])
             ->addColumn('type', 'string', [
-                'default' => 'node',
+                'default' => 'post',
                 'limit' => 100,
                 'null' => false,
             ])
