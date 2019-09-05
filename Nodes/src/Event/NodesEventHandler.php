@@ -88,7 +88,7 @@ class NodesEventHandler implements EventListenerInterface
      */
     public function onBootstrapComplete($event)
     {
-        if (Plugin::isLoaded('Comments')) {
+        if (Plugin::isLoaded('Croogo/Comments')) {
             Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Comments.Commentable');
             Croogo::hookComponent('Croogo/Nodes.Nodes', 'Comments.Comments');
             Croogo::hookModelProperty('Croogo/Comments.Comments', 'belongsTo', [
