@@ -16,7 +16,7 @@ Admin.modal = function() {
       });
   });
 
-  $('body').on('click', '.modal-dialog a', function(event) {
+  $('body').on('click', '.modal-dialog a:not(.item-choose)', function(event) {
     var $el = $(event.target);
     var href = $el.attr('href')
     $($el.closest('.modal-body')).load(href);
