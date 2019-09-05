@@ -62,9 +62,6 @@ class DateTimeWidget extends CakeDateTimeWidget
 
         if ($val instanceof DateTimeInterface) {
             $val = new FrozenTime($val);
-        }
-
-        if (!empty($val)) {
             $timestamp = $val->format('U');
         }
 
