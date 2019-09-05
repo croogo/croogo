@@ -186,4 +186,8 @@ $this->append('page-footer');
 <?php
 $this->end();
 
-$this->Js->buffer('Attachments.init();');
+$script =<<< EOF
+    Assets.init();
+    Attachments.init();
+EOF;
+$this->Js->buffer($script);
