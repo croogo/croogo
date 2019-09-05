@@ -24,6 +24,7 @@ $this->Croogo->adminScript(array(
     'Croogo/FileManager.fileupload/jquery.fileupload-video',
     'Croogo/FileManager.fileupload/jquery.fileupload-validate',
     'Croogo/FileManager.fileupload/jquery.fileupload-ui',
+    'Croogo/FileManager.admin',
     'Croogo/FileManager.assets',
 ));
 
@@ -252,6 +253,8 @@ $script =<<<EOF
     };
 
     \$startUpload.one('click', uploadHandler);
+    Attachments.init();
+    Assets.init();
 EOF;
 
 $this->Js->buffer($script);
