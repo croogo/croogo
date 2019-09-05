@@ -168,6 +168,8 @@ foreach ($attachments as $attachment):
         'data-token-separators' => [' ', ','],
     ]);
 
+    $this->Form->unlockField('usage-type');
+
     $row[] = $preview;
     $row[] = $typeCell;
     $row[] = $this->Number->toReadableSize($attachment->asset->filesize);
