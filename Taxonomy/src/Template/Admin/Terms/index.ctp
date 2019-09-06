@@ -52,7 +52,7 @@ foreach ($terms as $term):
             'controller' => 'Nodes',
             'action' => 'term',
             'type' => $defaultType->alias,
-            'slug' => $term->slug,
+            'term' => $term->slug,
         ], [
             'target' => '_blank',
         ]);

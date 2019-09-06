@@ -21,7 +21,7 @@
                 'controller' => 'Nodes',
                 'action' => 'term',
                 'type' => $defaultType['alias'],
-                'slug' => $term->slug,
+                'term' => $term->slug,
                 'prefix' => false,
             ], [
                 'class' => 'item-choose',
