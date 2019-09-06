@@ -186,8 +186,10 @@ $this->append('page-footer');
 <?php
 $this->end();
 
-$script =<<< EOF
-    Assets.init();
-    Attachments.init();
+if (!$this->request->is('ajax')):
+    $script =<<< EOF
+        Assets.init();
+        Attachments.init();
 EOF;
-$this->Js->buffer($script);
+    $this->Js->buffer($script);
+endif;
