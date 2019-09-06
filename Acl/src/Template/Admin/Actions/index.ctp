@@ -18,8 +18,8 @@ $this->append('action-buttons');
         __d('croogo', 'Tools'),
         '#',
         array(
-            'button' => 'secondary',
-            'class' => 'dropdown-toggle',
+            'button' => 'outline-secondary',
+            'class' => 'btn-sm dropdown-toggle',
             'data-toggle' => 'dropdown',
             'escape' => false
         )
