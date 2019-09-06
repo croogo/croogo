@@ -144,7 +144,13 @@ class CommentsController extends AppController
                 'parentId' => $parentId,
                 'userData' => $userData,
             ];
-            $success = $this->Comments->add($comment, $model, $foreignKey, $options);
+            try {
+                $success = $this->Comments->add($comment, $model, $foreignKey, $options);
+            } catch (\Exception $e) {
+                $success = false;
+                $this->log('Error when adding comments: ' . $e);
+                $this->Flash->error(__d('croogo', 'There was an error when posting your comment'));
+            }
             if ($success) {
                 if ($autoApprove) {
                     $messageFlash = __d('croogo', 'Your comment has been added successfully.');
