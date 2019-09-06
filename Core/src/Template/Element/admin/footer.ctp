@@ -9,7 +9,6 @@
                 'http://www.croogo.org');
             ?>
             <?= __d('croogo', 'Powered by %s', $link) ?>
-            <?= $this->Html->image('//assets.croogo.org/powered_by.png') ?>
         </div>
 
     </div>
