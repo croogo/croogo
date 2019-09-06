@@ -99,6 +99,8 @@ $headers = array(
     $this->loadHelper('Croogo/FileManager.AssetsImage');
 //}
 
+$this->Form->unlockField('usage-type');
+
 $rows = array();
 foreach ($attachments as $attachment):
     $row = $action = array();
@@ -167,8 +169,6 @@ foreach ($attachments as $attachment):
         'data-allow-clear' => 'true',
         'data-token-separators' => [' ', ','],
     ]);
-
-    $this->Form->unlockField('usage-type');
 
     $row[] = $preview;
     $row[] = $typeCell;
