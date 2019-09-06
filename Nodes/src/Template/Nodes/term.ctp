@@ -1,6 +1,9 @@
 <?php
 
 $titles = [];
+if (isset($vocabulary)):
+    $titles[] = $vocabulary->title;
+endif;
 if (isset($term)):
     $titles[] = $term->title;
 endif;

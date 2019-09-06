@@ -135,7 +135,11 @@ class Router extends CakeRouter
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'view', 'type' => $alias
         ]);
-        static::build($routeBuilder, '/' . $alias . '/term/:slug/*', [
+        static::build($routeBuilder, '/' . $alias . '/term/:term/*', [
+            'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
+            'action' => 'term', 'type' => $alias
+        ]);
+        static::build($routeBuilder, '/' . $alias . '/:vocab/:term/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'term', 'type' => $alias
         ]);

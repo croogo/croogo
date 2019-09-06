@@ -299,7 +299,7 @@ class NodesHelper extends Helper
                 'controller' => 'Nodes',
                 'action' => 'term',
                 'type' => $this->field('type'),
-                'slug' => $taxonomy->term->slug,
+                'term' => $taxonomy->term->slug,
             ]);
         })->toArray();
     }

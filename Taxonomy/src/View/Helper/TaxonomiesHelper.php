@@ -149,7 +149,7 @@ class TaxonomiesHelper extends Helper
                         'controller' => $options['controller'],
                         'action' => $options['action'],
                         'type' => $options['type'],
-                        'slug' => $term->term->slug,
+                        'term' => $term->term->slug,
                     ],
                     $termAttr
                 );
@@ -195,7 +195,7 @@ class TaxonomiesHelper extends Helper
                     'controller' => 'Nodes',
                     'action' => 'term',
                     'type' => $type->alias,
-                    'slug' => $termData['Term']['slug'],
+                    'term' => $termData['Term']['slug'],
                 ],
                 [
                     'target' => '_blank',
