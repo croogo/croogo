@@ -48,25 +48,32 @@ class SettingsController extends AppController
     public function prefix($prefix = null)
     {
         if ($this->request->is('post')) {
-            foreach ($this->request->getData() as $inputName => $value) {
-                $id = str_replace('setting-', '', $inputName);
-                if ($id == '_apply') {
-                    continue;
-                }
-                $setting = $this->Settings->get($id);
+            try {
 
-                if (is_array($value)) {
-                    if (isset($value['tmp_name'])) {
-                        $value = $this->_handleUpload($setting, $value);
-                    } else {
-                        $value = json_encode($value);
+                foreach ($this->request->getData() as $inputName => $value) {
+                    $id = str_replace('setting-', '', $inputName);
+                    if ($id == '_apply') {
+                        continue;
                     }
+                    $setting = $this->Settings->get($id);
+
+                    if (is_array($value)) {
+                        if (isset($value['tmp_name'])) {
+                            $value = $this->_handleUpload($setting, $value);
+                        } else {
+                            $value = json_encode($value);
+                        }
+                    }
+
+                    $setting->value = $value;
+                    $this->Settings->save($setting);
                 }
 
-                $setting->value = $value;
-                $this->Settings->save($setting);
+                $this->Flash->success(__d('croogo', 'Settings updated successfully'));
+            } catch (\Exception $e) {
+                $this->Flash->error(__d('croogo', 'Settings cannot be updated: ' . $e->getMessage()));
             }
-            $this->Flash->success(__d('croogo', 'Settings updated successfully'));
+
             return $this->redirect(['action' => 'prefix', $prefix]);
         }
 
@@ -92,6 +99,11 @@ class SettingsController extends AppController
         $currentBg = WWW_ROOT . $setting->value;
         if (file_exists($currentBg) && is_file($currentBg)) {
             unlink($currentBg);
+        }
+
+        $contentType = mime_content_type($value['tmp_name']);
+        if (substr($contentType, 0, 5) !== 'image') {
+            throw new \Exception('Invalid file type');
         }
 
         $dotPosition = strripos($name, '.');

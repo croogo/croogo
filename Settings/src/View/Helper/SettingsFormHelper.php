@@ -98,11 +98,12 @@ class SettingsFormHelper extends Helper
             if (!empty($setting->value)) {
                 $output .= $this->_View->Html->link(
                     $this->_View->Html->image($setting->value, [
-                        'class' => 'img-thumbnail',
+                        'class' => 'img-fluid',
                         'style' => 'max-width: 400px',
                     ]),
                     $setting->value, [
                         'data-toggle' => 'lightbox',
+                        'escape' => false,
                     ]
                 );
             }
