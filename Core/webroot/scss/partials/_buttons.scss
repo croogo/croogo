@@ -33,9 +33,11 @@
 }
 
 #breadcrumb-container + .actions {
-  .btn-group,
-  .btn {
+  .btn-group {
     margin-right: 2px;
+  }
+  .btn {
+    margin-right: 0px;
   }
 }
 
