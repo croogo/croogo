@@ -31,22 +31,30 @@ $this->append('table-body');
     foreach ($settings as $setting):
         $actions = array();
         $actions[] = $this->Croogo->adminRowAction('',
-            array('controller' => 'Settings', 'action' => 'moveup', $setting->id),
-            array('icon' =>$this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'))
-        );
+            array('controller' => 'Settings', 'action' => 'moveup', $setting->id), [
+            'icon' =>$this->Theme->getIcon('move-up'),
+            'escapeTitle' => false,
+            'tooltip' => __d('croogo', 'Move up'),
+        ]);
         $actions[] = $this->Croogo->adminRowAction('',
-            array('controller' => 'Settings', 'action' => 'movedown', $setting->id),
-            array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'))
-        );
+            array('controller' => 'Settings', 'action' => 'movedown', $setting->id), [
+            'icon' => $this->Theme->getIcon('move-down'),
+            'escapeTitle' => false,
+            'tooltip' => __d('croogo', 'Move down')
+        ]);
         $actions[] = $this->Croogo->adminRowAction('',
-            array('controller' => 'Settings', 'action' => 'edit', $setting->id),
-            array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
-        );
+            array('controller' => 'Settings', 'action' => 'edit', $setting->id), [
+            'icon' => $this->Theme->getIcon('update'),
+            'escapeTitle' => false,
+            'tooltip' => __d('croogo', 'Edit this item')
+        ]);
         $actions[] = $this->Croogo->adminRowActions($setting->id);
         $actions[] = $this->Croogo->adminRowAction('',
-            array('controller' => 'Settings', 'action' => 'delete', $setting->id),
-            array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')),
-            __d('croogo', 'Are you sure?'));
+            array('controller' => 'Settings', 'action' => 'delete', $setting->id), [
+            'icon' => $this->Theme->getIcon('delete'),
+            'escapeTitle' => false,
+            'tooltip' => __d('croogo', 'Remove this item')
+        ], __d('croogo', 'Are you sure?'));
 
         $key = $setting->key;
         $keyE = explode('.', $key);
