@@ -48,7 +48,7 @@ class ContactsController extends AppController
         }
         $message = $this->Contacts->Messages->newEntity();
         if ($this->request->is('post') && $continue === true) {
-            $this->Contacts->Messages->patchEntity($message, $this->request->data);
+            $message = $this->Contacts->Messages->patchEntity($message, $this->request->data);
             $message->contact_id = $contact->id;
             Croogo::dispatchEvent('Controller.Contacts.beforeMessage', $this);
 
@@ -59,10 +59,11 @@ class ContactsController extends AppController
             $this->set(compact('continue'));
 
             if ($continue === true) {
+                $this->Contacts->Messages->save($message);
                 Croogo::dispatchEvent('Controller.Contacts.afterMessage', $this);
                 $this->Flash->success(__d('croogo', 'Your message has been received...'));
 
-                return $this->Croogo->redirect('/');
+                return $this->redirect($this->referer());
             }
         }
 
