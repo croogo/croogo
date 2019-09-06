@@ -1,6 +1,8 @@
 <?php
 
 namespace Croogo\Taxonomy\Controller\Admin;
+
+use Cake\Cache\Cache;
 use Cake\Event\Event;
 
 /**
@@ -43,7 +45,13 @@ class VocabulariesController extends AppController
     public function implementedEvents()
     {
         return parent::implementedEvents() + [
+            'Crud.afterSave' => 'afterCrudSave',
             'Crud.beforeRender' => 'beforeCrudRender'
         ];
+    }
+
+    public function afterCrudSave(Event $event)
+    {
+        Cache::clearAll();
     }
 }
