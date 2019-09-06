@@ -8,14 +8,17 @@
   .select2-container--bootstrap {
     min-width: 100%; // make select in inactive tab pane has 100% width
   }
+  .input-group {
+    flex-wrap: nowrap;
+  }
 }
 
 .link-chooser {
   &+ .select2-container {
-    padding-right: 60px;
+    padding-right: 30px;
     min-width: 100%;
   }
-  &~ .input-group-btn {
-    margin-left: -60px;
+  &~ .input-group-append {
+    margin-left: -30px;
   }
 }

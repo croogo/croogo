@@ -25,12 +25,11 @@ foreach ($linkChoosers as $name => $chooser):
     $dropdowns[] = $link;
 endforeach;
 
-echo $this->Form->button($this->Html->icon('link'), [
+echo $this->Form->button('', [
     'type' => 'button',
     'class' => 'btn btn-secondary dropdown-toggle',
     'data-toggle' => 'dropdown',
     'aria-haspopup' => true,
     'aria-expanded' => false,
-    'escape' => false,
 ]);
 echo $this->Html->div('dropdown-menu dropdown-menu-right dropdown-scrollable', implode($dropdowns));
