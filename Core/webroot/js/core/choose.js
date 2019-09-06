@@ -59,16 +59,17 @@
           .find('.modal-title').html($link.data('title')).end()
           .find('.modal-body').html('Loading...');
         $.ajax({
-          url: $link.attr('href'),
-          datatype: 'html'
-        })
+            url: $link.attr('href'),
+            datatype: 'html'
+          })
           .done(function (response) {
-            var $response = $(response)
-            plugin.modal.find('.modal-body').html($response);
-            $response.on('click', options.itemSelector, function (e) {
-              e.preventDefault();
-              plugin.target.trigger('chooserSelect', this);
-            })
+            plugin.modal
+              .find('.modal-body')
+              .html(response).end()
+              .on('click', options.itemSelector, function (e) {
+                e.preventDefault();
+                plugin.target.trigger('chooserSelect', this);
+              });
           });
       }
 
