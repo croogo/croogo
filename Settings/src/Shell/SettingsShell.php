@@ -28,7 +28,6 @@ class SettingsShell extends Shell
      */
     public function initialize()
     {
-        parent::initialize();
         $this->loadModel('Croogo/Settings.Settings');
     }
 

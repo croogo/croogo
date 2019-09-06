@@ -53,7 +53,6 @@ class RowLevelAclComponent extends Component
  */
     public function initialize(array $settings)
     {
-        parent::initialize($settings);
         $controller = $this->getController();
         $Model = $controller->{$controller->name};
         $Model->addBehavior('Acl', [

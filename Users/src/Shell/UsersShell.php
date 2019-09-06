@@ -22,7 +22,6 @@ class UsersShell extends Shell
      */
     public function initialize()
     {
-        parent::initialize();
         $this->loadModel('Croogo/Users.Users');
     }
 

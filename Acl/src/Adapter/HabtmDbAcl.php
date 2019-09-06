@@ -32,7 +32,6 @@ class HabtmDbAcl extends CachedDbAcl
  */
     public function initialize(Component $component)
     {
-        parent::initialize($component);
         if (!empty($component->settings['habtm'])) {
             $this->settings = array_merge($this->settings, $component->settings['habtm']);
         }
