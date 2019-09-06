@@ -28,6 +28,9 @@ class TaxonomizableBehavior extends Behavior
         $this->_setupRelationships();
 
         $this->_table->searchManager()
+            ->add('vocab', 'Search.Finder', [
+                'finder' => 'withVocabulary',
+            ])
             ->add('term', 'Search.Finder', [
                 'finder' => 'withTerm',
             ]);
@@ -267,6 +270,40 @@ class TaxonomizableBehavior extends Behavior
                return $q
                    ->where([
                        'term_id' => $entity->id
+                   ]);
+            });
+
+        return $query;
+    }
+
+    public function findWithVocabulary(Query $query, array $options)
+    {
+        if (empty($options['vocab'])) {
+            return $query;
+        }
+        $vocab = $options['vocab'];
+
+        if (is_string($vocab)) {
+            $locale = I18n::getLocale();
+            $cacheKeys = ['term', $locale, $vocab];
+            $cacheKey = implode('_', $cacheKeys);
+            $entity = $this->_table->Taxonomies->Vocabularies->find()
+                ->where([
+                    'Vocabularies.alias' => $vocab
+                ])
+                ->cache($cacheKey, 'croogo_vocabularies')
+                ->first();
+        }
+
+        if (!$entity) {
+            throw new RecordNotFoundException(__d('croogo', 'Vocabulary not found: {0}', $vocab));
+        }
+
+        $query
+            ->matching('Taxonomies', function (Query $q) use ($entity) {
+               return $q
+                   ->where([
+                       'vocabulary_id' => $entity->id
                    ]);
             });
 
