@@ -23,6 +23,9 @@ class CommentsController extends AppController
         parent::initialize();
 
         $this->_loadCroogoComponents(['Akismet', 'BulkProcess', 'Recaptcha']);
+        $this->Crud->setConfig('actions.index', [
+            'displayFields' => $this->Comments->displayFields()
+        ]);
     }
 
     /**

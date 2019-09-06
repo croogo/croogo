@@ -30,13 +30,19 @@ class CommentsTable extends CroogoTable
 {
     use MailerAwareTrait;
 
-/**
- * Filter fields
- *
- * @var array
- */
-    public $filterArgs = [
-        'status' => ['type' => 'value'],
+    /**
+     * Display fields for this model
+     *
+     * @var array
+     */
+    protected $_displayFields = [
+        'id',
+        'name',
+        'email',
+        'website',
+        'title',
+        'body',
+        'type',
     ];
 
     public function initialize(array $config)

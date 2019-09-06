@@ -28,11 +28,11 @@ $this->append('action-buttons');
 echo $this->Croogo->adminAction(
     __d('croogo', 'Published'),
     ['action' => 'index', '?' => ['status' => '1']],
-    ['class' => 'btn btn-secondary']
+    ['class' => 'btn btn-outline-secondary btn-sm']
 );
 echo $this->Croogo->adminAction(
     __d('croogo', 'Awaiting approval'),
     ['action' => 'index', '?' => ['status' => '0']],
-    ['class' => 'btn btn-secondary']
+    ['class' => 'btn btn-outline-secondary btn-sm']
 );
 $this->end();
