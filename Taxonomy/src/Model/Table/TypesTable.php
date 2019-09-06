@@ -56,7 +56,7 @@ class TypesTable extends CroogoTable
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
         $this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
-            'joinTable' => 'types_vocabularies',
+            'through' => 'Croogo/Taxonomy.TypesVocabularies',
         ]);
     }
 

@@ -31,7 +31,7 @@ class VocabulariesTable extends CroogoTable
             'groups' => ['taxonomy']
         ]);
         $this->belongsToMany('Croogo/Taxonomy.Types', [
-            'joinTable' => 'types_vocabularies',
+            'through' => 'Croogo/Taxonomy.TypesVocabularies',
         ]);
         $this->hasMany('Croogo/Taxonomy.Taxonomies', [
             'dependent' => true,
