@@ -6,7 +6,6 @@ use Cake\Cache\Cache;
 use Cake\Core\Plugin;
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
-use Croogo\Comments\Model\Comment;
 use Croogo\Core\Croogo;
 use Croogo\Core\Nav;
 
@@ -89,16 +88,15 @@ class NodesEventHandler implements EventListenerInterface
     public function onBootstrapComplete($event)
     {
         if (Plugin::isLoaded('Croogo/Comments')) {
-            Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Comments.Commentable');
-            Croogo::hookComponent('Croogo/Nodes.Nodes', 'Comments.Comments');
-            Croogo::hookModelProperty('Croogo/Comments.Comments', 'belongsTo', [
+            Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Croogo/Comments.Commentable');
+            Croogo::hookTableProperty('Croogo/Comments.Comments', 'belongsTo', [
                 'Nodes' => [
                     'className' => 'Croogo/Nodes.Nodes',
                     'foreignKey' => 'foreign_key',
                     'counterCache' => true,
                     'counterScope' => [
-                        'Comment.model' => 'Croogo/Nodes.Nodes',
-                        'Comment.status' => Comment::STATUS_APPROVED,
+                        'Comments.model' => 'Croogo/Nodes.Nodes',
+                        'Comments.status' => true,
                     ],
                 ],
             ]);
