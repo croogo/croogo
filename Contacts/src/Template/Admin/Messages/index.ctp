@@ -64,12 +64,19 @@ $rows = [];
 foreach ($messages as $message) {
     $actions = [];
 
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'view', $message->id],
-        ['icon' => $this->Theme->geticon('read'), 'tooltip' => __d('croogo', 'View this item')]);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $message->id],
-        ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);
+    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'view', $message->id], [
+        'icon' => $this->Theme->geticon('read'),
+        'escapeTitle' => false,
+        'tooltip' => __d('croogo', 'View this item'),
+    ]);
+    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $message->id], [
+        'icon' => $this->Theme->getIcon('update'),
+        'escapeTitle' => false,
+        'tooltip' => __d('croogo', 'Edit this item'),
+    ]);
     $actions[] = $this->Croogo->adminRowAction('', '#Message' . $message->id . 'Id', [
         'icon' => $this->Theme->getIcon('delete'),
+        'escapeTitle' => false,
         'class' => 'delete',
         'tooltip' => __d('croogo', 'Remove this item'),
         'rowAction' => 'delete',
