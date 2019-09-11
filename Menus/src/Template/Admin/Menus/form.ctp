@@ -3,6 +3,7 @@
 use Croogo\Core\Status;
 
 $this->extend('Croogo/Core./Common/admin_edit');
+$this->Croogo->adminScript('Croogo/Menus.admin');
 
 $this->Breadcrumbs->add(__d('croogo', 'Menus'), ['action' => 'index']);
 
@@ -44,6 +45,7 @@ $this->append('tab-content');
 echo $this->Html->tabStart('menu-misc');
 echo $this->Form->input('params', [
     'label' => __d('croogo', 'Params'),
+    'type' => 'stringlist',
 ]);
 echo $this->Html->tabEnd();
 
