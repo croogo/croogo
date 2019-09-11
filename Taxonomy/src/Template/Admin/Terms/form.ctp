@@ -35,6 +35,7 @@ $this->assign('form-start', $this->Form->create($term, [
 
 $this->append('tab-heading');
     echo $this->Croogo->adminTab(__d('croogo', 'Term'), '#term-basic');
+    echo $this->Croogo->adminTab(__d('croogo', 'Misc.'), '#term-misc');
 $this->end();
 
 $this->append('tab-content');
@@ -63,6 +64,14 @@ $this->append('tab-content');
         ]);
 
     echo $this->Html->tabEnd();
+
+    echo $this->Html->tabStart('term-misc');
+        echo $this->Form->input('params', [
+            'label' => __d('croogo', 'Params'),
+            'type' => 'stringlist',
+        ]);
+    echo $this->Html->tabEnd();
+
 $this->end();
 
 $this->start('buttons');

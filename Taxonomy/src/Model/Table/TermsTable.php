@@ -4,6 +4,7 @@ namespace Croogo\Taxonomy\Model\Table;
 
 use ArrayObject;
 use Cake\Event\Event;
+use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -59,6 +60,12 @@ class TermsTable extends CroogoTable
             ]);
     }
 
+    protected function _initializeSchema(TableSchema $table)
+    {
+        $table->setColumnType('params', 'params');
+        return parent::_initializeSchema($table);
+    }
+
     /**
      * @param \Cake\Validation\Validator $validator
      * @return \Cake\Validation\Validator
@@ -110,7 +117,8 @@ class TermsTable extends CroogoTable
         ])->first();
         if ($term) {
             $id = $term->{$this->primaryKey()};
-            if ($id && $entity->dirty('description')) {
+            $hasDirtyFields = $entity->getDirty('description') || $entity->getDirty('params');
+            if ($id && $hasDirtyFields) {
                 $this->id = $id;
                 $this->save($entity);
             }

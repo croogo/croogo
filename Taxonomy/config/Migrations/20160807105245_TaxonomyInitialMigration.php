@@ -49,6 +49,11 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
+            ->addColumn('params', 'text', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
             ->addColumn('updated', 'datetime', [
                 'default' => null,
                 'limit' => null,
