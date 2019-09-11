@@ -29,6 +29,7 @@ class TermsTable extends CroogoTable
 
     public function initialize(array $config)
     {
+        $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
@@ -45,6 +46,17 @@ class TermsTable extends CroogoTable
             'targetForeignKey' => 'vocabulary_id',
         ]);
         $this->hasMany('Croogo/Taxonomy.Taxonomies');
+
+        $this->searchManager()
+            ->add('vocab', 'Search.Callback', [
+                'callback' => function($query, $args, $filter) {
+                    return $query->matching('Vocabularies', function($query) use ($args) {
+                        return $query->where([
+                            'Vocabularies.alias' => $args['vocab'],
+                        ]);
+                    });
+                },
+            ]);
     }
 
     /**
