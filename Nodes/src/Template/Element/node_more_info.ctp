@@ -1,13 +1,14 @@
 <div class="node-more-info text-muted mb-5">
 <?php
     $type = $typesForLayout[$this->Nodes->field('type')];
+    $nodeTerms = $this->Nodes->nodeTermLinks();
 
     if (!empty($this->Nodes->node->taxonomies)) {
-        echo __d('croogo', 'Posted in') . ' ' . implode(', ', $this->Nodes->nodeTermLinks());
+        echo __d('croogo', 'Posted in') . ' ' . implode(', ', $nodeTerms);
     }
 
     if ($this->Nodes->commentsEnabled() && $this->request->params['action'] !== 'view' && $type->comment_status) {
-        if (isset($nodeTerms) && count($nodeTerms) > 0) {
+        if (($nodeTerms) && count($nodeTerms) > 0) {
             echo ' | ';
         }
 
