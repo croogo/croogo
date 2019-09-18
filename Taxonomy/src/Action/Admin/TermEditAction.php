@@ -25,8 +25,8 @@ class TermEditAction extends BaseAction
     {
         $controller = $this->_controller();
         $request = $controller->request;
-        list($id) = $request->param('pass');
-        $vocabularyId = $request->query('vocabulary_id');
+        list($id) = $request->getParam('pass');
+        $vocabularyId = $request->getQuery('vocabulary_id');
 
         $response = $controller->_ensureVocabularyIdExists($vocabularyId);
         if ($response instanceof Response) {

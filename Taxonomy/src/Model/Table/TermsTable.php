@@ -287,7 +287,7 @@ class TermsTable extends CroogoTable
             'Taxonomies.vocabulary_id' => $vocabularyId,
         ]];
         if ($this->Vocabularies->Taxonomies->hasBehavior('Tree')) {
-            $this->Vocabularies->Taxonomies->behaviors()->get('Tree')->config($scopeSettings);
+            $this->Vocabularies->Taxonomies->behaviors()->get('Tree')->setConfig($scopeSettings);
         } else {
             $this->Vocabularies->Taxonomies->addBehavior('Tree', $scopeSettings);
         }

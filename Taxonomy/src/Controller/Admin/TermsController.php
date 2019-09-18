@@ -51,10 +51,10 @@ class TermsController extends AppController
     {
         parent::initialize();
 
-        $this->Crud->config('actions.add', [
+        $this->Crud->setConfig('actions.add', [
             'className' => 'Croogo/Taxonomy.Admin/TermAdd',
         ]);
-        $this->Crud->config('actions.edit', [
+        $this->Crud->setConfig('actions.edit', [
             'className' => 'Croogo/Taxonomy.Admin/TermEdit',
         ]);
     }
@@ -69,8 +69,8 @@ class TermsController extends AppController
     {
         parent::beforeFilter($event);
         $this->vocabularyId = null;
-        if (isset($this->request->params['named']['vocabulary'])) {
-            $this->vocabularyId = $this->request->params['named']['vocabulary'];
+        if ($this->request->getQuery('vocabulary_id')) {
+            $this->vocabularyId = $this->request->getParam('vocabulary_id');
         }
         $this->set('vocabulary', $this->vocabularyId);
     }
@@ -83,7 +83,7 @@ class TermsController extends AppController
      */
     public function index($vocabularyId = null)
     {
-        $vocabularyId = $this->request->query('vocabulary_id');
+        $vocabularyId = $this->request->getQuery('vocabulary_id');
         $response = $this->_ensureVocabularyIdExists($vocabularyId);
         if ($response instanceof Response) {
             return $response;
@@ -105,7 +105,7 @@ class TermsController extends AppController
             ->orderAsc('lft');
         $this->set(compact('vocabulary', 'terms', 'defaultType'));
 
-        if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
+        if ($this->request->getQuery('links') || $this->request->getQuery('chooser')) {
             $this->render('chooser');
         }
     }
@@ -217,7 +217,7 @@ class TermsController extends AppController
         if (isset($vocabulary->types[0])) {
             $defaultType = $vocabulary->types[0];
         }
-        $typeId = $this->request->query('type_id');
+        $typeId = $this->request->getQuery('type_id');
         if ($typeId) {
             $defaultType = collection($vocabulary['types'])->match([
                 'id' => $typeId,

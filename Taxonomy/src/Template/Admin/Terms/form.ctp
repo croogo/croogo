@@ -6,13 +6,13 @@ $this->Croogo->adminScript('Croogo/Taxonomy.terms');
 $this->Breadcrumbs->add(__d('croogo', 'Content'),
     ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']);
 
-if ($this->request->param('action') === 'edit'):
+if ($this->request->getParam('action') === 'edit'):
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['controller' => 'Vocabularies', 'action' => 'index'])
         ->add($vocabulary->title, ['action' => 'index', 'vocabulary_id' => $vocabulary->id])
         ->add($term->title, $this->request->getRequestTarget());
 endif;
 
-if ($this->request->param('action') === 'add'):
+if ($this->request->getParam('action') === 'add'):
     $this->assign('title', __d('croogo', '%s: Add Term', $vocabulary->title));
 
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'),
@@ -24,8 +24,8 @@ endif;
 $this->set('cancelUrl', ['action' => 'index', $vocabularyId]);
 
 $formUrl = [
-    'action' => $this->request->param('action'),
-    isset($this->request->pass[0]) ? $this->request->pass[0] : null,
+    'action' => $this->request->getParam('action'),
+    isset($this->request->getParam('pass')[0]) ? $this->request->getParam('pass')[0] : null,
     'vocabulary_id' => $vocabulary->id,
 ];
 

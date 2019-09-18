@@ -69,9 +69,8 @@ class AutoLoginComponent extends Component
         list(, $this->_userModel) = pluginSplit($setting['userModel']);
         $this->_fields = $setting['fields'];
 
-        $controller->eventManager()->on(
-            'Controller.Users.adminLoginSuccessful'
-            [],
+        $controller->getEventManager()->on(
+            'Controller.Users.adminLoginSuccessful',
             [$this, 'onAdminLoginSuccessful']
         );
     }

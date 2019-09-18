@@ -111,7 +111,7 @@ class FilterComponent extends Component
                 }
                 $Setting->write('Access Control.autoLoginDuration', '');
             }
-            $this->_controller->Auth->config('authenticate', ['Croogo/Acl.Cookie']);
+            $this->_controller->Auth->setConfig('authenticate', ['Croogo/Acl.Cookie']);
         }
         if ($this->_config('multiColumn')) {
             $this->_controller->Auth->setConfig('authenticate', ['Croogo/Acl.MultiColumn']);
