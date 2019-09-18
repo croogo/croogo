@@ -98,10 +98,7 @@ class NodesController extends AppController
             }
             $cacheName = $cacheNamePrefix .
                 '_' .
-                $this->request->getQuery('type') .
-                '_' . ($this->request->getQuery('page') ?: 1) .
-                '_' .
-                ($this->request->getQuery('limit') ? $this->request->getQuery('limit') : $limit);
+                md5(json_encode($this->request->getQuery()));
             $cacheConfig = 'nodes_index';
             $query->cache($cacheName, $cacheConfig);
         }
@@ -183,7 +180,7 @@ class NodesController extends AppController
                 'roleId' => $this->Croogo->roleId(),
             ]);
 
-        if ($vocabulary) {
+        if (isset($vocabulary)) {
             $query->find('withVocabulary', ['vocab' => $vocabulary->alias]);
         }
 
