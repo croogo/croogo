@@ -176,5 +176,3 @@ $this->start('bulk-action');
     $this->Js->buffer("$('.bulk-process').on('click', Nodes.confirmProcess);");
 
 $this->end();
-
-$this->append('paging', ' ');
