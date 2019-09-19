@@ -9,8 +9,9 @@
             'controller' => null,
             'action' => null,
             'type' => null,
+            'term' => null,
         ]),
     ];
-	echo $this->Paginator->numbers($options);
+    echo $this->Paginator->numbers($options);
 ?>
 </ul>
