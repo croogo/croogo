@@ -25,7 +25,7 @@ class ParamsType extends Type
     public function toPHP($value, Driver $driver)
     {
         if (empty($value) || $value === null) {
-            return [];
+            return new \stdClass();
         }
         return $this->paramsToArray($value);
     }
