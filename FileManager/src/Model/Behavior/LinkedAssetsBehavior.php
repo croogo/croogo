@@ -14,7 +14,7 @@ use Cake\ORM\TableRegistry;
 class LinkedAssetsBehavior extends Behavior {
 
     protected $_defaultConfig = [
-        'key' => 'LinkedAsset',
+        'key' => 'linked_assets',
     ];
 
     public function initialize(array $config = array()) {
@@ -67,7 +67,7 @@ class LinkedAssetsBehavior extends Behavior {
     }
 
     protected function _formatResults($results) {
-        $key = 'linked_assets';
+        $key = $this->getConfig('key');
 
         if (isset($model->Assets)) {
             $Assets = $model->Assets;
