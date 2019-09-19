@@ -383,9 +383,12 @@ class AttachmentsTable extends CroogoTable {
                     $files
                 );
             }
-
-            return $this->_createImportTask($files, $options);
         }
+
+        if (empty($files)) {
+            throw new \Exception('importTask: cannot detect files to import');
+        }
+        return $this->_createImportTask($files, $options);
     }
 
 /**

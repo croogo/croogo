@@ -24,7 +24,7 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
             return true;
         }
 
-        $model = $Event->subject();
+        $model = $Event->getSubject();
         $storage =& $event->data['record'];
 
         if (empty($storage->file)) {
