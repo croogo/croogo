@@ -2,6 +2,8 @@
 
 use Croogo\Core\Status;
 
+$this->Croogo->adminScript(['Croogo/Menus.admin']);
+
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Breadcrumbs->add(__d('croogo', 'Menus'), $this->request->getUri()->getPath());
@@ -45,7 +47,7 @@ foreach ($menus as $menu):
 
     $status = $this->element('Croogo/Core.admin/toggle', [
         'id' => $menu->id,
-        'status' => $menu->status,
+        'status' => (int) $menu->status,
     ]);
 
     $rows[] = [
