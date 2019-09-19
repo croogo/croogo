@@ -99,7 +99,7 @@ class LinksController extends AppController
             $this->Flash->error(__d('croogo', 'Invalid id for Link'));
 
             return $this->redirect([
-                'controller' => 'menus',
+                'controller' => 'Menus',
                 'action' => 'index',
             ]);
         }
@@ -136,7 +136,7 @@ class LinksController extends AppController
             $this->Flash->error(__d('croogo', 'Invalid id for Link'));
 
             return $this->redirect([
-                'controller' => 'menus',
+                'controller' => 'Menus',
                 'action' => 'index',
             ]);
         }

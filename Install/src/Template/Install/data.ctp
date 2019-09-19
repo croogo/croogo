@@ -12,7 +12,7 @@ $this->assign('title', __d('croogo', 'Step 2: Build database'));
 
     echo $this->Html->link(__d('croogo', 'Build database'), [
         'plugin' => 'Croogo/Install',
-        'controller' => 'install',
+        'controller' => 'Install',
         'action' => 'data',
         '?' => ['run' => 1],
     ], [

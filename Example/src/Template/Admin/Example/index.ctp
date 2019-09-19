@@ -1,7 +1,7 @@
 <?php
 $this->extend('Croogo/Core./Common/admin_index');
 $this->Breadcrumbs
-    ->add('Example', array('controller' => 'example', 'action' => 'index'));
+    ->add('Example', array('controller' => 'Example', 'action' => 'index'));
 ?>
 <?php $this->start('actions') ?>
 <?php

@@ -3,11 +3,11 @@
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Breadcrumbs->add(__d('croogo', 'Blocks'), [
-        'controller' => 'blocks',
+        'controller' => 'Blocks',
         'action' => 'index',
     ])
     ->add(__d('croogo', 'Regions'), [
-        'controller' => 'regions',
+        'controller' => 'Regions',
         'action' => 'index',
     ]);
 

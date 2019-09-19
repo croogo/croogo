@@ -2,7 +2,7 @@
 
 $this->append('action-buttons');
     echo $this->Html->link(__d('croogo', 'Translate in a new language'), [
-        'controller' => 'languages',
+        'controller' => 'Languages',
         'action' => 'select',
         'nodes',
         'translate',

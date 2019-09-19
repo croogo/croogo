@@ -38,7 +38,7 @@ $this->append('search', $this->element('admin/nodes_search'));
 $this->append('form-start', $this->Form->create(
     'Node',
     array(
-        'url' => array('controller' => 'nodes', 'action' => 'process'),
+        'url' => array('controller' => 'Nodes', 'action' => 'process'),
         'class' => 'form-inline'
     )
 ));
@@ -67,7 +67,7 @@ $this->append('table-body');
             <?php
                 echo $this->Html->link($node->title, array(
                     'admin' => false,
-                    'controller' => 'nodes',
+                    'controller' => 'Nodes',
                     'action' => 'view',
                     'type' => $node->type,
                     'slug' => $node->slug,
@@ -103,7 +103,7 @@ $this->append('table-body');
                 echo $this->Croogo->adminRowActions($node->id);
 
                 echo $this->Croogo->adminRowAction('',
-                    array('controller' => 'nodes', 'action' => 'move', $node->id, 'up'),
+                    array('controller' => 'Nodes', 'action' => 'move', $node->id, 'up'),
                     [
                         'icon' => $this->Theme->getIcon('move-up'),
                         'escapeTitle' => false,
@@ -111,7 +111,7 @@ $this->append('table-body');
                     ]
                 );
                 echo $this->Croogo->adminRowAction('',
-                    array('controller' => 'nodes', 'action' => 'move', $node->id, 'down'),
+                    array('controller' => 'Nodes', 'action' => 'move', $node->id, 'down'),
                     [
                         'icon' => $this->Theme->getIcon('move-down'),
                         'escapeTitle' => false,

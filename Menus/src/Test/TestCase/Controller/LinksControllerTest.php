@@ -92,7 +92,7 @@ class LinksControllerTest extends CroogoControllerTestCase
             ->method('redirect')
             ->with(
                 $this->equalTo([
-                    'controller' => 'menus',
+                    'controller' => 'Menus',
                     'action' => 'index',
                 ])
             );

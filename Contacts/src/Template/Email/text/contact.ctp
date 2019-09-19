@@ -1,8 +1,8 @@
 <?php
 $url = \Cake\Routing\Router::url([
-    'controller' => 'contacts',
+    'controller' => 'Contacts',
     'action' => 'view',
-    $contact['Contact']['alias'],
+    $contact->alias,
 ], true);
 echo __d('croogo', 'You have received a new message at: %s', $url) . "\n \n";
 echo __d('croogo', 'Name: %s', $message->name) . "\n";

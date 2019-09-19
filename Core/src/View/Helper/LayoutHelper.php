@@ -270,11 +270,11 @@ class LayoutHelper extends Helper
             $url = Configure::read('Site.feed_url');
         } else {
             /*$url = Router::url(array(
-				'controller' => 'nodes',
-				'action' => 'index',
-				'type' => 'blog',
-				'ext' => 'rss',
-			));*/
+                'controller' => 'Nodes',
+                'action' => 'index',
+                'type' => 'blog',
+                'ext' => 'rss',
+            ));*/
             $url = '/promoted.rss';
         }
 

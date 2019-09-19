@@ -4,7 +4,7 @@ $this->Croogo->adminScript('Croogo/Contacts.admin');
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Breadcrumbs->add(__d('croogo', 'Contacts'), ['controller' => 'contacts', 'action' => 'index']);
+$this->Breadcrumbs->add(__d('croogo', 'Contacts'), ['controller' => 'Contacts', 'action' => 'index']);
 
 $status = $this->request->getQuery('status');
 

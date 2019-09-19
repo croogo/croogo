@@ -42,7 +42,7 @@ endif;
 $detailUrl = array(
     'prefix' => 'admin',
     'plugin' => 'Croogo/FileManager',
-    'controller' => 'attachments',
+    'controller' => 'Attachments',
     'action' => 'browse',
     '?' => array(
         'manage' => true,

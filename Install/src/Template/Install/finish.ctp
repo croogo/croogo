@@ -18,13 +18,13 @@ $this->assign('title', __d('croogo', 'Successful'));
         $this->Html->link(__d('croogo', 'configuring your site'), [
             'plugin' => 'Croogo/Settings',
             'prefix' => 'admin',
-            'controller' => 'settings',
+            'controller' => 'Settings',
             'action' => 'prefix',
             'Site',
         ]), $this->Html->link(__d('croogo', 'create a blog post'), [
             'plugin' => 'Croogo/Nodes',
             'prefix' => 'admin',
-            'controller' => 'nodes',
+            'controller' => 'Nodes',
             'action' => 'add',
             'blog',
         ]));

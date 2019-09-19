@@ -6,7 +6,7 @@ use Cake\Utility\Inflector;
 
 $this->extend('Croogo/Core./Common/admin_index');
 $this->Breadcrumbs
-    ->add('Example', array('controller' => 'example', 'action' => 'index'))
+    ->add('Example', array('controller' => 'Example', 'action' => 'index'))
     ->add('RTE Example', $this->request->getRequestTarget());
 
 echo $this->Form->create('Example');

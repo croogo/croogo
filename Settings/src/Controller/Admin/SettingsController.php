@@ -142,8 +142,8 @@ class SettingsController extends AppController
         if (!$redirect = $this->referer()) {
             $redirect = [
                 'admin' => true,
-                'plugin' => 'settings',
-                'controller' => 'settings',
+                'plugin' => 'Croogo/Settings',
+                'controller' => 'Settings',
                 'action' => 'index'
             ];
         }
@@ -166,6 +166,6 @@ class SettingsController extends AppController
             $this->Flash->error(__d('croogo', 'Could not move down'));
         }
 
-        return $this->redirect(['admin' => true, 'controller' => 'settings', 'action' => 'index']);
+        return $this->redirect(['admin' => true, 'controller' => 'Settings', 'action' => 'index']);
     }
 }

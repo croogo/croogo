@@ -91,8 +91,8 @@ class NodesHelper extends Helper
     {
         $_options = [
             'link' => true,
-            'plugin' => 'nodes',
-            'controller' => 'nodes',
+            'plugin' => 'Croogo/Nodes',
+            'controller' => 'Nodes',
             'action' => 'view',
             'element' => 'Croogo/Nodes.node_list',
         ];
