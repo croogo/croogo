@@ -126,11 +126,18 @@ class TermsController extends AppController
         $taxonomyId = $this->Terms->Taxonomies->termInVocabulary($id, $vocabularyId);
         $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
 
-        if ($this->Terms->remove($id, $vocabularyId)) {
+        $success = true;
+        try {
+            $this->Terms->remove($id, $vocabularyId);
+        } catch (\Exception $e) {
+            $success = false;
+            $error = $e->getMessage();
+        }
+        if ($success) {
             $messageFlash = __d('croogo', 'Term deleted');
             $flashMethod = 'success';
         } else {
-            $messageFlash = __d('croogo', 'Term could not be deleted. Please, try again.');
+            $messageFlash = __d('croogo', 'Term could not be deleted. Please, try again.' . ' ' . $error);
             $flashMethod = 'error';
         }
 

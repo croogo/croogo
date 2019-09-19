@@ -20,7 +20,8 @@ class TaxonomyAddForeignKeys extends AbstractMigration
         $this->table('model_taxonomies')
             ->addForeignKey('taxonomy_id', 'taxonomies', ['id'], [
                 'constraint' => 'fk_model_taxonomies2taxonomies',
-                'delete' => 'RESTRICT',
+                'update' => 'CASCADE',
+                'delete' => 'CASCADE',
             ])
             ->save();
     }
