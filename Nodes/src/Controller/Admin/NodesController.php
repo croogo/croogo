@@ -276,8 +276,8 @@ class NodesController extends AppController
      */
     protected function _setCommonVariables(Type $type)
     {
-        if (isset($this->Taxonomies)) {
-            $this->Taxonomies->prepareCommonData($type);
+        if (isset($this->Taxonomy)) {
+            $this->Taxonomy->prepareCommonData($type);
         }
         $roles = $this->Nodes->Users->Roles->find('list');
         $parents = $this->Nodes->find('list')->where([

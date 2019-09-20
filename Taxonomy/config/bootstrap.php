@@ -11,7 +11,7 @@ $cacheConfig = array_merge(
 Cache::setConfig('croogo_types', $cacheConfig);
 Cache::setConfig('croogo_vocabularies', $cacheConfig);
 
-Croogo::hookComponent('*', 'Croogo/Taxonomy.Taxonomies');
+Croogo::hookComponent('*', 'Croogo/Taxonomy.Taxonomy');
 
 Croogo::hookHelper('*', 'Croogo/Taxonomy.Taxonomies');
 

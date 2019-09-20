@@ -14,7 +14,7 @@ use Croogo\Taxonomy\Model\Entity\Vocabulary;
 use Croogo\Taxonomy\Model\Table\TaxonomiesTable;
 
 /**
- * Taxonomies Component
+ * Taxonomy Component
  *
  * @category Component
  * @package  Croogo.Taxonomy.Controller.Component
@@ -23,7 +23,7 @@ use Croogo\Taxonomy\Model\Table\TaxonomiesTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TaxonomiesComponent extends Component
+class TaxonomyComponent extends Component
 {
 
     /**
