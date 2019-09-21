@@ -7,10 +7,13 @@ use Croogo\Core\Model\Table\CroogoTable;
 class TaxonomiesTable extends CroogoTable
 {
 
+    protected $_displayField = 'title';
+
     public function initialize(array $config)
     {
         $this->belongsTo('Croogo/Taxonomy.Terms');
         $this->belongsTo('Croogo/Taxonomy.Vocabularies');
+        $this->addBehavior('Search.Search');
         $this->addBehavior('Tree');
         $this->addBehavior('Timestamp', [
             'events' => [

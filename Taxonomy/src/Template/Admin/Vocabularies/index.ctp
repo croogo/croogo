@@ -21,7 +21,7 @@ $this->append('table-body');
 $rows = [];
 foreach ($vocabularies as $vocabulary) :
     $actions = [];
-    $actions[] = $this->Croogo->adminRowAction('', ['controller' => 'Terms', 'action' => 'index', '?' => ['vocabulary_id' => $vocabulary->id]],
+    $actions[] = $this->Croogo->adminRowAction('', ['controller' => 'Taxonomies', 'action' => 'index', '?' => ['vocabulary_id' => $vocabulary->id]],
         ['icon' => $this->Theme->getIcon('view'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'View terms')]);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveUp', $vocabulary->id],
         ['icon' => $this->Theme->getIcon('move-up'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post']);
@@ -35,7 +35,7 @@ foreach ($vocabularies as $vocabulary) :
         __d('croogo', 'Are you sure?'));
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
     $rows[] = [
-        $this->Html->link($vocabulary->title, ['controller' => 'Terms', 'action' => 'index', '?' => ['vocabulary_id' => $vocabulary->id]]),
+        $this->Html->link($vocabulary->title, ['controller' => 'Taxonomies', 'action' => 'index', '?' => ['vocabulary_id' => $vocabulary->id]]),
         $vocabulary->alias,
         $vocabulary->plugin,
         $actions,

@@ -1,21 +1,32 @@
 <?php
 
-$this->assign('title', __d('croogo', 'Vocabulary: %s', $vocabulary->title));
+if (isset($vocabulary)):
+    $title = __d('croogo', 'Vocabulary: %s', $vocabulary->title);
+else:
+    $title = __d('croogo', 'Terms');
+endif;
+$this->assign('title', $title);
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Breadcrumbs->add(__d('croogo', 'Content'),
-        ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'])
-    ->add(__d('croogo', 'Vocabularies'),
-        ['plugin' => 'Croogo/Taxonomy', 'controller' => 'Vocabularies', 'action' => 'index'])
-    ->add(h($vocabulary->title), $this->request->getRequestTarget());
+$this->Breadcrumbs
+    ->add(__d('croogo', 'Content'), [
+        'plugin' => 'Croogo/Nodes',
+        'controller' => 'Nodes',
+        'action' => 'index',
+    ])
+    ->add(__d('croogo', 'Vocabularies'), [
+        'plugin' => 'Croogo/Taxonomy',
+        'controller' => 'Vocabularies',
+        'action' => 'index',
+    ])
+    ->add(__d('croogo', 'Terms'), [
+        'plugin' => 'Croogo/Taxonomy',
+        'controller' => 'Terms',
+        'action' => 'index',
+    ]);
 
-$this->append('action-buttons');
-echo $this->Croogo->adminAction(__d('croogo', 'Create term'), [
-    'action' => 'add',
-    'vocabulary_id' => $vocabulary->id,
-]);
-$this->end();
+$this->set('showActions', false);
 
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([
@@ -32,15 +43,20 @@ $rows = [];
 foreach ($terms as $term):
     $actions = [];
     $actions[] = $this->Croogo->adminRowActions($term->id);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveUp', $term->id, $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('move-up'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post']);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveDown', $term->id, $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('move-down'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Move down'), 'method' => 'post']);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $term->id, 'vocabulary_id' => $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('update'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Edit this item')]);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'delete', $term->id, $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('delete'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Remove this item')],
-        __d('croogo', 'Are you sure?'));
+    $actions[] = $this->Croogo->adminRowAction('', [
+        'action' => 'edit', $term->id,
+    ], [
+        'icon' => $this->Theme->getIcon('update'),
+        'escapeTitle' => false,
+        'tooltip' => __d('croogo', 'Edit this item'),
+    ]);
+    $actions[] = $this->Croogo->adminRowAction('', [
+        'action' => 'delete', $term->id,
+    ], [
+        'icon' => $this->Theme->getIcon('delete'),
+        'escapeTitle' => false,
+        'tooltip' => __d('croogo', 'Remove this item'),
+    ], __d('croogo', 'Are you sure?'));
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
 
     // Title Column
@@ -58,15 +74,18 @@ foreach ($terms as $term):
         ]);
     }
 
-    if (!empty($term['Term']['indent'])):
-        $titleCol = str_repeat('&emsp;', $term['Term']['indent']) . $titleCol;
+    if (!empty($term->indent)):
+        $titleCol = str_repeat('&emsp;', $term->indent) . $titleCol;
     endif;
 
     // Build link list
-    $typeLinks = $this->Taxonomies->generateTypeLinks($vocabulary->types, $term);
-    if (!empty($typeLinks)) {
-        $titleCol .= $this->Html->tag('small', $typeLinks);
-    }
+    $vocabList = [];
+    foreach ($term->taxonomies as $taxonomy):
+        $vocabList[] = $taxonomy->vocabulary->title;
+    endforeach;
+    if (!empty($vocabList)):
+        $titleCol .= sprintf('&nbsp;(%s)', $this->Html->tag('small', implode(', ', $vocabList)));
+    endif;
 
     $rows[] = [
         $titleCol,

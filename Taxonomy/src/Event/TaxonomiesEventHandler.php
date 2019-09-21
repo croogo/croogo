@@ -52,7 +52,7 @@ class TaxonomiesEventHandler implements EventListenerInterface
                 'url' => [
                     'prefix' => 'admin',
                     'plugin' => 'Croogo/Taxonomy',
-                    'controller' => 'Terms',
+                    'controller' => 'Taxonomies',
                     'action' => 'index',
                     '?' => [
                         'vocabulary_id' => $v->id,
@@ -84,7 +84,7 @@ class TaxonomiesEventHandler implements EventListenerInterface
                     'url' => [
                         'prefix' => 'admin',
                         'plugin' => 'Croogo/Taxonomy',
-                        'controller' => 'Terms',
+                        'controller' => 'Taxonomies',
                         'action' => 'index',
                         $vocabulary->id,
                         '?' => [

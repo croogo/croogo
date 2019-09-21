@@ -46,8 +46,14 @@ class VocabulariesController extends AppController
     {
         return parent::implementedEvents() + [
             'Crud.afterSave' => 'afterCrudSave',
+            'Crud.beforeFind' => 'beforeCrudFind',
             'Crud.beforeRender' => 'beforeCrudRender'
         ];
+    }
+
+    public function beforeCrudFind(Event $event)
+    {
+        return $event->getSubject()->query->contain('Types');
     }
 
     public function afterCrudSave(Event $event)

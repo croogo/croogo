@@ -2,6 +2,7 @@
 
 namespace Croogo\Taxonomy\Model\Behavior;
 
+use ArrayObject;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
@@ -60,30 +61,25 @@ class TaxonomizableBehavior extends Behavior
             'bindingKey' => 'alias',
             'propertyName' => 'node_type',
         ]);
-        $this->_table->belongsToMany(
-            'Taxonomies',
-            [
-                'className' => 'Croogo/Taxonomy.Taxonomies',
-                'through' => 'Croogo/Taxonomy.ModelTaxonomies',
-                'foreignKey' => 'foreign_key',
-                'associationForeignKey' => 'taxonomy_id',
-                'conditions' => [
-                    'model' => $this->_table->getRegistryAlias(),
-                ],
-            ]
-        );
-        $this->_table->Taxonomies->belongsToMany(
-            $this->_table->getAlias(),
-            [
-                'targetTable' => $this->_table,
-                'through' => 'Croogo/Taxonomy.ModelTaxonomies',
-                'foreignKey' => 'foreign_key',
-                'associationForeignKey' => 'taxonomy_id',
-                'conditions' => [
-                    'model' => $this->_table->getRegistryAlias(),
-                ],
-            ]
-        );
+        $this->_table->belongsToMany('Taxonomies', [
+
+            'className' => 'Croogo/Taxonomy.Taxonomies',
+            'through' => 'Croogo/Taxonomy.ModelTaxonomies',
+            'foreignKey' => 'foreign_key',
+            'associationForeignKey' => 'taxonomy_id',
+            'conditions' => [
+                'model' => $this->_table->getRegistryAlias(),
+            ],
+        ]);
+        $this->_table->Taxonomies->belongsToMany($this->_table->getAlias(), [
+            'targetTable' => $this->_table,
+            'through' => 'Croogo/Taxonomy.ModelTaxonomies',
+            'foreignKey' => 'foreign_key',
+            'associationForeignKey' => 'taxonomy_id',
+            'conditions' => [
+                'model' => $this->_table->getRegistryAlias(),
+            ],
+        ]);
     }
 
     /**
@@ -114,36 +110,31 @@ class TaxonomizableBehavior extends Behavior
         }
 
         $type = $this->_table->Taxonomies->Vocabularies->Types->find()
-            ->select(
-                [
-                    'id',
-                    'title',
-                    'alias',
-                ]
-            )
-            ->contain(
-                [
-                    'Vocabularies' => function (Query $q) {
-                        return $q->select(
-                            [
-                                'id',
-                                'title',
-                                'alias',
-                                'required',
-                                'multiple',
-                            ]
-                        )->contain(['Taxonomies']);
-                    },
-                ]
-            )
+            ->select([
+                'id',
+                'title',
+                'alias',
+            ])
+            ->contain([
+                'Vocabularies' => function (Query $q) {
+                    return $q
+                        ->select([
+                            'id',
+                            'title',
+                            'alias',
+                            'required',
+                            'multiple',
+                        ])
+                        ->contain(['Taxonomies']);
+                },
+            ])
             ->where([
-                'alias' => $typeAlias
+                'alias' => $typeAlias,
             ])
             ->first();
 
         if (empty($type)) {
             Log::error('Type ' . $typeAlias . ' cannot be found');
-
             return true;
         }
 
@@ -180,17 +171,12 @@ class TaxonomizableBehavior extends Behavior
             throw new RecordNotFoundException(__d('croogo', 'Invalid Content Type'));
         }
         $entity->type = $type->alias;
-        if (!$this->_table->behaviors()
-            ->has('Tree')
-        ) {
-            $this->_table->addBehavior(
-                'Tree',
-                [
-                    'scope' => [
-                        $this->_table->aliasField('type') => $entity->type,
-                    ],
-                ]
-            );
+        if (!$this->_table->behaviors()->has('Tree')) {
+            $this->_table->addBehavior('Tree', [
+                'scope' => [
+                    $this->_table->aliasField('type') => $entity->type,
+                ],
+            ]);
         }
         if ($entity->has('taxonomy_data')) {
             $taxonomies = [];
@@ -216,7 +202,7 @@ class TaxonomizableBehavior extends Behavior
      *
      * @return bool
      */
-    public function beforeSave(Event $event, Entity $entity)
+    public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
     {
         if (!$entity->has('taxonomy_data')) {
             return;

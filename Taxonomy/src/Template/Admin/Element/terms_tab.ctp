@@ -17,7 +17,7 @@ if (count($taxonomies) > 0):
             'type' => 'select',
             'multiple' => $vocabularies[$vocabularyId]->multiple,
             'options' => $taxonomyTree,
-            'empty' => $hasEmpty,
+            'empty' => $hasEmpty ? '-- Please choose --' : false,
             'value' => $taxonomyIds,
             'help' => $error,
             'templates' => $templates

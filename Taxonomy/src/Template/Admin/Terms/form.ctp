@@ -3,29 +3,57 @@ $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Croogo->adminScript('Croogo/Taxonomy.terms');
 
-$this->Breadcrumbs->add(__d('croogo', 'Content'),
-    ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']);
+$this->Breadcrumbs
+    ->add(__d('croogo', 'Content'), [
+        'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index',
+    ])
+    ->add(__d('croogo', 'Vocabularies'), [
+        'controller' => 'Vocabularies', 'action' => 'index',
+    ]);
 
-if ($this->request->getParam('action') === 'edit'):
-    $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['controller' => 'Vocabularies', 'action' => 'index'])
-        ->add($vocabulary->title, ['action' => 'index', 'vocabulary_id' => $vocabulary->id])
-        ->add($term->title, $this->request->getRequestTarget());
+if (isset($vocabulary)):
+    $this->Breadcrumbs->add($vocabulary->title, [
+        'controller' => 'Taxonomies', 'action' => 'index', 'vocabulary_id' => $vocabulary->id,
+    ]);
+else:
+    $this->Breadcrumbs->add(__d('croogo', 'Terms'), [
+        'controller' => 'Terms', 'action' => 'index',
+    ]);
 endif;
 
-if ($this->request->getParam('action') === 'add'):
+$termId = isset($this->request->getParam('pass')[0]) ? $this->request->getParam('pass')[0] : null;
+$action = $this->request->getParam('action');
+if ($action === 'edit'):
+    if (isset($vocabulary)):
+        $this->assign('title', __d('croogo', '%s: Edit Term', $vocabulary->title));
+    else:
+        $this->assign('title', __d('croogo', 'Edit Term: %s', $term->title));
+    endif;
+    $this->Breadcrumbs->add($term->title, $this->request->getRequestTarget());
+endif;
+
+if ($action === 'add'):
     $this->assign('title', __d('croogo', '%s: Add Term', $vocabulary->title));
-
-    $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'),
-        ['controller' => 'Vocabularies', 'action' => 'index', $vocabulary->id])
-        ->add($vocabulary->title, ['action' => 'index', 'vocabulary_id' => $vocabulary->id])
-        ->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
 endif;
 
-$this->set('cancelUrl', ['action' => 'index', $vocabularyId]);
+if (isset($vocabularyId)):
+    $cancelUrl = [
+        'controller' => 'Taxonomies',
+        'action' => 'index',
+        'vocabulary_id' => $vocabularyId,
+    ];
+else:
+    $cancelUrl = [
+        'controller' => 'Terms',
+        'action' => 'index',
+    ];
+endif;
+$this->set('cancelUrl', $cancelUrl);
 
 $formUrl = [
     'action' => $this->request->getParam('action'),
-    isset($this->request->getParam('pass')[0]) ? $this->request->getParam('pass')[0] : null,
+    $termId,
     'vocabulary_id' => $vocabulary->id,
 ];
 
@@ -49,16 +77,34 @@ $this->append('tab-content');
             'label' => __d('croogo', 'Slug'),
         ]);
 
-        echo $this->Form->input('taxonomies.0.parent_id', [
-            'options' => $parentTree,
-            'empty' => '(no parent)',
-            'label' => __d('croogo', 'Parent'),
-            'class' => 'c-select',
-        ]);
-        echo $this->Form->input('taxonomies.0.id');
-        echo $this->Form->hidden('taxonomies.0.vocabulary_id', [
-            'value' => $vocabulary->id,
-        ]);
+        if ($action === 'add'):
+            echo $this->Form->input('taxonomies.0.vocabulary_id', [
+                'type' => 'hidden',
+                'value' => $vocabularyId,
+            ]);
+        endif;
+
+        if ($action === 'edit'):
+            if (isset($vocabularyId)):
+                echo $this->Form->input('taxonomies.0.id', ['type' => 'hidden']);
+                echo $this->Form->input('taxonomies.0.term_id', ['type' => 'hidden']);
+                echo $this->Form->input('taxonomies.0.vocabulary_id', ['type' => 'hidden']);
+                echo $this->Form->input('taxonomies.0.parent_id', [
+                    'options' => $parentTree,
+                    'empty' => '(no parent)',
+                    'label' => __d('croogo', 'Parent'),
+                    'class' => 'c-select',
+                ]);
+            else:
+                echo $this->Form->input('taxonomies._ids', [
+                    'type' => 'select',
+                    'multiple' => true,
+                    'value' => array_keys($taxonomies),
+                    'empty' => true,
+                ]);
+            endif;
+        endif;
+
         echo $this->Form->input('description', [
             'label' => __d('croogo', 'Description'),
         ]);

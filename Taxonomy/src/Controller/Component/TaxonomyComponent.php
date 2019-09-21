@@ -7,11 +7,14 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Croogo\Core\Core\Exception\Exception;
 use Croogo\Extensions\CroogoTheme;
 use Croogo\Taxonomy\Model\Entity\Type;
 use Croogo\Taxonomy\Model\Entity\Vocabulary;
 use Croogo\Taxonomy\Model\Table\TaxonomiesTable;
+use Croogo\Taxonomy\Model\Table\TermsTable;
+use InvalidArgumentException;
 
 /**
  * Taxonomy Component
@@ -70,6 +73,12 @@ class TaxonomyComponent extends Component
             $this->Taxonomies = $this->controller->Taxonomies;
         } else {
             $this->Taxonomies = TableRegistry::get('Croogo/Taxonomy.Taxonomies');
+        }
+
+        if ((isset($this->controller->Terms)) && ($this->controller->Terms instanceof TermsTable)) {
+            $this->Terms = $this->controller->Terms;
+        } else {
+            $this->Terms = TableRegistry::get('Croogo/Taxonomy.Terms');
         }
 
         if ($this->controller->request->getParam('prefix') !== 'admin' &&
@@ -154,41 +163,29 @@ class TaxonomyComponent extends Component
         $vocabularies = array_unique($vocabularies);
         foreach ($vocabularies as $vocabularyAlias) {
             $vocabulary = $this->Taxonomies->Vocabularies->find()
-                ->where(
-                    [
-                        'Vocabularies.alias' => $vocabularyAlias,
-                    ]
-                )
-                ->applyOptions(
-                    [
-                        'name' => 'vocabulary_' . $vocabularyAlias,
-                        'config' => 'croogo_vocabularies',
-                    ]
-                )
+                ->where([
+                    'Vocabularies.alias' => $vocabularyAlias,
+                ])
+                ->applyOptions([
+                    'name' => 'vocabulary_' . $vocabularyAlias,
+                    'config' => 'croogo_vocabularies',
+                ])
                 ->first();
             if (isset($vocabulary->id)) {
                 $threaded = $this->Taxonomies->find('threaded')
-                    ->where(
-                        [
-                            'Taxonomies.vocabulary_id' => $vocabulary->id,
-                        ]
-                    )
-                    ->order(
-                        [
-                            'Taxonomies.lft ASC',
-                        ]
-                    )
-                    ->applyOptions(
-                        [
-                            'name' => 'vocabulary_threaded_' . $vocabularyAlias,
-                            'config' => 'croogo_vocabularies',
-                        ]
-                    )
-                    ->contain(
-                        [
-                            'Terms',
-                        ]
-                    );
+                    ->where([
+                        'Taxonomies.vocabulary_id' => $vocabulary->id,
+                    ])
+                    ->order([
+                        'Taxonomies.lft ASC',
+                    ])
+                    ->applyOptions([
+                        'name' => 'vocabulary_threaded_' . $vocabularyAlias,
+                        'config' => 'croogo_vocabularies',
+                    ])
+                    ->contain([
+                        'Terms',
+                    ]);
 
                 $this->vocabulariesForLayout[$vocabularyAlias] = [];
                 $this->vocabulariesForLayout[$vocabularyAlias]['vocabulary'] = $vocabulary;
@@ -207,12 +204,9 @@ class TaxonomyComponent extends Component
      */
     public function prepareCommonData(Type $type, $options = [])
     {
-        $options = Hash::merge(
-            [
-                'modelClass' => $this->controller->modelClass,
-            ],
-            $options
-        );
+        $options = Hash::merge([
+            'modelClass' => $this->controller->modelClass,
+        ], $options);
         $typeAlias = $type->alias;
         list(, $modelClass) = pluginSplit($options['modelClass']);
 
@@ -248,4 +242,79 @@ class TaxonomyComponent extends Component
             )
         );
     }
+
+    /**
+     * Get default type from Vocabulary
+     */
+    public function getDefaultType($vocabulary)
+    {
+        $defaultType = null;
+        if (isset($vocabulary->types[0])) {
+            $defaultType = $vocabulary->types[0];
+        }
+        $typeId = $this->request->getQuery('type_id');
+        if ($typeId) {
+            $defaultType = collection($vocabulary['types'])->match([
+                'id' => $typeId,
+            ]);
+        }
+        return $defaultType;
+    }
+
+    /**
+     * Check that Term exists
+     *
+     * @param int $idTerm Id
+     * @param string $url Redirect Url
+     * @return bool True if Term exists
+     */
+    public function ensureTermExists($id)
+    {
+        try {
+            $this->Terms->get($id);
+        } catch (RecordNotFoundException $exception) {
+            $this->getController()->Flash->error(__d('croogo', 'Invalid Term ID.'));
+            throw $exception;
+        }
+    }
+
+    /**
+     * Checks that Taxonomy exists
+     *
+     * @param int $termId Term Id
+     * @param int $vocabularyId Vocabulary Id
+     * @return bool True if Taxonomy exists
+     */
+    public function ensureTaxonomyExists($termId, $vocabularyId)
+    {
+        $count = $this->Terms->Taxonomies->find()
+            ->where(['term_id' => $termId, 'vocabulary_id' => $vocabularyId])
+            ->count();
+        if (!$count) {
+            $this->getController()->Flash->error(__d('croogo', 'Invalid Taxonomy.'));
+            throw new RecordNotFoundException('Invalid Taxonomy.');
+        }
+    }
+
+    /**
+     * Checks that Vocabulary exists
+     *
+     * @param int $vocabularyIdVocabulary Id
+     * @param string $url Redirect Url
+     * @return bool True if Vocabulary exists
+     */
+    public function ensureVocabularyIdExists($vocabularyId)
+    {
+        if (!$vocabularyId) {
+            throw new InvalidArgumentException();
+        }
+
+        try {
+            $this->Terms->Vocabularies->get($vocabularyId);
+        } catch (RecordNotFoundException $exception) {
+            $this->getController()->Flash->error(__d('croogo', 'Invalid Vocabulary ID.'));
+            throw $exception;
+        }
+    }
+
 }

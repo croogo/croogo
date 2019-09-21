@@ -179,14 +179,10 @@ class TaxonomiesHelper extends Helper
     public function generateTypeLinks($typeData, $termData)
     {
         $typeLinks = '';
-        if (count($typeData) <= 1) {
-            return $typeLinks;
-        }
-
         $typeLink = [];
         $typeLink[] = ' (';
 
-        foreach ($typeData as $type) {
+        foreach ((array)$typeData as $type) {
             $typeLink[] = $this->Html->link(
                 $type->title,
                 [
@@ -195,7 +191,7 @@ class TaxonomiesHelper extends Helper
                     'controller' => 'Nodes',
                     'action' => 'term',
                     'type' => $type->alias,
-                    'term' => $termData['Term']['slug'],
+                    'term' => $termData->slug,
                 ],
                 [
                     'target' => '_blank',
