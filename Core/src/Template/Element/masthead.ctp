@@ -19,7 +19,7 @@ elseif (isset($contact)):
     endif;
 elseif ($this->request->getParam('action') === 'index' && isset($type)):
     $mastheadTitle = $type->title;
-    $mastheadSubheading = $type->description;
+    $mastheadSubheading = null;
     $mastheadWrapperClass = "page-heading";
 else:
     $mastheadTitle = Configure::read('Site.title');
