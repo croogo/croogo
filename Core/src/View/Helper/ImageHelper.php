@@ -181,9 +181,11 @@ class ImageHelper extends HtmlHelper
             }
             imagecopyresized($temp, $image, 0, 0, 0, 0, $w, $h, $sw, $sh);
         }
-        call_user_func('image' . $format, $temp, $target);
-        imagedestroy($image);
-        imagedestroy($temp);
+        if (is_writable(dirname($target))) {
+            call_user_func('image' . $format, $temp, $target);
+            imagedestroy($image);
+            imagedestroy($temp);
+        }
     }
 
 /**

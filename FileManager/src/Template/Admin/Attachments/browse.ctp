@@ -206,10 +206,14 @@ $this->append('table-body');
         endif;
 
         if ($mimeType == 'image') {
-            $img = $this->AssetsImage->resize(
-                $attachment->asset->path, 100, 200,
-                array('adapter' => $attachment->asset->adapter)
-            );
+            try {
+                $img = $this->AssetsImage->resize(
+                    $attachment->asset->path, 100, 200,
+                    ['adapter' => $attachment->asset->adapter]
+                );
+            } catch (\Exception $e) {
+                $img = $this->Html->image($attachment->asset->path, ['style' => 'max-width: 200px']);
+            }
             $thumbnail = $this->Html->link($img,
                 $attachment->asset->path,
                 array(

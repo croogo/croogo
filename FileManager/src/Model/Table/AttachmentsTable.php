@@ -252,7 +252,7 @@ class AttachmentsTable extends CroogoTable {
  */
     public function createFromFile($file) {
         if (!file_exists($file)) {
-            throw new InvalidArgumentException(__('{0} cannot be found', $file));
+            throw new InvalidArgumentException(__('Attachments::createFromFile(): {0} cannot be found', $file));
         }
 
         $finfo = new \finfo(FILEINFO_MIME_TYPE);

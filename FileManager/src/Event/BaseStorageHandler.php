@@ -7,6 +7,7 @@ use Cake\Core\App;
 use Cake\Log\LogTrait;
 use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
+use InvalidArgumentException;
 
 abstract class BaseStorageHandler {
 
@@ -126,7 +127,7 @@ abstract class BaseStorageHandler {
             }
         } catch (InvalidArgumentException $e) {
             $this->log(get_class($this) . ': ' . $e->getMessage());
-            return false;
+            throw $e;
         }
 
         return $this->_createAsset($attachment);
