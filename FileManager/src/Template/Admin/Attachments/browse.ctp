@@ -269,7 +269,7 @@ $this->append('table-body');
         );
         $urlPopover = $this->Croogo->adminRowAction('', '#', array(
             'class' => 'popovers',
-            'icon' => 'link',
+            'icon' => 'info-circle',
             'escapeTitle' => false,
             'iconSize' => 'small',
             'data-title' => __d('croogo', 'URL'),
