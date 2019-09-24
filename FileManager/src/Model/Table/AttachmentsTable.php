@@ -268,7 +268,31 @@ class AttachmentsTable extends CroogoTable {
             return sprintf('%s is duplicate to asset: %s', str_replace(APP, '', $file), $firstDupe);
         }
         $path = str_replace(rtrim(WWW_ROOT, '/'), '', $file);
-        $asset = $this->newEntity(array(
+
+        $sizeDelimiterPos = strrpos($path, '-');
+        $originalPath = substr($path, 0, $sizeDelimiterPos);
+        $extDelimiterPos = strrpos($path, '.');
+        $originalExt = substr($path, $extDelimiterPos);
+        $originalFile = $originalPath . $originalExt;
+
+        if (file_exists(WWW_ROOT . $originalFile)) {
+            // Found a possible parent file. Retrieve its parent and store
+            // the file path in a temp property asset_path so it gets picked up
+            // by _createImportTask() and runTask()
+            $attachment = $this->find()
+                ->contain('Assets')
+                ->where([
+                    'import_path' => $originalFile,
+                ])
+                ->first();
+            if ($attachment) {
+                $attachment->asset_path = $path;
+                $attachment->setDirty('asset_path', false);
+                return $attachment;
+            }
+        }
+
+        $attachment = $this->newEntity(array(
             'path' => $path,
             'import_path' => $path,
             'title' => basename($file),
@@ -279,7 +303,7 @@ class AttachmentsTable extends CroogoTable {
             'created' => date('Y-m-d H:i:s', $stat[9]),
             'modified' => date('Y-m-d H:i:s', time()),
         ));
-        return $asset;
+        return $attachment;
     }
 
 /**
@@ -290,15 +314,15 @@ class AttachmentsTable extends CroogoTable {
         $copy = array();
         $error = array();
         foreach ($files as $file) {
-            $asset = $this->createFromFile($file);
-            if ($asset instanceof EntityInterface) {
-                $data[] = $asset;
-                $copy[] = array('from' => $asset->import_path);
+            $attachment = $this->createFromFile($file);
+            if ($attachment instanceof EntityInterface) {
+                $data[] = $attachment;
+                $copy[] = ['from' => $attachment->asset_path ?: $attachment->import_path];
                 $error[] = null;
             } else {
                 $data[] = null;
                 $copy[] = null;
-                $error[] = $asset;
+                $error[] = $attachment;
             }
         }
         return compact('data', 'copy', 'error');
@@ -331,18 +355,36 @@ class AttachmentsTable extends CroogoTable {
                 $height = $sizeinfo[1];
             }
 
-            $task['data'][$i]->asset = $this->Assets->newEntity([
-                'model' => 'Attachments',
-                'adapter' => 'LegacyLocalAttachment',
-                'filesize' => $stat['size'],
-                'width' => $width,
-                'height' => $height,
-                'hash' => $task['data'][$i]->hash,
-                'extension' => $pathinfo['extension'],
-                'mime_type' => $task['data'][$i]->mime_type,
-                'path' => $source['from'],
-            ]);
-            $result = $this->save($task['data'][$i], array('atomic' => true));
+            $originalAsset = $task['data'][$i]->asset;
+            if ($originalAsset) {
+                $asset = $this->Assets->newEntity([
+                    'parent_asset_id' => $originalAsset->id,
+                    'model' => 'Attachments',
+                    'foreign_key' => $originalAsset->foreign_key,
+                    'adapter' => 'LegacyLocalAttachment',
+                    'filesize' => $stat['size'],
+                    'width' => $width,
+                    'height' => $height,
+                    'hash' => sha1_file($file),
+                    'extension' => $pathinfo['extension'],
+                    'mime_type' => $originalAsset->mime_type,
+                    'path' => $source['from'],
+                ]);
+                $result = $this->Assets->save($asset, array('atomic' => true));
+            } else {
+                $task['data'][$i]->asset = $this->Assets->newEntity([
+                    'model' => 'Attachments',
+                    'adapter' => 'LegacyLocalAttachment',
+                    'filesize' => $stat['size'],
+                    'width' => $width,
+                    'height' => $height,
+                    'hash' => $task['data'][$i]->hash,
+                    'extension' => $pathinfo['extension'],
+                    'mime_type' => $task['data'][$i]->mime_type,
+                    'path' => $source['from'],
+                ]);
+                $result = $this->save($task['data'][$i], array('atomic' => true));
+            }
             if ($result) {
                 $imports++;
             } else {
