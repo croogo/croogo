@@ -78,8 +78,12 @@
             </li>
         <?php endforeach ?>
     </ul>
-    <div class="pagination">
-        <ul><?= $this->Paginator->numbers() ?></ul>
+</div>
+<div class="row">
+    <div class="pagination-wrapper">
+        <ul class="pagination justify-content-center pagination-sm">
+            <?= $this->Paginator->numbers() ?>
+        </ul>
     </div>
 </div>
 <script>
