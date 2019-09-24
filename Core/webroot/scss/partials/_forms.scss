@@ -31,19 +31,22 @@ form .span8 + .span4 {
 
 span.slug {
   font-weight: bold;
-  padding: 13px;
+  padding: 6px;
 }
 
 .input-group {
   span.slug {
     border-top: $input-btn-border-width solid $input-border-color;
     border-bottom: $input-btn-border-width solid $input-border-color;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1;
   }
 
   .editable.btn {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    padding: 13px 6px;
   }
 }
 
