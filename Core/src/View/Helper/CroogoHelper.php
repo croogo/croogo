@@ -106,11 +106,6 @@ class CroogoHelper extends Helper
             'listTag' => 'ul',
         ], $options);
 
-        //		$aclPlugin = Configure::read('Site.acl_plugin');
-        //		$userId = AuthComponent::user('id');
-        //		if (empty($userId)) {
-        //			return '';
-        //		}
         $userId = $this->getView()->getRequest()->getSession()->read('Auth.User.id');
         if (empty($userId)) {
             return '';

@@ -23,12 +23,12 @@ class TaxonomiesTable extends CroogoTable
                 ]
             ]
         ]);
-		$this->addBehavior('Croogo/Core.Cached', [
-			'groups' => [
-				'nodes',
-				'taxonomy',
-			],
-		]);
+        $this->addBehavior('Croogo/Core.Cached', [
+            'groups' => [
+                'nodes',
+                'taxonomy',
+            ],
+        ]);
     }
 
     /**

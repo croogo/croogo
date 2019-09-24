@@ -20,11 +20,11 @@ class DashboardsTable extends CroogoTable
     public function initialize(array $config)
     {
         $this->setTable('dashboards');
-		$this->addBehavior('Timestamp');
-		$this->addBehavior('ADmad/Sequence.Sequence', [
-			'order' => 'weight',
-			'scope' => ['user_id', 'column'],
-		]);
+        $this->addBehavior('Timestamp');
+        $this->addBehavior('ADmad/Sequence.Sequence', [
+            'order' => 'weight',
+            'scope' => ['user_id', 'column'],
+        ]);
         $this->belongsTo('Users', [
             'className' => 'Croogo/Users.Users'
         ]);

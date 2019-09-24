@@ -57,10 +57,10 @@ class CroogoControllerTestCase extends TestCase
 
         $appDir = Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS;
 
-//		App::build(array(
-//			'Plugin' => array($appDir . 'Plugin' . DS),
-//			'View' => array($appDir . 'View' . DS),
-//		), App::PREPEND);
+//      App::build(array(
+//          'Plugin' => array($appDir . 'Plugin' . DS),
+//          'View' => array($appDir . 'View' . DS),
+//      ), App::PREPEND);
 
         if (!isset($_SERVER['REMOTE_ADDR'])) {
             $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
@@ -71,18 +71,18 @@ class CroogoControllerTestCase extends TestCase
         /**
          * Thease plugins are being loaded in the test bootstrap file
          */
-//		Plugin::load(array('Croogo/Users'), ['bootstrap' => true, 'path' => '../Users/', 'autoload' => true]);
-//		Plugin::load('Example', ['path' => '../Example/', 'autoload' => true]);
+//      Plugin::load(array('Croogo/Users'), ['bootstrap' => true, 'path' => '../Users/', 'autoload' => true]);
+//      Plugin::load('Example', ['path' => '../Example/', 'autoload' => true]);
 
         Configure::write('Acl.database', 'test');
 
-//		$Setting = ClassRegistry::init('Settings.Setting');
-//		$Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
-//		Configure::drop('settings');
-//		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS ));
+//      $Setting = ClassRegistry::init('Settings.Setting');
+//      $Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
+//      Configure::drop('settings');
+//      Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS ));
         Log::drop('stdout');
         Log::drop('stderr');
-//		$Setting->writeConfiguration();
+//      $Setting->writeConfiguration();
     }
 
 /**
