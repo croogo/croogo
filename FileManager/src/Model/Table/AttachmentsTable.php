@@ -362,6 +362,7 @@ class AttachmentsTable extends CroogoTable {
                     'model' => 'Attachments',
                     'foreign_key' => $originalAsset->foreign_key,
                     'adapter' => 'LegacyLocalAttachment',
+                    'filename' => basename($file),
                     'filesize' => $stat['size'],
                     'width' => $width,
                     'height' => $height,
@@ -375,6 +376,7 @@ class AttachmentsTable extends CroogoTable {
                 $task['data'][$i]->asset = $this->Assets->newEntity([
                     'model' => 'Attachments',
                     'adapter' => 'LegacyLocalAttachment',
+                    'filename' => basename($file),
                     'filesize' => $stat['size'],
                     'width' => $width,
                     'height' => $height,
