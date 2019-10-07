@@ -268,7 +268,7 @@ class UsersTable extends CroogoTable
                     'last' => true
                 ],
                 'name' => [
-                    'rule' => ['custom', '/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_\[\]\(\) ]+$/mu'],
+                    'rule' => ['custom', '/^[-\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}_\[\]\(\) ]+$/mu'],
                     'message' => 'This field must be alphanumeric',
                     'last' => true
                 ]
