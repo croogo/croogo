@@ -36,8 +36,8 @@ class ActionsController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        if ($this->request->param('action') == 'generate' && $this->request->param('prefix') == 'admin') {
-            $this->eventManager()->off($this->Csrf);
+        if ($this->request->getParam('action') == 'generate' && $this->request->getParam('prefix') == 'admin') {
+            $this->getEventManager()->off($this->Csrf);
         }
     }
 
@@ -104,7 +104,7 @@ class ActionsController extends AppController
 
             if ($this->Acos->save($aco)) {
                 $this->Flash->success(sprintf(__d('croogo', 'The %s has been saved'), $acoType));
-                if (isset($this->request->data['_apply'])) {
+                if (!$this->request->getData('_apply')) {
                     return $this->redirect(['action' => 'edit', $id]);
                 } else {
                     return $this->redirect(['action' => 'index']);
@@ -164,13 +164,13 @@ class ActionsController extends AppController
     {
         $AclExtras = new AclGenerator();
         $AclExtras->startup($this);
-        if (isset($this->request->query['sync'])) {
+        if ($this->request->getQuery('sync')) {
             $AclExtras->acoSync();
         } else {
             $AclExtras->acoUpdate();
         }
 
-        if (isset($this->request->query['permissions'])) {
+        if ($this->request->getQuery('permissions')) {
             return $this->redirect(['plugin' => 'Croogo/Acl', 'controller' => 'Permissions', 'action' => 'index']);
         } else {
             return $this->redirect(['action' => 'index']);
