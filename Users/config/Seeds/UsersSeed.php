@@ -18,6 +18,13 @@ class UsersSeed extends AbstractSeed
         'timezone' => 'UTC',
     ];
 
+    public function getDependencies()
+    {
+        return [
+            'RolesSeed',
+        ];
+    }
+
     public function run()
     {
         $this->getAdapter()->commitTransaction();
