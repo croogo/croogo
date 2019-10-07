@@ -33,16 +33,16 @@ class MetaController extends AppController
         unset($this->Meta);
         $this->loadModel('Croogo/Meta.Meta');
 
-        $this->Crud->config('actions.index', [
+        $this->Crud->setConfig('actions.index', [
             'displayFields' => $this->Meta->displayFields(),
             'searchFields' => ['key', 'value'],
             'relatedModels' => false
         ]);
-        $this->Crud->config('actions.edit', [
+        $this->Crud->setConfig('actions.edit', [
             'editFields' => $this->Meta->editFields(),
             'relatedModels' => false
         ]);
-        $this->Crud->config('actions.add', [
+        $this->Crud->setConfig('actions.add', [
             'editFields' => $this->Meta->editFields(),
             'relatedModels' => false
         ]);

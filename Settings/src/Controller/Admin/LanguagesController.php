@@ -21,13 +21,13 @@ class LanguagesController extends AppController
     {
         parent::initialize();
 
-        $this->Crud->config('actions.moveUp', [
+        $this->Crud->setConfig('actions.moveUp', [
             'className' => 'Croogo/Core.Admin/MoveUp'
         ]);
-        $this->Crud->config('actions.moveDown', [
+        $this->Crud->setConfig('actions.moveDown', [
             'className' => 'Croogo/Core.Admin/MoveDown'
         ]);
-        $this->Crud->config('actions.index', [
+        $this->Crud->setConfig('actions.index', [
             'searchFields' => [
                 'title',
                 'alias',
@@ -48,8 +48,8 @@ class LanguagesController extends AppController
  */
     public function select()
     {
-        $id = $this->request->query('id');
-        $modelAlias = $this->request->query('model');
+        $id = $this->request->getQuery('id');
+        $modelAlias = $this->request->getQuery('model');
         if ($id == null ||
             $modelAlias == null) {
             return $this->redirect(['action' => 'index']);
@@ -68,7 +68,7 @@ class LanguagesController extends AppController
     public function index()
     {
         $this->Crud->on('beforePaginate', function(Event $e) {
-            if (empty($this->request->query('sort'))) {
+            if (empty($this->request->getQuery('sort'))) {
                 $e->getSubject()->query
                     ->orderDesc('status');
             }

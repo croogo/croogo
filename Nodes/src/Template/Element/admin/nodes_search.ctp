@@ -53,7 +53,7 @@ echo $this->Html->link('Reset', array_merge([
     'action' => 'index',
 ], [
     '?' => [
-        'chooser' => $this->request->query('chooser')
+        'chooser' => $this->request->getQuery('chooser')
     ],
 ]), [
     'class' => 'btn btn-outline-secondary',
