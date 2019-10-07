@@ -4,6 +4,7 @@ namespace Croogo\Install\Shell;
 
 use App\Console\Installer;
 use App\Controller\Component\AuthComponent;
+use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
 use Cake\Console\Shell;
 use Cake\Core\Plugin;
@@ -219,5 +220,6 @@ class InstallShell extends Shell
 
         $this->out();
         $this->success('Congratulations, Croogo has been installed successfully.');
+        Cache::clearAll();
     }
 }
