@@ -25,8 +25,8 @@
             "Croogo\\Core\\": "src"
         },
         "files": [
-			"src/functions.php"
-		]
+            "src/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
