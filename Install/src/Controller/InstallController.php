@@ -93,7 +93,7 @@ class InstallController extends Controller
     }
 
 /**
- * Step 0: welcome
+ * Step 1: welcome
  *
  * A simple welcome message for the installer.
  *
@@ -129,7 +129,7 @@ class InstallController extends Controller
 
         if ($this->request->is('post')) {
             $InstallManager = new InstallManager();
-            $result = $InstallManager->createDatabaseFile($this->request->data());
+            $result = $InstallManager->createDatabaseFile($this->request->getData());
             if ($result !== true) {
                 $this->Flash->error($result);
             } else {

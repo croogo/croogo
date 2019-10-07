@@ -2,6 +2,7 @@
 
 namespace Croogo\Install;
 
+use Cake\Cache\Cache;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -241,6 +242,7 @@ class InstallManager
 
     public function setupAcos()
     {
+        Cache::clearAll();
         $generator = new AclGenerator();
         if ($this->controller) {
             $dummyShell = new DummyShell();
