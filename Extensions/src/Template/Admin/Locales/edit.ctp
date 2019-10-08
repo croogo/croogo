@@ -5,7 +5,7 @@ $this->extend('/Common/admin_edit');
 $this->Breadcrumbs
     ->add(__d('croogo', 'Extensions'), array('plugin' => 'Croogo/Extensions', 'controller' => 'Plugins', 'action' => 'index'))
     ->add(__d('croogo', 'Locales'), array('plugin' => 'Croogo/Extensions', 'controller' => 'Locales', 'action' => 'index'))
-    ->add($this->request->params['pass'][0], $this->request->getRequestTarget());
+    ->add($this->getRequest()->params['pass'][0], $this->getRequest()->getRequestTarget());
 
 $this->append('form-start', $this->Form->create($locale, array(
     'url' => array(

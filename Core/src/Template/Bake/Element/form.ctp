@@ -21,12 +21,12 @@ if (isset($modelObject) && $modelObject->behaviors()->has('Tree')) {
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Breadcrumbs->add(__('<%= $pluralHumanName %>'), ['action' => 'index']);
-$action = $this->request->param('action');
+$action = $this->getRequest()->param('action');
 
 if ($action == 'edit'):
     $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>);
 else:
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->getRequest()->here());
 endif;
 
 $this->append('action-buttons');

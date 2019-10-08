@@ -18,7 +18,7 @@ class MockCroogoComponent extends CroogoComponent
 
     public function startup(Event $event)
     {
-        $this->_controller = $event->subject();
+        $this->_controller = $event->getSubject();
     }
 }
 

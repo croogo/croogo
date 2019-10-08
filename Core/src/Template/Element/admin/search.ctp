@@ -10,19 +10,19 @@ if (!empty($searchFields)):
         'align' => 'inline',
         'novalidate' => true,
         'url' => [
-            'plugin' => $this->request->getParam('plugin'),
-            'controller' => $this->request->getParam('controller'),
-            'action' => $this->request->getParam('action'),
+            'plugin' => $this->getRequest()->getParam('plugin'),
+            'controller' => $this->getRequest()->getParam('controller'),
+            'action' => $this->getRequest()->getParam('action'),
         ],
     ]);
     $this->Form->setTemplates([
         'label' => false,
         'submitContainer' => '{{content}}',
     ]);
-    if ($this->request->getQuery('chooser')):
+    if ($this->getRequest()->getQuery('chooser')):
         echo $this->Form->input('chooser', [
             'type' => 'hidden',
-            'value' => $this->request->getQuery('chooser'),
+            'value' => $this->getRequest()->getQuery('chooser'),
         ]);
     endif;
     foreach ($searchFields as $field => $fieldOptions) {
@@ -38,7 +38,7 @@ if (!empty($searchFields)):
         if (substr($label, -3) === '_id') {
             $label = substr($label, 0, -3);
         }
-        $options['default'] = $this->request->getQuery($field);
+        $options['default'] = $this->getRequest()->getQuery($field);
         $label = __(Inflector::humanize(Inflector::underscore($label)));
         $options['placeholder'] = __d('croogo', $label);
         $this->Form->unlockField($field);

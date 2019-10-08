@@ -6,14 +6,14 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Content'), ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'])
     ->add(__d('croogo', 'Types'), ['plugin' => 'Croogo/Taxonomy', 'controller' => 'Types', 'action' => 'index']);
 
-if ($this->request->getParam('action') == 'edit') {
+if ($this->getRequest()->getParam('action') == 'edit') {
     $this->assign('title', __d('croogo', 'Edit Type'));
 
-    $this->Breadcrumbs->add(h($type->title), $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(h($type->title), $this->getRequest()->getRequestTarget());
 }
 
-if ($this->request->getParam('action') == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
+if ($this->getRequest()->getParam('action') == 'add') {
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->getRequest()->getRequestTarget());
 }
 
 $this->append('form-start', $this->Form->create($type));

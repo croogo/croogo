@@ -10,7 +10,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 $this->Croogo->adminScript('Croogo/Nodes.admin');
 
 $this->Breadcrumbs
-    ->add(__d('croogo', 'Content'), $this->request->getUri()->getPath());
+    ->add(__d('croogo', 'Content'), $this->getRequest()->getUri()->getPath());
 
 $this->append('action-buttons');
     if (isset($type)):
@@ -97,7 +97,7 @@ $this->append('table-body');
                     <?php
                     echo $this->Croogo->adminRowActions($node->id);
 
-                    if ($this->request->getQuery('type')):
+                    if ($this->getRequest()->getQuery('type')):
                         echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'move', $node->id, 'up'], [
                                 'method' => 'post',
                                 'icon' => $this->Theme->getIcon('move-up'),

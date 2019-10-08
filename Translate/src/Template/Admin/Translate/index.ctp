@@ -6,7 +6,7 @@ use Cake\Utility\Inflector;
 $this->extend('Croogo/Core./Common/admin_index');
 
 $plugin = 'Croogo/Nodes'; $controller = 'Nodes';
-$modelPath = $this->request->query('model');
+$modelPath = $this->getRequest()->query('model');
 list($plugin, $model) = pluginSplit($modelPath);
 $controller = $model;
 
@@ -30,7 +30,7 @@ $this->Breadcrumbs
             $record->id,
         )
     )
-    ->add(__d('croogo', 'Translations'), $this->request->getRequestTarget());
+    ->add(__d('croogo', 'Translations'), $this->getRequest()->getRequestTarget());
 
 $this->start('action-buttons');
     $translateButton = $this->Html->link(

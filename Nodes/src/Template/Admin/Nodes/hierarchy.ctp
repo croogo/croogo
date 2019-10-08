@@ -16,7 +16,7 @@ $indexUrl = [
 $this->Breadcrumbs
     ->add(__d('croogo', 'Content'), $indexUrl);
 
-if (isset($type) && $this->request->getQuery('type')):
+if (isset($type) && $this->getRequest()->getQuery('type')):
     $typeUrl = array_merge($indexUrl, [
         'type' => $type->alias,
     ]);

@@ -12,7 +12,7 @@ $clearUrl = [
 
 $this->Breadcrumbs->add(__d('croogo', 'Settings'),
     ['plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'prefix', 'Site'])
-    ->add(__d('croogo', 'Caches'), $this->request->getUri()->getPath());
+    ->add(__d('croogo', 'Caches'), $this->getRequest()->getUri()->getPath());
 
 $this->append('action-buttons');
     echo $this->Croogo->adminAction(__d('croogo', 'Clear All'), array_merge(

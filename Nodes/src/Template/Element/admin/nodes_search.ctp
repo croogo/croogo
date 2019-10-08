@@ -12,17 +12,17 @@ echo $this->Form->input('filter', [
     'title' => __d('croogo', 'Search'),
     'placeholder' => __d('croogo', 'Search...'),
     'tooltip' => false,
-    'default' => $this->request->getQuery('filter'),
+    'default' => $this->getRequest()->getQuery('filter'),
 ]);
 
 echo $this->Form->input('type', [
     'options' => $nodeTypes,
     'empty' => __d('croogo', 'Type'),
     'class' => 'c-select',
-    'default' => $this->request->getQuery('type'),
+    'default' => $this->getRequest()->getQuery('type'),
 ]);
 
-if (!$this->request->getQuery('chooser')):
+if (!$this->getRequest()->getQuery('chooser')):
 
     echo $this->Form->input('status', [
         'options' => [
@@ -31,7 +31,7 @@ if (!$this->request->getQuery('chooser')):
         ],
         'empty' => __d('croogo', 'Status'),
         'class' => 'c-select',
-        'default' => $this->request->getQuery('status'),
+        'default' => $this->getRequest()->getQuery('status'),
     ]);
 
     echo $this->Form->input('promote', [
@@ -41,7 +41,7 @@ if (!$this->request->getQuery('chooser')):
         ],
         'empty' => __d('croogo', 'Promoted'),
         'class' => 'c-select',
-        'default' => $this->request->getQuery('promote'),
+        'default' => $this->getRequest()->getQuery('promote'),
     ]);
 
 endif;
@@ -53,7 +53,7 @@ echo $this->Html->link('Reset', array_merge([
     'action' => 'index',
 ], [
     '?' => [
-        'chooser' => $this->request->getQuery('chooser')
+        'chooser' => $this->getRequest()->getQuery('chooser')
     ],
 ]), [
     'class' => 'btn btn-outline-secondary',

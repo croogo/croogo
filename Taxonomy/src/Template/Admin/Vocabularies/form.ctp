@@ -6,18 +6,18 @@ $this->extend('Croogo/Core./Common/admin_edit');
 $this->Breadcrumbs->add(__d('croogo', 'Content'),
     ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']);
 
-if ($this->request->params['action'] == 'edit') {
+if ($this->getRequest()->params['action'] == 'edit') {
     $this->assign('title', __d('croogo', 'Edit Vocabulary'));
 
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['action' => 'index', $vocabulary->id])
         ->add($vocabulary->title);
 }
 
-if ($this->request->params['action'] == 'add') {
+if ($this->getRequest()->params['action'] == 'add') {
     $this->assign('title', __d('croogo', 'Add Vocabulary'));
 
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['action' => 'index'])
-        ->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
+        ->add(__d('croogo', 'Add'), $this->getRequest()->getRequestTarget());
 }
 
 $this->append('form-start', $this->Form->create($vocabulary, [

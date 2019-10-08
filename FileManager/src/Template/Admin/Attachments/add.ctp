@@ -34,10 +34,10 @@ $indexUrl = [
     'action' => 'index'
 ];
 
-if (!$this->request->getQuery('editor')):
+if (!$this->getRequest()->getQuery('editor')):
     $this->Breadcrumbs
         ->add(__d('croogo', 'Attachments'), $indexUrl)
-        ->add(__d('croogo', 'Upload'), $this->request->getUri()->getPath());
+        ->add(__d('croogo', 'Upload'), $this->getRequest()->getUri()->getPath());
 endif;
 
 if ($this->layout === 'admin_popup'):
@@ -45,7 +45,7 @@ if ($this->layout === 'admin_popup'):
 endif;
 
 $formUrl = ['plugin' => 'Croogo/FileManager', 'controller' => 'Attachments', 'action' => 'add'];
-if ($this->request->getQuery('editor')) {
+if ($this->getRequest()->getQuery('editor')) {
     $formUrl['editor'] = 1;
 }
 $this->append('form-start', $this->Form->create($attachment, [
@@ -54,8 +54,8 @@ $this->append('form-start', $this->Form->create($attachment, [
     'id' => 'attachment-upload-form',
 ]));
 
-$model = $this->request->getQuery('model') ?: null;
-$foreignKey = $this->request->getQuery('foreign_key') ?: null;
+$model = $this->getRequest()->getQuery('model') ?: null;
+$foreignKey = $this->getRequest()->getQuery('foreign_key') ?: null;
 
 $this->append('tab-heading');
     echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#attachment-upload');
@@ -108,13 +108,13 @@ $this->end();
 
 $this->append('panels');
     $redirect = array('action' => 'index');
-    if ($this->request->getSession()->check('Wysiwyg.redirect')) {
-        $redirect = $this->request->getSession()->read('Wysiwyg.redirect');
+    if ($this->getRequest()->getSession()->check('Wysiwyg.redirect')) {
+        $redirect = $this->getRequest()->getSession()->read('Wysiwyg.redirect');
     }
-    if ($this->request->getQuery('model')) {
+    if ($this->getRequest()->getQuery('model')) {
         $redirect = array_merge(
             array('action' => 'browse'),
-            array('?' => $this->request->getQuery())
+            array('?' => $this->getRequest()->getQuery())
         );
         unset($redirect['?']['editor']);
     }

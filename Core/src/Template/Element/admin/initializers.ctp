@@ -12,6 +12,6 @@ $adminThemeScripts = <<<EOF
 
 EOF;
 
-if (!$this->request->is('ajax')):
+if (!$this->getRequest()->is('ajax')):
     $this->Js->buffer($adminThemeScripts);
 endif;

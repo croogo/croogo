@@ -21,20 +21,20 @@ else:
     ]);
 endif;
 
-$termId = isset($this->request->getParam('pass')[0]) ? $this->request->getParam('pass')[0] : null;
-$action = $this->request->getParam('action');
+$termId = isset($this->getRequest()->getParam('pass')[0]) ? $this->getRequest()->getParam('pass')[0] : null;
+$action = $this->getRequest()->getParam('action');
 if ($action === 'edit'):
     if (isset($vocabulary)):
         $this->assign('title', __d('croogo', '%s: Edit Term', $vocabulary->title));
     else:
         $this->assign('title', __d('croogo', 'Edit Term: %s', $term->title));
     endif;
-    $this->Breadcrumbs->add($term->title, $this->request->getRequestTarget());
+    $this->Breadcrumbs->add($term->title, $this->getRequest()->getRequestTarget());
 endif;
 
 if ($action === 'add'):
     $this->assign('title', __d('croogo', '%s: Add Term', $vocabulary->title));
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->getRequest()->getRequestTarget());
 endif;
 
 if (isset($vocabularyId)):
@@ -52,7 +52,7 @@ endif;
 $this->set('cancelUrl', $cancelUrl);
 
 $formUrl = [
-    'action' => $this->request->getParam('action'),
+    'action' => $this->getRequest()->getParam('action'),
     $termId,
     'vocabulary_id' => $vocabulary->id,
 ];

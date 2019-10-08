@@ -18,7 +18,7 @@ $model = isset($model) ? $model : null;
 if (!$model):
     $context = $this->Form->context();
     if ($context instanceof NullContext):
-        $model = $this->request->param('controller');
+        $model = $this->getRequest()->param('controller');
     else:
         $modelSource = $this->Form->context()->entity()->getSource();
         list($junk, $model) = pluginSplit($modelSource);
@@ -26,7 +26,7 @@ if (!$model):
 endif;
 $primaryKey = isset($primaryKey) ? $primaryKey : 'id';
 
-$varName = Inflector::variable(Inflector::singularize($this->request->getParam('controller')));
+$varName = Inflector::variable(Inflector::singularize($this->getRequest()->getParam('controller')));
 if (isset(${$varName})):
     $data = ${$varName};
 endif;
@@ -270,7 +270,7 @@ $script =<<<EOF
     }
     Assets.init();
 EOF;
-if ($this->request->is('ajax')):
+if ($this->getRequest()->is('ajax')):
     // re-initialize the tooltips on an ajax reload
     $script .= "\n    Admin.form();\n";
     echo $this->Html->scriptBlock($script);

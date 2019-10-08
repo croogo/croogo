@@ -1,7 +1,7 @@
 <?php
 
 $this->loadHelper('Croogo/Core.Croogo');
-if ($this->request->getQuery('urls')) {
+if ($this->getRequest()->getQuery('urls')) {
     foreach ($permissions as $acoId => &$aco) {
         $aco[key($aco)]['url'] = array(
             'up' => $this->Html->link('',

@@ -6,9 +6,9 @@ $this->Croogo->adminScript('Croogo/FileManager.assets');
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Breadcrumbs
-    ->add(__d('croogo', 'Attachments'), $this->request->getUri()->getPath());
+    ->add(__d('croogo', 'Attachments'), $this->getRequest()->getUri()->getPath());
 
-$query = (array)$this->request->getQuery();
+$query = (array)$this->getRequest()->getQuery();
 
 $this->append('action-buttons');
 
@@ -186,7 +186,7 @@ $this->append('page-footer');
 <?php
 $this->end();
 
-if (!$this->request->is('ajax')):
+if (!$this->getRequest()->is('ajax')):
     $script =<<< EOF
         Assets.init();
         Attachments.init();

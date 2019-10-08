@@ -1,6 +1,6 @@
 <?php
 
-if (!$this->request->is('ajax')):
+if (!$this->getRequest()->is('ajax')):
 
     echo $this->Html->css([
         'Croogo/Core.core/croogo-admin',

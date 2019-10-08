@@ -21,7 +21,7 @@ $dashboardUrl = (new StringConverter())->linkStringToArray(
         ],
     ]);
     ?>
-    <?php if ($this->request->getSession()->read('Auth.User.id')): ?>
+    <?php if ($this->getRequest()->getSession()->read('Auth.User.id')): ?>
     <?php
         echo $this->Croogo->adminMenus(Nav::items('top-right'), [
             'type' => 'dropdown',

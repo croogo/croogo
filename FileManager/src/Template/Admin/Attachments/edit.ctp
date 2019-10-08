@@ -8,15 +8,15 @@ $this->Croogo->adminScript(['Croogo/FileManager.admin', 'Croogo/FileManager.asse
 
 $this->Breadcrumbs
     ->add(__d('croogo', 'Attachments'), array('plugin' => 'Croogo/FileManager', 'controller' => 'Attachments', 'action' => 'index'))
-    ->add(h($attachment->title), $this->request->getUri()->getPath());
+    ->add(h($attachment->title), $this->getRequest()->getUri()->getPath());
 
 if ($this->layout === 'admin_popup'):
     $this->append('title', ' ');
 endif;
 
 $formUrl = array('controller' => 'Attachments', 'action' => 'edit');
-if ($this->request->getQuery()) {
-    $formUrl = array_merge($formUrl, $this->request->getQuery());
+if ($this->getRequest()->getQuery()) {
+    $formUrl = array_merge($formUrl, $this->getRequest()->getQuery());
 }
 
 $this->append('form-start', $this->Form->create($attachment, array(
@@ -57,13 +57,13 @@ $this->end();
 
 $this->append('panels');
     $redirect = array('action' => 'index');
-    if ($this->request->getSession()->check('Wysiwyg.redirect')) {
-        $redirect = $this->request->getSsession()->read('Wysiwyg.redirect');
+    if ($this->getRequest()->getSession()->check('Wysiwyg.redirect')) {
+        $redirect = $this->getRequest()->getSsession()->read('Wysiwyg.redirect');
     }
-    if ($this->request->getQuery('model')) {
+    if ($this->getRequest()->getQuery('model')) {
         $redirect = array_merge(
             array('action' => 'browse'),
-            array('?' => $this->request->getQuery())
+            array('?' => $this->getRequest()->getQuery())
         );
     }
     echo $this->Html->beginBox(__d('croogo', 'Publishing')) .

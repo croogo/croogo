@@ -4,7 +4,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 $tableHeaderClass = $this->Theme->getCssClass('tableHeaderClass');
 
 $this->assign('title', __d('croogo', 'File Manager'));
-$this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->getRequestTarget());
+$this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->getRequest()->getRequestTarget());
 
 ?>
 

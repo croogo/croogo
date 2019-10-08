@@ -1,6 +1,6 @@
 <?php
 
-if (!$this->request->is('ajax')):
+if (!$this->getRequest()->is('ajax')):
 
     echo $this->Layout->js();
     echo $this->Html->script([

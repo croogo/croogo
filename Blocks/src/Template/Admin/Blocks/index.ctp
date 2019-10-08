@@ -6,14 +6,14 @@ $this->Croogo->adminScript('Croogo/Blocks.admin');
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Breadcrumbs->add(__d('croogo', 'Blocks'), $this->request->getUri()->getPath());
+$this->Breadcrumbs->add(__d('croogo', 'Blocks'), $this->getRequest()->getUri()->getPath());
 
 $this->append('form-start', $this->Form->create(null, [
     'url' => ['action' => 'process'],
     'align' => 'inline'
 ]));
 
-$chooser = $this->request->getQuery('chooser');
+$chooser = $this->getRequest()->getQuery('chooser');
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([
     $this->Form->checkbox('checkAll', ['id' => 'BlocksCheckAll']),

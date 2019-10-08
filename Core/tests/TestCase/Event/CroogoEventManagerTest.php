@@ -137,7 +137,7 @@ class EventManagerTest extends TestCase
         foreach ($eventNames as $name) {
             $event = Croogo::dispatchEvent($name, $this->Users);
             $this->assertTrue($event->result, sprintf('Event: %s', $name));
-            $this->assertInstanceOf('\\Croogo\\Core\\Test\\TestCase\\Event\\TestUsersEventController', $event->subject());
+            $this->assertInstanceOf('\\Croogo\\Core\\Test\\TestCase\\Event\\TestUsersEventController', $event->getSubject());
         }
     }
 
@@ -158,7 +158,7 @@ class EventManagerTest extends TestCase
         foreach ($eventNames as $name) {
             $event = Croogo::dispatchEvent($name, $this->Nodes);
             $this->assertTrue($event->result, sprintf('Event: %s', $name));
-            $this->assertInstanceOf('\\Croogo\\Core\\Test\\TestCase\\Event\\TestNodesEventController', $event->subject());
+            $this->assertInstanceOf('\\Croogo\\Core\\Test\\TestCase\\Event\\TestNodesEventController', $event->getSubject());
         }
     }
 
@@ -175,7 +175,7 @@ class EventManagerTest extends TestCase
         foreach ($eventNames as $name) {
             $event = Croogo::dispatchEvent($name, $View);
             $this->assertTrue($event->result, sprintf('Event: %s', $name));
-            $this->assertInstanceOf('\\Cake\\View\\View', $event->subject());
+            $this->assertInstanceOf('\\Cake\\View\\View', $event->getSubject());
         }
     }
 }

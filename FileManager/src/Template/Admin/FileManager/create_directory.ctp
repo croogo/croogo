@@ -7,7 +7,7 @@ $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Breadcrumbs->add(__d('croogo', 'File Manager'),
     ['plugin' => 'Croogo/FileManager', 'controller' => 'FileManager', 'action' => 'browse'])
-    ->add(__d('croogo', 'Create Directory'), $this->request->getRequestTarget());
+    ->add(__d('croogo', 'Create Directory'), $this->getRequest()->getRequestTarget());
 
 $this->append('form-start', $this->Form->create(null));
 

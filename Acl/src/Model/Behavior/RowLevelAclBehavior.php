@@ -28,7 +28,7 @@ class RowLevelAclBehavior extends Behavior
         if (!$entity || !$entity->id) {
             return;
         }
-        $Table = $event->subject();
+        $Table = $event->getSubject();
         $alias = $Table->getAlias();
         $aco = $Table->node($entity)->firstOrFail();
         $aco->alias = sprintf('%s.%s', $alias, $entity->id);

@@ -15,7 +15,7 @@ $this->end();
 
 $this->Breadcrumbs->add(__d('croogo', 'Attachments'));
 
-if (!$this->request->is('ajax')):
+if (!$this->getRequest()->is('ajax')):
     $this->Croogo->adminScript([
         'Croogo/FileManager.admin',
         'Croogo/FileManager.assets',
@@ -23,35 +23,35 @@ if (!$this->request->is('ajax')):
 endif;
 
 $assetId = $filter = $filename = $type = $all = null;
-if (empty($model) && !empty($this->request->getQuery('model'))):
-    $model = $this->request->getQuery('model');
+if (empty($model) && !empty($this->getRequest()->getQuery('model'))):
+    $model = $this->getRequest()->getQuery('model');
 endif;
-if (empty($foreignKey) && !empty($this->request->getQuery('foreign_key'))):
-    $foreignKey = $this->request->getQuery('foreign_key');
+if (empty($foreignKey) && !empty($this->getRequest()->getQuery('foreign_key'))):
+    $foreignKey = $this->getRequest()->getQuery('foreign_key');
 endif;
-if (!empty($this->request->getQuery('asset_id'))):
-    $assetId = $this->request->getQuery('asset_id');
+if (!empty($this->getRequest()->getQuery('asset_id'))):
+    $assetId = $this->getRequest()->getQuery('asset_id');
 endif;
-if (!empty($this->request->getQuery('type'))):
-    $type = $this->request->getQuery('type');
+if (!empty($this->getRequest()->getQuery('type'))):
+    $type = $this->getRequest()->getQuery('type');
 endif;
-if (!empty($this->request->getQuery('filter'))):
-    $filter = $this->request->getQuery('filter');
+if (!empty($this->getRequest()->getQuery('filter'))):
+    $filter = $this->getRequest()->getQuery('filter');
 endif;
-if (!empty($this->request->getQuery('filename'))):
-    $filename = $this->request->getQuery('filename');
+if (!empty($this->getRequest()->getQuery('filename'))):
+    $filename = $this->getRequest()->getQuery('filename');
 endif;
-if (!empty($this->request->getQuery('all'))):
-    $all = $this->request->getQuery('all');
+if (!empty($this->getRequest()->getQuery('all'))):
+    $all = $this->getRequest()->getQuery('all');
 endif;
-if (!empty($this->request->getQuery('editor'))):
-    $editor = $this->request->getQuery('editor');
+if (!empty($this->getRequest()->getQuery('editor'))):
+    $editor = $this->getRequest()->getQuery('editor');
 endif;
-if (empty($editor) && !empty($this->request->getQuery('CKEditor'))):
-    $editor = $this->request->getQuery('CKEditor');
+if (empty($editor) && !empty($this->getRequest()->getQuery('CKEditor'))):
+    $editor = $this->getRequest()->getQuery('CKEditor');
 endif;
-if (!empty($this->request->getQuery('manage'))):
-    $manage = $this->request->getQuery('manage');
+if (!empty($this->getRequest()->getQuery('manage'))):
+    $manage = $this->getRequest()->getQuery('manage');
 endif;
 
 $this->append('action-buttons');
@@ -59,7 +59,7 @@ $this->append('action-buttons');
         __d('croogo', 'New Attachment'),
         array_merge(
             array('controller' => 'Attachments', 'action' => 'add', 'editor' => 1),
-            array('?' => (array)$this->request->getQuery())
+            array('?' => (array)$this->getRequest()->getQuery())
         )
     ) . ' ';
 
@@ -100,7 +100,7 @@ $this->append('table-heading');
 $this->end();
 
 $this->append('table-body');
-    $query = array('?' => (array)$this->request->getQuery());
+    $query = array('?' => (array)$this->getRequest()->getQuery());
     $rows = array();
     foreach ($attachments as $attachment):
         $actions = array();
@@ -189,7 +189,7 @@ $this->append('table-body');
             endif;
         elseif ($mimeType === 'image'):
 
-            if (!$this->request->getQuery('manage')):
+            if (!$this->getRequest()->getQuery('manage')):
                 $detailUrl = Hash::merge(array(
                     'action' => 'browse',
                     '?' => array(
@@ -236,7 +236,7 @@ $this->append('table-body');
                             'action' => 'browse',
                             '?' => array(
                                 'type' => $attachment['AssetsAssetUsage']['type']
-                            ) + $this->request->query,
+                            ) + $this->getRequest()->query,
                         ),
                         array(
                             'escape' => false,
@@ -314,7 +314,7 @@ $this->append('table-body');
 $this->end();
 $this->set('tableFooter', $tableHeaders);
 
-if (!$this->request->is('ajax')):
+if (!$this->getRequest()->is('ajax')):
     $script =<<<EOF
         $('.popovers').popover().on('click', function() { return false; });
         Assets.init();

@@ -1,5 +1,5 @@
 <?php
-$chooserType = isset($this->request->query['chooser_type']) ? $this->request->query['chooser_type'] : 'attachment';
+$chooserType = isset($this->getRequest()->query['chooser_type']) ? $this->getRequest()->query['chooser_type'] : 'attachment';
 ?>
 <div class="clearfix filter">
     <?php
@@ -27,7 +27,7 @@ $chooserType = isset($this->request->query['chooser_type']) ? $this->request->qu
         'chooser',
         [
             'type' => 'hidden',
-            'value' => isset($this->request->query['chooser']),
+            'value' => isset($this->getRequest()->query['chooser']),
         ]
     );
 

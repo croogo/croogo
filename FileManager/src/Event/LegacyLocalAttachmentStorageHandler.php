@@ -79,7 +79,7 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
         if (!$this->_check($Event)) {
             return true;
         }
-        $model = $Event->subject();
+        $model = $event->getSubject();
         $entity = $Event->data('record');
         $fields = array('adapter', 'filename');
         $asset = $model->findById($entity->id, $fields)->first();

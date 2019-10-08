@@ -7,8 +7,8 @@ $this->Breadcrumbs->add(__d('croogo', 'Contacts'),
     ->add(__d('croogo', 'Messages'),
         ['plugin' => 'Croogo/Contacts', 'controller' => 'Messages', 'action' => 'index']);
 
-if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add(h($message->title), $this->request->getRequestTarget());
+if ($this->getRequest()->params['action'] == 'edit') {
+    $this->Breadcrumbs->add(h($message->title), $this->getRequest()->getRequestTarget());
 }
 
 $this->append('form-start', $this->Form->create($message));

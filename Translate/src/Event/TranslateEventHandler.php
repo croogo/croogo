@@ -36,8 +36,8 @@ class TranslateEventHandler implements EventListenerInterface
 
     public function onBeforeRender($event)
     {
-        $View = $event->subject;
-        if ($View->request->param('prefix') !== 'admin') {
+        $View = $event->getSubject();
+        if ($View->getRequest()->getParam('prefix') !== 'admin') {
             return;
         }
         if (empty($View->viewVars['viewVar'])) {
@@ -53,7 +53,7 @@ class TranslateEventHandler implements EventListenerInterface
         }
         $title = __d('croogo', 'Translate');
         $View->append('action-buttons');
-            echo $event->subject->Croogo->adminAction($title, [
+            echo $event->getSubject()->Croogo->adminAction($title, [
                 'plugin' => 'Croogo/Translate',
                 'controller' => 'Translate',
                 'action' => 'index',

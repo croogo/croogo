@@ -1,8 +1,8 @@
 <?php
 $url = array(
-    'prefix' => isset($prefix) ? $prefix : $this->request->getParam('prefix'),
-    'plugin' => isset($plugin) ? $plugin : $this->request->getParam('plugin'),
-    'controller' => isset($controller) ? $controller : $this->request->getParam('controller'),
+    'prefix' => isset($prefix) ? $prefix : $this->getRequest()->getParam('prefix'),
+    'plugin' => isset($plugin) ? $plugin : $this->getRequest()->getParam('plugin'),
+    'controller' => isset($controller) ? $controller : $this->getRequest()->getParam('controller'),
     'action' => isset($action) ? $action : 'toggle',
     $id,
     $status,

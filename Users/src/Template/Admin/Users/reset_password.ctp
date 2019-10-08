@@ -8,7 +8,7 @@ $this->Breadcrumbs
         'action' => 'edit',
         $user->id,
     ])
-    ->add(__d('croogo', 'Reset Password'), $this->request->getRequestTarget());
+    ->add(__d('croogo', 'Reset Password'), $this->getRequest()->getRequestTarget());
 $this->assign('form-start', $this->Form->create($user));
 
 $this->start('tab-heading');

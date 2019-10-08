@@ -10,7 +10,7 @@ $this->Breadcrumbs
         'action' => 'index',
     ));
 
-$key = $this->request->getQuery('key');
+$key = $this->getRequest()->getQuery('key');
 if ($key) {
     $this->Breadcrumbs->add($key);
 }

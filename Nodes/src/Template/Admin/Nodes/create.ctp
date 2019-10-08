@@ -5,7 +5,7 @@ $this->assign('title', __d('croogo', 'Create content'));
 <?php
 $this->Breadcrumbs
     ->add(__d('croogo', 'Content'), ['action' => 'index'])
-    ->add(__d('croogo', 'Create'), $this->request->getRequestTarget());
+    ->add(__d('croogo', 'Create'), $this->getRequest()->getRequestTarget());
 
 ?>
 <div class="<?= $this->Theme->getCssClass('row') ?>">

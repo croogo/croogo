@@ -7,7 +7,7 @@
         echo __d('croogo', 'Posted in') . ' ' . implode(', ', $nodeTerms);
     }
 
-    if ($this->Nodes->commentsEnabled() && $this->request->params['action'] !== 'view' && $type->comment_status) {
+    if ($this->Nodes->commentsEnabled() && $this->getRequest()->params['action'] !== 'view' && $type->comment_status) {
         if (($nodeTerms) && count($nodeTerms) > 0) {
             echo ' | ';
         }

@@ -45,7 +45,7 @@ class ExampleEventHandler implements EventListenerInterface
  */
     public function onAdminLoginSuccessful($event)
     {
-        $Controller = $event->subject();
+        $Controller = $event->getSubject();
         $message = sprintf('Welcome %s.  Have a nice day', $Controller->Auth->user('name'));
         $Controller->Flash->success($message);
         $Controller->redirect([

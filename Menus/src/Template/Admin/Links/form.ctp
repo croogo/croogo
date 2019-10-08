@@ -7,24 +7,24 @@ $this->Croogo->adminScript('Croogo/Menus.admin');
 
 $this->Breadcrumbs->add(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index']);
 
-if ($this->request->getParam('action') == 'add') {
+if ($this->getRequest()->getParam('action') == 'add') {
     $this->Breadcrumbs->add(h($menu->title), [
                 'action' => 'index',
                 '?' => ['menu_id' => $menu->id],
             ])
-        ->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
+        ->add(__d('croogo', 'Add'), $this->getRequest()->getRequestTarget());
     $formUrl = [
         'action' => 'add',
         $menu->id,
     ];
 }
 
-if ($this->request->getParam('action') == 'edit') {
+if ($this->getRequest()->getParam('action') == 'edit') {
     $this->Breadcrumbs->add(h($menu->title), [
             'action' => 'index',
             '?' => ['menu_id' => $menu->id],
         ])
-        ->add($link->title, $this->request->getRequestTarget());
+        ->add($link->title, $this->getRequest()->getRequestTarget());
     $formUrl = [
         'action' => 'edit',
         '?' => [

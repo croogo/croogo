@@ -272,7 +272,7 @@ class MenusHelper extends Helper
 
             // Remove locale part before comparing links
             if ($this->getView()->getRequest()->getParam('locale')) {
-                $currentUrl = substr($this->getView()->getRequest()->url, strlen($this->getView()->getRequest()->getParam('locale') . '/'));
+                $currentUrl = substr($this->getView()->getRequest()->getPath(), strlen($this->getView()->getRequest()->getParam('locale') . '/'));
             } else {
                 $currentUrl = $this->getView()->getRequest()->getPath();
             }

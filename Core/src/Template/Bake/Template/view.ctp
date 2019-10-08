@@ -46,7 +46,7 @@ $this->Breadcrumbs
     ->add(__d('croogo', '<%= $pluralHumanName %>'), ['action' => 'index']);
 
 <% if (isset($displayField)): %>
-    $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>, $this->request->here());
+    $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>, $this->getRequest()->here());
 <% endif; %>
 
 $this->append('action-buttons');

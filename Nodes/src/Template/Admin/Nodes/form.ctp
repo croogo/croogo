@@ -7,14 +7,14 @@ $this->Html->script(array('Croogo/Nodes.admin'), ['block' => true]);
 
 $this->Breadcrumbs->add(__d('croogo', 'Content'), ['action' => 'index']);
 
-if ($this->request->getParam('action') == 'add'):
+if ($this->getRequest()->getParam('action') == 'add'):
     $this->assign('title', __d('croogo', 'Create content: %s', $type->title));
 
     $this->Breadcrumbs->add(__d('croogo', 'Create'), ['action' => 'create'])
-        ->add(h($type->title), $this->request->getRequestTarget());
+        ->add(h($type->title), $this->getRequest()->getRequestTarget());
 endif;
 
-if ($this->request->getParam('action') == 'edit'):
+if ($this->getRequest()->getParam('action') == 'edit'):
     $this->assign('title', __d('croogo', 'Edit %s: %s', $node->type, $node->title));
 
     $this->Breadcrumbs
@@ -22,7 +22,7 @@ if ($this->request->getParam('action') == 'edit'):
             'action' => 'index',
             '?' => ['type' => $type->alias],
         ])
-        ->add(h($node->title), $this->request->getRequestTarget(), [
+        ->add(h($node->title), $this->getRequest()->getRequestTarget(), [
             'innerAttrs' => [
                 'title' => h($node->title),
             ],
@@ -68,7 +68,7 @@ $this->start('tab-content');
 $this->end();
 
 $this->start('panels');
-    $username = isset($node->user->username) ? $node->user->username : $this->request->getSession()
+    $username = isset($node->user->username) ? $node->user->username : $this->getRequest()->getSession()
         ->read('Auth.User.username');
     echo $this->Html->beginBox(__d('croogo', 'Publishing'));
     echo $this->element('Croogo/Core.admin/buttons', ['type' => h($type->title)]);

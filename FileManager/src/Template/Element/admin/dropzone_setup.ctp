@@ -9,7 +9,7 @@ echo $this->Html->tag(
     [
         'id' => 'dropzone-target',
         'data-base-url' => $this->Url->build('/', true),
-        'data-csrf-token' => $this->request->getParam('_csrfToken'),
+        'data-csrf-token' => $this->getRequest()->getParam('_csrfToken'),
         'data-url' => $this->Url->build([
             'action' => 'add',
             'prefix' => 'admin',

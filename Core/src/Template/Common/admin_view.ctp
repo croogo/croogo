@@ -10,7 +10,7 @@ if (!isset($className)) {
 }
 
 $humanName = Inflector::humanize(Inflector::underscore($modelClass));
-$i18nDomain = $this->request->getParam('plugin') ?: 'croogo';
+$i18nDomain = $this->getRequest()->getParam('plugin') ?: 'croogo';
 
 $rowClass = $this->Theme->getCssClass('row');
 $columnFull = $this->Theme->getCssClass('columnFull');

@@ -18,11 +18,11 @@ class ComponentsPanel extends DebugPanel
     public function afterFilter(Event $event)
     {
         /* @var ComponentRegistry $componentRegistry */
-        if (!isset($event->subject()->View)) {
+        if (!isset($event->getSubject()->View)) {
             return;
         }
 
-        $componentRegistry = $event->subject()->components();
+        $componentRegistry = $event->getSubject()->components();
 
         $loadedComponents = $componentRegistry->loaded();
 

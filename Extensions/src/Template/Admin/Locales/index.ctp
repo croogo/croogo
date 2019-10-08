@@ -8,7 +8,7 @@ $this->assign('title', __d('croogo', 'Locales'));
 
 $this->Breadcrumbs
     ->add(__d('croogo', 'Extensions'), array('plugin' => 'Croogo/Extensions', 'controller' => 'Plugins', 'action' => 'index'))
-    ->add(__d('croogo', 'Locales'), $this->request->getUri()->getPath());
+    ->add(__d('croogo', 'Locales'), $this->getRequest()->getUri()->getPath());
 
 $this->append('action-buttons');
     echo $this->Croogo->adminAction(__d('croogo', 'Upload'),

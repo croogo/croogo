@@ -7,14 +7,14 @@ $this->Croogo->adminScript('Croogo/Menus.admin');
 
 $this->Breadcrumbs->add(__d('croogo', 'Menus'), ['action' => 'index']);
 
-if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add(h($menu->title), $this->request->getRequestTarget());
+if ($this->getRequest()->params['action'] == 'edit') {
+    $this->Breadcrumbs->add(h($menu->title), $this->getRequest()->getRequestTarget());
 
     $this->assign('title', __d('croogo', 'Edit Menu'));
 }
 
-if ($this->request->params['action'] == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->getRequestTarget());
+if ($this->getRequest()->params['action'] == 'add') {
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->getRequest()->getRequestTarget());
 
     $this->assign('title', __d('croogo', 'Add Menu'));
 }

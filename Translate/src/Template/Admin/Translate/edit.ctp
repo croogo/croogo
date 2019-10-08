@@ -23,7 +23,7 @@ $this->Breadcrumbs
             ],
         )
     )
-    ->add(__d('croogo', 'Translate (%s)', $language->title), $this->request->getRequestTarget());
+    ->add(__d('croogo', 'Translate (%s)', $language->title), $this->getRequest()->getRequestTarget());
 
 $this->append('form-start', $this->Form->create($entity, array(
     'url' => array(
@@ -80,8 +80,8 @@ $this->start('panels');
         ]) .
         $this->Html->link(__d('croogo', 'Cancel'), ['action' => 'index',
             '?' => [
-                'id' => $this->request->query('id'),
-                'model' => urldecode($this->request->query('model')),
+                'id' => $this->getRequest()->query('id'),
+                'model' => urldecode($this->getRequest()->query('model')),
             ],
         ], [
             'class' => 'cancel',

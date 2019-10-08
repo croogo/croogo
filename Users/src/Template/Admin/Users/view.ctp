@@ -4,7 +4,7 @@ $this->extend('Croogo/Core./Common/admin_view');
 
 $this->Breadcrumbs
     ->add(__d('croogo', 'Users'), ['action' => 'index'])
-    ->add($user->name, $this->request->getRequestTarget());
+    ->add($user->name, $this->getRequest()->getRequestTarget());
 
 $this->append('action-buttons');
     echo $this->Croogo->adminAction(__d('croogo', 'Edit User'), ['action' => 'edit', $user->id]);
