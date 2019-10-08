@@ -535,8 +535,13 @@ class PluginManager extends Plugin
         if ($plugin !== 'app') {
             $options['plugin'] = $plugin;
         }
-        return $this->_getMigrations()
-            ->migrate($options);
+
+        try {
+            return $this->_getMigrations()
+                ->migrate($options);
+        } catch (\Exception $e) {
+            $this->migrationErrors[] = $e->getMessage();
+        }
     }
 
     public function seed($plugin) {
