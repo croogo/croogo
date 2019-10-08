@@ -7,9 +7,12 @@ if (!$this->getRequest()->is('ajax')) :
         'Croogo/Core.core/moment-with-locales',
     ]);
     echo $this->Html->script([
-        'Croogo/Core.jquery/jquery-ui.min.js',
-        'Croogo/Core.core/popper.min.js',
-        'Croogo/Core.core/bootstrap.min.js',
+        'Croogo/Core.core/sleek.bundle.min.js',
+        'Croogo/Core.core/plugins/nprogress/nprogress.js',
+        'Croogo/Core.core/plugins/slimscrollbar/jquery.slimscroll.min.js',
+        //'Croogo/Core.jquery/jquery-ui.min.js',
+        //'Croogo/Core.core/popper.min.js',
+        //'Croogo/Core.core/bootstrap.min.js',
         'Croogo/Core.jquery/jquery.slug',
         'Croogo/Core.jquery/jquery.hoverIntent.minified',
         'Croogo/Core.core/underscore-min',

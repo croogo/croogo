@@ -17,15 +17,44 @@ $showActions = isset($showActions) ? $showActions : true;
 
         ?>
     </head>
-    <body>
-        <?= $this->element('Croogo/Core.admin/header') ?>
-        <div id="wrap">
-            <div class="nav-sidebar">
-                <?= $this->element('Croogo/Core.admin/navigation') ?>
-            </div>
-            <div id="content-container" class="content-container <?= $this->Theme->getCssClass('containerFluid') ?>">
-                <div id="content" class="content">
-                    <div id="breadcrumb-container" class="col-12 p-0 d-flex justify-content-between align-items-center">
+    <body id="body" class="header-fixed sidebar-fixed sidebar-dark header-light">
+        <div class="wrapper">
+
+            <aside class="left-sidebar bg-sidebar">
+
+                <div id="sidebar" class="sidebar sidebar-with-footer">
+
+                <div class="app-brand">
+                    <a href="javascript:void(0)">
+                        <svg
+                        class="brand-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        preserveAspectRatio="xMidYMid"
+                        width="30"
+                        height="33"
+                        viewBox="0 0 30 33"
+                        >
+                        <g fill="none" fill-rule="evenodd">
+                            <path
+                            class="logo-fill-blue"
+                            fill="#7DBCFF"
+                            d="M0 4v25l8 4V0zM22 4v25l8 4V0z"
+                            />
+                            <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
+                        </g>
+                        </svg>
+                        <span class="brand-name">Croogo</span>
+                    </a>
+                </div>
+                    <?= $this->element('Croogo/Core.admin/navigation') ?>
+                </div>
+            </aside>
+
+            <div class="page-wrapper">
+                <?= $this->element('Croogo/Core.admin/header') ?>
+                <div class="content-wrapper">
+
+                    <div id="breadcrumb-container" class="p-0 d-flex justify-content-between align-items-center">
                         <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
                         <?php if ($showActions && $actionsBlock = $this->fetch('action-buttons')) : ?>
                             <div class="actions m-2 ml-auto">
@@ -33,14 +62,17 @@ $showActions = isset($showActions) ? $showActions : true;
                             </div>
                         <?php endif ?>
                     </div>
-                    <div id="inner-content" class="p-0 mt-2 <?= $this->Theme->getCssClass('columnFull') ?>">
+
+                    <div id="inner-content" class="content">
                         <?= $this->Layout->sessionFlash() ?>
                         <?= $this->fetch('content') ?>
                     </div>
+
                 </div>
+
+                <?= $this->element('Croogo/Core.admin/footer') ?>
             </div>
         </div>
-        <?= $this->element('Croogo/Core.admin/footer') ?>
         <?php
         echo $this->element('Croogo/Core.admin/initializers');
         echo $this->fetch('body-footer');

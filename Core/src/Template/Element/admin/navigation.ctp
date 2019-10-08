@@ -1,4 +1,4 @@
-<nav class="navbar-dark bg-black">
+<div class="sidebar-scrollbar">
     <?php
 
     use Cake\Cache\Cache;
@@ -9,8 +9,9 @@
         return $this->Croogo->adminMenus(Nav::items(), [
             'htmlAttributes' => [
                 'id' => 'sidebar-menu',
+                'class' => 'nav sidebar-inner',
             ],
         ]);
     }, 'croogo_menus');
     ?>
-</nav>
+</div>

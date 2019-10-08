@@ -159,12 +159,14 @@ class CroogoHelper extends Helper
                 $title .= $menu['title'];
             }
             $children = '';
+            $childContainerId = null;
             if (!empty($menu['children'])) {
                 $childClass = '';
+                $childContainerId = Text::slug(strtolower($menu['title']), '-');
                 if ($sidebar) {
                     $itemTag = 'li';
                     $listTag = 'ul';
-                    $childClass = 'nav flex-column sub-nav ';
+                    $childClass = 'collapse';
                     $childClass .= ' submenu-' . Text::slug(strtolower($menu['title']), '-');
                     if ($depth > 0) {
                         $childClass .= ' dropdown-menu';
@@ -179,12 +181,17 @@ class CroogoHelper extends Helper
                 $children = $this->adminMenus($menu['children'], [
                     'type' => $options['type'],
                     'children' => true,
-                    'htmlAttributes' => ['class' => $childClass],
+                    'htmlAttributes' => [
+                        'id' => $childContainerId,
+                        'class' => $childClass,
+                    ],
                     'itemTag' => $itemTag,
                     'listTag' => $listTag,
                 ], $depth + 1);
 
-                $menu['htmlAttributes']['class'] .= ' hasChild dropdown-close';
+                $menu['htmlAttributes']['class'] .= ' has-sub';
+                $menu['htmlAttributes']['data-toggle'] = 'collapse';
+                $menu['htmlAttributes']['data-target'] = '#' . $childContainerId;
             }
 
             $menuUrl = $this->Url->build($menu['url']);
@@ -206,7 +213,7 @@ class CroogoHelper extends Helper
             } elseif (!$sidebar && $depth > 0) {
                 $menu['htmlAttributes']['class'] .= ' dropdown-item';
             } else {
-                $menu['htmlAttributes']['class'] .= ' sidebar-item';
+                $menu['htmlAttributes']['class'] .= ' sidebar-item-link';
             }
 
             if (isset($menu['before'])) {

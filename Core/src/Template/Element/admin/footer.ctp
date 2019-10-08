@@ -1,7 +1,6 @@
-<footer class="navbar-dark">
-    <div class="navbar-inner">
+<footer class="footer mt-auto">
+    <div class="copyright bg-dark text-center">
 
-        <div class="footer-content">
             <?php
 
             use Cake\Core\Configure;
@@ -12,7 +11,6 @@
             );
             ?>
             <?= __d('croogo', 'Powered by %s', $link) ?>
-        </div>
 
     </div>
 </footer>

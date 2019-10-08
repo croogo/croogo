@@ -9,18 +9,22 @@ $dashboardUrl = (new StringConverter())->linkStringToArray(
 );
 
 ?>
-<header class="navbar navbar-expand-md navbar-dark bg-black fixed-top">
-    <?= $this->Html->link(
-    Configure::read('Site.title'),
-    $dashboardUrl,
-    ['class' => 'navbar-brand']
-); ?>
+<header class="main-header" id="header">
 
-    <?= $this->Croogo->adminMenus(Nav::items('top-left'), [
+    <nav class="navbar">
+
+    <button id="sidebar-toggler" class="sidebar-toggle">
+        <span class="sr-only">Toggle navigation</span>
+    </button>
+
+    <?php $this->Html->link(Configure::read('Site.title'), $dashboardUrl,
+        ['class' => 'navbar-brand']); ?>
+
+    <?php $this->Croogo->adminMenus(Nav::items('top-left'), [
         'type' => 'dropdown',
         'htmlAttributes' => [
             'id' => 'top-left-menu',
-            'class' => 'navbar-nav d-none d-sm-block mr-auto',
+            //'class' => 'navbar-nav d-none d-sm-block mr-auto',
         ],
     ]);
 ?>
@@ -30,9 +34,10 @@ $dashboardUrl = (new StringConverter())->linkStringToArray(
             'type' => 'dropdown',
             'htmlAttributes' => [
                 'id' => 'top-right-menu',
-                'class' => 'navbar-nav ml-auto',
+                'class' => 'ml-auto',
             ],
         ]);
         ?>
     <?php endif; ?>
+    </nav>
 </header>
