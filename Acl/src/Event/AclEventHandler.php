@@ -4,7 +4,6 @@ namespace Croogo\Acl\Event;
 
 use Cake\Core\Configure;
 use Cake\Event\EventListenerInterface;
-use Croogo\Core\Croogo;
 
 /**
  * AclEventHandler

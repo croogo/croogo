@@ -3,10 +3,8 @@
 namespace Croogo\Acl\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Utility\Hash;
 
 /**
  * Provides "Remember me" feature (via CookieAuthenticate) by listening to

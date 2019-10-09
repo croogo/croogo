@@ -7,13 +7,11 @@ use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
+use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
 use Cake\Utility\Inflector;
-
-use Psr\Log\LogLevel;
 
 /**
  * An authentication adapter for AuthComponent. Provides similar functionality
@@ -81,7 +79,7 @@ class AclCachedAuthorize extends BaseAuthorize
  *
  * @see BaseAuthorize::action()
  */
-    public function action(Request $request, $path = '/:plugin/:prefix/:controller/:action')
+    public function action(ServerRequest $request, $path = '/:plugin/:prefix/:controller/:action')
     {
         $apiPath = Configure::read('Croogo.Api.path');
         if (!$request->is('api')) {
@@ -112,7 +110,7 @@ class AclCachedAuthorize extends BaseAuthorize
  * check request request authorization
  *
  */
-    public function authorize($user, Request $request)
+    public function authorize($user, ServerRequest $request)
     {
         // Admin role is allowed to perform all actions, bypassing ACL
         if ($this->_isAdmin($user)) {
@@ -211,7 +209,7 @@ class AclCachedAuthorize extends BaseAuthorize
  *
  * @throws Exception
  */
-    protected function _authorizeByContent($user, Request $request, $id)
+    protected function _authorizeByContent($user, ServerRequest $request, $id)
     {
         if (!isset($this->config('actionMap')[$request->params['action']])) {
             $message = __d('croogo',

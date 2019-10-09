@@ -6,8 +6,6 @@ use Cake\Event\Event;
 use Cake\Routing\Router;
 
 use Croogo\Core\Controller\Component\CroogoComponent;
-use Croogo\Core\Croogo;
-use Croogo\Nodes\Model\Entity\Node;
 use Croogo\Nodes\Model\Table\NodesTable;
 use Croogo\Taxonomy\Controller\Component\TaxonomiesComponent;
 use Croogo\Taxonomy\Model\Entity\Type;

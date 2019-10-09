@@ -4,7 +4,6 @@ namespace Croogo\Acl\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
 
 /**

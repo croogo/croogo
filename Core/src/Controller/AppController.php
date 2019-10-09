@@ -8,8 +8,8 @@ use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Http\ServerRequest;
 use Cake\Event\Event;
-use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Utility\Hash;
 
@@ -63,7 +63,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
      * @param Response $response
      * @param null $name
      */
-    public function __construct(Request $request = null, Response $response = null, $name = null)
+    public function __construct(ServerRequest $request = null, Response $response = null, $name = null)
     {
         parent::__construct($request, $response, $name);
         if ($request) {

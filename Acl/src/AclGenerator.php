@@ -4,10 +4,8 @@ namespace Croogo\Acl;
 
 use Acl\AclExtras;
 use Cake\Core\Configure;
-use Cake\Database\Exception;
 use Cake\Datasource\ConnectionInterface;
 use Cake\ORM\TableRegistry;
-use Croogo\Core\Plugin;
 
 class AclGenerator extends AclExtras
 {

@@ -2,13 +2,10 @@
 
 namespace Croogo\Nodes\Controller;
 
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Database\Expression\IdentifierExpression;
-use Cake\Event\Event;
 use Cake\I18n\I18n;
 use Cake\Network\Exception\NotFoundException;
-use Cake\ORM\Query;
 use Cake\Utility\Inflector;
 use Croogo\Nodes\Model\Table\NodesTable;
 
@@ -276,8 +273,6 @@ class NodesController extends AppController
      * @param string $typeAlias The alias of the type
      *
      * @return null|\Cake\Network\Response
-     *
-     * @access public
      */
     public function search($typeAlias = null)
     {

@@ -4,8 +4,8 @@ namespace Croogo\Core\Utility;
 
 use Cake\Collection\CollectionInterface;
 use Cake\Datasource\ResultSetInterface;
+use Cake\Http\ServerRequest;
 use Cake\Log\LogTrait;
-use Cake\Network\Request;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
@@ -46,9 +46,9 @@ class VisibilityFilter
 /**
  * Constructor
  *
- * @param Request $request
+ * @param \Cake\Http\ServerRequest $request
  */
-    public function __construct(Request $request = null)
+    public function __construct(ServerRequest $request = null)
     {
         if ($request) {
             $this->_request = $request;

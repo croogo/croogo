@@ -4,12 +4,11 @@ namespace Croogo\Core;
 
 use Cake\Core\Configure;
 use Cake\Database\Exception\MissingConnectionException;
+use Cake\Http\ServerRequest;
 use Cake\Log\Log;
-use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router as CakeRouter;
-use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
 /**
@@ -48,7 +47,7 @@ class Router extends CakeRouter
  * @param $request Request Request object
  * @return bool True when request contains the necessary route parameters
  */
-    public static function isApiRequest(Request $request)
+    public static function isApiRequest(ServerRequest $request)
     {
         if (!$request) {
             return false;
@@ -69,7 +68,7 @@ class Router extends CakeRouter
  * @param $request Request Request object
  * @return boolean True when request is from a whitelisted IP Address
  */
-    public static function isWhitelistedRequest(Request $request)
+    public static function isWhitelistedRequest(ServerRequest $request)
     {
         if (!$request) {
             return false;
@@ -178,7 +177,7 @@ class Router extends CakeRouter
         return parent::url($url, $full);
     }
 
-    public static function getActionPath(Request $request, $encode = false)
+    public static function getActionPath(ServerRequest $request, $encode = false)
     {
         $plugin = $request->getParam('plugin');
         $prefix = $request->getParam('prefix');

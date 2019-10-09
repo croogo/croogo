@@ -2,15 +2,11 @@
 
 namespace Croogo\Acl\Controller\Component;
 
-use Cake\Cache\Cache;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Controller\Component;
 use Cake\Controller\Component\AuthComponent;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
 use Croogo\Core\Utility\StringConverter;
 

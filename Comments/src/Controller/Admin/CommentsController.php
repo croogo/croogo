@@ -2,9 +2,7 @@
 
 namespace Croogo\Comments\Controller\Admin;
 
-use App\Network\Email\Email;
 use Cake\Event\Event;
-use Croogo\Comments\Model\Entity\Comment;
 
 /**
  * Comments Controller

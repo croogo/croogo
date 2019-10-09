@@ -3,7 +3,6 @@
 namespace Croogo\Extensions;
 
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
@@ -12,6 +11,8 @@ use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Croogo\Core\PluginManager;
 use Croogo\Extensions\Exception\MissingThemeException;
+
+use UnexpectedValueException;
 
 /**
  * CroogoTheme class

@@ -2,9 +2,7 @@
 
 namespace Croogo\Core;
 
-use App\Model\Permission;
 use ArrayAccess;
-use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Exception\Exception;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;

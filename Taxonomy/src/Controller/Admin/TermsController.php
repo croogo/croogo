@@ -124,7 +124,7 @@ class TermsController extends AppController
             ]);
             $taxonomies = $this->Terms->Taxonomies
                 ->find('list', [
-                    'idField' => 'id',
+                    'keyField' => 'id',
                     'valueField' => 'title',
                     'groupField' => 'vocabulary_id',
                 ])
@@ -197,8 +197,8 @@ class TermsController extends AppController
                 ->first();
 
             $term = $existingTerm
-                ? $this->Terms->patchEntity($existingTerm, $request->data)
-                : $this->Terms->patchEntity($term, $request->data);
+                ? $this->Terms->patchEntity($existingTerm, $request->getData())
+                : $this->Terms->patchEntity($term, $request->getData());
 
             $taxonomy = $this->Terms->add($term, $vocabularyId);
             if ($taxonomy) {

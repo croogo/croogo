@@ -17,10 +17,10 @@ class Plugin extends BasePlugin
     {
         parent::bootstrap($app);
 
-        \Croogo\Core\timerStart('Croogo bootstrap');
+        timerStart('Croogo bootstrap');
         PluginManager::setup($app);
         PluginManager::croogoBootstrap($app);
-        \Croogo\Core\timerStop('Croogo bootstrap');
+        timerStop('Croogo bootstrap');
 
         // Load Install plugin
         $salted = Security::getSalt() !== '__SALT__';
