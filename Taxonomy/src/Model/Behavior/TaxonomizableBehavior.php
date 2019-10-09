@@ -11,6 +11,8 @@ use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
+use Cake\Utility\Text;
+use Croogo\Taxonomy\Model\Entity\Term;
 
 /**
  * TaxonomizableBehavior
@@ -185,6 +187,11 @@ class TaxonomizableBehavior extends Behavior
                     continue;
                 }
                 foreach ((array)$taxonomyIds as $taxonomyId) {
+                    if (!is_numeric($taxonomyId)) {
+                        $term = $this->findOrCreateTerm($entity, $vocabularyId, $taxonomyId);
+                        $taxonomy = $this->findTermTaxonomy($term, $vocabularyId);
+                        $taxonomyId = $taxonomy->id;
+                    }
                     $taxonomies[] = [
                         'id' => $taxonomyId,
                         '_joinData' => [
@@ -195,6 +202,60 @@ class TaxonomizableBehavior extends Behavior
             }
             $this->_table->patchEntity($entity, compact('taxonomies'));
         }
+    }
+
+    /**
+     * Find or create term and linkage with the relevant taxonomy and vocabulary
+     *
+     * @param Cake\ORM\Entity $entity Entity
+     * @param int $vocabularyId Vocabulary Id
+     * @param String|int $taxonomyId Taxonomy ID
+     * @return \Croogo\Taxonomy\Model\Entity\Term
+     */
+    private function findOrCreateTerm(Entity $entity, int $vocabularyId, $taxonomyId)
+    {
+        $Terms = $this->_table->Taxonomies->Terms;
+        $term = $Terms->find()
+            ->where([
+                'title' => $taxonomyId,
+            ])->first();
+
+        if (!$term) {
+            $term = $Terms->newEntity([
+                'title' => $taxonomyId,
+                'slug' => Text::slug(strtolower($taxonomyId)),
+                'vocabularies' => [
+                    ['id' => $vocabularyId],
+                ],
+                'taxonomies' => [
+                    ['model' => $entity->getSource()],
+                ],
+            ], [
+                'associated' => [
+                    'vocabularies',
+                ]
+            ]);
+            $Terms->setScopeForTaxonomy($vocabularyId);
+            $term = $Terms->save($term, [
+                'associated' => [
+                    'vocabularies',
+                ],
+            ]);
+        }
+
+        return $term;
+    }
+
+    private function findTermTaxonomy(Term $term, int $vocabularyId)
+    {
+        $Taxonomies = $this->_table->Taxonomies;
+
+        return $Taxonomies->find()
+            ->where([
+                'vocabulary_id' => $vocabularyId,
+                'term_id' => $term->id,
+            ])
+            ->first();
     }
 
     /**

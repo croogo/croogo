@@ -11,16 +11,27 @@ if (count($taxonomies) > 0):
             $allTemplates = $this->Form->templates();
             $templates['inputContainer'] = $allTemplates['inputContainerError'];
         }
-        $hasEmpty = !$vocabularies[$vocabularyId]->multiple;
-        echo $this->Form->input('taxonomy_data.' . $vocabularyId, [
-            'label' => $vocabularies[$vocabularyId]->title,
+        $currVocabulary = $vocabularies[$vocabularyId];
+        $hasEmpty = !$currVocabulary->multiple;
+        $inputOptions = [
+            'label' => $currVocabulary->title,
             'type' => 'select',
-            'multiple' => $vocabularies[$vocabularyId]->multiple,
+            'multiple' => $currVocabulary->multiple,
             'options' => $taxonomyTree,
             'empty' => $hasEmpty ? '-- Please choose --' : false,
             'value' => $taxonomyIds,
             'help' => $error,
             'templates' => $templates
-        ]);
+        ];
+        if ($currVocabulary->tags === true) {
+            $inputOptions += [
+                'data-tags' => true,
+                'data-token-separators' => json_encode([
+                    ',',
+                    ' ',
+                ]),
+            ];
+        }
+        echo $this->Form->input('taxonomy_data.' . $vocabularyId, $inputOptions);
     endforeach;
 endif;
