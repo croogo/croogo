@@ -6,11 +6,11 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Permissions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Permissions'))
     ->add(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index'));
 
-if ($this->getRequest()->param('action') == 'edit') {
+if ($this->getRequest()->getParam('action') == 'edit') {
     $this->Breadcrumbs->add($aco->id . ': ' . $aco->alias, $this->getRequest()->getRequestTarget());
 }
 
-if ($this->getRequest()->param('action') == 'add') {
+if ($this->getRequest()->getParam('action') == 'add') {
     $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->getRequest()->getRequestTarget());
 }
 

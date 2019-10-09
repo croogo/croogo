@@ -144,7 +144,7 @@ class UsersController extends AppController
         }
 
         $options = [
-            'prefix' => $this->getRequest()->param('prefix'),
+            'prefix' => $this->getRequest()->getParam('prefix'),
         ];
         $success = $this->Users->resetPassword($user, $options);
         if (!$success) {

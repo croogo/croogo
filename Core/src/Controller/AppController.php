@@ -168,8 +168,8 @@ class AppController extends \App\Controller\AppController implements HookableCom
         ) {
             if (!$this->getRequest()->is('whitelisted') &&
                 !(
-                    $this->getRequest()->param('prefix') == 'admin' &&
-                    $this->getRequest()->param('action') === 'login'
+                    $this->getRequest()->getParam('prefix') == 'admin' &&
+                    $this->getRequest()->getParam('action') === 'login'
                 )
             ) {
                 $this->viewBuilder()->setLayout('maintenance');
@@ -237,7 +237,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
             if (strpos($config['models'], str_replace('/', '\/', $this->modelClass)) === false) {
                 return;
             }
-            if ($this->getRequest()->param('controller')) {
+            if ($this->getRequest()->getParam('controller')) {
                 $this->loadComponent('Croogo/Acl.RowLevelAcl');
             }
         }

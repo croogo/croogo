@@ -18,7 +18,7 @@ $model = isset($model) ? $model : null;
 if (!$model):
     $context = $this->Form->context();
     if ($context instanceof NullContext):
-        $model = $this->getRequest()->param('controller');
+        $model = $this->getRequest()->getParam('controller');
     else:
         $modelSource = $this->Form->context()->entity()->getSource();
         list($junk, $model) = pluginSplit($modelSource);
