@@ -7,7 +7,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Contacts'),
     ->add(__d('croogo', 'Messages'),
         ['plugin' => 'Croogo/Contacts', 'controller' => 'Messages', 'action' => 'index']);
 
-if ($this->getRequest()->params['action'] == 'edit') {
+if ($this->getRequest()->getParam('action') == 'edit') {
     $this->Breadcrumbs->add(h($message->title), $this->getRequest()->getRequestTarget());
 }
 

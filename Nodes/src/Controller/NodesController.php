@@ -59,7 +59,7 @@ class NodesController extends AppController
     {
         $locale = I18n::getLocale();
         if (!$this->getRequest()->getParam('type')) {
-            $this->getRequest()->params['type'] = 'node';
+            $this->setRequest($this->getRequest()->withParam('type', 'node'));
         }
 
         $query = $this->Nodes->find('view', [

@@ -39,8 +39,8 @@ class CommentsCell extends Cell
             $node->id,
         ];
 
-        if (isset($this->getRequest()->params['pass'][2])) {
-            $formUrl[] = $this->getRequest()->params['pass'][2];
+        if (isset($this->getRequest()->getParam('pass')[2])) {
+            $formUrl[] = $this->getRequest()->getParam('pass')[2];
         }
 
         $this->set('title', $node->title);
