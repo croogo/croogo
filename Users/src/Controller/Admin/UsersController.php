@@ -199,7 +199,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id);
 
         if ($this->getRequest()->is('put')) {
-            $user = $this->Users->patchEntity($user, $this->getRequest()->data());
+            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
 
             if ($this->Users->save($user)) {
                 $this->Flash->success(__d('croogo', 'Password has been reset.'));
@@ -370,7 +370,7 @@ class UsersController extends AppController
             return;
         }
 
-        $user = $this->Users->register($user, $this->getRequest()->data());
+        $user = $this->Users->register($user, $this->getRequest()->getData());
         if (!$user) {
             $this->Flash->error(__d('croogo', 'The User could not be saved. Please, try again.'));
 
@@ -449,7 +449,7 @@ class UsersController extends AppController
         }
 
         // Change the password of the user entity
-        $user = $this->Users->changePasswordFromReset($user, $this->getRequest()->data());
+        $user = $this->Users->changePasswordFromReset($user, $this->getRequest()->getData());
 
         // Save the user with changed password
         $user = $this->Users->save($user);
