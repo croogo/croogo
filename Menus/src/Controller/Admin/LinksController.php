@@ -32,14 +32,14 @@ class LinksController extends AppController
         $this->loadComponent('Croogo/Core.BulkProcess');
         $this->loadModel('Croogo/Users.Roles');
 
-        if ($this->request->getParam('action') == 'toggle') {
+        if ($this->getRequest()->getParam('action') == 'toggle') {
             $this->Croogo->protectToggleAction();
         }
     }
 
     public function index()
     {
-        $menuId = $this->request->getQuery('menu_id');
+        $menuId = $this->getRequest()->getQuery('menu_id');
         $menu = $this->Links->Menus->get($menuId);
         $this->set('title_for_layout', __d('croogo', 'Links: %s', $menu->title));
         $linksTree = $this->Links->find('treeList')
@@ -196,8 +196,8 @@ class LinksController extends AppController
             $menuId = $event->getSubject()->entity->menu_id;
             $conditions[$this->Links->aliasField('id') .' !='] = $event->getSubject()->entity->id;
         }
-        if ($this->request->getQuery('menu_id')) {
-            $menuId = $this->request->getQuery('menu_id');
+        if ($this->getRequest()->getQuery('menu_id')) {
+            $menuId = $this->getRequest()->getQuery('menu_id');
         }
         if (!$menuId) {
             return;

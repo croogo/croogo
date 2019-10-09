@@ -23,7 +23,7 @@ class MetaComponent extends Component
         if ($controller->request->getParam('prefix') === 'admin') {
             $this->_adminTabs();
 
-            if (empty($controller->getRequest()->getData('meta'))) {
+            if (empty($controller->request->getData('meta'))) {
                 return;
             }
             $unlockedFields = [];

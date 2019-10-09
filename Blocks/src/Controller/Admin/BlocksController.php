@@ -42,7 +42,7 @@ class BlocksController extends AppController
             'className' => 'Croogo/Core.Admin/MoveDown'
         ]);
 
-        if ($this->request->getParam('action') == 'toggle') {
+        if ($this->getRequest()->getParam('action') == 'toggle') {
             $this->Croogo->protectToggleAction();
         }
     }

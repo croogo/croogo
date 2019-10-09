@@ -122,7 +122,7 @@ class AppController extends Controller
         if (Configure::read('Site.status') == 0 &&
             $this->Auth->user('role_id') != 1
         ) {
-            if (!$this->request->is('whitelisted')) {
+            if (!$this->getRequest()->is('whitelisted')) {
                 $this->response->statusCode(503);
             }
         }

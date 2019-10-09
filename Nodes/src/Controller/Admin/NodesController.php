@@ -115,8 +115,8 @@ class NodesController extends AppController
         /** @var \Cake\ORM\Query $query */
         $query = $event->getSubject()->query;
 
-        if (empty($this->request->getQuery('sort'))) {
-            if ($this->request->getQuery('type')) {
+        if (empty($this->getRequest()->getQuery('sort'))) {
+            if ($this->getRequest()->getQuery('type')) {
                 $this->paginate['order'] = [
                     $this->Nodes->aliasField('lft') => 'ASC',
                 ];
@@ -149,9 +149,9 @@ class NodesController extends AppController
         $nodeTypes = $types->combine('alias', 'title')->toArray();
         $this->set('nodeTypes', $nodeTypes);
 
-        if ($this->request->getQuery('type')) {
+        if ($this->getRequest()->getQuery('type')) {
             $type = $this->Nodes->Taxonomies->Vocabularies->Types
-                ->findByAlias($this->request->getQuery('type'))
+                ->findByAlias($this->getRequest()->getQuery('type'))
                 ->first();
             $this->set('type', $type);
 
@@ -160,7 +160,7 @@ class NodesController extends AppController
             ]);
         }
 
-        if (!empty($this->request->getQuery('links')) || $this->request->getQuery('chooser')) {
+        if (!empty($this->getRequest()->getQuery('links')) || $this->getRequest()->getQuery('chooser')) {
             $this->viewBuilder()->setLayout('admin_popup');
             $this->Crud->action()->view('chooser');
         }
@@ -184,9 +184,9 @@ class NodesController extends AppController
 
         $entity = $event->getSubject()->entity;
 
-        switch ($this->request->getParam('action')) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'add':
-                $typeAlias = $this->request->getParam('pass.0');
+                $typeAlias = $this->getRequest()->getParam('pass.0');
                 break;
             case 'edit':
                 $typeAlias = $entity->type;
@@ -227,8 +227,8 @@ class NodesController extends AppController
     public function beforeCrudSave(Event $event)
     {
         $entity = $event->getSubject()->entity;
-        if (($this->request->getParam('action') === 'add') && ($this->request->getParam('pass.0'))) {
-            $entity->type = $this->request->getParam('pass.0');
+        if (($this->getRequest()->getParam('action') === 'add') && ($this->getRequest()->getParam('pass.0'))) {
+            $entity->type = $this->getRequest()->getParam('pass.0');
             $entity->path = Router::url([
                 'prefix' => false,
                 'plugin' => 'Croogo/Nodes',
@@ -309,7 +309,7 @@ class NodesController extends AppController
 
     public function hierarchy()
     {
-        $typeAlias = $this->request->getQuery('type');
+        $typeAlias = $this->getRequest()->getQuery('type');
         if ($typeAlias) {
             $type = $this->Nodes->Types->findByAlias($typeAlias)->first();
             $this->set(compact('type'));

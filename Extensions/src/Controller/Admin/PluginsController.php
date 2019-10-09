@@ -67,11 +67,11 @@ class PluginsController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Upload a new plugin'));
 
-        if ($this->request->is('post')) {
-            $data = $this->request->getData();
+        if ($this->getRequest()->is('post')) {
+            $data = $this->getRequest()->getData();
             $file = $data['Plugin']['file'];
             unset($data['Plugin']['file']);
-            $this->request = $this->request->withParsedBody($data);
+            $this->request = $this->getRequest()->withParsedBody($data);
 
             $Installer = new ExtensionsInstaller;
             try {
@@ -91,7 +91,7 @@ class PluginsController extends AppController
  */
     public function delete($id)
     {
-        $plugin = $this->request->query('name');
+        $plugin = $this->getRequest()->query('name');
         if (!$plugin) {
             $this->Flash->error(__d('croogo', 'Invalid plugin'));
             return $this->redirect(['action' => 'index']);
@@ -120,7 +120,7 @@ class PluginsController extends AppController
  */
     public function toggle()
     {
-        $plugin = $this->request->getQuery('name');
+        $plugin = $this->getRequest()->getQuery('name');
         if (!$plugin) {
             $this->Flash->error(__d('croogo', 'Invalid plugin'));
             return $this->redirect(['action' => 'index']);
@@ -160,7 +160,7 @@ class PluginsController extends AppController
  */
     public function migrate()
     {
-        $plugin = $this->request->query('name');
+        $plugin = $this->getRequest()->query('name');
         if (!$plugin) {
             $this->Flash->error(__d('croogo', 'Invalid plugin'));
         } elseif ($this->_CroogoPlugin->migrate($plugin)) {
@@ -180,8 +180,8 @@ class PluginsController extends AppController
  */
     public function moveup()
     {
-        $plugin = $this->request->query('name');
-        $this->request->allowMethod('post');
+        $plugin = $this->getRequest()->query('name');
+        $this->getRequest()->allowMethod('post');
 
         if ($plugin === null) {
             throw new Exception(__d('croogo', 'Invalid plugin'));
@@ -207,8 +207,8 @@ class PluginsController extends AppController
  */
     public function movedown()
     {
-        $plugin = $this->request->query('name');
-        $this->request->allowMethod('post');
+        $plugin = $this->getRequest()->query('name');
+        $this->getRequest()->allowMethod('post');
 
         if ($plugin === null) {
             throw new Exception(__d('croogo', 'Invalid plugin'));

@@ -54,17 +54,17 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        if ($this->request->is('json')) {
+        if ($this->getRequest()->is('json')) {
             return;
         }
         $viewBuilder = $this->viewBuilder();
         $viewBuilder->setClassName('Croogo/Core.Croogo');
-        if ($this->request->getParam('prefix') === 'admin') {
+        if ($this->getRequest()->getParam('prefix') === 'admin') {
             $adminTheme = Configure::read('Site.admin_theme');
             if ($adminTheme) {
                 $viewBuilder->setTheme($adminTheme);
             }
-            if (!$this->request->is('ajax')) {
+            if (!$this->getRequest()->is('ajax')) {
                 $viewBuilder->setLayout('admin_full');
             }
         } elseif (Configure::read('Site.theme')) {

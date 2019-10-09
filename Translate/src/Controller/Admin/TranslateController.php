@@ -37,8 +37,8 @@ class TranslateController extends AppController
  */
     public function index()
     {
-        $id = $this->request->query('id');
-        $modelAlias = $this->request->query('model');
+        $id = $this->getRequest()->query('id');
+        $modelAlias = $this->getRequest()->query('model');
         if ($id == null) {
             $this->Flash->error(__d('croogo', 'Invalid ID.'));
             return $this->redirect([
@@ -101,11 +101,11 @@ class TranslateController extends AppController
  */
     public function edit($id = null)
     {
-        $id = $this->request->query('id');
-        $modelAlias = urldecode($this->request->query('model'));
-        $locale = $this->request->query('locale');
+        $id = $this->getRequest()->query('id');
+        $modelAlias = urldecode($this->getRequest()->query('model'));
+        $locale = $this->getRequest()->query('locale');
 
-        if (!$id && empty($this->request->data)) {
+        if (!$id && empty($this->getRequest()->data)) {
             $this->Flash->error(__d('croogo', 'Invalid ID.'));
             return $this->redirect([
                 'plugin' => null,
@@ -114,7 +114,7 @@ class TranslateController extends AppController
             ]);
         }
 
-        if (!$this->request->query('locale')) {
+        if (!$this->getRequest()->query('locale')) {
             $this->Flash->error(__d('croogo', 'Invalid locale'));
             return $this->redirect([
                 'plugin' => null,
@@ -129,7 +129,7 @@ class TranslateController extends AppController
 
         $language = $this->Languages->find()
             ->where([
-                'locale' => $this->request->query('locale'),
+                'locale' => $this->getRequest()->query('locale'),
                 'status' => 1,
             ])->first();
         if (!$language->id) {
@@ -162,10 +162,10 @@ class TranslateController extends AppController
             ->where([$Model->aliasField('id') => $id])
             ->first();
 
-        if (!empty($this->request->data)) {
+        if (!empty($this->getRequest()->data)) {
             $entity->_locale = $locale;
             $entity->accessible('_translations', true);
-            $entity = $Model->patchEntity($entity, $this->request->getData(), [
+            $entity = $Model->patchEntity($entity, $this->getRequest()->getData(), [
                 'translations' => true,
             ]);
             if ($Model->save($entity)) {
@@ -179,7 +179,7 @@ class TranslateController extends AppController
                         'locale' => $locale,
                     ],
                 ];
-                if (isset($this->request->data['apply'])) {
+                if (isset($this->getRequest()->data['apply'])) {
                     $redirect['action'] = 'edit';
                 }
                 return $this->redirect($redirect);

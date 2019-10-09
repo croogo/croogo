@@ -36,7 +36,7 @@ class ActionsController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        if ($this->request->getParam('action') == 'generate' && $this->request->getParam('prefix') == 'admin') {
+        if ($this->getRequest()->getParam('action') == 'generate' && $this->getRequest()->getParam('prefix') == 'admin') {
             $this->getEventManager()->off($this->Csrf);
         }
     }
@@ -63,9 +63,9 @@ class ActionsController extends AppController
     {
         $aco = $this->Acos->newEntity();
 
-        if ($this->request->is('post')) {
-            $aco = $this->Acos->patchEntity($aco, $this->request->data());
-            if ($this->request->data('parent_id') == null) {
+        if ($this->getRequest()->is('post')) {
+            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->data());
+            if ($this->getRequest()->data('parent_id') == null) {
                 $aco->parent_id = 1;
                 $acoType = 'controller';
             } else {
@@ -93,9 +93,9 @@ class ActionsController extends AppController
     {
         $aco = $this->Acos->get($id);
 
-        if ($this->request->is('put')) {
-            $aco = $this->Acos->patchEntity($aco, $this->request->data());
-            if ($this->request->data('parent_id') == null) {
+        if ($this->getRequest()->is('put')) {
+            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->data());
+            if ($this->getRequest()->data('parent_id') == null) {
                 $aco->parent_id = 1;
                 $acoType = 'controller';
             } else {
@@ -104,7 +104,7 @@ class ActionsController extends AppController
 
             if ($this->Acos->save($aco)) {
                 $this->Flash->success(sprintf(__d('croogo', 'The %s has been saved'), $acoType));
-                if (!$this->request->getData('_apply')) {
+                if (!$this->getRequest()->getData('_apply')) {
                     return $this->redirect(['action' => 'edit', $id]);
                 } else {
                     return $this->redirect(['action' => 'index']);
@@ -164,13 +164,13 @@ class ActionsController extends AppController
     {
         $AclExtras = new AclGenerator();
         $AclExtras->startup($this);
-        if ($this->request->getQuery('sync')) {
+        if ($this->getRequest()->getQuery('sync')) {
             $AclExtras->acoSync();
         } else {
             $AclExtras->acoUpdate();
         }
 
-        if ($this->request->getQuery('permissions')) {
+        if ($this->getRequest()->getQuery('permissions')) {
             return $this->redirect(['plugin' => 'Croogo/Acl', 'controller' => 'Permissions', 'action' => 'index']);
         } else {
             return $this->redirect(['action' => 'index']);

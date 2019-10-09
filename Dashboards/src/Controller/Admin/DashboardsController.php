@@ -94,7 +94,7 @@ class DashboardsController extends AppController
         if (!$userId) {
             throw new Exception('You must be logged in');
         }
-        $data = Hash::insert($this->request->data['dashboard'], '{n}.user_id', $userId);
+        $data = Hash::insert($this->getRequest()->data['dashboard'], '{n}.user_id', $userId);
         $dashboardIds = array_filter(Hash::extract($data, '{n}.id'));
         $query = $this->Dashboards->find();
         if ($dashboardIds) {

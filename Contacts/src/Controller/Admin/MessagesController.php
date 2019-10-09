@@ -80,7 +80,7 @@ class MessagesController extends AppController
     {
         $this->Crud->on('beforePaginate', function(Event $event) {
             $query = $event->getSubject()->query;
-            if (empty($this->request->getQuery('sort'))) {
+            if (empty($this->getRequest()->getQuery('sort'))) {
                 $query->order([
                     $this->Messages->aliasField('created') => 'desc',
                 ]);

@@ -163,7 +163,7 @@ class FilterComponent extends Component
             'controller' => 'Users',
             'action' => 'login',
         ]);
-        if ($this->_controller->request->getParam('prefix') == 'admin') {
+        if ($this->request->getParam('prefix') == 'admin') {
             $dashboardUrl = Configure::read('Site.dashboard_url');
             if (is_string($dashboardUrl)) {
                 $converter = new StringConverter();

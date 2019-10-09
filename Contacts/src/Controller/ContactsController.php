@@ -47,8 +47,8 @@ class ContactsController extends AppController
             $continue = false;
         }
         $message = $this->Contacts->Messages->newEntity();
-        if ($this->request->is('post') && $continue === true) {
-            $message = $this->Contacts->Messages->patchEntity($message, $this->request->data);
+        if ($this->getRequest()->is('post') && $continue === true) {
+            $message = $this->Contacts->Messages->patchEntity($message, $this->getRequest()->data);
             $message->contact_id = $contact->id;
             Croogo::dispatchEvent('Controller.Contacts.beforeMessage', $this);
 

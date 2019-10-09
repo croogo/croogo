@@ -73,7 +73,7 @@ class CroogoView extends AppView
     {
         parent::loadHelpers();
 
-        $prefix = $this->request->getParam('prefix') ?: '';
+        $prefix = $this->getRequest()->getParam('prefix') ?: '';
         if ($prefix === 'admin') {
             $this->loadHelper('Croogo/Core.Croogo');
         }
@@ -87,7 +87,7 @@ class CroogoView extends AppView
 
         $this->loadHelperList($hookHelpers);
         $this->loadHelper('Time', [
-            'outputTimezone' => $this->request->getSession()->read('Auth.User.timezone'),
+            'outputTimezone' => $this->getRequest()->getSession()->read('Auth.User.timezone'),
         ]);
     }
 

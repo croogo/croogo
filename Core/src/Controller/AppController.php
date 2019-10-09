@@ -103,12 +103,12 @@ class AppController extends \App\Controller\AppController implements HookableCom
      */
     public function render($view = null, $layout = null)
     {
-        if ($this->request->getParam('prefix') === 'admin') {
+        if ($this->getRequest()->getParam('prefix') === 'admin') {
             Croogo::dispatchEvent('Croogo.setupAdminData', $this);
         }
 
         // Just render normal when we aren't in a edit or add action
-        if (!in_array($this->request->getParam('action'), ['edit', 'add'])) {
+        if (!in_array($this->getRequest()->getParam('action'), ['edit', 'add'])) {
             return parent::render($view, $layout);
         }
 
@@ -166,10 +166,10 @@ class AppController extends \App\Controller\AppController implements HookableCom
         if (Configure::read('Site.status') == 0 &&
             $this->Auth->user('role_id') != 1
         ) {
-            if (!$this->request->is('whitelisted') &&
+            if (!$this->getRequest()->is('whitelisted') &&
                 !(
-                    $this->request->param('prefix') == 'admin' &&
-                    $this->request->param('action') === 'login'
+                    $this->getRequest()->param('prefix') == 'admin' &&
+                    $this->getRequest()->param('action') === 'login'
                 )
             ) {
                 $this->viewBuilder()->setLayout('maintenance');
@@ -180,19 +180,19 @@ class AppController extends \App\Controller\AppController implements HookableCom
             }
         }
 
-        if (!$this->request->is('api')) {
+        if (!$this->getRequest()->is('api')) {
             $this->Security->blackHoleCallback = '_securityError';
-            if ($this->request->getParam('action') == 'delete' && $this->request->getParam('prefix') == 'admin') {
-                $this->request->allowMethod('post');
+            if ($this->getRequest()->getParam('action') == 'delete' && $this->getRequest()->getParam('prefix') == 'admin') {
+                $this->getRequest()->allowMethod('post');
             }
         }
 
-        if ($this->request->is('ajax')) {
+        if ($this->getRequest()->is('ajax')) {
             $this->viewBuilder()->setLayout('ajax');
         }
 
-        if ($this->request->getParam('locale')) {
-            Configure::write('Config.language', $this->request->getParam('locale'));
+        if ($this->getRequest()->getParam('locale')) {
+            Configure::write('Config.language', $this->getRequest()->getParam('locale'));
         }
     }
 
@@ -237,7 +237,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
             if (strpos($config['models'], str_replace('/', '\/', $this->modelClass)) === false) {
                 return;
             }
-            if ($this->request->param('controller')) {
+            if ($this->getRequest()->param('controller')) {
                 $this->loadComponent('Croogo/Acl.RowLevelAcl');
             }
         }
