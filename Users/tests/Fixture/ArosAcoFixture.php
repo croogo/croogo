@@ -4,6 +4,8 @@ namespace Croogo\Users\Test\Fixture;
 
 use Acl\Controller\Component\AclComponent;
 use Cake\Controller\ComponentRegistry;
+use Cake\Core\App;
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionInterface;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\TestSuite\CroogoTestFixture;
@@ -34,6 +36,7 @@ class ArosAcoFixture extends CroogoTestFixture
         $registered = $roles->get(2);
         $public = $roles->get(3);
 
+        Configure::write('Acl.classname', App::className('Croogo/Acl.HabtmDbAcl', 'Adapter'));
         $acl = new AclComponent(new ComponentRegistry);
         $acl->allow($admin, 'controllers');
         $acl->allow($registered, 'controllers');

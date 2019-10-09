@@ -1,9 +1,11 @@
 <?php
 // @codingStandardsIgnoreFile
 
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\Routing\DispatcherFactory;
 use Cake\Routing\Router;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 
 $findVendor = function () {
     $root = dirname(__DIR__);
@@ -45,7 +47,7 @@ require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 date_default_timezone_set('UTC');
 
-Cake\Core\Configure::write('App', [
+Configure::write('App', [
 	'namespace' => 'App',
 	'paths' => [
         'plugins' => [ROOT . DS . 'plugins' . DS],
@@ -53,7 +55,7 @@ Cake\Core\Configure::write('App', [
         'locales' => [APP . 'Locale' . DS],
 	]
 ]);
-Cake\Core\Configure::write('debug', true);
+Configure::write('debug', true);
 
 $tmpDirectory = new \Cake\Filesystem\Folder(TMP);
 $tmpDirectory->delete(TMP . 'cache');
@@ -81,7 +83,7 @@ $cache = [
 	]
 ];
 Cake\Cache\Cache::config($cache);
-Cake\Core\Configure::write('Session', [
+Configure::write('Session', [
     'defaults' => 'php'
 ]);
 
@@ -111,16 +113,17 @@ ConnectionManager::config('test_migrations', [
 
 $settingsFixture = new \Croogo\Core\Test\Fixture\SettingsFixture();
 
-\Cake\Datasource\ConnectionManager::alias('test', 'default');
-$settingsFixture->create(\Cake\Datasource\ConnectionManager::get('default'));
-$settingsFixture->insert(\Cake\Datasource\ConnectionManager::get('default'));
+ConnectionManager::alias('test', 'default');
+Configure::write('Acl.database', 'default');
+$settingsFixture->create(ConnectionManager::get('default'));
+$settingsFixture->insert(ConnectionManager::get('default'));
 
-Plugin::load('Croogo/Core', ['bootstrap' => true, 'routes' => true]);
-Plugin::load('Croogo/Settings', ['bootstrap' => true, 'routes' => true]);
+PluginManager::load('Croogo/Core', ['bootstrap' => true, 'routes' => true]);
+PluginManager::load('Croogo/Settings', ['bootstrap' => true, 'routes' => true]);
 
-Cake\Routing\DispatcherFactory::add('Routing');
-Cake\Routing\DispatcherFactory::add('ControllerFactory');
+DispatcherFactory::add('Routing');
+DispatcherFactory::add('ControllerFactory');
 
 class_alias('Croogo\Core\TestSuite\TestCase', 'Croogo\Core\TestSuite\CroogoTestCase');
 
-Plugin::routes();
+PluginManager::routes();

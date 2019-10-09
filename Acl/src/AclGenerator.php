@@ -28,7 +28,11 @@ class AclGenerator extends AclExtras
         if (!isset($this->Shell)) {
             $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
         }
-        return parent::out($msg);
+        if (isset($this->Shell) || isset($this->controller)) {
+            return parent::out($msg);
+        } else {
+            \Cake\Log\Log::warning($msg);
+        }
     }
 
     protected function _checkMethods($className, $controllerName, $node, $pluginPath = null, $prefixPath = null)
@@ -46,11 +50,7 @@ class AclGenerator extends AclExtras
         $models = Configure::read('Access Control.models');
         if (!$models) {
             $message = 'No models are configured for row level access control';
-            if (isset($this->Shell) || isset($this->controller)) {
-                $this->out($message);
-            } else {
-                \Cake\Log\Log::warning($message);
-            }
+            $this->out($message);
         }
         $models = json_decode($models, true);
 
