@@ -72,8 +72,8 @@ class RecaptchaComponent extends Component
      */
     public function verify()
     {
-        if (isset($this->request->data['g-recaptcha-response'])) {
-            $captcha = $this->request->data['g-recaptcha-response'];
+        if ($this->request->getData('g-recaptcha-response')) {
+            $captcha = $this->request->getData('g-recaptcha-response');
             $response = $this->_getApiResponse($captcha);
 
             if (!$response->success) {

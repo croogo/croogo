@@ -170,10 +170,10 @@ class AclCachedAuthorize extends BaseAuthorize
             $ids[] = $request->param('pass.0');
         } elseif ($request->is('post') || $request->is('put')) {
 
-            $action = $request->data('action');
+            $action = $request->getData('action');
             if ($action) {
                 // collect ids from 'bulk' processing action
-                foreach ($request->data[$model] as $id => $flag) {
+                foreach ($request->getData($model) as $id => $flag) {
                     if (isset($flag[$primaryKey]) && $flag[$primaryKey] == 1) {
                         $ids[] = $id;
                     }

@@ -81,7 +81,7 @@ class AutoLoginComponent extends Component
     protected function _cookie($request)
     {
         $time = time();
-        $username = $request->data($this->_fields['username']);
+        $username = $request->getData($this->_fields['username']);
         $hasher = $this->_registry->Auth->authenticationProvider()->passwordHasher();
         $data = json_encode([
             'hash' => $hasher->hash($username . $time),
@@ -101,7 +101,7 @@ class AutoLoginComponent extends Component
     public function onAdminLoginSuccessful(Event $event)
     {
         $request = $event->getSubject()->request;
-        $remember = $request->data('remember');
+        $remember = $request->getData('remember');
         $expires = Configure::read('Access Control.autoLoginDuration');
         if (strtotime($expires) === false) {
             $expires = '+1 week';
