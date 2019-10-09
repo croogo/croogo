@@ -3,6 +3,7 @@
 namespace Croogo\Extensions\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
 use Cake\Network\Exception\BadRequestException;
 use Croogo\Extensions\CroogoTheme;
 use Croogo\Extensions\Exception\MissingThemeException;
@@ -94,15 +95,17 @@ class ThemesController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Upload a new theme'));
 
-        if (!empty($this->request->data)) {
-            $file = $this->request->data['Theme']['file'];
-            unset($this->request->data['Theme']['file']);
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+            $file = $data['Theme']['file'];
+            unset($data['Theme']['file']);
+            $this->request = $this->request->withParsedBody($data);
 
             $Installer = new ExtensionsInstaller;
             try {
                 $Installer->extractTheme($file['tmp_name']);
                 $this->Flash->success(__d('croogo', 'Theme uploaded successfully.'));
-            } catch (CakeException $e) {
+            } catch (Exception $e) {
                 $this->Flash->error($e->getMessage());
             }
 

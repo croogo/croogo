@@ -3,6 +3,7 @@
 namespace Croogo\Core\Shell;
 
 use Cake\Console\Exception\ConsoleException;
+use Cake\Core\Exception\Exception;
 use Cake\Utility\Inflector;
 use Croogo\Core\Shell\CroogoAppShell;
 use Croogo\Core\PluginManager;
@@ -61,9 +62,9 @@ class InstallShell extends AppShell
  * @param type $stderr
  * @param type $stdin
  */
-    public function __construct($stdout = null, $stderr = null, $stdin = null)
+    public function __construct($io = null, $locator = null)
     {
-        parent::__construct($stdout, $stderr, $stdin);
+        parent::__construct($io, $locator);
         $this->_ExtensionsInstaller = new ExtensionsInstaller();
         $this->_CroogoPlugin = new PluginManager();
         $this->_CroogoTheme = new CroogoTheme();
@@ -111,7 +112,7 @@ class InstallShell extends AppShell
                         $this->err(__d('croogo', 'Package installed but not activated.'));
                     }
                 }
-            } catch (CakeException $e) {
+            } catch (Exception $e) {
                 $this->err($e->getMessage());
             }
         } else {
@@ -168,7 +169,7 @@ class InstallShell extends AppShell
             $ext = $this->_ExtensionsInstaller->{'get' . ucfirst($type) . 'Name'}($zip);
             $this->dispatchShell('ext', 'activate', $type, $ext, '--quiet');
             return true;
-        } catch (CakeException $e) {
+        } catch (Exception $e) {
             $this->err($e->getMessage());
         }
         return false;
@@ -187,7 +188,7 @@ class InstallShell extends AppShell
         try {
             $this->_ExtensionsInstaller->{'extract' . ucfirst($type)}($zip);
             return true;
-        } catch (CakeException $e) {
+        } catch (Exception $e) {
             $this->err($e->getMessage());
         }
         return false;

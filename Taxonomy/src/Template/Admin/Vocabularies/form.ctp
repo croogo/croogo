@@ -6,14 +6,14 @@ $this->extend('Croogo/Core./Common/admin_edit');
 $this->Breadcrumbs->add(__d('croogo', 'Content'),
     ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']);
 
-if ($this->getRequest()->params['action'] == 'edit') {
+if ($this->getRequest()->getParam('action') == 'edit') {
     $this->assign('title', __d('croogo', 'Edit Vocabulary'));
 
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['action' => 'index', $vocabulary->id])
         ->add($vocabulary->title);
 }
 
-if ($this->getRequest()->params['action'] == 'add') {
+if ($this->getRequest()->getParam('action') == 'add') {
     $this->assign('title', __d('croogo', 'Add Vocabulary'));
 
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['action' => 'index'])

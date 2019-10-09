@@ -2,10 +2,10 @@
 
 namespace Croogo\Extensions\Controller\Admin;
 
+use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
 use Croogo\Core\PluginManager;
 use Croogo\Extensions\ExtensionsInstaller;
-use Cake\Core\Exception\Exception;
 
 /**
  * Extensions Plugins Controller
@@ -67,14 +67,16 @@ class PluginsController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Upload a new plugin'));
 
-        if (!empty($this->request->data)) {
-            $file = $this->request->data['Plugin']['file'];
-            unset($this->request->data['Plugin']['file']);
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+            $file = $data['Plugin']['file'];
+            unset($data['Plugin']['file']);
+            $this->request = $this->request->withParsedBody($data);
 
             $Installer = new ExtensionsInstaller;
             try {
                 $Installer->extractPlugin($file['tmp_name']);
-            } catch (CakeException $e) {
+            } catch (Exception $e) {
                 $this->Flash->error($e->getMessage());
                 return $this->redirect(['action' => 'add']);
             }
@@ -174,7 +176,7 @@ class PluginsController extends AppController
 /**
  * Move up a plugin in bootstrap order
  *
- * @throws CakeException
+ * @throws Exception
  */
     public function moveup()
     {
@@ -201,7 +203,7 @@ class PluginsController extends AppController
 /**
  * Move down a plugin in bootstrap order
  *
- * @throws CakeException
+ * @throws Exception
  */
     public function movedown()
     {

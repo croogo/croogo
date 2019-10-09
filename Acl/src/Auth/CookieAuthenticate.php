@@ -6,8 +6,8 @@ use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\ServerRequest;
+use Cake\Http\Response;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 
@@ -92,9 +92,9 @@ class CookieAuthenticate extends BaseAuthenticate {
      *
      * @param Request $request The unused request object
      * @return mixed False on login failure. An array of User data on success.
-     * @throws CakeException
+     * @throws Exception
      */
-    public function getUser(Request $request) {
+    public function getUser(ServerRequest $request) {
         if (!$this->_registry->has('Cookie')) {
             throw new Exception('CookieComponent is not loaded');
         }
@@ -176,7 +176,7 @@ class CookieAuthenticate extends BaseAuthenticate {
      *
      * @see BaseAuthenticate::authenticate()
      */
-    public function authenticate(Request $request, Response $response)
+    public function authenticate(ServerRequest $request, Response $response)
     {
         if (!empty($request->data) || $request->is('post')) {
             return false;
