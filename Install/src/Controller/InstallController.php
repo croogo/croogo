@@ -4,10 +4,9 @@ namespace Croogo\Install\Controller;
 
 use App\Console\Installer;
 use Cake\Cache\Cache;
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-
-use Cake\Controller\Controller;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Utility\File;

@@ -12,15 +12,21 @@ use Zend\Diactoros\Response\RedirectResponse;
  */
 class InstallMiddleware
 {
+
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
-        if (strpos($request->getUri()->getPath(), 'install') === false &&
-            strpos($request->getUri()->getPath(), 'debug_kit') === false
-         ) {
-            $url = ['plugin' => 'Croogo/Install', 'controller' => 'Install', 'action' => 'index'];
+        $plugin = $request->getParam('plugin');
+        if (!in_array($plugin, ['Croogo/Install', 'DebugKit'])) {
+            $url = [
+                'plugin' => 'Croogo/Install',
+                'controller' => 'Install',
+                'action' => 'index',
+            ];
 
             return new RedirectResponse(Router::url($url), 307);
         }
+
         return $next($request, $response);
     }
+
 }
