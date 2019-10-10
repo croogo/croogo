@@ -12,6 +12,13 @@ $this->Croogo->adminScript('Croogo/Nodes.admin');
 $this->Breadcrumbs
     ->add(__d('croogo', 'Content'), $this->getRequest()->getUri()->getPath());
 
+if ($this->getRequest()->getQuery('type')):
+    $this->Breadcrumbs->add($type->title, [
+        'action' => 'index',
+        'type' => $type->alias,
+    ]);
+endif;
+
 $this->append('action-buttons');
     if (isset($type)):
         echo $this->Croogo->adminAction(__d('croogo', 'New %s', $type->title), [
