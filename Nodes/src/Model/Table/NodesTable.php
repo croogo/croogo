@@ -51,6 +51,11 @@ class NodesTable extends CroogoTable
                 ],
             ],
         ]);
+        $this->addBehavior('Croogo/Core.Copyable', [
+            'stripFields' => [
+                'model_taxonomies',
+            ],
+        ]);
 
         $this->belongsTo('Croogo/Users.Users');
         $this->belongsTo('Parent', [

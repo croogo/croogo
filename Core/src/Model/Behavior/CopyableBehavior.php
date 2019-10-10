@@ -3,11 +3,13 @@
 namespace Croogo\Core\Model\Behavior;
 
 use Cake\Datasource\EntityInterface;
+use Cake\Log\LogTrait;
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
+use PDOException;
 
 /**
  * Copyable Behavior class file.
@@ -33,6 +35,8 @@ use Croogo\Core\Croogo;
  */
 class CopyableBehavior extends Behavior
 {
+
+    use LogTrait;
 
 /**
  * Behavior settings
@@ -123,7 +127,9 @@ class CopyableBehavior extends Behavior
 
         $result = false;
         try {
-            $result = $this->_copyRecord();
+            $result = $this->_table->save($this->record, [
+                'associated' => true,
+            ]);
         } catch (PDOException $e) {
             $this->log('Error executing _copyRecord: ' . $e->getMessage());
         }
@@ -154,7 +160,7 @@ class CopyableBehavior extends Behavior
  * Removes any ignored associations, as defined in the model settings, from
  * the $this->contain array.
  *
- * @param object $contain Model object
+ * @param array $contain data
  * @return boolean
  */
     protected function _removeIgnored($contain)
@@ -226,7 +232,7 @@ class CopyableBehavior extends Behavior
  * on `Behavior.Copyable.convertData`
  *
  * @param object $Model Model object
- * @return array $this->record
+ * @return \Cake\ORM\Entity $this->record
  */
     protected function _convertData()
     {
@@ -266,9 +272,9 @@ class CopyableBehavior extends Behavior
  * HABTM join tables may contain extra information (sorting
  * order, etc).
  *
- * @param Model $table Model object
- * @param array $record
- * @return array modified $record
+ * @param \Cake\ORM\Table $table Table object
+ * @param \Cake\ORM\Entity $record
+ * @return \Cake\ORM\Entity Modified $record
  */
     protected function _convertHabtm(Table $table, $record)
     {
@@ -295,80 +301,6 @@ class CopyableBehavior extends Behavior
             }
         }
 
-        return $record;
-    }
-
-/**
- * Performs the actual creation and save.
- *
- * @param object $Model Model object
- * @return mixed
- */
-    protected function _copyRecord()
-    {
-        \Cake\Log\Log::error($this->record);
-        $saved = $this->_table->save($this->record);
-
-        if ($this->getConfig('masterKey')) {
-            $record = $this->_updateMasterKey();
-            $saved = $this->_table->save($record, [
-                'associated' => true,
-                'checkRules' => false,
-            ]);
-        }
-        return $saved;
-    }
-
-/**
- * Runs through to update the master key for deep copying.
- *
- * @param Model $Model
- * @return array
- */
-    protected function _updateMasterKey()
-    {
-        $table = $this->_table;
-        $record = $this->_table->find()
-            ->where([
-                $table->aliasField('id') => $this->record->id
-            ])
-            ->contain($this->contain)
-            ->first();
-
-        $this->_masterKey = $this->getConfig('masterKey');
-        $record = $this->_masterKeyLoop($record, $this->_originalId);
-        return $record;
-    }
-
-/**
- * Called by _updateMasterKey as part of the copying process for deep recursion.
- *
- * @param Model $record
- * @param array $id
- * @param int $id
- * @return array
- */
-    protected function _masterKeyLoop($record, $id)
-    {
-        $properties = $record->visibleProperties();
-
-        foreach ($properties as $property) {
-            if (is_array($record->{$property})) {
-                foreach ($record->{$property} as $innerKey => $innerVal) {
-                    if ($innerVal instanceof Entity) {
-                        $innerVal = $this->_masterKeyLoop($innerVal, $id);
-                    }
-                }
-            }
-
-            if ($record->{$property} instanceof Entity) {
-                $record->{$property} = $this->_masterKeyLoop($record->{$property}, $id);
-            }
-
-            if ($this->_masterKey == $property) {
-                $record->set($property, $id);
-            }
-        }
         return $record;
     }
 
@@ -406,7 +338,7 @@ class CopyableBehavior extends Behavior
  *
  * @param object $record Model object
  * @param array $record
- * @return array
+ * @return \Cake\ORM\Entity
  */
     protected function _stripFields($record)
     {

@@ -127,6 +127,13 @@ class NodesInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
+            ->addIndex([
+                'type', 'slug',
+            ], [
+                'name' => 'ix_nodes_slug_by_type',
+                'unique' => true,
+                'limit' => 190,
+            ])
             ->create();
     }
 

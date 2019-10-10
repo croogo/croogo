@@ -64,7 +64,6 @@ class TaxonomizableBehavior extends Behavior
             'propertyName' => 'node_type',
         ]);
         $this->_table->belongsToMany('Taxonomies', [
-
             'className' => 'Croogo/Taxonomy.Taxonomies',
             'through' => 'Croogo/Taxonomy.ModelTaxonomies',
             'foreignKey' => 'foreign_key',
