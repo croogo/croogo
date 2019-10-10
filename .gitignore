@@ -22,3 +22,5 @@ tmp/
 Core/webroot/bootstrap/
 Core/webroot/fontAwesome/
 Core/.sass-cache/
+composer.lock
+vendor/
