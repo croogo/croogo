@@ -193,10 +193,10 @@ class Router extends CakeRouter
     }
 
     /**
- * Setup Site.home_url
- *
- * @return void
- */
+     * Setup Site.home_url
+     *
+     * @return void
+     */
     public static function homepage()
     {
         $homeUrl = Configure::read('Site.home_url');
