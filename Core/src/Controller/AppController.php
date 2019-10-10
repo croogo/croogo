@@ -9,8 +9,8 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Http\ServerRequest;
+use Cake\Http\Response;
 use Cake\Event\Event;
-use Cake\Network\Response;
 use Cake\Utility\Hash;
 
 use Cake\View\Exception\MissingTemplateException;
