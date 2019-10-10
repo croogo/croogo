@@ -88,23 +88,6 @@ class CroogoComponentTest extends TestCase
     }
 
 /**
- * testRedirect
- *
- * @return void
- * @dataProvider redirectData
- */
-    public function testRedirect($expected, $url, $data = [], $indexUrl = [])
-    {
-        $this->controller->request->data = $data;
-        $this->controller->expects($this->once())
-            ->method('redirect')
-            ->with($this->equalTo($expected));
-        $CroogoComponent = new CroogoComponent(new ComponentRegistry());
-        $CroogoComponent->startup(new Event(null, $this->controller));
-        $CroogoComponent->redirect($url, null, true, $indexUrl);
-    }
-
-/**
  * redirectData
  *
  * @return array

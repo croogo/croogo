@@ -54,7 +54,7 @@ class TestCase extends CakeTestCase
         PluginManager::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
         Configure::write('Acl.database', 'test');
 
-        $this->previousPlugins = Plugin::isoaded();
+        $this->previousPlugins = Plugin::loaded();
     }
 
     public function tearDown()
@@ -62,7 +62,10 @@ class TestCase extends CakeTestCase
         parent::tearDown();
 
         // Unload all plugins that were loaded while running tests
-        PluginManager::unload(array_diff(Plugin::loaded(), $this->previousPlugins));
+        $diff = array_diff(Plugin::loaded(), $this->previousPlugins);
+        foreach ($diff as $plugin) {
+            PluginManager::unload($plugin);
+        }
     }
 
     public function assertQueryCount($count, Query $query, $message = '')

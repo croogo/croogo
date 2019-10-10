@@ -3,7 +3,7 @@
 namespace Croogo\Core\Test\TestCase\Controller\Component;
 
 use Cake\Controller\Controller;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest;
 use Croogo\Core\TestSuite\CroogoTestCase;
 
 class BulkProcessComponentTest extends CroogoTestCase
@@ -13,8 +13,8 @@ class BulkProcessComponentTest extends CroogoTestCase
 
     protected function _createController($data)
     {
-        $request = new Request();
-        $request->data = $data;
+        $request = new ServerRequest();
+        $request = $request->withParsedBody($data);
         $controller = new Controller($request);
         $controller->loadComponent('Croogo/Core.BulkProcess');
         $controller->startupProcess();
@@ -28,10 +28,10 @@ class BulkProcessComponentTest extends CroogoTestCase
     {
         $controller = $this->_createController([
             'Node' => [
-                'action' => 'copy',
                 1 => ['id' => 0],
                 2 => ['id' => 1],
             ],
+            'action' => 'copy',
         ]);
         $BulkProcess = $controller->BulkProcess;
         list($action, $ids) = $BulkProcess->getRequestVars('Node');
@@ -47,11 +47,11 @@ class BulkProcessComponentTest extends CroogoTestCase
         $controller = $this->_createController([
             'Node' => [
                 'checkAll' => 1,
-                'action' => 'publish',
                 1 => ['id' => 1],
                 2 => ['id' => 1],
                 3 => ['id' => 3],
             ],
+            'action' => 'publish',
         ]);
         $BulkProcess = $controller->BulkProcess;
         list($action, $ids) = $BulkProcess->getRequestVars('Node');

@@ -23,7 +23,7 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface
  */
     public function onCroogoStatusSetup($event)
     {
-        $event->data['publishing'][4] = 'Added by event handler';
+        $event->getData('publishing')[4] = 'Added by event handler';
     }
 
 /**
@@ -31,7 +31,7 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface
  */
     public function setUp()
     {
-        EventManager::instance()->attach($this);
+        EventManager::instance()->on($this);
         $this->CroogoStatus = new Status();
     }
 
@@ -40,7 +40,7 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface
  */
     public function tearDown()
     {
-        EventManager::instance()->detach($this);
+        EventManager::instance()->off($this);
         unset($this->CroogoStatus);
     }
 
@@ -68,7 +68,7 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface
     public function testStatuses()
     {
         $result = $this->CroogoStatus->statuses();
-        $this->assertTrue(count($result) >= 4);
+        $this->assertTrue(count($result) >= 3);
     }
 
 /**
@@ -86,14 +86,16 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface
  */
     public function modifyStatus($event)
     {
-        switch ($event->data['accessType']) {
+        switch ($event->getData('accessType')) {
             case 'webmaster':
-                if (!in_array(Status::PREVIEW, $event->data['values'])) {
-                    $event->data['values'][] = Status::PREVIEW;
+                $values = $event->getData('values');
+                if (!in_array(Status::PREVIEW, $values)) {
+                    $values[] = Status::PREVIEW;
+                    $event->setData('values', $values);
                 }
                 break;
             default:
-                $event->data['values'] = [null];
+                $event->setData('values', [null]);
                 break;
         }
     }

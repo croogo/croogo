@@ -2,12 +2,11 @@
 
 namespace Croogo\Taxonomy\Test\Fixture;
 
-use Croogo\Core\TestSuite\CroogoTestFixture;
+//use Croogo\Core\TestSuite\CroogoTestFixture;
+use Cake\TestSuite\Fixture\TestFixture;
 
-class TypeFixture extends CroogoTestFixture
+class TypeFixture extends TestFixture
 {
-
-    public $name = 'Type';
 
     public $fields = [
         'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],

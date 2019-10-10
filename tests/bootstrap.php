@@ -20,7 +20,7 @@ $findVendor = function () {
 };
 
 if (!defined('DS')) {
-	define('DS', DIRECTORY_SEPARATOR);
+    define('DS', DIRECTORY_SEPARATOR);
 }
 
 define('VENDOR', $findVendor());
@@ -48,12 +48,12 @@ require CORE_PATH . 'config' . DS . 'bootstrap.php';
 date_default_timezone_set('UTC');
 
 Configure::write('App', [
-	'namespace' => 'App',
-	'paths' => [
+    'namespace' => 'App',
+    'paths' => [
         'plugins' => [ROOT . DS . 'plugins' . DS],
         'templates' => [APP . 'Template' . DS],
         'locales' => [APP . 'Locale' . DS],
-	]
+    ]
 ]);
 Configure::write('debug', true);
 
@@ -64,23 +64,27 @@ $tmpDirectory->create(TMP . 'cache/persistent', 0777);
 $tmpDirectory->create(TMP . 'cache/views', 0777);
 
 $cache = [
-	'default' => [
-		'engine' => 'File'
-	],
-	'_cake_core_' => [
-		'className' => 'File',
-		'prefix' => 'croogo_core_myapp_cake_core_',
-		'path' => CACHE . 'persistent/',
-		'serialize' => true,
-		'duration' => '+10 seconds'
-	],
-	'_cake_model_' => [
-		'className' => 'File',
-		'prefix' => 'croogo_core_my_app_cake_model_',
-		'path' => CACHE . 'models/',
-		'serialize' => 'File',
-		'duration' => '+10 seconds'
-	]
+    'default' => [
+        'engine' => 'File'
+    ],
+    '_cake_core_' => [
+        'className' => 'File',
+        'prefix' => 'croogo_core_myapp_cake_core_',
+        'path' => CACHE . 'persistent/',
+        'serialize' => true,
+        'duration' => '+10 seconds'
+    ],
+    '_cake_model_' => [
+        'className' => 'File',
+        'prefix' => 'croogo_core_my_app_cake_model_',
+        'path' => CACHE . 'models/',
+        'serialize' => 'File',
+        'duration' => '+10 seconds'
+    ],
+    'cached_settings' => [
+        'engine' => 'File',
+        'groups' => ['settings'],
+    ],
 ];
 Cake\Cache\Cache::setConfig($cache);
 Configure::write('Session', [

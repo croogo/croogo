@@ -4,10 +4,14 @@ namespace Croogo\Core\Test\TestCase\View\Helper;
 use Cake\Http\ServerRequest;
 use Cake\Http\Response;
 use Cake\Routing\Router;
+use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\CroogoTestCase;
-use Croogo\Core\View\Helper\CroogoAppHelper;
+
+class CroogoAppHelper extends Helper
+{
+}
 
 class CroogoAppHelperTest extends CroogoTestCase
 {
@@ -42,7 +46,7 @@ class CroogoAppHelperTest extends CroogoTestCase
         $request = new ServerRequest();
         $this->View = new View($request, new Response());
         $this->AppHelper = new CroogoAppHelper($this->View);
-        $this->AppHelper->request = $request;
+        $this->AppHelper->getView()->setRequest($request);
     }
 
     public function tearDown()
