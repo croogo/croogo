@@ -2,9 +2,8 @@
 
 namespace Croogo\Core;
 
-use App\Model\Permission;
 use ArrayAccess;
-use Cake\Controller\Component\AuthComponent;
+use Cake\Core\Exception\Exception;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 
@@ -125,7 +124,7 @@ class Status implements ArrayAccess
             $Permission = TableRegistry::get('Acl.Permissions');
             try {
                 $allow = $Permission->check(['model' => 'Roles', 'foreign_key' => $roleId], 'controllers/Croogo\Nodes/Admin/Nodes/edit');
-            } catch (CakeException $e) {
+            } catch (Exception $e) {
                 Log::error($e->getMessage());
             }
         }

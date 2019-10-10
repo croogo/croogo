@@ -54,11 +54,11 @@ class UsersController extends AppController
 
         $this->set('user', $user);
 
-        if (!$this->request->is('post')) {
+        if (!$this->getRequest()->is('post')) {
             return;
         }
 
-        $user = $this->Users->register($user, $this->request->data());
+        $user = $this->Users->register($user, $this->getRequest()->getData());
         if (!$user) {
             $this->Flash->error(__d('croogo', 'The User could not be saved. Please, try again.'));
 
@@ -125,12 +125,12 @@ class UsersController extends AppController
  */
     public function forgot()
     {
-        if (!$this->request->is('post')) {
+        if (!$this->getRequest()->is('post')) {
             return;
         }
 
         $user = $this->Users
-            ->findByUsername($this->request->data('username'))
+            ->findByUsername($this->getRequest()->data('username'))
             ->first();
         if (!$user) {
             $this->Flash->error(__d('croogo', 'Invalid username.'));
@@ -144,7 +144,7 @@ class UsersController extends AppController
         }
 
         $options = [
-            'prefix' => $this->request->param('prefix'),
+            'prefix' => $this->getRequest()->getParam('prefix'),
         ];
         $success = $this->Users->resetPassword($user, $options);
         if (!$success) {
@@ -181,12 +181,12 @@ class UsersController extends AppController
 
         $this->set('user', $user);
 
-        if (!$this->request->is('put')) {
+        if (!$this->getRequest()->is('put')) {
             return;
         }
 
         // Change the password of the user entity
-        $user = $this->Users->changePasswordFromReset($user, $this->request->data());
+        $user = $this->Users->changePasswordFromReset($user, $this->getRequest()->getData());
 
         // Save the user with changed password
         $user = $this->Users->save($user);
@@ -209,8 +209,8 @@ class UsersController extends AppController
  */
     public function login()
     {
-        $session = $this->request->session();
-        if (!$this->request->is('post')) {
+        $session = $this->getRequest()->session();
+        if (!$this->getRequest()->is('post')) {
             $redirectUrl = $this->Auth->redirectUrl();
             if ($redirectUrl != '/' && !$session->check('Croogo.redirect')) {
                 $session->write('Croogo.redirect', $redirectUrl);
@@ -258,7 +258,7 @@ class UsersController extends AppController
     public function logout()
     {
         Croogo::dispatchEvent('Controller.Users.beforeLogout', $this);
-        $this->request->session()->delete('Croogo.redirect');
+        $this->getRequest()->session()->delete('Croogo.redirect');
 
         $this->Flash->success(__d('croogo', 'Log out successful.'), 'auth');
 

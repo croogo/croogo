@@ -1,11 +1,11 @@
 <?php
 namespace Croogo\Core\Test\TestCase\View\Helper;
 
-use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Routing\Router;
 use Cake\View\View;
+use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\View\Helper\CroogoAppHelper;
 
@@ -37,7 +37,7 @@ class CroogoAppHelperTest extends CroogoTestCase
     {
         parent::setUp();
 
-        Plugin::load('Croogo/Translate', ['autoload' => true, 'path' => '../Translate/']);
+        PluginManager::load('Croogo/Translate', ['autoload' => true, 'path' => '../Translate/']);
 
         $request = new Request();
         $this->View = new View($request, new Response());
@@ -49,7 +49,7 @@ class CroogoAppHelperTest extends CroogoTestCase
     {
         parent::tearDown();
 
-        Plugin::unload('Translate');
+        PluginManager::unload('Translate');
 
         unset($this->AppHelper->request, $this->AppHelper, $this->View);
     }

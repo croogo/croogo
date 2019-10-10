@@ -48,8 +48,8 @@ class LanguagesController extends AppController
  */
     public function select()
     {
-        $id = $this->request->getQuery('id');
-        $modelAlias = $this->request->getQuery('model');
+        $id = $this->getRequest()->getQuery('id');
+        $modelAlias = $this->getRequest()->getQuery('model');
         if ($id == null ||
             $modelAlias == null) {
             return $this->redirect(['action' => 'index']);
@@ -68,7 +68,7 @@ class LanguagesController extends AppController
     public function index()
     {
         $this->Crud->on('beforePaginate', function(Event $e) {
-            if (empty($this->request->getQuery('sort'))) {
+            if (empty($this->getRequest()->getQuery('sort'))) {
                 $e->getSubject()->query
                     ->orderDesc('status');
             }

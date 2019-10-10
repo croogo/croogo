@@ -7,9 +7,7 @@ use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
-use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
-use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 
 /**

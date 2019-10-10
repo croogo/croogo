@@ -1,7 +1,8 @@
 <?php
 namespace Croogo\Acl\Controller\Component\Auth;
 
-use App\Controller\Component\Auth\FormAuthenticate;
+use Cake\Auth\FormAuthenticate;
+use Cake\Controller\ComponentRegistry;
 
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using POST

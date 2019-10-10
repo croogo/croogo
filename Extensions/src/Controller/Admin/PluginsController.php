@@ -2,10 +2,10 @@
 
 namespace Croogo\Extensions\Controller\Admin;
 
+use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
 use Croogo\Core\PluginManager;
 use Croogo\Extensions\ExtensionsInstaller;
-use Cake\Core\Exception\Exception;
 
 /**
  * Extensions Plugins Controller
@@ -67,14 +67,16 @@ class PluginsController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Upload a new plugin'));
 
-        if (!empty($this->request->data)) {
-            $file = $this->request->data['Plugin']['file'];
-            unset($this->request->data['Plugin']['file']);
+        if ($this->getRequest()->is('post')) {
+            $data = $this->getRequest()->getData();
+            $file = $data['Plugin']['file'];
+            unset($data['Plugin']['file']);
+            $this->request = $this->getRequest()->withParsedBody($data);
 
             $Installer = new ExtensionsInstaller;
             try {
                 $Installer->extractPlugin($file['tmp_name']);
-            } catch (CakeException $e) {
+            } catch (Exception $e) {
                 $this->Flash->error($e->getMessage());
                 return $this->redirect(['action' => 'add']);
             }
@@ -89,7 +91,7 @@ class PluginsController extends AppController
  */
     public function delete($id)
     {
-        $plugin = $this->request->query('name');
+        $plugin = $this->getRequest()->query('name');
         if (!$plugin) {
             $this->Flash->error(__d('croogo', 'Invalid plugin'));
             return $this->redirect(['action' => 'index']);
@@ -118,7 +120,7 @@ class PluginsController extends AppController
  */
     public function toggle()
     {
-        $plugin = $this->request->getQuery('name');
+        $plugin = $this->getRequest()->getQuery('name');
         if (!$plugin) {
             $this->Flash->error(__d('croogo', 'Invalid plugin'));
             return $this->redirect(['action' => 'index']);
@@ -158,7 +160,7 @@ class PluginsController extends AppController
  */
     public function migrate()
     {
-        $plugin = $this->request->query('name');
+        $plugin = $this->getRequest()->query('name');
         if (!$plugin) {
             $this->Flash->error(__d('croogo', 'Invalid plugin'));
         } elseif ($this->_CroogoPlugin->migrate($plugin)) {
@@ -174,12 +176,12 @@ class PluginsController extends AppController
 /**
  * Move up a plugin in bootstrap order
  *
- * @throws CakeException
+ * @throws Exception
  */
     public function moveup()
     {
-        $plugin = $this->request->query('name');
-        $this->request->allowMethod('post');
+        $plugin = $this->getRequest()->query('name');
+        $this->getRequest()->allowMethod('post');
 
         if ($plugin === null) {
             throw new Exception(__d('croogo', 'Invalid plugin'));
@@ -201,12 +203,12 @@ class PluginsController extends AppController
 /**
  * Move down a plugin in bootstrap order
  *
- * @throws CakeException
+ * @throws Exception
  */
     public function movedown()
     {
-        $plugin = $this->request->query('name');
-        $this->request->allowMethod('post');
+        $plugin = $this->getRequest()->query('name');
+        $this->getRequest()->allowMethod('post');
 
         if ($plugin === null) {
             throw new Exception(__d('croogo', 'Invalid plugin'));

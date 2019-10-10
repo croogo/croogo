@@ -7,7 +7,7 @@ class TaxonomiesController extends AppController
 
     public function index()
     {
-        $vocabularyId = $this->request->getQuery('vocabulary_id');
+        $vocabularyId = $this->getRequest()->getQuery('vocabulary_id');
         $vocabulary = $this->Taxonomies->Vocabularies
             ->get($vocabularyId, [
                 'contain' => 'Types',
@@ -33,7 +33,7 @@ class TaxonomiesController extends AppController
 
         $this->set(compact('vocabulary', 'taxonomies', 'defaultType'));
 
-        if ($this->request->getQuery('links') || $this->request->getQuery('chooser')) {
+        if ($this->getRequest()->getQuery('links') || $this->getRequest()->getQuery('chooser')) {
             $this->render('chooser');
         }
     }
@@ -95,9 +95,9 @@ class TaxonomiesController extends AppController
     public function delete($id)
     {
         $taxonomy = $this->Taxonomies->get($id);
-        $vocabularyId = $this->request->getQuery('vocabulary_id');
+        $vocabularyId = $this->getRequest()->getQuery('vocabulary_id');
         $this->Taxonomy->ensureVocabularyIdExists($vocabularyId);
-        if ($this->request->is('post') && isset($taxonomy)) {
+        if ($this->getRequest()->is('post') && isset($taxonomy)) {
             $success = $this->Taxonomies->Terms->remove($taxonomy->term_id, $vocabularyId);
             if ($success) {
                 $this->Flash->success(__d('croogo', 'Taxonomy deleted successfully'));

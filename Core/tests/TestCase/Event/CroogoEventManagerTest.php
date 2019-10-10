@@ -4,12 +4,13 @@ namespace Croogo\Core\Test\TestCase\Event;
 use Cake\Cache\Cache;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\View\View;
 use Croogo\Core\Croogo;
 use Croogo\Core\Event\EventManager;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\TestSuite\TestCase;
 use Croogo\Nodes\Controller\Admin\NodesController;
@@ -34,9 +35,9 @@ class EventManagerTest extends TestCase
     {
         parent::setUp();
 
-        Plugin::unload('Example');
-        Plugin::load('Shops', ['events' => true, 'autoload' => true]);
-        Plugin::events();
+        PluginManager::unload('Example');
+        PluginManager::load('Shops', ['events' => true, 'autoload' => true]);
+        PluginManager::events();
         EventManager::loadListeners();
         $request = new Request();
         $response = new Response();
@@ -53,23 +54,23 @@ class EventManagerTest extends TestCase
     {
         parent::tearDown();
 
-        Plugin::unload('Shops');
+        PluginManager::unload('Shops');
     }
 
 /**
  * Indirectly test EventManager::detachPluginSubscribers()
- * triggerred by calling Plugin::unload(null)
+ * triggerred by calling PluginManager::unload(null)
  */
     public function testDetachPluginSubscribers()
     {
-        $loaded = Plugin::loaded('Shops');
+        $loaded = Plugin::isLoaded('Shops');
         $this->assertNotEmpty($loaded);
 
         $eventName = 'Controller.Users.activationFailure';
         $event = Croogo::dispatchEvent($eventName, $this->Users);
         $this->assertTrue($event->result, sprintf('Event: %s', $eventName));
 
-        Plugin::unload('Shops');
+        PluginManager::unload('Shops');
 
         $eventName = 'Controller.Users.activationFailure';
         $event = Croogo::dispatchEvent($eventName, $this->Users);

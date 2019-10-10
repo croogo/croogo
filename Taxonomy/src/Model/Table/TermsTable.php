@@ -138,7 +138,7 @@ class TermsTable extends CroogoTable
  */
     public function edit(Entity $entity, $vocabularyId)
     {
-        if ($entity->dirty('slug') && $this->slugExists($entity->slug)) {
+        if ($entity->isDirty('slug') && $this->slugExists($entity->slug)) {
             $edited = false;
         } else {
             $edited = $this->_save($entity, $vocabularyId);

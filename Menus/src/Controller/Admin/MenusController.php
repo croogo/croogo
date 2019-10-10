@@ -27,7 +27,7 @@ class MenusController extends AppController
     public function initialize()
     {
         parent::initialize();
-        if ($this->request->getParam('action') === 'toggle') {
+        if ($this->getRequest()->getParam('action') === 'toggle') {
             $this->Croogo->protectToggleAction();
         }
     }

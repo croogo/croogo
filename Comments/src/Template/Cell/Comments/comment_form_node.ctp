@@ -3,7 +3,7 @@ $captcha = (isset($captcha)) ? $captcha : false;
 ?>
 <div class="comment-form">
     <h6><?= h(__d('croogo', 'Add new comment')); ?></h6>
-    <?php if ($this->getRequest()->params['controller'] == 'Comments'): ?>
+    <?php if ($this->getRequest()->getParam('controller') == 'Comments'): ?>
         <p class="back">
             <?= $this->Html->link(__d('croogo', 'Go back to original post: %s', $title), $url->getUrl()); ?>
         </p>

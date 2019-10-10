@@ -14,20 +14,9 @@ trait RowLevelAclTrait
  */
     public function parentNode()
     {
-        //if (!$model->id && empty($model->data)) {
         if (!$this->id && !$this->isDirty()) {
             return null;
         } else {
-
-/*
-            $alias = $model->alias;
-            if ($model->id) {
-                $id = $model->id;
-            } else {
-                $id = $model->data[$alias][$model->primaryKey];
-            }
-*/
-
             $Table = TableRegistry::get($this->getSource());
             $alias = $this->getSource();
 

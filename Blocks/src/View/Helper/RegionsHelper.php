@@ -6,7 +6,6 @@ use Cake\Event\Event;
 use Cake\Log\LogTrait;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
-use Croogo\Blocks\Catalog;
 use Croogo\Blocks\Model\Entity\Block;
 use Croogo\Core\Croogo;
 

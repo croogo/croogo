@@ -1,7 +1,11 @@
 <?php
 namespace Croogo\Acl\Controller\Component\Auth;
 
-use App\Controller\Component\Auth\BaseAuthenticate;
+use Cake\Auth\BaseAuthenticate;
+use Cake\Controller\ComponentRegistry;
+use Cake\Core\Exception\Exception;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using Token
@@ -60,13 +64,13 @@ class TokenAuthenticate extends BaseAuthenticate
  *
  * @param ComponentRegistry $collection The Component collection used on this request.
  * @param array $settings Array of settings to use.
- * @throws CakeException
+ * @throws Exception
  */
     public function __construct(ComponentRegistry $collection, $settings)
     {
         parent::__construct($collection, $settings);
         if (empty($this->settings['parameter']) && empty($this->settings['header'])) {
-            throw new CakeException(__d('croogo', 'You need to specify token parameter and/or header'));
+            throw new Exception(__d('croogo', 'You need to specify token parameter and/or header'));
         }
     }
 
@@ -76,7 +80,7 @@ class TokenAuthenticate extends BaseAuthenticate
  * @param Response $response response object.
  * @return mixed.  False on login failure.  An array of User data on success.
  */
-    public function authenticate(Request $request, Response $response)
+    public function authenticate(ServerRequest $request, Response $response)
     {
         $user = $this->getUser($request);
         if (!$user) {
@@ -92,7 +96,7 @@ class TokenAuthenticate extends BaseAuthenticate
  * @param Request $request Request object.
  * @return mixed Either false or an array of user information
  */
-    public function getUser(Request $request)
+    public function getUser(ServerRequest $request)
     {
         if (!empty($this->settings['header'])) {
             $token = $request->header($this->settings['header']);

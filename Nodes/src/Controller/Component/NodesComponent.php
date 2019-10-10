@@ -3,8 +3,6 @@
 namespace Croogo\Nodes\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Core\App;
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;

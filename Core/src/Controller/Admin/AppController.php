@@ -141,7 +141,7 @@ class AppController extends CroogoAppController
     {
         $subject = $event->getSubject();
         if ($subject->success) {
-            $data = $this->request->getData();
+            $data = $this->getRequest()->getData();
             if (isset($data['_apply'])) {
                 $entity = $subject->entity;
                 return $this->redirect(['action' => 'edit', $entity->id]);

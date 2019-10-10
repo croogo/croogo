@@ -7,11 +7,11 @@ $this->Breadcrumbs->add(__d('croogo', 'Settings'),
     ->add(__d('croogo', 'Language'),
         ['plugin' => 'Croogo/Settings', 'controller' => 'Languages', 'action' => 'index']);
 
-if ($this->getRequest()->params['action'] == 'edit') {
+if ($this->getRequest()->getParam('action') == 'edit') {
     $this->Breadcrumbs->add($language->title);
 }
 
-if ($this->getRequest()->params['action'] == 'add') {
+if ($this->getRequest()->getParam('action') == 'add') {
     $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->getRequest()->getRequestTarget());
 }
 

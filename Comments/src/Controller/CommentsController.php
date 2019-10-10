@@ -130,9 +130,9 @@ class CommentsController extends AppController
         $continue = $this->_captcha($continue, $captchaProtection, $entity);
         $success = false;
         $comment = null;
-        if (!empty($this->request->data) && $continue === true) {
-            $comment = $this->Comments->newEntity($this->request->data);
-            $comment->ip = $this->request->clientIp();
+        if (!empty($this->getRequest()->data) && $continue === true) {
+            $comment = $this->Comments->newEntity($this->getRequest()->data);
+            $comment->ip = $this->getRequest()->clientIp();
             $comment->status = $autoApprove ? Status::APPROVED : Status::PENDING;
 
             $userData = [];
@@ -178,13 +178,13 @@ class CommentsController extends AppController
  */
     protected function _spamProtection($continue, $spamProtection, $node)
     {
-        if (!empty($this->request->data) &&
+        if (!empty($this->getRequest()->data) &&
             $spamProtection &&
             $continue === true) {
-            $this->Akismet->setCommentAuthor($this->request->data['Comment']['name']);
-            $this->Akismet->setCommentAuthorEmail($this->request->data['Comment']['email']);
-            $this->Akismet->setCommentAuthorURL($this->request->data['Comment']['website']);
-            $this->Akismet->setCommentContent($this->request->data['Comment']['body']);
+            $this->Akismet->setCommentAuthor($this->getRequest()->data['Comment']['name']);
+            $this->Akismet->setCommentAuthorEmail($this->getRequest()->data['Comment']['email']);
+            $this->Akismet->setCommentAuthorURL($this->getRequest()->data['Comment']['website']);
+            $this->Akismet->setCommentContent($this->getRequest()->data['Comment']['body']);
             if ($this->Akismet->isCommentSpam()) {
                 $continue = false;
                 $this->Flash->error(__d('croogo', 'Sorry, the comment appears to be spam.'));
@@ -205,7 +205,7 @@ class CommentsController extends AppController
  */
     protected function _captcha($continue, $captchaProtection, $node)
     {
-        if (!empty($this->request->data) &&
+        if (!empty($this->getRequest()->data) &&
             $captchaProtection &&
             $continue === true &&
             !$this->Recaptcha->verify($this->request)) {

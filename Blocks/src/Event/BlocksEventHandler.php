@@ -7,7 +7,6 @@ use Cake\Datasource\ModelAwareTrait;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\Locator\LocatorAwareTrait;
-use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
 use Croogo\Core\Utility\StringConverter;
 

@@ -124,7 +124,7 @@ class TermsController extends AppController
             ]);
             $taxonomies = $this->Terms->Taxonomies
                 ->find('list', [
-                    'idField' => 'id',
+                    'keyField' => 'id',
                     'valueField' => 'title',
                     'groupField' => 'vocabulary_id',
                 ])
@@ -143,7 +143,7 @@ class TermsController extends AppController
         }
 
         if ($request->is('post') || $request->is('put')) {
-            $term = $this->Terms->patchEntity($term, $request->data, [
+            $term = $this->Terms->patchEntity($term, $request->getData(), [
                 'associated' => 'Taxonomies',
             ]);
             if (isset($vocabularyId)) {
@@ -154,7 +154,7 @@ class TermsController extends AppController
             }
             if ($saved) {
                 $this->Flash->success(__d('croogo', 'Term saved successfuly.'));
-                if (isset($request->data['_apply'])) {
+                if ($request->getData('_apply')) {
                     return $this->redirect([
                         'action' => 'edit',
                         $term->id,
@@ -197,8 +197,8 @@ class TermsController extends AppController
                 ->first();
 
             $term = $existingTerm
-                ? $this->Terms->patchEntity($existingTerm, $request->data)
-                : $this->Terms->patchEntity($term, $request->data);
+                ? $this->Terms->patchEntity($existingTerm, $request->getData())
+                : $this->Terms->patchEntity($term, $request->getData());
 
             $taxonomy = $this->Terms->add($term, $vocabularyId);
             if ($taxonomy) {
@@ -206,7 +206,7 @@ class TermsController extends AppController
 
                 $redirectUrl = [
                     'action' => 'edit',
-                    $taxonomy->term_id,
+                    $term->id,
                     'vocabulary_id' => $vocabularyId,
                 ];
                 if (!$term->has('_apply')) {

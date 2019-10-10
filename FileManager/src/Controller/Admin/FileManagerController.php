@@ -93,7 +93,7 @@ class FileManagerController extends AppController
     {
         $this->folder = new Folder;
 
-        $path = $this->request->getQuery('path') ?: APP;
+        $path = $this->getRequest()->getQuery('path') ?: APP;
 
         $path = realpath($path) . DS;
         $regex = '/^' . preg_quote(realpath(ROOT), '/') . '/';
@@ -124,8 +124,8 @@ class FileManagerController extends AppController
      */
     public function editFile()
     {
-        if (!empty($this->request->getQuery('path'))) {
-            $path = $this->request->getQuery('path');
+        if (!empty($this->getRequest()->getQuery('path'))) {
+            $path = $this->getRequest()->getQuery('path');
             $absolutefilepath = $path;
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
@@ -142,8 +142,8 @@ class FileManagerController extends AppController
         $path = implode(DS, $pathE);
         $this->file = new File($absolutefilepath, true);
 
-        if (!empty($this->request->getData())) {
-            if ($this->file->write($this->request->getData('content'))) {
+        if (!empty($this->getRequest()->getData())) {
+            if ($this->file->write($this->getRequest()->getData('content'))) {
                 $this->Flash->success(__d('croogo', 'File saved successfully'));
             }
         }
@@ -163,7 +163,7 @@ class FileManagerController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Upload'));
 
-        $path = $this->request->getQuery('path') ?: APP;
+        $path = $this->getRequest()->getQuery('path') ?: APP;
         $this->set(compact('path'));
 
         if (isset($path) && !$this->FileManager->isDeletable($path)) {
@@ -172,7 +172,7 @@ class FileManagerController extends AppController
             return $this->redirect($this->referer());
         }
 
-        $postFile = $this->request->getData('file');
+        $postFile = $this->getRequest()->getData('file');
         if (isset($postFile['tmp_name']) &&
             is_uploaded_file($postFile['tmp_name'])
         ) {
@@ -193,8 +193,8 @@ class FileManagerController extends AppController
      */
     public function deleteFile()
     {
-        if (!empty($this->request->data['path'])) {
-            $path = $this->request->data['path'];
+        if (!empty($this->getRequest()->data['path'])) {
+            $path = $this->getRequest()->data['path'];
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
@@ -228,8 +228,8 @@ class FileManagerController extends AppController
      */
     public function deleteDirectory()
     {
-        if (!empty($this->request->data['path'])) {
-            $path = $this->request->data['path'];
+        if (!empty($this->getRequest()->data['path'])) {
+            $path = $this->getRequest()->data['path'];
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
@@ -263,7 +263,7 @@ class FileManagerController extends AppController
      */
     public function rename()
     {
-        $path = $this->request->query('path');
+        $path = $this->getRequest()->query('path');
         $pathFragments = array_filter(explode(DIRECTORY_SEPARATOR, $path));
 
         if (!$this->FileManager->isEditable($path)) {
@@ -272,11 +272,11 @@ class FileManagerController extends AppController
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if ($this->request->is('post') || $this->request->is('put')) {
-            if (!is_null($this->request->data('name')) &&
-                !empty($this->request->data['name'])
+        if ($this->getRequest()->is('post') || $this->getRequest()->is('put')) {
+            if (!is_null($this->getRequest()->data('name')) &&
+                !empty($this->getRequest()->data['name'])
             ) {
-                $newName = trim($this->request->data['name']);
+                $newName = trim($this->getRequest()->data['name']);
                 $oldName = array_pop($pathFragments);
                 $newPath = DIRECTORY_SEPARATOR .
                     implode(DIRECTORY_SEPARATOR, $pathFragments) .
@@ -307,7 +307,7 @@ class FileManagerController extends AppController
             $redirectUrl = ['controller' => 'FileManager', 'action' => 'browse'];
             return $this->redirect($redirectUrl);
         }
-        $this->request->data('name', array_pop($pathFragments));
+        $this->getRequest()->data('name', array_pop($pathFragments));
         $this->set('path', $path);
     }
 
@@ -319,8 +319,8 @@ class FileManagerController extends AppController
      */
     public function createDirectory()
     {
-        if (isset($this->request->query['path'])) {
-            $path = $this->request->query['path'];
+        if (isset($this->getRequest()->query['path'])) {
+            $path = $this->getRequest()->query['path'];
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
@@ -331,9 +331,9 @@ class FileManagerController extends AppController
             return $this->redirect($this->referer());
         }
 
-        if (!empty($this->request->data)) {
+        if (!empty($this->getRequest()->data)) {
             $this->folder = new Folder;
-            if ($this->folder->create($path . $this->request->data['name'])) {
+            if ($this->folder->create($path . $this->getRequest()->data['name'])) {
                 $this->Flash->success(__d('croogo', 'Directory created successfully.'));
                 $redirectUrl = $this->_browsePathUrl($path);
 
@@ -354,8 +354,8 @@ class FileManagerController extends AppController
      */
     public function createFile()
     {
-        if (isset($this->request->query['path'])) {
-            $path = $this->request->query['path'];
+        if (isset($this->getRequest()->query['path'])) {
+            $path = $this->getRequest()->query['path'];
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
@@ -366,8 +366,8 @@ class FileManagerController extends AppController
             return $this->redirect($this->referer());
         }
 
-        if (!empty($this->request->data)) {
-            if (file_put_contents($path . $this->request->data['name'], $this->request->data['content'])) {
+        if (!empty($this->getRequest()->data)) {
+            if (file_put_contents($path . $this->getRequest()->data['name'], $this->getRequest()->data['content'])) {
                 $this->Flash->success(__d('croogo', 'File created successfully.'));
                 $redirectUrl = $this->_browsePathUrl($path);
 

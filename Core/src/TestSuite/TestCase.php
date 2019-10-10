@@ -4,10 +4,11 @@ namespace Croogo\Core\TestSuite;
 
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\ORM\Query;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Core\Event\EventManager;
 use Croogo\Core\TestSuite\Constraint\QueryCount;
 use PHPUnit_Util_InvalidArgumentHelper;
@@ -49,11 +50,11 @@ class TestCase extends CakeTestCase
         EventManager::instance(new EventManager);
         Configure::write('EventHandlers', []);
 
-        Plugin::unload('Croogo/Install');
-        Plugin::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
+        PluginManager::unload('Croogo/Install');
+        PluginManager::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
         Configure::write('Acl.database', 'test');
 
-        $this->previousPlugins = Plugin::loaded();
+        $this->previousPlugins = Plugin::isoaded();
     }
 
     public function tearDown()
@@ -61,7 +62,7 @@ class TestCase extends CakeTestCase
         parent::tearDown();
 
         // Unload all plugins that were loaded while running tests
-        Plugin::unload(array_diff(Plugin::loaded(), $this->previousPlugins));
+        PluginManager::unload(array_diff(Plugin::loaded(), $this->previousPlugins));
     }
 
     public function assertQueryCount($count, Query $query, $message = '')

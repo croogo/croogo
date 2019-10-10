@@ -39,8 +39,8 @@ class CommentsCell extends Cell
             $node->id,
         ];
 
-        if (isset($this->request->params['pass'][2])) {
-            $formUrl[] = $this->request->params['pass'][2];
+        if (isset($this->getRequest()->getParam('pass')[2])) {
+            $formUrl[] = $this->getRequest()->getParam('pass')[2];
         }
 
         $this->set('title', $node->title);
@@ -48,6 +48,6 @@ class CommentsCell extends Cell
         $this->set('formUrl', $formUrl);
         $this->set('comment', $comment ?: $this->Comments->newEntity());
         $this->set('captcha', $type->comment_captcha);
-        $this->set('loggedInUser', $this->request->session()->read('Auth.User'));
+        $this->set('loggedInUser', $this->getRequest()->session()->read('Auth.User'));
     }
 }

@@ -22,9 +22,9 @@ class CachesController extends AppController
     {
         $caches = [];
         $configured = Cache::configured();
-        if ($this->request->getquery('sort') === 'title') {
+        if ($this->getRequest()->getquery('sort') === 'title') {
             sort($configured);
-            if ($this->request->getQuery('direction') !== 'asc') {
+            if ($this->getRequest()->getQuery('direction') !== 'asc') {
                 $configured = array_reverse($configured);
             }
         }
@@ -37,7 +37,7 @@ class CachesController extends AppController
 
     public function clear()
     {
-        $config = $this->request->getQuery('config') ?: 'all';
+        $config = $this->getRequest()->getQuery('config') ?: 'all';
         if ($config === 'all') {
             $result = Cache::clearAll();
         } else {
@@ -48,7 +48,7 @@ class CachesController extends AppController
         } else {
             $this->Flash->warning(__d('croogo', 'Failed clearing cache'));
         }
-        return $this->redirect($this->request->referer());
+        return $this->redirect($this->getRequest()->referer());
     }
 
 }

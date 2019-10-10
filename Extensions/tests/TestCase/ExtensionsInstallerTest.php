@@ -120,7 +120,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
  * testGetPluginNameInvalid
  *
  * @return void
- * @expectedException CakeException
+ * @expectedException Exception
  */
     public function testGetPluginNameInvalid()
     {
@@ -177,7 +177,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
 /**
  * testComposerInstall
  *
- * @expectedException CakeException
+ * @expectedException Exception
  */
     public function testComposerInstall()
     {

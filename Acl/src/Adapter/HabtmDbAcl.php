@@ -5,7 +5,6 @@ namespace Croogo\Acl\Adapter;
 use Acl\Adapter\CachedDbAcl;
 use Cake\Controller\Component;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Hash;
 
 /**
  * HabtmDbAcl implements an ACL control system in the database like DbAcl with

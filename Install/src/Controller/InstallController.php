@@ -127,9 +127,9 @@ class InstallController extends Controller
 
         Installer::setSecuritySalt(ROOT, new BufferIO());
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             $InstallManager = new InstallManager();
-            $result = $InstallManager->createDatabaseFile($this->request->getData());
+            $result = $InstallManager->createDatabaseFile($this->getRequest()->getData());
             if ($result !== true) {
                 $this->Flash->error($result);
             } else {
@@ -239,12 +239,12 @@ class InstallController extends Controller
 
         $user = $this->Users->get(1);
 
-        if ($this->request->is('put')) {
-            $this->Users->patchEntity($user, $this->request->getData());
+        if ($this->getRequest()->is('put')) {
+            $this->Users->patchEntity($user, $this->getRequest()->getData());
             $install = new InstallManager();
             $result = $install->createAdminUser($user);
             if ($result === true) {
-                $this->request->getSession()->write('Install.user', $user);
+                $this->getRequest()->getSession()->write('Install.user', $user);
 
                 return $this->redirect(['action' => 'finish']);
             }
@@ -270,8 +270,8 @@ class InstallController extends Controller
         $install = new InstallManager();
         $install->installCompleted();
 
-        $this->set('user', $this->request->getSession()->read('Install.user'));
-        $this->request->getSession()->destroy();
+        $this->set('user', $this->getRequest()->getSession()->read('Install.user'));
+        $this->getRequest()->getSession()->destroy();
         $this->set('onStep', 4);
         Cache::clearAll();
     }
