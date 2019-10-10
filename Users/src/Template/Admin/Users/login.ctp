@@ -36,7 +36,7 @@ $footer .= $this->Form->button(__d('croogo', 'Log In'), ['class' => 'btn btn-pri
 $formEnd = $this->Form->end();
 
 ?>
-<div class="card rounded-plus bg-faded w-25">
+<div class="card rounded-plus bg-faded">
     <div class="card-header">
         <h5 class="card-title"><?= $this->fetch('title') ?></h5>
     </div>
