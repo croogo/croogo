@@ -23,7 +23,7 @@ if (count($taxonomies) > 0):
             'help' => $error,
             'templates' => $templates
         ];
-        if ($currVocabulary->tags === true) {
+        if ($currVocabulary->tags === true):
             $inputOptions += [
                 'data-tags' => true,
                 'data-token-separators' => json_encode([
@@ -31,7 +31,12 @@ if (count($taxonomies) > 0):
                     ' ',
                 ]),
             ];
-        }
+        endif;
+        if ($currVocabulary->required === true):
+            $inputOptions += [
+                'required' => true,
+            ];
+        endif;
         echo $this->Form->input('taxonomy_data.' . $vocabularyId, $inputOptions);
     endforeach;
 endif;
