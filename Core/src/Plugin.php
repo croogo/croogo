@@ -29,4 +29,10 @@ class Plugin extends BasePlugin
         }
     }
 
+    public function routes($routes)
+    {
+        parent::routes($routes);
+        Router::homepage();
+    }
+
 }

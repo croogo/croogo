@@ -11,6 +11,7 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router as CakeRouter;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use Croogo\Core\Utility\StringConverter;
 
 /**
  * Router
@@ -196,14 +197,13 @@ class Router extends CakeRouter
  *
  * @return void
  */
-//    public static function routes()
-//    {
-//        $homeUrl = Configure::read('Site.home_url');
-//        if ($homeUrl && strpos($homeUrl, ':') !== false) {
-//            $converter = new StringConverter();
-//            $url = $converter->linkStringToArray($homeUrl);
-//            Router::connect('/', $url, [], ['promote' => true]);
-//        }
-//        Plugin::routes();
-//    }
+    public static function homepage()
+    {
+        $homeUrl = Configure::read('Site.home_url');
+        if ($homeUrl && strpos($homeUrl, ':') !== false) {
+            $converter = new StringConverter();
+            $url = $converter->linkStringToArray($homeUrl);
+            Router::connect('/', $url, [], ['promote' => true]);
+        }
+    }
 }
