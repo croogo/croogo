@@ -237,8 +237,9 @@ class CroogoFormHelper extends FormHelper
     {
         $displayKey = $displayValue = null;
         $request = $this->getView()->getRequest();
-        if ($request->getData($this->defaultModel)[$field]) {
-            $displayKey = $request->getData($this->defaultModel)[$field];
+        list( , $table) = pluginSplit($this->context()->entity()->getSource());
+        if (isset($request->getData($table)[$field])) {
+            $displayKey = $request->getData($table)[$field];
         }
 
         if (substr($field, -3) === '_id') {
