@@ -24,10 +24,10 @@ class TrackableBehaviorTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.Croogo/Core.trackable',
-//		'plugin.croogo/users.user',
-//		'plugin.croogo/users.role',
-//		'plugin.croogo/settings.setting',
+//		'plugin.Croogo/Core.Trackable',
+//		'plugin.Croogo/Users.User',
+//		'plugin.Croogo/Users.Role',
+//		'plugin.Croogo/Settings.Setting',
     ];
 
     public function setUp()

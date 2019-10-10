@@ -28,7 +28,7 @@ class EventManagerTest extends TestCase
 {
 
     public $fixtures = [
-        'plugin.croogo/core.settings',
+        'plugin.Croogo/Core.Settings',
     ];
 
     public function setUp()

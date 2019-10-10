@@ -17,12 +17,12 @@ class CroogoHelperTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.croogo\users.aco',
-//		'plugin.croogo\users.aro',
-//		'plugin.croogo\users.aros_aco',
-//		'plugin.croogo\settings.setting',
-//		'plugin.croogo\users.role',
-//		'plugin.taxonomy.type',
+//		'plugin.Croogo/Users.Aco',
+//		'plugin.Croogo/Users.Aro',
+//		'plugin.Croogo/Users.ArosAco',
+//		'plugin.Croogo/Settings.Setting',
+//		'plugin.Croogo/Users.Role',
+//		'plugin.Croogo/Taxonomy.Type',
     ];
 
 /**

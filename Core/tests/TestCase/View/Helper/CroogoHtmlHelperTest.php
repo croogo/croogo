@@ -13,7 +13,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.taxonomy.type',
+//		'plugin.Croogo/Taxonomy.Type',
     ];
 
     /**

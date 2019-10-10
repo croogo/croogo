@@ -10,10 +10,10 @@ class CommentableBehaviorTest extends CroogoTestCase
     public $setupSettings = false;
 
     public $fixtures = [
-        'plugin.comments.comment',
-        'plugin.nodes.node',
-        'plugin.users.user',
-        'plugin.taxonomy.type',
+        'plugin.Croogo/Comments.Comment',
+        'plugin.Croogo/Nodes.Node',
+        'plugin.Croogo/Users.User',
+        'plugin.Croogo/Taxonomy.Type',
     ];
 
     public function setUp()

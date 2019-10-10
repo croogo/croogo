@@ -10,7 +10,7 @@ class RegionsHelperTest extends TestCase
 {
 
     public $fixtures = [
-        'plugin.croogo/blocks.block',
+        'plugin.Croogo/Blocks.Block',
     ];
 
     /**

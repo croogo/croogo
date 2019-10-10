@@ -39,9 +39,9 @@ class CroogoAppControllerTest extends IntegrationTestCase
 {
 
     public $fixtures = [
-//		'plugin.croogo/settings.setting',
-//		'plugin.taxonomy.type',
-//		'plugin.croogo/nodes.node',
+//		'plugin.Croogo/Settings.Setting',
+//		'plugin.Croogo/Taxonomy.Type',
+//		'plugin.Croogo/Nodes.Node',
     ];
 
     public function setUp()

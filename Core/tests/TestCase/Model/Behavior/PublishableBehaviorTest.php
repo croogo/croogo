@@ -8,8 +8,8 @@ class PublishableBehaviorTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.croogo\settings.setting',
-//		'plugin.Croogo\Core.order_record',
+//		'plugin.Croogo/Settings.Setting',
+//		'plugin.Croogo/Core.OrderRecord',
     ];
 
 /**

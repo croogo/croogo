@@ -10,7 +10,7 @@ use Croogo\Core\TestSuite\TestCase;
 class SettingsTableTest extends TestCase
 {
     public $fixtures = [
-        'plugin.croogo/core.settings',
+        'plugin.Croogo/Core.Settings',
     ];
 
     public function setUp()

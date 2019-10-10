@@ -9,9 +9,9 @@ class InstallTest extends CroogoTestCase
 {
 
     public $fixtures = [
-        'plugin.users.aro',
-        'plugin.install.install_user',
-        'plugin.install.install_role',
+        'plugin.Croogo/Users.Aro',
+        'plugin.Croogo/Install.InstallUser',
+        'plugin.Croogo/Install.InstallRole',
     ];
 
     public function setUp()

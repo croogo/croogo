@@ -9,11 +9,11 @@ class AclPermissionTest extends CroogoTestCase
 {
 
     public $fixtures = [
-        'plugin.users.aro',
-        'plugin.users.aco',
-        'plugin.users.aros_aco',
-        'plugin.users.role',
-        'plugin.users.user',
+        'plugin.Croogo/Users.Aro',
+        'plugin.Croogo/Users.Aco',
+        'plugin.Croogo/Users.ArosAco',
+        'plugin.Croogo/Users.Role',
+        'plugin.Croogo/Users.User',
     ];
 
 /**
