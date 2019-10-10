@@ -10,6 +10,7 @@ use Cake\Network\Session;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Hash;
 use Croogo\Core\Configure\CroogoJsonReader;
+use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\CroogoTestFixture;
 
 /**
@@ -66,7 +67,7 @@ class CroogoControllerTestCase extends TestCase
             $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         }
 
-        Plugin::unload('Install');
+        PluginManager::unload('Install');
 
         /**
          * Thease plugins are being loaded in the test bootstrap file

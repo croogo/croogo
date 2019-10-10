@@ -80,7 +80,7 @@ $cache = [
 		'duration' => '+10 seconds'
 	]
 ];
-Cake\Cache\Cache::config($cache);
+Cake\Cache\Cache::setConfig($cache);
 Cake\Core\Configure::write('Session', [
     'defaults' => 'php'
 ]);
@@ -90,7 +90,7 @@ if (!getenv('db_class')) {
     putenv('db_class=Cake\Database\Driver\Sqlite');
     putenv('db_dsn=sqlite::memory:');
 }
-ConnectionManager::config('test', [
+ConnectionManager::setConfig('test', [
     'className' => 'Cake\Database\Connection',
     'driver' => getenv('db_class'),
     'dsn' => getenv('db_dsn'),
@@ -99,7 +99,7 @@ ConnectionManager::config('test', [
     'password' => getenv('db_password'),
     'timezone' => 'UTC'
 ]);
-ConnectionManager::config('test_migrations', [
+ConnectionManager::setConfig('test_migrations', [
     'className' => 'Cake\Database\Connection',
     'driver' => getenv('db_class'),
     'dsn' => getenv('db_dsn'),
@@ -122,5 +122,3 @@ Cake\Routing\DispatcherFactory::add('Routing');
 Cake\Routing\DispatcherFactory::add('ControllerFactory');
 
 class_alias('Croogo\Core\TestSuite\TestCase', 'Croogo\Core\TestSuite\CroogoTestCase');
-
-Plugin::routes();

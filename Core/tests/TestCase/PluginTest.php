@@ -6,7 +6,7 @@ use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\TestCase;
 
 class PluginTest extends TestCase
@@ -355,16 +355,16 @@ class PluginTest extends TestCase
     public function testUsedBy()
     {
         Cache::delete('pluginDeps', 'cached_settings');
-        Plugin::load('Widgets');
-        Plugin::load('Editors');
-        Plugin::load('Articles');
-        Plugin::cacheDependencies();
+        PluginManager::load('Widgets');
+        PluginManager::load('Editors');
+        PluginManager::load('Articles');
+        PluginManager::cacheDependencies();
         $usedBy = $this->plugin->usedBy('Widgets');
         $this->assertTrue(in_array('Articles', $usedBy));
         $this->assertTrue(in_array('Editors', $usedBy));
-        Plugin::unload('Articles');
-        Plugin::unload('Editors');
-        Plugin::unload('Widgets');
+        PluginManager::unload('Articles');
+        PluginManager::unload('Editors');
+        PluginManager::unload('Widgets');
     }
 
     /**

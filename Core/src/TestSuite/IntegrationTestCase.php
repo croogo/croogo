@@ -4,12 +4,13 @@ namespace Croogo\Core\TestSuite;
 
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Datasource\EntityInterface;
 use Cake\Network\Request;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Core\Event\EventManager;
 use Croogo\Core\TestSuite\Constraint\EntityHasProperty;
 use PHPUnit_Util_InvalidArgumentHelper;
@@ -51,7 +52,7 @@ class IntegrationTestCase extends CakeIntegrationTestCase
         EventManager::instance(new EventManager);
         Configure::write('EventHandlers', []);
 
-        Plugin::unload('Croogo/Install');
+        PluginManager::unload('Croogo/Install');
         Plugin::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
         Configure::write('Acl.database', 'test');
 
@@ -67,7 +68,7 @@ class IntegrationTestCase extends CakeIntegrationTestCase
         parent::tearDown();
 
         // Unload all plugins that were loaded while running tests
-        Plugin::unload(array_diff(Plugin::loaded(), $this->previousPlugins));
+        PluginManager::unload(array_diff(Plugin::loaded(), $this->previousPlugins));
     }
 
 /**
