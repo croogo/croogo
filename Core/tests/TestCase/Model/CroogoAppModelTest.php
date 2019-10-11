@@ -30,12 +30,12 @@ class CroogoAppModelTest extends CroogoTestCase
  * @var array
  */
     public $fixtures = [
-//		'plugin.croogo\users.aco',
-//		'plugin.croogo\users.aro',
-//		'plugin.croogo\users.aros_aco',
-//		'plugin.croogo\users.role',
-//		'plugin.croogo\users.user',
-//		'plugin.croogo\settings.setting',
+//		'plugin.Croogo/Users.Aco',
+//		'plugin.Croogo/Users.Aro',
+//		'plugin.Croogo/Users.ArosAco',
+//		'plugin.Croogo/Users.Role',
+//		'plugin.Croogo/Users.User',
+//		'plugin.Croogo/Settings.Setting',
     ];
 
 /**

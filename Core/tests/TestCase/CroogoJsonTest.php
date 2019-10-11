@@ -8,7 +8,7 @@ class CroogoJsonTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.croogo/settings.setting',
+//		'plugin.Croogo/Settings.Setting',
     ];
 
 /**

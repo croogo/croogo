@@ -14,7 +14,7 @@ class CroogoTest extends TestCase
 {
 
     public $fixtures = [
-//		'plugin.croogo/settings.setting',
+//		'plugin.Croogo/Settings.Setting',
     ];
 
     public function testCrossPluginHooks()

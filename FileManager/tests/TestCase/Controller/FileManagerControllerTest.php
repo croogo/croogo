@@ -24,18 +24,18 @@ class FileManagerControllerTest extends CroogoControllerTestCase
  * @var array
  */
     public $fixtures = [
-        'plugin.users.aco',
-        'plugin.users.aro',
-        'plugin.users.aros_aco',
-        'plugin.settings.setting',
-        'plugin.users.role',
-        'plugin.blocks.block',
-        'plugin.nodes.node',
-        'plugin.menus.menu',
-        'plugin.menus.link',
-        'plugin.taxonomy.type',
-        'plugin.taxonomy.types_vocabulary',
-        'plugin.taxonomy.vocabulary',
+        'plugin.Croogo/Users.Aco',
+        'plugin.Croogo/Users.Aro',
+        'plugin.Croogo/Users.ArosAco',
+        'plugin.Croogo/Settings.Setting',
+        'plugin.Croogo/Users.Role',
+        'plugin.Croogo/Blocks.Block',
+        'plugin.Croogo/Nodes.Node',
+        'plugin.Croogo/Menus.Menu',
+        'plugin.Croogo/Menus.Link',
+        'plugin.Croogo/Taxonomy.Type',
+        'plugin.Croogo/Taxonomy.TypesVocabulary',
+        'plugin.Croogo/Taxonomy.Vocabulary',
     ];
 
 /**

@@ -10,7 +10,7 @@ class UrlBehaviorTest extends CroogoTestCase
 {
 
     public $fixtures = [
-        'plugin.croogo\core.things'
+        'plugin.Croogo/Core.Things'
     ];
 
 /**

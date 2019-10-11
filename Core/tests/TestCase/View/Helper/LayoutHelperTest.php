@@ -15,12 +15,12 @@ class LayoutHelperTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.croogo\users.user',
-//		'plugin.croogo\users.role',
-//		'plugin.croogo\settings.setting',
-//		'plugin.taxonomy.type',
-//		'plugin.taxonomy.vocabulary',
-//		'plugin.taxonomy.types_vocabulary',
+//		'plugin.Croogo/Users.User',
+//		'plugin.Croogo/Users.Role',
+//		'plugin.Croogo/Settings.Setting',
+//		'plugin.Croogo/Taxonomy.Type',
+//		'plugin.Croogo/Taxonomy.Vocabulary',
+//		'plugin.Croogo/Taxonomy.TypesVocabulary',
     ];
 
 /**

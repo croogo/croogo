@@ -10,7 +10,7 @@ class ApiRouteTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.croogo\settings.setting',
+//		'plugin.Croogo/Settings.Setting',
     ];
 
     public function testParse()

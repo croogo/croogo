@@ -8,13 +8,13 @@ class CommentTest extends CroogoTestCase
 {
 
     public $fixtures = [
-        'plugin.comments.comment',
-        'plugin.meta.meta',
-        'plugin.nodes.node',
-        'plugin.taxonomy.model_taxonomy',
-        'plugin.taxonomy.taxonomy',
-        'plugin.taxonomy.type',
-        'plugin.users.user',
+        'plugin.Croogo/Comments.Comment',
+        'plugin.Croogo/Meta.Meta',
+        'plugin.Croogo/Nodes.Node',
+        'plugin.Croogo/Taxonomy.ModelTaxonomy',
+        'plugin.Croogo/Taxonomy.Taxonomy',
+        'plugin.Croogo/Taxonomy.Type',
+        'plugin.Croogo/Users.User',
     ];
 
     public $Comment;

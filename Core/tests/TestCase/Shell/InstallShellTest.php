@@ -55,7 +55,7 @@ class InstallShellTest extends CroogoTestCase
  * @var array
  */
     public $fixtures = [
-//		'plugin.croogo\settings.setting',
+//		'plugin.Croogo/Settings.Setting',
     ];
 
 /**

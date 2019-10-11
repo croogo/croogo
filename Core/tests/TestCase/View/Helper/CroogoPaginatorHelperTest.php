@@ -12,7 +12,7 @@ class CroogoPaginatorHelperTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.taxonomy.type',
+//		'plugin.Croogo/Taxonomy.Type',
     ];
 
     public function setUp()

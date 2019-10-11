@@ -26,17 +26,17 @@ class CroogoComponentTest extends TestCase
 {
 
     public $fixtures = [
-//		'plugin.croogo/users.aco',
-//		'plugin.croogo/users.aro',
-//		'plugin.croogo/users.aros_aco',
-//		'plugin.croogo/settings.setting',
-//		'plugin.croogo/menus.menu',
-//		'plugin.croogo/menus.link',
-//		'plugin.croogo/users.role',
-//		'plugin.croogo/taxonomy.type',n
-//		'plugin.croogo/taxonomy.vocabulary',
-//		'plugin.croogo/taxonomy.types_vocabulary',
-//		'plugin.croogo/nodes.node',
+//		'plugin.Croogo/Users.Aco',
+//		'plugin.Croogo/Users.Aro',
+//		'plugin.Croogo/Users.ArosAco',
+//		'plugin.Croogo/Settings.Setting',
+//		'plugin.Croogo/Menus.Menu',
+//		'plugin.Croogo/Menus.Link',
+//		'plugin.Croogo/Users.Role',
+//		'plugin.Croogo/Taxonomy.Type',
+//		'plugin.Croogo/Taxonomy.Vocabulary',
+//		'plugin.Croogo/Taxonomy.TypesVocabulary',
+//		'plugin.Croogo/Nodes.Node',
     ];
 
     public $component = null;

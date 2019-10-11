@@ -21,12 +21,12 @@ class AclFilterComponentTest extends CroogoTestCase
 {
 
     public $fixtures = [
-        'plugin.users.aro',
-        'plugin.users.aco',
-        'plugin.users.aros_aco',
-        'plugin.users.user',
-        'plugin.users.role',
-        'plugin.settings.setting',
+        'plugin.Croogo/Users.Aro',
+        'plugin.Croogo/Users.Aco',
+        'plugin.Croogo/Users.ArosAco',
+        'plugin.Croogo/Users.User',
+        'plugin.Croogo/Users.Role',
+        'plugin.Croogo/Settings.Setting',
     ];
 
     public function testAllowedActions()
