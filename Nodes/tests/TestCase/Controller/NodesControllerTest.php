@@ -67,7 +67,7 @@ class NodesControllerTest extends IntegrationTestCase
 
     public function testViewFallback()
     {
-        Plugin::load('Mytheme');
+        PluginManager::load('Mytheme');
         Configure::write('Site.theme', 'Mytheme');
 
         $this->get('/node');
