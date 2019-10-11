@@ -4,7 +4,7 @@ namespace Croogo\Nodes\Test\TestCase\Controller;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Event\EventManager;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\IntegrationTestCase;
 
 /**
@@ -42,8 +42,6 @@ class NodesControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Plugin::routes();
-        Plugin::events();
         EventManager::loadListeners();
 
         $this->Nodes = TableRegistry::get('Croogo/Nodes.Nodes');
