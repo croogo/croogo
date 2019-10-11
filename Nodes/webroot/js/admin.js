@@ -14,7 +14,7 @@ var Nodes = {};
  */
 Nodes.documentReady = function () {
   Admin.toggleRowSelection('#NodesCheckAll');
-}
+};
 
 Nodes.confirmProcess = function (event) {
   var $el = $(event.currentTarget);
@@ -37,7 +37,7 @@ Nodes.confirmProcess = function (event) {
     }
   }
   return false;
-}
+};
 
 /**
  * document ready

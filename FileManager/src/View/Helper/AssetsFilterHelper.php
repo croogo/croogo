@@ -5,47 +5,51 @@ namespace Croogo\FileManager\View\Helper;
 use Cake\Event\Event;
 use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
-use Cake\View\View;
 use Cake\View\Helper;
+use Cake\View\View;
 use Croogo\Core\Utility\StringConverter;
 
-class AssetsFilterHelper extends Helper {
+class AssetsFilterHelper extends Helper
+{
 
     use LogTrait;
 
-    public $helpers = array(
+    public $helpers = [
         'Html',
         'Croogo/Nodes.Nodes',
-    );
+    ];
 
-    public function __construct(View $view, $settings = array()) {
+    public function __construct(View $view, $settings = [])
+    {
         parent::__construct($view);
         $this->_setupEvents();
     }
 
-    protected function _setupEvents() {
-        $events = array(
-            'Helper.Layout.beforeFilter' => array(
+    protected function _setupEvents()
+    {
+        $events = [
+            'Helper.Layout.beforeFilter' => [
                 'callable' => 'filter', 'passParams' => true,
-            ),
-        );
+            ],
+        ];
         $eventManager = $this->_View->getEventManager();
         foreach ($events as $name => $config) {
             $eventManager->on($name, $config, [$this, 'filter']);
         }
     }
 
-    public function filter(Event $event) {
+    public function filter(Event $event)
+    {
         $content =& $event->result['content'];
         $options =& $event->result['options'];
         $converter = new StringConverter();
-        $conditions = array();
+        $conditions = [];
         $identifier = '';
         if (isset($options['model']) && isset($options['id'])) {
-            $conditions = array(
+            $conditions = [
                 'AssetUsages.model' => $options['model'],
                 'AssetUsages.foreign_key' => $options['id'],
-            );
+            ];
             $identifier = $options['model'] . '.' . $options['id'];
         }
 
@@ -62,8 +66,10 @@ class AssetsFilterHelper extends Helper {
                 ->cache('asset_filtered_' . $assetId, 'nodes')
                 ->first();
             if (!$assetUsage) {
-                $this->log(sprintf('%s - Asset not found for %s',
-                    $identifier, $tagMatches[0][$i]
+                $this->log(sprintf(
+                    '%s - Asset not found for %s',
+                    $identifier,
+                    $tagMatches[0][$i]
                 ));
                 $regex = '/' . preg_quote($tagMatches[0][$i]) . '/';
                 $content = preg_replace($regex, '', $content);
@@ -79,7 +85,8 @@ class AssetsFilterHelper extends Helper {
         return $content;
     }
 
-    public function afterSetNode() {
+    public function afterSetNode()
+    {
         $body = $this->Nodes->field('body');
         //$body = $this->filter($body, array(
         //    'model' => 'Node', 'id' => $this->Nodes->field('id')
@@ -92,5 +99,4 @@ class AssetsFilterHelper extends Helper {
 
         $this->Nodes->field('body', $body);
     }
-
 }

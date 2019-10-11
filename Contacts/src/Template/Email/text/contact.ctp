@@ -1,5 +1,8 @@
 <?php
-$url = \Cake\Routing\Router::url([
+
+use Cake\Routing\Router;
+
+$url = Router::url([
     'controller' => 'Contacts',
     'action' => 'view',
     $contact->alias,

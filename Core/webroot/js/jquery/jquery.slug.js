@@ -245,8 +245,7 @@
         str = str.replace(rExps[i].re, rExps[i].ch);
       }
       return str;
-    };
-
+    }
     function makeSlug(input) {
       var slug = transliterate(jQuery.trim(input))
         .replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '').toLowerCase()
@@ -254,8 +253,7 @@
         .replace(/\-$/, '')
         .replace(/^\-/, '');
       return slug;
-    };
-
+    }
     $.fn.slug = function (options) {
       var settings = {
         selector: '',

@@ -23,12 +23,12 @@ class HabtmDbAcl extends CachedDbAcl
         'groupAlias' => 'Roles',
     ];
 
-/**
- * Initializes the containing component and sets the Aro/Aco objects to it.
- *
- * @param AclComponent $component
- * @return void
- */
+    /**
+     * Initializes the containing component and sets the Aro/Aco objects to it.
+     *
+     * @param AclComponent $component
+     * @return void
+     */
     public function initialize(Component $component)
     {
         if (!empty($component->settings['habtm'])) {
@@ -37,18 +37,18 @@ class HabtmDbAcl extends CachedDbAcl
         $this->Acl = $component;
     }
 
-/**
- * Checks if the given $aro has access to action $action in $aco
- * Check returns true once permissions are found, in following order:
- * User node
- * User::parentNode() node
- * Groupnodes of Groups that User has habtm links to
- *
- * @param string $aro ARO The requesting object identifier.
- * @param string $aco ACO The controlled object identifier.
- * @param string $action Action (defaults to *)
- * @return boolean Success (true if ARO has access to action in ACO, false otherwise)
- */
+    /**
+     * Checks if the given $aro has access to action $action in $aco
+     * Check returns true once permissions are found, in following order:
+     * User node
+     * User::parentNode() node
+     * Groupnodes of Groups that User has habtm links to
+     *
+     * @param string $aro ARO The requesting object identifier.
+     * @param string $aco ACO The controlled object identifier.
+     * @param string $action Action (defaults to *)
+     * @return boolean Success (true if ARO has access to action in ACO, false otherwise)
+     */
     public function check($aro, $aco, $action = "*")
     {
         if (parent::check($aro, $aco, $action)) {
@@ -77,7 +77,7 @@ class HabtmDbAcl extends CachedDbAcl
                 return true;
             }
         }
+
         return false;
     }
-
 }

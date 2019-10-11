@@ -2,7 +2,8 @@
 
 use Migrations\AbstractMigration;
 
-class AssetsInitialMigration extends AbstractMigration {
+class AssetsInitialMigration extends AbstractMigration
+{
 
     public $description = '';
 
@@ -153,5 +154,4 @@ class AssetsInitialMigration extends AbstractMigration {
         $this->dropTable('assets');
         $this->dropTable('attachments');
     }
-
 }

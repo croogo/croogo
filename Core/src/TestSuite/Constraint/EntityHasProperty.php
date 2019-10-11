@@ -1,8 +1,10 @@
 <?php
 
 namespace Croogo\Core\TestSuite\Constraint;
+
 use Cake\Core\App;
 use Cake\Datasource\EntityInterface;
+use InvalidArgumentException;
 use PHPUnit_Framework_Constraint;
 
 /**
@@ -41,7 +43,7 @@ class EntityHasProperty extends PHPUnit_Framework_Constraint
     protected function matches($entity)
     {
         if (!$entity instanceof EntityInterface) {
-            throw new \InvalidArgumentException();
+            throw new InvalidArgumentException();
         }
 
         return $entity->has($this->propertyName);

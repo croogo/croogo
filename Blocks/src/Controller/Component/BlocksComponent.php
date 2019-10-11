@@ -6,11 +6,8 @@ use Cake\Cache\Cache;
 use Cake\Collection\Collection;
 use Cake\Controller\Component;
 use Cake\Event\Event;
-use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
-
 use Cake\Utility\Hash;
-use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Croogo\Blocks\Model\Entity\Block;
 use Croogo\Core\Utility\StringConverter;
@@ -24,20 +21,20 @@ use Croogo\Core\Utility\VisibilityFilter;
 class BlocksComponent extends Component
 {
 
-/**
- * Blocks for layout
- *
- * @var string
- * @access public
- */
+    /**
+     * Blocks for layout
+     *
+     * @var string
+     * @access public
+     */
     public $blocksForLayout = [];
 
-/**
- * Blocks data: contains parsed value of bb-code like strings
- *
- * @var array
- * @access public
- */
+    /**
+     * Blocks data: contains parsed value of bb-code like strings
+     *
+     * @var array
+     * @access public
+     */
     public $blocksData = [
         'menus' => [],
         'vocabularies' => [],
@@ -49,11 +46,11 @@ class BlocksComponent extends Component
      */
     protected $_stringConverter = null;
 
-/**
- * initialize
- *
- * @param Event $event
- */
+    /**
+     * initialize
+     *
+     * @param Event $event
+     */
     public function beforeFilter(Event $event)
     {
         $this->controller = $event->getSubject();
@@ -65,12 +62,12 @@ class BlocksComponent extends Component
         }
     }
 
-/**
- * Startup
- *
- * @param Event $event
- * @return void
- */
+    /**
+     * Startup
+     *
+     * @param Event $event
+     * @return void
+     */
     public function startup(Event $event)
     {
         if ($this->request->getParam('prefix') !== 'admin' && !$this->request->getParam('requested')) {
@@ -78,24 +75,24 @@ class BlocksComponent extends Component
         }
     }
 
-/**
- * beforeRender
- *
- * @param object $event
- * @return void
- */
+    /**
+     * beforeRender
+     *
+     * @param object $event
+     * @return void
+     */
     public function beforeRender(Event $event)
     {
         $event->getSubject()->set('blocksForLayout', $this->blocksForLayout);
     }
 
-/**
- * Blocks
- *
- * Blocks will be available in this variable in views: $blocksForLayout
- *
- * @return void
- */
+    /**
+     * Blocks
+     *
+     * Blocks will be available in this variable in views: $blocksForLayout
+     *
+     * @return void
+     */
     public function blocks()
     {
         $this->blocksForLayout = [];
@@ -139,12 +136,12 @@ class BlocksComponent extends Component
         }
     }
 
-/**
- * Process blocks for bb-code like strings
- *
- * @param Collection $blocks
- * @return void
- */
+    /**
+     * Process blocks for bb-code like strings
+     *
+     * @param Collection $blocks
+     * @return void
+     */
     public function processBlocksData(Collection $blocks)
     {
         $converter = $this->_stringConverter;
@@ -168,5 +165,4 @@ class BlocksComponent extends Component
             );
         }
     }
-
 }

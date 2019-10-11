@@ -43,15 +43,18 @@ class RegionsTable extends CroogoTable
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
             ->notBlank('alias', __d('croogo', 'Alias cannot be empty.'));
+
         return $validator;
     }
 
     public function buildRules(RulesChecker $rules)
     {
         $rules
-            ->add($rules->isUnique( ['alias'],
+            ->add($rules->isUnique(
+                ['alias'],
                 __d('croogo', 'That alias is already taken')
             ));
+
         return $rules;
     }
 

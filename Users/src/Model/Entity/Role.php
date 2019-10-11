@@ -35,6 +35,7 @@ class Role extends Entity
             } else {
                 $return = null;
             }
+
             return $return;
         }
     }

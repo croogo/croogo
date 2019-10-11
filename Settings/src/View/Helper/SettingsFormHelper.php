@@ -2,8 +2,8 @@
 
 namespace Croogo\Settings\View\Helper;
 
-use Cake\View\Helper;
 use Cake\Utility\Hash;
+use Cake\View\Helper;
 use Croogo\Settings\Model\Entity\Setting;
 
 /**
@@ -26,11 +26,11 @@ class SettingsFormHelper extends Helper
         'Croogo/Core.Croogo',
     ];
 
-/**
- * _inputCheckbox
- *
- * @see SettingsFormHelper::input()
- */
+    /**
+     * _inputCheckbox
+     *
+     * @see SettingsFormHelper::input()
+     */
     protected function _inputCheckbox(Setting $setting, $label)
     {
         $tooltip = [
@@ -52,16 +52,17 @@ class SettingsFormHelper extends Helper
                 'label' => $label
             ]);
         }
+
         return $output;
     }
 
-/**
- * Renders input setting according to its type
- *
- * @param Setting $setting setting data
- * @param string $label Input label
- * @return string
- */
+    /**
+     * Renders input setting according to its type
+     *
+     * @param Setting $setting setting data
+     * @param string $label Input label
+     * @return string
+     */
     public function input(Setting $setting, $label)
     {
         $output = '';
@@ -101,7 +102,8 @@ class SettingsFormHelper extends Helper
                         'class' => 'img-fluid',
                         'style' => 'max-width: 400px',
                     ]),
-                    $setting->value, [
+                    $setting->value,
+                    [
                         'data-toggle' => 'lightbox',
                         'escape' => false,
                     ]
@@ -129,6 +131,7 @@ class SettingsFormHelper extends Helper
 
             $output = $this->Form->input('setting-' . $setting->id, $options);
         }
+
         return $output;
     }
 }

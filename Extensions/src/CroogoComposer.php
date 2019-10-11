@@ -19,20 +19,20 @@ use Croogo\Lib\CroogoJson;
 class CroogoComposer
 {
 
-/**
- * Path to APP
- *
- * @var string
- */
+    /**
+     * Path to APP
+     *
+     * @var string
+     */
     public $appPath = APP;
 
     public $composerPath = null;
 
-/**
- * Downloads composer if it doesn't exist
- *
- * @return boolean
- */
+    /**
+     * Downloads composer if it doesn't exist
+     *
+     * @return boolean
+     */
     public function getComposer()
     {
         $appComposer = $this->appPath . 'composer.phar';
@@ -42,6 +42,7 @@ class CroogoComposer
             if (DS != '\\' && exec('which composer', $output, $found)) {
                 if ($found == 0) {
                     $this->composerPath = $output[0];
+
                     return true;
                 }
             }
@@ -49,14 +50,15 @@ class CroogoComposer
             $this->_shellExec('curl -s http://getcomposer.org/installer | php -- --install-dir=' . $this->appPath);
             $this->composerPath = $appComposer;
         }
+
         return true;
     }
 
-/**
- * Runs composer.phar
- *
- * @return boolean
- */
+    /**
+     * Runs composer.phar
+     *
+     * @return boolean
+     */
     public function runComposer()
     {
         $cmd = 'php ' . $this->composerPath . ' ';
@@ -65,15 +67,16 @@ class CroogoComposer
         } else {
             $cmd .= 'install';
         }
+
         return $this->_shellExec($cmd);
     }
 
-/**
- * setConfig
- *
- * @param array $requires
- * @return boolean
- */
+    /**
+     * setConfig
+     *
+     * @param array $requires
+     * @return boolean
+     */
     public function setConfig($requires = [])
     {
         $filename = 'composer.json';
@@ -113,15 +116,17 @@ class CroogoComposer
         $json = CroogoJson::stringify($json, $options) . "\n";
         $file->write($json);
         $file->close();
+
         return true;
     }
 
-/**
- * Wrapper for shell_exec() method for testing
- */
+    /**
+     * Wrapper for shell_exec() method for testing
+     */
     protected function _shellExec($cmd)
     {
         $output = system($cmd, $returnValue);
+
         return compact('cmd', 'output', 'returnValue');
     }
 }

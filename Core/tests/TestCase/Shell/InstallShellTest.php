@@ -3,7 +3,6 @@
 namespace Croogo\Core\Test\TestCase\Shell;
 
 use Cake\Console\Shell;
-use Cake\Console\ShellDispatcher;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Croogo\Core\Shell\InstallShell;
@@ -16,12 +15,12 @@ use ReflectionClass;
 class TestInstallShell extends InstallShell
 {
 
-/**
- * Open _githubUrl for testing
- *
- * @param string $url
- * @return string
- */
+    /**
+     * Open _githubUrl for testing
+     *
+     * @param string $url
+     * @return string
+     */
     public function githubUrl($url = null)
     {
         return $this->_githubUrl($url);
@@ -49,37 +48,37 @@ class TestInstallShell extends InstallShell
 class InstallShellTest extends CroogoTestCase
 {
 
-/**
- * fixtures
- *
- * @var array
- */
+    /**
+     * fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
-//		'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Settings.Setting',
     ];
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
 
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-//		App::build(array(
-//			'Plugin' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-//			'View' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
-//		), App::PREPEND);
+//      App::build(array(
+//          'Plugin' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
+//          'View' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
+//      ), App::PREPEND);
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
@@ -94,11 +93,11 @@ class InstallShellTest extends CroogoTestCase
         $Folder->delete();
     }
 
-/**
- * testInstallPlugin
- *
- * @return void
- */
+    /**
+     * testInstallPlugin
+     *
+     * @return void
+     */
     public function testInstallPlugin()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -120,11 +119,11 @@ class InstallShellTest extends CroogoTestCase
         $Shell->main();
     }
 
-/**
- * testInstallTheme
- *
- * @return void
- */
+    /**
+     * testInstallTheme
+     *
+     * @return void
+     */
     public function testInstallTheme()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -146,9 +145,9 @@ class InstallShellTest extends CroogoTestCase
         $Shell->main();
     }
 
-/**
- * testGithubUrl
- */
+    /**
+     * testGithubUrl
+     */
     public function testGithubUrl()
     {
         $Shell = new TestInstallShell();
@@ -165,9 +164,9 @@ class InstallShellTest extends CroogoTestCase
         $this->assertEquals($expected, $result);
     }
 
-/**
- * testComposerInstall
- */
+    /**
+     * testComposerInstall
+     */
     public function testComposerInstall()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -217,9 +216,9 @@ class InstallShellTest extends CroogoTestCase
         $ShellMock->main();
     }
 
-/**
- * Called when we want to pretend to download a plugin
- */
+    /**
+     * Called when we want to pretend to download a plugin
+     */
     public function callbackDownloadPlugin()
     {
         $argOne = func_get_arg(0);
@@ -227,12 +226,13 @@ class InstallShellTest extends CroogoTestCase
         $dest = $zip[1];
         $src = Plugin::path('Croogo/Extensions') . 'tests' . DS . 'test_files' . DS . 'example_plugin.zip';
         copy($src, $dest);
+
         return 'Here is that thing you wanted';
     }
 
-/**
- * Called when we want to pretend to download a theme
- */
+    /**
+     * Called when we want to pretend to download a theme
+     */
     public function callbackDownloadTheme()
     {
         $argOne = func_get_arg(0);
@@ -240,6 +240,7 @@ class InstallShellTest extends CroogoTestCase
         $dest = $zip[1];
         $src = Plugin::path('Croogo/Extensions') . 'tests' . DS . 'test_files' . DS . 'example_theme.zip';
         copy($src, $dest);
+
         return 'Here is that thing you wanted';
     }
 }

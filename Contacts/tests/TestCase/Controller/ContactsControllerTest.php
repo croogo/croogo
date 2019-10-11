@@ -34,11 +34,11 @@ class ContactsControllerTest extends CroogoControllerTestCase
         'plugin.Croogo/Taxonomy.Vocabulary',
     ];
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -59,33 +59,33 @@ class ContactsControllerTest extends CroogoControllerTestCase
             ->will($this->returnCallback([$this, 'authUserCallback']));
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->ContactsController);
     }
 
-/**
- * testAdminIndex
- *
- * @return void
- */
+    /**
+     * testAdminIndex
+     *
+     * @return void
+     */
     public function testAdminIndex()
     {
         $this->testAction('/admin/contacts/contacts/index');
         $this->assertNotEmpty($this->vars['contacts']);
     }
 
-/**
- * testAdminAdd
- *
- * @return void
- */
+    /**
+     * testAdminAdd
+     *
+     * @return void
+     */
     public function testAdminAdd()
     {
         $this->expectFlashAndRedirect('The Contact has been saved');
@@ -101,11 +101,11 @@ class ContactsControllerTest extends CroogoControllerTestCase
         $this->assertEqual($newContact['Contact']['title'], 'New contact');
     }
 
-/**
- * testAdminEdit
- *
- * @return void
- */
+    /**
+     * testAdminEdit
+     *
+     * @return void
+     */
     public function testAdminEdit()
     {
         $this->expectFlashAndRedirect('The Contact has been saved');
@@ -121,11 +121,11 @@ class ContactsControllerTest extends CroogoControllerTestCase
         $this->assertEquals('Contact [modified]', $result['Contact']['title']);
     }
 
-/**
- * testAdminDelete
- *
- * @return void
- */
+    /**
+     * testAdminDelete
+     *
+     * @return void
+     */
     public function testAdminDelete()
     {
         $this->expectFlashAndRedirect('Contact deleted');
@@ -136,9 +136,9 @@ class ContactsControllerTest extends CroogoControllerTestCase
         $this->assertFalse($hasAny);
     }
 
-/**
- * testView
- */
+    /**
+     * testView
+     */
     public function testView()
     {
         $Contacts = $this->generate('Contacts', [

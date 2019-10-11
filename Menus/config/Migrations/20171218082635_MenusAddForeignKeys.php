@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class MenusAddForeignKeys extends AbstractMigration
@@ -20,5 +21,4 @@ class MenusAddForeignKeys extends AbstractMigration
             ->dropForeignKey('menu_id')
             ->save();
     }
-
 }

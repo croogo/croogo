@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class DashboardsAddForeignKeys extends AbstractMigration
@@ -20,5 +21,4 @@ class DashboardsAddForeignKeys extends AbstractMigration
             ->dropForeignKey('user_id')
             ->save();
     }
-
 }

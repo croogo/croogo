@@ -9,5 +9,4 @@ class Type extends Entity
 {
 
     use TranslateTrait;
-
 }

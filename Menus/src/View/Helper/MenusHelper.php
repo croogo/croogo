@@ -3,10 +3,10 @@
 namespace Croogo\Menus\View\Helper;
 
 use Cake\Event\Event;
+use Cake\Log\LogTrait;
 use Cake\Routing\Exception\MissingRouteException;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
-use Cake\Log\LogTrait;
 use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\Nav;
@@ -31,9 +31,9 @@ class MenusHelper extends Helper
         'Html',
     ];
 
-/**
- * constructor
- */
+    /**
+     * constructor
+     */
     public function __construct(View $view, $settings = [])
     {
         parent::__construct($view, $settings);
@@ -41,9 +41,9 @@ class MenusHelper extends Helper
         $this->_converter = new StringConverter();
     }
 
-/**
- * setup events
- */
+    /**
+     * setup events
+     */
     protected function _setupEvents()
     {
         $events = [
@@ -57,9 +57,9 @@ class MenusHelper extends Helper
         }
     }
 
-/**
- * beforeRender
- */
+    /**
+     * beforeRender
+     */
     public function beforeRender($viewFile)
     {
         $request = $this->getView()->getRequest();
@@ -71,9 +71,9 @@ class MenusHelper extends Helper
         }
     }
 
-/**
- * Inject admin menu items
- */
+    /**
+     * Inject admin menu items
+     */
     protected function _adminMenu()
     {
         if (empty($this->_View->viewVars['menus_for_admin_layout'])) {
@@ -101,29 +101,30 @@ class MenusHelper extends Helper
         };
     }
 
-/**
- * Checks wether $id is the current active menu
- *
- * The value is checked against the menuId variable set in
- * LinksController::admin_add() and LinksController::admin_edit()
- *
- * @param string $id Menu id
- * @return bool True if $id is currently the active menu
- */
+    /**
+     * Checks wether $id is the current active menu
+     *
+     * The value is checked against the menuId variable set in
+     * LinksController::admin_add() and LinksController::admin_edit()
+     *
+     * @param string $id Menu id
+     * @return bool True if $id is currently the active menu
+     */
     private function __isCurrentMenu($id)
     {
         $currentMenuId = $this->_View->get('menuId');
+
         return $currentMenuId === $id;
     }
 
-/**
- * Filter content for Menus
- *
- * Replaces [menu:menu_alias] or [m:menu_alias] with Menu list
- *
- * @param Event $event
- * @return string
- */
+    /**
+     * Filter content for Menus
+     *
+     * Replaces [menu:menu_alias] or [m:menu_alias] with Menu list
+     *
+     * @param Event $event
+     * @return string
+     */
     public function filter(Event $event, $options = [])
     {
         $data = $event->getData();
@@ -139,6 +140,7 @@ class MenusHelper extends Helper
             $options = Hash::expand($options);
             $data['content'] = str_replace($tagMatches[0][$i], $this->verticalNav($menuAlias, $options), $data['content']);
         }
+
         return $event->getData();
     }
 
@@ -168,18 +170,19 @@ class MenusHelper extends Helper
         if (!$items) {
             return null;
         }
+
         return $this->Html->tag('nav', implode('', $items), [
             'class' => 'nav flex-column',
         ]);
     }
 
-/**
- * Show Menu by Alias
- *
- * @param string $menuAlias Menu alias
- * @param array $options (optional)
- * @return string
- */
+    /**
+     * Show Menu by Alias
+     *
+     * @param string $menuAlias Menu alias
+     * @param array $options (optional)
+     * @return string
+     */
     public function menu($menuAlias, $options = [])
     {
         $_options = [
@@ -209,17 +212,18 @@ class MenusHelper extends Helper
             'menu' => $menu,
             'options' => $options,
         ]);
+
         return $output;
     }
 
-/**
- * Merge Link options retrieved from Params behavior
- *
- * @param array $link Link data
- * @param string $param Parameter name
- * @param array $attributes Default options
- * @return string
- */
+    /**
+     * Merge Link options retrieved from Params behavior
+     *
+     * @param array $link Link data
+     * @param string $param Parameter name
+     * @param array $options Default options
+     * @return string
+     */
     protected function _mergeLinkParams($link, $param, $options = [])
     {
         if (isset($link['Params'][$param])) {
@@ -239,14 +243,14 @@ class MenusHelper extends Helper
         return $options;
     }
 
-/**
- * Nested Links
- *
- * @param array $links model output (threaded)
- * @param array $options (optional)
- * @param int $depthdepth level
- * @return string
- */
+    /**
+     * Nested Links
+     *
+     * @param array $links model output (threaded)
+     * @param array $options (optional)
+     * @param int $depth level
+     * @return string
+     */
     public function nestedLinks($links, $options = [], $depth = 1)
     {
         $_options = [
@@ -286,8 +290,10 @@ class MenusHelper extends Helper
                 }
             } catch (MissingRouteException $e) {
                 $this->log(
-                    sprintf('MissingRouteException for menu id %d - %s:',
-                        $link->id, $link->title
+                    sprintf(
+                        'MissingRouteException for menu id %d - %s:',
+                        $link->id,
+                        $link->title
                     ),
                     LOG_WARNING
                 );
@@ -329,25 +335,25 @@ class MenusHelper extends Helper
         return $output;
     }
 
-/**
- * Converts strings like controller:abc/action:xyz/ to arrays
- *
- * @param string|array $link link
- * @return array
- * @see Use StringConverter::linkStringToArray()
- */
+    /**
+     * Converts strings like controller:abc/action:xyz/ to arrays
+     *
+     * @param string|array $link link
+     * @return array
+     * @see Use StringConverter::linkStringToArray()
+     */
     public function linkStringToArray($link)
     {
         return $this->_converter->linkStringToArray($link);
     }
 
-/**
- * Converts array into string controller:abc/action:xyz/value1/value2
- *
- * @param array $url link
- * @return array
- * @see StringConverter::urlToLinkString()
- */
+    /**
+     * Converts array into string controller:abc/action:xyz/value1/value2
+     *
+     * @param array $url link
+     * @return array
+     * @see StringConverter::urlToLinkString()
+     */
     public function urlToLinkString($url)
     {
         return $this->_converter->urlToLinkString($url);

@@ -2,7 +2,6 @@
 
 namespace Croogo\Core\TestSuite;
 
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Log\Log;
@@ -47,11 +46,11 @@ class CroogoControllerTestCase extends TestCase
         copy($source, $target);
     }
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -69,9 +68,9 @@ class CroogoControllerTestCase extends TestCase
 
         PluginManager::unload('Install');
 
-        /**
-         * Thease plugins are being loaded in the test bootstrap file
-         */
+/**
+ * Thease plugins are being loaded in the test bootstrap file
+ */
 //      Plugin::load(array('Croogo/Users'), ['bootstrap' => true, 'path' => '../Users/', 'autoload' => true]);
 //      Plugin::load('Example', ['path' => '../Example/', 'autoload' => true]);
 
@@ -86,11 +85,11 @@ class CroogoControllerTestCase extends TestCase
 //      $Setting->writeConfiguration();
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
@@ -101,12 +100,12 @@ class CroogoControllerTestCase extends TestCase
         ClassRegistry::flush();
     }
 
-/**
- * authUserCallback
- *
- * @param type $key
- * @return mixed
- */
+    /**
+     * authUserCallback
+     *
+     * @param type $key
+     * @return mixed
+     */
     public function authUserCallback($key)
     {
         $auth = [
@@ -120,16 +119,17 @@ class CroogoControllerTestCase extends TestCase
         if (empty($key) || !isset($auth[$key])) {
             return $auth;
         }
+
         return $auth[$key];
     }
 
-/**
- * Helper to expect a Session->setFlash and redirect
- *
- * @param string $message expected message that will be passed to setFlash()
- * @param string $class class name, when null current class will be used
- * @param array $flashOptions expected SessionComponent::setFlash arguments
- */
+    /**
+     * Helper to expect a Session->setFlash and redirect
+     *
+     * @param string $message expected message that will be passed to setFlash()
+     * @param string $class class name, when null current class will be used
+     * @param array $flashOptions expected SessionComponent::setFlash arguments
+     */
     public function expectFlashAndRedirect($message = '', $class = false, $flashOptions = [])
     {
         if (!$class) {

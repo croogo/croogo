@@ -2,9 +2,9 @@
 
 namespace Croogo\Dashboards\Event;
 
-use Cake\Event\EventListenerInterface;
-use Cake\Core\Plugin;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Event\EventListenerInterface;
 
 /**
  * DashboardsEventHandler
@@ -17,9 +17,9 @@ use Cake\Core\Configure;
 class DashboardsEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- */
+    /**
+     * implementedEvents
+     */
     public function implementedEvents()
     {
         return [
@@ -29,9 +29,9 @@ class DashboardsEventHandler implements EventListenerInterface
         ];
     }
 
-/**
- * Setup admin data
- */
+    /**
+     * Setup admin data
+     */
     public function onSetupAdminDashboardData($event)
     {
         $plugins = Plugin::loaded();

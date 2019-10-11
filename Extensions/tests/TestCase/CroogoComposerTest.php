@@ -18,11 +18,11 @@ use Extensions\Lib\CroogoComposer;
 class CroogoComposerTest extends CroogoTestCase
 {
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -36,11 +36,11 @@ class CroogoComposerTest extends CroogoTestCase
         $this->CroogoComposer->appPath = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS;
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
@@ -54,11 +54,11 @@ class CroogoComposerTest extends CroogoTestCase
         $File->delete();
     }
 
-/**
- * testGetComposer
- *
- * @return void
- */
+    /**
+     * testGetComposer
+     *
+     * @return void
+     */
     public function testGetComposer()
     {
         $CroogoComposer = $this->getMock('CroogoComposer', ['_shellExec']);
@@ -72,11 +72,11 @@ class CroogoComposerTest extends CroogoTestCase
         $CroogoComposer->getComposer();
     }
 
-/**
- * testRunComposer
- *
- * @return void
- */
+    /**
+     * testRunComposer
+     *
+     * @return void
+     */
     public function testRunComposer()
     {
         $CroogoComposer = $this->getMock('CroogoComposer', ['_shellExec']);
@@ -91,11 +91,11 @@ class CroogoComposerTest extends CroogoTestCase
         $CroogoComposer->runComposer();
     }
 
-/**
- * testSetConfig
- *
- * @return void
- */
+    /**
+     * testSetConfig
+     *
+     * @return void
+     */
     public function testSetConfig()
     {
         $result = $this->CroogoComposer->setConfig([

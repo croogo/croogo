@@ -2,7 +2,6 @@
 
 namespace Croogo\Core\Test\TestCase\View\Helper;
 
-use Cake\Controller\Controller;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\View\View;
@@ -13,7 +12,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.Croogo/Taxonomy.Type',
+//      'plugin.Croogo/Taxonomy.Type',
     ];
 
     /**
@@ -103,9 +102,9 @@ class CroogoHtmlHelperTest extends CroogoTestCase
         $this->assertContains('<i class="icon-remove icon-large"></i>', $result);
     }
 
-/**
- * testLinkWithSmallIcon
- */
+    /**
+     * testLinkWithSmallIcon
+     */
     public function testLinkWithSmallIcon()
     {
         $result = $this->Html->link('', '/remove', [
@@ -117,9 +116,9 @@ class CroogoHtmlHelperTest extends CroogoTestCase
         $this->assertContains('<i class="icon-remove"></i>', $result);
     }
 
-/**
- * testLinkWithInlineIcon
- */
+    /**
+     * testLinkWithInlineIcon
+     */
     public function testLinkWithInlineIcon()
     {
         $result = $this->Html->link('', '/remove', [

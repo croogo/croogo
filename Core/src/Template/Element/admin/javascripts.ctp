@@ -1,7 +1,6 @@
 <?php
 
-if (!$this->getRequest()->is('ajax')):
-
+if (!$this->getRequest()->is('ajax')) :
     echo $this->Layout->js();
     echo $this->Html->script([
         'Croogo/Core.jquery/jquery.min.js',
@@ -23,5 +22,4 @@ if (!$this->getRequest()->is('ajax')):
         'Croogo/Core.core/ekko-lightbox.min.js',
         'Croogo/Core.core/select2.full.min.js',
     ]);
-
 endif;

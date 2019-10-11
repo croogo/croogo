@@ -2,8 +2,8 @@
 
 use Cake\Core\Configure;
 use Croogo\Core\Croogo;
-use Croogo\Wysiwyg\Wysiwyg;
 use Croogo\FileManager\Utility\StorageManager;
+use Croogo\Wysiwyg\Wysiwyg;
 
 Configure::write('Wysiwyg.attachmentBrowseUrl', [
     'prefix' => 'admin',
@@ -25,18 +25,18 @@ Configure::write('FileManager', [
     ],
 ]);
 
-StorageManager::config('LocalAttachment', array(
+StorageManager::config('LocalAttachment', [
     'description' => 'Local Attachment',
-    'adapterOptions' => array(WWW_ROOT . 'assets', true),
+    'adapterOptions' => [WWW_ROOT . 'assets', true],
     'adapterClass' => '\League\Flysystem\Adapter\Local',
     'class' => '\League\Flysystem\Filesystem',
-));
-StorageManager::config('LegacyLocalAttachment', array(
+]);
+StorageManager::config('LegacyLocalAttachment', [
     'description' => 'Local Attachment (Legacy)',
-    'adapterOptions' => array(WWW_ROOT . 'uploads', true),
+    'adapterOptions' => [WWW_ROOT . 'uploads', true],
     'adapterClass' => '\League\Flysystem\Adapter\Local',
     'class' => '\League\Flysystem\Filesystem',
-));
+]);
 
 // TODO: make this configurable via backend
 $actions = [
@@ -49,7 +49,7 @@ $actions = [
     'Admin/Vocabularies/edit',
 ];
 $tabTitle = __d('assets', 'Assets');
-foreach ($actions as $action):
+foreach ($actions as $action) :
     list($controller, ) = explode('/', $action);
     Croogo::hookAdminTab($action, $tabTitle, 'Croogo/FileManager.admin/asset_list');
     Croogo::hookHelper($controller, 'Croogo/FileManager.AssetsAdmin');

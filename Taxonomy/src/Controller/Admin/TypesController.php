@@ -63,5 +63,4 @@ class TypesController extends AppController
             return;
         }
     }
-
 }

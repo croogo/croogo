@@ -22,7 +22,6 @@ use Acl\Controller\Component\Auth\MultiColumnAuthenticate;
 use App\Controller\Component\AuthComponent;
 use App\Model\AppModel;
 use Cake\Network\Request;
-use Cake\Network\Response;
 use Croogo\TestSuite\CroogoTestCase;
 
 /**
@@ -35,11 +34,11 @@ class MultiColumnAuthenticateTest extends CroogoTestCase
 
     public $fixtures = ['plugin.acl.multi_user'];
 
-/**
- * setup
- *
- * @return void
- */
+    /**
+     * setup
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -55,11 +54,11 @@ class MultiColumnAuthenticateTest extends CroogoTestCase
         $this->response = $this->getMock('Response');
     }
 
-/**
- * test authenticate email or username
- *
- * @return void
- */
+    /**
+     * test authenticate email or username
+     *
+     * @return void
+     */
     public function testAuthenticateEmailOrUsername()
     {
         $request = new Request('posts/index', false);
@@ -87,11 +86,11 @@ class MultiColumnAuthenticateTest extends CroogoTestCase
         $this->assertEquals($expected, $result);
     }
 
-/**
- * test the authenticate method
- *
- * @return void
- */
+    /**
+     * test the authenticate method
+     *
+     * @return void
+     */
     public function testAuthenticateNoData()
     {
         $request = new Request('posts/index', false);
@@ -99,11 +98,11 @@ class MultiColumnAuthenticateTest extends CroogoTestCase
         $this->assertFalse($this->auth->authenticate($request, $this->response));
     }
 
-/**
- * test the authenticate method
- *
- * @return void
- */
+    /**
+     * test the authenticate method
+     *
+     * @return void
+     */
     public function testAuthenticateNoUsername()
     {
         $request = new Request('posts/index', false);
@@ -111,11 +110,11 @@ class MultiColumnAuthenticateTest extends CroogoTestCase
         $this->assertFalse($this->auth->authenticate($request, $this->response));
     }
 
-/**
- * test the authenticate method
- *
- * @return void
- */
+    /**
+     * test the authenticate method
+     *
+     * @return void
+     */
     public function testAuthenticateNoPassword()
     {
         $request = new Request('posts/index', false);
@@ -126,11 +125,11 @@ class MultiColumnAuthenticateTest extends CroogoTestCase
         $this->assertFalse($this->auth->authenticate($request, $this->response));
     }
 
-/**
- * test the authenticate method
- *
- * @return void
- */
+    /**
+     * test the authenticate method
+     *
+     * @return void
+     */
     public function testAuthenticateInjection()
     {
         $request = new Request('posts/index', false);
@@ -142,11 +141,11 @@ class MultiColumnAuthenticateTest extends CroogoTestCase
             $this->assertFalse($this->auth->authenticate($request, $this->response));
     }
 
-/**
- * test scope failure.
- *
- * @return void
- */
+    /**
+     * test scope failure.
+     *
+     * @return void
+     */
     public function testAuthenticateScopeFail()
     {
         $this->auth->settings['scope'] = ['user' => 'nate'];

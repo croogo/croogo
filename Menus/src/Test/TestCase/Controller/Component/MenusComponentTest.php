@@ -58,9 +58,9 @@ class MenusComponentTest extends CroogoControllerTestCase
         unset($this->controller);
     }
 
-/**
- * test that public Links are displayed
- */
+    /**
+     * test that public Links are displayed
+     */
     public function testMenuGenerationForPublic()
     {
         $vars = $this->testAction('/index', [
@@ -73,9 +73,9 @@ class MenusComponentTest extends CroogoControllerTestCase
         $this->assertNotEmpty($result);
     }
 
-/**
- * test that public Links are not displayed
- */
+    /**
+     * test that public Links are not displayed
+     */
     public function testMenuGenerationForRegistered()
     {
         $this->controller->Session->write('Auth.User', ['id' => 3, 'role_id' => 2]);

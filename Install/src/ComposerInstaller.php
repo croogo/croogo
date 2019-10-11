@@ -5,6 +5,7 @@ namespace Croogo\Install;
 use Cake\Composer\Installer\PluginInstaller;
 use Composer\Composer;
 use Composer\Script\Event;
+use DirectoryIterator;
 
 class ComposerInstaller extends PluginInstaller
 {
@@ -30,6 +31,7 @@ class ComposerInstaller extends PluginInstaller
         $configFile = static::_configFile($vendorDir);
         static::writeConfigFile($configFile, $plugins);
     }
+
     /**
      * Find all plugins available
      *
@@ -56,7 +58,7 @@ class ComposerInstaller extends PluginInstaller
         }
 
         if (is_dir($pluginsDir)) {
-            $dir = new \DirectoryIterator($pluginsDir);
+            $dir = new DirectoryIterator($pluginsDir);
             foreach ($dir as $info) {
                 if (!$info->isDir() || $info->isDot()) {
                     continue;
@@ -68,7 +70,7 @@ class ComposerInstaller extends PluginInstaller
         }
 
         ksort($plugins);
+
         return $plugins;
     }
-
 }

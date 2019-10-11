@@ -12,6 +12,7 @@ class CroogoLibsTest extends PHPUnit_Framework_TestSuite
         $path = APP . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . 'Croogo' . DS . 'Test' . DS . 'Case' . DS . 'Lib' . DS;
         $suite->addTestDirectory($path);
         $suite->addTestDirectory($path . 'Configure');
+
         return $suite;
     }
 }

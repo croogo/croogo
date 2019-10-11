@@ -15,6 +15,7 @@ class UserMailPreview extends MailPreview
             $user->email = 'test@example.org';
             $user->clean();
         }
+
         return $this->getMailer('Croogo/Users.User')
             ->resetPassword($user);
     }
@@ -27,8 +28,8 @@ class UserMailPreview extends MailPreview
             $user->email = 'test@example.org';
             $user->clean();
         }
+
         return $this->getMailer('Croogo/Users.User')
             ->registrationActivation($user);
     }
-
 }

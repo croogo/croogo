@@ -10,7 +10,6 @@ Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route
         $route->scope('/comments', [], function (RouteBuilder $route) {
             $route->fallbacks();
         });
-
     });
 
     $route->setExtensions(['rss']);

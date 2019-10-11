@@ -1,7 +1,7 @@
 <?php
 $escape = isset($params['escape']) ? $params['escape'] : true;
 
-if ($escape):
+if ($escape) :
     $message = h($message);
 endif;
 ?>

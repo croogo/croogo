@@ -3,7 +3,6 @@
 namespace Croogo\Meta\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
 

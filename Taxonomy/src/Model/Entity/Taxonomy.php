@@ -19,7 +19,7 @@ class Taxonomy extends Entity
                 ? $this->term->title
                 : $this->term_id,
         ];
+
         return implode(' - ', $titles);
     }
-
 }

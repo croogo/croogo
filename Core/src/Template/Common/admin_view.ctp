@@ -18,15 +18,15 @@ $tableClass = isset($tableClass) ? $tableClass : $this->Theme->getCssClass('tabl
 
 $showActions = isset($showActions) ? $showActions : true;
 
-if ($pageHeading = trim($this->fetch('page-heading'))):
+if ($pageHeading = trim($this->fetch('page-heading'))) :
     echo $pageHeading;
 endif;
 ?>
 
     <h2 class="d-md-none">
-        <?php if ($titleBlock = $this->fetch('title')): ?>
+        <?php if ($titleBlock = $this->fetch('title')) : ?>
             <?= $titleBlock ?>
-        <?php else: ?>
+        <?php else : ?>
             <?php
             echo !empty($title_for_layout) ? $title_for_layout : $this->name;
             ?>
@@ -47,19 +47,19 @@ if (empty($this->fetch('action-buttons'))) {
     <div class="<?= $rowClass ?>">
         <div class="<?= $columnFull ?>">
             <?php
-            if ($contentBlock = trim($this->fetch('content'))):
+            if ($contentBlock = trim($this->fetch('content'))) :
                 echo $this->element('admin/search');
                 echo $contentBlock;
-            else:
-                if ($mainBlock = trim($this->fetch('main'))):
+            else :
+                if ($mainBlock = trim($this->fetch('main'))) :
                     echo $mainBlock;
-                else:
+                else :
                     ?>
                     <ul class="nav nav-tabs">
                         <?php
-                        if ($tabHeading = $this->fetch('tab-heading')):
+                        if ($tabHeading = $this->fetch('tab-heading')) :
                             echo $tabHeading;
-                        else:
+                        else :
                             echo $this->Croogo->adminTab(__d('croogo', $modelClass), "#$tabId");
                         endif;
                         echo $this->Croogo->adminTabs();
@@ -69,9 +69,9 @@ if (empty($this->fetch('action-buttons'))) {
                     <?php
 
                     $tabContent = trim($this->fetch('tab-content'));
-                    if (!$tabContent):
+                    if (!$tabContent) :
                         $content = '';
-                        foreach ($editFields as $field => $opts):
+                        foreach ($editFields as $field => $opts) :
                             if (is_string($opts)) {
                                 $field = $opts;
                                 $opts = [
@@ -86,7 +86,7 @@ if (empty($this->fetch('action-buttons'))) {
                     ?>
 
                     <?php
-                    if (empty($tabContent) && !empty($content)):
+                    if (empty($tabContent) && !empty($content)) :
                         $tabContent = $this->Html->div('tab-pane', $content, [
                             'id' => $tabId,
                         ]);
@@ -103,6 +103,6 @@ if (empty($this->fetch('action-buttons'))) {
 
 <?php
 
-if ($pageFooter = trim($this->fetch('page-footer'))):
+if ($pageFooter = trim($this->fetch('page-footer'))) :
     echo $pageFooter;
 endif;

@@ -2,7 +2,6 @@
 
 namespace Croogo\Core\Action\Admin;
 
-use Cake\Event\Event;
 use Crud\Action\IndexAction as CrudIndexAction;
 
 class IndexAction extends CrudIndexAction

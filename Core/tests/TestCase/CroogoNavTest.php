@@ -65,26 +65,26 @@ class CroogoNavTest extends CroogoTestCase
         $this->assertEquals($saved, Nav::items());
     }
 
-/**
- * @expectedException UnexpectedValueException
- */
+    /**
+     * @expectedException UnexpectedValueException
+     */
     public function testNavClearWithException()
     {
         Nav::clear('bogus');
     }
 
-/**
- * testNavItemsWithBogusMenu
- */
+    /**
+     * testNavItemsWithBogusMenu
+     */
     public function testNavItemsWithBogusMenu()
     {
         $result = Nav::items('bogus');
         $this->assertEquals([], $result);
     }
 
-/**
- * Test Get Menus
- */
+    /**
+     * Test Get Menus
+     */
     public function testNavGetMenus()
     {
         $result = Nav::menus();
@@ -97,9 +97,9 @@ class CroogoNavTest extends CroogoTestCase
         $this->assertEquals(['sidebar', 'top'], $result);
     }
 
-/**
- * Test multiple menu
- */
+    /**
+     * Test multiple menu
+     */
     public function testNavMultipleMenus()
     {
         Nav::activeMenu('top');
@@ -129,11 +129,11 @@ class CroogoNavTest extends CroogoTestCase
     public function testNavMergeSameArray()
     {
         Nav::clear();
-        $foo = array('url' => array('action' => 'index', 'hi'));
+        $foo = ['url' => ['action' => 'index', 'hi']];
         Nav::add('foo', $foo);
         Nav::add('foo', $foo);
         $items = Nav::items();
-        $expected = array('action' => 'index', 'hi');
+        $expected = ['action' => 'index', 'hi'];
         $this->assertEquals($expected, $items['foo']['url']);
     }
 

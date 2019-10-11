@@ -3,31 +3,30 @@
 namespace Croogo\Core\Test\TestCase\Model\Behavior;
 
 use Cake\Core\Configure;
-use Cake\Network\Session;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Users\Model\User;
 
 //class TrackableUserModel extends User {
 //
-//	public $useTable = 'users';
+//  public $useTable = 'users';
 //
-//	public $order = 'TrackableUserModel.name';
+//  public $order = 'TrackableUserModel.name';
 //
-//	public $actsAs = array(
-//		'Croogo.Trackable' => array(
-//			'userModel' => 'TrackableUserModel',
-//		),
-//	);
+//  public $actsAs = array(
+//      'Croogo.Trackable' => array(
+//          'userModel' => 'TrackableUserModel',
+//      ),
+//  );
 //}
 
 class TrackableBehaviorTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.Croogo/Core.Trackable',
-//		'plugin.Croogo/Users.User',
-//		'plugin.Croogo/Users.Role',
-//		'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Core.Trackable',
+//      'plugin.Croogo/Users.User',
+//      'plugin.Croogo/Users.Role',
+//      'plugin.Croogo/Settings.Setting',
     ];
 
     public function setUp()
@@ -37,18 +36,18 @@ class TrackableBehaviorTest extends CroogoTestCase
         $this->markTestIncomplete('This hasn\'t been ported yet');
 
         $this->loadFixtures('Trackable');
-//		$this->model = ClassRegistry::init(array(
-//			'class' => 'TestModel',
-//			'alias' => 'TestModel',
-//			'table' => 'trackables',
-//		));
-//		$this->model->Behaviors->attach('Croogo.Trackable');
+//      $this->model = ClassRegistry::init(array(
+//          'class' => 'TestModel',
+//          'alias' => 'TestModel',
+//          'table' => 'trackables',
+//      ));
+//      $this->model->Behaviors->attach('Croogo.Trackable');
     }
 
     public function tearDown()
     {
         Configure::delete('Trackable.Auth');
-//		Session::delete('Auth.User');
+//      Session::delete('Auth.User');
     }
 
     protected function _authTrackable($userIdField = 'id', $userId = 1)
@@ -58,12 +57,12 @@ class TrackableBehaviorTest extends CroogoTestCase
 
     protected function _authSession($userIdField = 'id', $userId = 1)
     {
-//		Session::write('Auth.User', array($userIdField => $userId));
+//      Session::write('Auth.User', array($userIdField => $userId));
     }
 
-/**
- * testFieldPopulation
- */
+    /**
+     * testFieldPopulation
+     */
     protected function _testFieldPopulation($authCallback)
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -95,25 +94,25 @@ class TrackableBehaviorTest extends CroogoTestCase
         $this->assertEquals(2, $data['updated_by']);
     }
 
-/**
- * Test model operation using session auth data
- */
+    /**
+     * Test model operation using session auth data
+     */
     public function testUserDataFromSession()
     {
         $this->_testFieldPopulation('_authSession');
     }
 
-/**
- * Test model operation using manually setup auth data
- */
+    /**
+     * Test model operation using manually setup auth data
+     */
     public function testUserDataFromTrackable()
     {
         $this->_testFieldPopulation('_authTrackable');
     }
 
-/**
- * Test auth data override
- */
+    /**
+     * Test auth data override
+     */
     public function testAuthDataOverride()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -130,9 +129,9 @@ class TrackableBehaviorTest extends CroogoTestCase
         $this->assertEquals('yvonne', $result['TrackableCreator']['username']);
     }
 
-/**
- * Test with uncommon/inherited User model
- */
+    /**
+     * Test with uncommon/inherited User model
+     */
     public function testUncommonInheritedUserModel()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -158,9 +157,9 @@ class TrackableBehaviorTest extends CroogoTestCase
         $this->assertEquals('1', $user['TrackableUpdater']['id']);
     }
 
-/**
- * Test Trackable saveField
- */
+    /**
+     * Test Trackable saveField
+     */
     public function testTrackableSaveField()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');

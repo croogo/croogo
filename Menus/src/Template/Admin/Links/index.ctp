@@ -1,6 +1,5 @@
 <?php
 
-use Cake\Utility\Inflector;
 use Croogo\Core\Status;
 
 $this->Croogo->adminscript('Croogo/Menus.admin');
@@ -34,7 +33,7 @@ $this->end();
 
 $this->append('table-body');
 $rows = [];
-foreach ($linksTree as $linkId => $linkTitle):
+foreach ($linksTree as $linkId => $linkTitle) :
     $actions = [];
     $actions[] = $this->Croogo->adminRowAction('', [
         'action' => 'moveUp',

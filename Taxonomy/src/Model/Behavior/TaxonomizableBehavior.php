@@ -136,6 +136,7 @@ class TaxonomizableBehavior extends Behavior
 
         if (empty($type)) {
             Log::error('Type ' . $typeAlias . ' cannot be found');
+
             return true;
         }
 
@@ -313,7 +314,7 @@ class TaxonomizableBehavior extends Behavior
 
         $query
             ->matching('Taxonomies', function (Query $q) use ($entity) {
-               return $q
+                return $q
                    ->where([
                        'term_id' => $entity->id
                    ]);
@@ -347,7 +348,7 @@ class TaxonomizableBehavior extends Behavior
 
         $query
             ->matching('Taxonomies', function (Query $q) use ($entity) {
-               return $q
+                return $q
                    ->where([
                        'vocabulary_id' => $entity->id
                    ]);
@@ -355,5 +356,4 @@ class TaxonomizableBehavior extends Behavior
 
         return $query;
     }
-
 }

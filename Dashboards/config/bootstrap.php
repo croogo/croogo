@@ -5,8 +5,8 @@
  */
 
 use Cake\Core\Configure;
-use Croogo\Dashboards\Configure\DashboardsConfigReader;
 use Croogo\Core\Utility\StringConverter;
+use Croogo\Dashboards\Configure\DashboardsConfigReader;
 
 if (!Configure::check('Site.dashboard_url')) {
     $converter = new StringConverter();

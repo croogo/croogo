@@ -3,7 +3,6 @@
 namespace Croogo\Acl\View\Helper;
 
 use Acl\Controller\Component\AclComponent;
-use Cake\Core\Configure;
 use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -24,22 +23,22 @@ use Cake\View\View;
 class AclHelper extends Helper
 {
 
-/**
- * Cached actions per Role
- *
- * @var array
- * @access public
- */
+    /**
+     * Cached actions per Role
+     *
+     * @var array
+     * @access public
+     */
     public $allowedActions = [];
 
-/**
- * Path Whitelist
- */
+    /**
+     * Path Whitelist
+     */
     protected $_pathWhitelist = ['/', '#'];
 
-/**
- * Constructor
- */
+    /**
+     * Constructor
+     */
     public function __construct(View $View, $settings = [])
     {
         $this->settings = Hash::merge([
@@ -53,24 +52,24 @@ class AclHelper extends Helper
         $this->Acl = new AclComponent(new ComponentRegistry());
     }
 
-/**
- * Checks whether path is in whitelist
- *
- * @param string $path Path
- * @return bool True if path is in the whitelist
- */
+    /**
+     * Checks whether path is in whitelist
+     *
+     * @param string $url Path
+     * @return bool True if path is in the whitelist
+     */
     protected function _isWhitelist($url)
     {
         return in_array($url, (array)$this->settings['pathWhitelist']);
     }
 
-/**
- * Check if url is allowed for the User
- *
- * @param int $userId User Id
- * @param array|string $url link/url to check
- * @return boolean
- */
+    /**
+     * Check if url is allowed for the User
+     *
+     * @param int $userId User Id
+     * @param array|string $url link/url to check
+     * @return boolean
+     */
     public function linkIsAllowedByUserId($userId, $url)
     {
         if (is_array($url)) {
@@ -112,7 +111,7 @@ class AclHelper extends Helper
         if ($this->Acl->check($userAro, $linkAction, '*')) {
             return true;
         }
+
         return false;
     }
-
 }

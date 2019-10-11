@@ -7,11 +7,10 @@ use Cake\Datasource\ResultSetInterface;
 use Cake\Http\ServerRequest;
 use Cake\Log\LogTrait;
 use Cake\ORM\Entity;
-use Cake\ORM\Query;
-use Cake\Utility\Hash;
 use Cake\Routing\Router;
-use Croogo\Blocks\Model\Entity\Block;
+use Cake\Utility\Hash;
 use Psr\Log\LogLevel;
+use Traversable;
 
 /**
  * VisibilityFilter
@@ -26,14 +25,14 @@ class VisibilityFilter
 
     use LogTrait;
 
-/**
- * StringConverter instance
- */
+    /**
+     * StringConverter instance
+     */
     protected $_converter = null;
 
-/**
- * Known url keys
- */
+    /**
+     * Known url keys
+     */
     protected $_urlKeys = [
         'admin' => false,
         'plugin' => false,
@@ -43,11 +42,11 @@ class VisibilityFilter
         'pass' => false,
     ];
 
-/**
- * Constructor
- *
- * @param \Cake\Http\ServerRequest $request
- */
+    /**
+     * Constructor
+     *
+     * @param \Cake\Http\ServerRequest $request
+     */
     public function __construct(ServerRequest $request = null)
     {
         if ($request) {
@@ -58,26 +57,27 @@ class VisibilityFilter
         $this->_converter = new StringConverter();
     }
 
-/**
- * Check that request (passed in the constructor) is visible based on list of
- * specified rules.  The rules can specified in link string format or just a
- * plain URL fragment.  Whenever possible, use link string formatted rule since
- * a URL fragment can be expensive.
- *
- * The current request is checked against negative rules first (implicitly
- * hidden), then against positive rules (implicitly visible).
- * If there's no positive rule, defaults to visible.
- *
- * @param array $rules Array of rules in link string format
- * @return bool True if the rules are satisfied
- * @see StringConverter::linkStringToArray()
- */
+    /**
+     * Check that request (passed in the constructor) is visible based on list of
+     * specified rules.  The rules can specified in link string format or just a
+     * plain URL fragment.  Whenever possible, use link string formatted rule since
+     * a URL fragment can be expensive.
+     *
+     * The current request is checked against negative rules first (implicitly
+     * hidden), then against positive rules (implicitly visible).
+     * If there's no positive rule, defaults to visible.
+     *
+     * @param array $rules Array of rules in link string format
+     * @return bool True if the rules are satisfied
+     * @see StringConverter::linkStringToArray()
+     */
     protected function _isVisible($rules)
     {
         $negativeRules = array_filter($rules, function ($value) {
             if ($value[0] === '-') {
                 return true;
             }
+
             return false;
         });
         foreach ($negativeRules as $rule) {
@@ -102,12 +102,12 @@ class VisibilityFilter
         return false;
     }
 
-/**
- * Check that request matches a single rule
- *
- * @param string $rule Rule in link string or plain URL fragment
- * @return bool True if request satisfies the rule
- */
+    /**
+     * Check that request matches a single rule
+     *
+     * @param string $rule Rule in link string or plain URL fragment
+     * @return bool True if request satisfies the rule
+     */
     protected function _ruleMatch($rule)
     {
         if (strpos($rule, ':') !== false) {
@@ -142,7 +142,7 @@ class VisibilityFilter
      * @param array $options
      * @return \Cake\Collection\Collection
      */
-    public function remove(\Traversable $traversable, $options = [])
+    public function remove(Traversable $traversable, $options = [])
     {
         $options = Hash::merge([
             'field' => null,

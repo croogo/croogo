@@ -22,9 +22,9 @@
 namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
-use Cake\Core\Configure;
 
 /**
  *    The Akismet PHP5 Class
@@ -125,10 +125,12 @@ class AkismetComponent extends Component
     {
         // Check to see if the key is valid
         $response = $this->sendRequest('key=' . $this->akismetAPIKey . '&blog=' . $this->blogURL, $this->akismetServer, '/' . $this->akismetVersion . '/verify-key');
+
         return $response[1] == 'valid';
     }
 
     // makes a request to the Akismet service
+
     private function sendRequest($request, $host, $path)
     {
         $httpRequest  = "POST " . $path . " HTTP/1.0\r\n";
@@ -146,6 +148,7 @@ class AkismetComponent extends Component
     }
 
     // Formats the data for transmission
+
     private function getQueryString()
     {
         foreach ($_SERVER as $key => $value) {

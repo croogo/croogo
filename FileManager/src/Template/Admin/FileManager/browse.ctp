@@ -11,12 +11,21 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->getRequest()->getR
 <?php $this->start('action-buttons') ?>
 <div class="btn-group">
     <?php
-    echo $this->FileManager->adminAction(__d('croogo', 'Upload here'),
-        ['controller' => 'FileManager', 'action' => 'upload'], $path);
-    echo $this->FileManager->adminAction(__d('croogo', 'Create directory'),
-        ['controller' => 'FileManager', 'action' => 'create_directory'], $path);
-    echo $this->FileManager->adminAction(__d('croogo', 'Create file'),
-        ['controller' => 'FileManager', 'action' => 'create_file'], $path);
+    echo $this->FileManager->adminAction(
+        __d('croogo', 'Upload here'),
+        ['controller' => 'FileManager', 'action' => 'upload'],
+        $path
+    );
+    echo $this->FileManager->adminAction(
+        __d('croogo', 'Create directory'),
+        ['controller' => 'FileManager', 'action' => 'create_directory'],
+        $path
+    );
+    echo $this->FileManager->adminAction(
+        __d('croogo', 'Create file'),
+        ['controller' => 'FileManager', 'action' => 'create_file'],
+        $path
+    );
     ?>
 </div>
 <?php $this->end() ?>
@@ -38,7 +47,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->getRequest()->getR
         <?php
         // directories
         $rows = [];
-        foreach ($content['0'] as $directory):
+        foreach ($content['0'] as $directory) :
             $actions = [];
             $fullpath = $path . $directory;
             $actions[] = $this->FileManager->linkDirectory(__d('croogo', 'Open'), $fullpath . DS);
@@ -63,11 +72,11 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->getRequest()->getR
 
         // files
         $rows = [];
-        foreach ($content['1'] as $file):
+        foreach ($content['1'] as $file) :
             $actions = [];
             $fullpath = $path . $file;
             $icon = $this->FileManager->filename2icon($file);
-            if ($icon == 'picture.png'):
+            if ($icon == 'picture.png') :
                 $image = '/' . str_replace(WWW_ROOT, '', $fullpath);
                 $lightboxOptions = [
                     'data-toggle' => 'lightbox',
@@ -75,7 +84,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->getRequest()->getR
                 ];
                 $linkFile = $this->Html->link($file, $image, $lightboxOptions);
                 $actions[] = $this->Html->link(__d('croogo', 'View'), $image, $lightboxOptions);
-            else:
+            else :
                 $linkFile = $this->FileManager->linkFile($file, $fullpath);
                 $actions[] = $this->FileManager->link(__d('croogo', 'Edit'), [
                         'plugin' => 'Croogo/FileManager',

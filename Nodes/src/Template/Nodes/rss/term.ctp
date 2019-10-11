@@ -1,7 +1,7 @@
 <?php
 
 $Url = $this->Url;
-$items = $this->Rss->items($nodes->toArray(), function($item) use ($Url) {
+$items = $this->Rss->items($nodes->toArray(), function ($item) use ($Url) {
     return [
         'title' => $item->title,
         'link' => $Url->build($item->url->getUrl(), true),

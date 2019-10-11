@@ -5,16 +5,15 @@ namespace Croogo\Install\Shell;
 use App\Console\Installer;
 use App\Controller\Component\AuthComponent;
 use Cake\Cache\Cache;
-use Cake\Controller\ComponentRegistry;
 use Cake\Console\Shell;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
+use Composer\IO\BufferIO;
 use Croogo\Acl\AclGenerator;
 use Croogo\Core\PluginManager;
 use Croogo\Install\InstallManager;
-use Croogo\Install\Model\Table\InstallTable;
-use Composer\IO\BufferIO;
+use Exception;
 
 /**
  * Install Shell
@@ -40,9 +39,9 @@ class InstallShell extends Shell
         }
     }
 
-/**
- * Display help/options
- */
+    /**
+     * Display help/options
+     */
     public function getOptionParser()
     {
         $drivers = ['Mysql', 'Postgres', 'Sqlite', 'Sqlserver'];
@@ -102,28 +101,31 @@ class InstallShell extends Shell
             ->addArgument('admin-password', [
                 'help' => 'Admin password',
             ]);
+
         return $parser;
     }
 
-/**
- * Convenient wrapper for Shell::in() that gets the default from CLI options
- */
+    /**
+     * Convenient wrapper for Shell::in() that gets the default from CLI options
+     */
     protected function _in($prompt, $options = null, $default = null, $argument = null)
     {
         if (isset($this->params[$argument])) {
             return $this->params[$argument];
         }
+
         return $this->in($prompt, $options, $default);
     }
 
-/**
- * Convenient wrapper for Shell::in() that gets the default from CLI argument
- */
+    /**
+     * Convenient wrapper for Shell::in() that gets the default from CLI argument
+     */
     protected function _args($prompt, $options = null, $default = null, $index = null)
     {
         if (!empty($this->args[$index])) {
             return $this->args[$index];
         }
+
         return $this->in($prompt, $options, $default);
     }
 
@@ -150,6 +152,7 @@ class InstallShell extends Shell
         $isFileCreated = $InstallManager->createDatabaseFile($install);
         if ($isFileCreated !== true) {
             $this->err($isFileCreated);
+
             return $this->_stop();
         }
 
@@ -158,11 +161,13 @@ class InstallShell extends Shell
             $result = $InstallManager->setupDatabase();
             if ($result !== true) {
                 $this->err($result);
+
                 return $this->_stop();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->err($e->getMessage());
             $this->err('Please verify you have the correct credentials');
+
             return $this->_stop();
         }
 
@@ -172,9 +177,10 @@ class InstallShell extends Shell
             $generator->setShell($this);
             $generator->insertAcos(ConnectionManager::get('default'));
             $InstallManager->setupGrants();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->err('Error installing access control objects');
             $this->err($e->getMessage());
+
             return $this->_stop();
         }
 
@@ -214,7 +220,7 @@ class InstallShell extends Shell
             $Install = TableRegistry::get('Croogo/Install.Install');
             $Install->addAdminUser($user);
             $InstallManager->installCompleted();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->err('Error creating admin user: ' . $e->getMessage());
         }
 

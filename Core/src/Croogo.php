@@ -346,6 +346,7 @@ class Croogo
         } else {
             $event = EventManager::instance()->dispatch($event);
         }
+
         return $event;
     }
 
@@ -364,6 +365,7 @@ class Croogo
             $absoluteUrl = Router::url('/' . $url, true);
         }
         $path = '/' . str_replace(Router::url('/', true), '', $absoluteUrl);
+
         return $path;
     }
 
@@ -387,6 +389,7 @@ class Croogo
         }
         $values = Hash::merge((array)$values, $config);
         Configure::write($key, $values);
+
         return $values;
     }
 
@@ -396,5 +399,4 @@ class Croogo
             $model => $config
         ], true);
     }
-
 }

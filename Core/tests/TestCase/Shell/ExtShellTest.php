@@ -2,8 +2,6 @@
 
 namespace Croogo\Core\Test\TestCase\Shell;
 
-use Cake\Console\Shell;
-use Cake\Console\ShellDispatcher;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Croogo\Core\TestSuite\CroogoTestCase;
@@ -21,51 +19,51 @@ use Croogo\Core\TestSuite\CroogoTestCase;
 class ExtShellTest extends CroogoTestCase
 {
 
-/**
- * fixtures
- *
- * @var array
- */
+    /**
+     * fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
-//		'plugin.Croogo/Comments.Comment',
-//		'plugin.Croogo/Menus.Menu',
-//		'plugin.Croogo/Blocks.Block',
-//		'plugin.Croogo/Menus.Link',
-//		'plugin.Croogo/Meta.Meta',
-//		'plugin.Croogo/Nodes.Node',
-//		'plugin.Croogo/Taxonomy.ModelTaxonomy',
-//		'plugin.Croogo/Blocks.Region',
-//		'plugin.Croogo/Users.Role',
-//		'plugin.Croogo/Settings.Setting',
-//		'plugin.Croogo/Taxonomy.Taxonomy',
-//		'plugin.Croogo/Taxonomy.Term',
-//		'plugin.Croogo/Taxonomy.Type',
-//		'plugin.Croogo/Taxonomy.TypesVocabulary',
-//		'plugin.Croogo/Users.User',
-//		'plugin.Croogo/Taxonomy.Vocabulary',
-//		'plugin.Croogo/Users.Aro',
-//		'plugin.Croogo/Users.Aco',
-//		'plugin.Croogo/Users.ArosAco',
+//      'plugin.Croogo/Comments.Comment',
+//      'plugin.Croogo/Menus.Menu',
+//      'plugin.Croogo/Blocks.Block',
+//      'plugin.Croogo/Menus.Link',
+//      'plugin.Croogo/Meta.Meta',
+//      'plugin.Croogo/Nodes.Node',
+//      'plugin.Croogo/Taxonomy.ModelTaxonomy',
+//      'plugin.Croogo/Blocks.Region',
+//      'plugin.Croogo/Users.Role',
+//      'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Taxonomy.Taxonomy',
+//      'plugin.Croogo/Taxonomy.Term',
+//      'plugin.Croogo/Taxonomy.Type',
+//      'plugin.Croogo/Taxonomy.TypesVocabulary',
+//      'plugin.Croogo/Users.User',
+//      'plugin.Croogo/Taxonomy.Vocabulary',
+//      'plugin.Croogo/Users.Aro',
+//      'plugin.Croogo/Users.Aco',
+//      'plugin.Croogo/Users.ArosAco',
     ];
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
         $Folder = new Folder(APP . 'Plugin' . DS . 'Example');
         $Folder->copy(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
-//		$this->Setting = ClassRegistry::init('Settings.Setting');
+//      $this->Setting = ClassRegistry::init('Settings.Setting');
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
@@ -73,11 +71,11 @@ class ExtShellTest extends CroogoTestCase
         $Folder->delete();
     }
 
-/**
- * testPlugin
- *
- * @return void
- */
+    /**
+     * testPlugin
+     *
+     * @return void
+     */
     public function testPlugin()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -107,9 +105,9 @@ class ExtShellTest extends CroogoTestCase
         $this->assertFalse(in_array($bogusPlugin, explode(',', $result['Setting']['value'])));
     }
 
-/**
- * testForceActivation
- */
+    /**
+     * testForceActivation
+     */
     public function testForceActivation()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -128,9 +126,9 @@ class ExtShellTest extends CroogoTestCase
         $this->assertTrue(in_array('TestPlugin', explode(',', $result['Setting']['value'])));
     }
 
-/**
- * testForceDeactivation
- */
+    /**
+     * testForceDeactivation
+     */
     public function testForceDeactivation()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -149,11 +147,11 @@ class ExtShellTest extends CroogoTestCase
         $this->assertFalse(in_array('Bogus', explode(',', $result['Setting']['value'])));
     }
 
-/**
- * testTheme
- *
- * @return void
- */
+    /**
+     * testTheme
+     *
+     * @return void
+     */
     public function testTheme()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');

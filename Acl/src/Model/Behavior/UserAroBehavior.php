@@ -23,17 +23,17 @@ use Cake\ORM\TableRegistry;
 class UserAroBehavior extends Behavior
 {
 
-/**
- * Setup
- */
+    /**
+     * Setup
+     */
     public function initialize(array $config)
     {
         $this->_setupMultirole($this->_table);
     }
 
-/**
- * Enable Multiple Role, dynamically bind User Habtm Role
- */
+    /**
+     * Enable Multiple Role, dynamically bind User Habtm Role
+     */
     protected function _setupMultirole(Table $model)
     {
         if (!Configure::read('Access Control.multiRole')) {
@@ -48,8 +48,8 @@ class UserAroBehavior extends Behavior
     /**
      * afterSave
      *
-     * @param Model $model
-     * @param bool $created
+     * @param Model $event
+     * @param bool $entity
      * @return void
      */
     public function afterSave(Event $event, Entity $entity)
@@ -77,5 +77,4 @@ class UserAroBehavior extends Behavior
     {
         Cache::clearGroup('acl', 'permissions');
     }
-
 }

@@ -31,12 +31,12 @@ class MessagesController extends AppController
         ]);
     }
 
-/**
- * Admin process
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin process
+     *
+     * @return void
+     * @access public
+     */
     public function process()
     {
         $Messages = $this->Messages;
@@ -47,6 +47,7 @@ class MessagesController extends AppController
             'read' => __d('croogo', 'Messages marked as read'),
             'unread' => __d('croogo', 'Messages marked as unread'),
         ];
+
         return $this->BulkProcess->process($Messages, $action, $ids, [
             'messageMap' => $messageMap,
         ]);
@@ -78,7 +79,7 @@ class MessagesController extends AppController
 
     public function index()
     {
-        $this->Crud->on('beforePaginate', function(Event $event) {
+        $this->Crud->on('beforePaginate', function (Event $event) {
             $query = $event->getSubject()->query;
             if (empty($this->getRequest()->getQuery('sort'))) {
                 $query->order([
@@ -86,7 +87,7 @@ class MessagesController extends AppController
                 ]);
             }
         });
+
         return $this->Crud->execute();
     }
-
 }

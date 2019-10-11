@@ -2,8 +2,8 @@
 
 $this->extend('/Common/admin_index');
 $this->Breadcrumbs
-    ->add('Example', array('controller' => 'Example', 'action' => 'index'))
-    ->add('Chooser Example', array('controller' => 'Example', 'action' => 'chooser'));
+    ->add('Example', ['controller' => 'Example', 'action' => 'index'])
+    ->add('Chooser Example', ['controller' => 'Example', 'action' => 'chooser']);
 
 $this->append('form-start', $this->Form->create(null));
 
@@ -13,19 +13,20 @@ echo $this->element('Croogo/Core.admin/modal', [
     'id' => 'link-chooser',
 ]);
 
-echo $this->Form->input('node_id', array(
+echo $this->Form->input('node_id', [
     'type' => 'text',
     'data-attr' => 'data-chooser-id',
-    'append' => $this->Html->link('Choose Node',
-        array(
+    'append' => $this->Html->link(
+    'Choose Node',
+    [
             'plugin' => 'Croogo/Nodes',
             'controller' => 'Nodes',
             'action' => 'index',
-            '?' => array(
+            '?' => [
                 'chooser' => true,
-            ),
-        ),
-        array(
+            ],
+        ],
+    [
             'class' => 'item-choose',
             'data-chooser-type' => 'Node',
             'data-chooser-target' => '#node-id',
@@ -33,23 +34,24 @@ echo $this->Form->input('node_id', array(
             'data-target' => '#link-chooser',
             'data-toggle' => 'modal',
             'data-chooser' => true,
-        )
-    )
-));
+        ]
+)
+]);
 
-echo $this->Form->input('node_url', array(
+echo $this->Form->input('node_url', [
     'type' => 'text',
     'data-attr' => 'rel',
-    'append' => $this->Html->link('Choose Node',
-        array(
+    'append' => $this->Html->link(
+    'Choose Node',
+    [
             'plugin' => 'Croogo/Nodes',
             'controller' => 'Nodes',
             'action' => 'index',
-            '?' => array(
+            '?' => [
                 'chooser' => true,
-            ),
-        ),
-        array(
+            ],
+        ],
+    [
             'class' => 'item-choose',
             'data-chooser-type' => 'Node',
             'data-chooser-target' => '#node-url',
@@ -57,23 +59,24 @@ echo $this->Form->input('node_url', array(
             'data-target' => '#link-chooser',
             'data-toggle' => 'modal',
             'data-chooser' => true,
-        )
-    )
-));
+        ]
+)
+]);
 
-echo $this->Form->input('block_id', array(
+echo $this->Form->input('block_id', [
     'type' => 'text',
     'data-attr' => 'data-chooser-id',
-    'append' => $this->Html->link('Choose Block Id',
-        array(
+    'append' => $this->Html->link(
+    'Choose Block Id',
+    [
             'plugin' => 'Croogo/Blocks',
             'controller' => 'Blocks',
             'action' => 'index',
-            '?' => array(
+            '?' => [
                 'chooser' => true,
-            ),
-        ),
-        array(
+            ],
+        ],
+    [
             'class' => 'item-choose',
             'data-chooser-type' => 'Block',
             'data-chooser-target' => '#block-id',
@@ -81,23 +84,24 @@ echo $this->Form->input('block_id', array(
             'data-target' => '#link-chooser',
             'data-toggle' => 'modal',
             'data-chooser' => true,
-        )
-    )
-));
+        ]
+)
+]);
 
-echo $this->Form->input('block_title', array(
+echo $this->Form->input('block_title', [
     'type' => 'text',
     'data-attr' => 'data-chooser-title',
-    'append' => $this->Html->link('Choose Block Title',
-        array(
+    'append' => $this->Html->link(
+    'Choose Block Title',
+    [
             'plugin' => 'Croogo/Blocks',
             'controller' => 'Blocks',
             'action' => 'index',
-            '?' => array(
+            '?' => [
                 'chooser' => true,
-            ),
-        ),
-        array(
+            ],
+        ],
+    [
             'class' => 'item-choose',
             'data-chooser-type' => 'Block',
             'data-chooser-target' => '#block-title',
@@ -105,23 +109,24 @@ echo $this->Form->input('block_title', array(
             'data-target' => '#link-chooser',
             'data-toggle' => 'modal',
             'data-chooser' => true,
-        )
-    )
-));
+        ]
+)
+]);
 
-echo $this->Form->input('user_id', array(
+echo $this->Form->input('user_id', [
     'type' => 'text',
     'data-attr' => 'data-chooser-id',
-    'append' => $this->Html->link('Choose User Id',
-        array(
+    'append' => $this->Html->link(
+    'Choose User Id',
+    [
             'plugin' => 'Croogo/Users',
             'controller' => 'Users',
             'action' => 'index',
-            '?' => array(
+            '?' => [
                 'chooser' => true,
-            ),
-        ),
-        array(
+            ],
+        ],
+    [
             'class' => 'item-choose',
             'data-chooser-type' => 'User',
             'data-chooser-target' => '#user-id',
@@ -129,9 +134,9 @@ echo $this->Form->input('user_id', array(
             'data-target' => '#link-chooser',
             'data-toggle' => 'modal',
             'data-chooser' => true,
-        )
-    )
-));
+        ]
+)
+]);
 
 $this->end();
 

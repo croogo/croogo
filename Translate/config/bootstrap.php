@@ -1,7 +1,6 @@
 <?php
 
 use Cake\Core\Configure;
-use Cake\Routing\DispatcherFactory;
 use Cake\Event\EventManager;
 use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
@@ -17,7 +16,7 @@ I18n::setLocale($siteLocale);
 
 EventManager::instance()->on(
     'Server.buildMiddleware',
-    function($event, $stack) use ($siteLocale, $languages) {
+    function ($event, $stack) use ($siteLocale, $languages) {
         $stack->add(new I18nMiddleware([
             'defaultLanguage' => $siteLocale,
             'languages' => $languages,

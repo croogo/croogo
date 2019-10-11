@@ -2,14 +2,14 @@
 
 namespace Croogo\Dashboards\View\Helper;
 
-use Cake\View\Helper;
-use Cake\Utility\Hash;
 use Cake\Core\Configure;
 use Cake\Log\Log;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
+use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\Croogo;
 use Croogo\Dashboards\CroogoDashboard;
-use Cake\ORM\TableRegistry;
 
 /**
  * Dashboards Helper
@@ -30,9 +30,9 @@ class DashboardsHelper extends Helper
         'Croogo/Core.Theme',
     ];
 
-/**
- * Constructor
- */
+    /**
+     * Constructor
+     */
     public function __construct(View $View, $settings = [])
     {
         $this->settings = Hash::merge([
@@ -42,9 +42,9 @@ class DashboardsHelper extends Helper
         parent::__construct($View, $settings);
     }
 
-/**
- * Before Render callback
- */
+    /**
+     * Before Render callback
+     */
     public function beforeRender($viewFile)
     {
         $request = $this->getView()->getRequest();
@@ -53,11 +53,11 @@ class DashboardsHelper extends Helper
         }
     }
 
-/**
- * Gets the dashboard markup
- *
- * @return string
- */
+    /**
+     * Gets the dashboard markup
+     *
+     * @return string
+     */
     public function dashboards()
     {
         $registered = Configure::read('Dashboards');
@@ -80,7 +80,7 @@ class DashboardsHelper extends Helper
         $cssSetting = $this->Theme->settings('css');
 
         if (!empty($this->_View->viewVars['boxes_for_dashboard'])) {
-            $boxesForLayout = collection($this->_View->viewVars['boxes_for_dashboard'])->combine('alias', function($entity) {
+            $boxesForLayout = collection($this->_View->viewVars['boxes_for_dashboard'])->combine('alias', function ($entity) {
                 return $entity;
             })->toArray();
             $dashboards = [];
@@ -146,12 +146,12 @@ class DashboardsHelper extends Helper
             $this->Html->tag('div', implode('', $columnDivs), ['class' => $cssSetting['row']]);
     }
 
-/**
- * Gets a readable name from constants
- *
- * @param int $id CroogoDashboard position constants
- * @return string Readable position name
- */
+    /**
+     * Gets a readable name from constants
+     *
+     * @param int $id CroogoDashboard position constants
+     * @return string Readable position name
+     */
     public function columnName($id)
     {
         switch ($id) {
@@ -165,6 +165,7 @@ class DashboardsHelper extends Helper
                 return __d('croogo', 'Full');
             break;
         }
+
         return null;
     }
 }

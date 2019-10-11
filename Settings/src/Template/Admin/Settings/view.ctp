@@ -1,38 +1,67 @@
 <div class="settings view">
 <h2><?= __d('croogo', 'Setting'); ?></h2>
-    <dl><?php $i = 0; $class = ' class="altrow"';?>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?= __d('croogo', 'Id'); ?></dt>
-        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    <dl><?php $i = 0;
+    $class = ' class="altrow"';?>
+        <dt<?php if ($i % 2 == 0) {
+            echo $class;
+           }?>><?= __d('croogo', 'Id'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) {
+            echo $class;
+           }?>>
             <?= $setting->id; ?>
             &nbsp;
         </dd>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?= __d('croogo', 'Key'); ?></dt>
-        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+        <dt<?php if ($i % 2 == 0) {
+            echo $class;
+           }?>><?= __d('croogo', 'Key'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) {
+            echo $class;
+           }?>>
             <?= $setting->key; ?>
             &nbsp;
         </dd>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?= __d('croogo', 'Value'); ?></dt>
-        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+        <dt<?php if ($i % 2 == 0) {
+            echo $class;
+           }?>><?= __d('croogo', 'Value'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) {
+            echo $class;
+           }?>>
             <?= $setting->value; ?>
             &nbsp;
         </dd>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?= __d('croogo', 'Description'); ?></dt>
-        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+        <dt<?php if ($i % 2 == 0) {
+            echo $class;
+           }?>><?= __d('croogo', 'Description'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) {
+            echo $class;
+           }?>>
             <?= $setting->description; ?>
             &nbsp;
         </dd>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?= __d('croogo', 'Input Type'); ?></dt>
-        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+        <dt<?php if ($i % 2 == 0) {
+            echo $class;
+           }?>><?= __d('croogo', 'Input Type'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) {
+            echo $class;
+           }?>>
             <?= $setting->input_type; ?>
             &nbsp;
         </dd>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?= __d('croogo', 'Weight'); ?></dt>
-        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+        <dt<?php if ($i % 2 == 0) {
+            echo $class;
+           }?>><?= __d('croogo', 'Weight'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) {
+            echo $class;
+           }?>>
             <?= $setting->weight; ?>
             &nbsp;
         </dd>
-        <dt<?php if ($i % 2 == 0) echo $class;?>><?= __d('croogo', 'Params'); ?></dt>
-        <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+        <dt<?php if ($i % 2 == 0) {
+            echo $class;
+           }?>><?= __d('croogo', 'Params'); ?></dt>
+        <dd<?php if ($i++ % 2 == 0) {
+            echo $class;
+           }?>>
             <?= $setting->params; ?>
             &nbsp;
         </dd>

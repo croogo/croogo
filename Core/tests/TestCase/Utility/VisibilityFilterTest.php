@@ -5,7 +5,6 @@ namespace Croogo\Core\Test\TestCase\Utility;
 use Cake\Core\Configure;
 use Cake\Network\Request;
 use Cake\ORM\Entity;
-use Cake\Utility\Hash;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\Utility\VisibilityFilter;
 

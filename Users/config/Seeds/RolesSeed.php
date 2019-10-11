@@ -54,5 +54,4 @@ class RolesSeed extends AbstractSeed
         $result = $Roles->saveMany($entities);
         $this->getAdapter()->beginTransaction();
     }
-
 }

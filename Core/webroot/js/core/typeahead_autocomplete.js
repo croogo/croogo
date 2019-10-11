@@ -41,12 +41,10 @@
 			if (typeof elConfig[key] !== 'undefined') {
 				this.options[field] = elConfig[key];
 			}
-		};
-
-		this.init(this);
-	};
-
-	Plugin.prototype = {
+    }
+    this.init(this);
+  }
+  Plugin.prototype = {
 		init: function (plugin) {
 			var options = plugin.options;
 			var results = [];
@@ -135,4 +133,4 @@
 		});
 	};
 
-})(jQuery, window, document)
+})(jQuery, window, document);

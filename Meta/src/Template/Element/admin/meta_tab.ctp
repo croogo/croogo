@@ -1,8 +1,11 @@
 <div class="meta-fields">
     <?php
+
+    use Cake\Utility\Hash;
+
     if (isset($entity) && !empty($entity->meta)) {
-        $fields = \Cake\Utility\Hash::combine($entity->meta, '{n}.key', '{n}.value');
-        $fieldsKeyToId = \Cake\Utility\Hash::combine($entity->meta, '{n}.key', '{n}.id');
+        $fields = Hash::combine($entity->meta, '{n}.key', '{n}.value');
+        $fieldsKeyToId = Hash::combine($entity->meta, '{n}.key', '{n}.id');
     } else {
         $fields = $fieldsKeyToId = [];
     }
@@ -14,7 +17,8 @@
     ?>
 </div>
 <?php
-echo $this->Html->link(__d('croogo', 'Add another field'),
+echo $this->Html->link(
+    __d('croogo', 'Add another field'),
     ['plugin' => 'Croogo/Meta', 'controller' => 'Meta', 'action' => 'addMeta'],
     ['class' => 'add-meta btn btn-secondary']
 );

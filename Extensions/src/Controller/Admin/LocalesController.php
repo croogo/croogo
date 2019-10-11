@@ -2,12 +2,11 @@
 
 namespace Croogo\Extensions\Controller\Admin;
 
-use Cake\Core\App;
 use Cake\Cache\Cache;
-use Cake\Filesystem\Folder;
+use Cake\Core\App;
 use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
-
 use Locale;
 
 /**
@@ -23,22 +22,22 @@ use Locale;
 class LocalesController extends AppController
 {
 
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
+    /**
+     * Models used by the Controller
+     *
+     * @var array
+     * @access public
+     */
     public $uses = [
         'Croogo/Settings.Settings',
         'Croogo/Users.Users',
     ];
 
-/**
- * Admin index
- *
- * @return void
- */
+    /**
+     * Admin index
+     *
+     * @return void
+     */
     public function index()
     {
         $this->set('title_for_layout', __d('croogo', 'Locales'));
@@ -72,17 +71,18 @@ class LocalesController extends AppController
         $this->set(compact('content', 'locales'));
     }
 
-/**
- * Admin activate
- *
- * @param string $locale
- * @return void
- */
+    /**
+     * Admin activate
+     *
+     * @param string $locale
+     * @return void
+     */
     public function activate($locale = null)
     {
         $poFile = $this->__getPoFile($locale);
         if ($locale == null || !$poFile) {
             $this->Flash->error(__d('croogo', 'Locale does not exist.'));
+
             return $this->redirect(['action' => 'index']);
         }
 
@@ -94,19 +94,21 @@ class LocalesController extends AppController
         } else {
             $this->Flash->error(__d('croogo', 'Could not save Locale setting.'));
         }
+
         return $this->redirect(['action' => 'index']);
     }
 
-/**
- * Deactivate locale
- *
- * @param string $locale
- * @return void
- */
+    /**
+     * Deactivate locale
+     *
+     * @param string $locale
+     * @return void
+     */
     public function deactivate($locale = null)
     {
         if ($locale == null) {
             $this->Flash->error(__d('croogo', 'Invalid locale.'));
+
             return $this->redirect(['action' => 'index']);
         }
         $result = $this->Settings->write('Site.locale', '');
@@ -117,14 +119,15 @@ class LocalesController extends AppController
         } else {
             $this->Flash->error(__d('croogo', 'Could not save Locale setting.'));
         }
+
         return $this->redirect(['action' => 'index']);
     }
 
-/**
- * Admin add
- *
- * @return void
- */
+    /**
+     * Admin add
+     *
+     * @return void
+     */
     public function add()
     {
         $this->set('title_for_layout', __d('croogo', 'Upload a new locale'));
@@ -154,11 +157,13 @@ class LocalesController extends AppController
 
             if (!$locale) {
                 $this->Flash->error(__d('croogo', 'Invalid locale.'));
+
                 return $this->redirect(['action' => 'add']);
             }
 
             if (is_dir(APP . 'Locale' . DS . $locale)) {
                 $this->Flash->error(__d('croogo', 'Locale already exists.'));
+
                 return $this->redirect(['action' => 'add']);
             }
 
@@ -198,18 +203,19 @@ class LocalesController extends AppController
         }
     }
 
-/**
- * Admin edit
- *
- * @param string $locale
- * @return void
- */
+    /**
+     * Admin edit
+     *
+     * @param string $locale
+     * @return void
+     */
     public function edit($locale = null)
     {
         $this->set('title_for_layout', sprintf(__d('croogo', 'Edit locale: %s'), $locale));
 
         if (!$locale) {
             $this->Flash->error(__d('croogo', 'Invalid locale.'));
+
             return $this->redirect(['action' => 'index']);
         }
 
@@ -217,6 +223,7 @@ class LocalesController extends AppController
 
         if (!$poFile) {
             $this->Flash->error(__d('croogo', 'The file %s does not exist.', 'croogo.po'));
+
             return $this->redirect(['action' => 'index']);
         }
 
@@ -233,6 +240,7 @@ class LocalesController extends AppController
             // save
             if ($file->write($this->getRequest()->data('content'))) {
                 $this->Flash->success(__d('croogo', 'Locale updated successfully'));
+
                 return $this->redirect(['action' => 'index']);
             }
         }
@@ -240,18 +248,19 @@ class LocalesController extends AppController
         $this->set(compact('locale', 'content'));
     }
 
-/**
- * Admin delete
- *
- * @param string $locale
- * @return void
- */
+    /**
+     * Admin delete
+     *
+     * @param string $locale
+     * @return void
+     */
     public function delete($locale = null)
     {
         $poFile = $this->__getPoFile($locale);
 
         if (!$poFile) {
             $this->Flash->error(__d('croogo', 'The file %s does not exist.', 'croogo.po'));
+
             return $this->redirect(['action' => 'index']);
         }
 

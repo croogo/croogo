@@ -3,12 +3,8 @@
 namespace Croogo\Comments\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\Database\Schema\TableSchema;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\NotFoundException;
-use Cake\ORM\Query;
-use Cake\ORM\ResultSet;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use Croogo\Comments\Model\Entity\Comment;
@@ -94,19 +90,19 @@ class CommentsTable extends CroogoTable
     }
 
     /**
- * Add a new Comment
- *
- * Options:
- * - parentId id of parent comment (if it is a reply)
- * - userData author data (User data (if logged in) / Author fields from Comment form)
- *
- * @param array $data Comment data (Usually POSTed data from Comment form)
- * @param string $model Model alias
- * @param int $foreignKey Foreign Key (Node Id from where comment was posted).
- * @param array $options Options
- * @return bool true if comment was added, false otherwise.
- * @throws NotFoundException
- */
+     * Add a new Comment
+     *
+     * Options:
+     * - parentId id of parent comment (if it is a reply)
+     * - userData author data (User data (if logged in) / Author fields from Comment form)
+     *
+     * @param array $comment Comment data (Usually POSTed data from Comment form)
+     * @param string $model Model alias
+     * @param int $foreignKey Foreign Key (Node Id from where comment was posted).
+     * @param array $options Options
+     * @return bool true if comment was added, false otherwise.
+     * @throws NotFoundException
+     */
     public function add(Comment $comment, $model, $foreignKey, $options = [])
     {
         $options = Hash::merge([
@@ -157,13 +153,13 @@ class CommentsTable extends CroogoTable
         return (bool)$this->save($comment);
     }
 
-/**
- * Checks wether comment has been approved
- *
- * @param int $commentId comment id
- * @param int $nodeId node id
- * @return boolean true if comment is approved
- */
+    /**
+     * Checks wether comment has been approved
+     *
+     * @param int $commentId comment id
+     * @param int $model node id
+     * @return boolean true if comment is approved
+     */
     public function isApproved($commentId, $model, $foreignKey)
     {
         return $this->exists([
@@ -174,12 +170,12 @@ class CommentsTable extends CroogoTable
         ]);
     }
 
-/**
- * Checks wether comment is within valid level range
- *
- * @return boolean
- * @throws NotFoundException
- */
+    /**
+     * Checks wether comment is within valid level range
+     *
+     * @return boolean
+     * @throws NotFoundException
+     */
     public function isValidLevel($commentId)
     {
         if (!$this->exists(['id' => $commentId])) {
@@ -193,14 +189,14 @@ class CommentsTable extends CroogoTable
         return Configure::read('Comment.level') > $level;
     }
 
-/**
- * Change status of given Comment Ids
- *
- * @param array $ids array of Comment Ids
- * @param bool
- * @return mixed
- * @see Model::saveMany()
- */
+    /**
+     * Change status of given Comment Ids
+     *
+     * @param array $ids array of Comment Ids
+     * @param bool
+     * @return mixed
+     * @see Model::saveMany()
+     */
     public function changeStatus($ids, $status)
     {
         return $this->updateAll([
@@ -210,17 +206,17 @@ class CommentsTable extends CroogoTable
         ]);
     }
 
-/**
- * Provide our own bulkPublish since BulkProcessBehavior::bulkPublish is incompatible with boolean status
- */
+    /**
+     * Provide our own bulkPublish since BulkProcessBehavior::bulkPublish is incompatible with boolean status
+     */
     public function bulkPublish($ids)
     {
         return $this->changeStatus($ids, true);
     }
 
-/**
- * Provide our own bulkUnpublish since BulkProcessBehavior::bulkUnpublish is incompatible with boolean status
- */
+    /**
+     * Provide our own bulkUnpublish since BulkProcessBehavior::bulkUnpublish is incompatible with boolean status
+     */
     public function bulkUnpublish($ids)
     {
         return $this->changeStatus($ids, false);

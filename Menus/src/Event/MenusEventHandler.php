@@ -16,9 +16,9 @@ use Cake\Event\EventListenerInterface;
 class MenusEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- */
+    /**
+     * implementedEvents
+     */
     public function implementedEvents()
     {
         return [
@@ -34,12 +34,12 @@ class MenusEventHandler implements EventListenerInterface
         ];
     }
 
-/**
- * Clear Links related cache after bulk operation
- *
- * @param Event $event
- * @return void
- */
+    /**
+     * Clear Links related cache after bulk operation
+     *
+     * @param Event $event
+     * @return void
+     */
     public function onAfterBulkProcess(Event $event)
     {
         Cache::clearGroup('menus', 'croogo_menus');

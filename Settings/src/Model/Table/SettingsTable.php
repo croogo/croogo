@@ -3,12 +3,11 @@
 namespace Croogo\Settings\Model\Table;
 
 use ArrayObject;
-
 use Cake\Core\Configure;
 use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\Form\Schema;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 use Croogo\Acl\AclGenerator;
@@ -23,7 +22,7 @@ use Croogo\Core\Model\Table\CroogoTable;
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
- * @method \Cake\ORM\Query findByKey(string $key)
+ * @method Query findByKey(string $key)
  */
 class SettingsTable extends CroogoTable
 {
@@ -32,21 +31,24 @@ class SettingsTable extends CroogoTable
     {
         $validator
             ->notBlank('key', __d('croogo', 'Key cannot be empty.'));
+
         return $validator;
     }
 
     public function buildRules(RulesChecker $rules)
     {
         $rules
-            ->add($rules->isUnique( ['key'],
+            ->add($rules->isUnique(
+                ['key'],
                 __d('croogo', 'That key is already taken')
             ));
+
         return $rules;
     }
 
-/**
- * @param array $config
- */
+    /**
+     * @param array $config
+     */
     public function initialize(array $config)
     {
         $this->addBehavior('Croogo/Core.Trackable');
@@ -68,27 +70,28 @@ class SettingsTable extends CroogoTable
             ]);
     }
 
-/**
- * @param Table $schema
- * @return Table
- */
+    /**
+     * @param Table $schema
+     * @return Table
+     */
     protected function _initializeSchema(TableSchema $schema)
     {
         $schema->setColumnType('params', 'params');
+
         return $schema;
     }
 
-/**
- * beforeSave callback
- */
+    /**
+     * beforeSave callback
+     */
     public function beforeSave()
     {
         $this->getConnection()->getDriver()->enableAutoQuoting();
     }
 
-/**
- * afterSave callback
- */
+    /**
+     * afterSave callback
+     */
     public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
 
@@ -101,14 +104,14 @@ class SettingsTable extends CroogoTable
         }
     }
 
-/**
- * Creates a new record with key/value pair if key does not exist.
- *
- * @param string $key
- * @param string $value
- * @param array $options
- * @return boolean
- */
+    /**
+     * Creates a new record with key/value pair if key does not exist.
+     *
+     * @param string $key
+     * @param string $value
+     * @param array $options
+     * @return boolean
+     */
     public function write($key, $value, $options = [])
     {
         $setting = $this->findByKey($key)->first();
@@ -117,7 +120,6 @@ class SettingsTable extends CroogoTable
             $setting->type = gettype($value);
 
             $setting = $this->patchEntity($setting, $options);
-
         } else {
             $options = array_merge([
                 'title' => '',
@@ -145,24 +147,26 @@ class SettingsTable extends CroogoTable
 
         if ($this->save($setting)) {
             Configure::write($key, $value);
+
             return true;
         } else {
             return false;
         }
     }
 
-/**
- * Deletes setting record for given key
- *
- * @param string $key
- * @return boolean
- */
+    /**
+     * Deletes setting record for given key
+     *
+     * @param string $key
+     * @return boolean
+     */
     public function deleteKey($key)
     {
         $setting = $this->findByKey($key)->first();
         if ($setting && $this->delete($setting)) {
             return true;
         }
+
         return false;
     }
 }

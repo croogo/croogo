@@ -5,4 +5,3 @@ header('Content-Type: text/x-json');
 header('X-JSON: ' . $this->fetch('content'));
 
 echo $this->fetch('content');
-?>

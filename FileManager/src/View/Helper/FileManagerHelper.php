@@ -2,8 +2,8 @@
 
 namespace Croogo\FileManager\View\Helper;
 
-use Cake\View\Helper;
 use Cake\Routing\Router;
+use Cake\View\Helper;
 
 /**
  * FileManager Helper
@@ -18,12 +18,12 @@ use Cake\Routing\Router;
 class FileManagerHelper extends Helper
 {
 
-/**
- * Other helpers used by this helper
- *
- * @var array
- * @access public
- */
+    /**
+     * Other helpers used by this helper
+     *
+     * @var array
+     * @access public
+     */
     public $helpers = ['Html', 'Form'];
 
     private $__actionsAsButton = [
@@ -37,12 +37,12 @@ class FileManagerHelper extends Helper
         'delete_file'
     ];
 
-/**
- * Get extension from a file name.
- *
- * @param string $filename file name
- * @return string
- */
+    /**
+     * Get extension from a file name.
+     *
+     * @param string $filename file name
+     * @return string
+     */
     public function filename2ext($filename)
     {
         $filename = strtolower($filename);
@@ -51,16 +51,17 @@ class FileManagerHelper extends Helper
             return "file";
         } else {
             $n = count($filenameE) - 1;
+
             return $filenameE[$n];
         }
     }
 
-/**
- * Get icon from file extension
- *
- * @param string $ext Extension
- * @return string Icon
- */
+    /**
+     * Get icon from file extension
+     *
+     * @param string $ext Extension
+     * @return string Icon
+     */
     public function ext2icon($ext)
     {
         $ext = strtolower($ext);
@@ -91,25 +92,26 @@ class FileManagerHelper extends Helper
         return $output;
     }
 
-/**
- * Get icon from file name
- *
- * @param string $filename file name
- * @return string Icon
- */
+    /**
+     * Get icon from file name
+     *
+     * @param string $filename file name
+     * @return string Icon
+     */
     public function filename2icon($filename)
     {
         $ext = $this->filename2ext($filename);
         $icon = $this->ext2icon($ext);
+
         return $icon;
     }
 
-/**
- * Breadcrumb
- *
- * @param string $path absolute path
- * @return string
- */
+    /**
+     * Breadcrumb
+     *
+     * @param string $path absolute path
+     * @return string
+     */
     public function breadcrumb($path)
     {
         $pathE = explode(DS, $path);
@@ -130,29 +132,29 @@ class FileManagerHelper extends Helper
         return $output;
     }
 
-/**
- * adminAction
- *
- * @param string $title Title
- * @param string|array $url Url
- * @param string $path Path
- * @param string $pathKey Query string variable name denoting path
- * @return string Action link
- */
+    /**
+     * adminAction
+     *
+     * @param string $title Title
+     * @param string|array $url Url
+     * @param string $path Path
+     * @param string $pathKey Query string variable name denoting path
+     * @return string Action link
+     */
     public function adminAction($title, $url, $path, $pathKey = 'path')
     {
         return $this->link($title, $url, $path, $pathKey);
     }
 
-/**
- * Generate anchor tag for a file/directory
- *
- * @param string $title link title
- * @param array $url link url
- * @param string $path file/directory path
- * @param string $pathKey default is 'path'
- * @return string
- */
+    /**
+     * Generate anchor tag for a file/directory
+     *
+     * @param string $title link title
+     * @param array $url link url
+     * @param string $path file/directory path
+     * @param string $pathKey default is 'path'
+     * @return string
+     */
     public function link($title, $url, $path, $pathKey = 'path')
     {
         $class = '';
@@ -165,16 +167,17 @@ class FileManagerHelper extends Helper
         } else {
             $output = '<a class="' . $class . '" href="' . Router::url($url) . "?{$pathKey}=" . urlencode($path) . '">' . $title . '</a>';
         }
+
         return $output;
     }
 
-/**
- * Generate anchor tag for directory
- *
- * @param string $title link title
- * @param string $path directory path
- * @return string
- */
+    /**
+     * Generate anchor tag for directory
+     *
+     * @param string $title link title
+     * @param string $path directory path
+     * @return string
+     */
     public function linkDirectory($title, $path)
     {
         $output = $this->link($title, [
@@ -182,16 +185,17 @@ class FileManagerHelper extends Helper
             'controller' => 'FileManager',
             'action' => 'browse',
         ], $path);
+
         return $output;
     }
 
-/**
- * Generate anchor tag for file
- *
- * @param string $title Title
- * @param string $path File path
- * @return string
- */
+    /**
+     * Generate anchor tag for file
+     *
+     * @param string $title Title
+     * @param string $path File path
+     * @return string
+     */
     public function linkFile($title, $path)
     {
         return $this->Html->link($title, [
@@ -203,38 +207,40 @@ class FileManagerHelper extends Helper
         ]);
     }
 
-/**
- * Generate anchor tag for upload link
- *
- * @param string $title link title
- * @param string $path absolute path
- * @return string
- */
+    /**
+     * Generate anchor tag for upload link
+     *
+     * @param string $title link title
+     * @param string $path absolute path
+     * @return string
+     */
     public function linkUpload($title, $path)
     {
         $output = $this->link($title, ['controller' => 'FileManager', 'action' => 'upload'], $path);
+
         return $output;
     }
 
-/**
- * Generate anchor tag for 'create a new directory' link
- *
- * @param string $title link title
- * @param string $path absolute path
- * @return string
- */
+    /**
+     * Generate anchor tag for 'create a new directory' link
+     *
+     * @param string $title link title
+     * @param string $path absolute path
+     * @return string
+     */
     public function linkCreateDirectory($title, $path)
     {
         $output = $this->link($title, ['controller' => 'FileManager', 'action' => 'new'], $path);
+
         return $output;
     }
 
-/**
- * Get icon from mime type
- *
- * @param string $mimeType mine type
- * @return string
- */
+    /**
+     * Get icon from mime type
+     *
+     * @param string $mimeType mine type
+     * @return string
+     */
     public function mimeTypeToImage($mimeType)
     {
         $mime = explode('/', $mimeType);
@@ -252,13 +258,13 @@ class FileManagerHelper extends Helper
         return $output;
     }
 
-/**
- * Checks if searched location is under any of the paths
- *
- * @param array $paths Paths
- * @param string $search Search string
- * @return boolean
- */
+    /**
+     * Checks if searched location is under any of the paths
+     *
+     * @param array $paths Paths
+     * @param string $search Search string
+     * @return boolean
+     */
     public function inPath($paths, $search)
     {
         foreach ($paths as $path) {
@@ -266,6 +272,7 @@ class FileManagerHelper extends Helper
                 return true;
             }
         }
+
         return false;
     }
 }

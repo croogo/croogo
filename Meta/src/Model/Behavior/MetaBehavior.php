@@ -2,13 +2,12 @@
 
 namespace Croogo\Meta\Model\Behavior;
 
+use ArrayObject;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
-use Cake\ORM\ResultSet;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 
 /**
@@ -27,7 +26,7 @@ class MetaBehavior extends Behavior
     /**
      * Setup
      *
-     * @param Model $model
+     * @param Model $config
      * @param array $config
      * @return void
      */
@@ -74,6 +73,7 @@ class MetaBehavior extends Behavior
                         $customFields = Hash::combine($entity->meta, '{n}.key', '{n}.value');
                     }
                     $entity->custom_fields = $customFields;
+
                     return $entity;
                 });
             });
@@ -84,7 +84,7 @@ class MetaBehavior extends Behavior
     /**
      * Prepare data
      *
-     * @param Model $model
+     * @param Model $data
      * @param array $data
      * @return array
      */
@@ -96,11 +96,11 @@ class MetaBehavior extends Behavior
     /**
      * Protected method for MetaBehavior::prepareData()
      *
-     * @param Model $model
-     * @param array $data
+     * @param Model $data
+     * @param array $options
      * @return array
      */
-    protected function _prepareMeta(\ArrayObject $data, \ArrayObject $options)
+    protected function _prepareMeta(ArrayObject $data, ArrayObject $options)
     {
         if (isset($data['meta']) &&
             is_array($data['meta']) &&
@@ -134,7 +134,7 @@ class MetaBehavior extends Behavior
         $this->_prepareMeta($event->getData('data'), $event->getData('options'));
     }
 
-    public function beforeSave(Event $event, Entity $entity, \ArrayObject $options)
+    public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
     {
         if (!$entity->has('meta')) {
             return;

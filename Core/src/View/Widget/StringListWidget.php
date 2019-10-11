@@ -27,6 +27,7 @@ class StringListWidget implements WidgetInterface
             }
         }
         $data = Hash::merge(['class' => 'form-control'], $data);
+
         return $this->_templates->format('textarea', [
             'class' => 'textarea stringlist',
             'name' => $data['name'],

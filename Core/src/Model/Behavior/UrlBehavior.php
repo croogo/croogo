@@ -2,7 +2,6 @@
 
 namespace Croogo\Core\Model\Behavior;
 
-use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;

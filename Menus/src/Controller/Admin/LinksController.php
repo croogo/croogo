@@ -3,7 +3,6 @@
 namespace Croogo\Menus\Controller\Admin;
 
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Croogo\Core\Controller\Component\CroogoComponent;

@@ -7,5 +7,4 @@ class MessagesSeed extends AbstractSeed
 
     public $records = [
     ];
-
 }

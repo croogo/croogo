@@ -52,9 +52,9 @@ $this->start('tab-content');
             'class' => 'c-select',
             'multiple' => 'checkbox'
         ]);
-    echo $this->Html->tabEnd();
+        echo $this->Html->tabEnd();
 
-    echo $this->Html->tabStart('type-comments');
+        echo $this->Html->tabStart('type-comments');
         echo $this->Form->input('comment_status', [
             'type' => 'radio',
             'options' => [
@@ -83,33 +83,33 @@ $this->start('tab-content');
             'action' => 'prefix',
             'Service',
         ]);
-    echo $this->Html->tabEnd();
+        echo $this->Html->tabEnd();
 
-    echo $this->Html->tabStart('type-params');
+        echo $this->Html->tabStart('type-params');
         echo $this->Form->input('params', [
             'type' => 'stringlist',
             'label' => __d('croogo', 'Params'),
             'default' => 'routes=true',
         ]);
-    echo $this->Html->tabEnd();
+        echo $this->Html->tabEnd();
 
-$this->end();
+        $this->end();
 
-$this->start('panels');
-echo $this->Html->beginBox(__d('croogo', 'Publishing'));
-    echo $this->element('Croogo/Core.admin/buttons', ['type' => 'type']);
-    echo $this->Form->input('format_show_author', [
+        $this->start('panels');
+        echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+        echo $this->element('Croogo/Core.admin/buttons', ['type' => 'type']);
+        echo $this->Form->input('format_show_author', [
         'label' => __d('croogo', 'Show author\'s name'),
         'class' => false,
-    ]);
-    echo $this->Form->input('format_show_date', [
+        ]);
+        echo $this->Form->input('format_show_date', [
         'label' => __d('croogo', 'Show date'),
         'class' => false,
-    ]);
-    echo $this->Form->input('format_use_wysiwyg', [
+        ]);
+        echo $this->Form->input('format_use_wysiwyg', [
         'label' => __d('croogo', 'Use rich editor'),
         'class' => false,
         'default' => true
-    ]);
-    echo $this->Html->endBox();
-$this->end();
+        ]);
+        echo $this->Html->endBox();
+        $this->end();

@@ -16,5 +16,4 @@ class Node extends Entity
     use RowLevelAclTrait;
 
     use TranslateTrait;
-
 }

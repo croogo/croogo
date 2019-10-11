@@ -2,7 +2,6 @@
 
 namespace Croogo\Core\Action\Admin;
 
-use Cake\Event\Event;
 use Crud\Action\BaseAction;
 use Crud\Event\Subject;
 use Crud\Traits\FindMethodTrait;

@@ -61,6 +61,7 @@ class VocabulariesTable extends CroogoTable
             ['alias'],
             __d('croogo', 'That alias is already taken')
         ));
+
         return parent::buildRules($rules);
     }
 }

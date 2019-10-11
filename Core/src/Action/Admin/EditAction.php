@@ -2,7 +2,6 @@
 
 namespace Croogo\Core\Action\Admin;
 
-use Cake\Event\Event;
 use Crud\Action\EditAction as CrudEditAction;
 
 class EditAction extends CrudEditAction

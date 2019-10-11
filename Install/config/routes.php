@@ -1,10 +1,11 @@
 <?php
 
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
 Router::connect('/', []);
 
-Router::scope('/install', ['plugin' => 'Croogo/Install', 'controller' => 'Install'], function (\Cake\Routing\RouteBuilder $routeBuilder) {
+Router::scope('/install', ['plugin' => 'Croogo/Install', 'controller' => 'Install'], function (RouteBuilder $routeBuilder) {
     $routeBuilder->connect('/', ['action' => 'index']);
     $routeBuilder->connect('/:action');
 });

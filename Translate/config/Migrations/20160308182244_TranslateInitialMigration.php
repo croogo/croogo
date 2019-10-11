@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class TranslateInitialMigration extends AbstractMigration

@@ -3,6 +3,8 @@
 </p>
 
 <p>
-    You can remove this box by disabling the <em>Example</em> plugin from the <?= $this->Html->link('Plugin',
-        array('plugin' => 'Croogo/Extensions', 'controller' => 'Plugins', 'action' => 'index'));?> page.
+    You can remove this box by disabling the <em>Example</em> plugin from the <?= $this->Html->link(
+    'Plugin',
+    ['plugin' => 'Croogo/Extensions', 'controller' => 'Plugins', 'action' => 'index']
+);?> page.
 </p>

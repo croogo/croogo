@@ -2,10 +2,9 @@
 namespace Croogo\Core\Test\TestCase\View\Helper;
 
 use Cake\Controller\ComponentRegistry;
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Network\Response;
 use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\Network\Session;
 use Cake\View\View;
 use Croogo\Core\Nav;
@@ -17,17 +16,17 @@ class CroogoHelperTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.Croogo/Users.Aco',
-//		'plugin.Croogo/Users.Aro',
-//		'plugin.Croogo/Users.ArosAco',
-//		'plugin.Croogo/Settings.Setting',
-//		'plugin.Croogo/Users.Role',
-//		'plugin.Croogo/Taxonomy.Type',
+//      'plugin.Croogo/Users.Aco',
+//      'plugin.Croogo/Users.Aro',
+//      'plugin.Croogo/Users.ArosAco',
+//      'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Users.Role',
+//      'plugin.Croogo/Taxonomy.Type',
     ];
 
-/**
- * setUp
- */
+    /**
+     * setUp
+     */
     public function setUp()
     {
         parent::setUp();
@@ -53,7 +52,7 @@ class CroogoHelperTest extends CroogoTestCase
         $this->Croogo->Acl = $this->getMock(
             $aclHelper,
             ['linkIsAllowedByRoleId']
-            //			array($view)
+            //          array($view)
         );
         $this->Croogo->Acl
             ->expects($this->any())
@@ -66,19 +65,19 @@ class CroogoHelperTest extends CroogoTestCase
         Nav::clear();
     }
 
-/**
- * tearDown
- */
+    /**
+     * tearDown
+     */
     public function tearDown()
     {
-//		ClassRegistry::flush();
+//      ClassRegistry::flush();
         Nav::items('sidebar', $this->menus);
         unset($this->Croogo);
     }
 
-/**
- * testAdminMenus
- */
+    /**
+     * testAdminMenus
+     */
     public function testAdminMenus()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -94,9 +93,9 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertEquals($expected, $result);
     }
 
-/**
- * testAdminRowActions
- */
+    /**
+     * testAdminRowActions
+     */
     public function testAdminRowActions()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -172,9 +171,9 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertHtml($result, $expected);
     }
 
-/**
- * testAdminTabs
- */
+    /**
+     * testAdminTabs
+     */
     public function testAdminTabs()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -197,9 +196,9 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertContains('test-title', $result);
     }
 
-/**
- * testAdminTabsOptions
- */
+    /**
+     * testAdminTabsOptions
+     */
     public function testAdminTabsOptions()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -339,9 +338,9 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertContains('</textarea>', $result);
     }
 
-/**
- * testAdminRowAction
- */
+    /**
+     * testAdminRowAction
+     */
     public function testAdminRowAction()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -380,9 +379,9 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertHtml($result, $expected);
     }
 
-/**
- * testAdminRowActionEscapedConfirmMessage
- */
+    /**
+     * testAdminRowActionEscapedConfirmMessage
+     */
     public function testAdminRowActionEscapedConfirmMessage()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -420,9 +419,9 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertContains($quot . $sure . $quot, $result);
     }
 
-/**
- * testAdminRowActionBulkDelete
- */
+    /**
+     * testAdminRowActionBulkDelete
+     */
     public function testAdminRowActionBulkDelete()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');

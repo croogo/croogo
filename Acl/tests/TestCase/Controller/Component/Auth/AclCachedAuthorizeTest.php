@@ -3,7 +3,6 @@
 namespace Croogo\Acl\Test\TestCase\Controller\Component\Auth;
 
 use Acl\Controller\Component\Auth\AclCachedAuthorize;
-use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Croogo\TestSuite\CroogoTestCase;
 
@@ -15,9 +14,9 @@ class AclCachedAuthorizeController extends Controller
 class AclCachedAuthorizeTest extends CroogoTestCase
 {
 
-/**
- * setUp
- */
+    /**
+     * setUp
+     */
     public function setUp()
     {
         $this->apiPath = Configure::read('Croogo.Api.path');
@@ -39,9 +38,9 @@ class AclCachedAuthorizeTest extends CroogoTestCase
         unset($this->Controller);
     }
 
-/**
- * testAction
- */
+    /**
+     * testAction
+     */
     public function testAction()
     {
         $request = $this->_apiRequest([
@@ -63,9 +62,9 @@ class AclCachedAuthorizeTest extends CroogoTestCase
         $this->assertEquals('api/v1.0/Users/Users/index', $result);
     }
 
-/**
- * test action() with invalid request
- */
+    /**
+     * test action() with invalid request
+     */
     public function testActionWithInvalidRequest()
     {
         $request = $this->_apiRequest([

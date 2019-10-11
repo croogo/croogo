@@ -14,7 +14,7 @@ var Vocabularies = {};
  */
 Vocabularies.documentReady = function () {
 
-}
+};
 
 /**
  * document ready

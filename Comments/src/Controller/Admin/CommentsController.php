@@ -68,5 +68,4 @@ class CommentsController extends AppController
             return;
         }
     }
-
 }

@@ -40,5 +40,4 @@ class ContactsController extends AppController
             return;
         }
     }
-
 }

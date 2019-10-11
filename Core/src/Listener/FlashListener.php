@@ -23,5 +23,4 @@ class FlashListener extends BaseListener
         $plugin = Configure::read('Site.admin_theme');
         $subject->element = $plugin . '.' . $type;
     }
-
 }

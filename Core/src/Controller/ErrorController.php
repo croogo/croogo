@@ -4,8 +4,6 @@ namespace Croogo\Core\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Network\Request;
-use Cake\Network\Response;
 use Cake\Routing\Router;
 
 /**

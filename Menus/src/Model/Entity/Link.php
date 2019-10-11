@@ -19,5 +19,4 @@ class Link extends Entity
     {
         return $this->link ? $this->link->getPath() : null;
     }
-
 }

@@ -2,10 +2,8 @@
 
 namespace Croogo\Core\Controller;
 
-use Cake\Controller\ErrorController;
 use Cake\Controller\Exception\MissingActionException;
 use Cake\Controller\Exception\MissingComponentException;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Http\ServerRequest;
@@ -15,7 +13,6 @@ use Cake\Utility\Hash;
 
 use Cake\View\Exception\MissingTemplateException;
 use Croogo\Core\Croogo;
-use Croogo\Extensions\CroogoTheme;
 
 /**
  * Croogo App Controller
@@ -141,6 +138,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
                 }
                 if ($this->{$component}->isValidAction($action)) {
                     $this->setRequest($request);
+
                     return $this->{$component}->{$action}($this);
                 }
             }
@@ -224,6 +222,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
         $this->response->statusCode(400);
         $this->response->send();
         $this->_stop();
+
         return false;
     }
 

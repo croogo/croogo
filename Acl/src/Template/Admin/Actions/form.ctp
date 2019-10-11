@@ -2,9 +2,9 @@
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Breadcrumbs
-    ->add(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
-    ->add(__d('croogo', 'Permissions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Permissions'))
-    ->add(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index'));
+    ->add(__d('croogo', 'Users'), ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'])
+    ->add(__d('croogo', 'Permissions'), ['plugin' => 'Croogo/Acl', 'controller' => 'Permissions'])
+    ->add(__d('croogo', 'Actions'), ['plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index']);
 
 if ($this->getRequest()->getParam('action') == 'edit') {
     $this->Breadcrumbs->add($aco->id . ': ' . $aco->alias, $this->getRequest()->getRequestTarget());
@@ -22,16 +22,16 @@ $this->end();
 
 $this->append('tab-content');
 
-    echo $this->Form->input('parent_id', array(
+    echo $this->Form->input('parent_id', [
         'options' => $acos,
         'empty' => true,
         'label' => __d('croogo', 'Parent'),
-    ));
-    $this->Form->templates(array(
+    ]);
+    $this->Form->templates([
         'class' => 'span10',
-    ));
-    echo $this->Form->input('alias', array(
+    ]);
+    echo $this->Form->input('alias', [
         'label' => __d('croogo', 'Alias'),
-    ));
+    ]);
 
-$this->end();
+    $this->end();

@@ -3,6 +3,7 @@
 namespace Croogo\FileManager\Utility;
 
 use ReflectionClass;
+use RuntimeException;
 
 /**
  * StorageManager - manages and instantiates gaufrette storage engine instances
@@ -11,46 +12,50 @@ use ReflectionClass;
  * @copyright 2012 Florian Krämer
  * @license MIT
  */
-class StorageManager {
+class StorageManager
+{
 
-/**
- * Adapter configs
- *
- * @var array
- */
-    protected $_adapterConfig = array(
-        'Local' => array(
-            'adapterOptions' => array(TMP, true),
+    /**
+     * Adapter configs
+     *
+     * @var array
+     */
+    protected $_adapterConfig = [
+        'Local' => [
+            'adapterOptions' => [TMP, true],
             'adapterClass' => '\League\Flysystem\Adapter\Local',
-            'class' => '\League\Flysystem\Filesystem'));
+            'class' => '\League\Flysystem\Filesystem']];
 
-/**
- * Sets the default or active adapter that is used
- *
- * @var string
- */
+    /**
+     * Sets the default or active adapter that is used
+     *
+     * @var string
+     */
     protected $_activeAdapter = 'Local';
 
-/**
- * Return a singleton instance of the StorageManager.
- *
- * @return ClassRegistry instance
- */
-    public static function &getInstance() {
-        static $instance = array();
+    /**
+     * Return a singleton instance of the StorageManager.
+     *
+     * @return ClassRegistry instance
+     */
+    public static function &getInstance()
+    {
+        static $instance = [];
         if (!$instance) {
             $instance[0] = new StorageManager();
         }
+
         return $instance[0];
     }
 
-/**
- * Sets or gets the active storage adapter
- *
- * @param string
- * @return mixed
- */
-    public static function config($adapter = null, $options = array()) {
+    /**
+     * Sets or gets the active storage adapter
+     *
+     * @param string
+     * @return mixed
+     */
+    public static function config($adapter = null, $options = [])
+    {
         $_this = StorageManager::getInstance();
 
         if (!empty($adapter) && !empty($options)) {
@@ -68,13 +73,14 @@ class StorageManager {
         return false;
     }
 
-/**
- * Sets or gets the active storage adapter
- *
- * @param string
- * @return mixed
- */
-    public static function activeAdapter($name = null) {
+    /**
+     * Sets or gets the active storage adapter
+     *
+     * @param string
+     * @return mixed
+     */
+    public static function activeAdapter($name = null)
+    {
         $_this = StorageManager::getInstance();
 
         if (empty($name)) {
@@ -84,44 +90,48 @@ class StorageManager {
         if (isset($_this->_adapterConfig[$name])) {
             return $_this->_activeAdapter = $name;
         }
+
         return false;
     }
 
-/**
- * Flush all or a single adapter from the config
- *
- * @param string $name Config name, if none all adapters are flushed
- * @throws RuntimeException
- * @return boolean True on success
- */
-    public static function flush($name = null) {
+    /**
+     * Flush all or a single adapter from the config
+     *
+     * @param string $name Config name, if none all adapters are flushed
+     * @throws RuntimeException
+     * @return boolean True on success
+     */
+    public static function flush($name = null)
+    {
         $_this = StorageManager::getInstance();
 
         if (empty($name)) {
-            $_this->_adapterConfig = array();
+            $_this->_adapterConfig = [];
             $_this->_activeAdapter = '';
         }
 
         if (isset($_this->_adapterConfig[$name])) {
             if ($_this->_activeAdapter == $name) {
-                throw new \RuntimeException(__d('FileStorage', 'You can not flush the active adapter {0}', $name));
+                throw new RuntimeException(__d('FileStorage', 'You can not flush the active adapter {0}', $name));
             }
             unset($_this->_adapterConfig[$name]);
+
             return true;
         }
 
         return false;
     }
 
-/**
- * StorageAdapter
- *
- * @param mixed $adapterName string of adapter configuration or array of settings
- * @param boolean $renewObject Creates a new instance of the given adapter in the configuration
- * @throws RuntimeException
- * @return Flysystem object as configured by first arg
- */
-    public static function adapter($adapterName = null, $renewObject = false) {
+    /**
+     * StorageAdapter
+     *
+     * @param mixed $adapterName string of adapter configuration or array of settings
+     * @param bool $renewObject Creates a new instance of the given adapter in the configuration
+     * @throws RuntimeException
+     * @return Flysystem object as configured by first arg
+     */
+    public static function adapter($adapterName = null, $renewObject = false)
+    {
         $_this = StorageManager::getInstance();
 
         if (empty($adapterName)) {
@@ -133,7 +143,7 @@ class StorageManager {
             if (!empty($_this->_adapterConfig[$adapterName])) {
                 $adapter = $_this->_adapterConfig[$adapterName];
             } else {
-                throw new \RuntimeException(__d('FileStorage', 'Invalid Storage Adapter {0}', $adapterName));
+                throw new RuntimeException(__d('FileStorage', 'Invalid Storage Adapter {0}', $adapterName));
             }
 
             if (!empty($_this->_adapterConfig[$adapterName]['object']) && $renewObject === false) {
@@ -153,19 +163,21 @@ class StorageManager {
         if ($isConfigured) {
             $_this->_adapterConfig[$adapterName]['object'] = &$engineObject;
         }
+
         return $engineObject;
     }
 
-    public static function configured() {
+    public static function configured()
+    {
         $_this = StorageManager::getInstance();
-        $config = array();
+        $config = [];
         foreach ($_this->_adapterConfig as $k => $v) {
             if (empty($v['description'])) {
                 continue;
             }
             $config[$k] = $v['description'];
         }
+
         return $config;
     }
-
 }

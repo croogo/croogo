@@ -24,8 +24,8 @@ class RegionsHelperTest extends TestCase
     public $helper;
 
     /**
- * setUp
- */
+     * setUp
+     */
     public function setUp()
     {
         parent::setUp();
@@ -47,9 +47,9 @@ class RegionsHelperTest extends TestCase
             ->getMock();
     }
 
-/**
- * testIsEmpty
- */
+    /**
+     * testIsEmpty
+     */
     public function testIsEmpty()
     {
         $this->assertTrue($this->helper->isEmpty('right'));
@@ -99,7 +99,6 @@ class RegionsHelperTest extends TestCase
             'elementOptions' => ['class' => 'some-class']
         ]);
     }
-
 
     /**
      * testBlock with invalid/missing element

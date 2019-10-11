@@ -2,10 +2,14 @@
 
 $this->extend('/Common/admin_edit');
 
-$this->Breadcrumbs->add(__d('croogo', 'Extensions'),
-    ['plugin' => 'Croogo/Extensions', 'controller' => 'Plugins', 'action' => 'index'])
-    ->add(__d('croogo', 'Locales'),
-        ['plugin' => 'Croogo/Extensions', 'controller' => 'Locales', 'action' => 'index'])
+$this->Breadcrumbs->add(
+    __d('croogo', 'Extensions'),
+    ['plugin' => 'Croogo/Extensions', 'controller' => 'Plugins', 'action' => 'index']
+)
+    ->add(
+        __d('croogo', 'Locales'),
+        ['plugin' => 'Croogo/Extensions', 'controller' => 'Locales', 'action' => 'index']
+    )
     ->add(__d('croogo', 'Upload'), $this->getRequest()->getRequestTarget());
 
 $this->append('form-start', $this->Form->create(null, [

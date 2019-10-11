@@ -3,16 +3,16 @@
 namespace Croogo\Taxonomy\Model\Table;
 
 use ArrayObject;
-use Cake\Event\Event;
 use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Taxonomy\Model\Entity\Term;
+use Exception;
 
 /**
  * Term
@@ -51,8 +51,8 @@ class TermsTable extends CroogoTable
 
         $this->searchManager()
             ->add('vocab', 'Search.Callback', [
-                'callback' => function($query, $args, $filter) {
-                    return $query->matching('Vocabularies', function($query) use ($args) {
+                'callback' => function ($query, $args, $filter) {
+                    return $query->matching('Vocabularies', function ($query) use ($args) {
                         return $query->where([
                             'Vocabularies.alias' => $args['vocab'],
                         ]);
@@ -64,6 +64,7 @@ class TermsTable extends CroogoTable
     protected function _initializeSchema(TableSchema $table)
     {
         $table->setColumnType('params', 'params');
+
         return parent::_initializeSchema($table);
     }
 
@@ -98,14 +99,15 @@ class TermsTable extends CroogoTable
                 ['alias'],
                 __d('croogo', 'That alias is already taken')
             ));
+
         return $rules;
     }
 
-/**
- * Allow delete on whether given Term has any association left with Taxonomy
- *
- * @return bool
- */
+    /**
+     * Allow delete on whether given Term has any association left with Taxonomy
+     *
+     * @return bool
+     */
     public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         $count = $this->Taxonomies->find()
@@ -114,28 +116,29 @@ class TermsTable extends CroogoTable
             ])
             ->count();
         if ($count > 0) {
-            throw new \Exception('Term is still in use.');
+            throw new Exception('Term is still in use.');
         }
+
         return $count === 0;
     }
 
-/**
- * Save term
- *
- * @see Term::_save()
- * @return array|bool Array of saved term or boolean false
- */
+    /**
+     * Save term
+     *
+     * @see Term::_save()
+     * @return array|bool Array of saved term or boolean false
+     */
     public function add($data, $vocabularyId)
     {
         return $this->_save($data, $vocabularyId);
     }
 
-/**
- * Edit term
- *
- * @see Term::_save()
- * @return array|bool Array of saved term or boolean false
- */
+    /**
+     * Edit term
+     *
+     * @see Term::_save()
+     * @return array|bool Array of saved term or boolean false
+     */
     public function edit(Entity $entity, $vocabularyId)
     {
         if ($entity->isDirty('slug') && $this->slugExists($entity->slug)) {
@@ -143,25 +146,26 @@ class TermsTable extends CroogoTable
         } else {
             $edited = $this->_save($entity, $vocabularyId);
         }
+
         return $edited;
     }
 
-/**
- * Convenience check for slug
- *
- * @return bool
- */
+    /**
+     * Convenience check for slug
+     *
+     * @return bool
+     */
     public function slugExists($slug)
     {
         return $this->exists(compact('slug'));
     }
 
-/**
- * Remove term
- *
- * @param int $id Term Id
- * @param int $vocabularyId Vocabulary Id
- */
+    /**
+     * Remove term
+     *
+     * @param int $id Term Id
+     * @param int $vocabularyId Vocabulary Id
+     */
     public function remove($id, $vocabularyId)
     {
         $taxonomy = $this->Vocabularies->Taxonomies->find()
@@ -185,7 +189,7 @@ class TermsTable extends CroogoTable
             $deleted &= $this->delete($term);
         }
 
-        return $deleted ;
+        return $deleted;
     }
 
     public function findByVocabulary(Query $query, array $options)
@@ -213,26 +217,27 @@ class TermsTable extends CroogoTable
         return $query;
     }
 
-/**
- * Save new/updated term data
- *
- * @param Entity $entity Term
- * @param int $vocabularyId Vocabulary Id
- */
+    /**
+     * Save new/updated term data
+     *
+     * @param Entity $entity Term
+     * @param int $vocabularyId Vocabulary Id
+     */
     protected function _save(Term $entity, $vocabularyId)
     {
         $this->setScopeForTaxonomy($vocabularyId);
         $term = $this->save($entity, [
             'associated' => ['Taxonomies'],
         ]);
+
         return $term;
     }
 
-/**
- * Set Scope
- *
- * @param int $vocabularyId Vocabulary Id
- */
+    /**
+     * Set Scope
+     *
+     * @param int $vocabularyId Vocabulary Id
+     */
     public function setScopeForTaxonomy($vocabularyId)
     {
         $scopeSettings = ['scope' => [
@@ -244,5 +249,4 @@ class TermsTable extends CroogoTable
             $this->Vocabularies->Taxonomies->addBehavior('Tree', $scopeSettings);
         }
     }
-
 }

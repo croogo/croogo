@@ -305,6 +305,7 @@ class FileManagerController extends AppController
             }
 
             $redirectUrl = ['controller' => 'FileManager', 'action' => 'browse'];
+
             return $this->redirect($redirectUrl);
         }
         $this->getRequest()->data('name', array_pop($pathFragments));

@@ -74,5 +74,4 @@ class LocaleSelectorFilter extends DispatcherFilter
 
         I18n::setLocale($locale);
     }
-
 }

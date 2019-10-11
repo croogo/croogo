@@ -4,8 +4,9 @@
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Routing\DispatcherFactory;
-use Cake\Routing\Router;
+use Cake\Filesystem\Folder;
 use Croogo\Core\PluginManager;
+use Croogo\Core\Test\Fixture\SettingsFixture;
 
 $findVendor = function () {
     $root = dirname(__DIR__);
@@ -57,7 +58,7 @@ Configure::write('App', [
 ]);
 Configure::write('debug', true);
 
-$tmpDirectory = new \Cake\Filesystem\Folder(TMP);
+$tmpDirectory = new Folder(TMP);
 $tmpDirectory->delete(TMP . 'cache');
 $tmpDirectory->create(TMP . 'cache/models', 0777);
 $tmpDirectory->create(TMP . 'cache/persistent', 0777);
@@ -115,7 +116,7 @@ ConnectionManager::setConfig('test_migrations', [
     'timezone' => 'UTC'
 ]);
 
-$settingsFixture = new \Croogo\Core\Test\Fixture\SettingsFixture();
+$settingsFixture = new SettingsFixture();
 
 ConnectionManager::alias('test', 'default');
 Configure::write('Acl.database', 'default');

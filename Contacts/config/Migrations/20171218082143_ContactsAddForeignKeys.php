@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class ContactsAddForeignKeys extends AbstractMigration
@@ -20,5 +21,4 @@ class ContactsAddForeignKeys extends AbstractMigration
             ->dropForeignKey('contact_id')
             ->save();
     }
-
 }

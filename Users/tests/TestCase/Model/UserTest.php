@@ -12,11 +12,11 @@ use Croogo\Users\Model\User;
 class UserTest extends CroogoTestCase
 {
 
-/**
- * Fixtures
- *
- * @var array
- */
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
         'plugin.Croogo/Users.Role',
         'plugin.Croogo/Users.User',
@@ -25,41 +25,41 @@ class UserTest extends CroogoTestCase
         'plugin.Croogo/Users.ArosAco',
     ];
 
-/**
- * User instance
- *
- * @var TestUser
- */
+    /**
+     * User instance
+     *
+     * @var TestUser
+     */
     public $User;
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
-//		$this->User = ClassRegistry::init('TestUser');
-//		$this->User->Aro->useDbConfig = 'test';
+//      $this->User = ClassRegistry::init('TestUser');
+//      $this->User->Aro->useDbConfig = 'test';
     }
 
-/**
- * tearDown method
- *
- * @return void
- */
+    /**
+     * tearDown method
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->User->request, $this->User);
     }
 
-/**
- * testPasswords method
- *
- * @return void
- */
+    /**
+     * testPasswords method
+     *
+     * @return void
+     */
     public function testPasswords()
     {
         $this->User->create([
@@ -95,11 +95,11 @@ class UserTest extends CroogoTestCase
         $this->assertEqual($newUser['User']['password'], $oldPassword);
     }
 
-/**
- * testValidIdenticalPassword method
- *
- * @return void
- */
+    /**
+     * testValidIdenticalPassword method
+     *
+     * @return void
+     */
     public function testValidIdenticalPassword()
     {
         $this->User->data['User'] = ['password' => '123456'];
@@ -108,11 +108,11 @@ class UserTest extends CroogoTestCase
         $this->assertContains('Passwords do not match. Please, try again.', $this->User->validIdentical(['verify_password' => 'other-value']));
     }
 
-/**
- * testDeleteLastUser method
- *
- * @return void
- */
+    /**
+     * testDeleteLastUser method
+     *
+     * @return void
+     */
     public function testDeleteLastUser()
     {
         $this->User->create([
@@ -131,11 +131,11 @@ class UserTest extends CroogoTestCase
         $this->assertFalse($this->User->delete($newUser['User']['id']));
     }
 
-/**
- * testDeleteAdminUser method
- *
- * @return void
- */
+    /**
+     * testDeleteAdminUser method
+     *
+     * @return void
+     */
     public function testDeleteAdminUser()
     {
         $this->User->create([
@@ -166,11 +166,11 @@ class UserTest extends CroogoTestCase
         $this->assertTrue($this->User->delete($newAdmin['User']['id']));
     }
 
-/**
- * testDisplayFields
- *
- * @return void
- */
+    /**
+     * testDisplayFields
+     *
+     * @return void
+     */
     public function testDisplayFields()
     {
         $result = $this->User->displayFields();
@@ -249,11 +249,11 @@ class UserTest extends CroogoTestCase
         $this->assertEquals($expected, $result);
     }
 
-/**
- * testEditFields
- *
- * @return void
- */
+    /**
+     * testEditFields
+     *
+     * @return void
+     */
     public function testEditFields()
     {
         $result = $this->User->editFields();
@@ -298,9 +298,9 @@ class UserTest extends CroogoTestCase
         $this->assertEquals($expected, $result);
     }
 
-/**
- * testDeleteAdminUsers
- */
+    /**
+     * testDeleteAdminUsers
+     */
     public function testDeleteAdminUsers()
     {
         // delete an admin
@@ -322,9 +322,9 @@ class UserTest extends CroogoTestCase
         $this->assertEquals(1, $count);
     }
 
-/**
- * testDeleteUsers
- */
+    /**
+     * testDeleteUsers
+     */
     public function testDeleteUsers()
     {
         // delete normal user

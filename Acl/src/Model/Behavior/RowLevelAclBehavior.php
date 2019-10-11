@@ -2,9 +2,9 @@
 
 namespace Croogo\Acl\Model\Behavior;
 
+use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\TableRegistry;
-use Cake\Event\Event;
 
 /**
  * RowLevelAcl Behavior
@@ -15,13 +15,13 @@ use Cake\Event\Event;
 class RowLevelAclBehavior extends Behavior
 {
 
-/**
- * afterSave
- *
- * Creates an ACO record for current model record, and give permissions to the
- * creator. If 'RolePermission' is present, 'grant' or 'inherit' permissions
- * for the role.
- */
+    /**
+     * afterSave
+     *
+     * Creates an ACO record for current model record, and give permissions to the
+     * creator. If 'RolePermission' is present, 'grant' or 'inherit' permissions
+     * for the role.
+     */
     public function afterSave(Event $event)
     {
         $entity = $event->data['entity'];
@@ -50,5 +50,4 @@ class RowLevelAclBehavior extends Behavior
             }
         }
     }
-
 }

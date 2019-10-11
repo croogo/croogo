@@ -2,9 +2,6 @@
 
 namespace Croogo\Core\View\Widget;
 
-use BootstrapUI\View\Helper\OptionsAwareTrait;
-use Cake\View\Form\ContextInterface;
-
 class ButtonWidget extends \BootstrapUI\View\Widget\ButtonWidget
 {
     /**

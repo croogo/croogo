@@ -23,13 +23,13 @@ Croogo.Wysiwyg.choose = function(url, title, description) {
  * Returns boolean value to indicate an editor within the page has been modified
  */
 Croogo.Wysiwyg.isDirty = function() {
-}
+};
 
 /**
  * Reset dirty indicator for all editors in the page
  */
 Croogo.Wysiwyg.resetDirty = function() {
-}
+};
 
 /**
  * This function is responsible for integrating attachments/file browser in the editor.

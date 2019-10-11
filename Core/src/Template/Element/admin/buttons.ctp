@@ -18,15 +18,15 @@ $cancelLabel = $this->Html->icon('times') . $cancelText;
     <div class="card-buttons d-flex justify-content-center">
     <?php
         echo $this->Form->button($saveLabel, ['class' => 'btn-outline-success']);
-        if ($applyText):
-            echo $this->Form->button($applyLabel, ['class' => 'btn-outline-primary',
-                'name' => '_apply',
-            ]);
-        endif;
+    if ($applyText) :
+        echo $this->Form->button($applyLabel, ['class' => 'btn-outline-primary',
+            'name' => '_apply',
+        ]);
+    endif;
         echo $this->Html->link($cancelLabel, $cancelUrl, [
             'escapeTitle' => false,
             'class' => 'cancel btn btn-outline-danger'
         ]);
-    ?>
+        ?>
     </div>
 </div>

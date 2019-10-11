@@ -11,6 +11,7 @@ class CroogoControllerTest extends PHPUnit_Framework_TestSuite
         $suite = new CakeTestSuite('Croogo controller tests');
         $path = APP . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . 'Croogo' . DS . 'Test' . DS . 'Case' . DS . 'Controller' . DS;
         $suite->addTestDirectory($path);
+
         return $suite;
     }
 }

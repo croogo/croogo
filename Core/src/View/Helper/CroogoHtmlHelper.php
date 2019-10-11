@@ -4,7 +4,6 @@ namespace Croogo\Core\View\Helper;
 
 use BootstrapUI\View\Helper\HtmlHelper;
 use Cake\Event\Event;
-use Cake\I18n\I18n;
 use Cake\Utility\Hash;
 use Cake\View\View;
 use Croogo\Core\Status;
@@ -66,6 +65,7 @@ class CroogoHtmlHelper extends HtmlHelper
             'callable' => 'filter',
             'passParams' => true,
         ];
+
         return $events;
     }
 

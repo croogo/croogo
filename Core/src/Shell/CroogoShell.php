@@ -2,10 +2,7 @@
 
 namespace Croogo\Core\Shell;
 
-use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
-
 use Croogo\Acl\AclGenerator;
 
 /**
@@ -25,9 +22,9 @@ class CroogoShell extends AppShell
         'Croogo/Core.Upgrade',
     ];
 
-/**
- * Display help/options
- */
+    /**
+     * Display help/options
+     */
     public function getOptionParser()
     {
         $parser = parent::getOptionParser();
@@ -53,14 +50,15 @@ class CroogoShell extends AppShell
                     'description' => 'Populate acos of existing contents',
                 ],
             ]);
+
         return $parser;
     }
 
-/**
- * Get hashed password
- *
- * Usage: ./Console/cake croogo password myPasswordHere
- */
+    /**
+     * Get hashed password
+     *
+     * Usage: ./Console/cake croogo password myPasswordHere
+     */
     public function password()
     {
         $value = trim($this->args['0']);
@@ -70,7 +68,7 @@ class CroogoShell extends AppShell
     public function syncContentAcos()
     {
         $aclGenerator = new AclGenerator();
+
         return $aclGenerator->syncContentAcos();
     }
-
 }

@@ -4,7 +4,6 @@ namespace Croogo\Core\Database\Type;
 
 use Cake\Database\Driver;
 use Cake\Database\Type;
-use Croogo\Core\Utility\StringConverter;
 use PDO;
 
 class EncodedType extends Type
@@ -46,9 +45,9 @@ class EncodedType extends Type
         if ($value === null) {
             return PDO::PARAM_NULL;
         }
+
         return PDO::PARAM_STR;
     }
-
 
     /**
      * Encode data

@@ -15,9 +15,9 @@ use Cake\Event\EventListenerInterface;
 class ContactsEventHandler implements EventListenerInterface
 {
 
-/**
- * implementEvents
- */
+    /**
+     * implementEvents
+     */
     public function implementedEvents()
     {
         return [];

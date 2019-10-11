@@ -7,18 +7,18 @@ use Croogo\TestSuite\CroogoTestFixture;
 class MultiUserFixture extends CroogoTestFixture
 {
 
-/**
- * name property
- *
- * @var string 'MultiUser'
- */
+    /**
+     * name property
+     *
+     * @var string 'MultiUser'
+     */
     public $name = 'MultiUser';
 
-/**
- * fields property
- *
- * @var array
- */
+    /**
+     * fields property
+     *
+     * @var array
+     */
     public $fields = [
         'id' => ['type' => 'integer'],
         'user' => ['type' => 'string', 'null' => false],
@@ -30,11 +30,11 @@ class MultiUserFixture extends CroogoTestFixture
         '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
     ];
 
-/**
- * records property
- *
- * @var array
- */
+    /**
+     * records property
+     *
+     * @var array
+     */
     public $records = [
         ['user' => 'mariano', 'email' => 'mariano@example.com', 'password' => '5f4dcc3b5aa765d61d8327deb882cf99', 'token' => '12345', 'created' => '2007-03-17 01:16:23', 'updated' => '2007-03-17 01:18:31'],
         ['user' => 'nate', 'email' => 'nate@example.com', 'password' => '5f4dcc3b5aa765d61d8327deb882cf99', 'token' => '23456', 'created' => '2007-03-17 01:18:23', 'updated' => '2007-03-17 01:20:31'],

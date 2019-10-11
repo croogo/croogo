@@ -1,5 +1,4 @@
 <?php
-use Cake\Core\Configure;
 
 $this->setLayout('admin_login');
 
@@ -25,7 +24,7 @@ $formStart = $this->Form->create('Users', [
     ]);
     $formEnd = $this->Form->end();
 
-?>
+    ?>
 <div class="card rounded-plus bg-faded">
     <div class="card-header">
         <h5 class="card-title"><?= $this->fetch('title') ?></h5>

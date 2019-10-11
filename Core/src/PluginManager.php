@@ -2,8 +2,8 @@
 
 namespace Croogo\Core;
 
-use Aura\Intl\Package;
 use App\Controller\AppController;
+use Aura\Intl\Package;
 use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\BasePlugin;
@@ -25,11 +25,9 @@ use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
-
-use Croogo\Core\Croogo;
 use Croogo\Core\Event\EventManager;
 use Croogo\Settings\Configure\Engine\DatabaseConfig;
-
+use Exception;
 use InvalidArgumentException;
 use Migrations\Migrations;
 
@@ -355,6 +353,7 @@ class PluginManager extends Plugin
         if (!static::available($plugin)) {
             return false;
         }
+
         return $this->_loadData($plugin, static::path($plugin), $ignoreMigrations);
     }
 
@@ -539,18 +538,20 @@ class PluginManager extends Plugin
         try {
             return $this->_getMigrations()
                 ->migrate($options);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->migrationErrors[] = $e->getMessage();
         }
     }
 
-    public function seed($plugin) {
+    public function seed($plugin)
+    {
         $options = [
             'connection' => static::migrationConnectionName()
         ];
         if ($plugin !== 'app') {
             $options['plugin'] = $plugin;
         }
+
         return $this->_getMigrations()
             ->seed($options);
     }
@@ -568,6 +569,7 @@ class PluginManager extends Plugin
         if ($plugin !== 'app') {
             $options['plugin'] = $plugin;
         }
+
         return $this->_getMigrations()
             ->rollback($options);
     }
@@ -655,6 +657,7 @@ class PluginManager extends Plugin
                     $fqcn = App::className($plugin . '.' . $className, 'Config');
                     if (!$fqcn) {
                         $this->log(sprintf('Unable to load PluginActivation class. Expected class name is %s\\Config\\PluginActivation', str_replace('/', '\\', $plugin), LOG_CRIT));
+
                         return null;
                     }
                     $this->_PluginActivation = new $fqcn;
@@ -668,6 +671,7 @@ class PluginManager extends Plugin
                     $fqcn = App::className($plugin . '.' . $className, 'Config');
                     if (!$fqcn) {
                         $this->log(sprintf('Unable to load PluginActivation class. Expected class name is %s\\Config\\PluginActivation', str_replace('/', '\\', $plugin), LOG_CRIT));
+
                         return null;
                     }
                     $this->_PluginActivation = new $fqcn;
@@ -1099,6 +1103,7 @@ class PluginManager extends Plugin
             foreach (Plugin::loaded() as $p) {
                 static::events($p);
             }
+
             return true;
         }
         $instance = static::$plugins->get($plugin);
@@ -1170,7 +1175,7 @@ class PluginManager extends Plugin
         try {
             $defaultConnection = ConnectionManager::get('default');
             $dbConfigExists = $defaultConnection->connect();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $dbConfigExists = false;
         }
 
@@ -1233,8 +1238,7 @@ class PluginManager extends Plugin
         Configure::config('settings', new DatabaseConfig());
         try {
             Configure::load('settings', 'settings');
-        }
-        catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             Log::error('You can ignore the above error during installation');
         }
@@ -1272,7 +1276,7 @@ class PluginManager extends Plugin
         // Make sure that the Croogo event manager is the global one
         EventManager::instance();
 
-        \Croogo\Core\time(function () {
+        time(function () {
 
             /**
              * Locale
@@ -1314,10 +1318,11 @@ class PluginManager extends Plugin
             if ($localePackage) {
                 $package->setMessages($localePackage->getMessages());
             }
+
             return $package;
         });
 
-        \Croogo\Core\time(function () use ($app) {
+        time(function () use ($app) {
             /**
              * Load required plugins
              */
@@ -1352,7 +1357,7 @@ class PluginManager extends Plugin
             $plugins = Hash::merge((array)$aclPlugin, $plugins);
         }
         $themes = [Configure::read('Site.theme'), Configure::read('Site.admin_theme')];
-        \Croogo\Core\time(function () use ($app, $plugins, $themes) {
+        time(function () use ($app, $plugins, $themes) {
             $option = [
                 'autoload' => true,
                 'bootstrap' => true,
@@ -1374,7 +1379,6 @@ class PluginManager extends Plugin
                 }
             }
 
-
             foreach ($themes as $theme) {
                 if ($theme && !Plugin::isLoaded($theme) && PluginManager::available($theme)) {
                     PluginManager::load($theme, [
@@ -1390,17 +1394,14 @@ class PluginManager extends Plugin
 
         // FIXME DispatcherFactory::add('Croogo/Core.HomePage');
 
-        \Croogo\Core\time(function () {
+        time(function () {
             PluginManager::events();
 
             EventManager::loadListeners();
         }, 'Registering plugin listeners');
 
-
-        \Croogo\Core\time(function () {
+        time(function () {
             Croogo::dispatchEvent('Croogo.bootstrapComplete');
         }, 'event-Croogo.bootstrapComplete', 'Event: Croogo.bootstrapComplete');
-
     }
-
 }

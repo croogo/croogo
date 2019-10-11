@@ -16,25 +16,25 @@ class CroogoAppHelper extends Helper
 class CroogoAppHelperTest extends CroogoTestCase
 {
 
-/**
- * View instance
- *
- * @var View
- */
+    /**
+     * View instance
+     *
+     * @var View
+     */
     public $View;
 
-/**
- * AppHelper instance
- *
- * @var CroogoAppHelper
- */
+    /**
+     * AppHelper instance
+     *
+     * @var CroogoAppHelper
+     */
     public $AppHelper;
 
     public $fixtures = [
-//		'plugin.Croogo/Settings.Setting',
-//		'plugin.Croogo/Taxonomy.Type',
-//		'plugin.Croogo/Taxonomy.Vocabulary',
-//		'plugin.Croogo/Taxonomy.TypesVocabulary',
+//      'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Taxonomy.Type',
+//      'plugin.Croogo/Taxonomy.Vocabulary',
+//      'plugin.Croogo/Taxonomy.TypesVocabulary',
     ];
 
     public function setUp()

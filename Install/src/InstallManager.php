@@ -11,8 +11,9 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
 use Croogo\Acl\AclGenerator;
-use Croogo\Core\PluginManager;
 use Croogo\Core\Database\SequenceFixer;
+use Croogo\Core\PluginManager;
+use Exception;
 
 class InstallManager
 {
@@ -96,10 +97,12 @@ class InstallManager
             $db->connect();
         } catch (MissingConnectionException $e) {
             ConnectionManager::drop('default');
+
             return __d('croogo', 'Could not connect to database: ') . $e->getMessage();
         }
         if (!$db->isConnected()) {
             ConnectionManager::drop('default');
+
             return __d('croogo', 'Could not connect to database.');
         }
 
@@ -254,7 +257,7 @@ class InstallManager
     public function setupGrants($success = null, $error = null)
     {
         if (!$success) {
-            $success = function() {
+            $success = function () {
             };
         }
         if (!$error) {
@@ -311,7 +314,7 @@ class InstallManager
                     if ($result) {
                         $success(__d('croogo', 'Permission %s granted to %s', $aco, $aro));
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $error($e->getMessage());
                 }
             }
@@ -319,9 +322,11 @@ class InstallManager
     }
 }
 
-class DummyShell extends Shell {
+class DummyShell extends Shell
+{
     use LogTrait;
-    function out($msg = null, $newlines = 1, $level = Shell::NORMAL) {
+    function out($msg = null, $newlines = 1, $level = Shell::NORMAL)
+    {
         $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
         $this->log($msg);
     }

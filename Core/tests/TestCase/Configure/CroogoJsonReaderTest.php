@@ -45,9 +45,9 @@ class CroogoJsonReaderTest extends TestCase
         $this->testFile = $this->CroogoJsonReader->getPath() . 'test.json';
     }
 
-/**
- * tearDown
- */
+    /**
+     * tearDown
+     */
     public function tearDown()
     {
         if (file_exists($this->testFile)) {
@@ -55,18 +55,18 @@ class CroogoJsonReaderTest extends TestCase
         }
     }
 
-/**
- * testDefaultPath
- */
+    /**
+     * testDefaultPath
+     */
     public function testDefaultPath()
     {
         $path = $this->CroogoJsonReader->getPath();
         $this->assertEquals(Plugin::path('Croogo/Core') . '..' . DS . 'tests' . DS . 'test_app' . DS . 'config' . DS, $path);
     }
 
-/**
- * testRead
- */
+    /**
+     * testRead
+     */
     public function testRead()
     {
         $settings = $this->CroogoJsonReader->read('settings', 'settings');
@@ -84,9 +84,9 @@ class CroogoJsonReaderTest extends TestCase
         $this->assertEquals($expected, $settings['Site']);
     }
 
-/**
- * testDump
- */
+    /**
+     * testDump
+     */
     public function testDump()
     {
         $settings = [

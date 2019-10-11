@@ -3,7 +3,6 @@
 namespace Croogo\Settings\Controller\Admin;
 
 use Cake\Cache\Cache;
-use Croogo\Core\Event\EventManager;
 
 /**
  * Caches Controller
@@ -48,7 +47,7 @@ class CachesController extends AppController
         } else {
             $this->Flash->warning(__d('croogo', 'Failed clearing cache'));
         }
+
         return $this->redirect($this->getRequest()->referer());
     }
-
 }

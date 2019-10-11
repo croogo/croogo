@@ -24,9 +24,9 @@ class MenusHelperTest extends CroogoTestCase
         'plugin.settings.setting',
     ];
 
-/**
- * setUp
- */
+    /**
+     * setUp
+     */
     public function setUp()
     {
         parent::setUp();
@@ -41,9 +41,9 @@ class MenusHelperTest extends CroogoTestCase
         $this->_debug = Configure::read('debug');
     }
 
-/**
- * tearDown
- */
+    /**
+     * tearDown
+     */
     public function tearDown()
     {
         Configure::write('App.encoding', $this->_appEncoding);
@@ -53,9 +53,9 @@ class MenusHelperTest extends CroogoTestCase
         unset($this->Layout);
     }
 
-/**
- * Test [menu] shortcode
- */
+    /**
+     * Test [menu] shortcode
+     */
     public function testMenuShortcode()
     {
         $content = '[menu:blogroll]';

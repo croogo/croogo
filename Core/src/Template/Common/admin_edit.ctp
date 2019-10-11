@@ -2,7 +2,7 @@
 /**
  * @var \Croogo\Core\View\CroogoView $this
  */
-use Cake\Utility\Hash;
+
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 
@@ -13,18 +13,18 @@ if (!isset($className)) {
     $className = strtolower($this->name);
 }
 
-if (isset(${Inflector::variable(Inflector::singularize($this->name))})):
+if (isset(${Inflector::variable(Inflector::singularize($this->name))})) :
     $entity = ${Inflector::variable(Inflector::singularize($this->name))};
 
-    if (!is_array($entity)):
+    if (!is_array($entity)) :
         $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
-    else:
+    else :
         $what = __d('croogo', 'Edit');
     endif;
 endif;
 
 $title = $this->fetch('title');
-if (empty($title)):
+if (empty($title)) :
     $this->assign('title', $this->name);
 endif;
 
@@ -34,38 +34,38 @@ $columnRight = $this->Theme->getCssClass('columnRight');
 $columnFull = $this->Theme->getCssClass('columnFull');
 $tabContentClass = $this->Theme->getCssClass('tabContentClass');
 
-if ($pageHeading = trim($this->fetch('page-heading'))):
+if ($pageHeading = trim($this->fetch('page-heading'))) :
     echo $pageHeading;
 endif;
 
-if ($contentBlock = trim($this->fetch('content'))):
+if ($contentBlock = trim($this->fetch('content'))) :
     echo $contentBlock;
 
     return;
 endif;
 
-if ($formStart = trim($this->fetch('form-start'))):
+if ($formStart = trim($this->fetch('form-start'))) :
     echo $formStart;
-else:
+else :
     echo $this->Form->create($entity);
-    if (isset($this->getRequest()->data[$modelClass]['id'])):
+    if (isset($this->getRequest()->data[$modelClass]['id'])) :
         echo $this->Form->input('id');
     endif;
 endif;
 
 $tabId = 'tabitem-' . Text::slug(strtolower($modelClass), '-');
 
-if (!$this->exists('left-column')):
+if (!$this->exists('left-column')) :
     $tabHeading = $this->fetch('tab-heading');
-    if (empty($tabHeading)):
+    if (empty($tabHeading)) :
         $tabHeading = $this->Croogo->adminTab(__d('croogo', $modelClass), "#$tabId");
     endif;
     $tabHeading .= $this->Croogo->adminTabs();
 
     $tabContent = trim($this->fetch('tab-content'));
-    if (!$tabContent):
+    if (!$tabContent) :
         $content = '';
-        foreach ($editFields as $field => $opts):
+        foreach ($editFields as $field => $opts) :
             if (is_string($opts)) {
                 $field = $opts;
                 $opts = [
@@ -77,7 +77,7 @@ if (!$this->exists('left-column')):
         endforeach;
     endif;
 
-    if (empty($tabContent) && !empty($content)):
+    if (empty($tabContent) && !empty($content)) :
         $tabContent = $this->Html->div('tab-pane', $content, [
             'id' => $tabId,
         ]);
@@ -90,12 +90,12 @@ if (!$this->exists('left-column')):
     $this->end();
 endif;
 
-if (!$this->exists('right-column')):
+if (!$this->exists('right-column')) :
     $this->start('right-column');
-    if ($this->exists('panels')):
+    if ($this->exists('panels')) :
         echo $this->fetch('panels');
-    else:
-        if ($buttonsBlock = $this->fetch('buttons')):
+    else :
+        if ($buttonsBlock = $this->fetch('buttons')) :
             echo $buttonsBlock;
         else :
             echo $this->Html->beginBox(__d('croogo', 'Publishing'));
@@ -114,12 +114,12 @@ $rightColumn = $this->Html->tag('div', $this->fetch('right-column'), ['class' =>
 $output .= $this->Html->tag('div', $rightColumn, ['class' => $columnRight]);
 echo $this->Html->tag('div', $output, ['class' => $rowClass]);
 
-if ($formEnd = trim($this->fetch('form-end'))):
+if ($formEnd = trim($this->fetch('form-end'))) :
     echo $formEnd;
-else:
+else :
     echo $this->Form->end();
 endif;
 
-if ($pageFooter = trim($this->fetch('page-footer'))):
+if ($pageFooter = trim($this->fetch('page-footer'))) :
     echo $pageFooter;
 endif;

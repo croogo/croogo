@@ -290,8 +290,10 @@ class CroogoTheme
             if ($request) {
                 $prefix = $request->getParam('prefix');
                 if (isset($data['settings']['prefixes'][$prefix]['css'])) {
-                    $data['settings']['css'] = Hash::merge($data['settings']['prefixes'][$prefix]['css'],
-                        $data['settings']['css']);
+                    $data['settings']['css'] = Hash::merge(
+                        $data['settings']['prefixes'][$prefix]['css'],
+                        $data['settings']['css']
+                    );
                 }
             }
             $themeData[$theme] = $data;

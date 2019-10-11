@@ -4,7 +4,6 @@ namespace Croogo\Core\View;
 
 use App\View\AppView;
 use Cake\Core\App;
-use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Croogo\Core\Croogo;
 use Croogo\Extensions\CroogoTheme;

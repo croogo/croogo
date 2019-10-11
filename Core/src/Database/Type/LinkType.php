@@ -25,7 +25,7 @@ class LinkType extends Type
         }
 
         if (is_array($value)) {
-            $value = array_map(function($val) {
+            $value = array_map(function ($val) {
                 return str_replace('/', '%2f', $val);
             }, $value);
             if (count($value) === 1) {

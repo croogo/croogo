@@ -9,5 +9,4 @@ class Term extends Entity
 {
 
     use TranslateTrait;
-
 }

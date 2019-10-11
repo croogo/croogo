@@ -334,5 +334,4 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
         $Table = $this->table('settings');
         $Table->insert($this->records)->save();
     }
-
 }

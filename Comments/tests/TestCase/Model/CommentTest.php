@@ -39,9 +39,9 @@ class CommentTest extends CroogoTestCase
         unset($this->Comment);
     }
 
-/**
- * testAdd
- */
+    /**
+     * testAdd
+     */
     public function testAdd()
     {
         $oldCount = $this->Comment->find('count');
@@ -69,9 +69,9 @@ class CommentTest extends CroogoTestCase
         $this->assertEquals(2, $newComment['Comment']['status']);
     }
 
-/**
- * testAddWithParentId
- */
+    /**
+     * testAddWithParentId
+     */
     public function testAddWithParentId()
     {
         $oldCount = $this->Comment->find('count');
@@ -101,9 +101,9 @@ class CommentTest extends CroogoTestCase
         $this->assertTrue($result);
     }
 
-/**
- * testAddCommentWithUserData
- */
+    /**
+     * testAddCommentWithUserData
+     */
     public function testAddCommentWithUserData()
     {
         $oldCount = $this->Comment->find('count');
@@ -155,9 +155,9 @@ class CommentTest extends CroogoTestCase
         $this->assertEquals(2, $newComment['Comment']['user_id']);
     }
 
-/**
- * testAddCommentToModeratedNode
- */
+    /**
+     * testAddCommentToModeratedNode
+     */
     public function testAddCommentToModeratedNode()
     {
         $oldCount = $this->Comment->find('count');
@@ -187,9 +187,9 @@ class CommentTest extends CroogoTestCase
         $this->assertEquals(Comment::STATUS_PENDING, $newComment['Comment']['status']);
     }
 
-/**
- * testAddCommentIsRejectedWhenLevelIsExceeded
- */
+    /**
+     * testAddCommentIsRejectedWhenLevelIsExceeded
+     */
     public function testAddCommentIsRejectedWhenLevelIsExceeded()
     {
         $oldConf = Configure::read('Comment.level');
@@ -222,9 +222,9 @@ class CommentTest extends CroogoTestCase
         $this->assertEquals($oldCount, $newCount);
     }
 
-/**
- * testAddCommentThrowsExceptionWithInvalidNodeId
- */
+    /**
+     * testAddCommentThrowsExceptionWithInvalidNodeId
+     */
     public function testAddCommentThrowsExceptionWithInvalidNodeId()
     {
         $this->setExpectedException('NotFoundException');
@@ -236,9 +236,9 @@ class CommentTest extends CroogoTestCase
         );
     }
 
-/**
- * testAddCommentThrowsExceptionWithInvalidParentId
- */
+    /**
+     * testAddCommentThrowsExceptionWithInvalidParentId
+     */
     public function testAddCommentThrowsExceptionWithInvalidParentId()
     {
         $this->setExpectedException('NotFoundException');

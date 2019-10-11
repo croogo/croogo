@@ -37,6 +37,7 @@ class CroogoCorePluginsTest extends PHPUnit_Framework_TestSuite
             Plugin::load($plugin);
             $suite->addTestDirectoryRecursive(Plugin::path($plugin) . 'Test' . DS);
         }
+
         return $suite;
     }
 }

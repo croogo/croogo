@@ -1,7 +1,7 @@
 <?php
 
-use Cake\Core\Configure;
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Croogo\Core\Croogo;
 
 Croogo::hookApiComponent('Croogo/Users.Users', 'Users.UserApi');

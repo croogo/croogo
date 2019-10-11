@@ -26,9 +26,9 @@ use Cake\Utility\Inflector;
 class Router extends CakeRouter
 {
 
-/**
- * Helper method to setup both default and localized route
- */
+    /**
+     * Helper method to setup both default and localized route
+     */
     public static function build(RouteBuilder $builder, $path, $defaults, $options = [])
     {
         if (PluginManager::isLoaded('Croogo/Translate')) {
@@ -40,13 +40,13 @@ class Router extends CakeRouter
         $builder->connect($path, $defaults, $options);
     }
 
-/**
- * Check wether request is a API call.
- *
- * @see Request::addDetector()
- * @param $request Request Request object
- * @return bool True when request contains the necessary route parameters
- */
+    /**
+     * Check wether request is a API call.
+     *
+     * @see Request::addDetector()
+     * @param $request Request Request object
+     * @return bool True when request contains the necessary route parameters
+     */
     public static function isApiRequest(ServerRequest $request)
     {
         if (!$request) {
@@ -58,16 +58,17 @@ class Router extends CakeRouter
         if ($request['api'] !== Configure::read('Croogo.Api.path')) {
             return false;
         }
+
         return true;
     }
 
-/**
- * Check wether request is from a whitelisted IP address
- *
- * @see Request::addDetector()
- * @param $request Request Request object
- * @return boolean True when request is from a whitelisted IP Address
- */
+    /**
+     * Check wether request is from a whitelisted IP address
+     *
+     * @see Request::addDetector()
+     * @param $request Request Request object
+     * @return boolean True when request is from a whitelisted IP Address
+     */
     public static function isWhitelistedRequest(ServerRequest $request)
     {
         if (!$request) {
@@ -79,16 +80,17 @@ class Router extends CakeRouter
             'trim',
             (array)explode(',', Configure::read('Site.ipWhitelist'))
         );
+
         return in_array($clientIp, $whitelist);
     }
 
-/**
- * Creates REST resource routes for the given controller(s).
- *
- * @param string|array $controller string or array of controller names
- * @return array Array of mapped resources
- * @see Router::mapResources()
- */
+    /**
+     * Creates REST resource routes for the given controller(s).
+     *
+     * @param string|array $controller string or array of controller names
+     * @return array Array of mapped resources
+     * @see Router::mapResources()
+     */
     public static function mapResources($controller, $options = [])
     {
         $options = array_merge([
@@ -100,12 +102,12 @@ class Router extends CakeRouter
         return static::mapResources($controller, $options);
     }
 
-/**
- * If you want your non-routed controler actions (like /users/add) to support locale based urls,
- * this method must be called AFTER all the routes.
- *
- * @return void
- */
+    /**
+     * If you want your non-routed controler actions (like /users/add) to support locale based urls,
+     * this method must be called AFTER all the routes.
+     *
+     * @return void
+     */
     public static function localize()
     {
         if (PluginManager::isLoaded('Croogo/Translate')) {
@@ -114,12 +116,12 @@ class Router extends CakeRouter
         }
     }
 
-/**
- * Routes for content types
- *
- * @param string $alias
- * @return void
- */
+    /**
+     * Routes for content types
+     *
+     * @param string $alias
+     * @return void
+     */
     public static function contentType($alias, $routeBuilder)
     {
         static::build($routeBuilder, '/' . $alias, [
@@ -144,11 +146,11 @@ class Router extends CakeRouter
         ]);
     }
 
-/**
- * Apply routes for content types with routes enabled
- *
- * @return void
- */
+    /**
+     * Apply routes for content types with routes enabled
+     *
+     * @return void
+     */
     public static function routableContentTypes($routeBuilder)
     {
         try {
@@ -187,10 +189,11 @@ class Router extends CakeRouter
         if ($encode) {
             $val = base64_encode($val);
         }
+
         return $val;
     }
 
-    /**
+/**
  * Setup Site.home_url
  *
  * @return void

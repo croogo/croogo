@@ -98,11 +98,11 @@ class LanguagesControllerTest extends IntegrationTestCase
         $this->assertFalse($language);
     }
 
-/**
- * testAdminMoveUp
- *
- * @return void
- */
+    /**
+     * testAdminMoveUp
+     *
+     * @return void
+     */
     public function testAdminMoveUp()
     {
         $id = $this->_addLanguages();
@@ -171,11 +171,11 @@ class LanguagesControllerTest extends IntegrationTestCase
         ], $list);
     }
 
-/**
- * testAdminSelect
- *
- * @return void
- */
+    /**
+     * testAdminSelect
+     *
+     * @return void
+     */
     public function testAdminSelect()
     {
         $this->markTestIncomplete('Still being ported');
@@ -211,6 +211,7 @@ class LanguagesControllerTest extends IntegrationTestCase
         ]);
 
         $languages->save($german);
+
         return $german->id;
     }
 }

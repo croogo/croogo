@@ -2,7 +2,6 @@
 
 namespace Croogo\Comments\View\Helper;
 
-use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Croogo\Core\Croogo;
 

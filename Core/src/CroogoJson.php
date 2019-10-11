@@ -14,13 +14,13 @@ namespace Croogo\Core;
 class CroogoJson
 {
 
-/**
- * Returns an array in a pretty json format
- *
- * @param array $json
- * @return string
- * @author http://recursive-design.com/blog/2008/03/11/format-json-with-php/
- */
+    /**
+     * Returns an array in a pretty json format
+     *
+     * @param array $json
+     * @return string
+     * @author http://recursive-design.com/blog/2008/03/11/format-json-with-php/
+     */
     public static function stringify($json, $options = 0)
     {
         if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
@@ -67,6 +67,7 @@ class CroogoJson
             }
             $prevChar = $char;
         }
+
         return $result;
     }
 }

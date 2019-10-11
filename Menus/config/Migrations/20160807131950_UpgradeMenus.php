@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class UpgradeMenus extends AbstractMigration
@@ -26,4 +27,3 @@ class UpgradeMenus extends AbstractMigration
             ->update();
     }
 }
-

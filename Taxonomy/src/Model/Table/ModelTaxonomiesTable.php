@@ -19,5 +19,4 @@ class ModelTaxonomiesTable extends CroogoTable
     {
         $this->setTable('model_taxonomies');
     }
-
 }

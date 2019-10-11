@@ -27,4 +27,3 @@ echo $this->Form->input('verify_password', [
 <?php
 $this->assign('buttons', $this->Form->button(__d('croogo', 'Finalize installation'), ['class' => 'success']));
 $this->assign('after', $this->Form->end());
-?>

@@ -9,5 +9,4 @@ class Contact extends Entity
 {
 
     use TranslateTrait;
-
 }

@@ -6,7 +6,7 @@ use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
-use Croogo\FileManager\Controller\Admin\AppController;
+use Exception;
 
 /**
  * Attachments Controller
@@ -20,26 +20,28 @@ use Croogo\FileManager\Controller\Admin\AppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AttachmentsController extends AppController {
+class AttachmentsController extends AppController
+{
 
-/**
- * Helpers used by the Controller
- *
- * @var array
- * @access public
- */
+    /**
+     * Helpers used by the Controller
+     *
+     * @var array
+     * @access public
+     */
     public $helpers = [
         'Croogo/FileManager.AssetsImage',
         'Croogo/FileManager.FileManager',
         'Text',
     ];
 
-    public $paginate = array(
+    public $paginate = [
         'paramType' => 'querystring',
         'limit' => 5,
-    );
+    ];
 
-    public function initialize() {
+    public function initialize()
+    {
         parent::initialize();
         $this->loadComponent('Search.Prg', [
             'actions' => [
@@ -51,16 +53,17 @@ class AttachmentsController extends AppController {
         $this->loadModel('Croogo/FileManager.Attachments');
     }
 
-/**
- * Before executing controller actions
- *
- * @return void
- * @access public
- */
-    public function beforeFilter(Event $event) {
+    /**
+     * Before executing controller actions
+     *
+     * @return void
+     * @access public
+     */
+    public function beforeFilter(Event $event)
+    {
         parent::beforeFilter($event);
 
-        $noCsrfCheck = array('add', 'resize');
+        $noCsrfCheck = ['add', 'resize'];
         if (in_array($this->getRequest()->getParam('action'), $noCsrfCheck)) {
             $this->getEventManager()->off($this->Csrf);
         }
@@ -69,13 +72,14 @@ class AttachmentsController extends AppController {
         }
     }
 
-/**
- * Admin index
- *
- * @return void
- * @access public
- */
-    public function index() {
+    /**
+     * Admin index
+     *
+     * @return void
+     * @access public
+     */
+    public function index()
+    {
         $this->set('title_for_layout', __d('croogo', 'Attachments'));
 
         $this->set('searchFields', [
@@ -108,8 +112,7 @@ class AttachmentsController extends AppController {
             $finder = 'versions';
             unset($httpQuery['model']);
             unset($httpQuery['foreign_key']);
-        } elseif (
-            isset($httpQuery['asset_id']) ||
+        } elseif (isset($httpQuery['asset_id']) ||
             isset($httpQuery['all'])
         ) {
             $finder = 'versions';
@@ -166,13 +169,14 @@ class AttachmentsController extends AppController {
         }
     }
 
-/**
- * Admin add
- *
- * @return void
- * @access public
- */
-    public function add() {
+    /**
+     * Admin add
+     *
+     * @return void
+     * @access public
+     */
+    public function add()
+    {
         $this->set('title_for_layout', __d('croogo', 'Add Attachment'));
 
         if ($this->getRequest()->getQuery('editor')) {
@@ -180,7 +184,6 @@ class AttachmentsController extends AppController {
         }
 
         if ($this->getRequest()->is('post')) {
-
             $data = $this->getRequest()->getData();
             if (!empty($data)) {
                 $entity = $this->Attachments->newEntity($data);
@@ -208,27 +211,28 @@ class AttachmentsController extends AppController {
             }
 
             if ($this->getRequest()->is('ajax')) {
-                $files = array();
+                $files = [];
                 $error = false;
 
                 if (empty($errors)) {
                     $this->viewBuilder()->setClassName('Json');
-                    $files = array(array(
+                    $files = [[
                         'url' => $attachment->asset->path,
                         'thumbnail_url' => $attachment->asset->path,
                         'name' => $attachment->title,
                         'type' => $attachment->asset->mime_type,
                         'size' => $attachment->asset->filesize,
-                    ));
+                    ]];
                 } else {
                     $error = implode("\n", Hash::flatten($errors));
-                    $files = array(array(
+                    $files = [[
                         'error' => $error,
-                    ));
+                    ]];
                 }
 
                 $this->set(compact('files', 'error'));
-                $this->set('_serialize', array('files', 'error'));
+                $this->set('_serialize', ['files', 'error']);
+
                 return;
             } else {
                 // noop
@@ -236,7 +240,7 @@ class AttachmentsController extends AppController {
 
             if ($attachment) {
                 $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
-                $url = array();
+                $url = [];
                 if (isset($saved->asset->asset_usage[0])) {
                     $usage = $saved->asset->asset_usage[0];
                     if (!empty($usage->model) && !empty($usage->foreign_key)) {
@@ -245,10 +249,11 @@ class AttachmentsController extends AppController {
                     }
                 }
                 if ($this->getRequest()->getQuery('editor')) {
-                    $url = array_merge($url, array('action' => 'browse'));
+                    $url = array_merge($url, ['action' => 'browse']);
                 } else {
-                    $url = array_merge($url, array('action' => 'index'));
+                    $url = array_merge($url, ['action' => 'index']);
                 }
+
                 return $this->redirect($url);
             } else {
                 $this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));
@@ -261,30 +266,32 @@ class AttachmentsController extends AppController {
         $this->set(compact('attachment'));
     }
 
-/**
- * Admin edit
- *
- * @param int $id
- * @return void
- * @access public
- */
-    public function edit($id = null) {
+    /**
+     * Admin edit
+     *
+     * @param int $id
+     * @return void
+     * @access public
+     */
+    public function edit($id = null)
+    {
         $this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
 
         if ($this->getRequest()->getQuery('editor')) {
             $this->layout = 'admin_popup';
         }
 
-        $redirect = array('action' => 'index');
+        $redirect = ['action' => 'index'];
         if (!empty($this->getRequest()->getQuery())) {
             $redirect = array_merge(
                 $redirect,
-                array('action' => 'browse', '?' => $this->getRequest()->getQuery())
+                ['action' => 'browse', '?' => $this->getRequest()->getQuery()]
             );
         }
 
         if (!$id && empty($this->getRequest()->getData())) {
             $this->Flash->error(__d('croogo', 'Invalid Attachment'));
+
             return $this->redirect($redirect);
         }
         $attachment = $this->Attachments->get($id, [
@@ -296,6 +303,7 @@ class AttachmentsController extends AppController {
             $attachment = $this->Attachments->patchEntity($attachment, $this->getRequest()->getData());
             if ($this->Attachments->save($attachment)) {
                 $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
+
                 return $this->redirect($redirect);
             } else {
                 $this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));
@@ -304,24 +312,26 @@ class AttachmentsController extends AppController {
         $this->set(compact('attachment'));
     }
 
-/**
- * Admin delete
- *
- * @param int $id
- * @return void
- * @access public
- */
-    public function delete($id = null) {
+    /**
+     * Admin delete
+     *
+     * @param int $id
+     * @return void
+     * @access public
+     */
+    public function delete($id = null)
+    {
         if (!$id) {
             $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
-            return $this->redirect(array('action' => 'index'));
+
+            return $this->redirect(['action' => 'index']);
         }
 
-        $redirect = array('action' => 'index');
+        $redirect = ['action' => 'index'];
         if (!empty($this->getRequest()->getQuery())) {
             $redirect = array_merge(
                 $redirect,
-                array('action' => 'browse', '?' => $this->getRequest()->getQuery())
+                ['action' => 'browse', '?' => $this->getRequest()->getQuery()]
             );
         }
 
@@ -330,25 +340,29 @@ class AttachmentsController extends AppController {
         if ($this->Attachments->delete($attachment)) {
             $this->Attachments->getConnection()->commit();
             $this->Flash->success(__d('croogo', 'Attachment deleted'));
+
             return $this->redirect($redirect);
         } else {
             $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
+
             return $this->redirect($redirect);
         }
     }
 
-/**
- * Admin browse
- *
- * @return void
- * @access public
- */
-    public function browse() {
+    /**
+     * Admin browse
+     *
+     * @return void
+     * @access public
+     */
+    public function browse()
+    {
         $this->viewBuilder()->setLayout('admin_popup');
         $this->index();
     }
 
-    public function listing() {
+    public function listing()
+    {
         if ($this->getRequest()->is('ajax')) {
             $this->viewBuilder()->setLayout('ajax');
             $this->paginate['limit'] = 100;
@@ -363,7 +377,8 @@ class AttachmentsController extends AppController {
         $this->set(compact('attachments'));
     }
 
-    public function resize($id = null) {
+    public function resize($id = null)
+    {
         if (empty($id)) {
             throw new NotFoundException('Missing Asset Id to resize');
         }
@@ -373,7 +388,7 @@ class AttachmentsController extends AppController {
             $width = $this->getRequest()->getData('width');
             try {
                 $result = $this->Attachments->createResized($id, $width, null);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $result = $e->getMessage();
             }
         }
@@ -390,10 +405,9 @@ class AttachmentsController extends AppController {
         $messageMap = [
             'delete' => __d('croogo', 'Attachments deleted'),
         ];
+
         return $this->BulkProcess->process($Attachments, $action, $ids, [
             'messageMap' => $messageMap,
         ]);
     }
-
-
 }

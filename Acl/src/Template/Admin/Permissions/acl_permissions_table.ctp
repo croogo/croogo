@@ -3,10 +3,10 @@
     $roleTitles = array_values($roles->toArray());
     $roleIds = array_keys($roles->toArray());
 
-    $tableHeaders = array(
+    $tableHeaders = [
         __d('croogo', 'Id'),
         __d('croogo', 'Alias'),
-    );
+    ];
     $tableHeaders = array_merge($tableHeaders, $roleTitles);
     $tableHeaders = $this->Html->tableHeaders($tableHeaders);
     ?>
@@ -25,8 +25,8 @@
         if (substr($alias, 0, 1) == '_') {
             $level = 1;
             $class .= 'level-' . $level;
-            $oddOptions = array('class' => 'hidden controller-' . $currentController);
-            $evenOptions = array('class' => 'hidden controller-' . $currentController);
+            $oddOptions = ['class' => 'hidden controller-' . $currentController];
+            $evenOptions = ['class' => 'hidden controller-' . $currentController];
             $alias = substr_replace($alias, '', 0, 1);
         } else {
             $level = 0;
@@ -34,19 +34,19 @@
             if ($aco->children > 0) {
                 $class .= ' perm-expand';
             }
-            $oddOptions = array();
-            $evenOptions = array();
+            $oddOptions = [];
+            $evenOptions = [];
             $currentController = $alias;
         }
 
-        $row = array(
+        $row = [
             $id,
-            $this->Html->div(trim($class), $alias . $icon, array(
+            $this->Html->div(trim($class), $alias . $icon, [
                 'data-id' => $id,
                 'data-alias' => $alias,
                 'data-level' => $level,
-            )),
-        );
+            ]),
+        ];
 
         foreach ($roles as $roleId => $roleTitle) {
             $row[] = '';

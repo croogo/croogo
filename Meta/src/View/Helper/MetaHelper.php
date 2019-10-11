@@ -23,9 +23,9 @@ use Cake\View\Helper;
 class MetaHelper extends Helper
 {
 
-/**
- * Helpers
- */
+    /**
+     * Helpers
+     */
     public $helpers = [
         'Croogo/Core.Layout',
         'Croogo/Core.Croogo',
@@ -44,9 +44,9 @@ class MetaHelper extends Helper
         ],
     ];
 
-/**
- * beforeRender
- */
+    /**
+     * beforeRender
+     */
     public function beforeRender($viewFile)
     {
         if ($this->Layout->isLoggedIn()) {
@@ -54,11 +54,11 @@ class MetaHelper extends Helper
         }
     }
 
-/**
- * Meta tags
- *
- * @return string
- */
+    /**
+     * Meta tags
+     *
+     * @return string
+     */
     public function meta($metaForLayout = [])
     {
         $_metaForLayout = [];
@@ -100,15 +100,15 @@ class MetaHelper extends Helper
         return $output;
     }
 
-/**
- * Meta field: with key/value fields
- *
- * @param string $key (optional) key
- * @param string $value (optional) value
- * @param int $id (optional) ID of Meta
- * @param array $options (optional) options
- * @return string
- */
+    /**
+     * Meta field: with key/value fields
+     *
+     * @param string $key (optional) key
+     * @param string $value (optional) value
+     * @param int $id (optional) ID of Meta
+     * @param array $options (optional) options
+     * @return string
+     */
     public function field($key = '', $value = null, $id = null, $options = [])
     {
         $_options = [
@@ -160,7 +160,8 @@ class MetaHelper extends Helper
             $actions = $this->Html->tag('div', $actions, ['class' => 'actions my-3']);
         }
 
-        $output = $this->Html->tag('div',  $fields . $actions, ['class' => 'meta']);
+        $output = $this->Html->tag('div', $fields . $actions, ['class' => 'meta']);
+
         return $output;
     }
 }

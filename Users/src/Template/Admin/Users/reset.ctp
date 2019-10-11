@@ -26,4 +26,4 @@ echo $this->Form->create($user);
         ],
     ]);
 
-echo $this->Form->end();
+    echo $this->Form->end();

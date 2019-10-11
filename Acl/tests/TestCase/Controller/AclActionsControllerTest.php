@@ -10,11 +10,11 @@ use Croogo\TestSuite\CroogoControllerTestCase;
 class AclActionsControllerTest extends CroogoControllerTestCase
 {
 
-/**
- * fixtures
- *
- * @var array
- */
+    /**
+     * fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
         'plugin.Croogo/Users.Aro',
         'plugin.Croogo/Users.Aco',
@@ -27,11 +27,11 @@ class AclActionsControllerTest extends CroogoControllerTestCase
         'plugin.Croogo/Settings.Setting',
     ];
 
-/**
- * testGenerateActions
- *
- * @return void
- */
+    /**
+     * testGenerateActions
+     *
+     * @return void
+     */
     public function testGenerateActions()
     {
         $AclActions = $this->generate('Acl.AclActions', [

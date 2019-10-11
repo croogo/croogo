@@ -4,7 +4,6 @@ namespace Croogo\Nodes\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Routing\Router;
-
 use Croogo\Core\Controller\Component\CroogoComponent;
 use Croogo\Nodes\Model\Table\NodesTable;
 use Croogo\Taxonomy\Controller\Component\TaxonomiesComponent;
@@ -50,11 +49,11 @@ class NodesController extends AppController
      */
     public function create()
     {
-        $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all', array(
-            'order' => array(
+        $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all', [
+            'order' => [
                 'Types.alias' => 'ASC',
-            ),
-        ));
+            ],
+        ]);
 
         if ($types->count() === 1) {
             return $this->redirect(['action' => 'add', $types->first()->getAlias()]);
@@ -81,6 +80,7 @@ class NodesController extends AppController
         }
 
         $this->Flash->set($messageFlash, ['element' => 'flash', 'param' => compact('class')]);
+
         return $this->redirect(['action' => 'index']);
     }
 
@@ -94,17 +94,17 @@ class NodesController extends AppController
     {
         list($action, $ids) = $this->BulkProcess->getRequestVars($this->Nodes->getAlias());
 
-        $options = array(
-            'multiple' => array('copy' => false),
-            'messageMap' => array(
+        $options = [
+            'multiple' => ['copy' => false],
+            'messageMap' => [
                 'delete' => __d('croogo', 'Nodes deleted'),
                 'publish' => __d('croogo', 'Nodes published'),
                 'unpublish' => __d('croogo', 'Nodes unpublished'),
                 'promote' => __d('croogo', 'Nodes promoted'),
                 'unpromote' => __d('croogo', 'Nodes unpromoted'),
                 'copy' => __d('croogo', 'Nodes copied'),
-            ),
-        );
+            ],
+        ];
         $this->BulkProcess->process($this->Nodes, $action, $ids, $options);
     }
 
@@ -235,7 +235,6 @@ class NodesController extends AppController
                 'type' => $entity->type,
                 'slug' => $entity->slug
             ]);
-
         }
 
         $this->Crud->action()->setConfig('name', $entity->type);
@@ -290,16 +289,19 @@ class NodesController extends AppController
         return $this->Crud->execute();
     }
 
-    public function move($id, $direction = 'up', $step = '1') {
+    public function move($id, $direction = 'up', $step = '1')
+    {
         $node = $this->Nodes->get($id);
         if ($direction == 'up') {
             if ($this->Nodes->moveUp($node)) {
                 $this->Flash->success(__d('croogo', 'Content moved up'));
+
                 return $this->redirect($this->referer());
             }
         } else {
             if ($this->Nodes->moveDown($node)) {
                 $this->Flash->success(__d('croogo', 'Content moved down'));
+
                 return $this->redirect($this->referer());
             }
         }
@@ -312,10 +314,10 @@ class NodesController extends AppController
             $type = $this->Nodes->Types->findByAlias($typeAlias)->first();
             $this->set(compact('type'));
         }
-        $this->Crud->on('beforePaginate', function(Event $event) {
+        $this->Crud->on('beforePaginate', function (Event $event) {
             $event->getSubject()->query->find('treelist');
         });
-        $this->Crud->on('afterPaginate', function(Event $event) {
+        $this->Crud->on('afterPaginate', function (Event $event) {
             $subject = $event->getSubject();
             $nodes = [];
             foreach ($subject->entities as $id => $title) {
@@ -326,7 +328,7 @@ class NodesController extends AppController
             }
             $subject->entities = $nodes;
         });
+
         return $this->Crud->execute();
     }
-
 }

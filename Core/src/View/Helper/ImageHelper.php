@@ -2,8 +2,8 @@
 
 namespace Croogo\Core\View\Helper;
 
-use Cake\View\Helper\HtmlHelper;
 use Cake\Utility\Hash;
+use Cake\View\Helper\HtmlHelper;
 
 /**
  * @package Croogo.Croogo.View.Helper
@@ -20,24 +20,24 @@ class ImageHelper extends HtmlHelper
         'Url',
     ];
 
-/**
- * Automatically resizes an image and returns formatted IMG tag
- *
- * Options:
- * - aspect Maintain aspect ratio. Default: true
- * - uploadsDir Upload directory name. Default: 'uploads'
- * - cachedir Cache directory name. Default: 'resized'
- * - resizeInd: String to check in filename indicating that it was resized
- *
- * @param string $path Path to the image file, relative to the webroot/img/ directory.
- * @param int $width of returned image
- * @param int $height of returned image
- * @param array $options Options
- * @param array $htmlAttributes Array of HTML attributes.
- * @param bool $return this method should return a value or output it. This overrides AUTO_OUTPUT.
- * @return mixed Either string or echoes the value, depends on AUTO_OUTPUT and $return.
- * @access public
- */
+    /**
+     * Automatically resizes an image and returns formatted IMG tag
+     *
+     * Options:
+     * - aspect Maintain aspect ratio. Default: true
+     * - uploadsDir Upload directory name. Default: 'uploads'
+     * - cachedir Cache directory name. Default: 'resized'
+     * - resizeInd: String to check in filename indicating that it was resized
+     *
+     * @param string $path Path to the image file, relative to the webroot/img/ directory.
+     * @param int $width of returned image
+     * @param int $height of returned image
+     * @param array $options Options
+     * @param array $htmlAttributes Array of HTML attributes.
+     * @param bool $return this method should return a value or output it. This overrides AUTO_OUTPUT.
+     * @return mixed Either string or echoes the value, depends on AUTO_OUTPUT and $return.
+     * @access public
+     */
     public function resize($path, $width, $height, $options = [], $htmlAttributes = [], $return = false)
     {
         if (is_bool($options)) {
@@ -148,16 +148,16 @@ class ImageHelper extends HtmlHelper
         ]);
     }
 
-/**
- * Convenience method to resize image
- *
- * @param string $source File name of the source image
- * @param array $sourceSize Result of getimagesize() against $source
- * @param string $target File name of the target image
- * @param int $w Target Image width
- * @param int $h Target image height
- * @return void
- */
+    /**
+     * Convenience method to resize image
+     *
+     * @param string $source File name of the source image
+     * @param array $sourceSize Result of getimagesize() against $source
+     * @param string $target File name of the target image
+     * @param int $w Target Image width
+     * @param int $h Target image height
+     * @return void
+     */
     protected function _resize($source, $sourceSize, $target, $w, $h)
     {
         $types = [1 => "gif", "jpeg", "png", "swf", "psd", "wbmp"];
@@ -188,14 +188,14 @@ class ImageHelper extends HtmlHelper
         }
     }
 
-/**
- * Convenience method to setup image transparency
- *
- * @param resource $image Image resource
- * @param int $w Width
- * @param int $h Height
- * @return void
- */
+    /**
+     * Convenience method to setup image transparency
+     *
+     * @param resource $image Image resource
+     * @param int $w Width
+     * @param int $h Height
+     * @return void
+     */
     protected function _setupTransparency($image, $w, $h)
     {
         imagealphablending($image, false);

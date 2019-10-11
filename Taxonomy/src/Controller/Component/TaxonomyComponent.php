@@ -4,14 +4,13 @@ namespace Croogo\Taxonomy\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Croogo\Core\Core\Exception\Exception;
 use Croogo\Extensions\CroogoTheme;
 use Croogo\Taxonomy\Model\Entity\Type;
-use Croogo\Taxonomy\Model\Entity\Vocabulary;
 use Croogo\Taxonomy\Model\Table\TaxonomiesTable;
 use Croogo\Taxonomy\Model\Table\TermsTable;
 use InvalidArgumentException;
@@ -63,7 +62,7 @@ class TaxonomyComponent extends Component
     /**
      * Startup
      *
-     * @param object $controller instance of controller
+     * @param object $event instance of controller
      * @return void
      */
     public function startup(Event $event)
@@ -258,13 +257,14 @@ class TaxonomyComponent extends Component
                 'id' => $typeId,
             ]);
         }
+
         return $defaultType;
     }
 
     /**
      * Check that Term exists
      *
-     * @param int $idTerm Id
+     * @param int $id Id
      * @param string $url Redirect Url
      * @return bool True if Term exists
      */
@@ -299,7 +299,7 @@ class TaxonomyComponent extends Component
     /**
      * Checks that Vocabulary exists
      *
-     * @param int $vocabularyIdVocabulary Id
+     * @param int $vocabularyId Id
      * @param string $url Redirect Url
      * @return bool True if Vocabulary exists
      */
@@ -316,5 +316,4 @@ class TaxonomyComponent extends Component
             throw $exception;
         }
     }
-
 }

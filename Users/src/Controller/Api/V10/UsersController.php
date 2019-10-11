@@ -37,6 +37,7 @@ class UsersController extends AppController
         $expiry = 10 * 24 * 3600; // 10days
         $buffer = 5 * 60; // 5mins for random
         $exp = time() + rand($expiry, $expiry + $buffer);
+
         return JWT::encode([
             'iss' => Configure::read('Site.title'),
             'sub' => $user['id'],
@@ -62,5 +63,4 @@ class UsersController extends AppController
             '_serialize' => ['data'],
         ]);
     }
-
 }

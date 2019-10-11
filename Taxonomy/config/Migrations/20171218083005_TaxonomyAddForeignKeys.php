@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class TaxonomyAddForeignKeys extends AbstractMigration
@@ -37,5 +38,4 @@ class TaxonomyAddForeignKeys extends AbstractMigration
             ->dropForeignKey('taxonomy_id')
             ->save();
     }
-
 }

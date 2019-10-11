@@ -118,11 +118,13 @@ class DashboardsController extends AppController
     {
         if (!$id) {
             $this->Flash->error(__d('croogo', 'Invalid id for Dashboard'));
+
             return $this->redirect(['action' => 'index']);
         }
         $entity = $this->Dashboards->get($id);
         if ($this->Dashboards->delete($entity)) {
             $this->Flash->success(__d('croogo', 'Dashboard deleted'));
+
             return $this->redirect($this->referer());
         }
     }
@@ -155,6 +157,7 @@ class DashboardsController extends AppController
         } else {
             $this->Flash->error(__d('croogo', 'Could not move up'));
         }
+
         return $this->redirect(['action' => 'index']);
     }
 
@@ -177,5 +180,4 @@ class DashboardsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-
 }

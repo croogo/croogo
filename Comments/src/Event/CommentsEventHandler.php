@@ -15,9 +15,9 @@ use Cake\Event\EventListenerInterface;
 class CommentsEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- */
+    /**
+     * implementedEvents
+     */
     public function implementedEvents()
     {
         return [];

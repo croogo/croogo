@@ -1,7 +1,6 @@
 <?php
 namespace Croogo\Nodes\Test\TestCase\Model\Table;
 
-
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Event\EventManager;

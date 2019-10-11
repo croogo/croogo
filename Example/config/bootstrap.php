@@ -7,7 +7,6 @@
 namespace Croogo\Example\Config;
 
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
 use Croogo\Core\Croogo;
 use Croogo\Core\Nav as CroogoNav;
 use Croogo\Wysiwyg\Wysiwyg;

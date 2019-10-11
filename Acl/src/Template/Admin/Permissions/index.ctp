@@ -6,8 +6,10 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Croogo->adminScript('Croogo/Acl.acl_permissions');
 
-$this->Breadcrumbs->add(__d('croogo', 'Users'),
-        ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'])
+$this->Breadcrumbs->add(
+    __d('croogo', 'Users'),
+    ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index']
+)
     ->add(__d('croogo', 'Permissions'), $this->getRequest()->getUri()->getPath());
 
 $this->append('action-buttons');
@@ -48,8 +50,10 @@ echo $this->Html->div('btn-group', $toolsButton . $this->Html->tag('ul', $out, [
     'class' => 'dropdown-menu dropdown-menu-right',
 ]));
 
-echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
-    ['controller' => 'Actions', 'action' => 'index', 'permissions' => 1]);
+echo $this->Croogo->adminAction(
+    __d('croogo', 'Edit Actions'),
+    ['controller' => 'Actions', 'action' => 'index', 'permissions' => 1]
+);
 $this->end();
 
 $this->Js->buffer('AclPermissions.tabSwitcher();');

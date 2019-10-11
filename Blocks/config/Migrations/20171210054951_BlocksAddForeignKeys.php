@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class BlocksAddForeignKeys extends AbstractMigration
@@ -20,5 +21,4 @@ class BlocksAddForeignKeys extends AbstractMigration
             ->dropForeignKey('region_id')
             ->save();
     }
-
 }

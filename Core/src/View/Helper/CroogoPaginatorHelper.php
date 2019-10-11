@@ -37,10 +37,10 @@ class CroogoPaginatorHelper extends PaginatorHelper
         parent::__construct($View, $config);
     }
 
-/**
- * @param array $options
- * @return boolean
- */
+    /**
+     * @param array $options
+     * @return boolean
+     */
     public function numbers(array $options = [])
     {
         return parent::numbers($options);

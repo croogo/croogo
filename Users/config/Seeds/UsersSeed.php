@@ -1,7 +1,7 @@
 <?php
 
-use Cake\ORM\TableRegistry;
 use Cake\Log\LogTrait;
+use Cake\ORM\TableRegistry;
 use Phinx\Seed\AbstractSeed;
 
 class UsersSeed extends AbstractSeed
@@ -33,5 +33,4 @@ class UsersSeed extends AbstractSeed
         $result = $Users->save($entity);
         $this->getAdapter()->beginTransaction();
     }
-
 }

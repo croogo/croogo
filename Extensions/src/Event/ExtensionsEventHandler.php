@@ -17,9 +17,9 @@ use Croogo\Core\PluginManager;
 class ExtensionsEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- */
+    /**
+     * implementedEvents
+     */
     public function implementedEvents()
     {
         return [
@@ -35,9 +35,9 @@ class ExtensionsEventHandler implements EventListenerInterface
         ];
     }
 
-/**
- * Before Setup admin data
- */
+    /**
+     * Before Setup admin data
+     */
     public function onBeforeSetupAdminData($event)
     {
         $plugins = Plugin::loaded();
@@ -50,9 +50,9 @@ class ExtensionsEventHandler implements EventListenerInterface
         }
     }
 
-/**
- * Setup admin data
- */
+    /**
+     * Setup admin data
+     */
     public function onSetupAdminData($event)
     {
         $plugins = Plugin::loaded();
@@ -65,9 +65,9 @@ class ExtensionsEventHandler implements EventListenerInterface
         }
     }
 
-/**
- * onBootstrapComplete
- */
+    /**
+     * onBootstrapComplete
+     */
     public function onBootstrapComplete($event)
     {
         PluginManager::cacheDependencies();

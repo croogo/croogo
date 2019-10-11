@@ -18,12 +18,13 @@ class BulkProcessComponentTest extends CroogoTestCase
         $controller = new Controller($request);
         $controller->loadComponent('Croogo/Core.BulkProcess');
         $controller->startupProcess();
+
         return $controller;
     }
 
-/**
- * Test that presence of `action` does not affect result
- */
+    /**
+     * Test that presence of `action` does not affect result
+     */
     public function testGetRequestVarsDoNotCountActionAsId()
     {
         $controller = $this->_createController([
@@ -39,9 +40,9 @@ class BulkProcessComponentTest extends CroogoTestCase
         $this->assertCount(1, $ids);
     }
 
-/**
- * Test that presence of `checkAll` does not affect result
- */
+    /**
+     * Test that presence of `checkAll` does not affect result
+     */
     public function testGetRequestVarsWithCheckallData()
     {
         $controller = $this->_createController([

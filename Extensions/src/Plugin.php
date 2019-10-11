@@ -3,14 +3,14 @@
 namespace Croogo\Extensions;
 
 use Cake\Core\BasePlugin;
-use Cake\Core\Configure;
 use Cake\Core\Plugin as CakePlugin;
 use Cake\Core\PluginApplicationInterface;
 
 class Plugin extends BasePlugin
 {
 
-    public function bootstrap(PluginApplicationInterface $app) {
+    public function bootstrap(PluginApplicationInterface $app)
+    {
         if (!CakePlugin::isLoaded('Migrations')) {
             $app->addPlugin('Migrations', ['autoload' => true, 'classBase' => false]);
         }
@@ -21,5 +21,4 @@ class Plugin extends BasePlugin
             $app->addPlugin('Search', ['autoload' => true, 'classBase' => false]);
         }
     }
-
 }

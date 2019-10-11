@@ -2,26 +2,31 @@
 
 namespace Croogo\FileManager\Event;
 
-use Cake\Event\Event;;
+use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Log\LogTrait;
-
 use Croogo\FileManager\Utility\FileStorageUtils;
 use Croogo\FileManager\Utility\StorageManager;
+use Exception;
 
-class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventListenerInterface {
+;
+
+class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventListenerInterface
+{
 
     use LogTrait;
 
-    public function implementedEvents() {
-        return array(
+    public function implementedEvents()
+    {
+        return [
             'FileStorage.beforeSave' => 'onBeforeSave',
             'FileStorage.beforeDelete' => 'onBeforeDelete',
             'Assets.AssetsImageHelper.resize' => 'onResizeImage',
-        );
+        ];
     }
 
-    public function onBeforeSave(Event $event) {
+    public function onBeforeSave(Event $event)
+    {
         if (!$this->_check($event)) {
             return true;
         }
@@ -44,6 +49,7 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
                 $storage['height'] = $imageInfo['height'];
                 $storage['extension'] = substr($path, strrpos($path, '.') + 1);
             }
+
             return true;
         }
 
@@ -51,7 +57,7 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
         $filesystem = StorageManager::adapter($storage->adapter);
         try {
             if (!file_exists($file['tmp_name'])) {
-                throw new \Exception($this->Attachments->Assets->checkFileUpload($storage));
+                throw new Exception($this->Attachments->Assets->checkFileUpload($storage));
             }
             $raw = file_get_contents($file['tmp_name']);
             $key = sha1($raw);
@@ -78,15 +84,18 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
             $storage['width'] = $imageInfo['width'];
             $storage['height'] = $imageInfo['height'];
             $storage['extension'] = $extension;
+
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $event->getData('record')->setErrors(['path' => $e->getMessage()]);
             $this->log($e->getMessage());
+
             return false;
         }
     }
 
-    public function onBeforeDelete($event) {
+    public function onBeforeDelete($event)
+    {
         $model = $event->getSubject();
         if (!$this->_check($event)) {
             return true;
@@ -95,9 +104,8 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
         $entity = $event->getData('record');
 
         $model = $event->getSubject();
-        $fields = array('adapter', 'path');
+        $fields = ['adapter', 'path'];
         $data = $model->get($entity->id, compact('fields'));
-
 
         $filesystem = StorageManager::adapter($data->adapter);
         $key = str_replace('/assets', '', $data->path);
@@ -112,22 +120,25 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
         foreach ($forDeletions as $toDelete) {
             $model->delete($toDelete);
         }
+
         return true;
     }
 
-/**
- * Find parent of the resized image
- */
-    protected function _parentAsset($attachment) {
+    /**
+     * Find parent of the resized image
+     */
+    protected function _parentAsset($attachment)
+    {
         $path = $attachment->import_path;
         $parts = pathinfo($path);
         list($filename, ) = explode('.', $parts['filename'], 2);
         $filename = rtrim(WWW_ROOT, '/') . $parts['dirname'] . '/' . $filename . '.' . $parts['extension'];
         if (file_exists($filename)) {
             $hash = sha1_file($filename);
+
             return $this->Attachments->Assets->findByHash($hash)->first();
         }
+
         return false;
     }
-
 }

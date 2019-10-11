@@ -77,11 +77,18 @@ class RegionsHelper extends Helper
             $blockOutput = $this->_View->element($element, compact('block'), $elementOptions);
         } else {
             if (!empty($element)) {
-                $this->log(sprintf('Missing element `%s` in block `%s` (%s)', $block->element, $block->alias,
-                    $block->id), LOG_WARNING);
+                $this->log(sprintf(
+                    'Missing element `%s` in block `%s` (%s)',
+                    $block->element,
+                    $block->alias,
+                    $block->id
+                ), LOG_WARNING);
             }
-            $blockOutput = $this->_View->element($defaultElement, compact('block'),
-                ['ignoreMissing' => true] + $elementOptions);
+            $blockOutput = $this->_View->element(
+                $defaultElement,
+                compact('block'),
+                ['ignoreMissing' => true] + $elementOptions
+            );
         }
 
         if ($block->get('cell')) {

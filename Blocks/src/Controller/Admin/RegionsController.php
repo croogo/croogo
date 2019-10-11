@@ -43,5 +43,4 @@ class RegionsController extends AppController
             return;
         }
     }
-
 }

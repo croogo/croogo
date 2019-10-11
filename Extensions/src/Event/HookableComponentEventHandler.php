@@ -6,9 +6,8 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Utility\Hash;
-use Cake\Utility\Inflector;
-use Croogo\Core\Croogo;
 use Croogo\Core\Controller\HookableComponentInterface;
+use Croogo\Core\Croogo;
 use Croogo\Extensions\Exception\ControllerNotHookableException;
 
 class HookableComponentEventHandler implements EventListenerInterface
@@ -72,6 +71,7 @@ class HookableComponentEventHandler implements EventListenerInterface
         if ($prop !== $modelProp) {
             $this->{$prop} = $component;
         }
+
         return $component;
     }
 

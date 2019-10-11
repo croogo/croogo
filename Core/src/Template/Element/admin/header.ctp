@@ -10,8 +10,11 @@ $dashboardUrl = (new StringConverter())->linkStringToArray(
 
 ?>
 <header class="navbar navbar-expand-md navbar-dark bg-black fixed-top">
-    <?= $this->Html->link(Configure::read('Site.title'), $dashboardUrl,
-        ['class' => 'navbar-brand']); ?>
+    <?= $this->Html->link(
+    Configure::read('Site.title'),
+    $dashboardUrl,
+    ['class' => 'navbar-brand']
+); ?>
 
     <?= $this->Croogo->adminMenus(Nav::items('top-left'), [
         'type' => 'dropdown',
@@ -20,9 +23,9 @@ $dashboardUrl = (new StringConverter())->linkStringToArray(
             'class' => 'navbar-nav d-none d-sm-block mr-auto',
         ],
     ]);
-    ?>
-    <?php if ($this->getRequest()->getSession()->read('Auth.User.id')): ?>
-    <?php
+?>
+    <?php if ($this->getRequest()->getSession()->read('Auth.User.id')) : ?>
+        <?php
         echo $this->Croogo->adminMenus(Nav::items('top-right'), [
             'type' => 'dropdown',
             'htmlAttributes' => [
@@ -30,6 +33,6 @@ $dashboardUrl = (new StringConverter())->linkStringToArray(
                 'class' => 'navbar-nav ml-auto',
             ],
         ]);
-    ?>
+        ?>
     <?php endif; ?>
 </header>

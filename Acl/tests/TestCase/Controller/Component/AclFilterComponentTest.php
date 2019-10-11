@@ -2,7 +2,6 @@
 
 namespace Croogo\Acl\Test\TestCase\Controller\Component;
 
-use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Croogo\TestSuite\CroogoTestCase;
 

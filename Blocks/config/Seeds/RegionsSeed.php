@@ -111,5 +111,4 @@ class RegionsSeed extends AbstractSeed
         $Table = $this->table('regions');
         $Table->insert($this->records)->save();
     }
-
 }

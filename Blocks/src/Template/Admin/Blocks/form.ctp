@@ -1,7 +1,5 @@
 <?php
 
-use Croogo\Core\Status;
-
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Breadcrumbs->add(__d('croogo', 'Blocks'), ['action' => 'index']);

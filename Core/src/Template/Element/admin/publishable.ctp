@@ -2,6 +2,7 @@
 /**
  * @var \Croogo\Core\View\CroogoView $this
  */
+
 use Croogo\Core\Status;
 
 echo $this->Form->input('status', [

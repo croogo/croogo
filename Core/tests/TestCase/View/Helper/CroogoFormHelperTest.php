@@ -1,7 +1,6 @@
 <?php
 namespace Croogo\Core\Test\TestCase\View\Helper;
 
-use Cake\Controller\Controller;
 use Cake\View\View;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\View\Helper\CroogoFormHelper;
@@ -111,9 +110,9 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-/**
- * testInputAutoTooltips
- */
+    /**
+     * testInputAutoTooltips
+     */
     public function testInputAutoTooltips()
     {
         // automatic tooltips
@@ -346,9 +345,9 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-/**
- * testAutocomplete
- */
+    /**
+     * testAutocomplete
+     */
     public function testAutocomplete()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -389,9 +388,9 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-/**
- * testAutocompleteWithDefault
- */
+    /**
+     * testAutocompleteWithDefault
+     */
     public function testAutocompleteWithDefault()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -437,9 +436,9 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-/**
- * testAutocompleteWithDefaultFromViewVars
- */
+    /**
+     * testAutocompleteWithDefaultFromViewVars
+     */
     public function testAutocompleteWithDefaultFromViewVars()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -495,9 +494,9 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-/**
- * Test placeholder with nested model fields
- */
+    /**
+     * Test placeholder with nested model fields
+     */
     public function testInputPlaceholderNestedModel()
     {
         $expected = [
@@ -526,9 +525,9 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-/**
- * Test radio button class
- */
+    /**
+     * Test radio button class
+     */
     public function testInputRadioButtonClass()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -545,9 +544,9 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->assertContains('class="super-radio-button"', $result);
     }
 
-/**
- * Test checkbox class
- */
+    /**
+     * Test checkbox class
+     */
     public function testInputCheckboxClass()
     {
         $result = $this->Form->input('Node.promote', [

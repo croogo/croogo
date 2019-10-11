@@ -10,9 +10,9 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Utility\File;
-use Croogo\Core\Router;
-use Croogo\Install\InstallManager;
 use Composer\IO\BufferIO;
+use Croogo\Install\InstallManager;
+use Exception;
 
 /**
  * Install Controller
@@ -55,11 +55,11 @@ class InstallController extends Controller
     }
 
     /**
- * beforeFilter
- *
- * @return void
- * @access public
- */
+     * beforeFilter
+     *
+     * @return void
+     * @access public
+     */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
@@ -78,27 +78,28 @@ class InstallController extends Controller
         ]);
     }
 
-/**
- * If settings.json exists, app is already installed
- *
- * @return void
- */
+    /**
+     * If settings.json exists, app is already installed
+     *
+     * @return void
+     */
     protected function _check()
     {
         if (Configure::read('Croogo.installed') && Configure::read('Install.secured')) {
             $this->Flash->error('Already Installed');
+
             return $this->redirect('/');
         }
     }
 
-/**
- * Step 1: welcome
- *
- * A simple welcome message for the installer.
- *
- * @return void
- * @access public
- */
+    /**
+     * Step 1: welcome
+     *
+     * A simple welcome message for the installer.
+     *
+     * @return void
+     * @access public
+     */
     public function index()
     {
         $this->_check();
@@ -106,16 +107,16 @@ class InstallController extends Controller
         $this->set('onStep', 1);
     }
 
-/**
- * Step 1: database
- *
- * Try to connect to the database and give a message if that's not possible so the user can check their
- * credentials or create the missing database
- * Create the database file and insert the submitted details
- *
- * @return void
- * @access public
- */
+    /**
+     * Step 1: database
+     *
+     * Try to connect to the database and give a message if that's not possible so the user can check their
+     * credentials or create the missing database
+     * Create the database file and insert the submitted details
+     *
+     * @return void
+     * @access public
+     */
     public function database()
     {
         $this->_check();
@@ -158,18 +159,18 @@ class InstallController extends Controller
                 'schema' => true,
                 'defaults' => $config,
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
         $this->set(compact('context', 'currentConfiguration'));
         $this->set('onStep', 2);
     }
 
-/**
- * Step 2: Run the initial sql scripts to create the db and seed it with data
- *
- * @return void
- * @access public
- */
+    /**
+     * Step 2: Run the initial sql scripts to create the db and seed it with data
+     *
+     * @return void
+     * @access public
+     */
     public function data()
     {
         $this->_check();
@@ -183,6 +184,7 @@ class InstallController extends Controller
             );
 
             $this->set('onStep', 2);
+
             return;
         }
 
@@ -208,7 +210,7 @@ class InstallController extends Controller
             $install->setupGrants();
 
             return $this->redirect(['action' => 'adminUser']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->Flash->error(__d('croogo', 'Error installing access control objects'));
             $this->Flash->error($e->getMessage());
 
@@ -222,12 +224,11 @@ class InstallController extends Controller
      */
     public function undo()
     {
-
     }
 
-/**
- * Step 3: get username and passwords for administrative user
- */
+    /**
+     * Step 3: get username and passwords for administrative user
+     */
     public function adminUser()
     {
         $this->_check();
@@ -254,14 +255,14 @@ class InstallController extends Controller
         $this->set('onStep', 3);
     }
 
-/**
- * Step 4: finish
- *
- * Copy settings.json file into place and create user obtained in step 3
- *
- * @return void
- * @access public
- */
+    /**
+     * Step 4: finish
+     *
+     * Copy settings.json file into place and create user obtained in step 3
+     *
+     * @return void
+     * @access public
+     */
     public function finish($token = null)
     {
         $this->_check();

@@ -5,6 +5,7 @@ namespace Croogo\Acl;
 use Acl\AclExtras;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionInterface;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 
 class AclGenerator extends AclExtras
@@ -26,7 +27,8 @@ class AclGenerator extends AclExtras
         if (!isset($this->Shell)) {
             $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
         }
-        if (isset($this->Shell) || isset($this->controller)) {
+
+if (isset($this->Shell) || isset($this->controller)) {
             return parent::out($msg);
         } else {
             \Cake\Log\Log::warning($msg);
@@ -83,5 +85,4 @@ class AclGenerator extends AclExtras
             }
         }
     }
-
 }

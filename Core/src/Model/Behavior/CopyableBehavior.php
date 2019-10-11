@@ -5,8 +5,8 @@ namespace Croogo\Core\Model\Behavior;
 use Cake\Datasource\EntityInterface;
 use Cake\Log\LogTrait;
 use Cake\ORM\Behavior;
-use Cake\ORM\Table;
 use Cake\ORM\Entity;
+use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
 use PDOException;
@@ -38,31 +38,31 @@ class CopyableBehavior extends Behavior
 
     use LogTrait;
 
-/**
- * Behavior settings
- */
+    /**
+     * Behavior settings
+     */
     public $settings = [];
 
-/**
- * Array of contained models.
- */
+    /**
+     * Array of contained models.
+     */
     public $contain = [];
 
-/**
- * The full results of Model::find() that are modified and saved
- * as a new copy.
- */
+    /**
+     * The full results of Model::find() that are modified and saved
+     * as a new copy.
+     */
     public $record;
 
-/**
- * Default values for settings.
- *
- * - recursive: whether to copy hasMany and hasOne records
- * - habtm: whether to copy hasAndBelongsToMany associations
- * - stripFields: fields to strip during copy process
- * - ignore: aliases of any associations that should be ignored, using dot (.) notation.
- * will look in the $this->contain array.
- */
+    /**
+     * Default values for settings.
+     *
+     * - recursive: whether to copy hasMany and hasOne records
+     * - habtm: whether to copy hasAndBelongsToMany associations
+     * - stripFields: fields to strip during copy process
+     * - ignore: aliases of any associations that should be ignored, using dot (.) notation.
+     * will look in the $this->contain array.
+     */
     protected $_defaults = [
         'recursive' => false,
         'habtm' => false,
@@ -85,27 +85,27 @@ class CopyableBehavior extends Behavior
         'masterKey' => null
     ];
 
-/**
- * Holds the value of the original id
- */
+    /**
+     * Holds the value of the original id
+     */
     protected $_originalId;
 
-/**
- * Constructor
- */
+    /**
+     * Constructor
+     */
     public function __construct(Table $table, array $config = [])
     {
         $config = Hash::merge($this->_defaults, $config);
         parent::__construct($table, $config);
     }
 
-/**
- * Copy method.
- *
- * @param Table $id model object
- * @param mixed $id String or integer model ID
- * @return boolean
- */
+    /**
+     * Copy method.
+     *
+     * @param Table $id model object
+     * @param mixed $id String or integer model ID
+     * @return boolean
+     */
     public function copy($id)
     {
         $this->_originalId = $id;
@@ -133,16 +133,17 @@ class CopyableBehavior extends Behavior
         } catch (PDOException $e) {
             $this->log('Error executing _copyRecord: ' . $e->getMessage());
         }
+
         return $result;
     }
 
-/**
- * Wrapper method that combines the results of _recursiveChildContain()
- * with the models' HABTM associations.
- *
- * @param object $Model Model object
- * @return array
- */
+    /**
+     * Wrapper method that combines the results of _recursiveChildContain()
+     * with the models' HABTM associations.
+     *
+     * @param object $Model Model object
+     * @return array
+     */
     public function generateContain()
     {
         $contain = [];
@@ -153,16 +154,17 @@ class CopyableBehavior extends Behavior
         }
         $contain = array_merge($this->_recursiveChildContain($table), $contain);
         $contain = $this->_removeIgnored($contain);
+
         return $contain;
     }
 
-/**
- * Removes any ignored associations, as defined in the model settings, from
- * the $this->contain array.
- *
- * @param array $contain data
- * @return boolean
- */
+    /**
+     * Removes any ignored associations, as defined in the model settings, from
+     * the $this->contain array.
+     *
+     * @param array $contain data
+     * @return boolean
+     */
     protected function _removeIgnored($contain)
     {
         $ignore = array_unique($this->getConfig('ignore'));
@@ -172,17 +174,18 @@ class CopyableBehavior extends Behavior
         foreach ($ignore as $path) {
             $contain = Hash::remove($contain, $path);
         }
+
         return $contain;
     }
 
-/**
- * Strips primary keys and other unwanted fields
- * from hasOne and hasMany records.
- *
- * @param object $table model object
- * @param array $record
- * @return array $record
- */
+    /**
+     * Strips primary keys and other unwanted fields
+     * from hasOne and hasMany records.
+     *
+     * @param object $table model object
+     * @param array $record
+     * @return array $record
+     */
     protected function _convertChildren(Table $table, Entity $record)
     {
         $assocs = $table->associations();
@@ -221,19 +224,19 @@ class CopyableBehavior extends Behavior
         return $record;
     }
 
-/**
- * Strips primary and parent foreign keys (where applicable)
- * from $this->record in preparation for saving.
- *
- * When `autoFields` is set, it will iterate listed fields and append
- * ' (copy)' for titles or '-copy' for slug/alias fields.
- *
- * Plugins can also perform custom/additional data conversion by listening
- * on `Behavior.Copyable.convertData`
- *
- * @param object $Model Model object
- * @return \Cake\ORM\Entity $this->record
- */
+    /**
+     * Strips primary and parent foreign keys (where applicable)
+     * from $this->record in preparation for saving.
+     *
+     * When `autoFields` is set, it will iterate listed fields and append
+     * ' (copy)' for titles or '-copy' for slug/alias fields.
+     *
+     * Plugins can also perform custom/additional data conversion by listening
+     * on `Behavior.Copyable.convertData`
+     *
+     * @param object $Model Model object
+     * @return \Cake\ORM\Entity $this->record
+     */
     protected function _convertData()
     {
         $this->record = clone $this->record;
@@ -261,21 +264,22 @@ class CopyableBehavior extends Behavior
         ]);
 
         $this->record = $event->getData('record');
+
         return $this->record;
     }
 
-/**
- * Loops through any HABTM results in $this->record and plucks out
- * the join table info, stripping out the join table primary
- * key and the primary key of $Model. This is done instead of
- * a simple collection of IDs of the associated records, since
- * HABTM join tables may contain extra information (sorting
- * order, etc).
- *
- * @param \Cake\ORM\Table $table Table object
- * @param \Cake\ORM\Entity $record
- * @return \Cake\ORM\Entity Modified $record
- */
+    /**
+     * Loops through any HABTM results in $this->record and plucks out
+     * the join table info, stripping out the join table primary
+     * key and the primary key of $Model. This is done instead of
+     * a simple collection of IDs of the associated records, since
+     * HABTM join tables may contain extra information (sorting
+     * order, etc).
+     *
+     * @param \Cake\ORM\Table $table Table object
+     * @param \Cake\ORM\Entity $record
+     * @return \Cake\ORM\Entity Modified $record
+     */
     protected function _convertHabtm(Table $table, $record)
     {
         if (!$this->getConfig('habtm')) {
@@ -304,14 +308,14 @@ class CopyableBehavior extends Behavior
         return $record;
     }
 
-/**
- * Generates a contain array for Containable behavior by
- * recursively looping through $Model->hasMany and
- * $Model->hasOne associations.
- *
- * @param object $table Model object
- * @return array
- */
+    /**
+     * Generates a contain array for Containable behavior by
+     * recursively looping through $Model->hasMany and
+     * $Model->hasOne associations.
+     *
+     * @param object $table Model object
+     * @return array
+     */
     protected function _recursiveChildContain(Table $table)
     {
         $contain = [];
@@ -332,14 +336,14 @@ class CopyableBehavior extends Behavior
         return $contain;
     }
 
-/**
- * Strips unwanted fields from $record, taken from
- * the 'stripFields' setting.
- *
- * @param object $record Model object
- * @param array $record
- * @return \Cake\ORM\Entity
- */
+    /**
+     * Strips unwanted fields from $record, taken from
+     * the 'stripFields' setting.
+     *
+     * @param object $record Model object
+     * @param array $record
+     * @return \Cake\ORM\Entity
+     */
     protected function _stripFields($record)
     {
         $stripFields = (array)$this->getConfig('stripFields');

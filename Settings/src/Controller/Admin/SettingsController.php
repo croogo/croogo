@@ -4,6 +4,7 @@ namespace Croogo\Settings\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Utility\Inflector;
+use Exception;
 
 /**
  * Settings Controller
@@ -38,18 +39,17 @@ class SettingsController extends AppController
         }
     }
 
-/**
- * Admin prefix
- *
- * @param string $prefix
- * @return void
- * @access public
- */
+    /**
+     * Admin prefix
+     *
+     * @param string $prefix
+     * @return void
+     * @access public
+     */
     public function prefix($prefix = null)
     {
         if ($this->getRequest()->is('post')) {
             try {
-
                 foreach ($this->getRequest()->getData() as $inputName => $value) {
                     $id = str_replace('setting-', '', $inputName);
                     if ($id == '_apply') {
@@ -70,7 +70,7 @@ class SettingsController extends AppController
                 }
 
                 $this->Flash->success(__d('croogo', 'Settings updated successfully'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->Flash->error(__d('croogo', 'Settings cannot be updated: ' . $e->getMessage()));
             }
 
@@ -103,7 +103,7 @@ class SettingsController extends AppController
 
         $contentType = mime_content_type($value['tmp_name']);
         if (substr($contentType, 0, 5) !== 'image') {
-            throw new \Exception('Invalid file type');
+            throw new Exception('Invalid file type');
         }
 
         $dotPosition = strripos($name, '.');
@@ -120,17 +120,18 @@ class SettingsController extends AppController
         $targetFile = WWW_ROOT . $relativePath;
         move_uploaded_file($value['tmp_name'], $targetFile);
         $value = str_replace('\\', '/', $relativePath);
+
         return $value;
     }
 
-/**
- * Admin moveup
- *
- * @param int $id
- * @param int $step
- * @return void
- * @access public
- */
+    /**
+     * Admin moveup
+     *
+     * @param int $id
+     * @param int $step
+     * @return void
+     * @access public
+     */
     public function moveup($id, $step = 1)
     {
         if ($this->Setting->moveUp($id, $step)) {
@@ -147,17 +148,18 @@ class SettingsController extends AppController
                 'action' => 'index'
             ];
         }
+
         return $this->redirect($redirect);
     }
 
-/**
- * Admin moveup
- *
- * @param int $id
- * @param int $step
- * @return void
- * @access public
- */
+    /**
+     * Admin moveup
+     *
+     * @param int $id
+     * @param int $step
+     * @return void
+     * @access public
+     */
     public function movedown($id, $step = 1)
     {
         if ($this->Setting->moveDown($id, $step)) {

@@ -2,10 +2,9 @@
 
 namespace Croogo\Taxonomy\Controller\Admin;
 
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
-use Cake\Network\Response;
 use Croogo\Taxonomy\Model\Table\TermsTable;
+use Exception;
 
 /**
  * Terms Controller
@@ -44,10 +43,11 @@ class TermsController extends AppController
      */
     public function index($vocabularyId = null)
     {
-        $this->Crud->on('beforePaginate', function(Event $event) {
+        $this->Crud->on('beforePaginate', function (Event $event) {
             return $event->getSubject()->query
                 ->contain(['Taxonomies.Vocabularies']);
         });
+
         return $this->Crud->execute();
     }
 
@@ -78,7 +78,7 @@ class TermsController extends AppController
                 $term = $this->Terms->get($id);
                 $success = $this->Terms->delete($term);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $success = false;
             $error = $e->getMessage();
         }
@@ -114,7 +114,7 @@ class TermsController extends AppController
 
             $term = $this->Terms->get($id, [
                 'contain' => [
-                    'Taxonomies' => function($q) use ($id, $vocabularyId) {
+                    'Taxonomies' => function ($q) use ($id, $vocabularyId) {
                         return $q->where([
                             'term_id' => $id,
                             'vocabulary_id' => $vocabularyId,
@@ -216,6 +216,7 @@ class TermsController extends AppController
                         'vocabulary_id' => $vocabularyId,
                     ];
                 }
+
                 return $this->redirect($redirectUrl);
             } else {
                 $this->Flash->error(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'));
@@ -225,5 +226,4 @@ class TermsController extends AppController
         $parentTree = $this->Terms->Taxonomies->getTree($vocabulary->alias, ['taxonomyId' => true]);
         $this->set(compact('taxonomies', 'vocabulary', 'term', 'parentTree', 'vocabularyId'));
     }
-
 }

@@ -4,14 +4,14 @@ use Croogo\FileManager\Utility\StorageManager;
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->css(array(
+$this->Html->css([
     'Croogo/FileManager.jquery.fileupload',
     'Croogo/FileManager.jquery.fileupload-ui',
-), array(
+], [
     'block' => true,
-));
+]);
 
-$this->Croogo->adminScript(array(
+$this->Croogo->adminScript([
 //  'Croogo/FileManager.fileupload/vendor/jquery.ui.widget',
     'Croogo/FileManager.fileupload/tmpl.min.js',
     'Croogo/FileManager.fileupload/load-image.all.min',
@@ -26,7 +26,7 @@ $this->Croogo->adminScript(array(
     'Croogo/FileManager.fileupload/jquery.fileupload-ui',
     'Croogo/FileManager.admin',
     'Croogo/FileManager.assets',
-));
+]);
 
 $indexUrl = [
     'plugin' => 'Croogo/FileManager',
@@ -34,13 +34,13 @@ $indexUrl = [
     'action' => 'index'
 ];
 
-if (!$this->getRequest()->getQuery('editor')):
+if (!$this->getRequest()->getQuery('editor')) :
     $this->Breadcrumbs
         ->add(__d('croogo', 'Attachments'), $indexUrl)
         ->add(__d('croogo', 'Upload'), $this->getRequest()->getUri()->getPath());
 endif;
 
-if ($this->layout === 'admin_popup'):
+if ($this->layout === 'admin_popup') :
     $this->append('title', ' ');
 endif;
 
@@ -65,79 +65,79 @@ $this->append('tab-content');
 
     echo $this->Html->tabStart('attachment-upload');
 
-        if (isset($model) && isset($foreignKey)):
-            $assetUsage = 'asset.asset_usage.0.';
-            echo $this->Form->input($assetUsage . 'model', array(
-                'type' => 'hidden',
-                'value' => $model,
-            ));
-            echo $this->Form->input($assetUsage . 'foreign_key', array(
-                'type' => 'hidden',
-                'value' => $foreignKey,
-            ));
-        endif;
+if (isset($model) && isset($foreignKey)) :
+    $assetUsage = 'asset.asset_usage.0.';
+    echo $this->Form->input($assetUsage . 'model', [
+        'type' => 'hidden',
+        'value' => $model,
+    ]);
+    echo $this->Form->input($assetUsage . 'foreign_key', [
+        'type' => 'hidden',
+        'value' => $foreignKey,
+    ]);
+endif;
 
         echo $this->element('Croogo/FileManager.admin/fileupload');
 
-        if (isset($model) && isset($foreignKey)):
-            echo $this->Form->input($assetUsage . 'featured_image', array(
-                'type' => 'checkbox',
-                'label' => 'Featured Image',
-            ));
-        endif;
+if (isset($model) && isset($foreignKey)) :
+    echo $this->Form->input($assetUsage . 'featured_image', [
+        'type' => 'checkbox',
+        'label' => 'Featured Image',
+    ]);
+endif;
 
-        echo $this->Form->input('asset.adapter', array(
+        echo $this->Form->input('asset.adapter', [
             'type' => 'select',
             'default' => 'LocalAttachment',
             'options' => StorageManager::configured(),
-        ));
-        echo $this->Form->input('excerpt', array(
+        ]);
+        echo $this->Form->input('excerpt', [
             'label' => __d('croogo', 'Caption'),
-        ));
+        ]);
         echo $this->Form->input('title');
-        echo $this->Form->input('status', array(
+        echo $this->Form->input('status', [
             'type' => 'hidden', 'value' => true,
-        ));
-        echo $this->Form->input('asset.model', array(
+        ]);
+        echo $this->Form->input('asset.model', [
             'type' => 'hidden',
             'value' => 'Attachments',
-        ));
+        ]);
 
-    echo $this->Html->tabEnd();
-$this->end();
+        echo $this->Html->tabEnd();
+        $this->end();
 
-$this->append('panels');
-    $redirect = array('action' => 'index');
-    if ($this->getRequest()->getSession()->check('Wysiwyg.redirect')) {
-        $redirect = $this->getRequest()->getSession()->read('Wysiwyg.redirect');
-    }
-    if ($this->getRequest()->getQuery('model')) {
-        $redirect = array_merge(
-            array('action' => 'browse'),
-            array('?' => $this->getRequest()->getQuery())
-        );
-        unset($redirect['?']['editor']);
-    }
-    echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-        $this->Form->button(__d('croogo', 'Upload'), array(
+        $this->append('panels');
+        $redirect = ['action' => 'index'];
+        if ($this->getRequest()->getSession()->check('Wysiwyg.redirect')) {
+            $redirect = $this->getRequest()->getSession()->read('Wysiwyg.redirect');
+        }
+        if ($this->getRequest()->getQuery('model')) {
+            $redirect = array_merge(
+                ['action' => 'browse'],
+                ['?' => $this->getRequest()->getQuery()]
+            );
+            unset($redirect['?']['editor']);
+        }
+        echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+        $this->Form->button(__d('croogo', 'Upload'), [
             'icon' => 'upload',
             'button' => 'primary',
             'class' => 'start btn-outline-success',
             'type' => 'submit',
             'id' => 'start_upload',
-        )) .
+        ]) .
         $this->Form->end() . ' ' .
-        $this->Html->link(__d('croogo', 'Cancel'), $redirect, array(
+        $this->Html->link(__d('croogo', 'Cancel'), $redirect, [
             'class' => 'btn btn-outline-danger',
-        ));
-    echo $this->Html->endBox();
-    echo $this->Croogo->adminBoxes();
-$this->end();
+        ]);
+        echo $this->Html->endBox();
+        echo $this->Croogo->adminBoxes();
+        $this->end();
 
-$editorMode = isset($formUrl['editor']) ? $formUrl['editor'] : 0;
-$xhrUploadUrl = $this->Url->build($formUrl);
-$redirectUrl = $this->Url->build($indexUrl);
-$script =<<<EOF
+        $editorMode = isset($formUrl['editor']) ? $formUrl['editor'] : 0;
+        $xhrUploadUrl = $this->Url->build($formUrl);
+        $redirectUrl = $this->Url->build($indexUrl);
+        $script = <<<EOF
 
     \$('[data-toggle=tab]:first').tab('show');
     var filesToUpload = [];
@@ -257,4 +257,4 @@ $script =<<<EOF
     Assets.init();
 EOF;
 
-$this->Js->buffer($script);
+        $this->Js->buffer($script);

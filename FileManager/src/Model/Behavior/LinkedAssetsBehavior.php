@@ -3,21 +3,21 @@
 namespace Croogo\FileManager\Model\Behavior;
 
 use ArrayObject;
-use Cake\Collection\Collection;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
-use Cake\ORM\ResultSet;
 use Cake\ORM\TableRegistry;
 
-class LinkedAssetsBehavior extends Behavior {
+class LinkedAssetsBehavior extends Behavior
+{
 
     protected $_defaultConfig = [
         'key' => 'linked_assets',
     ];
 
-    public function initialize(array $config = array()) {
+    public function initialize(array $config = [])
+    {
         $this->_table->addAssociations([
             'hasMany' => [
                 'AssetUsages' => [
@@ -32,7 +32,8 @@ class LinkedAssetsBehavior extends Behavior {
         ]);
     }
 
-    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary) {
+    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
+    {
         //if ($model->findQueryType == 'list') {
             //return $query;
         //}
@@ -63,10 +64,12 @@ class LinkedAssetsBehavior extends Behavior {
         $query->formatResults(function ($resultSet) {
             return $this->_formatResults($resultSet);
         });
+
         return $query;
     }
 
-    protected function _formatResults($results) {
+    protected function _formatResults($results)
+    {
         $key = $this->getConfig('key');
 
         if (isset($model->Assets)) {
@@ -79,7 +82,7 @@ class LinkedAssetsBehavior extends Behavior {
             if (!$result instanceof EntityInterface || !$result->has('asset_usages')) {
                 continue;
             }
-            $result->$key = array();
+            $result->$key = [];
             foreach ($result->asset_usages as &$assetUsage) {
                 if (!$assetUsage->has('asset')) {
                     continue;
@@ -97,7 +100,6 @@ class LinkedAssetsBehavior extends Behavior {
                     $assetUsage->clean();
                     $result->{$key}['DefaultAsset'][] = $assetUsage;
                 } else {
-
                     $seedId = isset($assetUsage->asset->parent_asset_id) ?
                         $assetUsage->asset->parent_asset_id :
                         $assetUsage->asset->id;
@@ -117,37 +119,38 @@ class LinkedAssetsBehavior extends Behavior {
 
                     $result[$key][$assetUsage->type][] = $assetUsage->asset;
 
-
                 //} else {
                     //$result[$key][$assetUsage->type][] = $assetUsage->asset;
                 }
             }
             unset($result->asset_usages);
         }
+
         return $results;
     }
 
-/**
- * Import $path as $model's asset and automatically registers its usage record
- *
- * This method is intended for importing an existing file in the local
- * filesystem into Assets plugin with automatic usage record with the calling
- * model.
- *
- * Eg:
- *
- *   $Book = ClassRegistry::init('Book');
- *   $Book->Behaviors->load('Assets.LinkedAssets');
- *   $Book->importAsset('LocalAttachment', '/path/to/file');
- *
- * @param string $adapter Adapter name
- * @param string $path Path to file, relative from WWW_ROOT
- * @return bool
- */
-    public function importAsset(Model $model, $adapter, $path, $options = array()) {
-        $options = Hash::merge(array(
-            'usage' => array(),
-        ), $options);
+    /**
+     * Import $path as $model's asset and automatically registers its usage record
+     *
+     * This method is intended for importing an existing file in the local
+     * filesystem into Assets plugin with automatic usage record with the calling
+     * model.
+     *
+     * Eg:
+     *
+     *   $Book = ClassRegistry::init('Book');
+     *   $Book->Behaviors->load('Assets.LinkedAssets');
+     *   $Book->importAsset('LocalAttachment', '/path/to/file');
+     *
+     * @param string $model Adapter name
+     * @param string $adapter Path to file, relative from WWW_ROOT
+     * @return bool
+     */
+    public function importAsset(Model $model, $adapter, $path, $options = [])
+    {
+        $options = Hash::merge([
+            'usage' => [],
+        ], $options);
         $Attachment = ClassRegistry::init('Assets.Attachments');
         $attachment = $Attachment->createFromFile(WWW_ROOT . $path);
 
@@ -160,34 +163,34 @@ class LinkedAssetsBehavior extends Behavior {
         $stat = fstat($fp);
         $finfo = new finfo(FILEINFO_MIME_TYPE);
 
-        $attachment['AssetsAsset'] = array(
+        $attachment['AssetsAsset'] = [
             'model' => $Attachment->alias,
             'adapter' => $adapter,
-            'file' => array(
+            'file' => [
                 'name' => basename($originalPath),
                 'tmp_name' => $originalPath,
                 'type' => $finfo->file($originalPath),
                 'size' => $stat['size'],
                 'error' => UPLOAD_ERR_OK,
-            ),
-        );
+            ],
+        ];
         $attachment = $Attachment->saveAll($attachment);
 
         $Attachment->AssetsAsset->recursive = -1;
-        $asset = $Attachment->AssetsAsset->find('first', array(
-            'conditions' => array(
+        $asset = $Attachment->AssetsAsset->find('first', [
+            'conditions' => [
                 'model' => $Attachment->alias,
                 'foreign_key' => $Attachment->id,
-            ),
-        ));
+            ],
+        ]);
 
         $Usage = $Attachment->AssetsAsset->AssetsAssetUsage;
 
-        $usage = Hash::merge($options['usage'], array(
+        $usage = Hash::merge($options['usage'], [
             'asset_id' => $asset['AssetsAsset']['id'],
             'model' => $model->alias,
             'foreign_key' => $model->id,
-        ));
+        ]);
         $usage = $Usage->create($usage);
 
         $usage = $Usage->save($usage);
@@ -197,5 +200,4 @@ class LinkedAssetsBehavior extends Behavior {
 
         return false;
     }
-
 }

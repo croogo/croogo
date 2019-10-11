@@ -7,9 +7,6 @@ use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Utility\Security;
 
-use function Croogo\Core\timerStart;
-use function Croogo\Core\timerStop;
-
 class Plugin extends BasePlugin
 {
 
@@ -28,5 +25,4 @@ class Plugin extends BasePlugin
             $app->addPlugin('Croogo/Install', ['routes' => true, 'bootstrap' => true]);
         }
     }
-
 }
