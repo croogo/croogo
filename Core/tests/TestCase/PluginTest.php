@@ -51,8 +51,8 @@ class PluginTest extends TestCase
 
         // Backup the PDO connection instance as the Migrations CakeAdapter replaces it with Phinx's.
         $this->connection = ConnectionManager::get('test')
-            ->driver()
-            ->connection();
+            ->getDriver()
+            ->getConnection();
     }
 
     public function tearDown()

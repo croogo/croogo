@@ -48,7 +48,20 @@ class NodesTableTest extends TestCase
     {
         parent::setUp();
 
+        $cache = [
+            'nodes_view' => [
+                'engine' => 'File',
+                'groups' => ['nodes']
+            ]
+        ];
+        \Cake\Cache\Cache::setConfig($cache);
+
         $this->Nodes = TableRegistry::get('Croogo/Nodes.Nodes');
+    }
+
+    public function tearDown()
+    {
+        \Cake\Cache\Cache::drop('nodes_view');
     }
 
     public function testBeforeSave()
