@@ -3,7 +3,8 @@
         $this->cell('Croogo/Comments.Comments::commentFormNode', [
             'node' => $entity,
             'type' => $typesForLayout[$entity->type],
-            'comment' => $comment
+            'comment' => $comment,
+            'parentComment' => isset($parentComment) ? $parentComment : null,
         ]);
     ?>
 </div>

@@ -27,7 +27,7 @@ class CommentsCell extends Cell
         $this->set('node', $node);
     }
 
-    public function commentFormNode(Node $node, Type $type, Comment $comment = null)
+    public function commentFormNode(Node $node, Type $type, Comment $comment = null, Comment $parentComment = null)
     {
         $this->loadModel('Croogo/Comments.Comments');
 
@@ -39,15 +39,16 @@ class CommentsCell extends Cell
             $node->id,
         ];
 
-        if (isset($this->getRequest()->getParam('pass')[2])) {
-            $formUrl[] = $this->getRequest()->getParam('pass')[2];
+        if (isset($this->request->getParam('pass')[2])) {
+            $formUrl[] = $this->request->getParam('pass')[2];
         }
 
         $this->set('title', $node->title);
         $this->set('url', $node->url);
         $this->set('formUrl', $formUrl);
         $this->set('comment', $comment ?: $this->Comments->newEntity());
+        $this->set('parentComment', $parentComment);
         $this->set('captcha', $type->comment_captcha);
-        $this->set('loggedInUser', $this->getRequest()->session()->read('Auth.User'));
+        $this->set('loggedInUser', $this->request->getSession()->read('Auth.User'));
     }
 }

@@ -5,3 +5,23 @@
 .block h3 {
   text-transform: none;
 }
+
+.comment .comment-info {
+  padding: 1rem 0;
+}
+
+.comment-level-2 {
+  margin-left: 2rem;
+}
+
+.comment-level-3 {
+  margin-left: 3rem;
+}
+
+.comment-level-4 {
+  margin-left: 4rem;
+}
+
+.comment-form {
+  margin-top: 1rem;
+}

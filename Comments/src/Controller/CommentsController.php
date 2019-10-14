@@ -163,7 +163,11 @@ class CommentsController extends AppController
             }
         }
 
-        $this->set(compact('success', 'entity', 'type', 'model', 'foreignKey', 'parentId', 'comment'));
+        if ($parentId) {
+            $parentComment = $this->Comments->get($parentId);
+        }
+
+        $this->set(compact('success', 'entity', 'type', 'model', 'foreignKey', 'parentId', 'comment', 'parentComment'));
     }
 
 /**

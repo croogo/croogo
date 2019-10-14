@@ -8,13 +8,24 @@ $captcha = (isset($captcha)) ? $captcha : false;
             <?= $this->Html->link(__d('croogo', 'Go back to original post: %s', $title), $url->getUrl()); ?>
         </p>
     <?php endif; ?>
+
+    <?php
+        if (isset($parentComment)):
+        echo $this->element('Croogo/Comments.comment', [
+            'comment' => $parentComment,
+            'node' => null,
+            'level' => 1,
+            'hideReplyButton' => true,
+        ]);
+    endif;
+    ?>
     <?= $this->Form->create($comment, ['url' => $formUrl]); ?>
     <?php if (!$loggedInUser): ?>
         <?= $this->Form->input('name', ['label' => __d('croogo', 'Name')]); ?>
         <?= $this->Form->input('email', ['label' => __d('croogo', 'Email')]); ?>
         <?= $this->Form->input('website', ['label' => __d('croogo', 'Website')]); ?>
     <?php endif; ?>
-    <?= $this->Form->input('body'); ?>
+    <?= $this->Form->input('body', ['label' => false]); ?>
     <?php if ($captcha): ?>
         <?= $this->Recaptcha->display(); ?>
     <?php endif; ?>
