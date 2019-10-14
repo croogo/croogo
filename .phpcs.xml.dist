@@ -5,11 +5,34 @@
     <arg name="colors"/>
     <arg name="parallel" value="75"/>
     <arg value="ps"/>
-    <arg name="extensions" value="php,ctp"/>
+    <arg name="extensions" value="php"/>
 
     <file>./</file>
 
     <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>Migrations/*</exclude-pattern>
+    <exclude-pattern>Seeds/*</exclude-pattern>
+    <exclude-pattern>Bake/*</exclude-pattern>
 
     <rule ref="vendor/cakephp/cakephp-codesniffer/CakePHP"/>
+
+    <rule ref="CakePHP.Commenting.FunctionComment.MissingParamComment">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="CakePHP.Commenting.FunctionComment.MissingParamName">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="CakePHP.Commenting.FunctionComment.MissingParamTag">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="CakePHP.Commenting.FunctionComment.MissingReturn">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="CakePHP.Commenting.FunctionComment.Missing">
+        <severity>0</severity>
+    </rule>
 </ruleset>

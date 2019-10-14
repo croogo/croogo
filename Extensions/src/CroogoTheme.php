@@ -239,7 +239,7 @@ class CroogoTheme
      * Delete theme
      *
      * @param string $alias Theme alias
-     * @return boolean true when successful, false or array or error messages when failed
+     * @return bool true when successful, false or array or error messages when failed
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      */

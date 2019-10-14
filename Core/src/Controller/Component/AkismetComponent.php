@@ -1,4 +1,5 @@
 <?php
+//phpcs:ignoreFile
 /**
  * Akismet anti-comment spam service
  *
@@ -18,7 +19,9 @@
  * @version        0.4
  * @copyright      Alex Potsides, {@link http://www.achingbrain.net http://www.achingbrain.net}
  * @license        http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  */
+
 namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
@@ -76,22 +79,23 @@ class AkismetComponent extends Component
     private $akismetVersion;
 
     // This prevents some potentially sensitive information from being sent accross the wire.
-    private $ignore = ['HTTP_COOKIE',
-                            'HTTP_X_FORWARDED_FOR',
-                            'HTTP_X_FORWARDED_HOST',
-                            'HTTP_MAX_FORWARDS',
-                            'HTTP_X_FORWARDED_SERVER',
-                            'REDIRECT_STATUS',
-                            'SERVER_PORT',
-                            'PATH',
-                            'DOCUMENT_ROOT',
-                            'SERVER_ADMIN',
-                            'QUERY_STRING',
-                            'PHP_SELF' ];
+    private $ignore = [
+        'HTTP_COOKIE',
+        'HTTP_X_FORWARDED_FOR',
+        'HTTP_X_FORWARDED_HOST',
+        'HTTP_MAX_FORWARDS',
+        'HTTP_X_FORWARDED_SERVER',
+        'REDIRECT_STATUS',
+        'SERVER_PORT',
+        'PATH',
+        'DOCUMENT_ROOT',
+        'SERVER_ADMIN',
+        'QUERY_STRING',
+        'PHP_SELF'
+    ];
 
     /**
-     * @param    string    $event            The URL of your blog.
-     * @param    string    $wordPressAPIKey    WordPress API key.
+     * @param \Cake\Event\Event $event Event object
      */
     public function startup(Event $event)
     {
@@ -124,16 +128,18 @@ class AkismetComponent extends Component
     public function isKeyValid()
     {
         // Check to see if the key is valid
-        $response = $this->sendRequest('key=' . $this->akismetAPIKey . '&blog=' . $this->blogURL, $this->akismetServer, '/' . $this->akismetVersion . '/verify-key');
+        $response = $this->sendRequest('key=' . $this->akismetAPIKey . '&blog=' . $this->blogURL, $this->akismetServer,
+            '/' . $this->akismetVersion . '/verify-key');
 
         return $response[1] == 'valid';
     }
 
-    // makes a request to the Akismet service
-
+    /**
+     * makes a request to the Akismet service
+     */
     private function sendRequest($request, $host, $path)
     {
-        $httpRequest  = "POST " . $path . " HTTP/1.0\r\n";
+        $httpRequest = "POST " . $path . " HTTP/1.0\r\n";
         $httpRequest .= "Host: " . $host . "\r\n";
         $httpRequest .= "Content-Type: application/x-www-form-urlencoded; charset=utf-8\r\n";
         $httpRequest .= "Content-Length: " . strlen($request) . "\r\n";
@@ -182,7 +188,8 @@ class AkismetComponent extends Component
      */
     public function isCommentSpam()
     {
-        $response = $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.rest.akismet.com', '/' . $this->akismetVersion . '/comment-check');
+        $response = $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.rest.akismet.com',
+            '/' . $this->akismetVersion . '/comment-check');
 
         if ($response[1] == 'invalid' && !$this->isKeyValid()) {
             throw new Exception('The API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://akismet.com/');
@@ -198,7 +205,8 @@ class AkismetComponent extends Component
      */
     public function submitSpam()
     {
-        $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-spam');
+        $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.' . $this->akismetServer,
+            '/' . $this->akismetVersion . '/submit-spam');
     }
 
     /**
@@ -208,13 +216,14 @@ class AkismetComponent extends Component
      */
     public function submitHam()
     {
-        $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-ham');
+        $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.' . $this->akismetServer,
+            '/' . $this->akismetVersion . '/submit-ham');
     }
 
     /**
      *    To override the user IP address when submitting spam/ham later on
      *
-     * @param string $userip    An IP address.  Optional.
+     * @param string $userip An IP address.  Optional.
      */
     public function setUserIP($userip)
     {
@@ -224,7 +233,7 @@ class AkismetComponent extends Component
     /**
      *    To override the referring page when submitting spam/ham later on
      *
-     * @param string $referrer    The referring page.  Optional.
+     * @param string $referrer The referring page.  Optional.
      */
     public function setReferrer($referrer)
     {
@@ -234,7 +243,7 @@ class AkismetComponent extends Component
     /**
      *    A permanent URL referencing the blog post the comment was submitted to.
      *
-     * @param string $permalink    The URL.  Optional.
+     * @param string $permalink The URL.  Optional.
      */
     public function setPermalink($permalink)
     {
@@ -336,10 +345,10 @@ class SocketWriteRead
     private $errorString;
 
     /**
-     * @param    string    $host            The host to send/receive data.
-     * @param    int        $port            The port on the remote host.
-     * @param    string    $request        The data to send.
-     * @param    int        $responseLength    The amount of data to read.  Defaults to 1160 bytes.
+     * @param string $host The host to send/receive data.
+     * @param int $port The port on the remote host.
+     * @param string $request The data to send.
+     * @param int $responseLength The amount of data to read.  Defaults to 1160 bytes.
      */
     public function __construct($host, $port, $request, $responseLength = 1160)
     {

@@ -110,7 +110,7 @@ class SettingsTable extends CroogoTable
      * @param string $key
      * @param string $value
      * @param array $options
-     * @return boolean
+     * @return bool
      */
     public function write($key, $value, $options = [])
     {
@@ -158,7 +158,7 @@ class SettingsTable extends CroogoTable
      * Deletes setting record for given key
      *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     public function deleteKey($key)
     {

@@ -89,7 +89,7 @@ class ThemesController extends AppController
     /**
      * Admin add
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function add()
     {
@@ -136,7 +136,7 @@ class ThemesController extends AppController
      * Admin delete
      *
      * @param string $alias
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function delete($alias = null)
     {

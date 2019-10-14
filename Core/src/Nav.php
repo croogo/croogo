@@ -225,7 +225,7 @@ class Nav
      * Check menu existence by path
      * @param string $menu Menu name
      * @param string $path Path for Hash::extract()
-     * @return boolean
+     * @return bool
      */
     public static function check($menu, $path)
     {

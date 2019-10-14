@@ -29,9 +29,7 @@ class TranslateController extends AppController
     /**
      * index
      *
-     * @param int $id
-     * @param string $modelAlias
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function index()
     {
@@ -96,11 +94,9 @@ class TranslateController extends AppController
     /**
      * edit
      *
-     * @param int $id
-     * @param string $modelAlias
-     * @return void
+     * @return \Cake\Http\Response|void
      */
-    public function edit($id = null)
+    public function edit()
     {
         $id = $this->getRequest()->query('id');
         $modelAlias = urldecode($this->getRequest()->query('model'));
@@ -211,7 +207,7 @@ class TranslateController extends AppController
      * @param int $id
      * @param string $modelAlias
      * @param string $locale
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function delete($id = null, $modelAlias = null, $locale = null)
     {

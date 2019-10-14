@@ -7,6 +7,7 @@ use Cake\Controller\Controller;
 use Croogo\TestSuite\CroogoTestCase;
 use Menus\View\Helper\MenusHelper;
 
+//phpcs:disable
 class TheMenuTestController extends Controller
 {
 
@@ -14,6 +15,7 @@ class TheMenuTestController extends Controller
 
     public $uses = null;
 }
+//phpcs:enable
 
 class MenusHelperTest extends CroogoTestCase
 {

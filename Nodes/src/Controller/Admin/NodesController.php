@@ -24,6 +24,11 @@ use Croogo\Taxonomy\Model\Entity\Type;
  */
 class NodesController extends AppController
 {
+    /**
+     * @return void
+     * @throws \Crud\Error\Exception\MissingActionException
+     * @throws \Crud\Error\Exception\ActionNotConfiguredException
+     */
     public function initialize()
     {
         parent::initialize();
@@ -44,7 +49,7 @@ class NodesController extends AppController
     /**
      * Admin create
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function create()
@@ -65,10 +70,10 @@ class NodesController extends AppController
     /**
      * Admin update paths
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
-    public function update_paths()
+    public function updatePaths()
     {
         $Node = $this->{$this->modelClass};
         if ($Node->updateAllNodesPaths()) {
@@ -87,12 +92,12 @@ class NodesController extends AppController
     /**
      * Admin process
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function process()
     {
-        list($action, $ids) = $this->BulkProcess->getRequestVars($this->Nodes->getAlias());
+        [$action, $ids] = $this->BulkProcess->getRequestVars($this->Nodes->getAlias());
 
         $options = [
             'multiple' => ['copy' => false],
@@ -108,6 +113,12 @@ class NodesController extends AppController
         $this->BulkProcess->process($this->Nodes, $action, $ids, $options);
     }
 
+    /**
+     * @param Event $event Event
+     * @return void
+     * @throws \Crud\Error\Exception\MissingActionException
+     * @throws \Crud\Error\Exception\ActionNotConfiguredException
+     */
     public function beforePaginate(Event $event)
     {
         /** @var \Cake\ORM\Query $query */

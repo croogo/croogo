@@ -471,8 +471,11 @@ class CroogoHelper extends Helper
                             $tab['options']['elementData']['entity'] = $entity;
                         }
                         $output .= $this->Html->tabStart($domId);
-                        $output .= $this->_View->element($tab['element'], $tab['options']['elementData'],
-                            $tab['options']['elementOptions']);
+                        $output .= $this->_View->element(
+                            $tab['element'],
+                            $tab['options']['elementData'],
+                            $tab['options']['elementOptions']
+                        );
                         $output .= $this->Html->tabEnd();
                     } else {
                         $output .= $this->adminTab(__d('croogo', $title), '#' . $domId, $tab['options']['linkOptions']);
@@ -535,8 +538,11 @@ class CroogoHelper extends Helper
                     $box['options']['elementData']['entity'] = $entity;
                 }
                 $output .= $this->Html->beginBox($title);
-                $output .= $this->_View->element($box['element'], $box['options']['elementData'],
-                    $box['options']['elementOptions']);
+                $output .= $this->_View->element(
+                    $box['element'],
+                    $box['options']['elementData'],
+                    $box['options']['elementOptions']
+                );
                 $output .= $this->Html->endBox();
                 $this->boxAlreadyPrinted[] = $title;
             }

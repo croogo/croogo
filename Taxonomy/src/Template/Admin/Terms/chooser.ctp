@@ -29,13 +29,13 @@
                 'data-chooser-id' => $term->id,
                 'data-chooser-title' => $term->title,
                 'rel' => sprintf(
-            'plugin:%s/controller:%s/action:%s/type:%s/slug:%s',
-            'Croogo/Nodes',
-    'Nodes',
-    'term',
-    $defaultType['alias'],
-    $term->slug
-),
+    'plugin:%s/controller:%s/action:%s/type:%s/slug:%s',
+    'Croogo/Nodes',
+            'Nodes',
+            'term',
+            $defaultType['alias'],
+            $term->slug
+            ),
             ]);
         }
 

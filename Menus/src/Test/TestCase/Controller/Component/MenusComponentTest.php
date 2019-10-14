@@ -5,6 +5,7 @@ namespace Croogo\Menus\Test\TestCase\Controller\Component;
 use Cake\Controller\Controller;
 use Croogo\TestSuite\CroogoControllerTestCase;
 
+//phpcs:disable
 class MenusTestController extends Controller
 {
 
@@ -26,6 +27,7 @@ class MenusTestController extends Controller
     {
     }
 }
+//phpcs:enable
 
 class MenusComponentTest extends CroogoControllerTestCase
 {

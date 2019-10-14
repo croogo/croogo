@@ -163,7 +163,7 @@ class InstallShell extends AppShell
      *
      * @param string $type Type of extension
      * @param string $zip Path to zip file
-     * @return boolean
+     * @return bool
      */
     protected function _activate($type = null, $zip = null)
     {
@@ -184,7 +184,7 @@ class InstallShell extends AppShell
      *
      * @param string $type Type of extension
      * @param string $zip Path to zip file
-     * @return boolean
+     * @return bool
      */
     protected function _install($type = null, $zip = null)
     {

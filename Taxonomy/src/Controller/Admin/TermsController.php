@@ -56,7 +56,7 @@ class TermsController extends AppController
      *
      * @param int $id
      * @param int $vocabularyId
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function delete($id = null, $vocabularyId = null)
@@ -98,7 +98,6 @@ class TermsController extends AppController
      * Implements Term edit
      *
      * @param int $id
-     * @param int $vocabularyId
      * @access public
      */
     public function edit($id)
@@ -178,8 +177,7 @@ class TermsController extends AppController
     /**
      * Implements Term add
      *
-     * @param int $vocabularyId
-     * @access public
+     * @return \Cake\Http\Response|void
      */
     public function add()
     {

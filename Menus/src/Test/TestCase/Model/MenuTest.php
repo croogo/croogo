@@ -5,6 +5,7 @@ use Croogo\TestSuite\CroogoTestCase;
 use Menus\Model\Menu;
 use Menus\Model\MenusAppModel;
 
+//phpcs:disable
 /**
  * TestMenu
  *
@@ -19,6 +20,7 @@ class TestMenu extends Menu
      */
     public $alias = 'Menu';
 }
+//phpcs:enable
 
 /**
  * TestUser

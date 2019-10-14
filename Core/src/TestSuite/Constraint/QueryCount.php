@@ -69,12 +69,12 @@ class QueryCount extends PHPUnit_Framework_Constraint
      *
      * @param mixed $query Evaluated value or object.
      *
-     * @return string
+     * @return string|null
      */
     protected function failureDescription($query)
     {
         if (!$query instanceof Query) {
-            return;
+            return null;
         }
 
         return sprintf(

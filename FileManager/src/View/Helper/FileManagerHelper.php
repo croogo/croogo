@@ -263,7 +263,7 @@ class FileManagerHelper extends Helper
      *
      * @param array $paths Paths
      * @param string $search Search string
-     * @return boolean
+     * @return bool
      */
     public function inPath($paths, $search)
     {

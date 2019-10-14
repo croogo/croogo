@@ -22,7 +22,7 @@ class PluginActivation
      * onActivate will be called if this returns true
      *
      * @param  object $controller Controller
-     * @return boolean
+     * @return bool
      */
     public function beforeActivation(&$controller)
     {
@@ -71,7 +71,7 @@ class PluginActivation
      * onDeactivate will be called if this returns true
      *
      * @param  object $controller Controller
-     * @return boolean
+     * @return bool
      */
     public function beforeDeactivation(&$controller)
     {

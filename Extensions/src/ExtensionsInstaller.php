@@ -126,7 +126,7 @@ class ExtensionsInstaller
      *
      * @param string $path Path to extension zip file
      * @param string $plugin Optional plugin name
-     * @return boolean
+     * @return bool
      * @throws Exception
      */
     public function extractPlugin($path = null, $plugin = null)
@@ -213,7 +213,7 @@ class ExtensionsInstaller
      *
      * @param string $path Path to extension zip file
      * @param string $theme Optional theme name
-     * @return boolean
+     * @return bool
      * @throws Exception
      */
     public function extractTheme($path = null, $theme = null)
@@ -257,7 +257,7 @@ class ExtensionsInstaller
      * Install packages with CroogoComposer
      *
      * @param array $data
-     * @return boolean
+     * @return bool
      * @throws Exception
      */
     public function composerInstall($data = [])

@@ -87,7 +87,7 @@ class BulkProcessBehavior extends Behavior
      * @param array $ids Array of IDs
      * @param string $field Field to update
      * @param mixed $status Value to update
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      */
     protected function _saveStatus($ids, $field, $status)
     {
@@ -106,7 +106,7 @@ class BulkProcessBehavior extends Behavior
      * Bulk Publish
      *
      * @param array $ids Array of IDs
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      */
     public function bulkPublish($ids)
     {
@@ -119,7 +119,7 @@ class BulkProcessBehavior extends Behavior
      * Bulk Publish
      *
      * @param array $ids Array of IDs
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      */
     public function bulkUnpublish($ids)
     {
@@ -132,7 +132,7 @@ class BulkProcessBehavior extends Behavior
      * Bulk Promote
      *
      * @param array $ids Array of IDs
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      */
     public function bulkPromote($ids)
     {
@@ -145,7 +145,7 @@ class BulkProcessBehavior extends Behavior
      * Bulk Unpromote
      *
      * @param array $ids Array of IDs
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      */
     public function bulkUnpromote($ids)
     {
@@ -158,7 +158,7 @@ class BulkProcessBehavior extends Behavior
      * Bulk Delete
      *
      * @param array $ids Array of IDs
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      */
     public function bulkDelete($ids)
     {
@@ -189,7 +189,7 @@ class BulkProcessBehavior extends Behavior
      * Bulk Copy
      *
      * @param array $ids Array of IDs
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      */
     public function bulkCopy($ids)
     {

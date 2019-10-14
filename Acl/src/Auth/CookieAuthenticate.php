@@ -1,4 +1,5 @@
 <?php
+
 namespace Croogo\Acl\Auth;
 
 use Cake\Auth\BaseAuthenticate;

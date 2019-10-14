@@ -101,7 +101,7 @@ class CroogoAppControllerTest extends IntegrationTestCase
 
         $theme = 'Mytheme';
         $this->controller->theme = $theme;
-        $filePath = App::themePath($theme) . 'TestApp'. DS . 'admin_edit.ctp';
+        $filePath = App::themePath($theme) . 'TestApp' . DS . 'admin_edit.ctp';
 
         $expected = '<h1>I should be displayed</h1>';
         $File = new File($filePath, true, 0777);

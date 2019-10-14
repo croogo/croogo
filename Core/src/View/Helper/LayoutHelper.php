@@ -250,7 +250,7 @@ class LayoutHelper extends Helper
      *
      * if User is logged in
      *
-     * @return boolean
+     * @return bool
      */
     public function isLoggedIn()
     {
@@ -298,7 +298,7 @@ class LayoutHelper extends Helper
     /**
      * Get Role ID
      *
-     * @return integer
+     * @return int
      */
     public function getRoleId()
     {

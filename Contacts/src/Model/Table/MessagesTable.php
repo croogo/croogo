@@ -79,7 +79,7 @@ class MessagesTable extends CroogoTable
      * Mark messages as read in bulk
      *
      * @param array $ids Array of Message Ids
-     * @return boolean True if successful, false otherwise
+     * @return bool True if successful, false otherwise
      */
     public function bulkRead($ids)
     {
@@ -93,7 +93,7 @@ class MessagesTable extends CroogoTable
      * Mark messages as Unread in bulk
      *
      * @param array $ids Array of Message Ids
-     * @return boolean True if successful, false otherwise
+     * @return bool True if successful, false otherwise
      */
     public function bulkUnread($ids)
     {

@@ -26,7 +26,6 @@ class MetaBehavior extends Behavior
     /**
      * Setup
      *
-     * @param Model $config
      * @param array $config
      * @return void
      */
@@ -84,7 +83,6 @@ class MetaBehavior extends Behavior
     /**
      * Prepare data
      *
-     * @param Model $data
      * @param array $data
      * @return array
      */
@@ -96,9 +94,9 @@ class MetaBehavior extends Behavior
     /**
      * Protected method for MetaBehavior::prepareData()
      *
-     * @param Model $data
-     * @param array $options
-     * @return array
+     * @param ArrayObject $data
+     * @param ArrayObject $options
+     * @return void
      */
     protected function _prepareMeta(ArrayObject $data, ArrayObject $options)
     {

@@ -83,7 +83,7 @@ class ExtShell extends AppShell
     /**
      * Call the appropriate command
      *
-     * @return void
+     * @return bool
      */
     public function main()
     {
@@ -129,6 +129,8 @@ class ExtShell extends AppShell
 
                 return $this->{'_' . $method . ucfirst($type)}($ext);
         }
+
+        return true;
     }
 
     /**
@@ -169,7 +171,7 @@ class ExtShell extends AppShell
      * Activate a plugin
      *
      * @param string $plugin
-     * @return boolean
+     * @return bool
      */
     protected function _activatePlugin($plugin)
     {
@@ -191,7 +193,7 @@ class ExtShell extends AppShell
      * Deactivate a plugin
      *
      * @param string $plugin
-     * @return boolean
+     * @return bool
      */
     protected function _deactivatePlugin($plugin)
     {
@@ -230,7 +232,7 @@ class ExtShell extends AppShell
      * Activate a theme
      *
      * @param string $theme Name of theme
-     * @return boolean
+     * @return bool
      */
     protected function _activateTheme($theme)
     {

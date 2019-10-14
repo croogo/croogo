@@ -423,10 +423,10 @@ class PluginTest extends TestCase
     {
         return [
             // Internal Croogo plugins based on Croogo/Core path
-            ['Croogo/Core', CROOGO_INCLUDE_PATH  . 'Core' . DS],
+            ['Croogo/Core', CROOGO_INCLUDE_PATH . 'Core' . DS],
             ['Croogo/Nodes', CROOGO_INCLUDE_PATH . 'Nodes' . DS],
             // Plugin paths from the 'plugins' Configure key
-            ['BootstrapUI', VENDOR .  'friendsofcake' . DS . 'bootstrap-ui' . DS],
+            ['BootstrapUI', VENDOR . 'friendsofcake' . DS . 'bootstrap-ui' . DS],
             // Plugin path from the plugins directory
             ['Shops', App::path('Plugin')[0] . 'Shops'],
             // A non existing plugin

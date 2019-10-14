@@ -72,7 +72,7 @@ class UsersController extends AppController
      *
      * @param string $username
      * @param string $activationKey
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function activate($username, $activationKey)
@@ -161,7 +161,7 @@ class UsersController extends AppController
      *
      * @param string $username
      * @param string $activationKey
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function reset($username, $activationKey)
@@ -202,7 +202,7 @@ class UsersController extends AppController
     /**
      * Login
      *
-     * @return boolean
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function login()
@@ -272,7 +272,7 @@ class UsersController extends AppController
      * View
      *
      * @param string $username
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function view($username = null)

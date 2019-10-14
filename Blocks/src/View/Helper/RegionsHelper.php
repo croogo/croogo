@@ -30,7 +30,7 @@ class RegionsHelper extends Helper
      * returns true if Region has no Blocks.
      *
      * @param string $regionAlias Region alias
-     * @return boolean
+     * @return bool
      */
     public function isEmpty($regionAlias)
     {

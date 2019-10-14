@@ -197,9 +197,9 @@ class AppController extends \App\Controller\AppController implements HookableCom
     /**
      * blackHoleCallback for SecurityComponent
      *
-     * @return void
+     * @return bool
      */
-    public function _securityError($type)
+    protected function _securityError($type)
     {
         switch ($type) {
             case 'auth':
@@ -250,7 +250,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
         ]);
     }
 
-    public function _loadCroogoComponents(array $components)
+    protected function _loadCroogoComponents(array $components)
     {
         foreach ($components as $component => $options) {
             if (is_string($options)) {

@@ -261,7 +261,7 @@ class TaxonomizableBehavior extends Behavior
     /**
      * beforeSave
      *
-     * @return bool
+     * @return void
      */
     public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
     {

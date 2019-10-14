@@ -47,7 +47,7 @@ class HabtmDbAcl extends CachedDbAcl
      * @param string $aro ARO The requesting object identifier.
      * @param string $aco ACO The controlled object identifier.
      * @param string $action Action (defaults to *)
-     * @return boolean Success (true if ARO has access to action in ACO, false otherwise)
+     * @return bool Success (true if ARO has access to action in ACO, false otherwise)
      */
     public function check($aro, $aco, $action = "*")
     {

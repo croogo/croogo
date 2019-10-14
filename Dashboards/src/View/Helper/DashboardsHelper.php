@@ -157,13 +157,10 @@ class DashboardsHelper extends Helper
         switch ($id) {
             case CroogoDashboard::LEFT:
                 return __d('croogo', 'Left');
-            break;
             case CroogoDashboard::RIGHT:
                 return __d('croogo', 'Right');
-            break;
             case CroogoDashboard::FULL:
                 return __d('croogo', 'Full');
-            break;
         }
 
         return null;

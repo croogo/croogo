@@ -91,7 +91,7 @@ class TaxonomiesTable extends CroogoTable
             'valueField' => $options['value'],
             'groupField' => 'id',
         ])->where([
-            $this->Terms->aliasField('id') .' IN' => $termsIds,
+            $this->Terms->aliasField('id') . ' IN' => $termsIds,
         ])->toArray();
 
         $termsTree = [];
@@ -131,7 +131,7 @@ class TaxonomiesTable extends CroogoTable
      *
      * @param int $termId
      * @param int $vocabularyId
-     * @return boolean
+     * @return bool
      */
     public function termInVocabulary($termId, $vocabularyId)
     {

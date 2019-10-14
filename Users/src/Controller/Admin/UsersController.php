@@ -189,7 +189,7 @@ class UsersController extends AppController
      * Admin reset password
      *
      * @param int $id
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function resetPassword($id = null)
@@ -214,7 +214,7 @@ class UsersController extends AppController
     /**
      * Admin login
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function login()
@@ -280,7 +280,7 @@ class UsersController extends AppController
     /**
      * Admin logout
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function logout()
@@ -352,7 +352,7 @@ class UsersController extends AppController
     /**
      * Register
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function register()
@@ -433,7 +433,7 @@ class UsersController extends AppController
      *
      * @param string $username
      * @param string $activationKey
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function reset($username, $activationKey)

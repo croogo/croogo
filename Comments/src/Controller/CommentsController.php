@@ -178,7 +178,7 @@ class CommentsController extends AppController
      * @param bool $continue
      * @param bool $spamProtection
      * @param array $node
-     * @return boolean
+     * @return bool
      * @access protected
      * @deprecated This method will be renamed to _spamProtection() in the future
      */
@@ -206,7 +206,7 @@ class CommentsController extends AppController
      * @param bool $continue
      * @param bool $captchaProtection
      * @param array $node
-     * @return boolean
+     * @return bool
      * @access protected
      */
     protected function _captcha($continue, $captchaProtection, $node)

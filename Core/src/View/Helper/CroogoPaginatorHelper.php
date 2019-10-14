@@ -39,7 +39,7 @@ class CroogoPaginatorHelper extends PaginatorHelper
 
     /**
      * @param array $options
-     * @return boolean
+     * @return bool
      */
     public function numbers(array $options = [])
     {

@@ -26,8 +26,7 @@ class ContactsController extends AppController
      * View
      *
      * @param string $alias
-     * @return void
-     * @access public
+     * @return \Cake\Http\Response|void
      * @throws NotFoundException
      */
     public function view($alias = null)
@@ -80,7 +79,7 @@ class ContactsController extends AppController
      *
      * @param bool $continue
      * @param array $contact
-     * @return boolean
+     * @return bool
      * @access protected
      */
     protected function _validation($continue, $contact, Message $message)
@@ -101,7 +100,7 @@ class ContactsController extends AppController
      *
      * @param bool $continue
      * @param array $contact
-     * @return boolean
+     * @return bool
      * @access protected
      */
     protected function _spamProtection($continue, $contact, Message $message)
@@ -126,7 +125,7 @@ class ContactsController extends AppController
      *
      * @param bool $continue
      * @param array $contact
-     * @return boolean
+     * @return bool
      * @access protected
      */
     protected function _captcha($continue, $contact, Message $message)
@@ -149,7 +148,7 @@ class ContactsController extends AppController
      *
      * @param bool $continue
      * @param array $contact
-     * @return boolean
+     * @return bool
      * @access protected
      */
     protected function _sendEmail($continue, $contact, Message $message)

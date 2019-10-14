@@ -9,8 +9,6 @@ use Croogo\FileManager\Utility\FileStorageUtils;
 use Croogo\FileManager\Utility\StorageManager;
 use Exception;
 
-;
-
 class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventListenerInterface
 {
 

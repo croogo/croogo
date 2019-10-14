@@ -45,19 +45,19 @@ class AclCachedAuthorize extends BaseAuthorize
         ],
     ];
 
-/**
- * Constructor
- */
+    /**
+     * Constructor
+     */
     public function __construct(ComponentRegistry $registry, $config = [])
     {
         parent::__construct($registry, $config);
     }
 
-/**
- * Checks whether $user is an administrator
- *
- * @param bool True if user has administrative role
- */
+    /**
+     * Checks whether $user is an administrator
+     *
+     * @param bool True if user has administrative role
+     */
     protected function _isAdmin($user)
     {
         static $Role = null;
@@ -74,11 +74,11 @@ class AclCachedAuthorize extends BaseAuthorize
         return $user['role_id'] == $this->_adminRole;
     }
 
-/**
- * Get the action path for a given request.
- *
- * @see BaseAuthorize::action()
- */
+    /**
+     * Get the action path for a given request.
+     *
+     * @see BaseAuthorize::action()
+     */
     public function action(ServerRequest $request, $path = '/:plugin/:prefix/:controller/:action')
     {
         $apiPath = Configure::read('Croogo.Api.path');
@@ -106,10 +106,10 @@ class AclCachedAuthorize extends BaseAuthorize
         return trim($path, '/');
     }
 
-/**
- * check request request authorization
- *
- */
+    /**
+     * check request request authorization
+     *
+     */
     public function authorize($user, ServerRequest $request)
     {
         // Admin role is allowed to perform all actions, bypassing ACL
@@ -204,11 +204,11 @@ class AclCachedAuthorize extends BaseAuthorize
         return $allowed;
     }
 
-/**
- * Checks authorization by content
- *
- * @throws Exception
- */
+    /**
+     * Checks authorization by content
+     *
+     * @throws Exception
+     */
     protected function _authorizeByContent($user, ServerRequest $request, $id)
     {
         if (!isset($this->config('actionMap')[$request->params['action']])) {

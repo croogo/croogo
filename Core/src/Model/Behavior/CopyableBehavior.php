@@ -103,8 +103,7 @@ class CopyableBehavior extends Behavior
      * Copy method.
      *
      * @param Table $id model object
-     * @param mixed $id String or integer model ID
-     * @return boolean
+     * @return bool
      */
     public function copy($id)
     {
@@ -141,7 +140,6 @@ class CopyableBehavior extends Behavior
      * Wrapper method that combines the results of _recursiveChildContain()
      * with the models' HABTM associations.
      *
-     * @param object $Model Model object
      * @return array
      */
     public function generateContain()
@@ -163,7 +161,7 @@ class CopyableBehavior extends Behavior
      * the $this->contain array.
      *
      * @param array $contain data
-     * @return boolean
+     * @return bool
      */
     protected function _removeIgnored($contain)
     {
@@ -234,7 +232,6 @@ class CopyableBehavior extends Behavior
      * Plugins can also perform custom/additional data conversion by listening
      * on `Behavior.Copyable.convertData`
      *
-     * @param object $Model Model object
      * @return \Cake\ORM\Entity $this->record
      */
     protected function _convertData()
@@ -340,7 +337,6 @@ class CopyableBehavior extends Behavior
      * Strips unwanted fields from $record, taken from
      * the 'stripFields' setting.
      *
-     * @param object $record Model object
      * @param array $record
      * @return \Cake\ORM\Entity
      */

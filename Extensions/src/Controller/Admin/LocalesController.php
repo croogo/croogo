@@ -75,7 +75,7 @@ class LocalesController extends AppController
      * Admin activate
      *
      * @param string $locale
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function activate($locale = null)
     {
@@ -102,7 +102,7 @@ class LocalesController extends AppController
      * Deactivate locale
      *
      * @param string $locale
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function deactivate($locale = null)
     {
@@ -126,7 +126,7 @@ class LocalesController extends AppController
     /**
      * Admin add
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function add()
     {
@@ -207,7 +207,7 @@ class LocalesController extends AppController
      * Admin edit
      *
      * @param string $locale
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function edit($locale = null)
     {
@@ -252,7 +252,7 @@ class LocalesController extends AppController
      * Admin delete
      *
      * @param string $locale
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function delete($locale = null)
     {

@@ -202,7 +202,7 @@ class JsHelper extends Helper
             $data = [$one => $two];
         }
         if (!$data) {
-            return false;
+            return;
         }
         $this->_jsVars = array_merge($this->_jsVars, $data);
     }

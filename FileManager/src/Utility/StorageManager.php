@@ -99,7 +99,7 @@ class StorageManager
      *
      * @param string $name Config name, if none all adapters are flushed
      * @throws RuntimeException
-     * @return boolean True on success
+     * @return bool True on success
      */
     public static function flush($name = null)
     {

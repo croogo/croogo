@@ -91,7 +91,7 @@ class RowLevelAclComponent extends Component
      * Retrieve a list of roles with access status for a given node
      *
      * @param int $id Node id
-     * @return array
+     * @return void
      */
     protected function _rolePermissions($id)
     {

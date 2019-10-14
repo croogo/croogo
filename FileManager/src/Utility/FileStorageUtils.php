@@ -19,7 +19,7 @@ class FileStorageUtils
      * Return file extension from a given filename
      *
      * @param string
-     * @return boolean string or false
+     * @return bool string or false
      */
     public static function fileExtension($name)
     {
@@ -53,8 +53,8 @@ class FileStorageUtils
         $decrement = 0;
         $path = null;
         for ($i = 0; $i < $level; $i++) {
-            $decrement = $decrement - 2;
-            $path .=  sprintf("%02d" . DS, substr(str_pad('', 2 * $level, '0') . $string, $decrement, 2));
+            $decrement -= 2;
+            $path .= sprintf("%02d" . DS, substr(str_pad('', 2 * $level, '0') . $string, $decrement, 2));
         }
 
         return $path;

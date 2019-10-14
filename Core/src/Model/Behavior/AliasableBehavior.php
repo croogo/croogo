@@ -64,9 +64,8 @@ class AliasableBehavior extends Behavior
     /**
      * byId
      *
-     * @param
      * @param int $id
-     * @return boolean
+     * @return bool
      */
     public function byId($id)
     {
@@ -81,7 +80,7 @@ class AliasableBehavior extends Behavior
      * byAlias
      *
      * @param string $alias
-     * @return boolean
+     * @return bool
      */
     public function byAlias($alias)
     {
@@ -105,8 +104,7 @@ class AliasableBehavior extends Behavior
     /**
      * listByAlias
      *
-     * @param
-     * @return string
+     * @return array
      */
     public function listByAlias()
     {

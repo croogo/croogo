@@ -118,7 +118,7 @@ class CommentTest extends CroogoTestCase
             ]
         ];
 
-        $userData =     [
+        $userData = [
             'User' => [
                 'id' => 2,
                 'role_id' => 1,

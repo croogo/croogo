@@ -206,7 +206,6 @@ class CroogoFormHelper extends FormHelper
      * @see FormHelper::create()
      * @return string A formatted opening FORM tag
      */
-
     public function create($model = null, array $options = [])
     {
         if (!empty($options['fieldAccess'])) {

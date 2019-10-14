@@ -57,7 +57,7 @@ class CroogoComponent extends Component
     /**
      * Method to lazy load classes
      *
-     * @return Object
+     * @return mixed
      */
     public function __get($name)
     {
@@ -178,7 +178,7 @@ class CroogoComponent extends Component
     /**
      * Gets the Role Id of the current user
      *
-     * @return integer Role Id
+     * @return int Role Id
      */
     public function roleId()
     {

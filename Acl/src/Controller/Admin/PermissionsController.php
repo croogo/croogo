@@ -121,7 +121,7 @@ class PermissionsController extends AppController
      *
      * @param int $acoId
      * @param int $aroId
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function toggle($acoId, $aroId)
     {

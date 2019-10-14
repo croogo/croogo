@@ -31,7 +31,7 @@ class CroogoComposer
     /**
      * Downloads composer if it doesn't exist
      *
-     * @return boolean
+     * @return bool
      */
     public function getComposer()
     {
@@ -57,7 +57,7 @@ class CroogoComposer
     /**
      * Runs composer.phar
      *
-     * @return boolean
+     * @return bool
      */
     public function runComposer()
     {
@@ -75,7 +75,7 @@ class CroogoComposer
      * setConfig
      *
      * @param array $requires
-     * @return boolean
+     * @return bool
      */
     public function setConfig($requires = [])
     {

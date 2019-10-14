@@ -276,7 +276,7 @@ class PluginManager extends Plugin
      * Checks whether $plugin is builtin
      *
      * @param string $plugin plugin alias
-     * @return boolean true if $plugin is builtin
+     * @return bool true if $plugin is builtin
      */
     protected function _isBuiltin($plugin)
     {
@@ -397,7 +397,7 @@ class PluginManager extends Plugin
      * If yes, check if that plugin is available in plugins directory.
      *
      * @param  string $plugin plugin alias
-     * @return boolean
+     * @return bool
      */
     public function checkDependency($plugin = null)
     {
@@ -443,7 +443,7 @@ class PluginManager extends Plugin
      * If yes, check if that plugin is available in plugins directory.
      *
      * @param  string $plugin plugin alias (underscrored)
-     * @return boolean
+     * @return bool
      */
     public function checkPluginDependency($plugin = null)
     {
@@ -454,7 +454,7 @@ class PluginManager extends Plugin
      * Check if plugin is active
      *
      * @param  string $plugin Plugin name (underscored)
-     * @return boolean
+     * @return bool
      */
     public static function isActive($plugin)
     {
@@ -517,7 +517,7 @@ class PluginManager extends Plugin
      * Migrate a plugin
      *
      * @param string $plugin Plugin name
-     * @return boolean Success of the migration
+     * @return bool Success of the migration
      */
     public function migrate($plugin)
     {
@@ -688,7 +688,7 @@ class PluginManager extends Plugin
      * Activate plugin
      *
      * @param string $plugin Plugin name
-     * @return boolean true when successful, false or error message when failed
+     * @return bool true when successful, false or error message when failed
      */
     public function activate($plugin, $dependencyList = [])
     {
@@ -766,7 +766,7 @@ class PluginManager extends Plugin
      * Deactivate plugin
      *
      * @param string $plugin Plugin name
-     * @return boolean true when successful, false or error message when failed
+     * @return bool true when successful, false or error message when failed
      */
     public function deactivate($plugin)
     {
@@ -946,7 +946,7 @@ class PluginManager extends Plugin
      * Delete plugin
      *
      * @param string $plugin Plugin name
-     * @return boolean true when successful, false or array of error messages when failed
+     * @return bool true when successful, false or array of error messages when failed
      * @throws InvalidArgumentException
      */
     public function delete($plugin)
@@ -1021,7 +1021,7 @@ class PluginManager extends Plugin
      * Write Hook.bootstraps settings to database and json file
      *
      * @param array $bootstraps array of plugin aliases
-     * @return boolean
+     * @return bool
      * @throws Exception
      */
     protected function _saveBootstraps($bootstraps)
@@ -1302,7 +1302,7 @@ class PluginManager extends Plugin
              */
             $corePlugins = [
                 'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Croogo/Comments', 'Croogo/Contacts', 'Croogo/Menus', 'Croogo/Meta',
-                'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',  'Croogo/Dashboards',
+                'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor', 'Croogo/Dashboards',
             ];
             Configure::write('Core.corePlugins', $corePlugins);
         }, 'Setting base configuration');

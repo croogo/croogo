@@ -112,7 +112,7 @@ class DashboardsController extends AppController
      * Delete a dashboard
      *
      * @param int $id Dashboard id
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function delete($id = null)
     {
@@ -146,7 +146,7 @@ class DashboardsController extends AppController
      *
      * @param int $id Dashboard Id
      * @param int $step Step
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function moveup($id, $step = 1)
     {
@@ -166,7 +166,7 @@ class DashboardsController extends AppController
      *
      * @param int $id Dashboard Id
      * @param int $step Step
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function movedown($id, $step = 1)
     {

@@ -90,7 +90,6 @@ class RoleAroBehavior extends Behavior
      */
     public function findRoleHierarchy(Query $query, array $options)
     {
-
         $alias = $this->_table->getAlias();
         $primaryKey = $this->_table->getPrimaryKey();
         $this->_table->hasOne('ParentAro', [

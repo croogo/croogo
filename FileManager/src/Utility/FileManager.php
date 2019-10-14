@@ -25,7 +25,7 @@ class FileManager
      * FileManager.editablePaths
      *
      * @param string $path Path to check
-     * @return boolean true if file is editable
+     * @return bool true if file is editable
      */
     public function isEditable($path)
     {
@@ -49,7 +49,7 @@ class FileManager
      * FileManager.deletablePaths
      *
      * @param string $path Path to check
-     * @return boolean true when file is deletable
+     * @return bool true when file is deletable
      */
     public function isDeletable($path)
     {
@@ -89,7 +89,7 @@ class FileManager
      *
      * @param string $referencePath Reference path
      * @param string $pathToCheck Path to check
-     * @return boolean True if $pathToCheck resides under $referencePath
+     * @return bool True if $pathToCheck resides under $referencePath
      */
     protected function _isWithinPath($referencePath, $pathToCheck)
     {

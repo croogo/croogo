@@ -30,6 +30,10 @@ class NodesController extends AppController
      */
     public $presetVars = true;
 
+    /**
+     * @return void
+     * @throws \Exception
+     */
     public function initialize()
     {
         parent::initialize();
@@ -121,7 +125,7 @@ class NodesController extends AppController
     /**
      * Term
      *
-     * @return null|\Cake\Network\Response
+     * @return void|\Cake\Network\Response
      *
      * @access public
      */
@@ -249,7 +253,6 @@ class NodesController extends AppController
      */
     public function promoted()
     {
-
         $query = $this->Nodes
             ->find('published')
             ->find('promoted')
@@ -321,7 +324,7 @@ class NodesController extends AppController
      *
      * @param int $id The id of the node to view
      *
-     * @return null|\Cake\Network\Response
+     * @return void|\Cake\Network\Response
      *
      * @access public
      */

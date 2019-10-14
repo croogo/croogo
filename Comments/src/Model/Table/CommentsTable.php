@@ -76,7 +76,7 @@ class CommentsTable extends CroogoTable
 
     /**
      * @param \Cake\Validation\Validator $validator Validator object
-     * @return void
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator)
     {
@@ -158,7 +158,7 @@ class CommentsTable extends CroogoTable
      *
      * @param int $commentId comment id
      * @param int $model node id
-     * @return boolean true if comment is approved
+     * @return bool true if comment is approved
      */
     public function isApproved($commentId, $model, $foreignKey)
     {
@@ -173,7 +173,7 @@ class CommentsTable extends CroogoTable
     /**
      * Checks wether comment is within valid level range
      *
-     * @return boolean
+     * @return bool
      * @throws NotFoundException
      */
     public function isValidLevel($commentId)

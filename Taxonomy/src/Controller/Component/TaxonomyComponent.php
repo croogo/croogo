@@ -265,8 +265,7 @@ class TaxonomyComponent extends Component
      * Check that Term exists
      *
      * @param int $id Id
-     * @param string $url Redirect Url
-     * @return bool True if Term exists
+     * @return void
      */
     public function ensureTermExists($id)
     {
@@ -283,7 +282,7 @@ class TaxonomyComponent extends Component
      *
      * @param int $termId Term Id
      * @param int $vocabularyId Vocabulary Id
-     * @return bool True if Taxonomy exists
+     * @return void
      */
     public function ensureTaxonomyExists($termId, $vocabularyId)
     {
@@ -300,8 +299,7 @@ class TaxonomyComponent extends Component
      * Checks that Vocabulary exists
      *
      * @param int $vocabularyId Id
-     * @param string $url Redirect Url
-     * @return bool True if Vocabulary exists
+     * @return void
      */
     public function ensureVocabularyIdExists($vocabularyId)
     {

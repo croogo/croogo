@@ -280,7 +280,6 @@ class StringConverterTest extends CroogoTestCase
 
     public function testUrlToLinkStringWithQueryStringAndNamedArgs()
     {
-
         $url = [
             'controller' => 'contacts',
             'action' => 'view',

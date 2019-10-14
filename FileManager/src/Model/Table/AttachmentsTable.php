@@ -114,7 +114,6 @@ class AttachmentsTable extends CroogoTable
      */
     public function findDuplicate(Query $query, array $options)
     {
-
         if (empty($options['hash'])) {
             return $query;
         }

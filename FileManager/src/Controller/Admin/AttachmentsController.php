@@ -3,6 +3,7 @@
 namespace Croogo\FileManager\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\Http\Response;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
@@ -270,7 +271,7 @@ class AttachmentsController extends AppController
      * Admin edit
      *
      * @param int $id
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function edit($id = null)
@@ -316,7 +317,7 @@ class AttachmentsController extends AppController
      * Admin delete
      *
      * @param int $id
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function delete($id = null)

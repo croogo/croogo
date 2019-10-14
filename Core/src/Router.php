@@ -67,7 +67,7 @@ class Router extends CakeRouter
      *
      * @see Request::addDetector()
      * @param $request Request Request object
-     * @return boolean True when request is from a whitelisted IP Address
+     * @return bool True when request is from a whitelisted IP Address
      */
     public static function isWhitelistedRequest(ServerRequest $request)
     {
@@ -183,7 +183,7 @@ class Router extends CakeRouter
     {
         $plugin = $request->getParam('plugin');
         $prefix = $request->getParam('prefix');
-        $val  = $plugin ? $plugin . '.' : null;
+        $val = $plugin ? $plugin . '.' : null;
         $val .= $prefix ? Inflector::camelize($prefix) . '/' : null;
         $val .= $request->getParam('controller') . '/' . $request->getParam('action');
         if ($encode) {

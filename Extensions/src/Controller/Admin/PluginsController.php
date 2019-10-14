@@ -61,7 +61,7 @@ class PluginsController extends AppController
     /**
      * Admin add
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function add()
     {
@@ -89,7 +89,7 @@ class PluginsController extends AppController
     /**
      * Admin delete
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function delete($id)
     {
@@ -120,7 +120,7 @@ class PluginsController extends AppController
     /**
      * Admin toggle
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function toggle()
     {
@@ -163,7 +163,7 @@ class PluginsController extends AppController
     /**
      * Migrate a plugin (database)
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      */
     public function migrate()
     {

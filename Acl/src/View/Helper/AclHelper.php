@@ -68,7 +68,7 @@ class AclHelper extends Helper
      *
      * @param int $userId User Id
      * @param array|string $url link/url to check
-     * @return boolean
+     * @return bool
      */
     public function linkIsAllowedByUserId($userId, $url)
     {

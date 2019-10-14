@@ -75,7 +75,7 @@ class FileManagerController extends AppController
     /**
      * Admin index
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function index()
@@ -119,7 +119,7 @@ class FileManagerController extends AppController
     /**
      * Admin edit file
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function editFile()
@@ -156,7 +156,7 @@ class FileManagerController extends AppController
     /**
      * Admin upload
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function upload()
@@ -188,7 +188,7 @@ class FileManagerController extends AppController
     /**
      * Admin Delete File
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function deleteFile()
@@ -223,7 +223,7 @@ class FileManagerController extends AppController
     /**
      * Admin Delete Directory
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function deleteDirectory()
@@ -258,7 +258,7 @@ class FileManagerController extends AppController
     /**
      * Rename a file or directory
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function rename()
@@ -315,7 +315,7 @@ class FileManagerController extends AppController
     /**
      * Admin Create Directory
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function createDirectory()
@@ -350,7 +350,7 @@ class FileManagerController extends AppController
     /**
      * Admin Create File
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function createFile()
