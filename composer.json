@@ -101,7 +101,13 @@
         "post-autoload-dump": [
             "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
             "Croogo\\Install\\ComposerInstaller::postAutoloadDump"
-        ]
+        ],
+        "cs-check": "phpcs",
+        "cs-check-changed": "files=$(git ls-files -om --exclude-standard); phpcs $files;",
+        "cs-check-branch": "files=$(git diff Development... --name-only --diff-filter=d); phpcs $files;",
+        "cs-fix": "phpcbf",
+        "cs-fix-changed": "files=$(git ls-files -om --exclude-standard); phpcbf $files;",
+        "cs-fix-branch": "files=$(git diff Development... --name-only --diff-filter=d); phpcbf $files;"
     },
     "suggest": {
         "admad/cakephp-jwt-auth": "CakePHP JWT Authenticate plugin",
