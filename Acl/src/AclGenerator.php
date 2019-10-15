@@ -34,7 +34,7 @@ class AclGenerator extends AclExtras
 
     /**
      * @param string $msg
-     * @return void
+     * @return string|void
      */
     public function out($msg)
     {
@@ -42,7 +42,7 @@ class AclGenerator extends AclExtras
             $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
         }
 
-if (isset($this->Shell) || isset($this->controller)) {
+        if (isset($this->Shell) || isset($this->controller)) {
             return parent::out($msg);
         } else {
             \Cake\Log\Log::warning($msg);

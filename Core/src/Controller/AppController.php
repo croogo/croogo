@@ -5,12 +5,9 @@ namespace Croogo\Core\Controller;
 use Cake\Controller\Exception\MissingActionException;
 use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
-use Cake\Http\ServerRequest;
-use Cake\Http\Response;
 use Cake\Event\Event;
-use Cake\Utility\Hash;
-
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\View\Exception\MissingTemplateException;
 use Croogo\Core\Croogo;
 
@@ -68,7 +65,8 @@ class AppController extends \App\Controller\AppController implements HookableCom
                 'callback' => ['Croogo\\Core\\Router', 'isApiRequest'],
             ]);
             $request->addDetector('whitelisted', [
-                'Croogo\\Core\\Router', 'isWhitelistedRequest',
+                'Croogo\\Core\\Router',
+                'isWhitelistedRequest',
             ]);
         }
     }

@@ -1,8 +1,9 @@
 <?php
+
 namespace Croogo\Core\Test\TestCase\View\Helper;
 
-use Cake\Http\ServerRequest;
 use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
 use Cake\View\Helper;
 use Cake\View\View;

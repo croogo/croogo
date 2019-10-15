@@ -203,8 +203,8 @@ class CroogoFormHelper extends FormHelper
     /**
      * Returns an HTML FORM element.
      *
-     * @see FormHelper::create()
      * @return string A formatted opening FORM tag
+     * @see FormHelper::create()
      */
     public function create($model = null, array $options = [])
     {
@@ -242,7 +242,7 @@ class CroogoFormHelper extends FormHelper
     {
         $displayKey = $displayValue = null;
         $request = $this->getView()->getRequest();
-        list( , $table) = pluginSplit($this->context()->entity()->getSource());
+        list(, $table) = pluginSplit($this->context()->entity()->getSource());
         if (isset($request->getData($table)[$field])) {
             $displayKey = $request->getData($table)[$field];
         }

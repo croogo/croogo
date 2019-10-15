@@ -182,7 +182,7 @@ class CookieAuthenticate extends BaseAuthenticate
      */
     public function authenticate(ServerRequest $request, Response $response)
     {
-        if ($request->getData()|| $request->is('post')) {
+        if ($request->getData() || $request->is('post')) {
             return false;
         }
 

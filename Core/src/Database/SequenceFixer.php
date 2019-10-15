@@ -53,7 +53,7 @@ class SequenceFixer
                 )
             )->fetch('assoc');
 
-            $nextValue = empty($nextValue['max']) ? 1 :  $nextValue['max'] + 1;
+            $nextValue = empty($nextValue['max']) ? 1 : $nextValue['max'] + 1;
 
             preg_match_all("/'(.*)'/", $column['column_default'], $matches);
             $sequenceName = $matches[1][0];

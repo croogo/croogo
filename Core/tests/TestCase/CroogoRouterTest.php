@@ -7,7 +7,6 @@ use Cake\Core\Configure;
 use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Router;
-use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\TestCase;
 
 class CroogoRouterTest extends TestCase

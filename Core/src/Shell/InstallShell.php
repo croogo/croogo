@@ -2,8 +2,10 @@
 
 namespace Croogo\Core\Shell;
 
+use Cake\Console\ConsoleIo;
 use Cake\Console\Exception\ConsoleException;
 use Cake\Core\Exception\Exception;
+use Cake\ORM\Locator\LocatorInterface;
 use Cake\Utility\Inflector;
 use Croogo\Core\PluginManager;
 use Croogo\Core\Shell\CroogoAppShell;
@@ -58,11 +60,10 @@ class InstallShell extends AppShell
     /**
      * Init ExtensionsInstaller, CroogoPlugin, CroogoTheme
      *
-     * @param type $stdout
-     * @param type $stderr
-     * @param type $stdin
+     * @param ConsoleIo $io
+     * @param LocatorInterface $locator
      */
-    public function __construct($io = null, $locator = null)
+    public function __construct(ConsoleIo $io = null, LocatorInterface $locator = null)
     {
         parent::__construct($io, $locator);
         $this->_ExtensionsInstaller = new ExtensionsInstaller();

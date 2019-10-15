@@ -2,9 +2,9 @@
 
 namespace Croogo\Acl\Controller\Component;
 
-use Cake\Core\Configure;
 use Cake\Controller\Component;
 use Cake\Controller\Component\AuthComponent;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
@@ -186,7 +186,9 @@ class FilterComponent extends Component
         if (!empty($config['Auth']) && is_array($config['Auth'])) {
             $isAdminRequest = !empty($this->_controller->request->getParam('admin'));
             $authActions = [
-                'loginAction', 'loginRedirect', 'logoutRedirect',
+                'loginAction',
+                'loginRedirect',
+                'logoutRedirect',
                 'unauthorizedRedirect',
             ];
             foreach ($config['Auth'] as $property => $value) {

@@ -213,7 +213,7 @@ class TaxonomizableBehavior extends Behavior
      *
      * @param Cake\ORM\Entity $entity Entity
      * @param int $vocabularyId Vocabulary Id
-     * @param String|int $taxonomyId Taxonomy ID
+     * @param string $taxonomyId Taxonomy ID
      * @return \Croogo\Taxonomy\Model\Entity\Term
      */
     private function findOrCreateTerm(Entity $entity, int $vocabularyId, $taxonomyId)

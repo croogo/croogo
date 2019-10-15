@@ -28,5 +28,4 @@ class InstallMiddleware
 
         return $next($request, $response);
     }
-
 }

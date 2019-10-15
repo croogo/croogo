@@ -3,15 +3,14 @@
 namespace Croogo\Core\TestSuite;
 
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Datasource\EntityInterface;
 use Cake\Network\Request;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
-use Croogo\Core\PluginManager;
 use Croogo\Core\Event\EventManager;
 use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\Constraint\EntityHasProperty;
 use PHPUnit_Util_InvalidArgumentHelper;
 
@@ -114,7 +113,11 @@ class IntegrationTestCase extends CakeIntegrationTestCase
      */
     public function assertFlash($expected, $key = 'flash', $index = 0, $message = '')
     {
-        $this->assertSession($expected, 'Flash.' . $key . '.' . $index . '.message', 'Flash message did not match. ' . $message);
+        $this->assertSession(
+            $expected,
+            'Flash.' . $key . '.' . $index . '.message',
+            'Flash message did not match. ' . $message
+        );
     }
 
     public function assertEntityHasProperty($propertyName, EntityInterface $entity, $message = '')
