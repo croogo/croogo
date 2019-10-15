@@ -3,11 +3,11 @@
 namespace Croogo\Core\TestSuite;
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\ORM\Query;
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Croogo\Core\Event\EventManager;
-use Croogo\Core\Plugin;
 use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\Constraint\QueryCount;
 use PHPUnit_Util_InvalidArgumentHelper;
