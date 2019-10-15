@@ -550,7 +550,7 @@ class PluginManager extends Plugin
         try {
             return $this->_getMigrations()
                 ->migrate($options);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->migrationErrors[] = $e->getMessage();
         }
     }
