@@ -34,7 +34,7 @@ class MessagesController extends AppController
     /**
      * Admin process
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function process()

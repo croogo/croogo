@@ -43,7 +43,7 @@ class SettingsController extends AppController
      * Admin prefix
      *
      * @param string $prefix
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function prefix($prefix = null)
@@ -129,7 +129,7 @@ class SettingsController extends AppController
      *
      * @param int $id
      * @param int $step
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function moveup($id, $step = 1)
@@ -157,7 +157,7 @@ class SettingsController extends AppController
      *
      * @param int $id
      * @param int $step
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function movedown($id, $step = 1)

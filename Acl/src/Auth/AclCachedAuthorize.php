@@ -71,6 +71,7 @@ class AclCachedAuthorize extends BaseAuthorize
             }
             $this->_adminRole = $Role->byAlias('superadmin');
         }
+
         return $user['role_id'] == $this->_adminRole;
     }
 
@@ -103,6 +104,7 @@ class AclCachedAuthorize extends BaseAuthorize
             $this->config('actionPath') . $path
         );
         $path = str_replace('//', '/', $path);
+
         return trim($path, '/');
     }
 
@@ -169,7 +171,6 @@ class AclCachedAuthorize extends BaseAuthorize
             // collect id from actions such as: Nodes/admin_edit/1
             $ids[] = $request->param('pass.0');
         } elseif ($request->is('post') || $request->is('put')) {
-
             $action = $request->getData('action');
             if ($action) {
                 // collect ids from 'bulk' processing action
@@ -212,7 +213,8 @@ class AclCachedAuthorize extends BaseAuthorize
     protected function _authorizeByContent($user, ServerRequest $request, $id)
     {
         if (!isset($this->config('actionMap')[$request->params['action']])) {
-            $message = __d('croogo',
+            $message = __d(
+                'croogo',
                 '_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
                 $request->action,
                 $request->controller
@@ -256,6 +258,7 @@ class AclCachedAuthorize extends BaseAuthorize
             $cached = $hit ? ' (cache hit)' : ' (cache miss)';
             Log::write(LOG_ERR, $user['username'] . ' - ' . $action . '/' . $id . $status . $cached);
         }
+
         return $allowed;
     }
 }

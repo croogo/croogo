@@ -83,9 +83,8 @@ class CommentableBehavior extends Behavior
     /**
      * Get Comment settings from Type
      *
-     * @param Model Model instance
-     * @param array $data Model data to check
-     * @return bool
+     * @param Node $node Model data to check
+     * @return array
      */
     public function getTypeSetting(Node $node)
     {

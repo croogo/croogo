@@ -56,7 +56,7 @@ class DashboardsConfigReader extends PhpConfig implements ConfigEngineInterface
      *
      * @param string $key The identifier to write to.
      * @param array $data The data to dump.
-     * @return bool True on success or false on failure.
+     * @return void True on success or false on failure.
      */
     public function dump($key, array $data)
     {

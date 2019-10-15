@@ -126,8 +126,10 @@ class CookieAuthenticate extends BaseAuthenticate
         $user = $this->_findUser($data[$username]);
         if ($user) {
             $this->_registry->Auth->setUser($user);
+
             return $user;
         }
+
         return false;
     }
 
@@ -169,6 +171,7 @@ class CookieAuthenticate extends BaseAuthenticate
         ) {
             unset($user[$fields['password']]);
         }
+
         return $user;
     }
 
@@ -182,7 +185,7 @@ class CookieAuthenticate extends BaseAuthenticate
         if ($request->getData()|| $request->is('post')) {
             return false;
         }
+
         return $this->getUser($request);
     }
-
 }

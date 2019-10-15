@@ -5,23 +5,6 @@ use Croogo\TestSuite\CroogoTestCase;
 use Menus\Model\Menu;
 use Menus\Model\MenusAppModel;
 
-//phpcs:disable
-/**
- * TestMenu
- *
- */
-class TestMenu extends Menu
-{
-
-    /**
-     * model alias
-     *
-     * @var string
-     */
-    public $alias = 'Menu';
-}
-//phpcs:enable
-
 /**
  * TestUser
  *
@@ -119,3 +102,21 @@ class MenuTest extends CroogoTestCase
         $this->assertEquals($expected, $links);
     }
 }
+
+//phpcs:disable
+
+/**
+ * TestMenu
+ *
+ */
+class TestMenu extends Menu
+{
+
+    /**
+     * model alias
+     *
+     * @var string
+     */
+    public $alias = 'Menu';
+}
+//phpcs:enable

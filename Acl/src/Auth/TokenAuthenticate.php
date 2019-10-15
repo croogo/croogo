@@ -87,6 +87,7 @@ class TokenAuthenticate extends BaseAuthenticate
             $response->statusCode(401);
             $response->send();
         }
+
         return $user;
     }
 
@@ -106,8 +107,10 @@ class TokenAuthenticate extends BaseAuthenticate
         }
         if (!empty($this->settings['parameter']) && !empty($request->query[$this->settings['parameter']])) {
             $token = $request->query[$this->settings['parameter']];
+
             return $this->_findUser($token);
         }
+
         return false;
     }
 
@@ -116,7 +119,7 @@ class TokenAuthenticate extends BaseAuthenticate
      *
      * @param string $username The token identifier.
      * @param string $password Unused password.
-     * @return Mixed Either false on failure, or an array of user data.
+     * @return array|bool Either false on failure, or an array of user data.
      */
     protected function _findUser($username, $password = null)
     {
@@ -141,6 +144,7 @@ class TokenAuthenticate extends BaseAuthenticate
         $user = $result[$model];
         unset($user[$fields['password']]);
         unset($result[$model]);
+
         return array_merge($user, $result);
     }
 }

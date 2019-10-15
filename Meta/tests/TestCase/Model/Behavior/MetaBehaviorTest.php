@@ -36,22 +36,22 @@ class MetaBehaviorTest extends CroogoTestCase
 
     public $Node = null;
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
         $this->Node = ClassRegistry::init('Nodes.Node');
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();

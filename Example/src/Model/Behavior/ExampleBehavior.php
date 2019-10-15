@@ -22,14 +22,12 @@ class ExampleBehavior extends Behavior
     /**
      * afterFind callback
      *
-     * @param Model $event
+     * @param Event $event
      * @param array $query
-     * @param bool $primary
      * @return array
      */
     public function beforeFind(Event $event, Query $query)
     {
-
         $query->formatResults(function ($results) {
             return $results->map(function ($result) {
                 if ($result instanceof Entity) {

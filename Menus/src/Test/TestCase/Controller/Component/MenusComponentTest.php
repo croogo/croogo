@@ -5,30 +5,6 @@ namespace Croogo\Menus\Test\TestCase\Controller\Component;
 use Cake\Controller\Controller;
 use Croogo\TestSuite\CroogoControllerTestCase;
 
-//phpcs:disable
-class MenusTestController extends Controller
-{
-
-    public $components = [
-        'Auth',
-        'Session',
-        'Croogo.Croogo',
-        'Blocks.Blocks',
-        'Menus.Menus',
-    ];
-
-    public function beforeFilter()
-    {
-        $this->Auth->allow('index');
-        parent::beforeFilter();
-    }
-
-    public function index()
-    {
-    }
-}
-//phpcs:enable
-
 class MenusComponentTest extends CroogoControllerTestCase
 {
 
@@ -92,3 +68,27 @@ class MenusComponentTest extends CroogoControllerTestCase
         $this->controller->Session->delete('Auth');
     }
 }
+
+//phpcs:disable
+class MenusTestController extends Controller
+{
+
+    public $components = [
+        'Auth',
+        'Session',
+        'Croogo.Croogo',
+        'Blocks.Blocks',
+        'Menus.Menus',
+    ];
+
+    public function beforeFilter()
+    {
+        $this->Auth->allow('index');
+        parent::beforeFilter();
+    }
+
+    public function index()
+    {
+    }
+}
+//phpcs:enable

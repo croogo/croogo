@@ -3,8 +3,8 @@
 namespace Croogo\Extensions;
 
 use Cake\Core\BasePlugin;
-use Cake\Core\Plugin as CakePlugin;
 use Cake\Core\PluginApplicationInterface;
+use Cake\Core\Plugin as CakePlugin;
 
 class Plugin extends BasePlugin
 {

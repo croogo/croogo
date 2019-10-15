@@ -41,15 +41,14 @@ class CommentsController extends AppController
     /**
      * index
      *
-     * @return void
+     * @return \Cake\Http\Response|void
      * @access public
      */
     public function index()
     {
         $this->set('title_for_layout', __d('croogo', 'Comments'));
 
-        if (!isset($this->request['_ext']) ||
-            $this->request['_ext'] != 'rss') {
+        if ($this->request->getParam('_ext') != 'rss') {
             return $this->redirect('/');
         }
 
@@ -57,7 +56,7 @@ class CommentsController extends AppController
         $this->paginate = [
             'contain' => ['Nodes', 'Users'],
             'conditions' => [
-                $this->Comments->aliasField('status') .' IN' => $this->Comments->status($roleId, 'approval'),
+                $this->Comments->aliasField('status') . ' IN' => $this->Comments->status($roleId, 'approval'),
             ],
             'order' => [
                 'weight' => 'DESC',

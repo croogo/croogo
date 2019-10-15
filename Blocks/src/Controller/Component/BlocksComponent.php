@@ -110,7 +110,7 @@ class BlocksComponent extends Component
             $cacheKey = $regionAlias . '_' . $roleId;
             $this->blocksForLayout[$regionAlias] = [];
 
-            $visibilityCachePrefix = 'visibility_' .  $slug . '_' . $cacheKey;
+            $visibilityCachePrefix = 'visibility_' . $slug . '_' . $cacheKey;
             $blocks = Cache::read($visibilityCachePrefix, 'croogo_blocks');
             if ($blocks === false) {
                 $blocks = $this->Blocks->find('regionPublished', [

@@ -39,7 +39,7 @@ class DashboardsEventHandler implements EventListenerInterface
         foreach ($plugins as $plugin) {
             $file = Plugin::path($plugin) . $config;
             if (file_exists($file)) {
-                Configure::load($plugin .'.' . 'admin_dashboard', 'dashboards');
+                Configure::load($plugin . '.' . 'admin_dashboard', 'dashboards');
             }
         }
     }

@@ -4,20 +4,10 @@ namespace Croogo\Menus\Test\TestCase\View\Helper;
 
 use App\Controller\Component\SessionComponent;
 use Cake\Controller\Controller;
-use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\TestCase;
 use Menus\View\Helper\MenusHelper;
 
-//phpcs:disable
-class TheMenuTestController extends Controller
-{
-
-    public $name = 'TheTest';
-
-    public $uses = null;
-}
-//phpcs:enable
-
-class MenusHelperTest extends CroogoTestCase
+class MenusHelperTest extends TestCase
 {
 
     public $fixtures = [
@@ -74,3 +64,13 @@ class MenusHelperTest extends CroogoTestCase
         $this->assertContains('class="menu"', $content);
     }
 }
+
+//phpcs:disable
+class TheMenuTestController extends Controller
+{
+
+    public $name = 'TheTest';
+
+    public $uses = null;
+}
+//phpcs:enable

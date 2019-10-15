@@ -17,11 +17,6 @@ use Croogo\Acl\AclGenerator;
  */
 class CroogoShell extends AppShell
 {
-
-    public $tasks = [
-        'Croogo/Core.Upgrade',
-    ];
-
     /**
      * Display help/options
      */
@@ -29,10 +24,6 @@ class CroogoShell extends AppShell
     {
         $parser = parent::getOptionParser();
         $parser->description(__d('croogo', 'Croogo Utilities'))
-            ->addSubCommand('upgrade', [
-                'help' => __d('croogo', 'Upgrade Croogo'),
-                'parser' => $this->Upgrade->getOptionParser(),
-            ])
             ->addSubcommand('password', [
                 'help' => 'Get hashed password',
                 'parser' => [

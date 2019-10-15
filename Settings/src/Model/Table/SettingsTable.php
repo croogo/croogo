@@ -94,7 +94,6 @@ class SettingsTable extends CroogoTable
      */
     public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-
         $this->getConnection()->getDriver()->enableAutoQuoting(false);
         if ($entity->key == 'Access Control.rowLevel') {
             if ($entity->value == true && $entity->_original['value'] == false) {

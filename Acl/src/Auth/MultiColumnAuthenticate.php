@@ -64,9 +64,9 @@ class MultiColumnAuthenticate extends FormAuthenticate
     /**
      * Find a user record using the standard options.
      *
-     * @param string $username The username/identifier.
+     * @param string $conditions The username/identifier.
      * @param string $password The unhashed password.
-     * @return Mixed Either false on failure, or an array of user data.
+     * @return bool|array Either false on failure, or an array of user data.
      */
     protected function _findUser($conditions, $password = null)
     {
@@ -99,6 +99,7 @@ class MultiColumnAuthenticate extends FormAuthenticate
             return false;
         }
         unset($result[$model][$fields['password']]);
+
         return $result[$model];
     }
 }
