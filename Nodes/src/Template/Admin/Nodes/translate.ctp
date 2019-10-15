@@ -1,19 +1,19 @@
 <?php
 $this->Croogo->adminScript('Nodes.admin');
 if (Configure::read('Writing.wysiwyg')) {
-    $this->Html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
-    $this->Html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));
+    $this->Html->scriptBlock($tinymce->fileBrowserCallBack(), ['inline' => false]);
+    $this->Html->scriptBlock($tinymce->init('NodeBody'), ['inline' => false]);
 }
 ?>
 <div class="nodes form">
     <h2><?= $title_for_layout ?></h2>
 
     <?php
-        echo $this->Form->create('Node', array('url' => array(
+        echo $this->Form->create('Node', ['url' => [
             'action' => 'translate',
             'locale' => $this->getRequest()->getQuery('locale'),
-        )));
-    ?>
+        ]]);
+        ?>
     <fieldset>
         <div class="tabs">
             <ul>
@@ -22,9 +22,9 @@ if (Configure::read('Writing.wysiwyg')) {
 
             <div id="node-main">
             <?php
-                foreach ($fields as $field) {
-                    echo $this->Form->input('Node.' . $field);
-                }
+            foreach ($fields as $field) {
+                echo $this->Form->input('Node.' . $field);
+            }
             ?>
             </div>
         </div>

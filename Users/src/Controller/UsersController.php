@@ -2,10 +2,7 @@
 
 namespace Croogo\Users\Controller;
 
-use Cake\Network\Email\Email;
-use Cake\Network\Exception\SocketException;
 use Croogo\Core\Croogo;
-use Cake\Core\Configure;
 use Croogo\Users\Model\Table\UsersTable;
 
 /**
@@ -31,23 +28,23 @@ class UsersController extends AppController
         $this->Auth->allow(['logout']);
     }
 
-/**
- * Index
- *
- * @return void
- * @access public
- */
+    /**
+     * Index
+     *
+     * @return void
+     * @access public
+     */
     public function index()
     {
         $this->set('title_for_layout', __d('croogo', 'Users'));
     }
 
-/**
- * Add
- *
- * @return void
- * @access public
- */
+    /**
+     * Add
+     *
+     * @return void
+     * @access public
+     */
     public function add()
     {
         $user = $this->Users->newEntity();
@@ -70,14 +67,14 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'login']);
     }
 
-/**
- * Activate
- *
- * @param string $username
- * @param string $key
- * @return void
- * @access public
- */
+    /**
+     * Activate
+     *
+     * @param string $username
+     * @param string $activationKey
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function activate($username, $activationKey)
     {
         // Get the user with the activation key from the database
@@ -107,22 +104,22 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'login']);
     }
 
-/**
- * Edit
- *
- * @return void
- * @access public
- */
+    /**
+     * Edit
+     *
+     * @return void
+     * @access public
+     */
     public function edit()
     {
     }
 
-/**
- * Forgot
- *
- * @return void
- * @access public
- */
+    /**
+     * Forgot
+     *
+     * @return void
+     * @access public
+     */
     public function forgot()
     {
         if (!$this->getRequest()->is('post')) {
@@ -140,6 +137,7 @@ class UsersController extends AppController
 
         if (empty($user->email)) {
             $this->Flash->error(__d('croogo', 'Invalid email.'));
+
             return;
         }
 
@@ -158,14 +156,14 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'login']);
     }
 
-/**
- * Reset
- *
- * @param string $username
- * @param string $activationKey
- * @return void
- * @access public
- */
+    /**
+     * Reset
+     *
+     * @param string $username
+     * @param string $activationKey
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function reset($username, $activationKey)
     {
         // Get the user with the activation key from the database
@@ -201,12 +199,12 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'login']);
     }
 
-/**
- * Login
- *
- * @return boolean
- * @access public
- */
+    /**
+     * Login
+     *
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function login()
     {
         $session = $this->getRequest()->session();
@@ -215,6 +213,7 @@ class UsersController extends AppController
             if ($redirectUrl != '/' && !$session->check('Croogo.redirect')) {
                 $session->write('Croogo.redirect', $redirectUrl);
             }
+
             return;
         }
 
@@ -240,6 +239,7 @@ class UsersController extends AppController
             Croogo::dispatchEvent('Controller.Users.loginFailure', $this);
             $this->Auth->config('authError', __d('croogo', 'Authorization error'));
             $this->Flash->error($this->Auth->config('authError'));
+
             return $this->redirect($this->Auth->loginRedirect);
         }
 
@@ -250,11 +250,11 @@ class UsersController extends AppController
         return $this->redirect($redirectUrl);
     }
 
-/**
- * Logout
- *
- * @access public
- */
+    /**
+     * Logout
+     *
+     * @access public
+     */
     public function logout()
     {
         Croogo::dispatchEvent('Controller.Users.beforeLogout', $this);
@@ -264,16 +264,17 @@ class UsersController extends AppController
 
         $logoutUrl = $this->Auth->logout();
         Croogo::dispatchEvent('Controller.Users.afterLogout', $this);
+
         return $this->redirect($logoutUrl);
     }
 
-/**
- * View
- *
- * @param string $username
- * @return void
- * @access public
- */
+    /**
+     * View
+     *
+     * @param string $username
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function view($username = null)
     {
         if ($username == null) {
@@ -282,6 +283,7 @@ class UsersController extends AppController
         $user = $this->User->findByUsername($username);
         if (!isset($user['User']['id'])) {
             $this->Flash->error(__d('croogo', 'Invalid User.'));
+
             return $this->redirect('/');
         }
 

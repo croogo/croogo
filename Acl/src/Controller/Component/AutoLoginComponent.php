@@ -90,6 +90,7 @@ class AutoLoginComponent extends Component
         ]);
 
         $mac = hash_hmac('sha256', $data, Configure::read('Security.salt'));
+
         return compact('mac', 'data');
     }
 
@@ -110,6 +111,7 @@ class AutoLoginComponent extends Component
             $data = $this->_cookie($request);
             $this->_registry->Cookie->write($this->getConfig('cookieName'), $data);
         }
+
         return true;
     }
 
@@ -121,7 +123,7 @@ class AutoLoginComponent extends Component
     public function onAdminLogoutSuccessful($event)
     {
         $this->_registry->Cookie->delete($this->getConfig('cookieName'));
+
         return true;
     }
-
 }

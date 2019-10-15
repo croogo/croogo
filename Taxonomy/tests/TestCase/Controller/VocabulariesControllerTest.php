@@ -10,9 +10,9 @@ use Taxonomy\Controller\VocabulariesController;
 class VocabulariesControllerTest extends CroogoControllerTestCase
 {
 
-/**
- * fixtures
- */
+    /**
+     * fixtures
+     */
     public $fixtures = [
         'plugin.Croogo/Users.Aco',
         'plugin.Croogo/Users.Aro',
@@ -39,11 +39,11 @@ class VocabulariesControllerTest extends CroogoControllerTestCase
         'plugin.Croogo/Taxonomy.Vocabulary',
     ];
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -65,33 +65,33 @@ class VocabulariesControllerTest extends CroogoControllerTestCase
             ->will($this->returnCallback([$this, 'authUserCallback']));
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->VocabulariesController);
     }
 
-/**
- * testAdminIndex
- *
- * @return void
- */
+    /**
+     * testAdminIndex
+     *
+     * @return void
+     */
     public function testAdminIndex()
     {
         $this->testAction('/admin/taxonomy/vocabularies/index');
         $this->assertNotEmpty($this->vars['vocabularies']);
     }
 
-/**
- * testAdminAdd
- *
- * @return void
- */
+    /**
+     * testAdminAdd
+     *
+     * @return void
+     */
     public function testAdminAdd()
     {
         $this->expectFlashAndRedirect('The Vocabulary has been saved');
@@ -107,11 +107,11 @@ class VocabulariesControllerTest extends CroogoControllerTestCase
         $this->assertEqual($newVocabulary['Vocabulary']['title'], 'New Vocabulary');
     }
 
-/**
- * testAdminEdit
- *
- * @return void
- */
+    /**
+     * testAdminEdit
+     *
+     * @return void
+     */
     public function testAdminEdit()
     {
         $this->expectFlashAndRedirect('The Vocabulary has been saved');
@@ -127,11 +127,11 @@ class VocabulariesControllerTest extends CroogoControllerTestCase
         $this->assertEquals('Categories [modified]', $categories['Vocabulary']['title']);
     }
 
-/**
- * testAdminDelete
- *
- * @return void
- */
+    /**
+     * testAdminDelete
+     *
+     * @return void
+     */
     public function testAdminDelete()
     {
         $this->expectFlashAndRedirect('Vocabulary deleted');
@@ -142,11 +142,11 @@ class VocabulariesControllerTest extends CroogoControllerTestCase
         $this->assertFalse($hasAny);
     }
 
-/**
- * testAdminMoveup
- *
- * @return void
- */
+    /**
+     * testAdminMoveup
+     *
+     * @return void
+     */
     public function testAdminMoveup()
     {
         $this->expectFlashAndRedirect('Moved up successfully');
@@ -165,11 +165,11 @@ class VocabulariesControllerTest extends CroogoControllerTestCase
         $this->assertEqual($vocabularies, $expected);
     }
 
-/**
- * testAdminMovedown
- *
- * @return void
- */
+    /**
+     * testAdminMovedown
+     *
+     * @return void
+     */
     public function testAdminMovedown()
     {
         $this->expectFlashAndRedirect('Moved down successfully');

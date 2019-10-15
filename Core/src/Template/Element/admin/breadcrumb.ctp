@@ -1,6 +1,5 @@
 <?php
-if (!empty($this->Breadcrumbs->getCrumbs()))
-{
+if (!empty($this->Breadcrumbs->getCrumbs())) {
     $this->Breadcrumbs->setTemplates([
         'item' => '<li class="breadcrumb-item" {{attrs}}><a href="{{url}}"{{innerAttrs}}>{{title}}</a></li>{{separator}}',
         'itemWithoutLink' => '<li class="breadcrumb-item" {{attrs}}><span{{innerAttrs}}>{{title}}</span></li>{{separator}}',

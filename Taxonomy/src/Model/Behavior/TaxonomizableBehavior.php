@@ -26,6 +26,10 @@ use Croogo\Taxonomy\Model\Entity\Term;
  */
 class TaxonomizableBehavior extends Behavior
 {
+    /**
+     * @param array $config
+     * @return void
+     */
     public function initialize(array $config)
     {
         $this->_setupRelationships();
@@ -136,6 +140,7 @@ class TaxonomizableBehavior extends Behavior
 
         if (empty($type)) {
             Log::error('Type ' . $typeAlias . ' cannot be found');
+
             return true;
         }
 
@@ -208,7 +213,7 @@ class TaxonomizableBehavior extends Behavior
      *
      * @param Cake\ORM\Entity $entity Entity
      * @param int $vocabularyId Vocabulary Id
-     * @param String|int $taxonomyId Taxonomy ID
+     * @param string $taxonomyId Taxonomy ID
      * @return \Croogo\Taxonomy\Model\Entity\Term
      */
     private function findOrCreateTerm(Entity $entity, int $vocabularyId, $taxonomyId)
@@ -260,7 +265,7 @@ class TaxonomizableBehavior extends Behavior
     /**
      * beforeSave
      *
-     * @return bool
+     * @return void
      */
     public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
     {
@@ -277,6 +282,12 @@ class TaxonomizableBehavior extends Behavior
         $this->validateTaxonomyData($entity);
     }
 
+    /**
+     * @param Event $event
+     * @param Query $query
+     *
+     * @return array|Query
+     */
     public function beforeFind(Event $event, Query $query)
     {
         return $query->contain([
@@ -288,6 +299,12 @@ class TaxonomizableBehavior extends Behavior
         ]);
     }
 
+    /**
+     * @param Query $query
+     * @param array $options
+     *
+     * @return Query
+     */
     public function findWithTerm(Query $query, array $options)
     {
         if (empty($options['term'])) {
@@ -313,7 +330,7 @@ class TaxonomizableBehavior extends Behavior
 
         $query
             ->matching('Taxonomies', function (Query $q) use ($entity) {
-               return $q
+                return $q
                    ->where([
                        'term_id' => $entity->id
                    ]);
@@ -322,6 +339,12 @@ class TaxonomizableBehavior extends Behavior
         return $query;
     }
 
+    /**
+     * @param Query $query
+     * @param array $options
+     *
+     * @return Query
+     */
     public function findWithVocabulary(Query $query, array $options)
     {
         if (empty($options['vocab'])) {
@@ -347,7 +370,7 @@ class TaxonomizableBehavior extends Behavior
 
         $query
             ->matching('Taxonomies', function (Query $q) use ($entity) {
-               return $q
+                return $q
                    ->where([
                        'vocabulary_id' => $entity->id
                    ]);
@@ -355,5 +378,4 @@ class TaxonomizableBehavior extends Behavior
 
         return $query;
     }
-
 }

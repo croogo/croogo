@@ -2,11 +2,10 @@
 
 namespace Croogo\Core\Controller\Admin;
 
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Croogo\Core\Croogo;
 use Croogo\Core\Controller\AppController as CroogoAppController;
+use Croogo\Core\Croogo;
 use Crud\Controller\ControllerTrait;
 
 /**
@@ -25,11 +24,11 @@ class AppController extends CroogoAppController
 {
     use ControllerTrait;
 
-/**
- * Load the theme component with the admin theme specified
- *
- * @return void
- */
+    /**
+     * Load the theme component with the admin theme specified
+     *
+     * @return void
+     */
     public function initialize()
     {
         parent::initialize();
@@ -98,11 +97,11 @@ class AppController extends CroogoAppController
         $this->Theme->setConfig('theme', Configure::read('Site.admin_theme'));
     }
 
-/**
- * beforeFilter
- *
- * @return void
- */
+    /**
+     * beforeFilter
+     *
+     * @return void
+     */
     public function beforeFilter(Event $event)
     {
         $this->viewBuilder()->setLayout('admin');
@@ -144,9 +143,9 @@ class AppController extends CroogoAppController
             $data = $this->getRequest()->getData();
             if (isset($data['_apply'])) {
                 $entity = $subject->entity;
+
                 return $this->redirect(['action' => 'edit', $entity->id]);
             }
         }
     }
-
 }

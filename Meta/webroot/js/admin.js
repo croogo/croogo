@@ -15,7 +15,7 @@ Meta._spinner = '<i class="' + Admin.spinnerClass() + '"></i> ';
 Meta.documentReady = function () {
   Meta.addMeta();
   Meta.removeMeta();
-}
+};
 
 /**
  * add meta field
@@ -40,7 +40,7 @@ Meta.addMeta = function () {
     });
     e.preventDefault();
   });
-}
+};
 
 /**
  * remove meta field
@@ -78,7 +78,7 @@ Meta.removeMeta = function () {
     e.preventDefault();
     return false;
   });
-}
+};
 
 /**
  * document ready

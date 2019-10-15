@@ -6,6 +6,7 @@ use Cake\Controller\Component;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
+use Exception;
 
 /**
  * When "Access Control.rowLevel" Setting is active, this component will perform
@@ -40,17 +41,17 @@ use Croogo\Core\Croogo;
 class RowLevelAclComponent extends Component
 {
 
-/**
- * controller instance
- */
+    /**
+     * controller instance
+     */
     protected $_controller;
 
-/**
- * initialize
- *
- * attaches Acl and RowLevelAcl behavior to the controller's primary model and
- * hook the appropriate admin tabs
- */
+    /**
+     * initialize
+     *
+     * attaches Acl and RowLevelAcl behavior to the controller's primary model and
+     * hook the appropriate admin tabs
+     */
     public function initialize(array $settings)
     {
         $controller = $this->getController();
@@ -74,9 +75,9 @@ class RowLevelAclComponent extends Component
         }
     }
 
-/**
- * startup
- */
+    /**
+     * startup
+     */
     public function startup(Event $event)
     {
         $controller = $this->getController();
@@ -86,12 +87,12 @@ class RowLevelAclComponent extends Component
         }
     }
 
-/**
- * Retrieve a list of roles with access status for a given node
- *
- * @param int $id Node id
- * @return array
- */
+    /**
+     * Retrieve a list of roles with access status for a given node
+     *
+     * @param int $id Node id
+     * @return void
+     */
     protected function _rolePermissions($id)
     {
         $controller = $this->getController();
@@ -106,7 +107,7 @@ class RowLevelAclComponent extends Component
             $aro = ['model' => 'Roles', 'foreign_key' => $roleId];
             try {
                 $allowed = $Permission->check($aro, $aco);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $allowed = false;
             }
             $tmp[] = [
@@ -117,5 +118,4 @@ class RowLevelAclComponent extends Component
         $rolePermissions = $sorted->toArray();
         $controller->set(compact('rolePermissions'));
     }
-
 }

@@ -21,7 +21,7 @@ Attachments.confirmProcess = function (event) {
     }
   }
   return false;
-}
+};
 
 Attachments.init = function() {
   Admin.toggleRowSelection('#AttachmentsCheckAll');

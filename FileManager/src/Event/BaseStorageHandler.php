@@ -2,62 +2,69 @@
 
 namespace Croogo\FileManager\Event;
 
-use DOMDocument;
 use Cake\Core\App;
 use Cake\Log\LogTrait;
-use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
+use DOMDocument;
+use Exception;
 use InvalidArgumentException;
 
-abstract class BaseStorageHandler {
+abstract class BaseStorageHandler
+{
 
     use LogTrait;
 
     protected $_storage = null;
 
-/**
- * Instance config
- */
-    protected $_config = array();
+    /**
+     * Instance config
+     */
+    protected $_config = [];
 
-/**
- * Constructor
- */
-    public function __construct($config = array()) {
+    /**
+     * Constructor
+     */
+    public function __construct($config = [])
+    {
         $name = get_class($this);
-        $config = Hash::merge(array(
+        $config = Hash::merge([
             'alias' => $name,
             'className' => $name,
-        ), $config);
+        ], $config);
         $this->_config = $config;
         list($plugin, $storage) = pluginSplit(App::shortName($config['alias'], 'Event', 'StorageHandler'));
         $this->_storage = $storage;
 
         try {
             $this->Attachments = TableRegistry::get('Croogo/FileManager.Attachments');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->log(App::shortName(get_class($this), 'Event', 'StorageHandler') . ': ' . $e->getMessage(), LOG_CRIT);
         }
     }
 
-    protected abstract function _parentAsset($attachment);
+    abstract protected function _parentAsset($attachment);
 
-    protected function _check($event) {
+    protected function _check($event)
+    {
         if (empty($event->getData('record')['adapter'])) {
             return false;
         }
         $return = $this->_storage == $event->getData('record')['adapter'];
+
         return $return;
     }
 
-    public function storage() {
+    public function storage()
+    {
         return $this->_storage;
     }
 
-/**
- * Parse <img> tag and retrieves the value of the 'src' attribute
- */
-    protected function _pathFromHtml($html) {
+    /**
+     * Parse <img> tag and retrieves the value of the 'src' attribute
+     */
+    protected function _pathFromHtml($html)
+    {
         if (!$html) {
             return;
         }
@@ -67,15 +74,17 @@ abstract class BaseStorageHandler {
         if ($imgTags->length == 0) {
             return;
         }
+
         return $imgTags->item(0)->getAttribute('src');
     }
 
-/**
- * TODO: refactor this out and use Imagine in the future
- */
-    protected function __getImageInfo($path) {
+    /**
+     * TODO: refactor this out and use Imagine in the future
+     */
+    protected function __getImageInfo($path)
+    {
         if (!file_exists($path)) {
-            return array();
+            return [];
         }
 
         $fp = finfo_open(FILEINFO_MIME_TYPE);
@@ -88,21 +97,22 @@ abstract class BaseStorageHandler {
             case 'image/gif':
                 $size = getimagesize($path);
                 list($width, $height) = $size;
-            break;
+                break;
             default:
                 $width = $height = null;
-            break;
+                break;
         }
 
         return compact('width', 'height', 'mimeType');
     }
 
-/**
- * Registers a resized asset into the database
- *
- * Triggered by AssetsImageHelper::resize()
- */
-    public function onResizeImage($Event) {
+    /**
+     * Registers a resized asset into the database
+     *
+     * Triggered by AssetsImageHelper::resize()
+     */
+    public function onResizeImage($Event)
+    {
         if (!$this->_check($Event)) {
             return true;
         }
@@ -112,14 +122,16 @@ abstract class BaseStorageHandler {
 
         $src = $this->_pathFromHtml($Event->getData('record')['result']);
 
-        if (!$src){
+        if (!$src) {
             return false;
         }
 
         try {
             $base = $Event->getSubject()->getRequest()->getAttribute('base');
             $filename = rtrim(WWW_ROOT, '/') . preg_replace(
-                '/^' . preg_quote($base, '/') . '/', '', $src
+                '/^' . preg_quote($base, '/') . '/',
+                '',
+                $src
             );
             $attachment = $this->Attachments->createFromFile($filename);
             if (is_string($attachment)) {
@@ -133,10 +145,11 @@ abstract class BaseStorageHandler {
         return $this->_createAsset($attachment);
     }
 
-/**
- * Create AssetsAsset record from $attachment when necessary
- */
-    protected function _createAsset($attachment) {
+    /**
+     * Create AssetsAsset record from $attachment when necessary
+     */
+    protected function _createAsset($attachment)
+    {
         $hash = $attachment->hash;
         $path = $attachment->import_path;
         $Assets = TableRegistry::get('Croogo/FileManager.Assets');
@@ -165,7 +178,7 @@ abstract class BaseStorageHandler {
             'path' => $path,
             'hash' => $hash,
         ]);
+
         return $Assets->save($asset);
     }
-
 }

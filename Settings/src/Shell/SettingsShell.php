@@ -129,6 +129,7 @@ class SettingsShell extends Shell
                 $key = null;
             } else {
                 $this->out($this->OptionParser->help('get'));
+
                 return;
             }
         } else {
@@ -183,7 +184,8 @@ class SettingsShell extends Shell
 
                 if (isset($options['editable'])) {
                     $options['editable'] = in_array(
-                        $options['editable'], ['y', 'Y', '1']
+                        $options['editable'],
+                        ['y', 'Y', '1']
                     );
                 }
 
@@ -197,12 +199,12 @@ class SettingsShell extends Shell
         }
     }
 
-/**
- * Delete setting
- *
- * @param string $key
- * @return void
- */
+    /**
+     * Delete setting
+     *
+     * @param string $key
+     * @return void
+     */
     public function delete()
     {
         $key = $this->args[0];
@@ -226,14 +228,15 @@ class SettingsShell extends Shell
         }
     }
 
-/**
- * Update Croogo.version in settings
- */
+    /**
+     * Update Croogo.version in settings
+     */
     public function updateVersionInfo()
     {
         $gitDir = realpath(Plugin::path('Croogo/Core') . '..') . DS . '.git';
         if (!file_exists($gitDir)) {
             $this->err('Git repository not found');
+
             return false;
         }
         if (!is_dir($gitDir)) {
@@ -243,6 +246,7 @@ class SettingsShell extends Shell
         $git = trim(shell_exec('which git'));
         if (empty($git)) {
             $this->err('Git executable not found');
+
             return false;
         }
 
@@ -253,14 +257,15 @@ class SettingsShell extends Shell
         }
     }
 
-/**
- * Update Croogo.appVersion in settings
- */
+    /**
+     * Update Croogo.appVersion in settings
+     */
     public function updateAppVersionInfo()
     {
         $gitDir = realpath(ROOT . DS . '.git');
         if (!file_exists($gitDir)) {
             $this->err('Git repository not found');
+
             return false;
         }
         if (!is_dir($gitDir)) {
@@ -270,6 +275,7 @@ class SettingsShell extends Shell
         $git = trim(shell_exec('which git'));
         if (empty($git)) {
             $this->err('Git executable not found');
+
             return false;
         }
 
@@ -279,5 +285,4 @@ class SettingsShell extends Shell
             $this->runCommand(['write', 'Croogo.appVersion', $version]);
         }
     }
-
 }

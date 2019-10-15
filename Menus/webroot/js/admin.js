@@ -15,7 +15,7 @@ Links.slug = function() {
     slug: 'class',
     hide: false
   });
-}
+};
 
 Links.reloadParents = function(event) {
   var query = { menu_id: event.currentTarget.value };
@@ -45,7 +45,7 @@ Links.reloadParents = function(event) {
     }
     $selectParent.html(options);
   });
-}
+};
 
 
 Links.setupSelect2 = function(selector) {
@@ -76,7 +76,7 @@ Links.setupSelect2 = function(selector) {
   var makeOption = function(val) {
     return '<option data-select2-tag="true" selected="selected" ' +
       'value="' + val + '">' + decodeURIComponent(val) + '</option>';
-  }
+  };
 
   link
     .on('chooserSelect', function(e, data) {
@@ -112,7 +112,7 @@ Links.init = function() {
   }
 
   $('#LinkMenuId').on('change', Links.reloadParents);
-  Links.setupSelect2('#link')
+  Links.setupSelect2('#link');
 
   Admin.toggleRowSelection('#LinksCheckAll');
 };

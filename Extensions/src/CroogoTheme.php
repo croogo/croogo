@@ -239,7 +239,7 @@ class CroogoTheme
      * Delete theme
      *
      * @param string $alias Theme alias
-     * @return boolean true when successful, false or array or error messages when failed
+     * @return bool true when successful, false or array or error messages when failed
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      */
@@ -290,8 +290,10 @@ class CroogoTheme
             if ($request) {
                 $prefix = $request->getParam('prefix');
                 if (isset($data['settings']['prefixes'][$prefix]['css'])) {
-                    $data['settings']['css'] = Hash::merge($data['settings']['prefixes'][$prefix]['css'],
-                        $data['settings']['css']);
+                    $data['settings']['css'] = Hash::merge(
+                        $data['settings']['prefixes'][$prefix]['css'],
+                        $data['settings']['css']
+                    );
                 }
             }
             $themeData[$theme] = $data;

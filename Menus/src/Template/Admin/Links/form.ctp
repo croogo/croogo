@@ -1,7 +1,5 @@
 <?php
 
-use Croogo\Core\Status;
-
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Croogo->adminScript('Croogo/Menus.admin');
 
@@ -65,9 +63,9 @@ $this->append('tab-content');
 
         $linkString = (string)$link->link;
         $linkOptions = [];
-        if (preg_match('/(plugin:)|(controller:)|(action:)/', $linkString)):
+        if (preg_match('/(plugin:)|(controller:)|(action:)/', $linkString)) :
             $linkKeys = explode('/', $linkString);
-            foreach ($linkKeys as $linkKey):
+            foreach ($linkKeys as $linkKey) :
                 $linkOptions[] = [
                     'value' => $linkKey,
                     'text' => urldecode($linkKey),
@@ -75,8 +73,8 @@ $this->append('tab-content');
                     'data-select2-tag' => "true",
                 ];
             endforeach;
-        else:
-            if (!$link->isNew() && $linkString):
+        else :
+            if (!$link->isNew() && $linkString) :
                 $linkOptions[] = [
                     'value' => $linkString,
                     'text' => urldecode($linkString),
@@ -95,9 +93,9 @@ $this->append('tab-content');
             'options' => $linkOptions,
         ]);
 
-    echo $this->Html->tabEnd();
+        echo $this->Html->tabEnd();
 
-    echo $this->Html->tabStart('link-misc');
+        echo $this->Html->tabStart('link-misc');
         echo $this->Form->input('description', [
             'label' => __d('croogo', 'Description'),
         ]);
@@ -114,22 +112,22 @@ $this->append('tab-content');
             'label' => __d('croogo', 'Params'),
             'type' => 'stringlist',
         ]);
-    echo $this->Html->tabEnd();
+        echo $this->Html->tabEnd();
 
-$this->end();
+        $this->end();
 
-$this->start('panels');
-    echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+        $this->start('panels');
+        echo $this->Html->beginBox(__d('croogo', 'Publishing'));
         echo $this->element('Croogo/Core.admin/buttons', ['type' => 'link']);
         echo $this->element('Croogo/Core.admin/publishable');
-    echo $this->Html->endBox();
+        echo $this->Html->endBox();
 
-    echo $this->Html->beginBox(__d('croogo', 'Access control'));
+        echo $this->Html->beginBox(__d('croogo', 'Access control'));
         echo $this->Form->input('visibility_roles', [
             'class' => 'c-select',
             'options' => $roles,
             'multiple' => true,
             'label' => false,
         ]);
-    echo $this->Html->endBox();
-$this->end();
+        echo $this->Html->endBox();
+        $this->end();

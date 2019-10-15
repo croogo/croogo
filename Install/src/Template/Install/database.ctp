@@ -7,26 +7,26 @@ echo $this->Form->create($context, [
 ]);
 $this->end();
 ?>
-<?php if ($currentConfiguration['exists']): ?>
+<?php if ($currentConfiguration['exists']) : ?>
     <div class="alert alert-warning">
         <strong><?= __d('croogo', 'Warning') ?>:</strong>
         <?= __d('croogo', 'A database configuration already exists.') ?>
         <?php
-        if ($currentConfiguration['valid']):
+        if ($currentConfiguration['valid']) :
             $valid = __d('croogo', 'Valid');
             $class = 'text-success';
-        else:
+        else :
             $valid = __d('croogo', 'Invalid');
             $class = 'text-error';
         endif;
         echo __d('croogo', 'The configuration is %s.', $this->Html->tag('span', $valid, compact('class')));
         ?>
-        <?php if ($currentConfiguration['valid']): ?>
+        <?php if ($currentConfiguration['valid']) : ?>
             <?php
             echo $this->Html->link(__d('croogo', 'Reuse this configuration and proceed'), ['action' => 'data']);
             ?>
             or complete the form below to replace it.
-        <?php else: ?>
+        <?php else : ?>
             <?= __d('croogo', 'This configuration will be replaced.') ?>
         <?php endif ?>
     </div>

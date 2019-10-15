@@ -4,7 +4,6 @@ namespace Croogo\Core\Model\Behavior;
 
 use Acl\Model\Behavior\AclBehavior;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
 /**
@@ -20,12 +19,12 @@ use Cake\Utility\Inflector;
 class CroogoAclBehavior extends AclBehavior
 {
 
-/**
- * setup
- *
- * @param Model $table
- * @param array $config
- */
+    /**
+     * setup
+     *
+     * @param Model $table
+     * @param array $config
+     */
     public function __construct(Table $table, array $config = [])
     {
         parent::__construct($table, $config);

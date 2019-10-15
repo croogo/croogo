@@ -26,12 +26,12 @@ use Croogo\Nodes\Model\Entity\Node;
 class NodesHelper extends Helper
 {
 
-/**
- * Other helpers used by this helper
- *
- * @var array
- * @access public
- */
+    /**
+     * Other helpers used by this helper
+     *
+     * @var array
+     * @access public
+     */
     public $helpers = [
         'Croogo/Core.Url',
         'Croogo/Core.Layout',
@@ -39,24 +39,24 @@ class NodesHelper extends Helper
         'Time',
     ];
 
-/**
- * Current Node
- *
- * @var \Croogo\Nodes\Model\Entity\Node
- * @access public
- */
+    /**
+     * Current Node
+     *
+     * @var \Croogo\Nodes\Model\Entity\Node
+     * @access public
+     */
     public $node = null;
 
-/**
- * StringConverter instance
- *
- * @var StringConverter
- */
+    /**
+     * StringConverter instance
+     *
+     * @var StringConverter
+     */
     protected $_converter = null;
 
-/**
- * constructor
- */
+    /**
+     * constructor
+     */
     public function __construct(View $view, $settings = [])
     {
         parent::__construct($view);
@@ -64,9 +64,9 @@ class NodesHelper extends Helper
         $this->_setupEvents();
     }
 
-/**
- * setup events
- */
+    /**
+     * setup events
+     */
     protected function _setupEvents()
     {
         $events = [
@@ -80,13 +80,13 @@ class NodesHelper extends Helper
         }
     }
 
-/**
- * Show nodes list
- *
- * @param string $alias Node query alias
- * @param array $options (optional)
- * @return string
- */
+    /**
+     * Show nodes list
+     *
+     * @param string $alias Node query alias
+     * @param array $options (optional)
+     * @return string
+     */
     public function nodeList($alias, $options = [])
     {
         $_options = [
@@ -106,17 +106,18 @@ class NodesHelper extends Helper
                 'options' => $options,
             ]);
         }
+
         return $output;
     }
 
-/**
- * Filter content for Nodes
- *
- * Replaces [node:unique_name_for_query] or [n:unique_name_for_query] with Nodes list
- *
- * @param Event $event
- * @return string
- */
+    /**
+     * Filter content for Nodes
+     *
+     * Replaces [node:unique_name_for_query] or [n:unique_name_for_query] with Nodes list
+     *
+     * @param Event $event
+     * @return string
+     */
     public function filter(Event $event, $options = [])
     {
         $data = $event->getData();
@@ -131,15 +132,16 @@ class NodesHelper extends Helper
             }
             $data['content'] = str_replace($tagMatches[0][$i], $this->nodeList($alias, $options), $data['content']);
         }
+
         return $event->getData();
     }
 
-/**
- * Set current Node
- *
- * @param array $node
- * @return void
- */
+    /**
+     * Set current Node
+     *
+     * @param array $node
+     * @return void
+     */
     public function set($node)
     {
         $event = Croogo::dispatchEvent('Helper.Nodes.beforeSetNode', $this->_View, [
@@ -152,12 +154,12 @@ class NodesHelper extends Helper
         ]);
     }
 
-/**
- * Get value of a Node field
- *
- * @param string $field
- * @return string
- */
+    /**
+     * Get value of a Node field
+     *
+     * @param string $field
+     * @return string
+     */
     public function field($field = 'id', $value = null)
     {
         if ($value) {
@@ -167,12 +169,12 @@ class NodesHelper extends Helper
         return Hash::get($this->node, $field);
     }
 
-/**
- * Node info
- *
- * @param array $options
- * @return string
- */
+    /**
+     * Node info
+     *
+     * @param array $options
+     * @return string
+     */
     public function info($options = [])
     {
         $_options = [
@@ -183,19 +185,20 @@ class NodesHelper extends Helper
         $output = $this->Layout->hook('beforeNodeInfo');
         $output .= $this->_View->element($options['element']);
         $output .= $this->Layout->hook('afterNodeInfo');
+
         return $output;
     }
 
-/**
- * Node excerpt (summary)
- *
- * Options:
- * - `element`: Element to use when rendering excerpt
- * - `body`: Extract first paragraph from body as excerpt. Default is `false`
- *
- * @param array $options
- * @return string
- */
+    /**
+     * Node excerpt (summary)
+     *
+     * Options:
+     * - `element`: Element to use when rendering excerpt
+     * - `body`: Extract first paragraph from body as excerpt. Default is `false`
+     *
+     * @param array $options
+     * @return string
+     */
     public function excerpt($options = [])
     {
         $_options = [
@@ -217,15 +220,16 @@ class NodesHelper extends Helper
         $output = $this->Layout->hook('beforeNodeExcerpt');
         $output .= $this->_View->element($options['element'], compact('excerpt', 'node'));
         $output .= $this->Layout->hook('afterNodeExcerpt');
+
         return $output;
     }
 
-/**
- * Node body
- *
- * @param array $options
- * @return string
- */
+    /**
+     * Node body
+     *
+     * @param array $options
+     * @return string
+     */
     public function body($options = [])
     {
         $_options = [
@@ -236,15 +240,16 @@ class NodesHelper extends Helper
         $output = $this->Layout->hook('beforeNodeBody');
         $output .= $this->_View->element($options['element']);
         $output .= $this->Layout->hook('afterNodeBody');
+
         return $output;
     }
 
-/**
- * Node more info
- *
- * @param array $options
- * @return string
- */
+    /**
+     * Node more info
+     *
+     * @param array $options
+     * @return string
+     */
     public function moreInfo($options = [])
     {
         $_options = [
@@ -255,6 +260,7 @@ class NodesHelper extends Helper
         $output = $this->Layout->hook('beforeNodeMoreInfo');
         $output .= $this->_View->element($options['element']);
         $output .= $this->Layout->hook('afterNodeMoreInfo');
+
         return $output;
     }
 
@@ -283,6 +289,7 @@ class NodesHelper extends Helper
     public function date($date)
     {
         $tz = $this->getView()->getRequest()->getSession()->read('Auth.User.timezone') ?: Configure::read('Site.timezone');
+
         return $this->Time->format($date, Configure::read('Reading.date_time_format'), null, $tz);
     }
 

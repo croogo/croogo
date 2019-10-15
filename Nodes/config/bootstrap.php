@@ -1,8 +1,7 @@
 <?php
 
-use Cake\Core\Configure;
-use Cake\Routing\Router;
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Croogo\Core\Croogo;
 use Croogo\Wysiwyg\Wysiwyg;
 

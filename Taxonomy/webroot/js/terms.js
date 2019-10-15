@@ -14,7 +14,7 @@ var Terms = {};
  */
 Terms.documentReady = function() {
 
-}
+};
 
 /**
  * Create slugs based on title field
@@ -26,7 +26,7 @@ Terms.slug = function() {
 		slug:'slug',
 		hide: false
 	});
-}
+};
 
 /**
  * document ready

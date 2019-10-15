@@ -1,6 +1,5 @@
 <?php
 
-use Cake\Core\Configure;
 use Cake\Cache\Cache;
 use Croogo\Core\Croogo;
 

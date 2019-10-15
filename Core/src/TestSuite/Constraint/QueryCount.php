@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Core\TestSuite\Constraint;
-use Cake\Core\App;
-use Cake\Datasource\EntityInterface;
+
 use Cake\ORM\Query;
+use InvalidArgumentException;
 use PHPUnit_Framework_Constraint;
 
 /**
@@ -42,7 +42,7 @@ class QueryCount extends PHPUnit_Framework_Constraint
     protected function matches($query)
     {
         if (!$query instanceof Query) {
-            throw new \InvalidArgumentException();
+            throw new InvalidArgumentException();
         }
 
         return $query->count() === $this->count;
@@ -69,12 +69,12 @@ class QueryCount extends PHPUnit_Framework_Constraint
      *
      * @param mixed $query Evaluated value or object.
      *
-     * @return string
+     * @return string|null
      */
     protected function failureDescription($query)
     {
         if (!$query instanceof Query) {
-            return;
+            return null;
         }
 
         return sprintf(

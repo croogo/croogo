@@ -10,6 +10,7 @@ class AllExtensionsTestsTest extends PHPUnit_Framework_TestSuite
         $suite = new CakeTestSuite('All Extensions plugin tests');
         $path = CakePlugin::path('Extensions') . DS . 'Test' . DS . 'Case' . DS;
         $suite->addTestDirectory($path . 'Lib');
+
         return $suite;
     }
 }

@@ -13,5 +13,4 @@ class Plugin extends BasePlugin
     {
         return $queue->add(new InstallMiddleware());
     }
-
 }

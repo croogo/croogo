@@ -2,10 +2,14 @@
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Breadcrumbs->add(__d('croogo', 'Settings'),
-    ['plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'prefix', 'Site'])
-    ->add(__d('croogo', 'Language'),
-        ['plugin' => 'Croogo/Settings', 'controller' => 'Languages', 'action' => 'index']);
+$this->Breadcrumbs->add(
+    __d('croogo', 'Settings'),
+    ['plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'prefix', 'Site']
+)
+    ->add(
+        __d('croogo', 'Language'),
+        ['plugin' => 'Croogo/Settings', 'controller' => 'Languages', 'action' => 'index']
+    );
 
 if ($this->getRequest()->getParam('action') == 'edit') {
     $this->Breadcrumbs->add($language->title);

@@ -7,7 +7,6 @@ use Cake\Core\Configure;
 use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Router;
-use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\TestCase;
 
 class CroogoRouterTest extends TestCase
@@ -28,9 +27,9 @@ class CroogoRouterTest extends TestCase
         $this->skipIf(version_compare(Configure::version(), '2.3.1', '<'));
     }
 
-/**
- * testHomeRoute
- */
+    /**
+     * testHomeRoute
+     */
     public function testHomeRoute()
     {
         $promoted = [
@@ -148,9 +147,9 @@ class CroogoRouterTest extends TestCase
         $this->assertEquals('/press-release', $result);
     }
 
-/**
- * testWhitelistedDetectorWithInvalidIp
- */
+    /**
+     * testWhitelistedDetectorWithInvalidIp
+     */
     public function testWhitelistedDetectorWithInvalidIp()
     {
         $request = $this->getMockBuilder(ServerRequest::class)
@@ -165,9 +164,9 @@ class CroogoRouterTest extends TestCase
         $this->assertFalse($request->is('whitelisted'));
     }
 
-/**
- * testWhitelistedDetectorWithValidIp
- */
+    /**
+     * testWhitelistedDetectorWithValidIp
+     */
     public function testWhitelistedDetectorWithValidIp()
     {
         $request = $this->getMockBuilder(ServerRequest::class)

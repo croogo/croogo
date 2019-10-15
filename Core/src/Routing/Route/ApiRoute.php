@@ -26,16 +26,16 @@ class ApiRoute extends Route
         parent::__construct($template, $defaults, $options);
     }
 
-/**
- * Checks wether URL is an API route
- *
- * If the route is not an API route, we return false and let the next parser
- * to handle it.
- *
- * @param string $url The URL to attempt to parse.
- * @return mixed Boolean false on failure, otherwise an array or parameters
- * @see Route::parse()
- */
+    /**
+     * Checks wether URL is an API route
+     *
+     * If the route is not an API route, we return false and let the next parser
+     * to handle it.
+     *
+     * @param string $url The URL to attempt to parse.
+     * @return mixed Boolean false on failure, otherwise an array or parameters
+     * @see Route::parse()
+     */
     public function parse($url)
     {
         $parsed = parent::parse($url);
@@ -43,16 +43,17 @@ class ApiRoute extends Route
             return false;
         }
         $parsed['prefix'] = str_replace('.', '_', $parsed['prefix']);
+
         return $parsed;
     }
 
-/**
- * Checks if an URL array matches this route instance
- *
- * @param array $url An array of parameters to check matching with.
- * @return mixed Either a string URL for the parameters if they match or false.
- * @see Route::match()
- */
+    /**
+     * Checks if an URL array matches this route instance
+     *
+     * @param array $url An array of parameters to check matching with.
+     * @return mixed Either a string URL for the parameters if they match or false.
+     * @see Route::match()
+     */
     public function match(array $url, array $context = [])
     {
         if (isset($url['prefix']) && isset($url['action'])) {
@@ -64,6 +65,7 @@ class ApiRoute extends Route
         if ($match && isset($url['action']) && $url['action'] == 'index') {
             $match = str_replace('/index', '', $match);
         }
+
         return $match;
     }
 }

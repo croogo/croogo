@@ -75,6 +75,7 @@ class InstallTest extends CroogoTestCase
         $this->skipIf(version_compare(PHP_VERSION, '5.3.0', '<'), 'PHP >= 5.3.0 required to run this test.');
         $method = new ReflectionMethod(get_class($this->Install), $name);
         $method->setAccessible(true);
+
         return $method->invokeArgs($this->Install, $args);
     }
 }

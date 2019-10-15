@@ -35,5 +35,4 @@ class CommentsSeed extends AbstractSeed
         $Table = $this->table('comments');
         $Table->insert($this->records)->save();
     }
-
 }

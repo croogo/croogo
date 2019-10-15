@@ -5,7 +5,6 @@ namespace Croogo\Nodes\Model\Table;
 use Cake\Database\Schema\TableSchema;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
-use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\TableRegistry;
@@ -309,6 +308,7 @@ class NodesTable extends CroogoTable
     public function findPublished(Query $query, array $options = [])
     {
         $options += ['roleId' => null];
+
         return $query
             ->andWhere([
                 $this->aliasField('status') . ' IN' => $this->status($options['roleId']),

@@ -2,8 +2,17 @@
 
 namespace Croogo\Core\Controller;
 
+/**
+ * Interface HookableComponentInterface
+ */
 interface HookableComponentInterface
 {
 
-    public function _loadHookableComponent($name, array $config);
+    /**
+     * @param $name
+     * @param array $config
+     *
+     * @return mixed
+     */
+    public function loadHookableComponent($name, array $config);
 }

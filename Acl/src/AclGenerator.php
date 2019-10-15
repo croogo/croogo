@@ -5,27 +5,43 @@ namespace Croogo\Acl;
 use Acl\AclExtras;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionInterface;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 
+/**
+ * Class AclGenerator
+ */
 class AclGenerator extends AclExtras
 {
+    /**
+     * AclGenerator constructor.
+     */
     public function __construct()
     {
         $this->Aco = TableRegistry::get('Croogo/Acl.Acos');
         $this->_buildPrefixes();
     }
 
+    /**
+     * @param ConnectionInterface $connection
+     * @return void
+     */
     public function insertAcos(ConnectionInterface $connection)
     {
         $this->Aco->setConnection($connection);
         $this->acoUpdate();
     }
 
+    /**
+     * @param string $msg
+     * @return string|void
+     */
     public function out($msg)
     {
         if (!isset($this->Shell)) {
             $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
         }
+
         if (isset($this->Shell) || isset($this->controller)) {
             return parent::out($msg);
         } else {
@@ -33,6 +49,15 @@ class AclGenerator extends AclExtras
         }
     }
 
+    /**
+     * @param string $className
+     * @param string $controllerName
+     * @param array $node
+     * @param null $pluginPath
+     * @param null $prefixPath
+     *
+     * @return bool
+     */
     protected function _checkMethods($className, $controllerName, $node, $pluginPath = null, $prefixPath = null)
     {
         try {
@@ -43,6 +68,9 @@ class AclGenerator extends AclExtras
         return false;
     }
 
+    /**
+     * @return void
+     */
     public function syncContentAcos()
     {
         $models = Configure::read('Access Control.models');
@@ -83,5 +111,4 @@ class AclGenerator extends AclExtras
             }
         }
     }
-
 }

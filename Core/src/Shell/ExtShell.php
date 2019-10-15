@@ -4,7 +4,6 @@ namespace Croogo\Core\Shell;
 
 use App\Controller\AppController;
 use Cake\Controller\Controller;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
@@ -32,42 +31,42 @@ use Croogo\Extensions\CroogoTheme;
 class ExtShell extends AppShell
 {
 
-/**
- * Models we use
- *
- * @var array
- */
+    /**
+     * Models we use
+     *
+     * @var array
+     */
     public $uses = ['Settings.Setting'];
 
-/**
- * CroogoPlugin class
- *
- * @var CroogoPlugin
- */
+    /**
+     * CroogoPlugin class
+     *
+     * @var CroogoPlugin
+     */
     protected $_CroogoPlugin = null;
 
-/**
- * CroogoTheme class
- *
- * @var CroogoTheme
- */
+    /**
+     * CroogoTheme class
+     *
+     * @var CroogoTheme
+     */
     protected $_CroogoTheme = null;
 
-/**
- * Controller
- *
- * @var Controller
- * @todo Remove this when PluginActivation dont need controllers
- */
+    /**
+     * Controller
+     *
+     * @var Controller
+     * @todo Remove this when PluginActivation dont need controllers
+     */
     protected $_Controller = null;
 
-/**
- * Initialize
- *
- * @param type $stdout
- * @param type $stderr
- * @param type $stdin
- */
+    /**
+     * Initialize
+     *
+     * @param type $stdout
+     * @param type $stderr
+     * @param type $stdin
+     */
     public function __construct($stdout = null, $stderr = null, $stdin = null)
     {
         parent::__construct($stdout, $stderr, $stdin);
@@ -81,11 +80,11 @@ class ExtShell extends AppShell
         $this->initialize();
     }
 
-/**
- * Call the appropriate command
- *
- * @return void
- */
+    /**
+     * Call the appropriate command
+     *
+     * @return bool
+     */
     public function main()
     {
         $args = $this->args;
@@ -108,28 +107,35 @@ class ExtShell extends AppShell
         }
         if ($type == 'theme' && $method == 'deactivate') {
             $this->err(__d('croogo', 'Theme cannot be deactivated, instead activate another theme.'));
+
             return false;
         }
         if (!empty($ext) && !isset($extensions[$ext]) && !$active && !$force) {
             $this->err(__d('croogo', '%s "%s" not found.', ucfirst($type), $ext));
+
             return false;
         }
         switch ($method) {
             case 'list':
                 $call = Inflector::pluralize($type);
+
                 return $this->{$call}($ext);
             default:
                 if (empty($ext)) {
                     $this->err(__d('croogo', '%s name must be provided.', ucfirst($type)));
+
                     return false;
                 }
+
                 return $this->{'_' . $method . ucfirst($type)}($ext);
         }
+
+        return true;
     }
 
-/**
- * Display help/options
- */
+    /**
+     * Display help/options
+     */
     public function getOptionParser()
     {
         return parent::getOptionParser()
@@ -161,32 +167,34 @@ class ExtShell extends AppShell
             ]);
     }
 
-/**
- * Activate a plugin
- *
- * @param string $plugin
- * @return boolean
- */
+    /**
+     * Activate a plugin
+     *
+     * @param string $plugin
+     * @return bool
+     */
     protected function _activatePlugin($plugin)
     {
         $result = $this->_CroogoPlugin->activate($plugin);
         if ($result === true) {
             $this->out(__d('croogo', 'Plugin "%s" activated successfully.', $plugin));
+
             return true;
         } elseif (is_string($result)) {
             $this->err($result);
         } else {
             $this->err(__d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin));
         }
+
         return false;
     }
 
-/**
- * Deactivate a plugin
- *
- * @param string $plugin
- * @return boolean
- */
+    /**
+     * Deactivate a plugin
+     *
+     * @param string $plugin
+     * @return bool
+     */
     protected function _deactivatePlugin($plugin)
     {
         $usedBy = $this->_CroogoPlugin->usedBy($plugin);
@@ -213,17 +221,19 @@ class ExtShell extends AppShell
         }
         if ($result === true) {
             $this->out(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin));
+
             return true;
         }
+
         return false;
     }
 
-/**
- * Activate a theme
- *
- * @param string $theme Name of theme
- * @return boolean
- */
+    /**
+     * Activate a theme
+     *
+     * @param string $theme Name of theme
+     * @return bool
+     */
     protected function _activateTheme($theme)
     {
         if ($this->_CroogoTheme->activate($theme)) {
@@ -231,12 +241,13 @@ class ExtShell extends AppShell
         } else {
             $this->err(__d('croogo', 'Theme "%s" activation failed.', $theme));
         }
+
         return true;
     }
 
-/**
- * List plugins
- */
+    /**
+     * List plugins
+     */
     public function plugins($plugin = null)
     {
         $all = $this->params['all'];
@@ -260,9 +271,9 @@ class ExtShell extends AppShell
         }
     }
 
-/**
- * List themes
- */
+    /**
+     * List themes
+     */
     public function themes($theme = null)
     {
         $CroogoTheme = new CroogoTheme();

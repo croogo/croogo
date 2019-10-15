@@ -19,25 +19,23 @@ use Cake\ORM\Query;
 class ExampleBehavior extends Behavior
 {
 
-/**
- * afterFind callback
- *
- * @param Model $model
- * @param array $results
- * @param bool $primary
- * @return array
- */
+    /**
+     * afterFind callback
+     *
+     * @param Event $event
+     * @param array $query
+     * @return array
+     */
     public function beforeFind(Event $event, Query $query)
     {
-
         $query->formatResults(function ($results) {
-            return $results->map(function($result) {
+            return $results->map(function ($result) {
                 if ($result instanceof Entity) {
                     $result->body .= '<p>[Modified by ExampleBehavior]</p>';
                 }
+
                 return $result;
             });
         });
     }
-
 }

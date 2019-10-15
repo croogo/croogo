@@ -1,4 +1,5 @@
 <?php
+
 use Cake\Utility\Inflector;
 
 if (empty($modelClass)) {
@@ -19,11 +20,11 @@ $tableContainerClass = $this->Theme->getCssClass('tableContainerClass');
 $showActions = isset($showActions) ? $showActions : true;
 
 $title = $this->fetch('title');
-if (empty($title)):
+if (empty($title)) :
     $this->assign('title', $this->name);
 endif;
 
-if ($pageHeading = trim($this->fetch('page-heading'))):
+if ($pageHeading = trim($this->fetch('page-heading'))) :
     echo $pageHeading;
 endif;
 
@@ -38,12 +39,12 @@ if (empty($this->fetch('action-buttons'))) {
 }
 
 $tableHeaders = trim($this->fetch('table-heading'));
-if (!$tableHeaders && isset($displayFields)):
+if (!$tableHeaders && isset($displayFields)) :
     $tableHeaders = [];
-    foreach ($displayFields as $field => $arr):
-        if ($arr['sort']):
+    foreach ($displayFields as $field => $arr) :
+        if ($arr['sort']) :
             $tableHeaders[] = $this->Paginator->sort($field, __d($i18nDomain, $arr['label']));
-        else:
+        else :
             $tableHeaders[] = __d($i18nDomain, $arr['label']);
         endif;
     endforeach;
@@ -52,23 +53,25 @@ if (!$tableHeaders && isset($displayFields)):
 endif;
 
 $tableBody = trim($this->fetch('table-body'));
-if (!$tableBody && isset($displayFields)):
+if (!$tableBody && isset($displayFields)) :
     $rows = [];
-    if (!empty(${lcfirst($this->name)})):
-
-        foreach (${lcfirst($this->name)} as $item):
+    if (!empty(${lcfirst($this->name)})) :
+        foreach (${lcfirst($this->name)} as $item) :
             $actions = [];
 
-            if ($this->getRequest()->getQuery('chooser')):
+            if ($this->getRequest()->getQuery('chooser')) :
                 $title = isset($item->title) ? $item->title : null;
                 $actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', [
                     'class' => 'item-choose',
                     'data-chooser-type' => $modelClass,
                     'data-chooser-id' => $item->id,
                 ]);
-            else:
-                $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $item->id],
-                    ['icon' => $this->Theme->getIcon('update'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Edit this item')]);
+            else :
+                $actions[] = $this->Croogo->adminRowAction(
+                    '',
+                    ['action' => 'edit', $item->id],
+                    ['icon' => $this->Theme->getIcon('update'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Edit this item')]
+                );
                 $actions[] = $this->Croogo->adminRowActions($item->id);
                 $actions[] = $this->Croogo->adminRowAction('', [
                     'action' => 'delete',
@@ -81,7 +84,7 @@ if (!$tableBody && isset($displayFields)):
             endif;
             $actions = $this->Html->div('item-actions', implode(' ', $actions));
             $row = [];
-            foreach ($displayFields as $key => $val):
+            foreach ($displayFields as $key => $val) :
                 extract($val);
                 if (!is_int($key)) {
                     $val = $key;
@@ -106,31 +109,31 @@ $tableFooters = trim($this->fetch('table-footer'));
         <div class="<?= $columnFull ?>">
             <?php
             $searchBlock = $this->fetch('search');
-            if (!$searchBlock):
+            if (!$searchBlock) :
                 $searchBlock = $this->element('Croogo/Core.admin/search');
             endif;
 
             if (!empty($searchBlock)) :
-            ?>
+                ?>
             <div class="navbar navbar-light bg-light">
                 <div class="table-search float-right">
                     <?= $searchBlock ?>
                 </div>
             </div>
-            <?php
+                <?php
             endif;
 
-            if ($contentBlock = trim($this->fetch('content'))):
+            if ($contentBlock = trim($this->fetch('content'))) :
                 echo $this->element('Croogo/Core.admin/search');
                 echo $contentBlock;
-            else:
-                if ($formStart = trim($this->fetch('form-start'))):
+            else :
+                if ($formStart = trim($this->fetch('form-start'))) :
                     echo $formStart;
                 endif;
 
-                if ($mainBlock = trim($this->fetch('main'))):
+                if ($mainBlock = trim($this->fetch('main'))) :
                     echo $mainBlock;
-                elseif ($tableBody):
+                elseif ($tableBody) :
                     ?>
                     <div class="<?= $tableContainerClass ?>">
                     <table class="<?= $tableClass ?>">
@@ -139,7 +142,7 @@ $tableFooters = trim($this->fetch('table-footer'));
                             'class' => $tableHeaderClass,
                         ]);
                         echo $this->Html->tag('tbody', $tableBody);
-                        if ($tableFooters):
+                        if ($tableFooters) :
                             echo $this->Html->tag('tfoot', $tableFooters);
                         endif;
                         ?>
@@ -147,16 +150,16 @@ $tableFooters = trim($this->fetch('table-footer'));
                     </div>
                 <?php endif ?>
 
-                <?php if ($bulkAction = trim($this->fetch('bulk-action'))): ?>
+                <?php if ($bulkAction = trim($this->fetch('bulk-action'))) : ?>
                 <div id="bulk-action">
                     <?= $bulkAction ?>
                 </div>
                 <?php endif ?>
 
                 <?php
-                if ($formEnd = trim($this->fetch('form-end'))):
+                if ($formEnd = trim($this->fetch('form-end'))) :
                     echo $formEnd;
-                elseif ($formStart):
+                elseif ($formStart) :
                     echo $this->Form->end();
                 endif;
                 ?>
@@ -168,10 +171,10 @@ $tableFooters = trim($this->fetch('table-footer'));
     <div class="<?= $rowClass ?>">
         <div class="<?= $columnFull ?>">
             <?php
-            if ($pagingBlock = $this->fetch('paging')):
+            if ($pagingBlock = $this->fetch('paging')) :
                 echo $pagingBlock;
-            else:
-                if (isset($this->Paginator) && $this->getRequest()->getParam('paging')):
+            else :
+                if (isset($this->Paginator) && $this->getRequest()->getParam('paging')) :
                     echo $this->element('Croogo/Core.admin/pagination');
                 endif;
             endif;
@@ -180,6 +183,6 @@ $tableFooters = trim($this->fetch('table-footer'));
     </div>
 <?php
 
-if ($pageFooter = trim($this->fetch('page-footer'))):
+if ($pageFooter = trim($this->fetch('page-footer'))) :
     echo $pageFooter;
 endif;

@@ -1,8 +1,8 @@
 <?php
 
-if (isset($vocabulary)):
+if (isset($vocabulary)) :
     $title = __d('croogo', 'Vocabulary: %s', $vocabulary->title);
-else:
+else :
     $title = __d('croogo', 'Terms');
 endif;
 $this->assign('title', $title);
@@ -40,7 +40,7 @@ $this->end();
 $this->append('table-body');
 $rows = [];
 
-foreach ($terms as $term):
+foreach ($terms as $term) :
     $actions = [];
     $actions[] = $this->Croogo->adminRowActions($term->id);
     $actions[] = $this->Croogo->adminRowAction('', [
@@ -74,16 +74,16 @@ foreach ($terms as $term):
         ]);
     }
 
-    if (!empty($term->indent)):
+    if (!empty($term->indent)) :
         $titleCol = str_repeat('&emsp;', $term->indent) . $titleCol;
     endif;
 
     // Build link list
     $vocabList = [];
-    foreach ($term->taxonomies as $taxonomy):
+    foreach ($term->taxonomies as $taxonomy) :
         $vocabList[] = $taxonomy->vocabulary->title;
     endforeach;
-    if (!empty($vocabList)):
+    if (!empty($vocabList)) :
         $titleCol .= sprintf('&nbsp;(%s)', $this->Html->tag('small', implode(', ', $vocabList)));
     endif;
 

@@ -18,8 +18,7 @@
       this._name = pluginName;
 
       this.init();
-    };
-
+    }
     Plugin.prototype = {
 
       init: function () {
@@ -88,4 +87,4 @@
     });
 
   }
-)(jQuery, window, document)
+)(jQuery, window, document);

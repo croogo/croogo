@@ -13,7 +13,7 @@
     <?php
     $rows = [];
 
-    foreach ($terms as $term):
+    foreach ($terms as $term) :
         $titleCol = $term->title;
         if (isset($defaultType)) {
             $titleCol = $this->Html->link($term->title, [
@@ -28,8 +28,14 @@
                 'data-chooser-type' => 'Node',
                 'data-chooser-id' => $term->id,
                 'data-chooser-title' => $term->title,
-                'rel' => sprintf('plugin:%s/controller:%s/action:%s/type:%s/slug:%s', 'Croogo/Nodes', 'Nodes', 'term',
-                    $defaultType['alias'], $term->slug),
+                'rel' => sprintf(
+    'plugin:%s/controller:%s/action:%s/type:%s/slug:%s',
+    'Croogo/Nodes',
+            'Nodes',
+            'term',
+            $defaultType['alias'],
+            $term->slug
+            ),
             ]);
         }
 
@@ -39,7 +45,6 @@
             h($titleCol),
             $term->slug,
         ];
-
     endforeach;
 
     echo $this->Html->tableCells($rows);

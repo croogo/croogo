@@ -1,6 +1,6 @@
 <?php
 
-use \Cake\Utility\Text;
+use Cake\Utility\Text;
 
 $metaCollection = $entity->meta ? collection($entity->meta) : collection([]);
 

@@ -91,7 +91,7 @@ class TaxonomiesTable extends CroogoTable
             'valueField' => $options['value'],
             'groupField' => 'id',
         ])->where([
-            $this->Terms->aliasField('id') .' IN' => $termsIds,
+            $this->Terms->aliasField('id') . ' IN' => $termsIds,
         ])->toArray();
 
         $termsTree = [];
@@ -123,16 +123,16 @@ class TaxonomiesTable extends CroogoTable
         return $termsTree;
     }
 
-/**
- * Check if Term HABTM Vocabulary.
- *
- * If yes, return Taxonomy ID
- * otherwise, return false
- *
- * @param int $termId
- * @param int $vocabularyId
- * @return boolean
- */
+    /**
+     * Check if Term HABTM Vocabulary.
+     *
+     * If yes, return Taxonomy ID
+     * otherwise, return false
+     *
+     * @param int $termId
+     * @param int $vocabularyId
+     * @return bool
+     */
     public function termInVocabulary($termId, $vocabularyId)
     {
         $taxonomy = $this->find()->where([
@@ -142,6 +142,7 @@ class TaxonomiesTable extends CroogoTable
         if ($taxonomy) {
             return $taxonomy->id;
         }
+
         return false;
     }
 }

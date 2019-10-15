@@ -2,9 +2,9 @@
 
 namespace Croogo\Acl\Controller\Component;
 
-use Cake\Core\Configure;
 use Cake\Controller\Component;
 use Cake\Controller\Component\AuthComponent;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
@@ -23,19 +23,19 @@ use Croogo\Core\Utility\StringConverter;
 class FilterComponent extends Component
 {
 
-/**
- * _controller
- *
- * @var Controller
- */
+    /**
+     * _controller
+     *
+     * @var Controller
+     */
     protected $_controller = null;
 
-/**
- * beforeFilter
- *
- * @param Event $event instance of event
- * @return void
- */
+    /**
+     * beforeFilter
+     *
+     * @param Event $event instance of event
+     * @return void
+     */
     public function beforeFilter(Event $event)
     {
         $this->_controller = $event->getSubject();
@@ -43,15 +43,14 @@ class FilterComponent extends Component
         if ($this->_config('multiRole')) {
             Croogo::hookAdminTab('Admin/Users/add', 'Roles', 'Croogo/Acl.admin/roles');
             Croogo::hookAdminTab('Admin/Users/edit', 'Roles', 'Croogo/Acl.admin/roles');
-
         }
     }
 
-/**
- * Helper function to retrieve value from `Access Control` settings
- *
- * @return mixed null when config key is not found
- */
+    /**
+     * Helper function to retrieve value from `Access Control` settings
+     *
+     * @return mixed null when config key is not found
+     */
     protected function _config($key)
     {
         static $config = null;
@@ -61,14 +60,15 @@ class FilterComponent extends Component
         if (array_key_exists($key, (array)$config)) {
             return $config[$key];
         }
+
         return null;
     }
 
-/**
- * configure component settings
- *
- * @return void
- */
+    /**
+     * configure component settings
+     *
+     * @return void
+     */
     protected function _configure()
     {
         if (!$this->_registry->has('Croogo/Acl.AutoLogin')) {
@@ -133,11 +133,11 @@ class FilterComponent extends Component
         $this->configureLoginActions();
     }
 
-/**
- * Load login actions configurations
- *
- * @return void
- */
+    /**
+     * Load login actions configurations
+     *
+     * @return void
+     */
     public function configureLoginActions()
     {
         $this->_controller->Auth->setConfig('loginAction', [
@@ -186,7 +186,9 @@ class FilterComponent extends Component
         if (!empty($config['Auth']) && is_array($config['Auth'])) {
             $isAdminRequest = !empty($this->_controller->request->getParam('admin'));
             $authActions = [
-                'loginAction', 'loginRedirect', 'logoutRedirect',
+                'loginAction',
+                'loginRedirect',
+                'logoutRedirect',
                 'unauthorizedRedirect',
             ];
             foreach ($config['Auth'] as $property => $value) {
@@ -200,11 +202,11 @@ class FilterComponent extends Component
         }
     }
 
-/**
- * acl and auth
- *
- * @return void
- */
+    /**
+     * acl and auth
+     *
+     * @return void
+     */
     public function auth()
     {
         $this->_configure();

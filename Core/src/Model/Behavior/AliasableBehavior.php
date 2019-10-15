@@ -23,25 +23,24 @@ class AliasableBehavior extends Behavior
         'alias' => 'alias',
     ];
 
-/**
- * _byIds
- *
- * @var array
- */
+    /**
+     * _byIds
+     *
+     * @var array
+     */
     protected $_byIds = [];
 
-/**
- * _byAlias
- *
- * @var array
- */
+    /**
+     * _byAlias
+     *
+     * @var array
+     */
     protected $_byAlias = [];
 
     public function initialize(array $config)
     {
         $this->reload();
     }
-
 
     /**
      * reload
@@ -62,51 +61,51 @@ class AliasableBehavior extends Behavior
         $this->_byAlias = array_flip($this->_byIds);
     }
 
-/**
- * byId
- *
- * @param
- * @param int $id
- * @return boolean
- */
+    /**
+     * byId
+     *
+     * @param int $id
+     * @return bool
+     */
     public function byId($id)
     {
         if (!empty($this->_byIds[$id])) {
             return $this->_byIds[$id];
         }
+
         return false;
     }
 
-/**
- * byAlias
- *
- * @param string $alias
- * @return boolean
- */
+    /**
+     * byAlias
+     *
+     * @param string $alias
+     * @return bool
+     */
     public function byAlias($alias)
     {
         if (!empty($this->_byAlias[$alias])) {
             return $this->_byAlias[$alias];
         }
+
         return false;
     }
 
-/**
- * listById
- *
- * @return string
- */
+    /**
+     * listById
+     *
+     * @return string
+     */
     public function listById()
     {
         return $this->_byIds;
     }
 
-/**
- * listByAlias
- *
- * @param
- * @return string
- */
+    /**
+     * listByAlias
+     *
+     * @return array
+     */
     public function listByAlias()
     {
         return $this->_byAlias;

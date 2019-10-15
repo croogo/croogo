@@ -36,11 +36,11 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase
 
     public $Node = null;
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -55,11 +55,11 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase
         ]);
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
@@ -67,11 +67,11 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase
         ClassRegistry::flush();
     }
 
-/**
- * testSaveTranslation
- *
- * @return void
- */
+    /**
+     * testSaveTranslation
+     *
+     * @return void
+     */
     public function testSaveTranslation()
     {
         $translationData = [
@@ -84,9 +84,9 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase
         $this->assertEqual($about['Node']['title'], 'About [Translated in Bengali]');
     }
 
-/**
- * testSaveTranslationShouldFlushCacheOfModelBeingTranslated
- */
+    /**
+     * testSaveTranslationShouldFlushCacheOfModelBeingTranslated
+     */
     public function testSaveTranslationShouldFlushCacheOfModelBeingTranslated()
     {
         $translationData = ['Node' => ['title' => 'Some french content']];
@@ -103,9 +103,9 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase
         $this->__addNewTranslation(2, 'fra', $translationData);
     }
 
-/**
- * __addNewTranslation
- */
+    /**
+     * __addNewTranslation
+     */
     private function __addNewTranslation($id, $locale, $translationData)
     {
         $this->Node->id = $id;

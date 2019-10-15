@@ -2,8 +2,6 @@
 
 namespace Croogo\Acl\Model\Table;
 
-use Cake\Utility\Hash;
-
 /**
  * AclAro Model
  *
@@ -17,11 +15,11 @@ use Cake\Utility\Hash;
 class ArosTable extends \Acl\Model\Table\ArosTable
 {
 
-/**
- * Get a list of Role AROs
- *
- * @return array array of Aro.id indexed by Role.id
- */
+    /**
+     * Get a list of Role AROs
+     *
+     * @return array array of Aro.id indexed by Role.id
+     */
     public function getRoles($roles)
     {
         $aros = $this->find('all', [
@@ -30,6 +28,7 @@ class ArosTable extends \Acl\Model\Table\ArosTable
                 'Aros.foreign_key IN' => array_keys($roles->toArray()),
             ],
         ]);
+
         return collection($aros)->combine('foreign_key', 'id')->toArray();
     }
 }

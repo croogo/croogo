@@ -71,7 +71,7 @@ class TypeRoute extends Route
         if ($this->_checkType($url['type'])) {
             return parent::match($url, $context);
         }
+
         return false;
     }
-
 }

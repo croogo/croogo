@@ -26,8 +26,7 @@ class ContactsController extends AppController
      * View
      *
      * @param string $alias
-     * @return void
-     * @access public
+     * @return \Cake\Http\Response|void
      * @throws NotFoundException
      */
     public function view($alias = null)
@@ -78,9 +77,9 @@ class ContactsController extends AppController
     /**
      * Validation
      *
-     * @param boolean $continue
+     * @param bool $continue
      * @param array $contact
-     * @return boolean
+     * @return bool
      * @access protected
      */
     protected function _validation($continue, $contact, Message $message)
@@ -99,9 +98,9 @@ class ContactsController extends AppController
     /**
      * Spam protection
      *
-     * @param boolean $continue
+     * @param bool $continue
      * @param array $contact
-     * @return boolean
+     * @return bool
      * @access protected
      */
     protected function _spamProtection($continue, $contact, Message $message)
@@ -114,6 +113,7 @@ class ContactsController extends AppController
         $this->Akismet->setCommentContent($message->body);
         if ($this->Akismet->isCommentSpam()) {
             $this->Flash->error(__d('croogo', 'Sorry, the message appears to be spam.'));
+
             return false;
         }
 
@@ -123,9 +123,9 @@ class ContactsController extends AppController
     /**
      * Captcha
      *
-     * @param boolean $continue
+     * @param bool $continue
      * @param array $contact
-     * @return boolean
+     * @return bool
      * @access protected
      */
     protected function _captcha($continue, $contact, Message $message)
@@ -136,6 +136,7 @@ class ContactsController extends AppController
 
         if (!$this->Recaptcha->verify()) {
             $this->Flash->error(__d('croogo', 'Invalid captcha entry'));
+
             return false;
         }
 
@@ -145,9 +146,9 @@ class ContactsController extends AppController
     /**
      * Send Email
      *
-     * @param boolean $continue
+     * @param bool $continue
      * @param array $contact
-     * @return boolean
+     * @return bool
      * @access protected
      */
     protected function _sendEmail($continue, $contact, Message $message)

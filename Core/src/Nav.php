@@ -19,25 +19,25 @@ use UnexpectedValueException;
 class Nav
 {
 
-/**
- * Current active menu
- *
- * @see CroogoNav::activeMenu()
- */
+    /**
+     * Current active menu
+     *
+     * @see CroogoNav::activeMenu()
+     */
     protected static $_activeMenu = 'sidebar';
 
-/**
- * _items
- *
- * @var array
- */
+    /**
+     * _items
+     *
+     * @var array
+     */
     protected static $_items = ['sidebar' => []];
 
-/**
- * _defaults
- *
- * @var array
- */
+    /**
+     * _defaults
+     *
+     * @var array
+     */
     protected static $_defaults = [
         'icon' => '',
         'title' => false,
@@ -50,9 +50,9 @@ class Nav
         'htmlAttributes' => [],
     ];
 
-/**
- * Getter/setter for activeMenu
- */
+    /**
+     * Getter/setter for activeMenu
+     */
     public static function activeMenu($menu = null)
     {
         if ($menu === null) {
@@ -75,12 +75,12 @@ class Nav
         return array_keys(self::$_items);
     }
 
-/**
- * _setupOptions
- *
- * @param array $options
- * @return void
- */
+    /**
+     * _setupOptions
+     *
+     * @param array $options
+     * @return void
+     */
     protected static function _setupOptions(&$options)
     {
         $options = self::_merge(self::$_defaults, $options);
@@ -89,13 +89,13 @@ class Nav
         }
     }
 
-/**
- * Add a menu item
- *
- * @param string $menu dot separated path in the array.
- * @param array $path menu options array
- * @return void
- */
+    /**
+     * Add a menu item
+     *
+     * @param string $menu dot separated path in the array.
+     * @param array $path menu options array
+     * @return void
+     */
     public static function add($menu, $path, $options = [])
     {
         // Juggle argument for backward compatibility
@@ -125,14 +125,14 @@ class Nav
         }
     }
 
-/**
- * Replace a menu element
- *
- * @param array $target pointer to start of array
- * @param string $path path to search for in dot separated format
- * @param array $options data to replace with
- * @return void
- */
+    /**
+     * Replace a menu element
+     *
+     * @param array $target pointer to start of array
+     * @param string $path path to search for in dot separated format
+     * @param array $options data to replace with
+     * @return void
+     */
     protected static function _replace(&$target, $path, $options)
     {
         $pathE = explode('.', $path);
@@ -145,14 +145,14 @@ class Nav
         }
     }
 
-/**
- * Merge $firstArray with $secondArray
- *
- * Similar to Hash::merge, except duplicates are removed
- * @param array $firstArray
- * @param array $secondArray
- * @return array
- */
+    /**
+     * Merge $firstArray with $secondArray
+     *
+     * Similar to Hash::merge, except duplicates are removed
+     * @param array $firstArray
+     * @param array $secondArray
+     * @return array
+     */
     protected static function _merge($firstArray, $secondArray)
     {
         if ($firstArray == $secondArray) {
@@ -164,25 +164,26 @@ class Nav
                 $merged[$key] = array_unique($val);
             }
         }
+
         return $merged;
     }
 
-/**
- * Remove a menu item
- *
- * @param string $path dot separated path in the array.
- * @return void
- */
+    /**
+     * Remove a menu item
+     *
+     * @param string $path dot separated path in the array.
+     * @return void
+     */
     public static function remove($path)
     {
         self::$_items = Hash::remove(self::$_items, $path);
     }
 
-/**
- * Clear all menus
- *
- * @return void
- */
+    /**
+     * Clear all menus
+     *
+     * @return void
+     */
     public static function clear($menu = 'sidebar')
     {
         if ($menu) {
@@ -196,13 +197,13 @@ class Nav
         }
     }
 
-/**
- * Sets or returns menu data in array
- *
- * @param $items array if empty, the current menu is returned.
- * @return array
- * @throws UnexpectedValueException
- */
+    /**
+     * Sets or returns menu data in array
+     *
+     * @param $items array if empty, the current menu is returned.
+     * @return array
+     * @throws UnexpectedValueException
+     */
     public static function items($menu = 'sidebar', $items = null)
     {
         if (!is_string($menu)) {
@@ -213,8 +214,10 @@ class Nav
         }
         if (!array_key_exists($menu, self::$_items)) {
             Log::error('Invalid menu: ' . $menu);
+
             return [];
         }
+
         return self::$_items[$menu];
     }
 
@@ -222,19 +225,21 @@ class Nav
      * Check menu existence by path
      * @param string $menu Menu name
      * @param string $path Path for Hash::extract()
-     * @return boolean
+     * @return bool
      */
-    public static function check($menu, $path) {
+    public static function check($menu, $path)
+    {
         if (!isset(static::$_items[$menu])) {
             return false;
         }
+
         return Hash::check(self::$_items[$menu], $path);
     }
 
-/**
- * Gets default settings for menu items
- * @return array
- */
+    /**
+     * Gets default settings for menu items
+     * @return array
+     */
     public static function getDefaults()
     {
         return self::$_defaults;

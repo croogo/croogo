@@ -12,5 +12,4 @@ class Menu extends Entity
     use RowLevelAclTrait;
 
     use TranslateTrait;
-
 }

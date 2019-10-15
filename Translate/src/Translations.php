@@ -11,25 +11,24 @@
 namespace Croogo\Translate;
 
 use Cake\Core\Configure;
-use Cake\Log\Log;
-use Cake\Utility\Inflector;
 use Croogo\Core\Croogo;
 
 class Translations
 {
 
-/**
- * Read configured Translate.models and hook the appropriate behaviors
- */
+    /**
+     * Read configured Translate.models and hook the appropriate behaviors
+     */
     public static function translateModels()
     {
-        $path ='prefix:admin/plugin:Croogo%2fTranslate/controller:Translate/action:index/?id=:id&model={{model}}';
+        $path = 'prefix:admin/plugin:Croogo%2fTranslate/controller:Translate/action:index/?id=:id&model={{model}}';
         foreach (Configure::read('Translate.models') as $encoded => $config) {
             $model = base64_decode($encoded);
             Croogo::hookBehavior($model, 'Croogo/Translate.Translate', $config);
             $action = str_replace('.', '.Admin/', $model . '/index');
             $url = str_replace('{{model}}', urlencode($model), $path);
-            Croogo::hookAdminRowAction($action,
+            Croogo::hookAdminRowAction(
+                $action,
                 __d('croogo', 'Translate'),
                 [
                 $url => [
@@ -42,5 +41,4 @@ class Translations
             );
         }
     }
-
 }

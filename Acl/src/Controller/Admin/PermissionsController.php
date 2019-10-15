@@ -42,12 +42,12 @@ class PermissionsController extends AppController
         }
     }
 
-/**
- * admin_index
- *
- * @param id integer aco id, when null, the root ACO is used
- * @return void
- */
+    /**
+     * admin_index
+     *
+     * @param id integer aco id, when null, the root ACO is used
+     * @return void
+     */
     public function index($id = null, $level = null)
     {
         if ($this->getRequest()->getQuery('root')) {
@@ -116,13 +116,13 @@ class PermissionsController extends AppController
         $this->set(compact('roots'));
     }
 
-/**
- * toggle
- *
- * @param int $acoId
- * @param int $aroId
- * @return void
- */
+    /**
+     * toggle
+     *
+     * @param int $acoId
+     * @param int $aroId
+     * @return \Cake\Http\Response|void
+     */
     public function toggle($acoId, $aroId)
     {
         if (!$this->getRequest()->is('ajax')) {
@@ -147,5 +147,4 @@ class PermissionsController extends AppController
 
         $this->set(compact('acoId', 'aroId', 'data', 'success', 'permitted'));
     }
-
 }

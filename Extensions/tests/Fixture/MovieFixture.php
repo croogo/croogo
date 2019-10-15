@@ -7,11 +7,11 @@ use Croogo\TestSuite\CroogoTestFixture;
 class MovieFixture extends CroogoTestFixture
 {
 
-/**
- * fields property
- *
- * @var array
- */
+    /**
+     * fields property
+     *
+     * @var array
+     */
     public $fields = [
         'id' => ['type' => 'integer'],
         'title' => ['type' => 'string', 'null' => false],
@@ -22,11 +22,11 @@ class MovieFixture extends CroogoTestFixture
         '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
     ];
 
-/**
- * records property
- *
- * @var array
- */
+    /**
+     * records property
+     *
+     * @var array
+     */
     public $records = [
     ];
 }

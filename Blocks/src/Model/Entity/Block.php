@@ -12,5 +12,4 @@ class Block extends Entity
     use RowLevelAclTrait;
 
     use TranslateTrait;
-
 }

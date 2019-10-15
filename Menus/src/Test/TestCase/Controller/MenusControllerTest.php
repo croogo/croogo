@@ -33,11 +33,11 @@ class MenusControllerTest extends CroogoControllerTestCase
         'plugin.taxonomy.vocabulary',
     ];
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -56,33 +56,33 @@ class MenusControllerTest extends CroogoControllerTestCase
             ->will($this->returnCallback([$this, 'authUserCallback']));
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->MenusController);
     }
 
-/**
- * testAdminIndex
- *
- * @return void
- */
+    /**
+     * testAdminIndex
+     *
+     * @return void
+     */
     public function testAdminIndex()
     {
         $this->testAction('/admin/menus/menus/index');
         $this->assertNotEmpty($this->vars['menus']);
     }
 
-/**
- * testAdminAdd
- *
- * @return void
- */
+    /**
+     * testAdminAdd
+     *
+     * @return void
+     */
     public function testAdminAdd()
     {
         $this->expectFlashAndRedirect('The Menu has been saved');
@@ -101,11 +101,11 @@ class MenusControllerTest extends CroogoControllerTestCase
         $this->assertEqual($newMenu['Menu']['title'], 'New Menu');
     }
 
-/**
- * testAdminEdit
- *
- * @return void
- */
+    /**
+     * testAdminEdit
+     *
+     * @return void
+     */
     public function testAdminEdit()
     {
         $this->expectFlashAndRedirect('The Menu has been saved');
@@ -121,11 +121,11 @@ class MenusControllerTest extends CroogoControllerTestCase
         $this->assertEquals('Main Menu [modified]', $result['Menu']['title']);
     }
 
-/**
- * testAdminDelete
- *
- * @return void
- */
+    /**
+     * testAdminDelete
+     *
+     * @return void
+     */
     public function testAdminDelete()
     {
         $this->expectFlashAndRedirect('Menu deleted');

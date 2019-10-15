@@ -39,5 +39,4 @@ class TermsSeed extends AbstractSeed
         $Table = $this->table('terms');
         $Table->insert($this->records)->save();
     }
-
 }

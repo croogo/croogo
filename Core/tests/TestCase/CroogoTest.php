@@ -14,7 +14,7 @@ class CroogoTest extends TestCase
 {
 
     public $fixtures = [
-//		'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Settings.Setting',
     ];
 
     public function testCrossPluginHooks()
@@ -27,9 +27,9 @@ class CroogoTest extends TestCase
         $this->assertTrue($Orders->monitored);
     }
 
-/**
- * test Croogo::hookApiComponent
- */
+    /**
+     * test Croogo::hookApiComponent
+     */
     public function testHookApiComponent()
     {
         $hooks = Configure::read('Hook.controller_properties');

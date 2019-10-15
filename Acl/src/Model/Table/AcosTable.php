@@ -2,8 +2,8 @@
 
 namespace Croogo\Acl\Model\Table;
 
-use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * AclAco Model
@@ -18,22 +18,23 @@ use Cake\ORM\TableRegistry;
 class AcosTable extends \Acl\Model\Table\AcosTable
 {
 
-/**
- * getChildren
- *
- * @param integer aco id
- */
+    /**
+     * getChildren
+     *
+     * @param integer aco id
+     */
     public function getChildren($acoId, $fields = [])
     {
         $fields = Hash::merge(['id', 'parent_id', 'alias'], $fields);
         $acos = $this->find('children', ['for' => $acoId])
             ->find('threaded');
+
         return $acos;
     }
 
-/**
- * Create ACO tree
- */
+    /**
+     * Create ACO tree
+     */
     public function createFromPath($path)
     {
         $pathE = explode('/', $path);
@@ -66,19 +67,20 @@ class AcosTable extends \Acl\Model\Table\AcosTable
                 $parent = $this->save($aco);
             }
         }
+
         return $parent;
     }
 
-/**
- * ACL: add ACO
- *
- * Creates ACOs with permissions for roles.
- *
- * @param string $action possible values: Controller, Controller/action,
- *                                        Plugin/Controller/action
- * @param array $allowRoles Role aliases
- * @return void
- */
+    /**
+     * ACL: add ACO
+     *
+     * Creates ACOs with permissions for roles.
+     *
+     * @param string $action possible values: Controller, Controller/action,
+     *                                        Plugin/Controller/action
+     * @param array $allowRoles Role aliases
+     * @return void
+     */
     public function addAco($action, $allowRoles = [])
     {
         // AROs
@@ -102,14 +104,14 @@ class AcosTable extends \Acl\Model\Table\AcosTable
         }
     }
 
-/**
- * ACL: remove ACO
- *
- * Removes ACOs and their Permissions
- *
- * @param string $action possible values: ControllerName, ControllerName/method_name
- * @return void
- */
+    /**
+     * ACL: remove ACO
+     *
+     * Removes ACOs and their Permissions
+     *
+     * @param string $action possible values: ControllerName, ControllerName/method_name
+     * @return void
+     */
     public function removeAco($action)
     {
         $acoNodes = $this->node($action);
@@ -119,11 +121,11 @@ class AcosTable extends \Acl\Model\Table\AcosTable
         }
     }
 
-/**
- * Get valid permission roots
- *
- * @return array Array of valid permission roots
- */
+    /**
+     * Get valid permission roots
+     *
+     * @return array Array of valid permission roots
+     */
     public function getPermissionRoots()
     {
         $roots = $this->find('all', [

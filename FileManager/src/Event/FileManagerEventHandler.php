@@ -2,8 +2,8 @@
 
 namespace Croogo\FileManager\Event;
 
-use Cake\Log\Log;
 use Cake\Event\EventListenerInterface;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
 use Croogo\Core\Nav;
@@ -19,9 +19,9 @@ use Croogo\Core\Nav;
 class FileManagerEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- */
+    /**
+     * implementedEvents
+     */
     public function implementedEvents()
     {
         return [
@@ -40,13 +40,15 @@ class FileManagerEventHandler implements EventListenerInterface
     /**
      * Registers usage when new attachment is created and attached to a resource
      */
-    public function onNewAttachment($event) {
+    public function onNewAttachment($event)
+    {
         $controller = $event->getSubject();
         $request = $controller->request;
         $attachment = $event->getData('attachment');
 
         if (empty($attachment->asset->asset_usage)) {
             Log::error('No asset usage record to register');
+
             return;
         }
 
@@ -66,11 +68,11 @@ class FileManagerEventHandler implements EventListenerInterface
         $event->result = $result;
     }
 
-/**
- * Setup Link chooser values
- *
- * @return void
- */
+    /**
+     * Setup Link chooser values
+     *
+     * @return void
+     */
     public function onSetupLinkChooser($event)
     {
         $linkChoosers = [];
@@ -114,16 +116,16 @@ class FileManagerEventHandler implements EventListenerInterface
     /**
      * Setup admin data
      */
-    public function onSetupAdminData($event) {
-        Nav::add('media.children.attachments', array(
+    public function onSetupAdminData($event)
+    {
+        Nav::add('media.children.attachments', [
             'title' => __d('croogo', 'Attachments'),
-            'url' => array(
+            'url' => [
                 'prefix' => 'admin',
                 'plugin' => 'Croogo/FileManager',
                 'controller' => 'Attachments',
                 'action' => 'index',
-            ),
-        ));
+            ],
+        ]);
     }
-
 }

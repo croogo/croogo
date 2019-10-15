@@ -3,8 +3,8 @@
 namespace Croogo\Core\View\Helper;
 
 use BootstrapUI\View\Helper\FormHelper;
-use Cake\Utility\Inflector;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Cake\View\View;
 use Croogo\Extensions\CroogoTheme;
 
@@ -24,9 +24,9 @@ class CroogoFormHelper extends FormHelper
         'Croogo/Core.CroogoHtml',
     ];
 
-/**
- * Constructor
- */
+    /**
+     * Constructor
+     */
     public function __construct(View $View, $settings = [])
     {
         $settings = Hash::merge([
@@ -54,6 +54,7 @@ class CroogoFormHelper extends FormHelper
     {
         if ($options['tooltip'] === false) {
             unset($options['title']);
+
             return $options;
         }
         $tooltipOptions = [
@@ -84,12 +85,13 @@ class CroogoFormHelper extends FormHelper
         } else {
             $options += $tooltipOptions;
         }
+
         return $options;
     }
 
-/**
- * placeholderOptions
- */
+    /**
+     * placeholderOptions
+     */
     protected function _placeholderOptions($fieldName, $options = [])
     {
         $autoPlaceholder = empty($options['placeholder']) &&
@@ -113,15 +115,16 @@ class CroogoFormHelper extends FormHelper
                 $options['placeholder'] = Inflector::humanize($placeholder);
             }
         }
+
         return $options;
     }
 
-/**
- * Generate input options array
- *
- * @param array $fieldName Options list
- * @return array
- */
+    /**
+     * Generate input options array
+     *
+     * @param array $fieldName Options list
+     * @return array
+     */
     protected function _parseOptions($fieldName, $options)
     {
         $options = parent::_parseOptions($fieldName, $options);
@@ -162,11 +165,11 @@ class CroogoFormHelper extends FormHelper
         return $options;
     }
 
-/**
- * Normalize field name
- *
- * @return array Map of normalized field names and corresponding list of roleIds
- */
+    /**
+     * Normalize field name
+     *
+     * @return array Map of normalized field names and corresponding list of roleIds
+     */
     protected function _setupFieldAccess($fieldAccess)
     {
         $map = [];
@@ -176,14 +179,15 @@ class CroogoFormHelper extends FormHelper
             }
             $map[$field] = (array)$config;
         }
+
         return $map;
     }
 
-/**
- * Checks if field is editable by current user's role
- *
- * @return bool True if field is editable
- */
+    /**
+     * Checks if field is editable by current user's role
+     *
+     * @return bool True if field is editable
+     */
     protected function _isEditable($field)
     {
         if (strpos($field, '.') === false) {
@@ -192,16 +196,16 @@ class CroogoFormHelper extends FormHelper
         if (isset($this->_fieldAccess[$field])) {
             return in_array($this->_currentRoleId, $this->_fieldAccess[$field]);
         }
+
         return true;
     }
 
-/**
- * Returns an HTML FORM element.
- *
- * @see FormHelper::create()
- * @return string A formatted opening FORM tag
- */
-
+    /**
+     * Returns an HTML FORM element.
+     *
+     * @return string A formatted opening FORM tag
+     * @see FormHelper::create()
+     */
     public function create($model = null, array $options = [])
     {
         if (!empty($options['fieldAccess'])) {
@@ -209,6 +213,7 @@ class CroogoFormHelper extends FormHelper
             $this->_currentRoleId = $this->_View->Layout->getRoleId();
             unset($options['fieldAccess']);
         }
+
         return parent::create($model, $options);
     }
 
@@ -226,18 +231,18 @@ class CroogoFormHelper extends FormHelper
         return parent::input($fieldName, $options);
     }
 
-/**
- * Try to guess autocomplete default values
- *
- * @param string $field field name
- * @param array $config setting passed to CroogoFormHelper::autocomplete()
- * @return array Array of id and display value
- */
+    /**
+     * Try to guess autocomplete default values
+     *
+     * @param string $field field name
+     * @param array $config setting passed to CroogoFormHelper::autocomplete()
+     * @return array Array of id and display value
+     */
     protected function _acDefaults($field, $config)
     {
         $displayKey = $displayValue = null;
         $request = $this->getView()->getRequest();
-        list( , $table) = pluginSplit($this->context()->entity()->getSource());
+        list(, $table) = pluginSplit($this->context()->entity()->getSource());
         if (isset($request->getData($table)[$field])) {
             $displayKey = $request->getData($table)[$field];
         }
@@ -253,24 +258,25 @@ class CroogoFormHelper extends FormHelper
         }
 
         $defaults = [$displayKey => $displayValue];
+
         return array_filter($defaults);
     }
 
-/**
- * Generates an autocomplete text input that works with bootstrap's typeahead
- *
- * Besides the standard Form::input() $options, this method accepts:
- *
- *   'autocomplete' array with the following keys to configure fields to use
- *   from the AJAX result:
- *      `data-displayField`: field to display in the autocomplete dropdown
- *      `data-primaryKey`: field to use as the primary identifier
- *      `data-queryField`: field to use as the AJAX querystring
- *      `data-relatedElement`: selector to the input storing the actual value
- *      `data-url`: url to retrieve autocomplete data
- *
- * @see FormHelper::input()
- */
+    /**
+     * Generates an autocomplete text input that works with bootstrap's typeahead
+     *
+     * Besides the standard Form::input() $options, this method accepts:
+     *
+     *   'autocomplete' array with the following keys to configure fields to use
+     *   from the AJAX result:
+     *      `data-displayField`: field to display in the autocomplete dropdown
+     *      `data-primaryKey`: field to use as the primary identifier
+     *      `data-queryField`: field to use as the AJAX querystring
+     *      `data-relatedElement`: selector to the input storing the actual value
+     *      `data-url`: url to retrieve autocomplete data
+     *
+     * @see FormHelper::input()
+     */
     public function autocomplete($fieldName, $options = [])
     {
         $options = Hash::merge([
@@ -321,5 +327,4 @@ class CroogoFormHelper extends FormHelper
 
         return $out;
     }
-
 }

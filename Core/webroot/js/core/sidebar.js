@@ -71,7 +71,7 @@ Admin.navigation = function () {
       var onComplete = function () {
         dropdownClose.call($ul.get(0));
         $ul.css({'margin-left': sidebarWidth + 'px', 'margin-top': 'inherit'})
-      }
+      };
 
       if (window.innerWidth <= 979) {
         $ul.removeAttr('z-index').fadeOut('fast');
@@ -104,4 +104,4 @@ Admin.navigation = function () {
       dropdownClose.call(this);
     });
   });
-}
+};

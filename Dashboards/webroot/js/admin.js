@@ -40,7 +40,7 @@ Dashboard.saveDashboard = function(e, ui) {
     box
       .find('.toggle-icon .' + Croogo.themeSettings.iconDefaults.iconSet)
       .removeClass('fa-spinner fa-spin')
-      .addClass(collapsed ? 'fa-plus' : 'fa-minus')
+      .addClass(collapsed ? 'fa-plus' : 'fa-minus');
 
     for (var i in data) {
       $('#' + data[i].alias).data('id', data[i].id);
@@ -96,4 +96,4 @@ Dashboard.init = function() {
   var saveDashboard = _.debounce(Dashboard.saveDashboard, 300);
   Dashboard.sortable('.' + Croogo.themeSettings.css['dashboardClass'], saveDashboard);
   Dashboard.collapsable(saveDashboard);
-}
+};

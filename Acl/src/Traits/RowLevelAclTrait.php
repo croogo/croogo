@@ -7,11 +7,11 @@ use Cake\ORM\TableRegistry;
 trait RowLevelAclTrait
 {
 
-/**
- * parentNode
- *
- * @param $model Model model instance
- */
+    /**
+     * parentNode
+     *
+     * @param $model Model model instance
+     */
     public function parentNode()
     {
         if (!$this->id && !$this->isDirty()) {
@@ -35,8 +35,8 @@ trait RowLevelAclTrait
                     ],
                 ];
             }
+
             return $return;
         }
     }
-
 }

@@ -2,8 +2,6 @@
 
 namespace Croogo\Core\TestSuite;
 
-use Cake\Database\Connection;
-use Cake\Database\Driver\Postgres;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**

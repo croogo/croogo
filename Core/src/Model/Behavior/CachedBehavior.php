@@ -4,6 +4,7 @@ namespace Croogo\Core\Model\Behavior;
 
 use Cake\Cache\Cache;
 use Cake\ORM\Behavior;
+use InvalidArgumentException;
 
 /**
  * Cached Behavior
@@ -53,7 +54,7 @@ class CachedBehavior extends Behavior
                 foreach ($configs[$group] as $config) {
                     Cache::clearGroup($group, $config);
                 }
-            } catch (\InvalidArgumentException $e) {
+            } catch (InvalidArgumentException $e) {
                 //Ignore invalid cache configs
             }
         }

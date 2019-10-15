@@ -1,8 +1,10 @@
 <?php
 // @codingStandardsIgnoreFile
 
-use Cake\Routing\Router;
+use Cake\Datasource\ConnectionManager;
+use Cake\Filesystem\Folder;
 use Croogo\Core\Plugin;
+use Croogo\Core\Test\Fixture\SettingsFixture;
 
 $findVendor = function () {
     $root = dirname(dirname(dirname(dirname(dirname(__DIR__)))));
@@ -47,7 +49,7 @@ Cake\Core\Configure::write('App', [
 ]);
 Cake\Core\Configure::write('debug', true);
 
-$TMP = new \Cake\Filesystem\Folder(TMP);
+$TMP = new Folder(TMP);
 $TMP->create(TMP . 'cache/models', 0777);
 $TMP->create(TMP . 'cache/persistent', 0777);
 $TMP->create(TMP . 'cache/views', 0777);
@@ -87,11 +89,11 @@ Cake\Datasource\ConnectionManager::config('test', [
     'timezone' => 'UTC'
 ]);
 
-$settingsFixture = new \Croogo\Core\Test\Fixture\SettingsFixture();
+$settingsFixture = new SettingsFixture();
 
-\Cake\Datasource\ConnectionManager::alias('test', 'default');
-$settingsFixture->create(\Cake\Datasource\ConnectionManager::get('default'));
-$settingsFixture->insert(\Cake\Datasource\ConnectionManager::get('default'));
+ConnectionManager::alias('test', 'default');
+$settingsFixture->create(ConnectionManager::get('default'));
+$settingsFixture->insert(ConnectionManager::get('default'));
 
 Plugin::load('Croogo/Core', ['bootstrap' => true, 'routes' => true]);
 Plugin::load('Croogo/Settings', ['bootstrap' => true, 'routes' => true]);

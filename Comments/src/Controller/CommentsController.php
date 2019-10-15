@@ -4,10 +4,9 @@ namespace Croogo\Comments\Controller;
 
 use App\Network\Email\Email;
 use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Routing\Router;
-use Croogo\Comments\Model\Entity\Comment;
 use Croogo\Core\Status;
+use Exception;
 use UnexpectedValueException;
 
 /**
@@ -23,10 +22,10 @@ use UnexpectedValueException;
 class CommentsController extends AppController
 {
 
-/**
- * Preset Variable Search
- * @var array
- */
+    /**
+     * Preset Variable Search
+     * @var array
+     */
     public $presetVars = true;
 
     public function initialize()
@@ -39,18 +38,17 @@ class CommentsController extends AppController
         $this->_setupPrg();
     }
 
-/**
- * index
- *
- * @return void
- * @access public
- */
+    /**
+     * index
+     *
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function index()
     {
         $this->set('title_for_layout', __d('croogo', 'Comments'));
 
-        if (!isset($this->request['_ext']) ||
-            $this->request['_ext'] != 'rss') {
+        if ($this->request->getParam('_ext') != 'rss') {
             return $this->redirect('/');
         }
 
@@ -58,7 +56,7 @@ class CommentsController extends AppController
         $this->paginate = [
             'contain' => ['Nodes', 'Users'],
             'conditions' => [
-                $this->Comments->aliasField('status') .' IN' => $this->Comments->status($roleId, 'approval'),
+                $this->Comments->aliasField('status') . ' IN' => $this->Comments->status($roleId, 'approval'),
             ],
             'order' => [
                 'weight' => 'DESC',
@@ -69,19 +67,20 @@ class CommentsController extends AppController
         $this->set('comments', $this->paginate());
     }
 
-/**
- * add
- *
- * @param int $foreignKey
- * @param int $parentId
- * @return \Cake\Network\Response|null
- * @access public
- * @throws UnexpectedValueException
- */
+    /**
+     * add
+     *
+     * @param int $model
+     * @param int $foreignKey
+     * @return \Cake\Network\Response|null
+     * @access public
+     * @throws UnexpectedValueException
+     */
     public function add($model, $foreignKey = null, $parentId = null)
     {
         if (!$foreignKey) {
             $this->Flash->error(__d('croogo', 'Invalid id'));
+
             return $this->redirect('/');
         }
 
@@ -108,6 +107,7 @@ class CommentsController extends AppController
 
         if (!is_null($parentId) && !$this->Comments->isValidLevel($parentId)) {
             $this->Flash->error(__d('croogo', 'Maximum level reached. You cannot reply to that comment.'));
+
             return $this->redirect($redirectUrl);
         }
 
@@ -122,6 +122,7 @@ class CommentsController extends AppController
 
         if (!$continue) {
             $this->Flash->error(__d('croogo', 'Comments are not allowed.'));
+
             return $this->redirect($redirectUrl);
         }
 
@@ -146,7 +147,7 @@ class CommentsController extends AppController
             ];
             try {
                 $success = $this->Comments->add($comment, $model, $foreignKey, $options);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $success = false;
                 $this->log('Error when adding comments: ' . $e);
                 $this->Flash->error(__d('croogo', 'There was an error when posting your comment'));
@@ -170,16 +171,16 @@ class CommentsController extends AppController
         $this->set(compact('success', 'entity', 'type', 'model', 'foreignKey', 'parentId', 'comment', 'parentComment'));
     }
 
-/**
- * Spam Protection
- *
- * @param bool $continue
- * @param bool $spamProtection
- * @param array $node
- * @return boolean
- * @access protected
- * @deprecated This method will be renamed to _spamProtection() in the future
- */
+    /**
+     * Spam Protection
+     *
+     * @param bool $continue
+     * @param bool $spamProtection
+     * @param array $node
+     * @return bool
+     * @access protected
+     * @deprecated This method will be renamed to _spamProtection() in the future
+     */
     protected function _spamProtection($continue, $spamProtection, $node)
     {
         if (!empty($this->getRequest()->data) &&
@@ -198,15 +199,15 @@ class CommentsController extends AppController
         return $continue;
     }
 
-/**
- * Captcha
- *
- * @param bool $continue
- * @param bool $captchaProtection
- * @param array $node
- * @return boolean
- * @access protected
- */
+    /**
+     * Captcha
+     *
+     * @param bool $continue
+     * @param bool $captchaProtection
+     * @param array $node
+     * @return bool
+     * @access protected
+     */
     protected function _captcha($continue, $captchaProtection, $node)
     {
         if (!empty($this->getRequest()->data) &&
@@ -220,13 +221,13 @@ class CommentsController extends AppController
         return $continue;
     }
 
-/**
- * delete
- *
- * @param int $id
- * @return void
- * @access public
- */
+    /**
+     * delete
+     *
+     * @param int $id
+     * @return void
+     * @access public
+     */
     public function delete($id)
     {
         $success = 0;

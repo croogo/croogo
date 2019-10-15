@@ -2,7 +2,6 @@
 
 namespace Croogo\Core\View\Helper;
 
-use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -11,7 +10,6 @@ use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
-use Croogo\Core\Croogo;
 use Croogo\Core\Database\Type\ParamsType;
 use Croogo\Core\PluginManager;
 use Croogo\Core\Status;
@@ -29,6 +27,9 @@ use Croogo\Core\Status;
 class CroogoHelper extends Helper
 {
 
+    /**
+     * @var array
+     */
     public $helpers = [
         'Form',
         'Html' => [
@@ -62,6 +63,9 @@ class CroogoHelper extends Helper
         $this->_ParamsType = new ParamsType;
     }
 
+    /**
+     * @return array
+     */
     public function statuses()
     {
         return $this->_CroogoStatus->statuses();
@@ -72,17 +76,17 @@ class CroogoHelper extends Helper
      *
      * This method does nothing if request is ajax or not in admin prefix.
      *
+     * @param string|array  $url Javascript files to include
+     * @param array|bool $options Options or Html attributes
+     * @return string|null String of <script /> tags or null
      * @see HtmlHelper::script()
-     * @param $url string|array Javascript files to include
-     * @param array|boolean Options or Html attributes
-     * @return mixed String of <script /> tags or null
      */
     public function adminScript($url, $options = [])
     {
         $options = Hash::merge(['block' => 'scriptBottom'], $options);
         $request = $this->getView()->getRequest();
         if ($request->is('ajax') || $request->getParam('prefix') !== 'admin') {
-            return;
+            return null;
         }
 
         return $this->Html->script($url, $options);
@@ -470,7 +474,11 @@ class CroogoHelper extends Helper
                             $tab['options']['elementData']['entity'] = $entity;
                         }
                         $output .= $this->Html->tabStart($domId);
-                        $output .= $this->_View->element($tab['element'], $tab['options']['elementData'], $tab['options']['elementOptions']);
+                        $output .= $this->_View->element(
+                            $tab['element'],
+                            $tab['options']['elementData'],
+                            $tab['options']['elementOptions']
+                        );
                         $output .= $this->Html->tabEnd();
                     } else {
                         $output .= $this->adminTab(__d('croogo', $title), '#' . $domId, $tab['options']['linkOptions']);
@@ -533,7 +541,11 @@ class CroogoHelper extends Helper
                     $box['options']['elementData']['entity'] = $entity;
                 }
                 $output .= $this->Html->beginBox($title);
-                $output .= $this->_View->element($box['element'], $box['options']['elementData'], $box['options']['elementOptions']);
+                $output .= $this->_View->element(
+                    $box['element'],
+                    $box['options']['elementData'],
+                    $box['options']['elementOptions']
+                );
                 $output .= $this->Html->endBox();
                 $this->boxAlreadyPrinted[] = $title;
             }
@@ -542,6 +554,11 @@ class CroogoHelper extends Helper
         return $output;
     }
 
+    /**
+     * @param $target
+     *
+     * @return \Cake\View\Cell
+     */
     public function linkChooser($target)
     {
         $linkChooser = $this->_View->element('Croogo/Core.admin/modal', [
@@ -555,6 +572,13 @@ class CroogoHelper extends Helper
         return $this->_View->cell('Croogo/Core.Admin/LinkChooser', [$target]);
     }
 
+    /**
+     * @param $theme
+     * @param $path
+     * @param null $allowedMimeTypes
+     *
+     * @return string|null
+     */
     public function dataUri($theme, $path, $allowedMimeTypes = null)
     {
         $allowedMimeTypes = array_filter(array_merge([
@@ -578,7 +602,7 @@ class CroogoHelper extends Helper
             $mimeType,
             base64_encode(file_get_contents($file))
         );
+
         return $dataUri;
     }
-
 }

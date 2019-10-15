@@ -15,10 +15,11 @@ use Cake\Event\EventListenerInterface;
 class AclEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- */
-    public function implementedEvents() {
+    /**
+     * implementedEvents
+     */
+    public function implementedEvents()
+    {
         return [
             'Dispatcher.beforeDispatch' => [
                 'callable' => 'onBeforeDispatch',
@@ -27,10 +28,11 @@ class AclEventHandler implements EventListenerInterface
         ];
     }
 
-/**
- * Dispatcher.beforeDispatch handler
- */
-    public function onBeforeDispatch($event) {
+    /**
+     * Dispatcher.beforeDispatch handler
+     */
+    public function onBeforeDispatch($event)
+    {
         if (!Configure::read('Access Control.splitSession')) {
             return;
         }
@@ -38,5 +40,4 @@ class AclEventHandler implements EventListenerInterface
         $cookiePath = $request->base . '/' . $request->param('prefix');
         ini_set('session.cookie_path', $cookiePath);
     }
-
 }

@@ -5,8 +5,8 @@ use App\Controller\Component\AuthComponent;
 use App\Model\Model;
 use App\Model\User;
 use Cake\ORM\TableRegistry;
-use Croogo\Model\CroogoAppModel;
 use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Model\CroogoAppModel;
 use Croogo\Users\Model\Table\UsersTable;
 
 /**
@@ -24,70 +24,70 @@ use Croogo\Users\Model\Table\UsersTable;
 class CroogoAppModelTest extends CroogoTestCase
 {
 
-/**
- * Fixtures
- *
- * @var array
- */
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
-//		'plugin.Croogo/Users.Aco',
-//		'plugin.Croogo/Users.Aro',
-//		'plugin.Croogo/Users.ArosAco',
-//		'plugin.Croogo/Users.Role',
-//		'plugin.Croogo/Users.User',
-//		'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Users.Aco',
+//      'plugin.Croogo/Users.Aro',
+//      'plugin.Croogo/Users.ArosAco',
+//      'plugin.Croogo/Users.Role',
+//      'plugin.Croogo/Users.User',
+//      'plugin.Croogo/Settings.Setting',
     ];
 
-/**
- * User instance
- *
- * @var TestUser
- */
+    /**
+     * User instance
+     *
+     * @var TestUser
+     */
     public $User;
 
-/**
- * @var UsersTable
- */
+    /**
+     * @var UsersTable
+     */
     public $usersTable;
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
 
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-//		$this->User = ClassRegistry::init('Users.User');
+//      $this->User = ClassRegistry::init('Users.User');
         $this->usersTable = TableRegistry::get('Croogo/Users.Users');
     }
 
-/**
- * tearDown method
- *
- * @return void
- */
+    /**
+     * tearDown method
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->User);
     }
 
-/**
- * testValidName
- */
+    /**
+     * testValidName
+     */
     public function testValidName()
     {
         $this->assertTrue($this->usersTable->validName(['name' => 'Kyle']));
         $this->assertFalse($this->usersTable->validName(['name' => 'what%is@this#i*dont!even']));
     }
 
-/**
- * testValidAlias
- */
+    /**
+     * testValidAlias
+     */
     public function testValidAlias()
     {
         $this->assertTrue($this->usersTable->validAlias(['name' => 'Kyle']));

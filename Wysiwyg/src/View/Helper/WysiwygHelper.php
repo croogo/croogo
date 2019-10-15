@@ -4,7 +4,6 @@ namespace Croogo\Wysiwyg\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper;
-use Cake\Core\App;
 use Croogo\Core\Router;
 
 /**
@@ -20,23 +19,23 @@ use Croogo\Core\Router;
 class WysiwygHelper extends Helper
 {
 
-/**
- * Other helpers used by this helper
- *
- * @var array
- * @access public
- */
+    /**
+     * Other helpers used by this helper
+     *
+     * @var array
+     * @access public
+     */
     public $helpers = [
         'Html',
         'Url'
     ];
 
-/**
- * beforeRender
- *
- * @param string $viewFile
- * @return void
- */
+    /**
+     * beforeRender
+     *
+     * @param string $viewFile
+     * @return void
+     */
     public function beforeRender($viewFile)
     {
         $actions = array_keys(Configure::read('Wysiwyg.actions'));
@@ -46,5 +45,4 @@ class WysiwygHelper extends Helper
             $this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => 'script']);
         }
     }
-
 }

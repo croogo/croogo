@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class UsersAddForeignKeys extends AbstractMigration
@@ -12,7 +13,6 @@ class UsersAddForeignKeys extends AbstractMigration
                 'delete' => 'RESTRICT',
             ])
             ->save();
-
 
         $this->table('roles_users')
             ->addForeignKey('user_id', 'users', ['id'], [
@@ -37,5 +37,4 @@ class UsersAddForeignKeys extends AbstractMigration
             ->dropForeignKey('user_id')
             ->save();
     }
-
 }

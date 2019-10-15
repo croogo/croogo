@@ -1,11 +1,12 @@
 <?php
+
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
 if (empty($modelClass)) {
     $modelClass = $this->name;
 }
-if (!empty($searchFields)):
+if (!empty($searchFields)) :
     echo $this->Form->create(null, [
         'align' => 'inline',
         'novalidate' => true,
@@ -19,7 +20,7 @@ if (!empty($searchFields)):
         'label' => false,
         'submitContainer' => '{{content}}',
     ]);
-    if ($this->getRequest()->getQuery('chooser')):
+    if ($this->getRequest()->getQuery('chooser')) :
         echo $this->Form->input('chooser', [
             'type' => 'hidden',
             'value' => $this->getRequest()->getQuery('chooser'),

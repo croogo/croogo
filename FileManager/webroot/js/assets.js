@@ -55,7 +55,7 @@ Assets.changeUsageType = function(e) {
 };
 
 Assets.setFeaturedImage = function(e) {
-  var $target = $(e.currentTarget)
+  var $target = $(e.currentTarget);
   var pk = $target.data('pk');
   var newValue = 'FeaturedImage';
   var $select = $('.change-usage-type[data-pk=' + pk + ']');
@@ -75,11 +75,11 @@ Assets.setFeaturedImage = function(e) {
     .html('<option value="' + newValue + '">' + newValue + '</option>')
     .val(newValue)
     .change()
-    .select2()
+    .select2();
 
   e && e.preventDefault();
   return false;
-}
+};
 
 Assets.unregisterAssetUsage = function(e) {
   e && e.preventDefault();
@@ -134,7 +134,7 @@ Assets.resizeAsset = function(e) {
     return alert(errorThrown);
   });
   return false;
-}
+};
 
 Assets.init = function() {
   var $body = $('body');

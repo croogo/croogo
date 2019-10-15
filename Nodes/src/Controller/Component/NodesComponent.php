@@ -20,19 +20,19 @@ use Cake\Utility\Hash;
 class NodesComponent extends Component
 {
 
-/**
- * Nodes for layout
- *
- * @var string
- * @access public
- */
+    /**
+     * Nodes for layout
+     *
+     * @var string
+     * @access public
+     */
     public $nodesForLayout = [];
 
-/**
- * beforeFilter
- *
- * @param Event $event instance of controller
- */
+    /**
+     * beforeFilter
+     *
+     * @param Event $event instance of controller
+     */
     public function beforeFilter(Event $event)
     {
         $this->controller = $event->getSubject();
@@ -43,12 +43,12 @@ class NodesComponent extends Component
         }
     }
 
-/**
- * Startup
- *
- * @param Controller $controller instance of controller
- * @return void
- */
+    /**
+     * Startup
+     *
+     * @param Controller $event instance of controller
+     * @return void
+     */
     public function startup(Event $event)
     {
         $controller = $event->getSubject();
@@ -57,13 +57,13 @@ class NodesComponent extends Component
         }
     }
 
-/**
- * Nodes
- *
- * Nodes will be available in this variable in views: $nodesForLayout
- *
- * @return void
- */
+    /**
+     * Nodes
+     *
+     * Nodes will be available in this variable in views: $nodesForLayout
+     *
+     * @return void
+     */
     public function nodes()
     {
         $roleId = $this->controller->Croogo->roleId();
@@ -95,12 +95,12 @@ class NodesComponent extends Component
         }
     }
 
-/**
- * beforeRender
- *
- * @param object $controller instance of controller
- * @return void
- */
+    /**
+     * beforeRender
+     *
+     * @param object $event instance of controller
+     * @return void
+     */
     public function beforeRender(Event $event)
     {
         $event->getSubject()->set('nodesForLayout', $this->nodesForLayout);

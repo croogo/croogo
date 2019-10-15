@@ -45,6 +45,7 @@ class TestAclAutoLoginComponent extends AclAutoLoginComponent
                 'username' => $username,
             ],
         ];
+
         return $this->_cookie($request);
     }
 }
@@ -62,9 +63,9 @@ class AclAutoLoginComponentTest extends CakeTestCase
         $this->autoLogin->startup($this->controller);
     }
 
-/**
- * Test login succesfull event
- */
+    /**
+     * Test login succesfull event
+     */
     public function testLoginSuccessful()
     {
         $cookie = $this->autoLogin->readCookie('User');

@@ -1,4 +1,5 @@
 <?php
+
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 

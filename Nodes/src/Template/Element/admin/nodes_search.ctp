@@ -22,8 +22,7 @@ echo $this->Form->input('type', [
     'default' => $this->getRequest()->getQuery('type'),
 ]);
 
-if (!$this->getRequest()->getQuery('chooser')):
-
+if (!$this->getRequest()->getQuery('chooser')) :
     echo $this->Form->input('status', [
         'options' => [
             '1' => __d('croogo', 'Published'),
@@ -43,7 +42,6 @@ if (!$this->getRequest()->getQuery('chooser')):
         'class' => 'c-select',
         'default' => $this->getRequest()->getQuery('promote'),
     ]);
-
 endif;
 
 echo $this->Form->submit(__d('croogo', 'Filter'), [

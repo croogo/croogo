@@ -1,10 +1,11 @@
 <?php
+
 use Cake\Utility\Hash;
 
-if (count($taxonomies) > 0):
+if (count($taxonomies) > 0) :
     $taxonomyIds = Hash::extract((array)$entity->taxonomies, '{n}.id');
 
-    foreach ($taxonomies as $vocabularyId => $taxonomyTree):
+    foreach ($taxonomies as $vocabularyId => $taxonomyTree) :
         $error = implode('', $entity->getErrors('taxonomy_data.' . $vocabularyId));
         $templates = [];
         if ($error) {

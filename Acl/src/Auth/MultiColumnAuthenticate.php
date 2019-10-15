@@ -1,4 +1,5 @@
 <?php
+
 namespace Croogo\Acl\Controller\Component\Auth;
 
 use Cake\Auth\FormAuthenticate;
@@ -27,17 +28,17 @@ use Cake\Controller\ComponentRegistry;
 class MultiColumnAuthenticate extends FormAuthenticate
 {
 
-/**
- * Settings for this object.
- *
- * - `fields` The fields to use to identify a user by.
- * - 'columns' array of columns to check username form input against
- * - `userModel` The model name of the User, defaults to User.
- * - `scope` Additional conditions to use when looking up and authenticating users,
- *    i.e. `array('User.is_active' => 1).`
- *
- * @var array
- */
+    /**
+     * Settings for this object.
+     *
+     * - `fields` The fields to use to identify a user by.
+     * - 'columns' array of columns to check username form input against
+     * - `userModel` The model name of the User, defaults to User.
+     * - `scope` Additional conditions to use when looking up and authenticating users,
+     *    i.e. `array('User.is_active' => 1).`
+     *
+     * @var array
+     */
     public $settings = [
         'fields' => [
             'username' => 'username',
@@ -48,25 +49,25 @@ class MultiColumnAuthenticate extends FormAuthenticate
         'scope' => []
     ];
 
-/**
- * constructor
- *
- * Change the default use of Hash::merge() to array_merge() since Hash::merge()
- * 'combines' the 'column' values instead of replacing them
- */
+    /**
+     * constructor
+     *
+     * Change the default use of Hash::merge() to array_merge() since Hash::merge()
+     * 'combines' the 'column' values instead of replacing them
+     */
     public function __construct(ComponentRegistry $collection, $settings)
     {
         $this->_registry = $collection;
         $this->settings = array_merge($this->settings, $settings);
     }
 
-/**
- * Find a user record using the standard options.
- *
- * @param string $username The username/identifier.
- * @param string $password The unhashed password.
- * @return Mixed Either false on failure, or an array of user data.
- */
+    /**
+     * Find a user record using the standard options.
+     *
+     * @param string $conditions The username/identifier.
+     * @param string $password The unhashed password.
+     * @return bool|array Either false on failure, or an array of user data.
+     */
     protected function _findUser($conditions, $password = null)
     {
         $userModel = $this->settings['userModel'];
@@ -98,6 +99,7 @@ class MultiColumnAuthenticate extends FormAuthenticate
             return false;
         }
         unset($result[$model][$fields['password']]);
+
         return $result[$model];
     }
 }

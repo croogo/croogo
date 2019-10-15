@@ -18,9 +18,9 @@ use Croogo\Core\Nav;
 class TaxonomiesEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- */
+    /**
+     * implementedEvents
+     */
     public function implementedEvents()
     {
         return [
@@ -33,9 +33,9 @@ class TaxonomiesEventHandler implements EventListenerInterface
         ];
     }
 
-/**
- * Setup admin data
- */
+    /**
+     * Setup admin data
+     */
     public function onSetupAdminData($event)
     {
         $View = $event->getSubject();
@@ -63,11 +63,11 @@ class TaxonomiesEventHandler implements EventListenerInterface
         };
     }
 
-/**
- * Setup Link chooser values
- *
- * @return void
- */
+    /**
+     * Setup Link chooser values
+     *
+     * @return void
+     */
     public function onSetupLinkChooser($event)
     {
         $vocabulariesTable = TableRegistry::get('Croogo/Taxonomy.Vocabularies');

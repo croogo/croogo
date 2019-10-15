@@ -1,6 +1,6 @@
 <div class="users form">
     <h2><?= __d('croogo', 'Login') ?></h2>
-    <?= $this->Form->create(false, array('url' => array('action' => 'login')));?>
+    <?= $this->Form->create(false, ['url' => ['action' => 'login']]);?>
         <fieldset>
         <?php
             echo $this->Form->input('username');

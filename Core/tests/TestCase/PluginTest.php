@@ -147,7 +147,6 @@ class PluginTest extends TestCase
         $this->assertEquals('MixedManifest', $data['name']);
     }
 
-
     public function testNeedMigrationPluginNotExists()
     {
         $migrationVersion = $this->_getMockMigrationVersion();
@@ -304,9 +303,9 @@ class PluginTest extends TestCase
         Configure::read('Hook.bootstraps', $actives);
     }
 
-/**
- * testReorderBootstraps
- */
+    /**
+     * testReorderBootstraps
+     */
     public function testReorderBootstraps()
     {
         $bootstraps = explode(',', 'Croogo/Settings,Croogo/Taxonomy,Sites,Croogo/Example');
@@ -324,9 +323,9 @@ class PluginTest extends TestCase
         $this->assertEquals('Croogo/Example is already at the first position', $result);
     }
 
-/**
- * testReorderBootstrapsWithDependency
- */
+    /**
+     * testReorderBootstrapsWithDependency
+     */
     public function testReorderBootstrapsWithDependency()
     {
         $bootstraps = explode(',', 'Widgets,Editors');
@@ -340,18 +339,18 @@ class PluginTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-/**
- * testDeleteEmptyPlugin
- * @expectedException InvalidArgumentException
- */
+    /**
+     * testDeleteEmptyPlugin
+     * @expectedException InvalidArgumentException
+     */
     public function testDeleteEmptyPlugin()
     {
         $this->plugin->delete(null);
     }
 
-/**
- * testUsedBy
- */
+    /**
+     * testUsedBy
+     */
     public function testUsedBy()
     {
         Cache::delete('pluginDeps', 'cached_settings');
@@ -424,10 +423,10 @@ class PluginTest extends TestCase
     {
         return [
             // Internal Croogo plugins based on Croogo/Core path
-            ['Croogo/Core', CROOGO_INCLUDE_PATH  . 'Core' . DS],
+            ['Croogo/Core', CROOGO_INCLUDE_PATH . 'Core' . DS],
             ['Croogo/Nodes', CROOGO_INCLUDE_PATH . 'Nodes' . DS],
             // Plugin paths from the 'plugins' Configure key
-            ['BootstrapUI', VENDOR .  'friendsofcake' . DS . 'bootstrap-ui' . DS],
+            ['BootstrapUI', VENDOR . 'friendsofcake' . DS . 'bootstrap-ui' . DS],
             // Plugin path from the plugins directory
             ['Shops', App::path('Plugin')[0] . 'Shops'],
             // A non existing plugin

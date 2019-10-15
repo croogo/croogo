@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class EnlargeLanguagesFields extends AbstractMigration
@@ -26,5 +27,4 @@ class EnlargeLanguagesFields extends AbstractMigration
             ->removeIndexByName('ix_languages_locale')
             ->save();
     }
-
 }

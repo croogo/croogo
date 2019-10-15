@@ -6,11 +6,11 @@ use Croogo\TestSuite\CroogoTestCase;
 class CroogoTestsTest extends PHPUnit_Framework_TestSuite
 {
 
-/**
- * suite
- *
- * @return CakeTestSuite
- */
+    /**
+     * suite
+     *
+     * @return CakeTestSuite
+     */
     public static function suite()
     {
         $suite = new CakeTestSuite('Croogo Tests');
@@ -24,6 +24,7 @@ class CroogoTestsTest extends PHPUnit_Framework_TestSuite
         $suite->addTestFile($path . 'CroogoLibsTest.php');
         $suite->addTestFile($path . 'CroogoConsolesTest.php');
         $suite->addTestFile($path . 'CroogoCorePluginsTest.php');
+
         return $suite;
     }
 }

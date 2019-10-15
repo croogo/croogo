@@ -7,11 +7,11 @@ use Croogo\TestSuite\CroogoTestFixture;
 class EmployeeFixture extends CroogoTestFixture
 {
 
-/**
- * fields property
- *
- * @var array
- */
+    /**
+     * fields property
+     *
+     * @var array
+     */
     public $fields = [
         'id' => ['type' => 'integer'],
         'username' => ['type' => 'string', 'null' => false],
@@ -21,11 +21,11 @@ class EmployeeFixture extends CroogoTestFixture
         '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
     ];
 
-/**
- * records property
- *
- * @var array
- */
+    /**
+     * records property
+     *
+     * @var array
+     */
     public $records = [
         ['username' => 'mark', 'created' => '2007-03-17 01:16:23', 'primary_department_id' => 2],
         ['username' => 'jack', 'created' => '2007-03-17 01:18:23', 'primary_department_id' => null],

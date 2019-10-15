@@ -1,7 +1,7 @@
 <?php
 
-use Cake\Core\Configure;
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Croogo\Core\Croogo;
 
 Cache::setConfig('croogo_menus', array_merge(

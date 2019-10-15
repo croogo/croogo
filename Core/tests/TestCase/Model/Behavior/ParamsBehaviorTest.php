@@ -8,54 +8,54 @@ class ParamsBehaviorTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.Croogo/Users.Aco',
-//		'plugin.Croogo/Users.Aro',
-//		'plugin.Croogo/Users.ArosAco',
-//		'plugin.Croogo/Blocks.Block',
-//		'plugin.Croogo/Comments.Comment',
-//		'plugin.Croogo/Contacts.Contact',
-//		'plugin.Croogo/Translate.I18n',
-//		'plugin.Croogo/Settings.Language',
-//		'plugin.Croogo/Menus.Link',
-//		'plugin.Croogo/Menus.Menu',
-//		'plugin.Croogo/Contacts.Message',
-//		'plugin.Croogo/Meta.Meta',
-//		'plugin.Croogo/Nodes.Node',
-//		'plugin.Croogo/Taxonomy.ModelTaxonomy',
-//		'plugin.Croogo/Blocks.Region',
-//		'plugin.Croogo/Users.Role',
-//		'plugin.Croogo/Settings.Setting',
-//		'plugin.Croogo/Taxonomy.Taxonomy',
-//		'plugin.Croogo/Taxonomy.Term',
-//		'plugin.Croogo/Taxonomy.Type',
-//		'plugin.Croogo/Taxonomy.TypesVocabulary',
-//		'plugin.Croogo/Users.User',
-//		'plugin.Croogo/Taxonomy.Vocabulary',
+//      'plugin.Croogo/Users.Aco',
+//      'plugin.Croogo/Users.Aro',
+//      'plugin.Croogo/Users.ArosAco',
+//      'plugin.Croogo/Blocks.Block',
+//      'plugin.Croogo/Comments.Comment',
+//      'plugin.Croogo/Contacts.Contact',
+//      'plugin.Croogo/Translate.I18n',
+//      'plugin.Croogo/Settings.Language',
+//      'plugin.Croogo/Menus.Link',
+//      'plugin.Croogo/Menus.Menu',
+//      'plugin.Croogo/Contacts.Message',
+//      'plugin.Croogo/Meta.Meta',
+//      'plugin.Croogo/Nodes.Node',
+//      'plugin.Croogo/Taxonomy.ModelTaxonomy',
+//      'plugin.Croogo/Blocks.Region',
+//      'plugin.Croogo/Users.Role',
+//      'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Taxonomy.Taxonomy',
+//      'plugin.Croogo/Taxonomy.Term',
+//      'plugin.Croogo/Taxonomy.Type',
+//      'plugin.Croogo/Taxonomy.TypesVocabulary',
+//      'plugin.Croogo/Users.User',
+//      'plugin.Croogo/Taxonomy.Vocabulary',
     ];
 
     public $Type = null;
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
-//		$this->Type = ClassRegistry::init('Taxonomy.Type');
+//      $this->Type = ClassRegistry::init('Taxonomy.Type');
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->Type);
-//		ClassRegistry::flush();
+//      ClassRegistry::flush();
     }
 
     public function testSingle()

@@ -7,14 +7,19 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Croogo\Core\Model\Table\CroogoTable;
 
-
 /**
  * AssetUsages Table
  *
  */
-class AssetUsagesTable extends CroogoTable {
+class AssetUsagesTable extends CroogoTable
+{
 
-    public function initialize(array $config) {
+    /**
+     * @param array $config
+     * @return void
+     */
+    public function initialize(array $config)
+    {
         $this->setTable('asset_usages');
 
         $this->belongsTo('Assets', [
@@ -25,12 +30,20 @@ class AssetUsagesTable extends CroogoTable {
         $this->addBehavior('Croogo/Core.Trackable');
     }
 
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options) {
+    /**
+     * @param Event $event
+     * @param EntityInterface $entity
+     * @param ArrayObject $options
+     *
+     * @return bool
+     */
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
         if (!empty($entity->featured_image)) {
             $entity->type = 'FeaturedImage';
             $entity->unsetProperty('featured_image');
         }
+
         return true;
     }
-
 }

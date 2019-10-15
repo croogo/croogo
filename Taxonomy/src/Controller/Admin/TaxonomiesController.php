@@ -16,7 +16,7 @@ class TaxonomiesController extends AppController
         $defaultType = $this->Taxonomy->getDefaultType($vocabulary);
 
         $taxonomies = $this->Taxonomies->find()
-            ->matching('Terms', function($q) {
+            ->matching('Terms', function ($q) {
                 return $q->select([
                     'id', 'title', 'slug',
                 ]);
@@ -101,9 +101,9 @@ class TaxonomiesController extends AppController
             $success = $this->Taxonomies->Terms->remove($taxonomy->term_id, $vocabularyId);
             if ($success) {
                 $this->Flash->success(__d('croogo', 'Taxonomy deleted successfully'));
+
                 return $this->redirect(['action' => 'index', 'vocabulary_id' => $vocabularyId]);
             }
         }
     }
-
 }

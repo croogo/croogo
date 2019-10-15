@@ -14,9 +14,9 @@ use Cake\Event\EventListenerInterface;
 class UsersEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- */
+    /**
+     * implementedEvents
+     */
     public function implementedEvents()
     {
         return [];

@@ -8,31 +8,32 @@ $this->append('action-buttons');
         'translate',
         $node['Node']['id'],
     ]);
-$this->end();
+    $this->end();
 
-if (count($translations) == 0):
-    echo __d('croogo', 'No translations available.');
-    return;
-endif;
+    if (count($translations) == 0) :
+        echo __d('croogo', 'No translations available.');
 
-$this->append('table-heading');
-    $tableHeaders = $this->Html->tableHeaders(array(
+        return;
+    endif;
+
+    $this->append('table-heading');
+    $tableHeaders = $this->Html->tableHeaders([
         '',
         __d('croogo', 'Title'),
         __d('croogo', 'Locale'),
         __d('croogo', 'Actions'),
-    ));
+    ]);
     echo $tableHeaders;
-$this->end();
+    $this->end();
 
-$this->append('table-footer');
+    $this->append('table-footer');
     echo $tableHeaders;
-$this->end();
+    $this->end();
 
-$this->append('table-body');
+    $this->append('table-body');
 
     $rows = [];
-    foreach ($translations as $translation):
+    foreach ($translations as $translation) :
         $actions = $this->Html->link(__d('croogo', 'Edit'), [
             'action' => 'translate',
             $id,
@@ -43,13 +44,13 @@ $this->append('table-body');
             $translation[$runtimeModelAlias]['locale'],
             $id
         ], null, __d('croogo', 'Are you sure?'));
-        $rows[] = array(
+        $rows[] = [
             '',
             $translation[$runtimeModelAlias]['content'],
             $translation[$runtimeModelAlias]['locale'],
             $actions,
-        );
+        ];
     endforeach;
 
     echo $this->Html->tableCells($rows);
-$this->end();
+    $this->end();

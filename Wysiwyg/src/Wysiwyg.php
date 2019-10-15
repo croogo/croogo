@@ -5,7 +5,8 @@ namespace Croogo\Wysiwyg;
 use Cake\Core\Configure;
 use Croogo\Core\Croogo;
 
-class Wysiwyg {
+class Wysiwyg
+{
 
     /**
      * Get an array of wysiwyg enabled actions
@@ -18,6 +19,7 @@ class Wysiwyg {
             $action = base64_decode($key);
             $results[$action] = $config;
         }
+
         return $results;
     }
 
@@ -28,5 +30,4 @@ class Wysiwyg {
     {
         return Croogo::mergeConfig('Wysiwyg.actions', $config, true);
     }
-
 }

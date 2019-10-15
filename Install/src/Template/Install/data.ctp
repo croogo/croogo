@@ -23,4 +23,4 @@ $this->assign('title', __d('croogo', 'Step 2: Build database'));
         'button' => 'success',
     ]);
 
-$this->end();
+    $this->end();

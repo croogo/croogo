@@ -31,6 +31,7 @@ class ThemeComponent extends Component
         $theme = $this->getConfig('theme');
         if (!$theme) {
             $this->_controller->viewBuilder()->setTheme('Croogo/Core');
+
             return;
         }
 

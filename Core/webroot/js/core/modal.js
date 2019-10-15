@@ -18,7 +18,7 @@ Admin.modal = function() {
 
   $('body').on('click', '.modal-dialog a:not(.item-choose,.popovers)', function(event) {
     var $el = $(event.currentTarget);
-    var href = $el.attr('href')
+    var href = $el.attr('href');
     if (href) {
       $el.closest('.modal-body').load(href);
     }

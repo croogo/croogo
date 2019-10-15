@@ -228,6 +228,7 @@ class NodesControllerTest extends IntegrationTestCase
             ->count();
         $this->assertFalse($node);
     }
+
 //
 ///**
 // * testBlackholedRequest

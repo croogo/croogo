@@ -2,8 +2,10 @@
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Breadcrumbs->add(__d('croogo', 'Settings'),
-    ['plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'prefix', 'Site'])
+$this->Breadcrumbs->add(
+    __d('croogo', 'Settings'),
+    ['plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'prefix', 'Site']
+)
     ->add(__d('croogo', 'Languages'), $this->getRequest()->getUri()->getPath());
 
 $tableHeaders = $this->Html->tableHeaders([

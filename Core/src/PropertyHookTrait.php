@@ -12,12 +12,14 @@ trait PropertyHookTrait
         $relTypes = ['hasOne', 'hasMany', 'belongsTo', 'belongsToMany'];
         if (in_array($property, $relTypes)) {
             $associations = $this->associations();
+
             return $associations ? $associations->has($property) : false;
         }
 
         if (!isset($this->{$property})) {
             return false;
         }
+
         return $this->{$property};
     }
 
@@ -26,6 +28,7 @@ trait PropertyHookTrait
         $relTypes = ['hasOne', 'hasMany', 'belongsTo', 'belongsToMany'];
         if (in_array($property, $relTypes)) {
             $associations = $this->associations();
+
             return $associations ? $associations->addAssociations($property, $value) : false;
         }
 

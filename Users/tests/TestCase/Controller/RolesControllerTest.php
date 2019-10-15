@@ -12,31 +12,31 @@ class RolesControllerTest extends CroogoControllerTestCase
         'plugin.Croogo/Users.Aco',
         'plugin.Croogo/Users.Aro',
         'plugin.Croogo/Users.ArosAco',
-        //'plugin.Croogo/Blocks.Block',
-        //'plugin.Croogo/Comments.Comment',
-        //'plugin.Croogo/Contacts.Contact',
-        //'plugin.Croogo/Translate.I18n',
+//      'plugin.Croogo/Blocks.Block',
+//      'plugin.Croogo/Comments.Comment',
+//      'plugin.Croogo/Contacts.Contact',
+//      'plugin.Croogo/Translate.I18n',
         'plugin.Croogo/Settings.Language',
-        //'plugin.Croogo/Menus.Link',
-        //'plugin.Croogo/Menus.Menu',
-        //'plugin.Croogo/Contacts.Message',
-        //'plugin.Croogo/Meta.Meta',
+//      'plugin.Croogo/Menus.Link',
+//      'plugin.Croogo/Menus.Menu',
+//      'plugin.Croogo/Contacts.Message',
+//      'plugin.Croogo/Meta.Meta',
         'plugin.Croogo/Nodes.Node',
-        //'plugin.Croogo/Taxonomy.ModelTaxonomy',
-        //'plugin.Croogo/Blocks.Region',
+//      'plugin.Croogo/Taxonomy.ModelTaxonomy',
+//      'plugin.Croogo/Blocks.Region',
         'plugin.Croogo/Settings.Setting',
-        //'plugin.Croogo/Taxonomy.Taxonomy',
-        //'plugin.Croogo/Taxonomy.Term',
-        //'plugin.Croogo/Taxonomy.Type',
-        //'plugin.Croogo/Taxonomy.TypesVocabulary',
-        //'plugin.Croogo/Taxonomy.Vocabulary',
+//      'plugin.Croogo/Taxonomy.Taxonomy',
+//      'plugin.Croogo/Taxonomy.Term',
+//      'plugin.Croogo/Taxonomy.Type',
+//      'plugin.Croogo/Taxonomy.TypesVocabulary',
+//      'plugin.Croogo/Taxonomy.Vocabulary',
     ];
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -56,22 +56,22 @@ class RolesControllerTest extends CroogoControllerTestCase
             ->will($this->returnCallback([$this, 'authUserCallback']));
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->RolesController);
     }
 
-/**
- * testAdminIndex
- *
- * @return void
- */
+    /**
+     * testAdminIndex
+     *
+     * @return void
+     */
     public function testAdminIndex()
     {
         $this->testAction('/admin/users/roles/index');
@@ -79,11 +79,11 @@ class RolesControllerTest extends CroogoControllerTestCase
         $this->assertNotEmpty($this->vars['roles']);
     }
 
-/**
- * testAdminAdd
- *
- * @return void
- */
+    /**
+     * testAdminAdd
+     *
+     * @return void
+     */
     public function testAdminAdd()
     {
         $this->expectFlashAndRedirect('The Role has been saved');
@@ -99,11 +99,11 @@ class RolesControllerTest extends CroogoControllerTestCase
         $this->assertEqual($newRole['Role']['title'], 'new_role');
     }
 
-/**
- * testAdminIndex
- *
- * @return void
- */
+    /**
+     * testAdminIndex
+     *
+     * @return void
+     */
     public function testAdminEdit()
     {
         $this->expectFlashAndRedirect('The Role has been saved');
@@ -119,11 +119,11 @@ class RolesControllerTest extends CroogoControllerTestCase
         $this->assertEquals('Registered [modified]', $registered['Role']['title']);
     }
 
-/**
- * testAdminDelete
- *
- * @return void
- */
+    /**
+     * testAdminDelete
+     *
+     * @return void
+     */
     public function testAdminDelete()
     {
         $this->expectFlashAndRedirect('Role deleted');

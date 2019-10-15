@@ -3,7 +3,6 @@
 namespace Croogo\Menus\Controller\Admin;
 
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Croogo\Core\Controller\Component\CroogoComponent;
@@ -194,7 +193,7 @@ class LinksController extends AppController
         $conditions = [];
         if (isset($event->getSubject()->entity) && $event->getSubject()->entity->isNew() === false) {
             $menuId = $event->getSubject()->entity->menu_id;
-            $conditions[$this->Links->aliasField('id') .' !='] = $event->getSubject()->entity->id;
+            $conditions[$this->Links->aliasField('id') . ' !='] = $event->getSubject()->entity->id;
         }
         if ($this->getRequest()->getQuery('menu_id')) {
             $menuId = $this->getRequest()->getQuery('menu_id');

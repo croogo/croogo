@@ -63,5 +63,4 @@ class TypesSeed extends AbstractSeed
         $Table = $this->table('types');
         $Table->insert($this->records)->save();
     }
-
 }

@@ -1,13 +1,13 @@
 <?php
 
-use Cake\Routing\Router;
-
 $this->assign('title', __d('croogo', 'Edit file: %s', $path));
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Breadcrumbs->add(__d('croogo', 'File Manager'),
-        ['plugin' => 'Croogo/FileManager', 'controller' => 'FileManager', 'action' => 'browse'])
+$this->Breadcrumbs->add(
+    __d('croogo', 'File Manager'),
+    ['plugin' => 'Croogo/FileManager', 'controller' => 'FileManager', 'action' => 'browse']
+)
     ->add(basename($absolutefilepath), $this->getRequest()->getRequestTarget());
 
 $this->start('page-heading');

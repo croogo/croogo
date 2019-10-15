@@ -27,11 +27,11 @@ class EncoderBehaviorTest extends CroogoTestCase
         $this->nodesTable = TableRegistry::get('Croogo/Nodes.Nodes');
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();

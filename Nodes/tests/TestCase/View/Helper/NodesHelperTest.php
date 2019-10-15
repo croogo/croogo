@@ -2,7 +2,6 @@
 
 namespace Croogo\Nodes\Test\TestCase\View\Helper;
 
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\View\View;

@@ -1,6 +1,8 @@
 <?php
 // @codingStandardsIgnoreFile
 
+use Cake\Filesystem\Folder;
+
 $findRoot = function () {
 	$root = dirname(__DIR__);
 	if (is_dir($root . '/vendor/cakephp/cakephp')) {
@@ -46,7 +48,7 @@ Cake\Core\Configure::write('App', [
 ]);
 Cake\Core\Configure::write('debug', true);
 
-$TMP = new \Cake\Filesystem\Folder(TMP);
+$TMP = new Folder(TMP);
 $TMP->create(TMP . 'cache/models', 0777);
 $TMP->create(TMP . 'cache/persistent', 0777);
 $TMP->create(TMP . 'cache/views', 0777);

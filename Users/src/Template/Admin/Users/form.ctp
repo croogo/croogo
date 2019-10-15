@@ -5,8 +5,10 @@ use Cake\I18n\Time;
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Breadcrumbs->add(__d('croogo', 'Users'),
-        ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index']);
+$this->Breadcrumbs->add(
+    __d('croogo', 'Users'),
+    ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index']
+);
 
 if ($this->getRequest()->getParam('action') == 'edit') {
     $this->Breadcrumbs->add(h($user->name), $this->getRequest()->getRequestTarget());
@@ -17,7 +19,7 @@ if ($this->getRequest()->getParam('action') == 'edit') {
 }
 
 $this->start('action-buttons');
-if ($this->getRequest()->getParam('action') == 'edit'):
+if ($this->getRequest()->getParam('action') == 'edit') :
     echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), ['action' => 'reset_password', $user->id]);
 endif;
 $this->end();
@@ -67,7 +69,7 @@ $this->append('panels');
 echo $this->Html->beginBox(__d('croogo', 'Publishing'));
 echo $this->element('Croogo/Core.admin/buttons', ['type' => 'user']);
 
-if ($this->getRequest()->getParam('action') == 'add'):
+if ($this->getRequest()->getParam('action') == 'add') :
     echo $this->Form->input('notification', [
         'label' => __d('croogo', 'Send Activation Email'),
         'type' => 'checkbox',
@@ -80,7 +82,7 @@ echo $this->Form->input('status', [
 ]);
 
 $showPassword = !empty($user->status);
-if ($this->getRequest()->getParam('action') == 'add'):
+if ($this->getRequest()->getParam('action') == 'add') :
     $out = $this->Form->input('password', [
         'label' => __d('croogo', 'Password'),
         'disabled' => !$showPassword,

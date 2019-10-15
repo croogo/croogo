@@ -41,9 +41,9 @@ class ActionsController extends AppController
         }
     }
 
-/**
- * admin_index
- */
+    /**
+     * admin_index
+     */
     public function index($id = null)
     {
         if ($id == null) {
@@ -56,9 +56,9 @@ class ActionsController extends AppController
         $this->set(compact('acos'));
     }
 
-/**
- * admin_add
- */
+    /**
+     * admin_add
+     */
     public function add()
     {
         $aco = $this->Acos->newEntity();
@@ -74,6 +74,7 @@ class ActionsController extends AppController
 
             if ($this->Acos->save($aco)) {
                 $this->Flash->success(sprintf(__d('croogo', 'The %s has been saved'), $acoType));
+
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(sprintf(__d('croogo', 'The %s could not be saved. Please, try again.'), $acoType));
@@ -84,11 +85,11 @@ class ActionsController extends AppController
         $this->set(compact('aco', 'acos'));
     }
 
-/**
- * admin_edit
- *
- * @param int $id
- */
+    /**
+     * admin_edit
+     *
+     * @param int $id
+     */
     public function edit($id = null)
     {
         $aco = $this->Acos->get($id);
@@ -118,28 +119,29 @@ class ActionsController extends AppController
         $this->set(compact('aco', 'acos'));
     }
 
-/**
- * admin_delete
- *
- * @param int $id
- */
+    /**
+     * admin_delete
+     *
+     * @param int $id
+     */
     public function delete($id = null)
     {
         $aco = $this->Acos->get($id);
 
         if ($this->Acos->delete($aco)) {
             $this->Flash->success(__d('croogo', 'Action deleted'));
+
             return $this->redirect(['action' => 'index']);
         }
     }
 
-/**
- * admin_move
- *
- * @param int $id
- * @param string $direction
- * @param string $step
- */
+    /**
+     * admin_move
+     *
+     * @param int $id
+     * @param string $direction
+     * @param string $step
+     */
     public function move($id, $direction = 'up', $step = '1')
     {
         $aco = $this->Acos->get($id);
@@ -147,19 +149,21 @@ class ActionsController extends AppController
         if ($direction == 'up') {
             if ($this->Acos->moveUp($aco)) {
                 $this->Flash->success(__d('croogo', 'Action moved up'));
+
                 return $this->redirect(['action' => 'index']);
             }
         } else {
             if ($this->Acos->moveDown($aco)) {
                 $this->Flash->success(__d('croogo', 'Action moved down'));
+
                 return $this->redirect(['action' => 'index']);
             }
         }
     }
 
-/**
- * admin_generate
- */
+    /**
+     * admin_generate
+     */
     public function generate()
     {
         $AclExtras = new AclGenerator();

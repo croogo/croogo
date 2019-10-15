@@ -3,7 +3,6 @@
 namespace Croogo\Settings\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\Core\Event\EventManager;
 
 /**
  * Languages Controller
@@ -38,14 +37,14 @@ class LanguagesController extends AppController
         $this->_setupPrg();
     }
 
-/**
- * Admin select
- *
- * @param int $id
- * @param string $modelAlias
- * @return void
- * @access public
- */
+    /**
+     * Admin select
+     *
+     * @param int $id
+     * @param string $modelAlias
+     * @return void
+     * @access public
+     */
     public function select()
     {
         $id = $this->getRequest()->getQuery('id');
@@ -67,12 +66,13 @@ class LanguagesController extends AppController
 
     public function index()
     {
-        $this->Crud->on('beforePaginate', function(Event $e) {
+        $this->Crud->on('beforePaginate', function (Event $e) {
             if (empty($this->getRequest()->getQuery('sort'))) {
                 $e->getSubject()->query
                     ->orderDesc('status');
             }
         });
+
         return $this->Crud->execute();
     }
 }

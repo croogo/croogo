@@ -34,7 +34,8 @@ class TaxonomiesSeed extends AbstractSeed
         ],
     ];
 
-    public function getDependencies() {
+    public function getDependencies()
+    {
         return [
             'TermsSeed',
         ];
@@ -45,5 +46,4 @@ class TaxonomiesSeed extends AbstractSeed
         $Table = $this->table('taxonomies');
         $Table->insert($this->records)->save();
     }
-
 }

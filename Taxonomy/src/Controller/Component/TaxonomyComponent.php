@@ -4,14 +4,13 @@ namespace Croogo\Taxonomy\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Croogo\Core\Core\Exception\Exception;
 use Croogo\Extensions\CroogoTheme;
 use Croogo\Taxonomy\Model\Entity\Type;
-use Croogo\Taxonomy\Model\Entity\Vocabulary;
 use Croogo\Taxonomy\Model\Table\TaxonomiesTable;
 use Croogo\Taxonomy\Model\Table\TermsTable;
 use InvalidArgumentException;
@@ -63,7 +62,7 @@ class TaxonomyComponent extends Component
     /**
      * Startup
      *
-     * @param object $controller instance of controller
+     * @param object $event instance of controller
      * @return void
      */
     public function startup(Event $event)
@@ -258,15 +257,15 @@ class TaxonomyComponent extends Component
                 'id' => $typeId,
             ]);
         }
+
         return $defaultType;
     }
 
     /**
      * Check that Term exists
      *
-     * @param int $idTerm Id
-     * @param string $url Redirect Url
-     * @return bool True if Term exists
+     * @param int $id Id
+     * @return void
      */
     public function ensureTermExists($id)
     {
@@ -283,7 +282,7 @@ class TaxonomyComponent extends Component
      *
      * @param int $termId Term Id
      * @param int $vocabularyId Vocabulary Id
-     * @return bool True if Taxonomy exists
+     * @return void
      */
     public function ensureTaxonomyExists($termId, $vocabularyId)
     {
@@ -299,9 +298,8 @@ class TaxonomyComponent extends Component
     /**
      * Checks that Vocabulary exists
      *
-     * @param int $vocabularyIdVocabulary Id
-     * @param string $url Redirect Url
-     * @return bool True if Vocabulary exists
+     * @param int $vocabularyId Id
+     * @return void
      */
     public function ensureVocabularyIdExists($vocabularyId)
     {
@@ -316,5 +314,4 @@ class TaxonomyComponent extends Component
             throw $exception;
         }
     }
-
 }

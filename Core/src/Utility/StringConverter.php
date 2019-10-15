@@ -2,9 +2,6 @@
 
 namespace Croogo\Core\Utility;
 
-use Cake\Core\Configure;
-use Cake\Log\Log;
-
 /**
  * StringConverter
  *
@@ -15,24 +12,24 @@ use Cake\Log\Log;
 class StringConverter
 {
 
-/**
- * Parses bb-code like string.
- *
- * Example: string containing [menu:main option1="value"] will return an array like
- *
- * Array
- * (
- *     [main] => Array
- *         (
- *             [option1] => value
- *         )
- * )
- *
- * @param string $exp
- * @param string $text
- * @param array  $options
- * @return array
- */
+    /**
+     * Parses bb-code like string.
+     *
+     * Example: string containing [menu:main option1="value"] will return an array like
+     *
+     * Array
+     * (
+     *     [main] => Array
+     *         (
+     *             [option1] => value
+     *         )
+     * )
+     *
+     * @param string $exp
+     * @param string $text
+     * @param array  $options
+     * @return array
+     */
     public function parseString($exp, $text, $options = [])
     {
         $_options = [
@@ -59,18 +56,19 @@ class StringConverter
             }
             $output[$alias] = $aliasOptions;
         }
+
         return $output;
     }
 
-/**
- * Converts formatted string to array
- *
- * A string formatted like 'Nodes.type:blog;' will be converted to
- * array('Nodes.type' => 'blog');
- *
- * @param string $string in this format: Nodes.type:blog;Nodes.user_id:1;
- * @return array
- */
+    /**
+     * Converts formatted string to array
+     *
+     * A string formatted like 'Nodes.type:blog;' will be converted to
+     * array('Nodes.type' => 'blog');
+     *
+     * @param string $string in this format: Nodes.type:blog;Nodes.user_id:1;
+     * @return array
+     */
     public function stringToArray($string)
     {
         $string = explode(';', $string);
@@ -89,19 +87,20 @@ class StringConverter
                 }
             }
         }
+
         return $stringArr;
     }
 
-/**
- * Converts strings like controller:abc/action:xyz/ to arrays
- *
- * Options:
- * - `useCache`: Whether or not use cache results. Default is `true`
- *
- * @param string|array $link link
- * @param array $options Options array
- * @return array
- */
+    /**
+     * Converts strings like controller:abc/action:xyz/ to arrays
+     *
+     * Options:
+     * - `useCache`: Whether or not use cache results. Default is `true`
+     *
+     * @param string|array $link link
+     * @param array $options Options array
+     * @return array
+     */
     public function linkStringToArray($link, $options = [])
     {
         static $cached = [];
@@ -151,15 +150,16 @@ class StringConverter
         }
 
         $cached[$hash] = $linkArr;
+
         return $linkArr;
     }
 
-/**
- * Converts array into string controller:abc/action:xyz/value1/value2?foo=bar
- *
- * @param array $url link
- * @return array
- */
+    /**
+     * Converts array into string controller:abc/action:xyz/value1/value2?foo=bar
+     *
+     * @param array $url link
+     * @return array
+     */
     public function urlToLinkString($url)
     {
         $result = [];
@@ -188,24 +188,25 @@ class StringConverter
                 $result[] = $val;
             }
         }
+
         return join('/', $result) . $queryString;
     }
 
-/**
- * Extract the first paragraph from $text
- *
- * Options:
- *
- * - `tag` Wrap the returned value with a <p> tag. Default is `true`
- * - `regex` Regex expression to determine a paragraph
- * - `stripTags Strip all tags within the paragraph. Default is `true`
- * - `newline` Determine paragraph based on newlines instead of html <p> tag.
- *    Default is false
- *
- * @param string $text Html text
- * @param array $options Options
- * @return string
- */
+    /**
+     * Extract the first paragraph from $text
+     *
+     * Options:
+     *
+     * - `tag` Wrap the returned value with a <p> tag. Default is `true`
+     * - `regex` Regex expression to determine a paragraph
+     * - `stripTags Strip all tags within the paragraph. Default is `true`
+     * - `newline` Determine paragraph based on newlines instead of html <p> tag.
+     *    Default is false
+     *
+     * @param string $text Html text
+     * @param array $options Options
+     * @return string
+     */
     public function firstPara($text, $options = [])
     {
         $paragraph = null;
@@ -236,6 +237,7 @@ class StringConverter
                 $paragraph = '<p>' . $paragraph . '</p>';
             }
         }
+
         return $paragraph;
     }
 }

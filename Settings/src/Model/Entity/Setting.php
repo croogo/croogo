@@ -16,6 +16,7 @@ class Setting extends Entity
                 return [];
             }
             $class = new $className();
+
             return $class();
         } elseif (!empty($this->params['options'])) {
             return json_decode($this->params['options'], true);

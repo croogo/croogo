@@ -46,10 +46,10 @@ class CommentableBehavior extends Behavior
     }
 
     /**
- * Setup behavior
- *
- * @return void
- */
+     * Setup behavior
+     *
+     * @return void
+     */
     public function setup(Model $model, $config = [])
     {
         $this->settings[$model->getAlias()] = $config;
@@ -57,11 +57,11 @@ class CommentableBehavior extends Behavior
         $this->_setupRelationships($model);
     }
 
-/**
- * Setup relationships
- *
- * @return void
- */
+    /**
+     * Setup relationships
+     *
+     * @return void
+     */
     protected function _setupRelationships(Model $model)
     {
         $model->bindModel([
@@ -80,13 +80,12 @@ class CommentableBehavior extends Behavior
         ], false);
     }
 
-/**
- * Get Comment settings from Type
- *
- * @param Model Model instance
- * @param array $data Model data to check
- * @return bool
- */
+    /**
+     * Get Comment settings from Type
+     *
+     * @param Node $node Model data to check
+     * @return array
+     */
     public function getTypeSetting(Node $node)
     {
         $defaultSetting = [
@@ -118,17 +117,18 @@ class CommentableBehavior extends Behavior
         ];
     }
 
-/**
- * Convenience method for Comment::add()
- *
- * @return bool
- * @see Comment::add()
- */
+    /**
+     * Convenience method for Comment::add()
+     *
+     * @return bool
+     * @see Comment::add()
+     */
     public function addComment(Model $Model, $data, $options = [])
     {
         if (!isset($Model->id)) {
             throw new UnexpectedValueException('Id is not set');
         }
+
         return $Model->Comment->add($data, $Model->alias, $Model->id, $options);
     }
 }

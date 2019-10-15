@@ -11,11 +11,11 @@ $this->Breadcrumbs
         'controller' => 'Vocabularies', 'action' => 'index',
     ]);
 
-if (isset($vocabulary)):
+if (isset($vocabulary)) :
     $this->Breadcrumbs->add($vocabulary->title, [
         'controller' => 'Taxonomies', 'action' => 'index', 'vocabulary_id' => $vocabulary->id,
     ]);
-else:
+else :
     $this->Breadcrumbs->add(__d('croogo', 'Terms'), [
         'controller' => 'Terms', 'action' => 'index',
     ]);
@@ -23,27 +23,27 @@ endif;
 
 $termId = isset($this->getRequest()->getParam('pass')[0]) ? $this->getRequest()->getParam('pass')[0] : null;
 $action = $this->getRequest()->getParam('action');
-if ($action === 'edit'):
-    if (isset($vocabulary)):
+if ($action === 'edit') :
+    if (isset($vocabulary)) :
         $this->assign('title', __d('croogo', '%s: Edit Term', $vocabulary->title));
-    else:
+    else :
         $this->assign('title', __d('croogo', 'Edit Term: %s', $term->title));
     endif;
     $this->Breadcrumbs->add($term->title, $this->getRequest()->getRequestTarget());
 endif;
 
-if ($action === 'add'):
+if ($action === 'add') :
     $this->assign('title', __d('croogo', '%s: Add Term', $vocabulary->title));
     $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->getRequest()->getRequestTarget());
 endif;
 
-if (isset($vocabularyId)):
+if (isset($vocabularyId)) :
     $cancelUrl = [
         'controller' => 'Taxonomies',
         'action' => 'index',
         'vocabulary_id' => $vocabularyId,
     ];
-else:
+else :
     $cancelUrl = [
         'controller' => 'Terms',
         'action' => 'index',
@@ -77,15 +77,15 @@ $this->append('tab-content');
             'label' => __d('croogo', 'Slug'),
         ]);
 
-        if ($action === 'add'):
+        if ($action === 'add') :
             echo $this->Form->input('taxonomies.0.vocabulary_id', [
                 'type' => 'hidden',
                 'value' => $vocabularyId,
             ]);
         endif;
 
-        if ($action === 'edit'):
-            if (isset($vocabularyId)):
+        if ($action === 'edit') :
+            if (isset($vocabularyId)) :
                 echo $this->Form->input('taxonomies.0.id', ['type' => 'hidden']);
                 echo $this->Form->input('taxonomies.0.term_id', ['type' => 'hidden']);
                 echo $this->Form->input('taxonomies.0.vocabulary_id', ['type' => 'hidden']);
@@ -95,7 +95,7 @@ $this->append('tab-content');
                     'label' => __d('croogo', 'Parent'),
                     'class' => 'c-select',
                 ]);
-            else:
+            else :
                 echo $this->Form->input('taxonomies._ids', [
                     'type' => 'select',
                     'multiple' => true,
@@ -109,19 +109,19 @@ $this->append('tab-content');
             'label' => __d('croogo', 'Description'),
         ]);
 
-    echo $this->Html->tabEnd();
+        echo $this->Html->tabEnd();
 
-    echo $this->Html->tabStart('term-misc');
+        echo $this->Html->tabStart('term-misc');
         echo $this->Form->input('params', [
             'label' => __d('croogo', 'Params'),
             'type' => 'stringlist',
         ]);
-    echo $this->Html->tabEnd();
+        echo $this->Html->tabEnd();
 
-$this->end();
+        $this->end();
 
-$this->start('buttons');
-    echo $this->Html->beginBox(__d('croogo', 'Publishing'));
-    echo $this->element('Croogo/Core.admin/buttons', ['type' => 'Terms']);
-    echo $this->Html->endBox();
-$this->end();
+        $this->start('buttons');
+        echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+        echo $this->element('Croogo/Core.admin/buttons', ['type' => 'Terms']);
+        echo $this->Html->endBox();
+        $this->end();

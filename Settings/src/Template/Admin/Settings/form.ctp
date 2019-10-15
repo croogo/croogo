@@ -46,4 +46,4 @@ echo $this->Html->tabStart('setting-misc') . $this->Form->input('title', [
         'label' => __d('croogo', 'Params'),
     ]) . $this->Html->tabEnd();
 
-$this->end();
+    $this->end();

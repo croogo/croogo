@@ -8,6 +8,7 @@ use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use const PHP_SESSION_ACTIVE;
 
 /**
  * Trackable Behavior
@@ -23,9 +24,9 @@ use Cake\Utility\Hash;
 class TrackableBehavior extends Behavior
 {
 
-/**
- * Default settings
- */
+    /**
+     * Default settings
+     */
     protected $_defaults = [
         'userModel' => 'Croogo/Users.Users',
         'fields' => [
@@ -34,18 +35,18 @@ class TrackableBehavior extends Behavior
             ],
         ];
 
-/**
- * Constructor
- */
+    /**
+     * Constructor
+     */
     public function __construct(Table $table, array $config = [])
     {
         $config = Hash::merge($this->_defaults, $config);
         parent::__construct($table, $config);
     }
 
-/**
- * Setup
- */
+    /**
+     * Setup
+     */
     public function initialize(array $config)
     {
         if ($this->_hasTrackableFields()) {
@@ -53,22 +54,22 @@ class TrackableBehavior extends Behavior
         }
     }
 
-/**
- * Checks wether model has the required fields
- *
- * @return bool True if $model has the required fields
- */
+    /**
+     * Checks wether model has the required fields
+     *
+     * @return bool True if $model has the required fields
+     */
     protected function _hasTrackableFields()
     {
         $fields = $this->getConfig('fields');
-        return
-            $this->_table->hasField($fields['created_by']) &&
+
+        return $this->_table->hasField($fields['created_by']) &&
             $this->_table->hasField($fields['updated_by']);
     }
 
-/**
- * Bind relationship on the fly
- */
+    /**
+     * Bind relationship on the fly
+     */
     protected function _setupBelongsTo()
     {
         if ($this->_table->associations()->has('TrackableCreator')) {
@@ -90,17 +91,17 @@ class TrackableBehavior extends Behavior
         ]);
     }
 
-/**
- * Fill the created_by and updated_by fields
- *
- * Note: Since shells do not have Sessions, created_by/updated_by fields
- * will not be populated. If a shell needs to populate these fields, you
- * can simulate a logged in user by setting `Trackable.Auth` config:
- *
- *   Configure::write('Trackable.User', array('id' => 1));
- *
- * Note that value stored in this variable overrides session data.
- */
+    /**
+     * Fill the created_by and updated_by fields
+     *
+     * Note: Since shells do not have Sessions, created_by/updated_by fields
+     * will not be populated. If a shell needs to populate these fields, you
+     * can simulate a logged in user by setting `Trackable.Auth` config:
+     *
+     *   Configure::write('Trackable.User', array('id' => 1));
+     *
+     * Note that value stored in this variable overrides session data.
+     */
     public function beforeSave(Event $event, $options = [])
     {
         if (!$this->_hasTrackableFields()) {
@@ -113,7 +114,7 @@ class TrackableBehavior extends Behavior
         $userPk = $User->getPrimaryKey();
 
         $user = Configure::read('Trackable.Auth.User');
-        if (!$user && session_status() === \PHP_SESSION_ACTIVE) {
+        if (!$user && session_status() === PHP_SESSION_ACTIVE) {
             $user = Hash::get($_SESSION, 'Auth.User');
         }
 

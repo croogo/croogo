@@ -5,28 +5,6 @@ namespace Croogo\Menus\Test\TestCase\Controller\Component;
 use Cake\Controller\Controller;
 use Croogo\TestSuite\CroogoControllerTestCase;
 
-class MenusTestController extends Controller
-{
-
-    public $components = [
-        'Auth',
-        'Session',
-        'Croogo.Croogo',
-        'Blocks.Blocks',
-        'Menus.Menus',
-    ];
-
-    public function beforeFilter()
-    {
-        $this->Auth->allow('index');
-        parent::beforeFilter();
-    }
-
-    public function index()
-    {
-    }
-}
-
 class MenusComponentTest extends CroogoControllerTestCase
 {
 
@@ -58,9 +36,9 @@ class MenusComponentTest extends CroogoControllerTestCase
         unset($this->controller);
     }
 
-/**
- * test that public Links are displayed
- */
+    /**
+     * test that public Links are displayed
+     */
     public function testMenuGenerationForPublic()
     {
         $vars = $this->testAction('/index', [
@@ -73,9 +51,9 @@ class MenusComponentTest extends CroogoControllerTestCase
         $this->assertNotEmpty($result);
     }
 
-/**
- * test that public Links are not displayed
- */
+    /**
+     * test that public Links are not displayed
+     */
     public function testMenuGenerationForRegistered()
     {
         $this->controller->Session->write('Auth.User', ['id' => 3, 'role_id' => 2]);
@@ -90,3 +68,27 @@ class MenusComponentTest extends CroogoControllerTestCase
         $this->controller->Session->delete('Auth');
     }
 }
+
+//phpcs:disable
+class MenusTestController extends Controller
+{
+
+    public $components = [
+        'Auth',
+        'Session',
+        'Croogo.Croogo',
+        'Blocks.Blocks',
+        'Menus.Menus',
+    ];
+
+    public function beforeFilter()
+    {
+        $this->Auth->allow('index');
+        parent::beforeFilter();
+    }
+
+    public function index()
+    {
+    }
+}
+//phpcs:enable

@@ -53,7 +53,7 @@ $siteTagline = Configure::read('Site.tagline');
                             'class' => 'nav-link js-scroll-trigger',
                         ],
                     ]);
-                ?>
+?>
             </div>
     </nav>
 
@@ -107,7 +107,7 @@ $siteTagline = Configure::read('Site.tagline');
                             'class' => 'js-scroll-trigger',
                         ],
                     ]);
-                ?>
+                    ?>
                 </div>
             </div>
         </div>

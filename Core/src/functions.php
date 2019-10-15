@@ -2,7 +2,6 @@
 
 namespace Croogo\Core;
 
-use Croogo\Core\Link;
 use DebugKit\DebugTimer;
 
 if (!function_exists('\Croogo\Core\linkFromLinkString')) {

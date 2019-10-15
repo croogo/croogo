@@ -64,5 +64,4 @@ class TranslateEventHandler implements EventListenerInterface
             ]);
         $View->end();
     }
-
 }

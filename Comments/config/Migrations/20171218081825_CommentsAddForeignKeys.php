@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class CommentsAddForeignKeys extends AbstractMigration
@@ -19,5 +20,4 @@ class CommentsAddForeignKeys extends AbstractMigration
             ->dropForeignKey('user_id')
             ->save();
     }
-
 }

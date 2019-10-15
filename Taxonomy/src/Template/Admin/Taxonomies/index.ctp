@@ -4,10 +4,14 @@ $this->assign('title', __d('croogo', 'Vocabulary: %s', $vocabulary->title));
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Breadcrumbs->add(__d('croogo', 'Content'),
-        ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'])
-    ->add(__d('croogo', 'Vocabularies'),
-        ['plugin' => 'Croogo/Taxonomy', 'controller' => 'Vocabularies', 'action' => 'index'])
+$this->Breadcrumbs->add(
+    __d('croogo', 'Content'),
+    ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']
+)
+    ->add(
+        __d('croogo', 'Vocabularies'),
+        ['plugin' => 'Croogo/Taxonomy', 'controller' => 'Vocabularies', 'action' => 'index']
+    )
     ->add(h($vocabulary->title), $this->getRequest()->getRequestTarget());
 
 $this->append('action-buttons');
@@ -30,7 +34,7 @@ $this->end();
 $this->append('table-body');
 $rows = [];
 
-foreach ($taxonomies as $taxonomy):
+foreach ($taxonomies as $taxonomy) :
     $term = $taxonomy->term;
 
     $actions = [];
@@ -92,7 +96,7 @@ foreach ($taxonomies as $taxonomy):
         ]);
     }
 
-    if (!empty($taxonomy->indent)):
+    if (!empty($taxonomy->indent)) :
         $titleCol = str_repeat('&emsp;', $taxonomy->indent) . $titleCol;
     endif;
 

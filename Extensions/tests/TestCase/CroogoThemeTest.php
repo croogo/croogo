@@ -8,10 +8,10 @@ use Croogo\Extensions\CroogoTheme;
 class CroogoThemeTest extends CroogoTestCase
 {
 
-/**
- * CroogoTheme class
- * @var CroogoTheme
- */
+    /**
+     * CroogoTheme class
+     * @var CroogoTheme
+     */
     public $CroogoTheme;
 
     public function setUp()
@@ -26,45 +26,45 @@ class CroogoThemeTest extends CroogoTestCase
         unset($this->CroogoTheme);
     }
 
-/**
- * testDeleteEmptyTheme
- * @expectedException InvalidArgumentException
- */
+    /**
+     * testDeleteEmptyTheme
+     * @expectedException InvalidArgumentException
+     */
     public function testDeleteEmptyTheme()
     {
         $this->CroogoTheme->delete(null);
     }
 
-/**
- * testDeleteBogusTheme
- * @expectedException UnexpectedValueException
- */
+    /**
+     * testDeleteBogusTheme
+     * @expectedException UnexpectedValueException
+     */
     public function testDeleteBogusTheme()
     {
         $this->CroogoTheme->delete('Bogus');
     }
 
-/**
- * testGetThemes
- */
+    /**
+     * testGetThemes
+     */
     public function testGetThemes()
     {
         $themes = $this->CroogoTheme->getThemes();
         $this->assertTrue(array_key_exists('Mytheme', $themes));
     }
 
-/**
- * testGetDataBogusTheme
- */
+    /**
+     * testGetDataBogusTheme
+     */
     public function testGetDataBogusTheme()
     {
         $data = $this->CroogoTheme->getData('BogusTheme');
         $this->assertSame([], $data);
     }
 
-/**
- * testGetDataMixedManifest
- */
+    /**
+     * testGetDataMixedManifest
+     */
     public function testGetDataMixedManifest()
     {
         $data = $this->CroogoTheme->getData('MixedManifest');

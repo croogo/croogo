@@ -1,8 +1,8 @@
 <?php
 
-if (isset($dashboard['id'])):
+if (isset($dashboard['id'])) :
     $dataId = 'data-id="' . h($dashboard['id']) . '"';
-else:
+else :
     $dataId = null;
 endif;
 
@@ -16,8 +16,11 @@ endif;
         </a>
     </div>
     <div class="card-body <?= $dashboard['collapsed'] ? 'collapse' : 'collapse show' ?>" id="<?= $alias ?>-content">
-        <?php $cell = $this->cell($dashboard['cell'], $dashboard['arguments'],
-            ['cache' => $dashboard['cache'], 'alias' => $alias, 'dashboard' => $dashboard]) ?>
+        <?php $cell = $this->cell(
+            $dashboard['cell'],
+            $dashboard['arguments'],
+            ['cache' => $dashboard['cache'], 'alias' => $alias, 'dashboard' => $dashboard]
+        ) ?>
         <?= $cell ?>
     </div>
 </div>

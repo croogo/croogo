@@ -11,6 +11,7 @@ class CroogoBehaviorsTest extends PHPUnit_Framework_TestSuite
         $suite = new CakeTestSuite('Croogo behavior tests');
         $path = APP . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . 'Croogo' . DS . 'Test' . DS . 'Case' . DS . 'Model' . DS . 'Behavior' . DS;
         $suite->addTestDirectory($path);
+
         return $suite;
     }
 }

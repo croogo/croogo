@@ -1,4 +1,4 @@
-<?php if (isset($excerpt)): ?>
+<?php if (isset($excerpt)) : ?>
 <div class="node-excerpt my-2">
     <?= $excerpt ?>
     <div class="text-right">

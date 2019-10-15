@@ -2,11 +2,8 @@
 
 namespace Croogo\Core\Model\Behavior;
 
-use Cake\Database\Exception;
 use Cake\Log\Log;
 use Cake\ORM\Behavior;
-use Cake\ORM\Table;
-use Cake\Utility\Hash;
 use Croogo\Core\Status;
 use InvalidArgumentException;
 
@@ -49,14 +46,14 @@ class BulkProcessBehavior extends Behavior
         ],
     ];
 
-/**
- * Bulk process using $action for each $ids
- *
- * @param $action string actionToPerfom
- * @param $ids array nodes ids to perform action upon
- * @return bool True when successful, false otherwise
- * @throws InvalidArgumentException
- */
+    /**
+     * Bulk process using $action for each $ids
+     *
+     * @param $action string actionToPerfom
+     * @param $ids array nodes ids to perform action upon
+     * @return bool True when successful, false otherwise
+     * @throws InvalidArgumentException
+     */
     public function processAction($action, $ids)
     {
         $table = $this->_table;
@@ -84,14 +81,14 @@ class BulkProcessBehavior extends Behavior
         return $this->{$mappedAction}($ids);
     }
 
-/**
- * Internal helper method to save status fields
- *
- * @param array $ids Array of IDs
- * @param string $field Field to update
- * @param mixed $status Value to update
- * @return boolean True on success, false on failure
- */
+    /**
+     * Internal helper method to save status fields
+     *
+     * @param array $ids Array of IDs
+     * @param string $field Field to update
+     * @param mixed $status Value to update
+     * @return bool True on success, false on failure
+     */
     protected function _saveStatus($ids, $field, $status)
     {
         foreach ($ids as $id) {
@@ -105,60 +102,64 @@ class BulkProcessBehavior extends Behavior
         return true;
     }
 
-/**
- * Bulk Publish
- *
- * @param array $ids Array of IDs
- * @return boolean True on success, false on failure
- */
+    /**
+     * Bulk Publish
+     *
+     * @param array $ids Array of IDs
+     * @return bool True on success, false on failure
+     */
     public function bulkPublish($ids)
     {
         $field = $this->getConfig('fields.status');
+
         return $this->_saveStatus($ids, $field, Status::PUBLISHED);
     }
 
-/**
- * Bulk Publish
- *
- * @param array $ids Array of IDs
- * @return boolean True on success, false on failure
- */
+    /**
+     * Bulk Publish
+     *
+     * @param array $ids Array of IDs
+     * @return bool True on success, false on failure
+     */
     public function bulkUnpublish($ids)
     {
         $field = $this->getConfig('fields.status');
+
         return $this->_saveStatus($ids, $field, Status::UNPUBLISHED);
     }
 
-/**
- * Bulk Promote
- *
- * @param array $ids Array of IDs
- * @return boolean True on success, false on failure
- */
+    /**
+     * Bulk Promote
+     *
+     * @param array $ids Array of IDs
+     * @return bool True on success, false on failure
+     */
     public function bulkPromote($ids)
     {
         $field = $this->config('fields.promote');
+
         return $this->_saveStatus($ids, $field, Status::PROMOTED);
     }
 
-/**
- * Bulk Unpromote
- *
- * @param array $ids Array of IDs
- * @return boolean True on success, false on failure
- */
+    /**
+     * Bulk Unpromote
+     *
+     * @param array $ids Array of IDs
+     * @return bool True on success, false on failure
+     */
     public function bulkUnpromote($ids)
     {
         $field = $this->config('fields.promote');
+
         return $this->_saveStatus($ids, $field, Status::UNPROMOTED);
     }
 
-/**
- * Bulk Delete
- *
- * @param array $ids Array of IDs
- * @return boolean True on success, false on failure
- */
+    /**
+     * Bulk Delete
+     *
+     * @param array $ids Array of IDs
+     * @return bool True on success, false on failure
+     */
     public function bulkDelete($ids)
     {
         try {
@@ -179,16 +180,17 @@ class BulkProcessBehavior extends Behavior
             });
         } catch (\Exception $exception) {
             Log::critical(__FUNCTION__ . ': ' . $exception->getMessage());
+
             return false;
         }
     }
 
-/**
- * Bulk Copy
- *
- * @param array $ids Array of IDs
- * @return boolean True on success, false on failure
- */
+    /**
+     * Bulk Copy
+     *
+     * @param array $ids Array of IDs
+     * @return bool True on success, false on failure
+     */
     public function bulkCopy($ids)
     {
         if (!$this->_table->hasBehavior('Copyable')) {

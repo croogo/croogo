@@ -19,11 +19,11 @@ use Extensions\Lib\ExtensionsInstaller;
 class ExtensionsInstallerTest extends CroogoTestCase
 {
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -39,11 +39,11 @@ class ExtensionsInstallerTest extends CroogoTestCase
         $this->ExtensionsInstaller = new ExtensionsInstaller();
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
@@ -61,9 +61,9 @@ class ExtensionsInstallerTest extends CroogoTestCase
         }
     }
 
-/**
- * Helper method to create test zip file
- */
+    /**
+     * Helper method to create test zip file
+     */
     protected function _addDirectoryToZip($zip, $dir, $base)
     {
         $newFolder = str_replace($base, '', $dir);
@@ -76,12 +76,13 @@ class ExtensionsInstallerTest extends CroogoTestCase
                 $zip->addFile($file, $newFile);
             }
         }
+
         return $zip;
     }
 
-/**
- * Create a test zip file $zipPath from $dirName
- */
+    /**
+     * Create a test zip file $zipPath from $dirName
+     */
     protected function _createZip($zipPath, $dirName)
     {
         $dir = Plugin::path('Extensions') . 'Test' . DS . 'test_files' . DS;
@@ -93,22 +94,22 @@ class ExtensionsInstallerTest extends CroogoTestCase
         $this->assertTrue(file_exists($zipPath), 'Test zip not created');
     }
 
-/**
- * testGetPluginName
- *
- * @return void
- */
+    /**
+     * testGetPluginName
+     *
+     * @return void
+     */
     public function testGetPluginName()
     {
         $result = $this->ExtensionsInstaller->getPluginName($this->testPlugin);
         $this->assertEquals('Example', $result);
     }
 
-/**
- * testGetPluginName
- *
- * @return void
- */
+    /**
+     * testGetPluginName
+     *
+     * @return void
+     */
     public function testGetPluginNameMinimal()
     {
         $this->_createZip($this->minimalPlugin, 'Minimal');
@@ -116,21 +117,21 @@ class ExtensionsInstallerTest extends CroogoTestCase
         $this->assertEquals('Minimal', $result);
     }
 
-/**
- * testGetPluginNameInvalid
- *
- * @return void
- * @expectedException Exception
- */
+    /**
+     * testGetPluginNameInvalid
+     *
+     * @return void
+     * @expectedException Exception
+     */
     public function testGetPluginNameInvalid()
     {
         $this->_createZip($this->invalidPlugin, 'Invalid');
         $result = $this->ExtensionsInstaller->getPluginName($this->invalidPlugin);
     }
 
-/**
- * testExtractPlugin
- */
+    /**
+     * testExtractPlugin
+     */
     public function testExtractPlugin()
     {
         $result = $this->ExtensionsInstaller->extractPlugin($this->testPlugin);
@@ -146,18 +147,18 @@ class ExtensionsInstallerTest extends CroogoTestCase
         $this->assertTrue(in_array('Controller' . DS . 'ExampleAppController.php', $files));
     }
 
-/**
- * testGetThemeName
- */
+    /**
+     * testGetThemeName
+     */
     public function testGetThemeName()
     {
         $result = $this->ExtensionsInstaller->getThemeName($this->testTheme);
         $this->assertEquals('Minimal', $result);
     }
 
-/**
- * testExtractTheme
- */
+    /**
+     * testExtractTheme
+     */
     public function testExtractTheme()
     {
         $result = $this->ExtensionsInstaller->extractTheme($this->testTheme);
@@ -174,11 +175,11 @@ class ExtensionsInstallerTest extends CroogoTestCase
         $this->assertTrue(in_array('webroot' . DS . 'img' . DS . 'screenshot.png', $files));
     }
 
-/**
- * testComposerInstall
- *
- * @expectedException Exception
- */
+    /**
+     * testComposerInstall
+     *
+     * @expectedException Exception
+     */
     public function testComposerInstall()
     {
         $this->skipIf(version_compare(PHP_VERSION, '5.3.0', '<'), 'PHP >= 5.3.0 required to run this test.');

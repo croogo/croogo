@@ -4,7 +4,6 @@ namespace Croogo\Core\Controller\Api;
 
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Controller;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
@@ -59,17 +58,16 @@ class AppController extends Controller
                 'parameter' => 'token',
                 'queryDatasource' => true,
             ];
-
         }
 
         return $authConfig;
     }
 
-/**
- * Initialize
- *
- * @return void
- */
+    /**
+     * Initialize
+     *
+     * @return void
+     */
     public function initialize()
     {
         parent::initialize();
@@ -107,7 +105,6 @@ class AppController extends Controller
         ]);
 
         Configure::write('debug', false);
-
     }
 
     /**
@@ -127,5 +124,4 @@ class AppController extends Controller
             }
         }
     }
-
 }

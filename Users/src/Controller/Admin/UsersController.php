@@ -5,13 +5,7 @@ namespace Croogo\Users\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Network\Email\Email;
-use Cake\Routing\Router;
-use Cake\Utility\Hash;
-use Cake\Utility\Security;
-use Cake\Utility\Text;
 use Croogo\Core\Croogo;
-use Croogo\Users\Model\Entity\User;
 
 /**
  * Users Controller
@@ -35,11 +29,11 @@ class UsersController extends AppController
         ],
     ];
 
-/**
- * Initialize
- *
- * @return void
- */
+    /**
+     * Initialize
+     *
+     * @return void
+     */
     public function initialize()
     {
         parent::initialize();
@@ -76,11 +70,11 @@ class UsersController extends AppController
         $this->Auth->allow(['register', 'forgot', 'reset']);
     }
 
-/**
- * implementedEvents
- *
- * @return array
- */
+    /**
+     * implementedEvents
+     *
+     * @return array
+     */
     public function implementedEvents()
     {
         return parent::implementedEvents() + [
@@ -95,10 +89,11 @@ class UsersController extends AppController
         ];
     }
 
-    public function beforeFilter(Event $event) {
+    public function beforeFilter(Event $event)
+    {
         parent::beforeFilter($event);
 
-        $this->Crud->on('relatedModel', function(Event $event) {
+        $this->Crud->on('relatedModel', function (Event $event) {
             if ($event->getSubject()->name == 'Roles') {
                 $event->getSubject()->query = $this->Users->Roles
                     ->find('roleHierarchy')
@@ -108,7 +103,6 @@ class UsersController extends AppController
                     ->find('list');
             }
         });
-
     }
 
     public function beforeSetupAdminData()
@@ -116,11 +110,11 @@ class UsersController extends AppController
         $this->Auth->allow('resetPassword');
     }
 
-/**
- * Notify user when failed_login_limit hash been hit
- *
- * @return bool
- */
+    /**
+     * Notify user when failed_login_limit hash been hit
+     *
+     * @return bool
+     */
     public function onBeforeAdminLogin()
     {
         $field = $this->Auth->getConfig('authenticate.all.fields.username');
@@ -132,17 +126,19 @@ class UsersController extends AppController
         $cacheValue = Cache::read($cacheName, 'users_login');
         if ($cacheValue >= Configure::read('User.failed_login_limit')) {
             $this->Flash->error(__d('croogo', 'You have reached maximum limit for failed login attempts. Please try again after a few minutes.'));
+
             return $this->redirect(['action' => $this->getRequest()->getParam('action')]);
         }
+
         return true;
     }
 
-/**
- * Record the number of times a user has failed authentication in cache
- *
- * @return bool
- * @access public
- */
+    /**
+     * Record the number of times a user has failed authentication in cache
+     *
+     * @return bool
+     * @access public
+     */
     public function onAdminLoginFailure()
     {
         $field = $this->Auth->getConfig('authenticate.all.fields.username');
@@ -152,6 +148,7 @@ class UsersController extends AppController
         $cacheName = 'auth_failed_' . $this->getRequest()->data[$field];
         $cacheValue = Cache::read($cacheName, 'users_login');
         Cache::write($cacheName, (int)$cacheValue + 1, 'users_login');
+
         return true;
     }
 
@@ -172,7 +169,8 @@ class UsersController extends AppController
         $entity->activation_key = $this->Users->generateActivationKey();
     }
 
-    public function afterCrudSave(Event $event) {
+    public function afterCrudSave(Event $event)
+    {
         if ($event->getSubject()->success && $event->getSubject()->created) {
             if ($this->getRequest()->data('notification') != null) {
                 $this->Users->sendActivationEmail($event->getSubject()->entity);
@@ -187,13 +185,13 @@ class UsersController extends AppController
         }
     }
 
-/**
- * Admin reset password
- *
- * @param int $id
- * @return void
- * @access public
- */
+    /**
+     * Admin reset password
+     *
+     * @param int $id
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function resetPassword($id = null)
     {
         $user = $this->Users->get($id);
@@ -203,6 +201,7 @@ class UsersController extends AppController
 
             if ($this->Users->save($user)) {
                 $this->Flash->success(__d('croogo', 'Password has been reset.'));
+
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__d('croogo', 'Password could not be reset. Please, try again.'));
@@ -212,12 +211,12 @@ class UsersController extends AppController
         $this->set('user', $user);
     }
 
-/**
- * Admin login
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin login
+     *
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function login()
     {
         $this->viewBuilder()->setLayout('admin_login');
@@ -228,6 +227,7 @@ class UsersController extends AppController
             ) {
                 $this->Flash->error(__d('croogo', 'You are already logged in'), ['key' => 'auth']);
             }
+
             return $this->redirect($this->Auth->redirectUrl());
         }
 
@@ -241,7 +241,6 @@ class UsersController extends AppController
             Croogo::dispatchEvent('Controller.Users.beforeAdminLogin', $this);
             $user = $this->Auth->identify();
             if ($user) {
-
                 if ($session->check('Croogo.redirect')) {
                     $redirectUrl = $session->read('Croogo.redirect');
                     $session->delete('Croogo.redirect');
@@ -253,6 +252,7 @@ class UsersController extends AppController
                     Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);
                     $this->Auth->authError = __d('croogo', 'Authorization error');
                     $this->Flash->error($this->Auth->authError, ['key' => 'auth']);
+
                     return $this->redirect($this->Auth->loginAction);
                 }
 
@@ -265,26 +265,29 @@ class UsersController extends AppController
                 }
 
                 Croogo::dispatchEvent('Controller.Users.adminLoginSuccessful', $this);
+
                 return $this->redirect($redirectUrl);
             } else {
                 Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);
                 $this->Auth->authError = __d('croogo', 'Incorrect username or password');
                 $this->Flash->error($this->Auth->authError, ['key' => 'auth']);
+
                 return $this->redirect($this->Auth->getConfig('loginAction'));
             }
         }
     }
 
-/**
- * Admin logout
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin logout
+     *
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function logout()
     {
         Croogo::dispatchEvent('Controller.Users.adminLogoutSuccessful', $this);
         $this->Flash->success(__d('croogo', 'Log out successful.'), ['key' => 'auth']);
+
         return $this->redirect($this->Auth->logout());
     }
 
@@ -314,7 +317,7 @@ class UsersController extends AppController
                     'alias'
                 ],
             ],
-        ]);
+            ]);
     }
 
     public function beforePaginate(Event $event)
@@ -346,12 +349,12 @@ class UsersController extends AppController
         return 'croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
     }
 
-/**
- * Register
- *
- * @return void
- * @access public
- */
+    /**
+     * Register
+     *
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function register()
     {
         if ($this->Auth->user('id')) {
@@ -360,6 +363,7 @@ class UsersController extends AppController
             ) {
                 $this->Flash->error(__d('croogo', 'You are already logged in'));
             }
+
             return $this->redirect($this->referer());
         }
         $user = $this->Users->newEntity();
@@ -382,12 +386,12 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'login']);
     }
 
-/**
- * Forgot
- *
- * @return void
- * @access public
- */
+    /**
+     * Forgot
+     *
+     * @return void
+     * @access public
+     */
     public function forgot()
     {
         if (!$this->getRequest()->is('post')) {
@@ -397,6 +401,7 @@ class UsersController extends AppController
         $username = $this->getRequest()->data('username');
         if (!$username) {
             $this->Flash->error(__d('croogo', 'Invalid username.'));
+
             return $this->redirect(['action' => 'forgot']);
         }
 
@@ -407,12 +412,14 @@ class UsersController extends AppController
             ->first();
         if (!$user) {
             $this->Flash->error(__d('croogo', 'Invalid username.'));
+
             return $this->redirect(['action' => 'forgot']);
         }
 
         $success = $this->Users->resetPassword($user);
         if (!$success) {
             $this->Flash->error(__d('croogo', 'An error occurred. Please try again.'));
+
             return;
         }
 
@@ -421,14 +428,14 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'login']);
     }
 
-/**
- * Reset
- *
- * @param string $username
- * @param string $activationKey
- * @return void
- * @access public
- */
+    /**
+     * Reset
+     *
+     * @param string $username
+     * @param string $activationKey
+     * @return \Cake\Http\Response|void
+     * @access public
+     */
     public function reset($username, $activationKey)
     {
         // Get the user with the activation key from the database
@@ -463,5 +470,4 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'login']);
     }
-
 }

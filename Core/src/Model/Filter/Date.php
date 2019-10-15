@@ -2,8 +2,8 @@
 
 namespace Croogo\Core\Model\Filter;
 
-use DateTime;
 use DateInterval;
+use DateTime;
 use Search\Model\Filter\Base;
 
 class Date extends Base

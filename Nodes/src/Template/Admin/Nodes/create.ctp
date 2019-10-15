@@ -12,9 +12,9 @@ $this->Breadcrumbs
     <div class="<?= $this->Theme->getCssClass('columnFull') ?>">
         <p class="lead"><?= __d('croogo', 'Select the type of content you wish to create from the list below') ?></p>
         <div class="list-group">
-            <?php foreach ($types as $type): ?>
+            <?php foreach ($types as $type) : ?>
                 <?php
-                if (!empty($type->plugin)):
+                if (!empty($type->plugin)) :
                     continue;
                 endif;
                 ?>

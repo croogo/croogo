@@ -19,30 +19,30 @@ use Croogo\Extensions\CroogoTheme;
 class MenuComponent extends Component
 {
 
-/**
- * Other components used by this component
- *
- * @var array
- * @access public
- */
+    /**
+     * Other components used by this component
+     *
+     * @var array
+     * @access public
+     */
     public $components = [
         'Croogo.Croogo',
     ];
 
-/**
- * Menus for layout
- *
- * @var string
- * @access public
- */
+    /**
+     * Menus for layout
+     *
+     * @var string
+     * @access public
+     */
     public $menusForLayout = [];
 
-/**
- * Startup
- *
- * @param object $controller instance of controller
- * @return void
- */
+    /**
+     * Startup
+     *
+     * @param object $event instance of controller
+     * @return void
+     */
     public function startup(Event $event)
     {
         $this->controller = $event->getSubject();
@@ -55,7 +55,6 @@ class MenuComponent extends Component
         $controller = $event->getSubject();
         if (($controller->request->getParam('prefix') !== 'admin') && !$controller->request->getParam('requested')) {
             $this->menus();
-
         } else {
             $this->_adminData();
         }
@@ -82,13 +81,13 @@ class MenuComponent extends Component
         $event->getSubject()->set('menusForLayout', $this->menusForLayout);
     }
 
-/**
- * Menus
- *
- * Menus will be available in this variable in views: $menusForLayout
- *
- * @return void
- */
+    /**
+     * Menus
+     *
+     * Menus will be available in this variable in views: $menusForLayout
+     *
+     * @return void
+     */
     public function menus()
     {
         $menus = ['main'];

@@ -4,7 +4,6 @@ namespace Croogo\Nodes\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Routing\Router;
-
 use Croogo\Core\Controller\Component\CroogoComponent;
 use Croogo\Nodes\Model\Table\NodesTable;
 use Croogo\Taxonomy\Controller\Component\TaxonomiesComponent;
@@ -25,6 +24,11 @@ use Croogo\Taxonomy\Model\Entity\Type;
  */
 class NodesController extends AppController
 {
+    /**
+     * @return void
+     * @throws \Crud\Error\Exception\MissingActionException
+     * @throws \Crud\Error\Exception\ActionNotConfiguredException
+     */
     public function initialize()
     {
         parent::initialize();
@@ -45,16 +49,16 @@ class NodesController extends AppController
     /**
      * Admin create
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function create()
     {
-        $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all', array(
-            'order' => array(
+        $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all', [
+            'order' => [
                 'Types.alias' => 'ASC',
-            ),
-        ));
+            ],
+        ]);
 
         if ($types->count() === 1) {
             return $this->redirect(['action' => 'add', $types->first()->getAlias()]);
@@ -66,10 +70,10 @@ class NodesController extends AppController
     /**
      * Admin update paths
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
-    public function update_paths()
+    public function updatePaths()
     {
         $Node = $this->{$this->modelClass};
         if ($Node->updateAllNodesPaths()) {
@@ -81,33 +85,40 @@ class NodesController extends AppController
         }
 
         $this->Flash->set($messageFlash, ['element' => 'flash', 'param' => compact('class')]);
+
         return $this->redirect(['action' => 'index']);
     }
 
     /**
      * Admin process
      *
-     * @return void
+     * @return Cake\Http\Response|void
      * @access public
      */
     public function process()
     {
-        list($action, $ids) = $this->BulkProcess->getRequestVars($this->Nodes->getAlias());
+        [$action, $ids] = $this->BulkProcess->getRequestVars($this->Nodes->getAlias());
 
-        $options = array(
-            'multiple' => array('copy' => false),
-            'messageMap' => array(
+        $options = [
+            'multiple' => ['copy' => false],
+            'messageMap' => [
                 'delete' => __d('croogo', 'Nodes deleted'),
                 'publish' => __d('croogo', 'Nodes published'),
                 'unpublish' => __d('croogo', 'Nodes unpublished'),
                 'promote' => __d('croogo', 'Nodes promoted'),
                 'unpromote' => __d('croogo', 'Nodes unpromoted'),
                 'copy' => __d('croogo', 'Nodes copied'),
-            ),
-        );
+            ],
+        ];
         $this->BulkProcess->process($this->Nodes, $action, $ids, $options);
     }
 
+    /**
+     * @param Event $event Event
+     * @return void
+     * @throws \Crud\Error\Exception\MissingActionException
+     * @throws \Crud\Error\Exception\ActionNotConfiguredException
+     */
     public function beforePaginate(Event $event)
     {
         /** @var \Cake\ORM\Query $query */
@@ -164,6 +175,10 @@ class NodesController extends AppController
         }
     }
 
+    /**
+     * @param Event $event
+     * @return void
+     */
     public function beforeLookup(Event $event)
     {
         /** @var \Cake\ORM\Query $query */
@@ -174,6 +189,10 @@ class NodesController extends AppController
         ]);
     }
 
+    /**
+     * @param Event $event
+     * @return void
+     */
     public function beforeCrudRender(Event $event)
     {
         if (!isset($event->getSubject()->entity)) {
@@ -235,7 +254,6 @@ class NodesController extends AppController
                 'type' => $entity->type,
                 'slug' => $entity->slug
             ]);
-
         }
 
         $this->Crud->action()->setConfig('name', $entity->type);
@@ -256,6 +274,9 @@ class NodesController extends AppController
         }
     }
 
+    /**
+     * @return array
+     */
     public function implementedEvents()
     {
         return parent::implementedEvents() + [
@@ -285,26 +306,44 @@ class NodesController extends AppController
         $this->set(compact('roles', 'parents', 'users'));
     }
 
+    /**
+     * @return \Cake\Http\Response
+     * @throws \Exception
+     */
     public function toggle()
     {
         return $this->Crud->execute();
     }
 
-    public function move($id, $direction = 'up', $step = '1') {
+    /**
+     * @param $id
+     * @param string $direction
+     * @param string $step
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function move($id, $direction = 'up', $step = '1')
+    {
         $node = $this->Nodes->get($id);
         if ($direction == 'up') {
             if ($this->Nodes->moveUp($node)) {
                 $this->Flash->success(__d('croogo', 'Content moved up'));
+
                 return $this->redirect($this->referer());
             }
         } else {
             if ($this->Nodes->moveDown($node)) {
                 $this->Flash->success(__d('croogo', 'Content moved down'));
+
                 return $this->redirect($this->referer());
             }
         }
     }
 
+    /**
+     * @return \Cake\Http\Response
+     * @throws \Exception
+     */
     public function hierarchy()
     {
         $typeAlias = $this->getRequest()->getQuery('type');
@@ -312,10 +351,10 @@ class NodesController extends AppController
             $type = $this->Nodes->Types->findByAlias($typeAlias)->first();
             $this->set(compact('type'));
         }
-        $this->Crud->on('beforePaginate', function(Event $event) {
+        $this->Crud->on('beforePaginate', function (Event $event) {
             $event->getSubject()->query->find('treelist');
         });
-        $this->Crud->on('afterPaginate', function(Event $event) {
+        $this->Crud->on('afterPaginate', function (Event $event) {
             $subject = $event->getSubject();
             $nodes = [];
             foreach ($subject->entities as $id => $title) {
@@ -326,7 +365,7 @@ class NodesController extends AppController
             }
             $subject->entities = $nodes;
         });
+
         return $this->Crud->execute();
     }
-
 }

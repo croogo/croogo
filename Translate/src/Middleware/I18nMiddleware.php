@@ -9,7 +9,6 @@ use Cake\Network\Request;
 use Cake\Utility\Hash;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * I18nMiddleware

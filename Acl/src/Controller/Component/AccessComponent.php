@@ -23,18 +23,18 @@ use Croogo\Core\Croogo;
 class AccessComponent extends Component
 {
 
-/**
- * _controller
- *
- * @var Controller
- */
+    /**
+     * _controller
+     *
+     * @var Controller
+     */
     protected $_controller = null;
 
-/**
- * startup
- *
- * @param Event $event
- */
+    /**
+     * startup
+     *
+     * @param Event $event
+     */
     public function startup(Event $event)
     {
         $controller = $event->getSubject();
@@ -50,9 +50,9 @@ class AccessComponent extends Component
         }
     }
 
-/**
- * Hook admin menu element to set role parent
- */
+    /**
+     * Hook admin menu element to set role parent
+     */
     protected function _setupRole()
     {
         $title = __d('croogo', 'Parent Role');
@@ -67,19 +67,19 @@ class AccessComponent extends Component
         $this->_controller->set('parents', $this->_controller->Roles->allowedParents($id));
     }
 
-/**
- * Add ACO
- *
- * Creates ACOs with permissions for roles.
- *
- * Action Path format:
- * - ControllerName
- * - ControllerName/method_name
- *
- * @param string $action action path
- * @param array $allowRoles Role aliases
- * @return void
- */
+    /**
+     * Add ACO
+     *
+     * Creates ACOs with permissions for roles.
+     *
+     * Action Path format:
+     * - ControllerName
+     * - ControllerName/method_name
+     *
+     * @param string $action action path
+     * @param array $allowRoles Role aliases
+     * @return void
+     */
     public function addAco($action, $allowRoles = [])
     {
         $actionPath = $this->_controller->Auth->config('authorize.all.actionPath');
@@ -90,18 +90,18 @@ class AccessComponent extends Component
         $Aco->addAco($action, $allowRoles);
     }
 
-/**
- * Remove ACO
- *
- * Removes ACOs and their Permissions
- *
- * Action Path format:
- * - ControllerName
- * - ControllerName/method_name
- *
- * @param string $action action path
- * @return void
- */
+    /**
+     * Remove ACO
+     *
+     * Removes ACOs and their Permissions
+     *
+     * Action Path format:
+     * - ControllerName
+     * - ControllerName/method_name
+     *
+     * @param string $action action path
+     * @return void
+     */
     public function removeAco($action)
     {
         $actionPath = $this->_controller->Auth->authorize['all']['actionPath'];
@@ -129,7 +129,7 @@ class AccessComponent extends Component
             ];
         }
         $request = new ServerRequest($options);
+
         return $this->getController()->Auth->isAuthorized($user, $request);
     }
-
 }

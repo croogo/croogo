@@ -1,7 +1,7 @@
 <?php
 
-use Phinx\Seed\AbstractSeed;
 use Cake\I18n\I18n;
+use Phinx\Seed\AbstractSeed;
 
 class LanguagesSeed extends AbstractSeed
 {
@@ -64,5 +64,4 @@ class LanguagesSeed extends AbstractSeed
 
         $Table->insert($records)->save();
     }
-
 }

@@ -42,5 +42,4 @@ class MenusController extends AppController
             return;
         }
     }
-
 }

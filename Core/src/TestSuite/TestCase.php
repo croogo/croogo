@@ -2,14 +2,13 @@
 
 namespace Croogo\Core\TestSuite;
 
-use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\ORM\Query;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Croogo\Core\PluginManager;
 use Croogo\Core\Event\EventManager;
+use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\Constraint\QueryCount;
 use PHPUnit_Util_InvalidArgumentHelper;
 
@@ -38,11 +37,11 @@ class TestCase extends CakeTestCase
         Configure::write('Config.language', Configure::read('Site.locale'));
     }
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -79,9 +78,9 @@ class TestCase extends CakeTestCase
         static::assertThat($query, $constraint, $message);
     }
 
-/**
- * Helper method to create an test API request (with the appropriate detector)
- */
+    /**
+     * Helper method to create an test API request (with the appropriate detector)
+     */
     protected function _apiRequest($params)
     {
         $request = new Request();
@@ -89,6 +88,7 @@ class TestCase extends CakeTestCase
         $request->addDetector('api', [
             'callback' => ['Croogo\\Core\\Router', 'isApiRequest'],
         ]);
+
         return $request;
     }
 }

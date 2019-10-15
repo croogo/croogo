@@ -52,9 +52,8 @@ AclPermissions.tabLoad = function(e) {
 		$span.addClass(spinnerClass);
 	} else {
 		$target.append(' <span class="' + spinnerClass + '"></span>');
-	};
-
-	$(pane).load(
+  }
+  $(pane).load(
 		Croogo.basePath + 'admin/acl/permissions/',
 		$.param({ root: alias }),
 		function(responseText, textStatus, xhr) {
@@ -74,8 +73,8 @@ AclPermissions.tabSwitcher = function() {
 		AclPermissions.tabLoad({
 			target: $('#permissions-tab li:first-child a').get(0)
 		});
-	};
-}
+  }
+};
 
 /**
  * Toggle permissions (enable/disable)
@@ -198,12 +197,12 @@ AclPermissions.tableToggle = function() {
 		} else {
 			var children = $('tr[data-parent_id=' + id + ']');
 			children.each(function() {
-				var childId = $('.controller', this).data('id')
+				var childId = $('.controller', this).data('id');
 				var grandchildren = $('tr[data-parent_id=' + childId + ']');
 				grandchildren.each(function() {
 					var grandchildId = $('.controller', this).data('id');
 					$('tr[data-parent_id=' + grandchildId + ']').remove();
-				})
+				});
 				$('tr[data-parent_id=' + childId + ']').remove();
 			}).remove();
 			$el.removeClass('perm-collapse').addClass('perm-expand')

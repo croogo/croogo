@@ -13,11 +13,11 @@ class UrlBehaviorTest extends CroogoTestCase
         'plugin.Croogo/Core.Things'
     ];
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();

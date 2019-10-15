@@ -60,7 +60,7 @@
                 ];
                 $popup[] = [__d('croogo', 'Status'), $this->Layout->status($node->status)];
                 $popup[] = [__d('croogo', 'Created'), $node->created];
-                $popup = implode('<br>', array_map(function($el) {
+                $popup = implode('<br>', array_map(function ($el) {
                     return implode(': ', $el);
                 }, $popup));
                 $a = $this->Html->link('', '#', [

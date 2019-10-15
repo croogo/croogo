@@ -1,7 +1,6 @@
 <?php
 
-if (!$this->getRequest()->is('ajax')):
-
+if (!$this->getRequest()->is('ajax')) :
     echo $this->Html->css([
         'Croogo/Core.core/croogo-admin',
         'Croogo/Core.core/bootstrap-datetimepicker.min',
@@ -11,5 +10,4 @@ if (!$this->getRequest()->is('ajax')):
         'Croogo/Core.core/select2-bootstrap.min.css',
         'Croogo/Core.core/custom.css',
     ]);
-
 endif;

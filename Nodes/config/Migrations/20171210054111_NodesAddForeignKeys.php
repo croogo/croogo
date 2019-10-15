@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class NodesAddForeignKeys extends AbstractMigration
@@ -20,5 +21,4 @@ class NodesAddForeignKeys extends AbstractMigration
             ->dropForeignKey('user_id')
             ->save();
     }
-
 }

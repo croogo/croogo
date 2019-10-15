@@ -2,8 +2,8 @@
 
 namespace Croogo\Core\Controller\Admin;
 
-use Croogo\Core\Croogo;
 use Cake\Core\Configure;
+use Croogo\Core\Croogo;
 
 class LinkChooserController extends AppController
 {

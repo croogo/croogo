@@ -24,41 +24,41 @@ class CroogoTable extends Table
 
     use PropertyHookTrait;
 
-/**
- * use Caching
- *
- * @var string
- */
+    /**
+     * use Caching
+     *
+     * @var string
+     */
     public $useCache = true;
 
-/**
- * Default behaviors
- */
+    /**
+     * Default behaviors
+     */
     public $actsAs = [
         'Containable',
     ];
 
     public $hookedBehaviors = [];
 
-/**
- * Display fields for admin_index. Use displayFields()
- *
- * @var array
- * @access protected
- */
+    /**
+     * Display fields for admin_index. Use displayFields()
+     *
+     * @var array
+     * @access protected
+     */
     protected $_displayFields = [];
 
-/**
- * Edit fields for admin_edit. Use editFields()
- *
- * @var array
- * @access protected
- */
+    /**
+     * Edit fields for admin_edit. Use editFields()
+     *
+     * @var array
+     * @access protected
+     */
     protected $_editFields = [];
 
-/**
- * Constructor
- */
+    /**
+     * Constructor
+     */
     public function __construct(array $config)
     {
         Croogo::applyHookProperties('Hook.table_properties', $this);
@@ -66,7 +66,8 @@ class CroogoTable extends Table
         parent::__construct($config);
     }
 
-    public function implementedEvents() {
+    public function implementedEvents()
+    {
         return parent::implementedEvents() + [
             'Model.initialize' => 'onModelInitialized',
         ];
@@ -79,25 +80,25 @@ class CroogoTable extends Table
         }
     }
 
-/**
- * Fix to the Model::invalidate() method to display localized validate messages
- *
- * @param string $field The name of the field to invalidate
- * @param mixed $value Name of validation rule that was not failed, or validation message to
- *  be returned. If no validation key is provided, defaults to true.
- * @access public
- */
+    /**
+     * Fix to the Model::invalidate() method to display localized validate messages
+     *
+     * @param string $field The name of the field to invalidate
+     * @param mixed $value Name of validation rule that was not failed, or validation message to
+     *  be returned. If no validation key is provided, defaults to true.
+     * @access public
+     */
     public function invalidate($field, $value = true)
     {
         return parent::invalidate($field, __d('croogo', $value));
     }
 
-/**
- * Return formatted display fields
- *
- * @param array $displayFields
- * @return array
- */
+    /**
+     * Return formatted display fields
+     *
+     * @param array $displayFields
+     * @return array
+     */
     public function displayFields($displayFields = null)
     {
         if (isset($displayFields)) {
@@ -123,15 +124,16 @@ class CroogoTable extends Table
                 ]);
             }
         }
+
         return $out;
     }
 
-/**
- * Return formatted edit fields
- *
- * @param array $editFields
- * @return array
- */
+    /**
+     * Return formatted edit fields
+     *
+     * @param array $editFields
+     * @return array
+     */
     public function editFields($editFields = null)
     {
         if (isset($editFields)) {
@@ -156,24 +158,25 @@ class CroogoTable extends Table
                 ];
             }
         }
+
         return $out;
     }
 
-/**
- * Validation method for alias field
- *
- * @return bool true when validation successful
- */
+    /**
+     * Validation method for alias field
+     *
+     * @return bool true when validation successful
+     */
     public function validAlias($check)
     {
         return (preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_]+$/mu', $check[key($check)]) == 1);
     }
 
-/**
- * Validation method for name or title fields
- *
- * @return bool true when validation successful
- */
+    /**
+     * Validation method for name or title fields
+     *
+     * @return bool true when validation successful
+     */
     public function validName($check)
     {
         return (preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_\[\]\(\) ]+$/mu', $check[key($check)]) == 1);

@@ -15,7 +15,7 @@ $this->end();
 
 $this->Breadcrumbs->add(__d('croogo', 'Attachments'));
 
-if (!$this->getRequest()->is('ajax')):
+if (!$this->getRequest()->is('ajax')) :
     $this->Croogo->adminScript([
         'Croogo/FileManager.admin',
         'Croogo/FileManager.assets',
@@ -23,34 +23,34 @@ if (!$this->getRequest()->is('ajax')):
 endif;
 
 $assetId = $filter = $filename = $type = $all = null;
-if (empty($model) && !empty($this->getRequest()->getQuery('model'))):
+if (empty($model) && !empty($this->getRequest()->getQuery('model'))) :
     $model = $this->getRequest()->getQuery('model');
 endif;
-if (empty($foreignKey) && !empty($this->getRequest()->getQuery('foreign_key'))):
+if (empty($foreignKey) && !empty($this->getRequest()->getQuery('foreign_key'))) :
     $foreignKey = $this->getRequest()->getQuery('foreign_key');
 endif;
-if (!empty($this->getRequest()->getQuery('asset_id'))):
+if (!empty($this->getRequest()->getQuery('asset_id'))) :
     $assetId = $this->getRequest()->getQuery('asset_id');
 endif;
-if (!empty($this->getRequest()->getQuery('type'))):
+if (!empty($this->getRequest()->getQuery('type'))) :
     $type = $this->getRequest()->getQuery('type');
 endif;
-if (!empty($this->getRequest()->getQuery('filter'))):
+if (!empty($this->getRequest()->getQuery('filter'))) :
     $filter = $this->getRequest()->getQuery('filter');
 endif;
-if (!empty($this->getRequest()->getQuery('filename'))):
+if (!empty($this->getRequest()->getQuery('filename'))) :
     $filename = $this->getRequest()->getQuery('filename');
 endif;
-if (!empty($this->getRequest()->getQuery('all'))):
+if (!empty($this->getRequest()->getQuery('all'))) :
     $all = $this->getRequest()->getQuery('all');
 endif;
-if (!empty($this->getRequest()->getQuery('editor'))):
+if (!empty($this->getRequest()->getQuery('editor'))) :
     $editor = $this->getRequest()->getQuery('editor');
 endif;
-if (empty($editor) && !empty($this->getRequest()->getQuery('CKEditor'))):
+if (empty($editor) && !empty($this->getRequest()->getQuery('CKEditor'))) :
     $editor = $this->getRequest()->getQuery('CKEditor');
 endif;
-if (!empty($this->getRequest()->getQuery('manage'))):
+if (!empty($this->getRequest()->getQuery('manage'))) :
     $manage = $this->getRequest()->getQuery('manage');
 endif;
 
@@ -58,8 +58,8 @@ $this->append('action-buttons');
     echo $this->Croogo->adminAction(
         __d('croogo', 'New Attachment'),
         array_merge(
-            array('controller' => 'Attachments', 'action' => 'add', 'editor' => 1),
-            array('?' => (array)$this->getRequest()->getQuery())
+            ['controller' => 'Attachments', 'action' => 'add', 'editor' => 1],
+            ['?' => (array)$this->getRequest()->getQuery()]
         )
     ) . ' ';
 
@@ -67,26 +67,26 @@ $this->append('action-buttons');
         'controller' => 'Attachments',
         'action' => 'browse',
     ];
-    if (isset($model) && isset($foreignKey)):
+    if (isset($model) && isset($foreignKey)) :
         $listUrl['?'] = [
             'model' => $model,
             'foreign_key' => $foreignKey,
         ];
     endif;
 
-    if (!$all):
+    if (!$all) :
         $listUrl['?']['all'] = true;
         $listTitle = __d('assets', 'List All Attachments');
-    else:
+    else :
         $listTitle = __d('assets', 'List Attachments');
     endif;
-    echo $this->Croogo->adminAction($listTitle, $listUrl, array(
+    echo $this->Croogo->adminAction($listTitle, $listUrl, [
         'button' => 'outline-success',
-    ));
-$this->end();
+    ]);
+    $this->end();
 
-$this->append('table-heading');
-    $tableHeaders = $this->Html->tableHeaders(array(
+    $this->append('table-heading');
+    $tableHeaders = $this->Html->tableHeaders([
         $this->Paginator->sort('AssetsAsset.id', __d('croogo', 'Id')),
         '&nbsp;',
         $this->Paginator->sort('title', __d('croogo', 'Title')) . ' ' .
@@ -95,54 +95,58 @@ $this->append('table-heading');
         $this->Paginator->sort('height', __d('assets', 'Height')) . ' ' .
         $this->Paginator->sort('filesize', __d('croogo', 'Size')),
         __d('croogo', 'Actions'),
-    ));
+    ]);
     echo $tableHeaders;
-$this->end();
+    $this->end();
 
-$this->append('table-body');
-    $query = array('?' => (array)$this->getRequest()->getQuery());
-    $rows = array();
-    foreach ($attachments as $attachment):
-        $actions = array();
+    $this->append('table-body');
+    $query = ['?' => (array)$this->getRequest()->getQuery()];
+    $rows = [];
+    foreach ($attachments as $attachment) :
+        $actions = [];
         $mimeType = explode('/', $attachment->asset->mime_type);
         $mimeType = $mimeType['0'];
 
-        if (isset($editor)):
-
-            $actions[] = $this->Croogo->adminRowAction('', 'javascript:void(0)', array(
+        if (isset($editor)) :
+            $actions[] = $this->Croogo->adminRowAction('', 'javascript:void(0)', [
                 'onclick' => "Croogo.Wysiwyg.choose('" . $attachment->asset->path . "');",
                 'icon' => 'attach',
                 'escapeTitle' => false,
                 'tooltip' => __d('croogo', 'Insert')
-            ));
-
+            ]);
         endif;
 
         if (!isset($all) && !isset($assetId)) {
-            $deleteUrl = Hash::merge($query, array(
+            $deleteUrl = Hash::merge($query, [
                 'controller' => 'Attachments',
                 'action' => 'delete',
                 $attachment->id,
                 'editor' => 1,
-            ));
-            $actions[] = $this->Croogo->adminRowAction('', $deleteUrl, array(
+            ]);
+            $actions[] = $this->Croogo->adminRowAction(
+                '',
+                $deleteUrl,
+                [
                 'icon' => $this->Theme->getIcon('delete'),
                 'escapeTitle' => false,
                 'tooltip' => __d('croogo', 'Delete Attachment')
-                ),
+                ],
                 __d('croogo', 'Are you sure?')
             );
         } elseif (isset($manage) && isset($assetId)) {
-            $deleteAssetUrl = Hash::merge($query, array(
+            $deleteAssetUrl = Hash::merge($query, [
                 'controller' => 'Assets',
                 'action' => 'delete',
                 $attachment->asset->id,
-            ));
-            $actions[] = $this->Croogo->adminRowAction('', $deleteAssetUrl, array(
+            ]);
+            $actions[] = $this->Croogo->adminRowAction(
+                '',
+                $deleteAssetUrl,
+                [
                 'icon' => $this->Theme->getIcon('delete'),
                 'escapeTitle' => false,
                 'tooltip' => __d('croogo', 'Delete Attachment version')
-                ),
+                ],
                 __d('croogo', 'Are you sure?')
             );
         }
@@ -150,97 +154,100 @@ $this->append('table-body');
         if ($mimeType === 'image' &&
             $attachment->hash == $attachment->asset->hash
         ) {
-            $resizeUrl = Hash::merge($query, array(
+            $resizeUrl = Hash::merge($query, [
                 'action' => 'resize',
                 $attachment->id,
                 'ext' => 'json'
-            ));
-            $actions[] = $this->Croogo->adminRowAction('', $resizeUrl, array(
+            ]);
+            $actions[] = $this->Croogo->adminRowAction('', $resizeUrl, [
                 'icon' => $this->Theme->getIcon('resize'),
                 'escapeTitle' => false,
                 'tooltip' => __d('croogo', 'Resize this item'),
                 'data-toggle' => 'resize-asset'
-            ));
+            ]);
         }
 
-        if (isset($assetId) || isset($all)):
+        if (isset($assetId) || isset($all)) :
             unset($query['?']['asset_id']);
 
-            if (isset($model) && isset($foreignKey)):
+            if (isset($model) && isset($foreignKey)) :
                 $extractPath = "asset.asset_usage.{n}[model=$model][foreign_key=$foreignKey]";
                 $usage = Hash::extract($attachment, $extractPath);
-                if (empty($usage) && $model !== 'Attachments'):
-                    $addUrl = Hash::merge(array(
+                if (empty($usage) && $model !== 'Attachments') :
+                    $addUrl = Hash::merge([
                         'controller' => 'AssetUsages',
                         'action' => 'add',
-                        '?' => array(
+                        '?' => [
                             'asset_id' => $attachment->asset->id,
                             'model' => $model,
                             'foreign_key' => $foreignKey,
-                        )
-                    ), $query);
-                    $actions[] = $this->Croogo->adminRowAction('', $addUrl, array(
+                        ]
+                    ], $query);
+                    $actions[] = $this->Croogo->adminRowAction('', $addUrl, [
                         'icon' => 'create',
                         'escapeTitle' => false,
                         'tooltip' => __d('croogo', 'Register asset with this resource'),
                         'method' => 'post',
-                    ));
+                    ]);
                 endif;
             endif;
-        elseif ($mimeType === 'image'):
-
-            if (!$this->getRequest()->getQuery('manage')):
-                $detailUrl = Hash::merge(array(
+        elseif ($mimeType === 'image') :
+            if (!$this->getRequest()->getQuery('manage')) :
+                $detailUrl = Hash::merge([
                     'action' => 'browse',
-                    '?' => array(
+                    '?' => [
                         'asset_id' => $attachment->asset->id,
-                    )
-                ), $query);
-                $actions[] = $this->Croogo->adminRowAction('', $detailUrl, array(
+                    ]
+                ], $query);
+                $actions[] = $this->Croogo->adminRowAction('', $detailUrl, [
                     'icon' => 'suitcase',
                     'escapeTitle' => false,
                     'tooltip' => __d('assets', 'View other sizes'),
-                ));
+                ]);
             endif;
-
         endif;
 
         if ($mimeType == 'image') {
             try {
                 $img = $this->AssetsImage->resize(
-                    $attachment->asset->path, 100, 200,
+                    $attachment->asset->path,
+                    100,
+                    200,
                     ['adapter' => $attachment->asset->adapter]
                 );
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $img = $this->Html->image($attachment->asset->path, ['style' => 'max-width: 200px']);
             }
-            $thumbnail = $this->Html->link($img,
+            $thumbnail = $this->Html->link(
+                $img,
                 $attachment->asset->path,
-                array(
+                [
                     'data-toggle' => 'lightbox',
                     'escape' => false,
                     'title' => $attachment->title,
-                )
+                ]
             );
             if (!empty($attachment['AssetsAssetUsage']['type']) &&
                 $attachment['AssetsAssetUsage']['foreign_key'] === $foreignKey &&
                 $attachment['AssetsAssetUsage']['model'] === $model
-            ):
-                $thumbnail .= $this->Html->div(null,
+            ) :
+                $thumbnail .= $this->Html->div(
+                    null,
                     $this->Html->link(
-                        $this->Html->tag('span',
+                        $this->Html->tag(
+                            'span',
                             $attachment['AssetsAssetUsage']['type'],
-                            array('class' => 'badge badge-info')
+                            ['class' => 'badge badge-info']
                         ),
-                        array(
+                        [
                             'action' => 'browse',
-                            '?' => array(
+                            '?' => [
                                 'type' => $attachment['AssetsAssetUsage']['type']
-                            ) + $this->getRequest()->query,
-                        ),
-                        array(
+                            ] + $this->getRequest()->query,
+                        ],
+                        [
                             'escape' => false,
-                        )
+                        ]
                     )
                 );
             endif;
@@ -249,12 +256,11 @@ $this->append('table-body');
                 'width' => 200,
                 'controls' => true,
             ]);
-
         } else {
             $thumbnail = $this->Html->image('Croogo/Core./img/icons/page_white.png') . ' ' . $attachment->asset->mime_type . ' (' . $this->FileManager->filename2ext($attachment->slug) . ')';
-            $thumbnail = $this->Html->link($thumbnail, '#', array(
+            $thumbnail = $this->Html->link($thumbnail, '#', [
                 'escape' => false,
-            ));
+            ]);
         }
 
         $actions = $this->Html->div('item-actions', implode(' ', $actions));
@@ -262,12 +268,12 @@ $this->append('table-body');
         $url = $this->Html->link(
             $this->Url->build($attachment->asset->path),
             $attachment->asset->path,
-            array(
+            [
                 'onclick' => "Croogo.Wysiwyg.choose('" . $attachment->asset->path . "'); return false;",
                 'target' => '_blank',
-            )
+            ]
         );
-        $urlPopover = $this->Croogo->adminRowAction('', '#', array(
+        $urlPopover = $this->Croogo->adminRowAction('', '#', [
             'class' => 'popovers',
             'icon' => 'info-circle',
             'escapeTitle' => false,
@@ -277,47 +283,50 @@ $this->append('table-body');
             'data-placement' => 'top',
             'data-trigger' => 'click|focus',
             'data-content' => $url,
-        ));
+        ]);
 
         $title = $this->Html->para(null, h($attachment->title));
-        $title .= $this->Html->para('small',
+        $title .= $this->Html->para(
+            'small',
             $this->Text->truncate(
-                $attachment->asset->filename, 30
+                $attachment->asset->filename,
+                30
             ) . '&nbsp;' . $urlPopover,
-            array('title' => $attachment->asset->filename)
+            ['title' => $attachment->asset->filename]
         );
 
         $title .= $this->Html->para('small', 'Dimension: ' .
             $attachment->asset->width . ' x ' .
-            $attachment->asset->height
-        );
+            $attachment->asset->height);
 
-        $title .= $this->Html->para('small',
+        $title .= $this->Html->para(
+            'small',
             'Size: ' . $this->Number->toReadableSize($attachment->asset->filesize)
         );
 
         if (empty($all) && empty($assetId)) {
-            $title .= $this->Html->para('small',
+            $title .= $this->Html->para(
+                'small',
                 'Number of versions: ' . $attachment->asset_count
             );
         }
 
-        $rows[] = array(
+        $rows[] = [
             $attachment->id,
             $thumbnail,
             $title,
             $actions,
-        );
+        ];
     endforeach;
 
     echo $this->Html->tableCells($rows);
-$this->end();
-$this->set('tableFooter', $tableHeaders);
+    $this->end();
+    $this->set('tableFooter', $tableHeaders);
 
-if (!$this->getRequest()->is('ajax')):
-    $script =<<<EOF
+    if (!$this->getRequest()->is('ajax')) :
+        $script = <<<EOF
         $('.popovers').popover().on('click', function() { return false; });
         Assets.init();
 EOF;
-    $this->Js->buffer($script);
-endif;
+        $this->Js->buffer($script);
+    endif;

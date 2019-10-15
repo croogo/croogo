@@ -17,11 +17,11 @@ use Cake\Event\EventListenerInterface;
 class ExampleEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- *
- * @return array
- */
+    /**
+     * implementedEvents
+     *
+     * @return array
+     */
     public function implementedEvents()
     {
         return [
@@ -37,12 +37,12 @@ class ExampleEventHandler implements EventListenerInterface
         ];
     }
 
-/**
- * onAdminLoginSuccessful
- *
- * @param Event $event
- * @return void
- */
+    /**
+     * onAdminLoginSuccessful
+     *
+     * @param Event $event
+     * @return void
+     */
     public function onAdminLoginSuccessful($event)
     {
         $Controller = $event->getSubject();
@@ -56,12 +56,12 @@ class ExampleEventHandler implements EventListenerInterface
         ]);
     }
 
-/**
- * onLayoutBeforeFilter
- *
- * @param Event $event
- * @return void
- */
+    /**
+     * onLayoutBeforeFilter
+     *
+     * @param Event $event
+     * @return void
+     */
     public function onLayoutBeforeFilter($event)
     {
         $search = 'This is the content of your block.';
@@ -73,12 +73,12 @@ class ExampleEventHandler implements EventListenerInterface
         );
     }
 
-/**
- * onLayoutAfterFilter
- *
- * @param Event $event
- * @return void
- */
+    /**
+     * onLayoutAfterFilter
+     *
+     * @param Event $event
+     * @return void
+     */
     public function onLayoutAfterFilter($event)
     {
         $data = $event->getData();

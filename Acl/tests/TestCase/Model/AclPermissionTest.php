@@ -16,9 +16,9 @@ class AclPermissionTest extends CroogoTestCase
         'plugin.Croogo/Users.User',
     ];
 
-/**
- * setUp
- */
+    /**
+     * setUp
+     */
     public function setUp()
     {
         parent::setUp();
@@ -29,9 +29,9 @@ class AclPermissionTest extends CroogoTestCase
         );
     }
 
-/**
- * testPermissionCacheClearedAfterSave
- */
+    /**
+     * testPermissionCacheClearedAfterSave
+     */
     public function testPermissionCacheClearedAfterSave()
     {
         $key = 'permission_cache';
@@ -53,9 +53,9 @@ class AclPermissionTest extends CroogoTestCase
         $this->assertEquals($expected, $result);
     }
 
-/**
- * testNoDuplicateActions
- */
+    /**
+     * testNoDuplicateActions
+     */
     public function testNoDuplicateActions()
     {
         $permissions = $this->Permission->getAllowedActionsByUserId(3);

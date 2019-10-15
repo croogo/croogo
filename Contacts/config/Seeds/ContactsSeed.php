@@ -38,5 +38,4 @@ class ContactsSeed extends AbstractSeed
         $Table = $this->table('contacts');
         $Table->insert($this->records)->save();
     }
-
 }

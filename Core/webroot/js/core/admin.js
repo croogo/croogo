@@ -10,7 +10,7 @@ var Admin = typeof Admin == 'undefined' ? {} : Admin;
  */
 Admin.spinnerClass = function () {
   return Admin.iconClass('spinner') + ' ' + Admin.iconClass('spin', false);
-}
+};
 
 /**
  * Forms
@@ -24,12 +24,12 @@ Admin.form = function () {
   var ajaxToggle = function (e) {
     var $this = $(this);
     var spinnerClass = Admin.spinnerClass();
-    $this.find('i').attr('class', spinnerClass)
+    $this.find('i').attr('class', spinnerClass);
     var url = $this.data('url');
     $.post(url, function (data) {
       $this.parent().html(data);
     });
-  }
+  };
 
   // Autocomplete
   if (typeof $.fn.typeahead_autocomplete === 'function') {
@@ -40,7 +40,7 @@ Admin.form = function () {
   $('body')
     .on('click', 'a[data-row-action]', Admin.processLink)
     .on('click', 'a.ajax-toggle', ajaxToggle);
-}
+};
 
 /**
  * Protect forms for accidental page refresh
@@ -92,7 +92,7 @@ Admin.protectForms = function () {
       return confirmationMessage;
     };
   }
-}
+};
 
 Admin.formFeedback = function () {
   $('body').on('submit', 'form', function (el) {
@@ -118,7 +118,7 @@ Admin.formFeedback = function () {
     $('#content .nav-tabs').find(selector).tab('show')
   };
   $('form input').on('invalid', _.debounce(activateErrorTab, 150))
-}
+};
 
 /**
  * Helper to process row action links
@@ -137,7 +137,7 @@ Admin.processLink = function (event) {
   $('#bulk-action select', form).val(action);
   form.submit();
   return false;
-}
+};
 
 Admin.removeHash = function() {
   var scrollV, scrollH, loc = window.location;
@@ -154,7 +154,7 @@ Admin.removeHash = function() {
     document.body.scrollTop = scrollV;
     document.body.scrollLeft = scrollH;
   }
-}
+};
 
 /**
  * Extra stuff
@@ -199,7 +199,7 @@ Admin.extra = function () {
   if (typeof $.fn.select2 !== 'undefined') {
     $('select:not(".no-select2")').select2(Croogo.themeSettings.select2Defaults);
   }
-}
+};
 
 /**
  * Initialize boxes to enable to toggling Box content
@@ -230,7 +230,7 @@ Admin.toggleRowSelection = function (selector, checkboxSelector) {
   $selector.on('click', function (e) {
     $(checkboxSelector).prop('checked', $selector.is(':checked'));
   });
-}
+};
 
 /**
  * Helper method to get the proper icon class name based on theme settings
@@ -248,7 +248,7 @@ Admin.iconClass = function (icon, includeDefault) {
   }
   result += Croogo.themeSettings.iconDefaults['prefix'] + '-' + icon;
   return result.trim();
-}
+};
 
 Admin.dateTimeFields = function(datePickers) {
   datePickers = typeof datePickers !== 'undefined' ? datePickers : $('[role=datetime-picker]');
@@ -264,10 +264,10 @@ Admin.dateTimeFields = function(datePickers) {
       date = date.tz(timezone)
     }
 
-    var sDate = date ? date : picker.val()
+    var sDate = date ? date : picker.val();
 
     picker.on('dp.change', function(e) {
-      var sDate = ""
+      var sDate = "";
       date = moment(e.date);
       if (date.isValid()) {
         date.tz('UTC').locale('UTC');
@@ -291,7 +291,7 @@ Admin.dateTimeFields = function(datePickers) {
         clear: Admin.iconClass('trash'),
         close: Admin.iconClass('remove')
       }
-    }
+    };
     if (picker.data('mindate')) {
       dpOptions.minDate = picker.data('mindate');
     }
@@ -300,4 +300,4 @@ Admin.dateTimeFields = function(datePickers) {
     }
     picker.datetimepicker(dpOptions);
   });
-}
+};

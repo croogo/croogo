@@ -28,7 +28,7 @@ class LinksTable extends CroogoTable
 
         $validator
             ->add('link', 'custom', [
-                'rule' => function($value, $context) {
+                'rule' => function ($value, $context) {
                     return !empty($value);
                 },
                 'message' => __d('croogo', 'Link cannot be empty.')
@@ -79,6 +79,7 @@ class LinksTable extends CroogoTable
         $table->setColumnType('visibility_roles', 'encoded');
         $table->setColumnType('link', 'link');
         $table->setColumnType('params', 'params');
+
         return parent::_initializeSchema($table);
     }
 

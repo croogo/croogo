@@ -25,11 +25,11 @@ class AclArosAcoFixture extends CroogoTestFixture
 
     public $name = 'ArosAco';
 
-/**
- * fields property
- *
- * @var array
- */
+    /**
+     * fields property
+     *
+     * @var array
+     */
     public $fields = [
         'id' => ['type' => 'integer'],
         'aro_id' => ['type' => 'integer', 'length' => 10, 'null' => false],
@@ -41,10 +41,10 @@ class AclArosAcoFixture extends CroogoTestFixture
         '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
     ];
 
-/**
- * records property
- *
- * @var array
- */
+    /**
+     * records property
+     *
+     * @var array
+     */
     public $records = [];
 }

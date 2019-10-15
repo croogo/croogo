@@ -9,16 +9,16 @@ namespace Croogo\Install\Test\Fixture;
 class InstallUserFixture extends CakeTestFixture
 {
 
-/**
- * Table name
- */
+    /**
+     * Table name
+     */
     public $table = 'users';
 
-/**
- * Fields
- *
- * @var array
- */
+    /**
+     * Fields
+     *
+     * @var array
+     */
     public $fields = [
         'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20],
         'role_id' => ['type' => 'integer', 'null' => false, 'default' => null],
@@ -42,10 +42,10 @@ class InstallUserFixture extends CakeTestFixture
         '_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
     ];
 
-/**
- * Records
- *
- * @var array
- */
+    /**
+     * Records
+     *
+     * @var array
+     */
     public $records = [];
 }

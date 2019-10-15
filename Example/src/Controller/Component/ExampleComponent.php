@@ -20,35 +20,35 @@ use Cake\Event\Event;
 class ExampleComponent extends Component
 {
 
-/**
- * Called after the Controller::beforeFilter() and before the controller action
- *
- * @param object $controller Controller with components to startup
- * @return void
- */
+    /**
+     * Called after the Controller::beforeFilter() and before the controller action
+     *
+     * @param object $event Controller with components to startup
+     * @return void
+     */
     public function startup(Event $event)
     {
         $controller = $this->_registry->getController();
         $controller->set('exampleComponent', 'ExampleComponent startup');
     }
 
-/**
- * Called after the Controller::beforeRender(), after the view class is loaded, and before the
- * Controller::render()
- *
- * @param object $controller Controller with components to beforeRender
- * @return void
- */
+    /**
+     * Called after the Controller::beforeRender(), after the view class is loaded, and before the
+     * Controller::render()
+     *
+     * @param object $event Controller with components to beforeRender
+     * @return void
+     */
     public function beforeRender(Event $event)
     {
     }
 
-/**
- * Called after Controller::render() and before the output is printed to the browser.
- *
- * @param object $controller Controller with components to shutdown
- * @return void
- */
+    /**
+     * Called after Controller::render() and before the output is printed to the browser.
+     *
+     * @param object $event Controller with components to shutdown
+     * @return void
+     */
     public function shutdown(Event $event)
     {
     }

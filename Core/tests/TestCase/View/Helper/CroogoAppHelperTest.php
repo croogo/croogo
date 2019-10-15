@@ -1,8 +1,9 @@
 <?php
+
 namespace Croogo\Core\Test\TestCase\View\Helper;
 
-use Cake\Http\ServerRequest;
 use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
 use Cake\View\Helper;
 use Cake\View\View;
@@ -16,25 +17,25 @@ class CroogoAppHelper extends Helper
 class CroogoAppHelperTest extends CroogoTestCase
 {
 
-/**
- * View instance
- *
- * @var View
- */
+    /**
+     * View instance
+     *
+     * @var View
+     */
     public $View;
 
-/**
- * AppHelper instance
- *
- * @var CroogoAppHelper
- */
+    /**
+     * AppHelper instance
+     *
+     * @var CroogoAppHelper
+     */
     public $AppHelper;
 
     public $fixtures = [
-//		'plugin.Croogo/Settings.Setting',
-//		'plugin.Croogo/Taxonomy.Type',
-//		'plugin.Croogo/Taxonomy.Vocabulary',
-//		'plugin.Croogo/Taxonomy.TypesVocabulary',
+//      'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Taxonomy.Type',
+//      'plugin.Croogo/Taxonomy.Vocabulary',
+//      'plugin.Croogo/Taxonomy.TypesVocabulary',
     ];
 
     public function setUp()

@@ -13,5 +13,5 @@
         ]),
     ];
     echo $this->Paginator->numbers($options);
-?>
+    ?>
 </ul>

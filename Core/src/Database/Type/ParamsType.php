@@ -2,6 +2,7 @@
 
 namespace Croogo\Core\Database\Type;
 
+use ArrayObject;
 use Cake\Database\Driver;
 use Cake\Database\Type;
 use Croogo\Core\Utility\StringConverter;
@@ -17,64 +18,67 @@ use PDO;
 class ParamsType extends Type
 {
 
-/**
- * @param $value
- * @param Driver $driver
- * @return array
- */
+    /**
+     * @param $value
+     * @param Driver $driver
+     * @return array
+     */
     public function toPHP($value, Driver $driver)
     {
         if (empty($value) || $value === null) {
-            return new \ArrayObject();
+            return new ArrayObject();
         }
+
         return $this->paramsToArray($value);
     }
 
-/**
- * @param $value
- * @return array
- */
+    /**
+     * @param $value
+     * @return array
+     */
     public function marshal($value)
     {
         if (is_array($value) || $value === null) {
             return $value;
         }
+
         return $this->paramsToArray($value);
     }
 
-/**
- * @param $value
- * @param Driver $driver
- * @return array
- */
+    /**
+     * @param $value
+     * @param Driver $driver
+     * @return array
+     */
     public function toDatabase($value, Driver $driver)
     {
         return $this->arrayToParams($value);
     }
 
-/**
- * @param $value
- * @param Driver $driver
- * @return int
- */
+    /**
+     * @param $value
+     * @param Driver $driver
+     * @return int
+     */
     public function toStatement($value, Driver $driver)
     {
         if ($value === null) {
             return PDO::PARAM_NULL;
         }
+
         return PDO::PARAM_STR;
     }
 
-/**
- * Converts a string of params to an array of formatted key/value pairs
- *
- * String is supposed to have one parameter per line in the format:
- * my_param_key=value_here
- * another_param=another_value
- *
- * @param string $params
- * @return array
- */
+    /**
+     * Converts a string of params to an array of formatted key/value pairs
+     *
+     * String is supposed to have one parameter per line in the format:
+     * my_param_key=value_here
+     * another_param=another_value
+     *
+     * @param string $params
+     * @return array
+     */
     public function paramsToArray($params)
     {
         $converter = new StringConverter();
@@ -102,15 +106,16 @@ class ParamsType extends Type
                 $output[$key] = trim($value);
             }
         }
+
         return $output;
     }
 
-/**
- * Converts a array of formatted key/value pairs to an string of params
- *
- * @param $array
- * @return array
- */
+    /**
+     * Converts a array of formatted key/value pairs to an string of params
+     *
+     * @param $array
+     * @return array
+     */
     public function arrayToParams($array)
     {
         $params = '';
@@ -124,6 +129,7 @@ class ParamsType extends Type
 
             $i++;
         }
+
         return $params;
     }
 }

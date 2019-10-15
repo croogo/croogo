@@ -3,11 +3,7 @@
 namespace Croogo\Acl\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Utility\Hash;
-use Cake\Log\Log;
-use Cake\ORM\TableRegistry;
 
 /**
  * AclPermission Model
@@ -22,22 +18,22 @@ use Cake\ORM\TableRegistry;
 class PermissionsTable extends \Acl\Model\Table\PermissionsTable
 {
 
-/**
- * afterSave
- */
+    /**
+     * afterSave
+     */
     public function afterSave($created, $options = [])
     {
         Cache::clearGroup('acl', 'permissions');
     }
 
-/**
- * Retrieve an array for formatted aros/aco data
- *
- * @param array $acos
- * @param array $aros
- * @param array $options
- * @return array formatted array
- */
+    /**
+     * Retrieve an array for formatted aros/aco data
+     *
+     * @param array $acos
+     * @param array $aros
+     * @param array $options
+     * @return array formatted array
+     */
     public function format($acos, $aros, $options = [])
     {
         $options = Hash::merge([
@@ -71,8 +67,8 @@ class PermissionsTable extends \Acl\Model\Table\PermissionsTable
                 }
                 $permissions[$acoId] = [$acoAlias => $data];
             }
-
         }
+
         return $permissions;
     }
 }

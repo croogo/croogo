@@ -15,9 +15,9 @@ class TheTaxonomyTestController extends Controller
 class TaxonomiesHelperTest extends CroogoTestCase
 {
 
-/**
- * setUp
- */
+    /**
+     * setUp
+     */
     public function setUp()
     {
         parent::setUp();
@@ -29,18 +29,18 @@ class TaxonomiesHelperTest extends CroogoTestCase
         $this->Taxonomies = new TaxonomiesHelper($this->View);
     }
 
-/**
- * tearDown
- */
+    /**
+     * tearDown
+     */
     public function tearDown()
     {
         unset($this->View);
         unset($this->Taxonomies);
     }
 
-/**
- * Test [vocabulary] shortcode
- */
+    /**
+     * Test [vocabulary] shortcode
+     */
     public function testVocabularyShortcode()
     {
         $content = '[vocabulary:categories type="blog"]';

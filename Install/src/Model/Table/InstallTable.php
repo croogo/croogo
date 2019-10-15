@@ -2,42 +2,39 @@
 
 namespace Croogo\Install\Model\Table;
 
-use Cake\Core\Configure;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\File;
-use Cake\Utility\Security;
-use Croogo\Core\Plugin;
 
 class InstallTable extends Table
 {
 
-/**
- * name
- *
- * @var string
- */
+    /**
+     * name
+     *
+     * @var string
+     */
     public $name = 'Install';
 
-/**
- * useTable
- *
- * @var string
- */
+    /**
+     * useTable
+     *
+     * @var string
+     */
     public $useTable = false;
 
-/**
- *
- * @var CroogoPlugin
- */
+    /**
+     *
+     * @var CroogoPlugin
+     */
     protected $_CroogoPlugin = null;
 
-/**
- * Create admin user
- *
- * @var array $user User datas
- * @return If user is created
- */
+    /**
+     * Create admin user
+     *
+     * @var array $user User datas
+     * @return If user is created
+     */
     public function addAdminUser($user)
     {
         $Users = TableRegistry::get('Croogo/Users.Users');
@@ -55,9 +52,11 @@ class InstallTable extends Table
         $entity = $Users->patchEntity($entity, $user);
         if ($entity->getErrors()) {
             $this->err('Unable to create administrative user. Validation errors:');
+
             return $this->err($entity->getErrors());
         }
         $saved = $Users->save($entity);
+
         return $saved;
     }
 }

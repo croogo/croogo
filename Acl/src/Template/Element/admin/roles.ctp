@@ -1,5 +1,7 @@
 <?php
 
+use Cake\Utility\Hash;
+
 $entity = $this->Form->context()->entity();
 if ($entity->role_id) {
     $validRoles = array_diff_key($roles, array($entity->role_id => null));
@@ -8,7 +10,7 @@ if ($entity->role_id) {
 }
 
 $selected = $entity->roles ?
-    \Cake\Utility\Hash::extract($entity->roles, '{n}.id') :
+    Hash::extract($entity->roles, '{n}.id') :
     [];
 echo $this->Form->input('roles._ids', [
     'value' => $selected,

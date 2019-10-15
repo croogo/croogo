@@ -115,7 +115,7 @@ class Status implements ArrayAccess
     /**
      * Default status
      */
-    protected function _defaultStatus($roleId = null, $statusType)
+    protected function _defaultStatus($roleId, $statusType)
     {
         $status[$statusType] = [self::PUBLISHED];
         $allow = false;

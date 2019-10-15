@@ -1,4 +1,5 @@
 <?php
+
 use Cake\Core\Configure;
 
 $this->assign('title', __d('croogo', 'Login'));
@@ -16,7 +17,7 @@ $body .= $this->Form->input('password', [
     'prepend' => $this->Html->icon('key', ['class' => 'fa-fw']),
     'required' => true,
 ]);
-if (Configure::read('Access Control.autoLoginDuration')):
+if (Configure::read('Access Control.autoLoginDuration')) :
     $body .= $this->Form->input('remember', [
         'label' => __d('croogo', 'Remember me?'),
         'type' => 'checkbox',

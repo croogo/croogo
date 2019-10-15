@@ -18,7 +18,9 @@ $this->end();
 $this->start('tab-content');
 echo $this->Html->tabStart('reset-password');
 echo $this->Form->input('password', ['label' => __d('croogo', 'New Password'), 'value' => '']);
-echo $this->Form->input('verify_password',
-    ['label' => __d('croogo', 'Verify Password'), 'type' => 'password', 'value' => '']);
+echo $this->Form->input(
+    'verify_password',
+    ['label' => __d('croogo', 'Verify Password'), 'type' => 'password', 'value' => '']
+);
 echo $this->Html->tabEnd();
 $this->end();

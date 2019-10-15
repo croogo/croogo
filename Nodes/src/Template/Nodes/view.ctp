@@ -1,4 +1,5 @@
 <?php
+
 use Cake\Core\Plugin;
 
 $this->assign('title', $node->title);
@@ -13,9 +14,9 @@ $this->Nodes->set($node);
     ?>
 </div>
 
-<?php if (Plugin::isLoaded('Croogo/Comments')): ?>
+<?php if (Plugin::isLoaded('Croogo/Comments')) : ?>
 <div id="comments" class="node-comments">
-<?php
+    <?php
     $type = $typesForLayout[$this->Nodes->field('type')];
 
     if ($type->comment_status > 0 && $this->Nodes->field('comment_status') > 0) {
@@ -28,6 +29,6 @@ $this->Nodes->set($node);
             'type' => $type
         ]);
     }
-?>
+    ?>
 </div>
 <?php endif ?>

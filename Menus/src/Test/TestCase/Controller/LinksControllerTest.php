@@ -33,11 +33,11 @@ class LinksControllerTest extends CroogoControllerTestCase
         'plugin.taxonomy.vocabulary',
     ];
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -56,20 +56,20 @@ class LinksControllerTest extends CroogoControllerTestCase
             ->will($this->returnCallback([$this, 'authUserCallback']));
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->LinksController);
     }
 
-/**
- * checks that we were redirected with menu id
- */
+    /**
+     * checks that we were redirected with menu id
+     */
     protected function _expectsRedirectToMenu($menuId)
     {
         $this->controller->expects($this->once())
@@ -80,11 +80,11 @@ class LinksControllerTest extends CroogoControllerTestCase
             ]);
     }
 
-/**
- * testAdminIndex
- *
- * @return void
- */
+    /**
+     * testAdminIndex
+     *
+     * @return void
+     */
     public function testAdminIndex()
     {
         $this->LinksController
@@ -104,11 +104,11 @@ class LinksControllerTest extends CroogoControllerTestCase
         $this->assertNotEmpty($this->vars['linksStatus']);
     }
 
-/**
- * testAdminAdd
- *
- * @return void
- */
+    /**
+     * testAdminAdd
+     *
+     * @return void
+     */
     public function testAdminAdd()
     {
         $this->expectFlashAndRedirect('The Link has been saved');
@@ -132,11 +132,11 @@ class LinksControllerTest extends CroogoControllerTestCase
         $this->assertEqual($testLink['Link']['title'], 'Test link');
     }
 
-/**
- * testAdminEdit
- *
- * @return void
- */
+    /**
+     * testAdminEdit
+     *
+     * @return void
+     */
     public function testAdminEdit()
     {
         $this->expectFlashAndRedirect('The Link has been saved');
@@ -195,11 +195,11 @@ class LinksControllerTest extends CroogoControllerTestCase
         $this->assertEquals(1, $newAboutLink['Link']['lft']);
     }
 
-/**
- * testAdminDelete
- *
- * @return void
- */
+    /**
+     * testAdminDelete
+     *
+     * @return void
+     */
     public function testAdminDelete()
     {
         $this->expectFlashAndRedirect('Link deleted');
@@ -218,11 +218,11 @@ class LinksControllerTest extends CroogoControllerTestCase
         $this->assertFalse($hasAny);
     }
 
-/**
- * testAdminMoveUp
- *
- * @return void
- */
+    /**
+     * testAdminMoveUp
+     *
+     * @return void
+     */
     public function testAdminMoveUp()
     {
         $this->expectFlashAndRedirect('Moved up successfully');
@@ -248,11 +248,11 @@ class LinksControllerTest extends CroogoControllerTestCase
         ]);
     }
 
-/**
- * testAdminMoveUpWithSteps
- *
- * @return void
- */
+    /**
+     * testAdminMoveUpWithSteps
+     *
+     * @return void
+     */
     public function testAdminMoveUpWithSteps()
     {
         $this->expectFlashAndRedirect('Moved up successfully');
@@ -277,11 +277,11 @@ class LinksControllerTest extends CroogoControllerTestCase
         ]);
     }
 
-/**
- * testAdminMoveDown
- *
- * @return void
- */
+    /**
+     * testAdminMoveDown
+     *
+     * @return void
+     */
     public function testAdminMoveDown()
     {
         $this->expectFlashAndRedirect('Moved down successfully');
@@ -307,11 +307,11 @@ class LinksControllerTest extends CroogoControllerTestCase
         ]);
     }
 
-/**
- * testAdminMoveDownWithSteps
- *
- * @return void
- */
+    /**
+     * testAdminMoveDownWithSteps
+     *
+     * @return void
+     */
     public function testAdminMoveDownWithSteps()
     {
         $this->expectFlashAndRedirect('Moved down successfully');

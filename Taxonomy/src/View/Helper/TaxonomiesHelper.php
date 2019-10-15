@@ -3,7 +3,6 @@
 namespace Croogo\Taxonomy\View\Helper;
 
 use Cake\Event\Event;
-use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Croogo\Core\Croogo;
 

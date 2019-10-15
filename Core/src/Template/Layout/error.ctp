@@ -57,7 +57,7 @@ $this->loadHelper('Croogo/Menus.Menus');
                             'class' => 'nav-link js-scroll-trigger',
                         ],
                     ]);
-                ?>
+?>
             </div>
     </nav>
 
@@ -106,7 +106,7 @@ $this->loadHelper('Croogo/Menus.Menus');
                             'class' => 'js-scroll-trigger',
                         ],
                     ]);
-                ?>
+                    ?>
                 </div>
             </div>
         </div>

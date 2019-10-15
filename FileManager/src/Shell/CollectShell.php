@@ -5,25 +5,26 @@ namespace Croogo\FileManager\Shell;
 use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
 
-class CollectShell extends Shell {
+class CollectShell extends Shell
+{
 
     public function getOptionParser()
     {
         return parent::getOptionParser()
             ->setDescription(__d('croogo', 'Scan directory and import record to database'))
-            ->addArguments(array(
-                'dir' => array(
+            ->addArguments([
+                'dir' => [
                     'help' => __d('croogo', 'Path to scan'),
                     'required' => true,
-                ),
-            ))
-            ->addOptions(array(
-                'regex' => array(
+                ],
+            ])
+            ->addOptions([
+                'regex' => [
                     'help' => __d('croogo', 'File name Regex'),
                     'required' => false,
                     'short' => 'r',
-                ),
-            ));
+                ],
+            ]);
     }
 
     public function main()
@@ -51,9 +52,10 @@ class CollectShell extends Shell {
             $this->out();
             if ($tasks - $errors > 0) {
                 $this->out('<warning>' . __d('croogo', 'Task has %s tasks and %s errors?', $tasks, $errors) . '</warning>');
-                $continue = $this->in('Continue?', array('Y', 'n'), 'n');
+                $continue = $this->in('Continue?', ['Y', 'n'], 'n');
                 if ($continue == 'n') {
                     $this->out('Aborted');
+
                     return $this->_stop();
                 }
             }
@@ -69,5 +71,4 @@ class CollectShell extends Shell {
             $this->err($message);
         }
     }
-
 }

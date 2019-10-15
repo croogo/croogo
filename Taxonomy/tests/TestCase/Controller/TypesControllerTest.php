@@ -33,11 +33,11 @@ class TypesControllerTest extends CroogoControllerTestCase
         'plugin.Croogo/Taxonomy.Vocabulary',
     ];
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -56,22 +56,22 @@ class TypesControllerTest extends CroogoControllerTestCase
             ->will($this->returnCallback([$this, 'authUserCallback']));
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->TypesController);
     }
 
-/**
- * testAdminIndex
- *
- * @return void
- */
+    /**
+     * testAdminIndex
+     *
+     * @return void
+     */
     public function testAdminIndex()
     {
         $this->testAction('/admin/types/index');
@@ -79,11 +79,11 @@ class TypesControllerTest extends CroogoControllerTestCase
         $this->assertNotEmpty($this->vars['types']);
     }
 
-/**
- * testAdminAdd
- *
- * @return void
- */
+    /**
+     * testAdminAdd
+     *
+     * @return void
+     */
     public function testAdminAdd()
     {
         $this->expectFlashAndRedirect('The Type has been saved');
@@ -100,11 +100,11 @@ class TypesControllerTest extends CroogoControllerTestCase
         $this->assertEqual($newType['Type']['title'], 'New Type');
     }
 
-/**
- * testAdminEdit
- *
- * @return void
- */
+    /**
+     * testAdminEdit
+     *
+     * @return void
+     */
     public function testAdminEdit()
     {
         $this->expectFlashAndRedirect('The Type has been saved');
@@ -120,11 +120,11 @@ class TypesControllerTest extends CroogoControllerTestCase
         $this->assertEquals('[modified]', $page['Type']['description']);
     }
 
-/**
- * testAdminDelete
- *
- * @return void
- */
+    /**
+     * testAdminDelete
+     *
+     * @return void
+     */
     public function testAdminDelete()
     {
         $this->expectFlashAndRedirect('Type deleted');

@@ -4,15 +4,27 @@ namespace Croogo\Core\Controller;
 
 use Cake\Event\Event;
 
+/**
+ * Trait HookableComponentTrait
+ * @package Croogo\Core\Controller
+ */
 trait HookableComponentTrait
 {
-
-    public function _dispatchBeforeInitialize()
+    /**
+     * @return void
+     */
+    protected function _dispatchBeforeInitialize()
     {
         $this->getEventManager()->dispatch(new Event('Controller.beforeInitialize', $this));
     }
 
-    public function _loadHookableComponent($name, array $config)
+    /**
+     * @param $name
+     * @param array $config
+     *
+     * @return mixed
+     */
+    public function loadHookableComponent($name, array $config)
     {
         return $this->loadComponent($name, $config);
     }

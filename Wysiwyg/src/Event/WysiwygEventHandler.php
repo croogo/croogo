@@ -16,11 +16,11 @@ use Croogo\Core\Croogo;
 class WysiwygEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- *
- * @return array
- */
+    /**
+     * implementedEvents
+     *
+     * @return array
+     */
     public function implementedEvents()
     {
         return [

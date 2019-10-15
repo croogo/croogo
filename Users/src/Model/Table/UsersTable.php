@@ -2,13 +2,10 @@
 
 namespace Croogo\Users\Model\Table;
 
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\ORM\Query;
 use Cake\Utility\Security;
-use Cake\Utility\Text;
 use Cake\Validation\Validator;
 use Croogo\Core\Croogo;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -159,7 +156,9 @@ class UsersTable extends CroogoTable
         // Generate a unique activation key
         $user->activation_key = $this->generateActivationKey();
 
-        Croogo::dispatchEvent('Model.Users.beforeResetPassword', $this,
+        Croogo::dispatchEvent(
+            'Model.Users.beforeResetPassword',
+            $this,
             compact('user')
         );
         $user = $this->save($user);
@@ -176,9 +175,12 @@ class UsersTable extends CroogoTable
             return false;
         }
 
-        Croogo::dispatchEvent('Model.Users.afterResetPassword', $this,
+        Croogo::dispatchEvent(
+            'Model.Users.afterResetPassword',
+            $this,
             compact('email', 'user')
         );
+
         return true;
     }
 
@@ -188,7 +190,9 @@ class UsersTable extends CroogoTable
             ->viewVars(compact('user'))
             ->send('registrationActivation', [$user]);
 
-        Croogo::dispatchEvent('Model.Users.afterActivationEmail', $this,
+        Croogo::dispatchEvent(
+            'Model.Users.afterActivationEmail',
+            $this,
             compact('email', 'user')
         );
     }
@@ -293,6 +297,7 @@ class UsersTable extends CroogoTable
             ->orWhere([
                 $this->Roles->aliasField('id') => $roleId,
             ]);
+
         return $query;
     }
 
@@ -301,6 +306,7 @@ class UsersTable extends CroogoTable
         if (!$length) {
             $length = Configure::read('Croogo.activationKeyLength', 20);
         }
+
         return bin2hex(Security::randomBytes($length));
     }
 
@@ -309,5 +315,4 @@ class UsersTable extends CroogoTable
         return $query
             ->where([$this->aliasField('status') => 1]);
     }
-
 }

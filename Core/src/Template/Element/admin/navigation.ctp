@@ -1,5 +1,6 @@
 <nav class="navbar-dark bg-black">
     <?php
+
     use Cake\Cache\Cache;
     use Croogo\Core\Nav;
 

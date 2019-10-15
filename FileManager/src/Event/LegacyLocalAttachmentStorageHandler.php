@@ -2,24 +2,37 @@
 
 namespace Croogo\FileManager\Event;
 
-use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Log\LogTrait;
 use Croogo\FileManager\Utility\StorageManager;
 
-class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements EventListenerInterface {
+/**
+ * Class LegacyLocalAttachmentStorageHandler
+ */
+class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements EventListenerInterface
+{
 
     use LogTrait;
 
-    public function implementedEvents() {
-        return array(
+    /**
+     * @return array
+     */
+    public function implementedEvents()
+    {
+        return [
             'FileStorage.beforeSave' => 'onBeforeSave',
             'FileStorage.beforeDelete' => 'onBeforeDelete',
             'Assets.AssetsImageHelper.resize' => 'onResizeImage',
-        );
+        ];
     }
 
-    public function onBeforeSave($Event) {
+    /**
+     * @param $Event
+     *
+     * @return bool
+     */
+    public function onBeforeSave($Event)
+    {
         if (!$this->_check($Event)) {
             return true;
         }
@@ -41,6 +54,7 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
                 $storage['height'] = $imageInfo['height'];
                 $storage['extension'] = substr($path, strrpos($path, '.') + 1);
             }
+
             return true;
         }
 
@@ -68,29 +82,44 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
             if (empty($storage['path'])) {
                 $storage['path'] = '/uploads/' . $file['name'];
             }
+
             return $result;
         } catch (Exception $e) {
             $this->log($e->getMessage());
+
             return false;
         }
     }
 
-    public function onBeforeDelete($Event) {
+    /**
+     * @param $Event
+     *
+     * @return bool
+     */
+    public function onBeforeDelete($Event)
+    {
         if (!$this->_check($Event)) {
             return true;
         }
         $model = $event->getSubject();
         $entity = $Event->data('record');
-        $fields = array('adapter', 'filename');
+        $fields = ['adapter', 'filename'];
         $asset = $model->findById($entity->id, $fields)->first();
         $adapter = StorageManager::adapter($asset['adapter']);
         if ($adapter->has('filename')) {
             $adapter->delete($asset->filename);
         }
-        return $model->deleteAll(array('parent_asset_id' => $entity->id), true, true);
+
+        return $model->deleteAll(['parent_asset_id' => $entity->id], true, true);
     }
 
-    protected function _parentAsset($attachment) {
+    /**
+     * @param $attachment
+     *
+     * @return bool
+     */
+    protected function _parentAsset($attachment)
+    {
         $path = $attachment->import_path;
         $parts = pathinfo($path);
         if (strpos($parts['filename'], '.') === false) {
@@ -111,9 +140,10 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
         $filename = rtrim(WWW_ROOT, '/') . $dirname . '/' . $filename . '.' . $parts['extension'];
         if (file_exists($filename)) {
             $hash = sha1_file($filename);
+
             return $this->Attachments->Assets->findByHash($hash)->first();
         }
+
         return false;
     }
-
 }

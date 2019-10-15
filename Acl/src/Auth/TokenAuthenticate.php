@@ -1,4 +1,5 @@
 <?php
+
 namespace Croogo\Acl\Controller\Component\Auth;
 
 use Cake\Auth\BaseAuthenticate;
@@ -30,21 +31,20 @@ use Cake\Http\ServerRequest;
  */
 class TokenAuthenticate extends BaseAuthenticate
 {
-
-/**
- * Settings for this object.
- *
- * - `fields` The fields to use to identify a user by. Make sure `'token'` has been added to the array
- * - `parameter` The url parameter name of the token.
- * - `header` The token header value.
- * - `userModel` The model name of the User, defaults to User.
- * - `scope` Additional conditions to use when looking up and authenticating users,
- *    i.e. `array('User.is_active' => 1).`
- * - `recursive` The value of the recursive key passed to find(). Defaults to 0.
- * - `contain` Extra models to contain and store in session.
- *
- * @var array
- */
+    /**
+     * Settings for this object.
+     *
+     * - `fields` The fields to use to identify a user by. Make sure `'token'` has been added to the array
+     * - `parameter` The url parameter name of the token.
+     * - `header` The token header value.
+     * - `userModel` The model name of the User, defaults to User.
+     * - `scope` Additional conditions to use when looking up and authenticating users,
+     *    i.e. `array('User.is_active' => 1).`
+     * - `recursive` The value of the recursive key passed to find(). Defaults to 0.
+     * - `contain` Extra models to contain and store in session.
+     *
+     * @var array
+     */
     public $settings = [
         'fields' => [
             'username' => 'username',
@@ -59,13 +59,13 @@ class TokenAuthenticate extends BaseAuthenticate
         'contain' => null,
     ];
 
-/**
- * Constructor
- *
- * @param ComponentRegistry $collection The Component collection used on this request.
- * @param array $settings Array of settings to use.
- * @throws Exception
- */
+    /**
+     * Constructor
+     *
+     * @param ComponentRegistry $collection The Component collection used on this request.
+     * @param array $settings Array of settings to use.
+     * @throws Exception
+     */
     public function __construct(ComponentRegistry $collection, $settings)
     {
         parent::__construct($collection, $settings);
@@ -74,12 +74,12 @@ class TokenAuthenticate extends BaseAuthenticate
         }
     }
 
-/**
- *
- * @param Request $request The request object
- * @param Response $response response object.
- * @return mixed.  False on login failure.  An array of User data on success.
- */
+    /**
+     *
+     * @param Request $request The request object
+     * @param Response $response response object.
+     * @return mixed.  False on login failure.  An array of User data on success.
+     */
     public function authenticate(ServerRequest $request, Response $response)
     {
         $user = $this->getUser($request);
@@ -87,15 +87,16 @@ class TokenAuthenticate extends BaseAuthenticate
             $response->statusCode(401);
             $response->send();
         }
+
         return $user;
     }
 
-/**
- * Get token information from the request.
- *
- * @param Request $request Request object.
- * @return mixed Either false or an array of user information
- */
+    /**
+     * Get token information from the request.
+     *
+     * @param Request $request Request object.
+     * @return mixed Either false or an array of user information
+     */
     public function getUser(ServerRequest $request)
     {
         if (!empty($this->settings['header'])) {
@@ -106,18 +107,20 @@ class TokenAuthenticate extends BaseAuthenticate
         }
         if (!empty($this->settings['parameter']) && !empty($request->query[$this->settings['parameter']])) {
             $token = $request->query[$this->settings['parameter']];
+
             return $this->_findUser($token);
         }
+
         return false;
     }
 
-/**
- * Find a user record.
- *
- * @param string $username The token identifier.
- * @param string $password Unused password.
- * @return Mixed Either false on failure, or an array of user data.
- */
+    /**
+     * Find a user record.
+     *
+     * @param string $username The token identifier.
+     * @param string $password Unused password.
+     * @return array|bool Either false on failure, or an array of user data.
+     */
     protected function _findUser($username, $password = null)
     {
         $userModel = $this->settings['userModel'];
@@ -141,6 +144,7 @@ class TokenAuthenticate extends BaseAuthenticate
         $user = $result[$model];
         unset($user[$fields['password']]);
         unset($result[$model]);
+
         return array_merge($user, $result);
     }
 }

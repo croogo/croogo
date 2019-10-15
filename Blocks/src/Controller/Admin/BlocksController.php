@@ -3,7 +3,6 @@
 namespace Croogo\Blocks\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\Blocks\Model\Entity\Block;
 
 /**
  * Blocks Controller
@@ -47,12 +46,12 @@ class BlocksController extends AppController
         }
     }
 
-/**
- * Admin process
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin process
+     *
+     * @return void
+     * @access public
+     */
     public function process()
     {
         $Blocks = $this->Blocks;
@@ -105,5 +104,4 @@ class BlocksController extends AppController
     {
         return $this->Crud->execute();
     }
-
 }

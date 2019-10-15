@@ -2,8 +2,6 @@
 
 namespace Croogo\Example\Controller;
 
-use Croogo\Example\Controller\AppController;
-
 /**
  * Example Controller
  *
@@ -17,31 +15,30 @@ use Croogo\Example\Controller\AppController;
 class ExampleController extends AppController
 {
 
-   /**
-    * Controller name
-    *
-    * @var string
-    * @access public
-    */
+    /**
+     * Controller name
+     *
+     * @var string
+     * @access public
+     */
     public $name = 'Example';
 
-   /**
-    * Models used by the Controller
-    *
-    * @var array
-    * @access public
-    */
+    /**
+     * Models used by the Controller
+     *
+     * @var array
+     * @access public
+     */
     public $uses = ['Setting'];
 
-   /**
-    * index
-    *
-    * @return void
-    */
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
         $this->set('title_for_layout', 'Example');
         $this->set('exampleVariable', 'value here');
     }
-
 }

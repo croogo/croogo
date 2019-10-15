@@ -2,7 +2,6 @@
 
 namespace Croogo\Settings\Model\Table;
 
-use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
@@ -21,9 +20,9 @@ use Croogo\Core\Model\Table\CroogoTable;
 class LanguagesTable extends CroogoTable
 {
 
-/**
- * Initialize
- */
+    /**
+     * Initialize
+     */
     public function initialize(array $config)
     {
         $this->addBehavior('Croogo/Core.Trackable');
@@ -50,18 +49,22 @@ class LanguagesTable extends CroogoTable
             ->notBlank('native', __d('croogo', 'Native cannot be empty.'))
             ->notBlank('alias', __d('croogo', 'Alias cannot be empty.'))
             ->notBlank('locale', __d('croogo', 'Locale cannot be empty.'));
+
         return $validator;
     }
 
     public function buildRules(RulesChecker $rules)
     {
         $rules
-            ->add($rules->isUnique(['locale'],
+            ->add($rules->isUnique(
+                ['locale'],
                 __d('croogo', 'That locale is already taken')
             ))
-            ->add($rules->isUnique( ['alias'],
+            ->add($rules->isUnique(
+                ['alias'],
                 __d('croogo', 'That alias is already taken')
             ));
+
         return $rules;
     }
 
@@ -75,9 +78,10 @@ class LanguagesTable extends CroogoTable
                 foreach ($results as $row) {
                     $formatted[$row->alias] = ['locale' => $row->locale];
                 }
+
                 return $formatted;
             });
+
         return $query;
     }
-
 }

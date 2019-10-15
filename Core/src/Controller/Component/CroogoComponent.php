@@ -2,21 +2,16 @@
 
 namespace Croogo\Core\Controller\Component;
 
+use Cake\Controller\Component;
 use Cake\Controller\Controller;
 use Cake\Core\App;
-use Cake\Controller\Component\AuthComponent;
-use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\Table;
-
 use Croogo\Core\Exception\Exception;
-use Croogo\Core\Croogo;
 use Croogo\Core\Nav;
-use Croogo\Extensions\CroogoPlugin;
-use Croogo\Extensions\CroogoTheme;
 
 /**
  * Croogo Component
@@ -31,39 +26,39 @@ use Croogo\Extensions\CroogoTheme;
 class CroogoComponent extends Component
 {
 
-/**
- * Default Role ID
- *
- * Default is 3 (public)
- *
- * @var integer
- */
+    /**
+     * Default Role ID
+     *
+     * Default is 3 (public)
+     *
+     * @var integer
+     */
     protected $_defaultRoleId = 3;
 
-/**
- * Blocks data: contains parsed value of bb-code like strings
- *
- * @var array
- * @access public
- */
+    /**
+     * Blocks data: contains parsed value of bb-code like strings
+     *
+     * @var array
+     * @access public
+     */
     public $blocksData = [
         'menus' => [],
         'vocabularies' => [],
         'nodes' => [],
     ];
 
-/**
- * controller
- *
- * @var Controller
- */
+    /**
+     * controller
+     *
+     * @var Controller
+     */
     protected $_controller = null;
 
-/**
- * Method to lazy load classes
- *
- * @return Object
- */
+    /**
+     * Method to lazy load classes
+     *
+     * @return mixed
+     */
     public function __get($name)
     {
         switch ($name) {
@@ -76,6 +71,7 @@ class CroogoComponent extends Component
                         $this->{$name}->setController($this->_controller);
                     }
                 }
+
                 return $this->{$name};
             case 'roleId':
                 return $this->roleId();
@@ -84,12 +80,12 @@ class CroogoComponent extends Component
         }
     }
 
-/**
- * Startup
- *
- * @param object $event instance of controller
- * @return void
- */
+    /**
+     * Startup
+     *
+     * @param object $event instance of controller
+     * @return void
+     */
     public function startup(Event $event)
     {
         $this->_controller = $event->getSubject();
@@ -101,11 +97,11 @@ class CroogoComponent extends Component
         }
     }
 
-/**
- * Set variables for admin layout
- *
- * @return void
- */
+    /**
+     * Set variables for admin layout
+     *
+     * @return void
+     */
     protected function _adminData()
     {
         if (!Configure::read('Croogo.version')) {
@@ -128,9 +124,9 @@ class CroogoComponent extends Component
         $this->_adminMenus();
     }
 
-/**
- * Setup admin menu
- */
+    /**
+     * Setup admin menu
+     */
     protected function _adminMenus()
     {
         Nav::add('top-left', 'site', [
@@ -179,53 +175,54 @@ class CroogoComponent extends Component
         ]);
     }
 
-/**
- * Gets the Role Id of the current user
- *
- * @return integer Role Id
- */
+    /**
+     * Gets the Role Id of the current user
+     *
+     * @return int Role Id
+     */
     public function roleId()
     {
         $roleId = $this->_controller->request->getSession()->read('Auth.User.role_id');
+
         return $roleId ? $roleId : $this->_defaultRoleId;
     }
 
-/**
- * ACL: add ACO
- *
- * Creates ACOs with permissions for roles.
- *
- * @param string $action possible values: ControllerName, ControllerName/method_name
- * @param array $allowRoles Role aliases
- * @return void
- */
+    /**
+     * ACL: add ACO
+     *
+     * Creates ACOs with permissions for roles.
+     *
+     * @param string $action possible values: ControllerName, ControllerName/method_name
+     * @param array $allowRoles Role aliases
+     * @return void
+     */
     public function addAco($action, $allowRoles = [])
     {
         $this->_controller->CroogoAccess->addAco($action, $allowRoles);
     }
 
-/**
- * ACL: remove ACO
- *
- * Removes ACOs and their Permissions
- *
- * @param string $action possible values: ControllerName, ControllerName/method_name
- * @return void
- */
+    /**
+     * ACL: remove ACO
+     *
+     * Removes ACOs and their Permissions
+     *
+     * @param string $action possible values: ControllerName, ControllerName/method_name
+     * @return void
+     */
     public function removeAco($action)
     {
         $this->_controller->CroogoAccess->removeAco($action);
     }
 
-/**
- * Toggle field status
- *
- * @param $table Table instance
- * @param $id integer Model id
- * @param $status integer current status
- * @param $field string field name to toggle
- * @throws Exception
- */
+    /**
+     * Toggle field status
+     *
+     * @param $table Table instance
+     * @param $id integer Model id
+     * @param $status integer current status
+     * @param $field string field name to toggle
+     * @throws Exception
+     */
     public function fieldToggle(Table $table, $id, $status, $field = 'status')
     {
         if (empty($id) || $status === null) {
@@ -245,23 +242,23 @@ class CroogoComponent extends Component
         }
     }
 
-/**
- * Get a list of possible view paths for current request
- *
- * The default view paths are retrieved view App::path('View').  This method
- * injects the theme path and also considers whether a plugin is used.
- *
- * The paths that will be used for fallback is typically:
- *
- *   - APP/View/<Controller>
- *   - APP/Themed/<Theme>/<Controller>
- *   - APP/Themed/<Theme>/Plugin/<Plugin>/<Controller>
- *   - APP/Plugin/<Plugin/View/<Controller>
- *   - APP/Vendor/croogo/croogo/Croogo/View
- *
- * @param Controller $controller
- * @return array A list of view paths
- */
+    /**
+     * Get a list of possible view paths for current request
+     *
+     * The default view paths are retrieved view App::path('View').  This method
+     * injects the theme path and also considers whether a plugin is used.
+     *
+     * The paths that will be used for fallback is typically:
+     *
+     *   - APP/View/<Controller>
+     *   - APP/Themed/<Theme>/<Controller>
+     *   - APP/Themed/<Theme>/Plugin/<Plugin>/<Controller>
+     *   - APP/Plugin/<Plugin/View/<Controller>
+     *   - APP/Vendor/croogo/croogo/Croogo/View
+     *
+     * @param Controller $controller
+     * @return array A list of view paths
+     */
     protected function _setupViewPaths(Controller $controller)
     {
         $defaultViewPaths = App::path('Template');
@@ -284,18 +281,19 @@ class CroogoComponent extends Component
             $viewPaths = array_merge($viewPaths, App::path('Template', $controller->getPlugin()));
         }
         $viewPaths = array_merge($viewPaths, $defaultViewPaths);
+
         return $viewPaths;
     }
 
-/**
- * View Fallback
- *
- * Looks for view file through the available view paths.  If the view is found,
- * set Controller::$view variable.
- *
- * @param string|array $templates view path or array of view paths
- * @return void
- */
+    /**
+     * View Fallback
+     *
+     * Looks for view file through the available view paths.  If the view is found,
+     * set Controller::$view variable.
+     *
+     * @param string|array $templates view path or array of view paths
+     * @return void
+     */
     public function viewFallback($templates)
     {
         $templates = (array)$templates;
@@ -306,6 +304,7 @@ class CroogoComponent extends Component
                 $templatePath = $templatePath . $this->_viewPath() . DS . $template;
                 if (file_exists($templatePath . '.ctp')) {
                     $controller->viewBuilder()->template($this->_viewPath() . DS . $template);
+
                     return;
                 }
             }
@@ -322,6 +321,7 @@ class CroogoComponent extends Component
             );
             $viewPath = implode(DS, $prefixes) . DS . $viewPath;
         }
+
         return $viewPath;
     }
 

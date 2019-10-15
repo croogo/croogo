@@ -31,8 +31,8 @@ class BlocksEventHandler implements EventListenerInterface
     }
 
     /**
- * implementedEvents
- */
+     * implementedEvents
+     */
     public function implementedEvents()
     {
         return [
@@ -62,13 +62,13 @@ class BlocksEventHandler implements EventListenerInterface
         ];
     }
 
-/**
- * Filter block shortcode in node body, eg [block:snippet] and replace it with
- * the block content
- *
- * @param Event $event
- * @return void
- */
+    /**
+     * Filter block shortcode in node body, eg [block:snippet] and replace it with
+     * the block content
+     *
+     * @param Event $event
+     * @return void
+     */
     public function filterBlockShortcode(Event $event)
     {
         $this->loadModel('Croogo/Blocks.Blocks');
@@ -109,12 +109,12 @@ class BlocksEventHandler implements EventListenerInterface
         ]);
     }
 
-/**
- * Clear Blocks related cache after bulk operation
- *
- * @param CakeEvent $event
- * @return void
- */
+    /**
+     * Clear Blocks related cache after bulk operation
+     *
+     * @param CakeEvent $event
+     * @return void
+     */
     public function onAfterBulkProcess($event)
     {
         Cache::clearGroup('blocks', 'croogo_blocks');

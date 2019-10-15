@@ -2,8 +2,8 @@
 
 namespace Croogo\Core\Model\Behavior;
 
-use Cake\ORM\Behavior\TreeBehavior as CakeTree;
 use Cake\Event\Event;
+use Cake\ORM\Behavior\TreeBehavior as CakeTree;
 use Cake\ORM\Query;
 
 /**
@@ -20,6 +20,7 @@ class TreeBehavior extends CakeTree
         if ($scope) {
             $this->_scope($query);
         }
+
         return $query;
     }
 }

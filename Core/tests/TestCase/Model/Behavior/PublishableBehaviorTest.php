@@ -8,42 +8,42 @@ class PublishableBehaviorTest extends CroogoTestCase
 {
 
     public $fixtures = [
-//		'plugin.Croogo/Settings.Setting',
-//		'plugin.Croogo/Core.OrderRecord',
+//      'plugin.Croogo/Settings.Setting',
+//      'plugin.Croogo/Core.OrderRecord',
     ];
 
-/**
- * setUp
- *
- * @return void
- */
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
-//		$this->OrderRecord = ClassRegistry::init('OrderRecord');
-//		$this->OrderRecord->Behaviors->load('Croogo.Publishable', array(
-//			'fields' => array(
-//				'publish_start' => 'start',
-//				'publish_end' => 'end',
-//			),
-//		));
+//      $this->OrderRecord = ClassRegistry::init('OrderRecord');
+//      $this->OrderRecord->Behaviors->load('Croogo.Publishable', array(
+//          'fields' => array(
+//              'publish_start' => 'start',
+//              'publish_end' => 'end',
+//          ),
+//      ));
     }
 
-/**
- * tearDown
- *
- * @return void
- */
+    /**
+     * tearDown
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->OrderRecord);
-//		ClassRegistry::flush();
+//      ClassRegistry::flush();
     }
 
-/**
- * testPeriodFilter
- */
+    /**
+     * testPeriodFilter
+     */
     public function testPeriodFilter()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');

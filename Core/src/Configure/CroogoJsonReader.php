@@ -64,6 +64,7 @@ class CroogoJsonReader implements ConfigEngineInterface
             }
         }
         $config = json_decode(file_get_contents($file), true);
+
         return $config;
     }
 
@@ -88,6 +89,7 @@ class CroogoJsonReader implements ConfigEngineInterface
             $options |= JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT;
         }
         $contents = CroogoJson::stringify($data, $options);
+
         return $this->_writeFile($this->_path . $filename, $contents);
     }
 

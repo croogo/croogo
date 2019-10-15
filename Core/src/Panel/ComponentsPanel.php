@@ -4,7 +4,6 @@ namespace Croogo\Core\Panel;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Event\Event;
 use DebugKit\DebugPanel;
 

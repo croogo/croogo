@@ -6,32 +6,17 @@ use Menus\Model\Menu;
 use Menus\Model\MenusAppModel;
 
 /**
- * TestMenu
- *
- */
-class TestMenu extends Menu
-{
-
-/**
- * model alias
- *
- * @var string
- */
-    public $alias = 'Menu';
-}
-
-/**
  * TestUser
  *
  */
 class MenuTest extends CroogoTestCase
 {
 
-/**
- * Fixtures
- *
- * @var array
- */
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
         'plugin.users.aco',
         'plugin.users.aro',
@@ -41,38 +26,38 @@ class MenuTest extends CroogoTestCase
         'plugin.menus.link',
     ];
 
-/**
- * Menu instance
- *
- * @var TestMenu
- */
+    /**
+     * Menu instance
+     *
+     * @var TestMenu
+     */
     public $Menu;
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
         $this->Menu = ClassRegistry::init('TestMenu');
     }
 
-/**
- * tearDown method
- *
- * @return void
- */
+    /**
+     * tearDown method
+     *
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
         unset($this->Menu);
     }
 
-/**
- * testDeleteDependentLinks method
- */
+    /**
+     * testDeleteDependentLinks method
+     */
     public function testDeleteDependentLinks()
     {
         $totalLinks = $this->Menu->Link->find('count');
@@ -92,9 +77,9 @@ class MenuTest extends CroogoTestCase
         $this->assertEquals($totalLinks, $currentLinks + $toDelete);
     }
 
-/**
- * Test deleting a menu should not mess up other menu Link hierarchy
- */
+    /**
+     * Test deleting a menu should not mess up other menu Link hierarchy
+     */
     public function testDeleteMenuLinkIntegrity()
     {
         $settings = ['scope' => ['Link.menu_id' => 3]];
@@ -117,3 +102,21 @@ class MenuTest extends CroogoTestCase
         $this->assertEquals($expected, $links);
     }
 }
+
+//phpcs:disable
+
+/**
+ * TestMenu
+ *
+ */
+class TestMenu extends Menu
+{
+
+    /**
+     * model alias
+     *
+     * @var string
+     */
+    public $alias = 'Menu';
+}
+//phpcs:enable
