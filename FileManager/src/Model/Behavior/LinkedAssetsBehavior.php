@@ -9,13 +9,23 @@ use Cake\ORM\Behavior;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
+/**
+ * Class LinkedAssetsBehavior
+ */
 class LinkedAssetsBehavior extends Behavior
 {
 
+    /**
+     * @var array
+     */
     protected $_defaultConfig = [
         'key' => 'linked_assets',
     ];
 
+    /**
+     * @param array $config
+     * @return void
+     */
     public function initialize(array $config = [])
     {
         $this->_table->addAssociations([
@@ -32,6 +42,14 @@ class LinkedAssetsBehavior extends Behavior
         ]);
     }
 
+    /**
+     * @param Event $event
+     * @param Query $query
+     * @param ArrayObject $options
+     * @param $primary
+     *
+     * @return Query
+     */
     public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
     {
         //if ($model->findQueryType == 'list') {
@@ -68,6 +86,11 @@ class LinkedAssetsBehavior extends Behavior
         return $query;
     }
 
+    /**
+     * @param $results
+     *
+     * @return mixed
+     */
     protected function _formatResults($results)
     {
         $key = $this->getConfig('key');

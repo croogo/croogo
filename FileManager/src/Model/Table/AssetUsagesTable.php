@@ -14,6 +14,10 @@ use Croogo\Core\Model\Table\CroogoTable;
 class AssetUsagesTable extends CroogoTable
 {
 
+    /**
+     * @param array $config
+     * @return void
+     */
     public function initialize(array $config)
     {
         $this->setTable('asset_usages');
@@ -26,6 +30,13 @@ class AssetUsagesTable extends CroogoTable
         $this->addBehavior('Croogo/Core.Trackable');
     }
 
+    /**
+     * @param Event $event
+     * @param EntityInterface $entity
+     * @param ArrayObject $options
+     *
+     * @return bool
+     */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         if (!empty($entity->featured_image)) {

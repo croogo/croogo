@@ -4,11 +4,22 @@ namespace Croogo\Taxonomy\Model\Entity;
 
 use Cake\ORM\Entity;
 
+/**
+ * Class Taxonomy
+ */
 class Taxonomy extends Entity
 {
 
+    /**
+     * @var array
+     */
     protected $_virtual = ['title'];
 
+    /**
+     * @param $title
+     *
+     * @return string
+     */
     protected function _getTitle($title)
     {
         $titles = [

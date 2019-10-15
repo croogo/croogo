@@ -249,6 +249,12 @@ class PluginManager extends Plugin
         return false;
     }
 
+    /**
+     * @param $pluginDir
+     * @param $path
+     *
+     * @return bool
+     */
     protected function _pluginName($pluginDir, $path)
     {
         $pluginPath = $pluginDir . $path . DS;
@@ -283,6 +289,13 @@ class PluginManager extends Plugin
         return in_array($plugin, static::$bundledPlugins) || in_array($plugin, static::$corePlugins);
     }
 
+    /**
+     * @param $alias
+     * @param $pluginPath
+     * @param bool $ignoreMigration
+     *
+     * @return array|bool
+     */
     protected function _loadData($alias, $pluginPath, $ignoreMigration = true)
     {
         $active = $this->isActive($alias);
@@ -396,7 +409,7 @@ class PluginManager extends Plugin
      * Check if plugin is dependent on any other plugin.
      * If yes, check if that plugin is available in plugins directory.
      *
-     * @param  string $plugin plugin alias
+     * @param string $plugin plugin alias
      * @return bool
      */
     public function checkDependency($plugin = null)
@@ -421,7 +434,7 @@ class PluginManager extends Plugin
     /**
      * getDependencies
      *
-     * @param  string $plugin plugin alias (underscrored)
+     * @param string $plugin plugin alias (underscrored)
      * @return array list of plugin that $plugin depends on
      */
     public function getDependencies($plugin)
@@ -442,7 +455,7 @@ class PluginManager extends Plugin
      * Check if plugin is dependent on any other plugin.
      * If yes, check if that plugin is available in plugins directory.
      *
-     * @param  string $plugin plugin alias (underscrored)
+     * @param string $plugin plugin alias (underscrored)
      * @return bool
      */
     public function checkPluginDependency($plugin = null)
@@ -453,7 +466,7 @@ class PluginManager extends Plugin
     /**
      * Check if plugin is active
      *
-     * @param  string $plugin Plugin name (underscored)
+     * @param string $plugin Plugin name (underscored)
      * @return bool
      */
     public static function isActive($plugin)
@@ -543,6 +556,11 @@ class PluginManager extends Plugin
         }
     }
 
+    /**
+     * @param $plugin
+     *
+     * @return bool
+     */
     public function seed($plugin)
     {
         $options = [
@@ -556,6 +574,11 @@ class PluginManager extends Plugin
             ->seed($options);
     }
 
+    /**
+     * @param $plugin
+     *
+     * @return bool
+     */
     public function unmigrate($plugin)
     {
         if (($plugin !== 'app') && (!static::available($plugin))) {
@@ -656,7 +679,11 @@ class PluginManager extends Plugin
                 if (file_exists($configFile) && include $configFile) {
                     $fqcn = App::className($plugin . '.' . $className, 'Config');
                     if (!$fqcn) {
-                        $this->log(sprintf('Unable to load PluginActivation class. Expected class name is %s\\Config\\PluginActivation', str_replace('/', '\\', $plugin), LOG_CRIT));
+                        $this->log(sprintf(
+                            'Unable to load PluginActivation class. Expected class name is %s\\Config\\PluginActivation',
+                            str_replace('/', '\\', $plugin),
+                            LOG_CRIT
+                        ));
 
                         return null;
                     }
@@ -670,7 +697,11 @@ class PluginManager extends Plugin
                 if (file_exists($configFile) && include $configFile) {
                     $fqcn = App::className($plugin . '.' . $className, 'Config');
                     if (!$fqcn) {
-                        $this->log(sprintf('Unable to load PluginActivation class. Expected class name is %s\\Config\\PluginActivation', str_replace('/', '\\', $plugin), LOG_CRIT));
+                        $this->log(sprintf(
+                            'Unable to load PluginActivation class. Expected class name is %s\\Config\\PluginActivation',
+                            str_replace('/', '\\', $plugin),
+                            LOG_CRIT
+                        ));
 
                         return null;
                     }
@@ -816,6 +847,11 @@ class PluginManager extends Plugin
         Configure::write('pluginDeps', $pluginDeps);
     }
 
+    /**
+     * @param string $name
+     *
+     * @return bool|mixed
+     */
     public static function bootstrap($name)
     {
         $plugin = static::getCollection()->get($name);
@@ -838,9 +874,9 @@ class PluginManager extends Plugin
      * This method is identical to Plugin::load() with extra functionality
      * that loads event configuration when Plugin/Config/events.php is present.
      *
-     * @see Plugin::load()
      * @param mixed $plugin name of plugin, or array of plugin and its config
      * @return void
+     * @see Plugin::load()
      */
     public static function load($plugin, array $config = [])
     {
@@ -1143,6 +1179,9 @@ class PluginManager extends Plugin
         return false;
     }
 
+    /**
+     * @return string
+     */
     protected static function migrationConnectionName()
     {
         if (static::getConnectionConfiguration('default', false)) {
@@ -1152,6 +1191,12 @@ class PluginManager extends Plugin
         return static::getConnectionConfiguration('default')['name'];
     }
 
+    /**
+     * @param $connectionName
+     * @param bool $useAliases
+     *
+     * @return array|bool
+     */
     protected static function getConnectionConfiguration($connectionName, $useAliases = true)
     {
         try {
@@ -1162,6 +1207,10 @@ class PluginManager extends Plugin
         return false;
     }
 
+    /**
+     * @param PluginApplicationInterface $app
+     * @return void
+     */
     public static function setup(PluginApplicationInterface $app)
     {
         $dbConfigExists = false;
@@ -1191,11 +1240,11 @@ class PluginManager extends Plugin
         $defaultEngine = $defaultCacheConfig['className'];
         $defaultPrefix = Hash::get($defaultCacheConfig, 'prefix', 'cake_');
         $cacheConfig = [
-            'duration' => '+1 hour',
-            'path' => CACHE . 'queries' . DS,
-            'className' => $defaultEngine,
-            'prefix' => $defaultPrefix,
-        ] + $defaultCacheConfig;
+                'duration' => '+1 hour',
+                'path' => CACHE . 'queries' . DS,
+                'className' => $defaultEngine,
+                'prefix' => $defaultPrefix,
+            ] + $defaultCacheConfig;
         Configure::write('Croogo.Cache.defaultEngine', $defaultEngine);
         Configure::write('Croogo.Cache.defaultPrefix', $defaultPrefix);
         Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
@@ -1244,6 +1293,10 @@ class PluginManager extends Plugin
         }
     }
 
+    /**
+     * @param $app
+     * @return void
+     */
     public static function croogoBootstrap($app)
     {
         Configure::write(
@@ -1301,8 +1354,19 @@ class PluginManager extends Plugin
              * List of core plugins
              */
             $corePlugins = [
-                'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Croogo/Comments', 'Croogo/Contacts', 'Croogo/Menus', 'Croogo/Meta',
-                'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor', 'Croogo/Dashboards',
+                'Croogo/Settings',
+                'Croogo/Acl',
+                'Croogo/Blocks',
+                'Croogo/Comments',
+                'Croogo/Contacts',
+                'Croogo/Menus',
+                'Croogo/Meta',
+                'Croogo/Nodes',
+                'Croogo/Taxonomy',
+                'Croogo/Users',
+                'Croogo/Wysiwyg',
+                'Croogo/Ckeditor',
+                'Croogo/Dashboards',
             ];
             Configure::write('Core.corePlugins', $corePlugins);
         }, 'Setting base configuration');

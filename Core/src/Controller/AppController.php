@@ -73,6 +73,9 @@ class AppController extends \App\Controller\AppController implements HookableCom
         }
     }
 
+    /**
+     * @return void
+     */
     public function initialize()
     {
         $this->_dispatchBeforeInitialize();
@@ -242,6 +245,10 @@ class AppController extends \App\Controller\AppController implements HookableCom
         }
     }
 
+    /**
+     * @return void
+     * @throws \Exception
+     */
     protected function _setupPrg()
     {
         $this->loadComponent('Search.Prg', [
@@ -250,6 +257,11 @@ class AppController extends \App\Controller\AppController implements HookableCom
         ]);
     }
 
+    /**
+     * @param array $components
+     * @return void
+     * @throws \Exception
+     */
     protected function _loadCroogoComponents(array $components)
     {
         foreach ($components as $component => $options) {

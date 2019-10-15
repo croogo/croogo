@@ -33,6 +33,11 @@ class ThemeHelper extends Helper
     public $helpers = [
     ];
 
+    /**
+     * ThemeHelper constructor.
+     * @param View $View
+     * @param array $settings
+     */
     public function __construct(View $View, $settings = [])
     {
         $themeConfig = CroogoTheme::config($View->getTheme());

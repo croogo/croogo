@@ -14,17 +14,28 @@ class AssetsFilterHelper extends Helper
 
     use LogTrait;
 
+    /**
+     * @var array
+     */
     public $helpers = [
         'Html',
         'Croogo/Nodes.Nodes',
     ];
 
+    /**
+     * AssetsFilterHelper constructor.
+     * @param View $view
+     * @param array $settings
+     */
     public function __construct(View $view, $settings = [])
     {
         parent::__construct($view);
         $this->_setupEvents();
     }
 
+    /**
+     * @return void
+     */
     protected function _setupEvents()
     {
         $events = [
@@ -38,6 +49,11 @@ class AssetsFilterHelper extends Helper
         }
     }
 
+    /**
+     * @param Event $event
+     *
+     * @return string|string[]|null
+     */
     public function filter(Event $event)
     {
         $content =& $event->result['content'];
@@ -85,6 +101,9 @@ class AssetsFilterHelper extends Helper
         return $content;
     }
 
+    /**
+     * @return void
+     */
     public function afterSetNode()
     {
         $body = $this->Nodes->field('body');

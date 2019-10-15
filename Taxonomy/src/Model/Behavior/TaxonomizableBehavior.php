@@ -26,6 +26,10 @@ use Croogo\Taxonomy\Model\Entity\Term;
  */
 class TaxonomizableBehavior extends Behavior
 {
+    /**
+     * @param array $config
+     * @return void
+     */
     public function initialize(array $config)
     {
         $this->_setupRelationships();
@@ -278,6 +282,12 @@ class TaxonomizableBehavior extends Behavior
         $this->validateTaxonomyData($entity);
     }
 
+    /**
+     * @param Event $event
+     * @param Query $query
+     *
+     * @return array|Query
+     */
     public function beforeFind(Event $event, Query $query)
     {
         return $query->contain([
@@ -289,6 +299,12 @@ class TaxonomizableBehavior extends Behavior
         ]);
     }
 
+    /**
+     * @param Query $query
+     * @param array $options
+     *
+     * @return Query
+     */
     public function findWithTerm(Query $query, array $options)
     {
         if (empty($options['term'])) {
@@ -323,6 +339,12 @@ class TaxonomizableBehavior extends Behavior
         return $query;
     }
 
+    /**
+     * @param Query $query
+     * @param array $options
+     *
+     * @return Query
+     */
     public function findWithVocabulary(Query $query, array $options)
     {
         if (empty($options['vocab'])) {

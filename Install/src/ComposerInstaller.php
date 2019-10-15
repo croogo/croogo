@@ -7,9 +7,16 @@ use Composer\Composer;
 use Composer\Script\Event;
 use DirectoryIterator;
 
+/**
+ * Class ComposerInstaller
+ */
 class ComposerInstaller extends PluginInstaller
 {
 
+    /**
+     * @param Event $event
+     * @return void
+     */
     public static function postAutoloadDump(Event $event)
     {
         $composer = $event->getComposer();

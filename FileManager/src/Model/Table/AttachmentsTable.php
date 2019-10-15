@@ -27,12 +27,19 @@ class AttachmentsTable extends CroogoTable
 
     use LogTrait;
 
+    /**
+     * @var array
+     */
     public $findMethods = [
         'duplicate' => true,
         'modelAttachments' => true,
         'versions' => true,
     ];
 
+    /**
+     * @param array $config
+     * @return void
+     */
     public function initialize(array $config)
     {
         $this->setTable('attachments');
@@ -89,6 +96,13 @@ class AttachmentsTable extends CroogoTable
             ]);
     }
 
+    /**
+     * @param $query
+     * @param $args
+     * @param $filter
+     *
+     * @return mixed
+     */
     public function filterAttachments($query, $args, $filter)
     {
         $conditions = [];
@@ -125,6 +139,12 @@ class AttachmentsTable extends CroogoTable
         return $query;
     }
 
+    /**
+     * @param Query $query
+     * @param array $options
+     *
+     * @return Query
+     */
     public function findModelAttachments(Query $query, array $options)
     {
         $model = $foreignKey = null;
@@ -169,6 +189,12 @@ class AttachmentsTable extends CroogoTable
         return $query;
     }
 
+    /**
+     * @param Query $query
+     * @param array $options
+     *
+     * @return Query
+     */
     public function findVersions(Query $query, array $options)
     {
         $assetId = $model = $foreignKey = null;
@@ -229,6 +255,13 @@ class AttachmentsTable extends CroogoTable
         return $query;
     }
 
+    /**
+     * @param Event $event
+     * @param EntityInterface $entity
+     * @param ArrayObject|null $options
+     *
+     * @return bool|string
+     */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options = null)
     {
         if (!empty($entity->asset->file['name'])) {

@@ -167,6 +167,9 @@ class StorageManager
         return $engineObject;
     }
 
+    /**
+     * @return array
+     */
     public static function configured()
     {
         $_this = StorageManager::getInstance();

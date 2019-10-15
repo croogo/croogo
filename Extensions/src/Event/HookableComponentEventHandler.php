@@ -10,6 +10,9 @@ use Croogo\Core\Controller\HookableComponentInterface;
 use Croogo\Core\Croogo;
 use Croogo\Extensions\Exception\ControllerNotHookableException;
 
+/**
+ * Class HookableComponentEventHandler
+ */
 class HookableComponentEventHandler implements EventListenerInterface
 {
 
@@ -23,6 +26,10 @@ class HookableComponentEventHandler implements EventListenerInterface
         ];
     }
 
+    /**
+     * @param Event $event
+     * @return void
+     */
     public function initialize(Event $event)
     {
         /* @var \Cake\Controller\Controller|\Croogo\Core\Controller\HookableComponentInterface $controller */
@@ -63,6 +70,12 @@ class HookableComponentEventHandler implements EventListenerInterface
         }
     }
 
+    /**
+     * @param $name
+     * @param array $config
+     *
+     * @return mixed
+     */
     public function loadComponent($name, array $config = [])
     {
         list(, $prop) = pluginSplit($name);
@@ -75,6 +88,11 @@ class HookableComponentEventHandler implements EventListenerInterface
         return $component;
     }
 
+    /**
+     * @param Controller $controller
+     *
+     * @return array
+     */
     private function _getComponents(Controller $controller)
     {
         $properties = Croogo::options('Hook.controller_properties', $controller->request);

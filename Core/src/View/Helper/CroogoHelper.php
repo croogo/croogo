@@ -27,6 +27,9 @@ use Croogo\Core\Status;
 class CroogoHelper extends Helper
 {
 
+    /**
+     * @var array
+     */
     public $helpers = [
         'Form',
         'Html' => [
@@ -551,6 +554,11 @@ class CroogoHelper extends Helper
         return $output;
     }
 
+    /**
+     * @param $target
+     *
+     * @return \Cake\View\Cell
+     */
     public function linkChooser($target)
     {
         $linkChooser = $this->_View->element('Croogo/Core.admin/modal', [
@@ -564,6 +572,13 @@ class CroogoHelper extends Helper
         return $this->_View->cell('Croogo/Core.Admin/LinkChooser', [$target]);
     }
 
+    /**
+     * @param $theme
+     * @param $path
+     * @param null $allowedMimeTypes
+     *
+     * @return string|null
+     */
     public function dataUri($theme, $path, $allowedMimeTypes = null)
     {
         $allowedMimeTypes = array_filter(array_merge([

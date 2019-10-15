@@ -28,6 +28,9 @@ class FileManagerController extends AppController
      */
     public $deletablePaths = [];
 
+    /**
+     * @return void
+     */
     public function initialize()
     {
         parent::initialize();

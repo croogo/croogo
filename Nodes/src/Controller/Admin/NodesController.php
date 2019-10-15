@@ -175,6 +175,10 @@ class NodesController extends AppController
         }
     }
 
+    /**
+     * @param Event $event
+     * @return void
+     */
     public function beforeLookup(Event $event)
     {
         /** @var \Cake\ORM\Query $query */
@@ -185,6 +189,10 @@ class NodesController extends AppController
         ]);
     }
 
+    /**
+     * @param Event $event
+     * @return void
+     */
     public function beforeCrudRender(Event $event)
     {
         if (!isset($event->getSubject()->entity)) {
@@ -266,6 +274,9 @@ class NodesController extends AppController
         }
     }
 
+    /**
+     * @return array
+     */
     public function implementedEvents()
     {
         return parent::implementedEvents() + [
@@ -295,11 +306,22 @@ class NodesController extends AppController
         $this->set(compact('roles', 'parents', 'users'));
     }
 
+    /**
+     * @return \Cake\Http\Response
+     * @throws \Exception
+     */
     public function toggle()
     {
         return $this->Crud->execute();
     }
 
+    /**
+     * @param $id
+     * @param string $direction
+     * @param string $step
+     *
+     * @return \Cake\Http\Response|null
+     */
     public function move($id, $direction = 'up', $step = '1')
     {
         $node = $this->Nodes->get($id);
@@ -318,6 +340,10 @@ class NodesController extends AppController
         }
     }
 
+    /**
+     * @return \Cake\Http\Response
+     * @throws \Exception
+     */
     public function hierarchy()
     {
         $typeAlias = $this->getRequest()->getQuery('type');

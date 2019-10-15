@@ -32,10 +32,6 @@
         <severity>0</severity>
     </rule>
 
-    <rule ref="CakePHP.Commenting.FunctionComment.Missing">
-        <severity>0</severity>
-    </rule>
-
     <rule ref="Generic.Commenting.Todo.TaskFound">
         <severity>0</severity>
     </rule>

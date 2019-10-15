@@ -6,11 +6,17 @@ use Cake\Event\EventListenerInterface;
 use Cake\Log\LogTrait;
 use Croogo\FileManager\Utility\StorageManager;
 
+/**
+ * Class LegacyLocalAttachmentStorageHandler
+ */
 class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements EventListenerInterface
 {
 
     use LogTrait;
 
+    /**
+     * @return array
+     */
     public function implementedEvents()
     {
         return [
@@ -20,6 +26,11 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
         ];
     }
 
+    /**
+     * @param $Event
+     *
+     * @return bool
+     */
     public function onBeforeSave($Event)
     {
         if (!$this->_check($Event)) {
@@ -80,6 +91,11 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
         }
     }
 
+    /**
+     * @param $Event
+     *
+     * @return bool
+     */
     public function onBeforeDelete($Event)
     {
         if (!$this->_check($Event)) {
@@ -97,6 +113,11 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
         return $model->deleteAll(['parent_asset_id' => $entity->id], true, true);
     }
 
+    /**
+     * @param $attachment
+     *
+     * @return bool
+     */
     protected function _parentAsset($attachment)
     {
         $path = $attachment->import_path;
