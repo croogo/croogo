@@ -29,4 +29,14 @@ class Plugin extends BasePlugin
         }
     }
 
+    /**
+     * @param \Cake\Routing\RouteBuilder $routes The route builder to update.
+     * @return void
+     */
+    public function routes($routes)
+    {
+        parent::routes($routes);
+        Router::homepage();
+    }
+
 }
