@@ -24,7 +24,14 @@ Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
         $route->prefix('v10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);
 
-            $route->resources('Users');
+            $route->resources('Users', [
+                'map' => [
+                    'lookup' => [
+                        'action' => 'lookup',
+                        'method' => 'GET',
+                    ],
+                ],
+            ]);
         });
     });
 });
