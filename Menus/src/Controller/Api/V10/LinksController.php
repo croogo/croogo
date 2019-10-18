@@ -1,14 +1,14 @@
 <?php
 
-namespace Croogo\Nodes\Controller\Api\V10;
+namespace Croogo\Menus\Controller\Api\V10;
 
 use Cake\Event\Event;
 use Croogo\Core\Controller\Api\AppController;
 
 /**
- * Nodes Controller
+ * Links Controller
  */
-class NodesController extends AppController
+class LinksController extends AppController
 {
 
     public function initialize()
@@ -22,15 +22,12 @@ class NodesController extends AppController
     public function index()
     {
         $this->Crud->on('beforePaginate', function (Event $event) {
-            $event->getSubject()->query
-                ->find('view')
-                ->contain(['Users']);
+            $sort = $this->getRequest()->getQuery('sort');
+            if (!$sort) {
+                $event->getSubject()->query->sortBy('lft', 'ASC');
+            }
         });
         return $this->Crud->execute();
     }
 
-    public function lookup()
-    {
-        return $this->Crud->execute();
-    }
 }

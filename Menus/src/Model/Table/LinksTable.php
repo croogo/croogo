@@ -5,6 +5,7 @@ namespace Croogo\Menus\Model\Table;
 use Cake\Database\Schema\TableSchema;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
+use Cake\ORM\Query;
 use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
@@ -67,6 +68,9 @@ class LinksTable extends CroogoTable
             ->add('menu_id', 'Search.Value', [
                 'field' => 'menu_id'
             ])
+            ->add('menuAlias', 'Search.Finder', [
+                'finder' => 'filterByMenuAlias',
+            ])
             ->add('title', 'Search.Like', [
                 'field' => 'title',
                 'before' => true,
@@ -118,4 +122,18 @@ class LinksTable extends CroogoTable
             $this->recover();
         }
     }
+
+    /**
+     * Filters active links based on menu.alias
+     */
+    public function findFilterByMenuAlias(Query $query, array $options = [])
+    {
+        return $query
+            ->innerJoinWith('Menus')
+            ->where([
+                $this->Menus->aliasField('alias') => $options['menuAlias'],
+                $this->aliasField('status') => 1,
+            ]);
+    }
+
 }
