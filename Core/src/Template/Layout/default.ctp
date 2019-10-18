@@ -55,6 +55,7 @@ $siteTagline = Configure::read('Site.tagline');
                     ]);
 ?>
             </div>
+        </div>
     </nav>
 
     <?= $this->element('masthead') ?>
