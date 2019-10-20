@@ -68,7 +68,7 @@ class CookieAuthenticate extends BaseAuthenticate
         }
 
         $data = json_decode($cookie['data'], true);
-        $settings = $this->config();
+        $settings = $this->getConfig();
         $fields = $settings['fields'];
         if (empty($data['hash']) ||
             empty($data['time']) ||
@@ -100,7 +100,7 @@ class CookieAuthenticate extends BaseAuthenticate
             throw new Exception('CookieComponent is not loaded');
         }
 
-        $config = $this->config();
+        $config = $this->getConfig();
         if (!function_exists('mcrypt_encrypt')) {
             throw new Exception('Cannot use encryption, mcrypt_encrypt() is required');
         }
@@ -140,7 +140,7 @@ class CookieAuthenticate extends BaseAuthenticate
      */
     protected function _findUser($conditions, $password = null)
     {
-        $config = $this->config();
+        $config = $this->getConfig();
         $userModel = $config['userModel'];
         list(, $model) = pluginSplit($userModel);
         $fields = $config['fields'];
