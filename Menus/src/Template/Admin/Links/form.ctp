@@ -118,7 +118,13 @@ $this->append('tab-content');
 
         $this->start('panels');
         echo $this->Html->beginBox(__d('croogo', 'Publishing'));
-        echo $this->element('Croogo/Core.admin/buttons', ['type' => 'link']);
+        echo $this->element('Croogo/Core.admin/buttons', [
+            'type' => 'link',
+            'cancelUrl' => [
+                'action' => 'index',
+                'menu_id' => $menu->id,
+            ],
+        ]);
         echo $this->element('Croogo/Core.admin/publishable');
         echo $this->Html->endBox();
 
