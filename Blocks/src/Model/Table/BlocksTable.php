@@ -89,6 +89,9 @@ class BlocksTable extends CroogoTable
 
         $this->searchManager()
             ->value('region_id')
+            ->add('regionAlias', 'Search.Finder', [
+                'finder' => 'filterByRegionAlias',
+            ])
             ->add('title', 'Search.Like', [
                 'before' => true,
                 'after' => true,
@@ -141,4 +144,16 @@ class BlocksTable extends CroogoTable
                 'region_id IN' => $options['regionId']
             ]);
     }
+
+    public function findFilterByRegionAlias(Query $query, array $options = [])
+    {
+        return $query
+            ->find('published', $options)
+            ->find('byAccess', $options)
+            ->innerJoinWith('Regions')
+            ->where([
+                $this->Regions->aliasField('alias') => $options['regionAlias'],
+            ]);
+    }
+
 }
