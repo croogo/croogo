@@ -6,10 +6,10 @@ use App\Controller\AppController;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\Utility\Inflector;
-use Croogo\Extensions\CroogoPlugin;
+use Croogo\Core\PluginManager as CroogoPlugin;
 use Croogo\Extensions\CroogoTheme;
 
 /**
@@ -72,7 +72,7 @@ class ExtShell extends AppShell
         parent::__construct($stdout, $stderr, $stdin);
         $this->_CroogoPlugin = new CroogoPlugin();
         $this->_CroogoTheme = new CroogoTheme();
-        $Request = new Request();
+        $Request = new ServerRequest();
         $Response = new Response();
         $this->_Controller = new AppController($Request, $Response);
         $this->_Controller->startupProcess();
@@ -139,7 +139,7 @@ class ExtShell extends AppShell
     public function getOptionParser()
     {
         return parent::getOptionParser()
-            ->description(__d('croogo', 'Activate Plugins & Themes'))
+            ->setDescription(__d('croogo', 'Activate Plugins & Themes'))
             ->addArguments([
                 'method' => [
                     'help' => __d('croogo', 'Method to perform'),
@@ -265,7 +265,7 @@ class ExtShell extends AppShell
             if (!$active && !$all) {
                 continue;
             }
-            $data = $CroogoPlugin->getPluginData($plugin);
+            $data = $CroogoPlugin->getData($plugin);
             $author = isset($data['author']) ? $data['author'] : '';
             $this->out(__d('croogo', '%-20s%-50s%s', $plugin, $author, $status));
         }
