@@ -96,7 +96,7 @@ class TranslateController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function edit()
+    public function edit($id = null)
     {
         $id = $this->getRequest()->query('id');
         $modelAlias = urldecode($this->getRequest()->query('model'));
