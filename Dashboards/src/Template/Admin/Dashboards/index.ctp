@@ -55,6 +55,7 @@ $this->append('table-heading');
                 [
                     'icon' => $this->Theme->getIcon('move-up'),
                     'tooltip' => __d('croogo', 'Move up'),
+                    'escapeTitle' => false,
                 ]
             );
             $actions[] = $this->Croogo->adminRowAction(
@@ -63,6 +64,7 @@ $this->append('table-heading');
                 [
                     'icon' => $this->Theme->getIcon('move-down'),
                     'tooltip' => __d('croogo', 'Move down'),
+                    'escapeTitle' => false,
                 ]
             );
             $actions[] = $this->Croogo->adminRowAction(
@@ -72,6 +74,7 @@ $this->append('table-heading');
                     'icon' => $this->Theme->getIcon('delete'),
                     'escape' => true,
                     'method' => 'post',
+                    'escapeTitle' => false,
                 ],
                 __d('croogo', 'Are you sure you want to delete # %s?', $dashboard->id)
             );
