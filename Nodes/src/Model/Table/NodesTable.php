@@ -8,6 +8,7 @@ use Cake\I18n\I18n;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Cake\Validation\Validator;
 use Croogo\Core\Croogo;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -326,6 +327,18 @@ class NodesTable extends CroogoTable
     public function beforeSave(Event $event)
     {
         $node = $event->getData()['entity'];
+
+        if ($node->isDirty('type') || $node->isDirty('slug')) {
+            $node->path = Router::url([
+                'prefix' => false,
+                'plugin' => 'Croogo/Nodes',
+                'controller' => 'Nodes',
+                'action' => 'view',
+                'type' => $node->type,
+                'slug' => $node->slug
+            ]);
+        }
+
         $event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, [
             'node' => $node,
             'typeAlias' => $node->type
