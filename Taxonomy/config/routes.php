@@ -19,6 +19,9 @@ Router::plugin('Croogo/Taxonomy', ['path' => '/'], function (RouteBuilder $route
             $route->setExtensions(['json']);
 
             $route->resources('Taxonomies');
+            $route->resources('Terms');
+            $route->resources('Types');
+            $route->resources('Vocabularies');
         });
     });
 });

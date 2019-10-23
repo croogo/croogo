@@ -24,6 +24,7 @@ Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
         $route->prefix('v10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);
 
+            $route->resources('Roles');
             $route->resources('Users', [
                 'map' => [
                     'lookup' => [
