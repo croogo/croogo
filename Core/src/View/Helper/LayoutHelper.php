@@ -3,6 +3,7 @@
 namespace Croogo\Core\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\Log\LogTrait;
 use Cake\ORM\Entity;
 use Cake\Routing\Exception\MissingRouteException;
 use Cake\Routing\Router;
@@ -23,6 +24,8 @@ use Croogo\Core\Croogo;
  */
 class LayoutHelper extends Helper
 {
+
+    use LogTrait;
 
     /**
      * Other helpers used by this helper
@@ -430,12 +433,13 @@ class LayoutHelper extends Helper
      */
     private function __snippetDefaults($type)
     {
-        $varName = strtolower(Inflector::pluralize($type)) . '_for_layout';
-        $modelAlias = Inflector::classify($type);
+        $plural = Inflector::pluralize($type);
+        $varName = strtolower($plural) . 'ForLayout';
+        $modelAlias = Inflector::camelize($plural);
         $checkField = 'alias';
         $valueField = 'body';
         $filter = true;
-        $format = '{s}.{n}.%s[%s=%s].%s';
+        $format = '{s}.{n}[%s=%s].%s';
         switch ($type) {
             case 'type':
                 $valueField = 'description';
@@ -495,7 +499,7 @@ class LayoutHelper extends Helper
     {
         $options = array_merge($this->__snippetDefaults($type), $options);
         extract($options);
-        $path = sprintf($format, $modelAlias, $checkField, $name, $valueField);
+        $path = sprintf($format, $checkField, $name, $valueField);
         $result = $this->valueOf($options['varName'], $path);
         if ($result) {
             if ($options['filter'] === true && is_string($result)) {
