@@ -20,6 +20,7 @@ Router::plugin('Croogo/Menus', ['path' => '/'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);
 
             $route->resources('Links');
+            $route->resources('Menus');
         });
     });
 });

@@ -34,6 +34,7 @@
         "cakephp/plugin-installer": "~1.0",
         "admad/cakephp-sequence": "^2.1",
         "friendsofcake/crud": "^5.4",
+        "friendsofcake/crud-json-api": "^0.5.4",
         "friendsofcake/search": "^5.3",
         "friendsofcake/bootstrap-ui": "^2.0.0-beta6",
         "intervention/image": "^2.4.1",
