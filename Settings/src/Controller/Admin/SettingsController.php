@@ -50,16 +50,31 @@ class SettingsController extends AppController
     {
         if ($this->getRequest()->is('post')) {
             try {
+                $clearBackground = $this->getRequest()->getData('_clearbackground');
+                if ($prefix == 'Theme' && $clearBackground) {
+                    $bgImagePath = $this->Settings->find('search', ['search' => ['key' => 'Theme.bgImagePath']])->first()->value;
+                    $fullpath = WWW_ROOT . $bgImagePath;
+                    if (file_exists($fullpath)) {
+                        unlink($fullpath);
+                    }
+                    $this->Settings->write('Theme.bgImagePath', '');
+                    goto success;
+                }
+
                 foreach ($this->getRequest()->getData() as $inputName => $value) {
                     $id = str_replace('setting-', '', $inputName);
-                    if ($id == '_apply') {
+                    if (in_array($id, ['_apply', '_clearbackground'])) {
                         continue;
                     }
                     $setting = $this->Settings->get($id);
 
                     if (is_array($value)) {
-                        if (isset($value['tmp_name'])) {
-                            $value = $this->_handleUpload($setting, $value);
+                        if (array_key_exists('tmp_name', $value)) {
+                            if (!empty($value['tmp_name'])) {
+                                $value = $this->_handleUpload($setting, $value);
+                            } else {
+                                continue;
+                            }
                         } else {
                             $value = json_encode($value);
                         }
@@ -69,6 +84,7 @@ class SettingsController extends AppController
                     $this->Settings->save($setting);
                 }
 
+success:
                 $this->Flash->success(__d('croogo', 'Settings updated successfully'));
             } catch (Exception $e) {
                 $this->Flash->error(__d('croogo', 'Settings cannot be updated: ' . $e->getMessage()));

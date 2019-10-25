@@ -108,6 +108,10 @@ class SettingsFormHelper extends Helper
                         'escape' => false,
                     ]
                 );
+                $output .= $this->_View->Form->input('_clearbackground', [
+                    'type' => 'checkbox',
+                    'label' => 'Delete Theme Background Image',
+                ]);
             }
         } else {
             $options = [
