@@ -3,6 +3,10 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
+if ($this->request->getParam('prefix') !== 'admin'):
+    $this->setLayout('error');
+endif;
+
 if (Configure::read('debug')) :
     $this->layout = 'dev_error';
 

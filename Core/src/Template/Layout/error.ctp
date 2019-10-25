@@ -61,10 +61,12 @@ $this->loadHelper('Croogo/Menus.Menus');
             </div>
     </nav>
 
+    <?= $this->element('masthead') ?>
+
     <section id="main" class="bg-light">
         <div class="<?= $this->Theme->getCssClass('container') ?>">
             <div class="<?= $this->Theme->getCssClass('row') ?>">
-                <div class="<?= $this->Theme->getCssClass('columnLeft') ?>">
+                <div class="<?= $this->Theme->getCssClass('columnFull') ?>">
                     <?php
                         echo $this->Layout->sessionFlash();
                         echo $this->fetch('content');
