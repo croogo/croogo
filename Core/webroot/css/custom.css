@@ -25,3 +25,27 @@
 .comment-form {
   margin-top: 1rem;
 }
+
+header.masthead .page-heading,
+header.masthead .intro-text,
+header.masthead .post-heading {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+}
+
+.masthead .page-heading,
+.masthead .intro-heading,
+.masthead .post-heading h1 {
+    color: lightgray;
+    text-shadow: 1px 1px 2px #202020, 0 0 1em #303030, 0 0 0.2em #404040;
+}
+
+.masthead .intro-lead-in,
+.masthead .node-info {
+    color: lightgray !important;
+    text-shadow: 1px 1px 1px #202020, 0 0 1em #303030, 0 0 0.2em #404040;
+}
+
+.intro-text .intro-heading {
+    font-size: 400%;
+}
