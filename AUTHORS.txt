@@ -14,6 +14,7 @@ chadrien <chadrien@chadrien.fr>
 Mike Tallroth <mike.tallroth@gmail.com>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 Christopher M. Depré <mail@chris-depre.de>
+Heath Nail <sitedyno@gmail.com>
 Dimas Abdul Aziiz <dimas@xintesa.com>
 Eko Tristiyono <eko@xintesa.com>
 Jose Diaz-Gonzalez <josegonzalez@users.noreply.github.com>
