@@ -28,10 +28,10 @@ class RecaptchaHelper extends Helper
      */
     public function beforeRender($viewFile)
     {
-        if ($this->getRequest()->is('ajax')) {
+        if ($this->getView()->getRequest()->is('ajax')) {
             return;
         }
-        if ($this->getRequest()->getParam('prefix') === 'admin') {
+        if ($this->getView()->getRequest()->getParam('prefix') === 'admin') {
             return;
         }
         $this->Html->script(self::SECURE_API_URL, ['block' => true]);

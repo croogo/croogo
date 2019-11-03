@@ -52,7 +52,7 @@ class RecaptchaComponent extends Component
             $controller->Security->validatePost = false;
         }
 
-        $controller->viewBuilder()->getHelpers(['Croogo/Core.Recaptcha']);
+        $controller->viewBuilder()->setHelpers(['Croogo/Core.Recaptcha']);
     }
 
     /**

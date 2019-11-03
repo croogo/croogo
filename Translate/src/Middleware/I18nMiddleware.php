@@ -51,7 +51,7 @@ class I18nMiddleware
             $config['languages'] = Hash::normalize($config['languages']);
         }
 
-        $this->config($config);
+        $this->setConfig($config);
     }
 
     /**
@@ -66,7 +66,7 @@ class I18nMiddleware
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
-        $config = $this->config();
+        $config = $this->getConfig();
         $url = $request->getUri()->getPath();
 
         $langs = $config['languages'];
@@ -98,7 +98,7 @@ class I18nMiddleware
     public function detectLanguage(ServerRequestInterface $request, $default = null)
     {
         if (empty($default)) {
-            $lang = $this->_config['defaultLanguage'];
+            $lang = $this->getConfig('defaultLanguage');
         } else {
             $lang = $default;
         }
@@ -112,7 +112,7 @@ class I18nMiddleware
         }
         $acceptedLangs = array_intersect(
             $browserLangs,
-            array_keys($this->_config['languages'])
+            array_keys($this->getConfig('languages'))
         );
         if (!empty($acceptedLangs)) {
             $lang = reset($acceptedLangs);
