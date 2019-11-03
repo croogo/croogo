@@ -95,10 +95,10 @@ class LinkedAssetsBehavior extends Behavior
     {
         $key = $this->getConfig('key');
 
-        if (isset($model->Assets)) {
-            $Assets = $model->Assets;
+        if (isset($this->getTable()->Assets)) {
+            $Assets = $this->getTable()->Assets;
         } else {
-            $Assets = TableRegistry::get('Croogo/FileManager.Assets');
+            $Assets = TableRegistry::getTableLocator()->get('Croogo/FileManager.Assets');
         }
 
         foreach ($results as $result) {
