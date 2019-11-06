@@ -17,8 +17,11 @@ class ContactsController extends AppController
     {
         parent::initialize();
 
-        $this->loadComponent('Croogo/Core.Recaptcha', [
-            'actions' => ['view']
+        $this->_loadCroogoComponents([
+            'Akismet',
+            'Recaptcha' => [
+                'actions' => ['view']
+            ]
         ]);
     }
 
