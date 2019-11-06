@@ -98,11 +98,11 @@ class TranslateController extends AppController
      */
     public function edit($id = null)
     {
-        $id = $this->getRequest()->query('id');
+        $id = $this->getRequest()->getQuery('id', $id);
         $modelAlias = urldecode($this->getRequest()->query('model'));
         $locale = $this->getRequest()->query('locale');
 
-        if (!$id && empty($this->getRequest()->data)) {
+        if (!$id && empty($this->getRequest()->getData())) {
             $this->Flash->error(__d('croogo', 'Invalid ID.'));
 
             return $this->redirect([

@@ -128,7 +128,6 @@ class CroogoFormHelper extends FormHelper
     protected function _parseOptions($fieldName, $options)
     {
         $options = parent::_parseOptions($fieldName, $options);
-//        $options = $this->_parseOptionsAddon($options);
 
         $formInput = $this->Theme->getCssClass('formInput');
         $isMultipleCheckbox = isset($options['multiple']) &&
@@ -153,13 +152,8 @@ class CroogoFormHelper extends FormHelper
         }
 
         if ((array_key_exists('linkChooser', $options)) && ($options['linkChooser'])) {
-            $append = [];
-            if (isset($options['append'])) {
-                $append = (array)$options['append'];
-            }
-
             $target = '#' . $options['id'];
-            $options['append'] = [$this->Croogo->linkChooser($target)] + $append;
+            $options['append'] = $this->Croogo->linkChooser($target);
         }
 
         return $options;
@@ -219,6 +213,11 @@ class CroogoFormHelper extends FormHelper
 
     public function input($fieldName, array $options = [])
     {
+        return $this->control($fieldName, $options);
+    }
+
+    public function control($fieldName, array $options = [])
+    {
         if (!$this->_isEditable($fieldName)) {
             return null;
         }
@@ -228,7 +227,7 @@ class CroogoFormHelper extends FormHelper
             $options = $this->_tooltip($options);
         }
 
-        return parent::input($fieldName, $options);
+        return parent::control($fieldName, $options);
     }
 
     /**
