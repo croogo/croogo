@@ -227,10 +227,9 @@ class CroogoHtmlHelper extends HtmlHelper
      * @param string $title The content to be wrapped by <a> tags.
      * @param string|array $url Cake-relative URL or array of URL parameters, or external URL (starts with http://)
      * @param array $options Array of HTML attributes.
-     * @param string $confirmMessage JavaScript confirmation message.
      * @return string An `<a />` element.
      */
-    public function link($title, $url = null, array $options = [], $confirmMessage = false)
+    public function link($title, $url = null, array $options = [])
     {
         $defaults = ['escape' => true];
         $options = is_null($options) ? [] : $options;
@@ -267,6 +266,7 @@ class CroogoHtmlHelper extends HtmlHelper
                 }
                 unset($options['iconInline']);
             }
+            $options['escapeTitle'] = false;
             unset($options['icon']);
         }
 
@@ -288,7 +288,7 @@ class CroogoHtmlHelper extends HtmlHelper
             unset($options['tooltip']);
         }
 
-        return parent::link($title, $url, $options, $confirmMessage);
+        return parent::link($title, $url, $options);
     }
 
     /**
