@@ -9,7 +9,6 @@ use Cake\ORM\Behavior\TranslateBehavior as CakeTranslateBehavior;
 
 class TranslateBehavior extends CakeTranslateBehavior
 {
-
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
         if (empty($data['_locale'])) {

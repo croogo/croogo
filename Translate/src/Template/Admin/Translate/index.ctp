@@ -81,7 +81,7 @@ $this->start('action-buttons');
     endif;
     $this->end();
 
-    if (count($translations) == 0) :
+    if (count($translations->_translations) == 0) :
         echo $this->Html->para(null, __d('croogo', 'No translations available.'));
 
         return;
