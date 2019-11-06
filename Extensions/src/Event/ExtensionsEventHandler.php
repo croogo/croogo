@@ -63,6 +63,10 @@ class ExtensionsEventHandler implements EventListenerInterface
                 require $file;
             }
         }
+        $file = sprintf('%s/%s', ROOT, $config);
+        if (file_exists($file)){
+            require $file;
+        }
     }
 
     /**
