@@ -206,7 +206,7 @@ class PluginManager extends Plugin
         if (file_exists($composerFile)) {
             $json = json_decode(file_get_contents($composerFile));
 
-            if ($json->type === 'croogo-theme') {
+            if (property_exists($json, 'type') && $json->type === 'croogo-theme') {
                 return true;
             }
         }
