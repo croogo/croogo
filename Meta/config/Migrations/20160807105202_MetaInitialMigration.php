@@ -58,6 +58,6 @@ class MetaInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('meta');
+        $this->table('meta')->drop()->save();
     }
 }

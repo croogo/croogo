@@ -68,6 +68,6 @@ class TranslateInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('i18n');
+        $this->table('i18n')->drop()->save();
     }
 }

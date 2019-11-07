@@ -163,7 +163,7 @@ class BlocksInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('blocks');
-        $this->dropTable('regions');
+        $this->table('blocks')->drop()->save();
+        $this->table('regions')->drop()->save();
     }
 }

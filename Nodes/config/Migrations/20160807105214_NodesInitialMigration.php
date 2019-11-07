@@ -140,6 +140,6 @@ class NodesInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('nodes');
+        $this->table('nodes')->drop()->save();
     }
 }

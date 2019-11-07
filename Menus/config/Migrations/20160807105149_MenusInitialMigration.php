@@ -190,7 +190,7 @@ class MenusInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('links');
-        $this->dropTable('menus');
+        $this->table('links')->drop()->save();
+        $this->table('menus')->drop()->save();
     }
 }

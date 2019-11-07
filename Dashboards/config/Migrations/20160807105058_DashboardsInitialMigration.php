@@ -53,6 +53,6 @@ class DashboardsInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('dashboards');
+        $this->table('dashboards')->drop()->save();
     }
 }

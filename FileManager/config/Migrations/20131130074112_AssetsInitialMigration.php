@@ -150,8 +150,8 @@ class AssetsInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('asset_usages');
-        $this->dropTable('assets');
-        $this->dropTable('attachments');
+        $this->table('asset_usages')->drop()->save();
+        $this->table('assets')->drop()->save();
+        $this->table('attachments')->drop()->save();
     }
 }

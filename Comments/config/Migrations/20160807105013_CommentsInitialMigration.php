@@ -124,6 +124,6 @@ class CommentsInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('comments');
+        $this->table('comments')->drop()->save();
     }
 }

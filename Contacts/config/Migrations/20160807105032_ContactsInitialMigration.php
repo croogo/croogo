@@ -206,7 +206,7 @@ class ContactsInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('contacts');
-        $this->dropTable('messages');
+        $this->table('contacts')->drop()->save();
+        $this->table('messages')->drop()->save();
     }
 }

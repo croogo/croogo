@@ -109,8 +109,8 @@ class AclInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('acos');
-        $this->dropTable('aros');
-        $this->dropTable('aros_acos');
+        $this->table('acos')->drop()->save();
+        $this->table('aros')->drop()->save();
+        $this->table('aros_acos')->drop()->save();
     }
 }

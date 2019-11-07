@@ -132,7 +132,7 @@ class SettingsInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('languages');
-        $this->dropTable('settings');
+        $this->table('languages')->drop()->save();
+        $this->table('settings')->drop()->save();
     }
 }

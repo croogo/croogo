@@ -160,8 +160,8 @@ class UsersInitialMigration extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('roles');
-        $this->dropTable('users');
-        $this->dropTable('roles_users');
+        $this->table('roles')->drop()->save();
+        $this->table('users')->drop()->save();
+        $this->table('roles_users')->drop()->save();
     }
 }
