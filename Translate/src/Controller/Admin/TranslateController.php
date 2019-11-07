@@ -247,13 +247,7 @@ class TranslateController extends AppController
             ]);
         }
 
-        $runtimeModel = $model->translateModel();
-        $runtimeModelAlias = $runtimeModel->alias;
-        if ($runtimeModel->deleteAll([
-                $runtimeModelAlias . '.model' => $modelAlias,
-                $runtimeModelAlias . '.foreign_key' => $id,
-                $runtimeModelAlias . '.locale' => $locale,
-            ])) {
+        if ($Model->deleteTranslation($record, $locale)) {
             $this->Flash->success(__d('croogo', 'Translation for the locale deleted successfully.'));
         } else {
             $this->Flash->error(__d('croogo', 'Translation for the locale could not be deleted.'));
@@ -261,8 +255,8 @@ class TranslateController extends AppController
 
         return $this->redirect([
             'action' => 'index',
-            $id,
-            $modelAlias,
+            'id' => $id,
+            'model' => $modelAlias,
         ]);
     }
 }
