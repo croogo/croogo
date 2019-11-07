@@ -11,7 +11,7 @@
 namespace Croogo\Translate\Config;
 
 use Cake\ORM\TableRegistry;
-use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 
 class PluginActivation
 {
@@ -39,7 +39,7 @@ class PluginActivation
         $Acos->addAco('Croogo\Translate/Admin/Translate/index');
         $Acos->addAco('Croogo\Translate/Admin/Translate/edit');
         $Acos->addAco('Croogo\Translate/Admin/Translate/delete');
-        $CroogoPlugin = new Plugin();
+        $CroogoPlugin = new PluginManager();
         $CroogoPlugin->migrate('Croogo/Translate');
     }
 
