@@ -334,7 +334,6 @@ class CroogoComponent extends Component
         if (!$controller->request->is('post')) {
             throw new MethodNotAllowedException();
         }
-        $controller->getEventManager()->off($controller->Csrf);
         $controller->Security->setConfig('validatePost', false);
     }
 }

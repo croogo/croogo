@@ -18,7 +18,6 @@ class AssetUsagesController extends AppController
         ];
         if (in_array($this->getRequest()->getParam('action'), $excludeActions)) {
             $this->Security->setConfig('validatePost', false);
-            $this->getEventManager()->off($this->Csrf);
         }
     }
 
