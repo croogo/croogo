@@ -331,19 +331,22 @@ class NodesController extends AppController
     public function view($id = null)
     {
         $locale = I18n::getLocale();
-        if ($this->getRequest()->getParam('slug') && $this->getRequest()->getParam('type')) {
-            $cacheKeys = ['type', $locale, $this->getRequest()->getParam('type')];
+        $request = $this->getRequest();
+        $paramSlug = $request->getParam('slug') ?: $request->getQuery('slug');
+        $paramType = $request->getParam('type') ?: $request->getQuery('type');
+        if ($paramSlug && $paramType) {
+            $cacheKeys = ['type', $locale, $paramType];
             $cacheKey = implode('_', $cacheKeys);
             $type = $this->Nodes->Taxonomies->Vocabularies->Types->find()
                 ->cache($cacheKey, 'nodes_view')
                 ->where([
-                    'alias' => $this->getRequest()->getParam('type'),
+                    'alias' => $paramType,
                 ])
                 ->firstOrFail();
             $node = $this->Nodes
                 ->find('viewBySlug', [
-                    'slug' => $this->getRequest()->getParam('slug'),
-                    'type' => $this->getRequest()->getParam('type'),
+                    'slug' => $paramSlug,
+                    'type' => $paramType,
                     'roleId' => $this->Croogo->roleId(),
                 ])
                 ->firstOrFail();

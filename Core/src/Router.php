@@ -120,30 +120,41 @@ class Router extends CakeRouter
     /**
      * Routes for content types
      *
-     * @param string $alias
+     * @param string $aliasRegex
      * @return void
      */
-    public static function contentType($alias, $routeBuilder)
+    public static function contentType($aliasRegex, $routeBuilder)
     {
-        static::build($routeBuilder, '/' . $alias, [
+        static::build($routeBuilder, '/:type', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
-            'action' => 'index', 'type' => $alias
+            'action' => 'index',
+        ], [
+            'type' => $aliasRegex,
         ]);
-        static::build($routeBuilder, '/' . $alias . '/archives/*', [
+        static::build($routeBuilder, '/:type/archives/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
-            'action' => 'index', 'type' => $alias
+            'action' => 'index',
+        ], [
+            'type' => $aliasRegex,
         ]);
-        static::build($routeBuilder, '/' . $alias . '/:slug', [
+        static::build($routeBuilder, '/:type/:slug', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
-            'action' => 'view', 'type' => $alias
+            'action' => 'view',
+        ], [
+            'type' => $aliasRegex,
+            'slug' => '[a-z0-9-_]+',
         ]);
-        static::build($routeBuilder, '/' . $alias . '/term/:term/*', [
+        static::build($routeBuilder, '/:type/term/:term/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
-            'action' => 'term', 'type' => $alias
+            'action' => 'term',
+        ], [
+            'type' => $aliasRegex,
         ]);
-        static::build($routeBuilder, '/' . $alias . '/:vocab/:term/*', [
+        static::build($routeBuilder, '/:type/:vocab/:term/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
-            'action' => 'term', 'type' => $alias
+            'action' => 'term',
+        ], [
+            'type' => $aliasRegex,
         ]);
     }
 
@@ -161,11 +172,14 @@ class Router extends CakeRouter
                     'config' => 'croogo_types',
                 ],
             ]);
+            $aliases = [];
             foreach ($types as $type) {
                 if (isset($type->params['routes']) && $type->params['routes']) {
-                    static::contentType($type->alias, $routeBuilder);
+                    $aliases[] = $type->alias;
                 }
             }
+            $aliasRegex = implode('|', $aliases);
+            static::contentType($aliasRegex, $routeBuilder);
         } catch (MissingConnectionException $e) {
             Log::write('critical', __d('croogo', 'Unable to get routeable content types: %s', $e->getMessage()));
         }
