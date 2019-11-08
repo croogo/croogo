@@ -34,14 +34,6 @@ $this->start('tab-content');
         ]);
         echo $this->Form->input('alias', [
             'label' => __d('croogo', 'Alias'),
-            'label' => __d('croogo', 'Permalink'),
-            'prepend' => str_replace('_placeholder', '', $this->Url->build([
-                'prefix' => false,
-                'plugin' => 'Croogo/Nodes',
-                'controller' => 'Nodes',
-                'action' => 'index',
-                'type' => '_placeholder',
-            ], ['fullbase' => true]))
         ]);
         echo $this->Form->input('description', [
             'label' => __d('croogo', 'Description'),
