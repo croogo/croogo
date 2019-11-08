@@ -44,7 +44,7 @@ class Link extends ArrayObject
             }
         }
 
-        return (isset($this->controller)) ? $copy : $this->url;
+        return (isset($this->controller)) ? $copy : urldecode($this->url);
     }
 
     public function getPath()
