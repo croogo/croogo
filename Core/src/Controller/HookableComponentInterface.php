@@ -14,5 +14,5 @@ interface HookableComponentInterface
      *
      * @return mixed
      */
-    public function loadHookableComponent($name, array $config);
+    public function _loadHookableComponent($name, array $config);
 }

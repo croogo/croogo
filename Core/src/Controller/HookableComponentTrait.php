@@ -24,7 +24,7 @@ trait HookableComponentTrait
      *
      * @return mixed
      */
-    public function loadHookableComponent($name, array $config)
+    public function _loadHookableComponent($name, array $config)
     {
         return $this->loadComponent($name, $config);
     }

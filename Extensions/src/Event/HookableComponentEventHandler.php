@@ -41,7 +41,7 @@ class HookableComponentEventHandler implements EventListenerInterface
 
         $components = $this->_getComponents($controller);
         foreach ($components as $component => $config) {
-            $controller->loadHookableComponent($component, $config);
+            $controller->_loadHookableComponent($component, $config);
         }
     }
 
