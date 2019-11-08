@@ -101,7 +101,7 @@ class AclCachedAuthorize extends BaseAuthorize
         $path = str_replace(
             [$apiPath, ':prefix', ':plugin', ':controller', ':action'],
             [$api, $prefix, $plugin, $controller, $action],
-            $this->config('actionPath') . $path
+            $this->getConfig('actionPath') . $path
         );
         $path = str_replace('//', '/', $path);
 
@@ -121,18 +121,18 @@ class AclCachedAuthorize extends BaseAuthorize
 
         $allowed = false;
         $Acl = $this->_registry->load('Acl');
-        list($plugin, $userModel) = pluginSplit($this->config('userModel'));
+        list($plugin, $userModel) = pluginSplit($this->getConfig('userModel'));
 
         $action = $this->action($request);
 
-        $cacheName = 'permissions_' . strval($user['id']);
+        $cacheName = 'permissions_' . (string)$user['id'];
         if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
             $permissions = [];
             Cache::write($cacheName, $permissions, 'permissions');
         }
 
         if (!isset($permissions[$action])) {
-            $userTable = TableRegistry::get($this->config('userModel'));
+            $userTable = TableRegistry::getTableLocator()->get($this->getConfig('userModel'));
             $user = $userTable->get($user['id']);
             $allowed = $Acl->check($user, $action);
             $permissions[$action] = $allowed;
@@ -167,9 +167,9 @@ class AclCachedAuthorize extends BaseAuthorize
 
         $primaryKey = $Model->primaryKey();
         $ids = [];
-        if ($request->is('get') && $request->param('pass.0')) {
+        if ($request->is('get') && $request->getParam('pass.0')) {
             // collect id from actions such as: Nodes/admin_edit/1
-            $ids[] = $request->param('pass.0');
+            $ids[] = $request->getParam('pass.0');
         } elseif ($request->is('post') || $request->is('put')) {
             $action = $request->getData('action');
             if ($action) {
@@ -212,7 +212,7 @@ class AclCachedAuthorize extends BaseAuthorize
      */
     protected function _authorizeByContent($user, ServerRequest $request, $id)
     {
-        if (!isset($this->config('actionMap')[$request->params['action']])) {
+        if (!isset($this->getConfig('actionMap')[$request->params['action']])) {
             $message = __d(
                 'croogo',
                 '_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
@@ -223,13 +223,13 @@ class AclCachedAuthorize extends BaseAuthorize
             throw new Exception($message);
         }
 
-        list($plugin, $userModel) = pluginSplit($this->config('userModel'));
+        list($plugin, $userModel) = pluginSplit($this->getConfig('userModel'));
         $acoNode = [
             'model' => $this->_registry->getController()->name,
             'foreign_key' => $id,
         ];
         $alias = sprintf('%s.%s', $acoNode['model'], $acoNode['foreign_key']);
-        $action = $this->config('actionMap')[$request->param('action')];
+        $action = $this->getConfig('actionMap')[$request->param('action')];
 
         $cacheName = 'permissions_content_' . strval($user['id']);
         if (($permissions = Cache::read($cacheName, 'permissions')) === false) {

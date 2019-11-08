@@ -142,10 +142,10 @@ class UsersController extends AppController
     public function onAdminLoginFailure()
     {
         $field = $this->Auth->getConfig('authenticate.all.fields.username');
-        if (empty($this->getRequest()->data)) {
+        if (empty($this->getRequest()->getData())) {
             return true;
         }
-        $cacheName = 'auth_failed_' . $this->getRequest()->data[$field];
+        $cacheName = 'auth_failed_' . $this->getRequest()->getData($field);
         $cacheValue = Cache::read($cacheName, 'users_login');
         Cache::write($cacheName, (int)$cacheValue + 1, 'users_login');
 
@@ -172,7 +172,7 @@ class UsersController extends AppController
     public function afterCrudSave(Event $event)
     {
         if ($event->getSubject()->success && $event->getSubject()->created) {
-            if ($this->getRequest()->data('notification') != null) {
+            if ($this->getRequest()->getData('notification') != null) {
                 $this->Users->sendActivationEmail($event->getSubject()->entity);
             }
         }
@@ -260,7 +260,7 @@ class UsersController extends AppController
 
                 if ($this->Auth->authenticationProvider()->needsPasswordRehash()) {
                     $user = $this->Users->get($user['id']);
-                    $user->password = $this->getRequest()->data('password');
+                    $user->password = $this->getRequest()->getData('password');
                     $this->Users->save($user);
                 }
 
@@ -398,7 +398,7 @@ class UsersController extends AppController
             return;
         }
 
-        $username = $this->getRequest()->data('username');
+        $username = $this->getRequest()->getData('username');
         if (!$username) {
             $this->Flash->error(__d('croogo', 'Invalid username.'));
 
