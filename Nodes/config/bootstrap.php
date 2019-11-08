@@ -28,17 +28,17 @@ Croogo::hookHelper('*', 'Croogo/Nodes.Nodes');
 Wysiwyg::setActions([
     'Croogo/Nodes.Admin/Nodes/add' => [
         [
-            'elements' => 'NodeBody',
+            'elements' => '#NodeBody',
         ],
     ],
     'Croogo/Nodes.Admin/Nodes/edit' => [
         [
-            'elements' => 'NodeBody',
+            'elements' => '#NodeBody',
         ],
     ],
     'Croogo/Translate.Admin/Translate/edit' => [
         [
-            'elements' => 'NodeBody',
+            'elements' => "[id^='translations'][id$='body']",
         ],
     ],
 ]);
