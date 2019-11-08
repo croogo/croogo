@@ -46,7 +46,17 @@ Dashboard.saveDashboard = function(e, ui) {
       $('#' + data[i].alias).data('id', data[i].id);
     }
   };
-  $.post(saveUrl, {dashboard: dashboard}, saveCallback, 'json');
+  $.post({
+    url: saveUrl,
+    data: {
+      dashboard: dashboard
+    },
+    headers: {
+      'Accept': 'application/json',
+      'X-CSRF-Token': Admin.getCookie('csrfToken'),
+    },
+    success: saveCallback
+  });
 };
 
 Dashboard.sortable = function(selector, saveDashboard) {

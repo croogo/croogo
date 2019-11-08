@@ -64,10 +64,6 @@ class AttachmentsController extends AppController
     {
         parent::beforeFilter($event);
 
-        $noCsrfCheck = ['add', 'resize'];
-        if (in_array($this->getRequest()->getParam('action'), $noCsrfCheck)) {
-            $this->getEventManager()->off($this->Csrf);
-        }
         if ($this->getRequest()->getParam('action') == 'resize') {
             $this->Security->setConfig('validatePost', false);
         }

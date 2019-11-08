@@ -40,16 +40,24 @@ Assets.changeUsageType = function(e) {
     pk: $target.data('pk'),
     value: curValue,
   };
-  $.post($target.data('url'), postData, function(data, textStatus) {
-    if ($target.hasClass('select2-hidden-accessible')) {
-      $target.select2('destroy');
-    }
-    if (curValue) {
-      $target.html('<option value="' + curValue + '">' + curValue + '</option>')
-    } else {
-      $target.html('');
-    }
-    $target.select2()
+  $.post({
+    url: $target.data('url'),
+    data: postData,
+    headers: {
+      'Accept': 'application/json',
+      'X-CSRF-Token': Admin.getCookie('csrfToken'),
+    },
+    success: function(data, textStatus) {
+      if ($target.hasClass('select2-hidden-accessible')) {
+        $target.select2('destroy');
+      }
+      if (curValue) {
+        $target.html('<option value="' + curValue + '">' + curValue + '</option>')
+      } else {
+        $target.html('');
+      }
+      $target.select2()
+    },
   });
   return false;
 };
@@ -88,12 +96,20 @@ Assets.unregisterAssetUsage = function(e) {
     id: $target.data('id')
   };
   $('.tooltip').tooltip('hide');
-  $.post($target.attr('href'), postData, function(data, textStatus) {
-    if (data == true) {
-      $target.parents('tr').hide('medium', function() {
-        $(this).remove();
-      });
-    }
+  $.post({
+    url: $target.attr('href'),
+    data: postData,
+    headers: {
+      'Accept': 'application/json',
+      'X-CSRF-Token': Admin.getCookie('csrfToken'),
+    },
+    success: function(data, textStatus) {
+      if (data == true) {
+        $target.parents('tr').hide('medium', function() {
+          $(this).remove();
+        });
+      }
+    },
   });
   return false;
 };

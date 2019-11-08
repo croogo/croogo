@@ -12,6 +12,18 @@ Admin.spinnerClass = function () {
   return Admin.iconClass('spinner') + ' ' + Admin.iconClass('spin', false);
 };
 
+// https://stackoverflow.com/a/26234977
+Admin.getCookie = function(cookieName) {
+    if (!cookieName) { return null; }
+    return decodeURIComponent(
+      document.cookie.replace(
+        new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(cookieName)
+          .replace(/[\-\.\+\*]/g, "\\$&")
+          + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1"
+      )
+    ) || null;
+}
+
 /**
  * Forms
  *
@@ -26,8 +38,14 @@ Admin.form = function () {
     var spinnerClass = Admin.spinnerClass();
     $this.find('i').attr('class', spinnerClass);
     var url = $this.data('url');
-    $.post(url, function (data) {
-      $this.parent().html(data);
+    $.post({
+      url: url,
+      headers: {
+        'X-CSRF-Token': Admin.getCookie('csrfToken'),
+      },
+      success: function (data) {
+        $this.parent().html(data);
+      },
     });
   };
 

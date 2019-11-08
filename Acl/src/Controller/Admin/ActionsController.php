@@ -29,19 +29,6 @@ class ActionsController extends AppController
     }
 
     /**
-     * beforeFilter
-     *
-     * @return void
-     */
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        if ($this->getRequest()->getParam('action') == 'generate' && $this->getRequest()->getParam('prefix') == 'admin') {
-            $this->getEventManager()->off($this->Csrf);
-        }
-    }
-
-    /**
      * admin_index
      */
     public function index($id = null)

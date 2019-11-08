@@ -6,6 +6,7 @@ use Croogo\Core\Router;
 Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('admin', function (RouteBuilder $route) {
         $route->setExtensions(['json']);
+        $route->applyMiddleware('csrf');
 
         $route->scope('/nodes', [], function (RouteBuilder $route) {
             $route->fallbacks();
