@@ -219,7 +219,7 @@ class Router extends CakeRouter
         if ($homeUrl && strpos($homeUrl, ':') !== false) {
             $converter = new StringConverter();
             $url = $converter->linkStringToArray($homeUrl);
-            Router::connect('/', $url, [], ['promote' => true]);
+            Router::connect('/', $url);
         }
     }
 }
