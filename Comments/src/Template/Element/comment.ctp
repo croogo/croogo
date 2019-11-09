@@ -29,7 +29,7 @@ use Cake\Core\Configure;
                 urlencode($comment->model),
                 $comment->foreign_key,
                 $comment->id,
-            ), [
+            ], [
                 'class' => 'btn btn-sm btn-outline-secondary',
             ]); ?>
         <?php endif; ?>
