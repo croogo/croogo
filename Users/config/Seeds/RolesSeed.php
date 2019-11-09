@@ -16,15 +16,16 @@ class RolesSeed extends AbstractSeed
         ],
         [
             'id' => '2',
-            'title' => 'Registered',
-            'alias' => 'registered',
+            'title' => 'Public',
+            'alias' => 'public',
             'created' => '2009-04-05 00:10:50',
             'updated' => '2009-04-06 05:20:38'
         ],
         [
             'id' => '3',
-            'title' => 'Public',
-            'alias' => 'public',
+            'title' => 'Registered',
+            'alias' => 'registered',
+            'parent_id' => 2,
             'created' => '2009-04-05 00:12:38',
             'updated' => '2009-04-07 01:41:45'
         ],

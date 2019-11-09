@@ -115,20 +115,14 @@ class AccessComponent extends Component
     public function isUrlAuthorized($user, $url)
     {
         if (is_string($url)) {
-            $parsedUrl = Router::parseRequest($this->request);
-            unset($parsedUrl['_matchedRoute']);
-            $options = [
-                'params' => $parsedUrl,
-                'url' => $url,
-            ];
+            $request = new ServerRequest($url);
+            $params = Router::parseRequest($request);
+            $request = $request->withAttribute('params', $params);
         } else {
-            $reversedRoute = Router::reverse($url);
-            $options = [
-                'params' => $url,
-                'url' => $reversedRoute,
-            ];
+            $request = new ServerRequest();
+            $params = Router::reverse($url);
+            $request = $request->withAttribute('params', $params);
         }
-        $request = new ServerRequest($options);
 
         return $this->getController()->Auth->isAuthorized($user, $request);
     }
