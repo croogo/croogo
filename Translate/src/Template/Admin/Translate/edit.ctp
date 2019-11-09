@@ -3,7 +3,7 @@
 use Cake\Utility\Inflector;
 
 $this->extend('/Common/admin_edit');
-$this->assign('title', sprintf(__d('croogo', 'Translate content: %s (%s)'), $language->title, $language->native));
+$this->assign('title', sprintf(__d('croogo', 'Translate content: %s (%s)'), $language->title, $language->native ?: $language->alias));
 $this->set('className', 'translate');
 
 $crumbLabel = $model == 'Nodes' ? __d('croogo', 'Content') : Inflector::pluralize($model);

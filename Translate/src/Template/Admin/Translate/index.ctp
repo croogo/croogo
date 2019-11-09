@@ -46,8 +46,8 @@ $this->start('action-buttons');
             ],
         ],
         [
-            'button' => 'secondary',
-            'class' => 'dropdown-toggle',
+            'button' => 'outline-secondary',
+            'class' => 'btn-sm dropdown-toggle',
             'data-toggle' => 'dropdown',
         ]
     );
