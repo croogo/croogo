@@ -7,7 +7,7 @@
 # is a pre-release
 PRERELEASE=$(shell echo $(VERSION) | grep -E 'dev|rc|alpha|beta' --quiet && echo 'true' || echo 'false')
 PLUGINS=Nodes Menus Taxonomy Users
-CURRENT_BRANCH=$(shell git branch | grep '*' | tr -d '* ')
+CURRENT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
 # Github settings
 UPLOAD_HOST=https://uploads.github.com
@@ -183,7 +183,7 @@ plugin-split:
 		Wysiwyg:$(GITHUB_ROOT)/wysiwyg \
 		" \
 		--tags=$(RELEASE_TAG) \
-		--heads=3.0
+		--heads=$(CURRENT_BRANCH)
 
 plugins: $(foreach plugin, $(PLUGINS), plugin-$(plugin))
 plugins-tag: $(foreach plugin, $(PLUGINS), tag-plugin-$(plugin))
