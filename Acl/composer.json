@@ -2,8 +2,8 @@
     "name": "croogo/acl",
     "description": "Croogo Acl Plugin",
     "require": {
-        "cakephp/acl": "dev-master",
-        "croogo/core": "^3.0.1"
+        "cakephp/acl": "^0.5.2",
+        "croogo/core": "^4.0.0-beta.4"
     },
     "license": "MIT",
     "authors": [
