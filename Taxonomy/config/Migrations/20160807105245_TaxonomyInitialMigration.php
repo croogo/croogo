@@ -32,6 +32,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
+            ->addTimestamps('created', 'updated')
             ->create();
 
         $this->table('terms')
@@ -55,22 +56,13 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addColumn('updated', 'datetime', [
+            ->addTimestamps('created', 'updated')
+            ->addColumn('created_by', 'integer', [
                 'default' => null,
-                'limit' => null,
+                'limit' => 20,
                 'null' => false,
             ])
             ->addColumn('updated_by', 'integer', [
-                'default' => null,
-                'limit' => 20,
-                'null' => true,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
@@ -147,22 +139,13 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 255,
                 'null' => true,
             ])
-            ->addColumn('updated', 'datetime', [
+            ->addTimestamps('created', 'updated')
+            ->addColumn('created_by', 'integer', [
                 'default' => null,
-                'limit' => null,
+                'limit' => 20,
                 'null' => false,
             ])
             ->addColumn('updated_by', 'integer', [
-                'default' => null,
-                'limit' => 20,
-                'null' => true,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
@@ -219,22 +202,13 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
-            ->addColumn('updated', 'datetime', [
+            ->addTimestamps('created', 'updated')
+            ->addColumn('created_by', 'integer', [
                 'default' => null,
-                'limit' => null,
+                'limit' => 20,
                 'null' => false,
             ])
             ->addColumn('updated_by', 'integer', [
-                'default' => null,
-                'limit' => 20,
-                'null' => true,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
@@ -266,6 +240,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
+            ->addTimestamps('created', 'updated')
             ->addIndex(
                 [
                     'type_id', 'vocabulary_id',
@@ -290,6 +265,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => false,
             ])
+            ->addTimestamps('created', 'updated')
             ->addIndex(
                 [
                     'model', 'foreign_key', 'taxonomy_id',

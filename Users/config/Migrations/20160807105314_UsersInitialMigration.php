@@ -18,20 +18,11 @@ class UsersInitialMigration extends AbstractMigration
                 'limit' => 100,
                 'null' => true,
             ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
-            ])
+            ->addTimestamps('created', 'updated')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
-                'null' => true,
-            ])
-            ->addColumn('updated', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
+                'null' => false,
             ])
             ->addColumn('updated_by', 'integer', [
                 'default' => null,
@@ -97,27 +88,18 @@ class UsersInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => false,
             ])
-            ->addColumn('updated', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('updated_by', 'integer', [
-                'default' => null,
-                'limit' => 20,
-                'null' => true,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
             ->addColumn('timezone', 'string', [
                 'default' => 'UTC',
                 'limit' => 40,
                 'null' => false,
             ])
+            ->addTimestamps('created', 'updated')
             ->addColumn('created_by', 'integer', [
+                'default' => null,
+                'limit' => 20,
+                'null' => false,
+            ])
+            ->addColumn('updated_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
@@ -140,16 +122,7 @@ class UsersInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
-            ])
-            ->addColumn('updated', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
-            ])
+            ->addTimestamps('created', 'updated')
             ->addIndex(
                 [
                     'user_id',

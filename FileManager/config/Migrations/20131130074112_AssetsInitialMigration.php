@@ -43,16 +43,11 @@ class AssetsInitialMigration extends AbstractMigration
             ->addColumn('asset_count', 'integer', [
                 'null' => true,
             ])
-            ->addColumn('created', 'datetime', [
-                'null' => true,
-            ])
+            ->addTimestamps('created', 'updated')
             ->addColumn('created_by', 'integer', [
                 'null' => true,
             ])
-            ->addColumn('modified', 'datetime', [
-                'null' => true,
-            ])
-            ->addColumn('modified_by', 'integer', [
+            ->addColumn('updated_by', 'integer', [
                 'null' => true,
             ])
             ->addIndex(['hash'], [
@@ -99,12 +94,7 @@ class AssetsInitialMigration extends AbstractMigration
                 'null' => true, 'default' => null, 'length' => 32,
                 'comment' => 'Gaufrette Storage Adapter Class',
             ])
-            ->addColumn('created', 'datetime', [
-                'null' => true, 'default' => null,
-            ])
-            ->addColumn('modified', 'datetime', [
-                'null' => true, 'default' => null,
-            ])
+            ->addTimestamps('created', 'updated')
             ->addIndex(['hash', 'path'], [
                 'name' => 'ix_assets_hash',
             ])
@@ -133,12 +123,7 @@ class AssetsInitialMigration extends AbstractMigration
             ->addColumn('url', 'string', [
                 'length' => 512, 'null' => true,
             ])
-            ->addColumn('created', 'datetime', [
-                'null' => true, 'default' => null,
-            ])
-            ->addColumn('modified', 'datetime', [
-                'null' => true, 'default' => null,
-            ])
+            ->addTimestamps('created', 'updated')
             ->addColumn('params', 'text', [
                 'null' => true, 'default' => null,
             ])

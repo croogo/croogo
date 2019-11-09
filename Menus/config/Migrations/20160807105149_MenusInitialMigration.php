@@ -83,22 +83,13 @@ class MenusInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addColumn('updated', 'datetime', [
+            ->addTimestamps('created', 'updated')
+            ->addColumn('created_by', 'integer', [
                 'default' => null,
-                'limit' => null,
+                'limit' => 20,
                 'null' => false,
             ])
             ->addColumn('updated_by', 'integer', [
-                'default' => null,
-                'limit' => 20,
-                'null' => true,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
@@ -156,22 +147,13 @@ class MenusInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addColumn('updated', 'datetime', [
+            ->addTimestamps('created', 'updated')
+            ->addColumn('created_by', 'integer', [
                 'default' => null,
-                'limit' => null,
+                'limit' => 20,
                 'null' => false,
             ])
             ->addColumn('updated_by', 'integer', [
-                'default' => null,
-                'limit' => 20,
-                'null' => true,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,

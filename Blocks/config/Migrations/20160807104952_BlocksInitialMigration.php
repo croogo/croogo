@@ -83,22 +83,13 @@ class BlocksInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addColumn('updated', 'datetime', [
+            ->addTimestamps('created', 'updated')
+            ->addColumn('created_by', 'integer', [
                 'default' => null,
-                'limit' => null,
+                'limit' => 20,
                 'null' => false,
             ])
             ->addColumn('updated_by', 'integer', [
-                'default' => null,
-                'limit' => 20,
-                'null' => true,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
@@ -132,22 +123,13 @@ class BlocksInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => false,
             ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
-            ])
-            ->addColumn('created_by', 'integer', [
+            ->addTimestamps('created', 'updated')
+            ->addColumn('updated_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
-                'null' => true,
+                'null' => false,
             ])
-            ->addColumn('updated', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
-            ])
-            ->addColumn('updated_by', 'integer', [
+            ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,

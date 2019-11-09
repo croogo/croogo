@@ -56,12 +56,7 @@ class AttachmentsTable extends CroogoTable
         ]);
 
         $this->addBehavior('Timestamp');
-        $this->addBehavior('Croogo/Core.Trackable', [
-            'fields' => [
-                'created_by' => 'created_by',
-                'updated_by' => 'modified_by',
-            ]
-        ]);
+        $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Search.Search');
         //$this->addBehavior('Burzum/Imagine.Imagine');
 
@@ -346,7 +341,7 @@ class AttachmentsTable extends CroogoTable
             'hash' => $hash,
             'status' => true,
             'created' => date('Y-m-d H:i:s', $stat[9]),
-            'modified' => date('Y-m-d H:i:s', time()),
+            'updated' => date('Y-m-d H:i:s', time()),
         ]);
 
         return $attachment;
