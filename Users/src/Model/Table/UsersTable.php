@@ -109,7 +109,7 @@ class UsersTable extends CroogoTable
         ]);
 
         $user->set([
-            'role_id' => RolesTable::ROLE_REGISTERED,
+            'role_id' => $this->Roles->byAlias('registered'),
             'activation_key' => $this->generateActivationKey(),
         ]);
 
