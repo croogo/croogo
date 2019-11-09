@@ -28,8 +28,6 @@ class ContactsSeed extends AbstractSeed
             'message_captcha' => '0',
             'message_notify' => '1',
             'status' => '1',
-            'updated' => '2009-10-07 22:07:49',
-            'created' => '2009-09-16 01:45:17'
         ],
     ];
 

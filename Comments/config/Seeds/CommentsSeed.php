@@ -25,8 +25,6 @@ class CommentsSeed extends AbstractSeed
             'comment_type' => 'comment',
             'lft' => '1',
             'rght' => '2',
-            'updated' => '2009-12-25 12:00:00',
-            'created' => '2009-12-25 12:00:00'
         ],
     ];
 

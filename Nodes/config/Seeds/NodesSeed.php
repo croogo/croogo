@@ -26,8 +26,6 @@ class NodesSeed extends AbstractSeed
             'rght' => '2',
             'visibility_roles' => '',
             'type' => 'blog',
-            'updated' => '2009-12-25 11:00:00',
-            'created' => '2009-12-25 11:00:00'
         ],
         [
             'id' => '2',
@@ -49,8 +47,6 @@ class NodesSeed extends AbstractSeed
             'rght' => '2',
             'visibility_roles' => '',
             'type' => 'page',
-            'updated' => '2009-12-25 22:00:00',
-            'created' => '2009-12-25 22:00:00'
         ],
     ];
 
