@@ -3,6 +3,7 @@
 namespace Croogo\Extensions;
 
 use Cake\Cache\Cache;
+use Cake\Core\App;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
@@ -248,15 +249,22 @@ class CroogoTheme
         if (empty($alias)) {
             throw new InvalidArgumentException(__d('croogo', 'Invalid theme'));
         }
-        $paths = [
-            APP . 'webroot' . DS . 'theme' . DS . $alias,
-            APP . 'View' . DS . 'Themed' . DS . $alias,
-        ];
+        $paths = App::path('Plugin', $alias);
+        $paths = array_map(function ($path) use ($alias) {
+            return $path . $alias;
+        }, $paths);
         $folder = new Folder;
+
         foreach ($paths as $path) {
             if (!file_exists($path)) {
                 continue;
             }
+
+            $themeManifest = $path . '/config/theme.json';
+            if (!file_exists($themeManifest)) {
+                continue;
+            }
+
             if (is_link($path)) {
                 return unlink($path);
             } elseif (is_dir($path)) {
