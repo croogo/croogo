@@ -2,6 +2,7 @@
 
 namespace Croogo\Extensions\Controller\Admin;
 
+use UnexpectedValueException;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Network\Exception\BadRequestException;
@@ -72,10 +73,15 @@ class ThemesController extends AppController
      *
      * @param string $theme
      */
-    public function activate($theme = null, $type = 'theme')
+    public function activate()
     {
+        $theme = $this->getRequest()->getQuery('theme');
+        $type = $this->getRequest()->getQuery('type') ?: 'theme';
+
+        if (!$theme) {
+            throw new UnexpectedValueException();
+        }
         try {
-            $theme = base64_decode(urldecode($theme));
             $this->_CroogoTheme->activate($theme, $type);
 
             $this->Flash->success(__d('croogo', 'Theme activated.'));
@@ -140,6 +146,9 @@ class ThemesController extends AppController
      */
     public function delete($alias = null)
     {
+        if (!$alias) {
+            $alias = $this->getRequest()->getQuery('theme');
+        }
         if ($alias == null) {
             $this->Flash->error(__d('croogo', 'Invalid Theme.'));
 

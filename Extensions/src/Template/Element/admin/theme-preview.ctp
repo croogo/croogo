@@ -62,7 +62,7 @@ $activeThemes = [$currentTheme['name'], $currentBackendTheme['name']];
 if ($theme['isFrontendTheme'] && $currentTheme['name'] != $theme['name']) :
     $out .= $this->Form->postLink(__d('croogo', 'Activate Frontend'), [
             'action' => 'activate',
-            urlencode(base64_encode($theme['name'])),
+            'theme' => $theme['name'],
         ], [
             'button' => 'outline-secondary btn-sm',
             'icon' => $this->Theme->getIcon('power-on'),
@@ -73,8 +73,8 @@ endif;
 if ($theme['isBackendTheme'] && $currentBackendTheme['name'] != $theme['name']) :
     $out .= $this->Form->postLink(__d('croogo', 'Activate Backend'), [
             'action' => 'activate',
-            urlencode(base64_encode($theme['name'])),
-            'admin_theme',
+            'theme' => $theme['name'],
+            'type' => 'admin_theme',
         ], [
             'button' => 'outline-secondary btn-sm',
             'icon' => $this->Theme->getIcon('power-on'),
@@ -85,7 +85,7 @@ endif;
 if (!in_array($theme['name'], $activeThemes)) :
     $out .= $this->Form->postLink(__d('croogo', 'Delete'), [
             'action' => 'delete',
-            urlencode($theme['name']),
+            'theme' => $theme['name'],
         ], [
             'button' => 'outline-danger btn-sm',
             'escape' => true,
