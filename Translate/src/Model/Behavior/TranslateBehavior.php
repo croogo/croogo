@@ -35,7 +35,7 @@ class TranslateBehavior extends CakeTranslateBehavior
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
         if (empty($data['_locale'])) {
-            $data['_locale'] = I18n::defaultLocale();
+            $data['_locale'] = I18n::getDefaultLocale();
         }
     }
 }
