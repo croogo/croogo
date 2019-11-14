@@ -176,15 +176,16 @@ class FileManagerHelper extends Helper
      *
      * @param string $title link title
      * @param string $path directory path
+     * @param array $url url
      * @return string
      */
-    public function linkDirectory($title, $path)
+    public function linkDirectory($title, $path, $url = [])
     {
-        $output = $this->link($title, [
+        $output = $this->link($title, array_merge([
             'plugin' => 'Croogo/FileManager',
             'controller' => 'FileManager',
             'action' => 'browse',
-        ], $path);
+        ], $url), $path);
 
         return $output;
     }
@@ -194,17 +195,18 @@ class FileManagerHelper extends Helper
      *
      * @param string $title Title
      * @param string $path File path
+     * @param array $url url
      * @return string
      */
-    public function linkFile($title, $path)
+    public function linkFile($title, $path, $url = [])
     {
-        return $this->Html->link($title, [
+        return $this->Html->link($title, array_merge([
             'controller' => 'FileManager',
             'action' => 'editFile',
             '?' => [
                 'path' => $path,
             ],
-        ]);
+        ], $url));
     }
 
     /**
@@ -212,11 +214,15 @@ class FileManagerHelper extends Helper
      *
      * @param string $title link title
      * @param string $path absolute path
+     * @param array $url url
      * @return string
      */
-    public function linkUpload($title, $path)
+    public function linkUpload($title, $path, $url = [])
     {
-        $output = $this->link($title, ['controller' => 'FileManager', 'action' => 'upload'], $path);
+        $output = $this->link($title, array_merge([
+            'controller' => 'FileManager',
+            'action' => 'upload',
+        ], $url), $path);
 
         return $output;
     }
@@ -228,9 +234,12 @@ class FileManagerHelper extends Helper
      * @param string $path absolute path
      * @return string
      */
-    public function linkCreateDirectory($title, $path)
+    public function linkCreateDirectory($title, $path, $url = [])
     {
-        $output = $this->link($title, ['controller' => 'FileManager', 'action' => 'new'], $path);
+        $output = $this->link($title, array_merge([
+            'controller' => 'FileManager',
+            'action' => 'new',
+        ], $url), $path);
 
         return $output;
     }
