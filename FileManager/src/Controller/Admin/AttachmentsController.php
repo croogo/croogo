@@ -324,13 +324,7 @@ class AttachmentsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $redirect = ['action' => 'index'];
-        if (!empty($this->getRequest()->getQuery())) {
-            $redirect = array_merge(
-                $redirect,
-                ['action' => 'browse', '?' => $this->getRequest()->getQuery()]
-            );
-        }
+        $redirect = $this->referer(['action' => 'index'], true);
 
         $attachment = $this->Attachments->get($id);
         $this->Attachments->getConnection()->begin();
@@ -339,11 +333,11 @@ class AttachmentsController extends AppController
             $this->Flash->success(__d('croogo', 'Attachment deleted'));
 
             return $this->redirect($redirect);
-        } else {
-            $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
-
-            return $this->redirect($redirect);
         }
+
+        $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
+
+        return $this->redirect($redirect);
     }
 
     /**

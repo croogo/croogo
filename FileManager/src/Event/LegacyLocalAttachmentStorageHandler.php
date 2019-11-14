@@ -2,6 +2,7 @@
 
 namespace Croogo\FileManager\Event;
 
+use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Log\LogTrait;
 use Croogo\FileManager\Utility\StorageManager;
@@ -27,18 +28,18 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
     }
 
     /**
-     * @param $Event
+     * @param $event
      *
      * @return bool
      */
-    public function onBeforeSave($Event)
+    public function onBeforeSave(Event $event)
     {
-        if (!$this->_check($Event)) {
+        if (!$this->_check($event)) {
             return true;
         }
 
-        $model = $Event->getSubject();
-        $storage =& $event->data['record'];
+        $model = $event->getSubject();
+        $storage = $event->getData('record');
 
         if (empty($storage->file)) {
             if (isset($storage->path) && empty($storage->filename)) {
@@ -92,17 +93,17 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
     }
 
     /**
-     * @param $Event
+     * @param $event
      *
      * @return bool
      */
-    public function onBeforeDelete($Event)
+    public function onBeforeDelete(Event $event)
     {
-        if (!$this->_check($Event)) {
+        if (!$this->_check($event)) {
             return true;
         }
         $model = $event->getSubject();
-        $entity = $Event->data('record');
+        $entity = $event->getData('record');
         $fields = ['adapter', 'filename'];
         $asset = $model->findById($entity->id, $fields)->first();
         $adapter = StorageManager::adapter($asset['adapter']);
