@@ -5,6 +5,7 @@
 
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
+use Cake\Datasource\EntityInterface;
 
 if (empty($modelClass)) {
     $modelClass = Inflector::singularize($this->name);
@@ -16,7 +17,7 @@ if (!isset($className)) {
 if (isset(${Inflector::variable(Inflector::singularize($this->name))})) :
     $entity = ${Inflector::variable(Inflector::singularize($this->name))};
 
-    if (!is_array($entity)) :
+    if ($entity instanceof EntityInterface) :
         $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
     else :
         $what = __d('croogo', 'Edit');
