@@ -2,6 +2,7 @@
 
 namespace Croogo\FileManager\Controller\Admin;
 
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
@@ -20,14 +21,6 @@ use Croogo\FileManager\Utility\FileManager;
  */
 class FileManagerController extends AppController
 {
-    /**
-     * Deletable Paths
-     *
-     * @var array
-     * @access public
-     */
-    public $deletablePaths = [];
-
     /**
      * @return void
      */
@@ -51,11 +44,7 @@ class FileManagerController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->deletablePaths = [
-            APP . 'View' . DS . 'Themed' . DS,
-            WWW_ROOT,
-        ];
-        $this->set('deletablePaths', $this->deletablePaths);
+        $this->set('deletablePaths', Configure::read('FileManager.deletablePaths'));
     }
 
     /**
@@ -96,7 +85,7 @@ class FileManagerController extends AppController
     {
         $this->folder = new Folder;
 
-        $path = $this->getRequest()->getQuery('path') ?: APP;
+        $path = $this->getRequest()->getQuery('path') ?: WWW_ROOT;
 
         $path = realpath($path) . DS;
         $regex = '/^' . preg_quote(realpath(ROOT), '/') . '/';
