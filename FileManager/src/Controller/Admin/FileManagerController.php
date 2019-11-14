@@ -36,18 +36,6 @@ class FileManagerController extends AppController
     }
 
     /**
-     * beforeFilter
-     *
-     * @return void
-     * @access public
-     */
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        $this->set('deletablePaths', Configure::read('FileManager.deletablePaths'));
-    }
-
-    /**
      * Helper to generate a browse url for $path
      *
      * @param string $path Path
@@ -232,7 +220,8 @@ class FileManagerController extends AppController
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if (is_dir($path) && rmdir($path)) {
+        $folder = new Folder();
+        if (is_dir($path) && $folder->delete($path)) {
             $this->Flash->success(__d('croogo', 'Directory deleted'));
         } else {
             $this->Flash->error(__d('croogo', 'An error occured'));

@@ -29,10 +29,7 @@ class FileManager
      */
     public function isEditable($path)
     {
-        $editablePaths = Configure::check('FileManager.editablePaths') ?
-            Configure::read('FileManager.editablePaths') :
-            [];
-
+        $editablePaths = (array)Configure::check('FileManager.editablePaths');
         foreach ($editablePaths as $editablePath) {
             if ($this->_isWithinPath($editablePath, $path)) {
                 return true;
@@ -53,11 +50,11 @@ class FileManager
      */
     public function isDeletable($path)
     {
-        $deletablePaths = Configure::check('FileManager.deletablePaths') ?
-            Configure::read('FileManager.deletablePaths') :
-            [];
-
+        $deletablePaths = (array)Configure::read('FileManager.deletablePaths');
         foreach ($deletablePaths as $deletablePath) {
+            if ($deletablePath == $path) {
+                continue;
+            }
             if ($this->_isWithinPath($deletablePath, $path)) {
                 return true;
             }

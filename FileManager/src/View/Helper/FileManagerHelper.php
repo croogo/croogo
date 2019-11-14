@@ -3,6 +3,8 @@
 namespace Croogo\FileManager\View\Helper;
 
 use Cake\View\Helper;
+use Cake\View\View;
+use Croogo\FileManager\Utility\FileManager;
 
 /**
  * FileManager Helper
@@ -35,6 +37,22 @@ class FileManagerHelper extends Helper
         'delete_directory',
         'delete_file'
     ];
+
+    /**
+     * Instance of FileManager utility class
+     *
+     * @var \Croogo\FileManager\Utility\FileManager
+     */
+    protected $FileManager;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(View $View, array $config = [])
+    {
+        parent::__construct($View, $config);
+        $this->FileManager = new FileManager();
+    }
 
     /**
      * Get extension from a file name.
@@ -285,5 +303,19 @@ class FileManagerHelper extends Helper
         }
 
         return false;
+    }
+
+    /**
+     * @see \Croogo\FileManager\Utility\FileManager::isEditable()
+     */
+    public function isEditable($path) {
+        return $this->FileManager->isEditable($path);
+    }
+
+    /**
+     * @see \Croogo\FileManager\Utility\FileManager::isDeletable()
+     */
+    public function isDeletable($path) {
+        return $this->FileManager->isDeletable($path);
     }
 }

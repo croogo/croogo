@@ -51,7 +51,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->getRequest()->getR
             $actions = [];
             $fullpath = $path . $directory;
             $actions[] = $this->FileManager->linkDirectory(__d('croogo', 'Open'), $fullpath . DS);
-            if ($this->FileManager->inPath($deletablePaths, $fullpath)) {
+            if ($this->FileManager->isDeletable($fullpath)) {
                 $actions[] = $this->FileManager->link(__d('croogo', 'Delete'), [
                     'controller' => 'FileManager',
                     'action' => 'delete_directory',
@@ -92,7 +92,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->getRequest()->getR
                         'action' => 'edit_file',
                     ], $fullpath);
             endif;
-            if ($this->FileManager->inPath($deletablePaths, $fullpath)) {
+            if ($this->FileManager->isDeletable($fullpath)) {
                 $actions[] = $this->FileManager->link(__d('croogo', 'Delete'), [
                     'plugin' => 'Croogo/FileManager',
                     'controller' => 'FileManager',
