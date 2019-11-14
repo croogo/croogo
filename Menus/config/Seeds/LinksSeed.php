@@ -21,6 +21,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '4',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '6',
@@ -37,6 +38,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '6',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '7',
@@ -53,6 +55,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '6',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '8',
@@ -69,6 +72,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '10',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '9',
@@ -85,6 +89,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '9',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '10',
@@ -101,6 +106,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '2',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '11',
@@ -117,6 +123,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '8',
             'visibility_roles' => '["1","2"]',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '12',
@@ -133,6 +140,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '4',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '14',
@@ -149,6 +157,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '2',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '15',
@@ -165,6 +174,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '12',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '16',
@@ -181,6 +191,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '4',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '17',
@@ -197,6 +208,7 @@ class LinksSeed extends AbstractSeed
             'rght' => '6',
             'visibility_roles' => '',
             'params' => '',
+            'created_by' => 1,
         ],
     ];
 

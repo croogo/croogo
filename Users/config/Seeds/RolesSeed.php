@@ -11,28 +11,33 @@ class RolesSeed extends AbstractSeed
             'id' => '1',
             'title' => 'SuperAdmin',
             'alias' => 'superadmin',
+            'created_by' => 1,
         ],
         [
             'id' => '2',
             'title' => 'Public',
             'alias' => 'public',
+            'created_by' => 1,
         ],
         [
             'id' => '3',
             'title' => 'Registered',
             'alias' => 'registered',
+            'created_by' => 1,
             'parent_id' => 2,
         ],
         [
             'id' => '4',
             'title' => 'Admin',
             'alias' => 'admin',
+            'created_by' => 1,
             'parent_id' => 2,
         ],
         [
             'id' => '5',
             'title' => 'Publisher',
             'alias' => 'publisher',
+            'created_by' => 1,
             'parent_id' => 4,
         ],
     ];

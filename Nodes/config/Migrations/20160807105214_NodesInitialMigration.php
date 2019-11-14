@@ -98,7 +98,16 @@ class NodesInitialMigration extends AbstractMigration
                 'limit' => 100,
                 'null' => false,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addColumn('created_by', 'integer', [
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addColumn('updated_by', 'integer', [
+                'default' => null,
+                'limit' => 11,
+                'null' => true,
+            ])
             ->addColumn('publish_start', 'datetime', [
                 'default' => null,
                 'limit' => null,
@@ -109,16 +118,7 @@ class NodesInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addColumn('updated_by', 'integer', [
-                'default' => null,
-                'limit' => 11,
-                'null' => true,
-            ])
-            ->addColumn('created_by', 'integer', [
-                'default' => null,
-                'limit' => 11,
-                'null' => true,
-            ])
+            ->addTimestamps('created', 'updated')
             ->addIndex([
                 'type', 'slug',
             ], [

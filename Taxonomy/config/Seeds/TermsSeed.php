@@ -13,18 +13,21 @@ class TermsSeed extends AbstractSeed
             'title' => 'Uncategorized',
             'slug' => 'uncategorized',
             'description' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '2',
             'title' => 'Announcements',
             'slug' => 'announcements',
             'description' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '3',
             'title' => 'mytag',
             'slug' => 'mytag',
             'description' => '',
+            'created_by' => 1,
         ],
     ];
 

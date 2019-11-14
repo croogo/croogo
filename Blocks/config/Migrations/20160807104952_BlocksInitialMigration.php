@@ -127,12 +127,12 @@ class BlocksInitialMigration extends AbstractMigration
             ->addColumn('updated_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
-                'null' => true,
+                'null' => false,
             ])
             ->addIndex(
                 [

@@ -11,6 +11,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'none',
             'alias' => 'none',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -18,6 +19,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'right',
             'alias' => 'right',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '6'
         ],
         [
@@ -25,6 +27,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'left',
             'alias' => 'left',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -32,6 +35,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'header',
             'alias' => 'header',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -39,6 +43,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'footer',
             'alias' => 'footer',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -46,6 +51,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'region1',
             'alias' => 'region1',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -53,6 +59,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'region2',
             'alias' => 'region2',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -60,6 +67,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'region3',
             'alias' => 'region3',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -67,6 +75,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'region4',
             'alias' => 'region4',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -74,6 +83,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'region5',
             'alias' => 'region5',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -81,6 +91,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'region6',
             'alias' => 'region6',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -88,6 +99,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'region7',
             'alias' => 'region7',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -95,6 +107,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'region8',
             'alias' => 'region8',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
         [
@@ -102,6 +115,7 @@ class RegionsSeed extends AbstractSeed
             'title' => 'region9',
             'alias' => 'region9',
             'description' => '',
+            'created_by' => 1,
             'block_count' => '0'
         ],
     ];

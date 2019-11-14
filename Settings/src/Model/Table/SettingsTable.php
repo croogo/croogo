@@ -9,6 +9,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use Croogo\Acl\AclGenerator;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -120,6 +121,13 @@ class SettingsTable extends CroogoTable
 
             $setting = $this->patchEntity($setting, $options);
         } else {
+            $user = Configure::read('Trackable.Auth.User');
+            if (!$user && session_status() === PHP_SESSION_ACTIVE) {
+                $userId = Hash::get($_SESSION, 'Auth.User.id');
+            } else {
+                $userId = 1;
+            }
+
             $options = array_merge([
                 'title' => '',
                 'description' => '',
@@ -140,7 +148,8 @@ class SettingsTable extends CroogoTable
                 'editable' => $options['editable'],
                 'weight' => $options['weight'],
                 'params' => $options['params'],
-                'option_class' => $options['option_class']
+                'option_class' => $options['option_class'],
+                'created_by' => $userId,
             ]);
         }
 

@@ -16,6 +16,7 @@ class MenusSeed extends AbstractSeed
             'weight' => null,
             'link_count' => '4',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '4',
@@ -27,6 +28,7 @@ class MenusSeed extends AbstractSeed
             'weight' => null,
             'link_count' => '2',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '5',
@@ -38,6 +40,7 @@ class MenusSeed extends AbstractSeed
             'weight' => null,
             'link_count' => '4',
             'params' => '',
+            'created_by' => 1,
         ],
         [
             'id' => '6',
@@ -49,6 +52,7 @@ class MenusSeed extends AbstractSeed
             'weight' => null,
             'link_count' => '2',
             'params' => '',
+            'created_by' => 1,
         ],
     ];
 

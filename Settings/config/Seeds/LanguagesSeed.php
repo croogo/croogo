@@ -29,6 +29,7 @@ class LanguagesSeed extends AbstractSeed
                 'locale' => $locale,
                 'status' => intval($status),
                 'weight' => $weight++,
+                'created_by' => 1,
             ];
             I18n::setLocale($locale);
             $data['native'] = Locale::getDisplayRegion($locale);

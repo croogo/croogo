@@ -18,6 +18,7 @@ class VocabulariesSeed extends AbstractSeed
             'tags' => '0',
             'plugin' => null,
             'weight' => '1',
+            'created_by' => 1,
         ],
         [
             'id' => '2',
@@ -29,6 +30,7 @@ class VocabulariesSeed extends AbstractSeed
             'tags' => '0',
             'plugin' => null,
             'weight' => '2',
+            'created_by' => 1,
         ],
     ];
 

@@ -20,6 +20,7 @@ class BlocksSeed extends AbstractSeed
             'visibility_roles' => '',
             'visibility_paths' => '',
             'visibility_php' => '',
+            'created_by' => 1,
             'params' => '',
         ],
         [
@@ -36,6 +37,7 @@ class BlocksSeed extends AbstractSeed
             'visibility_roles' => '',
             'visibility_paths' => '',
             'visibility_php' => '',
+            'created_by' => 1,
             'params' => '',
         ],
         [
@@ -52,6 +54,7 @@ class BlocksSeed extends AbstractSeed
             'visibility_roles' => '',
             'visibility_paths' => '',
             'visibility_php' => '',
+            'created_by' => 1,
             'params' => '',
         ],
         [
@@ -68,6 +71,7 @@ class BlocksSeed extends AbstractSeed
             'visibility_roles' => '',
             'visibility_paths' => '',
             'visibility_php' => '',
+            'created_by' => 1,
             'params' => '',
         ],
         [
@@ -84,6 +88,7 @@ class BlocksSeed extends AbstractSeed
             'visibility_roles' => '',
             'visibility_paths' => '',
             'visibility_php' => '',
+            'created_by' => 1,
             'params' => '',
         ],
         [
@@ -100,6 +105,7 @@ class BlocksSeed extends AbstractSeed
             'visibility_roles' => '',
             'visibility_paths' => '',
             'visibility_php' => '',
+            'created_by' => 1,
             'params' => '',
         ],
     ];

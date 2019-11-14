@@ -21,6 +21,7 @@ class TypesSeed extends AbstractSeed
             'comment_captcha' => '0',
             'params' => 'routes=true',
             'plugin' => null,
+            'created_by' => 1,
         ],
         [
             'id' => '2',
@@ -35,6 +36,7 @@ class TypesSeed extends AbstractSeed
             'comment_captcha' => '0',
             'params' => 'routes=true',
             'plugin' => null,
+            'created_by' => 1,
         ],
         [
             'id' => '4',
@@ -49,6 +51,7 @@ class TypesSeed extends AbstractSeed
             'comment_captcha' => '0',
             'params' => 'routes=true',
             'plugin' => null,
+            'created_by' => 1,
         ],
     ];
 

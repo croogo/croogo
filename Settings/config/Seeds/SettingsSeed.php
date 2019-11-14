@@ -14,6 +14,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '1',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -24,6 +25,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'textarea',
             'editable' => '1',
             'weight' => '2',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -34,6 +36,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '3',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -44,6 +47,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'checkbox',
             'editable' => '1',
             'weight' => '6',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -54,6 +58,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '11',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -64,6 +69,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '12',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -74,6 +80,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '13',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -84,6 +91,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '10',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -94,6 +102,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '0',
             'weight' => '14',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -104,6 +113,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '0',
             'weight' => '15',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -114,6 +124,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '16',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -124,6 +135,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'checkbox',
             'editable' => '1',
             'weight' => '17',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -134,6 +146,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '18',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -144,6 +157,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '19',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -154,6 +168,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'text',
             'editable' => '1',
             'weight' => '20',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -164,6 +179,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '21',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -174,6 +190,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '1',
             'weight' => '22',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -184,6 +201,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'select',
             'editable' => '1',
             'weight' => '4',
+            'created_by' => 1,
             'params' => 'optionClass=Croogo/Settings.Timezones'
         ],
         [
@@ -194,6 +212,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => '',
             'editable' => '0',
             'weight' => '23',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -204,6 +223,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'checkbox',
             'editable' => '1',
             'weight' => '24',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -214,6 +234,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'checkbox',
             'editable' => '1',
             'weight' => '25',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -224,6 +245,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'checkbox',
             'editable' => '1',
             'weight' => '26',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -234,6 +256,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'text',
             'editable' => '1',
             'weight' => '27',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -244,6 +267,7 @@ class SettingsSeed extends AbstractSeed
             'input_type' => 'multiple',
             'editable' => '1',
             'weight' => '26',
+            'created_by' => 1,
             'params' => 'multiple=checkbox
 options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croogo/Menus.Menus": "Menus", "Croogo/Menus.Links": "Links"}'
         ],
@@ -255,6 +279,7 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'input_type' => 'text',
             'editable' => '1',
             'weight' => '27',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -265,6 +290,7 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'editable' => 1,
             'input_type' => 'radio',
             'weight' => 28,
+            'created_by' => 1,
             'params' => 'options={"0": "Disabled", "1": "Enabled in debug mode only", "force": "Always enabled"}',
         ],
         [
@@ -275,6 +301,7 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'input_type' => 'text',
             'editable' => '1',
             'weight' => '29',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -285,6 +312,7 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'input_type' => 'text',
             'editable' => '1',
             'weight' => '30',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -295,6 +323,7 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'input_type' => 'text',
             'editable' => '0',
             'weight' => '31',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -305,6 +334,7 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'input_type' => 'text',
             'editable' => '0',
             'weight' => '31',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -315,6 +345,7 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'input_type' => 'file',
             'editable' => '1',
             'weight' => '32',
+            'created_by' => 1,
             'params' => ''
         ],
         [
@@ -325,6 +356,7 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
             'input_type' => 'checkbox',
             'editable' => '1',
             'weight' => '32',
+            'created_by' => 1,
             'params' => ''
         ],
     ];

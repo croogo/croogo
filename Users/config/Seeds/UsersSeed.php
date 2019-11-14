@@ -16,6 +16,7 @@ class UsersSeed extends AbstractSeed
         'email' => 'seed@example.com',
         'status' => false,
         'timezone' => 'UTC',
+        'created_by' => 1,
     ];
 
     public function getDependencies()

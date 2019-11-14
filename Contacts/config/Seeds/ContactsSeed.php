@@ -28,6 +28,7 @@ class ContactsSeed extends AbstractSeed
             'message_captcha' => '0',
             'message_notify' => '1',
             'status' => '1',
+            'created_by' => 1,
         ],
     ];
 
