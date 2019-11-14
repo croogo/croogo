@@ -1413,8 +1413,6 @@ class PluginManager extends Plugin
         $pluginBootstraps = Configure::read('Hook.bootstraps');
         $plugins = array_filter(explode(',', $pluginBootstraps));
 
-        //debug($pluginBootstraps); die();
-
         if (!in_array($aclPlugin, $plugins)) {
             $plugins = Hash::merge((array)$aclPlugin, $plugins);
         }

@@ -19,6 +19,11 @@ class Plugin extends BasePlugin
         PluginManager::croogoBootstrap($app);
         timerStop('Croogo bootstrap');
 
+        $setupFile = ROOT . '/config/croogo.php';
+        if (file_exists ($setupFile)) {
+            require_once $setupFile;
+        }
+
         // Load Install plugin
         $salted = Security::getSalt() !== '__SALT__';
         if (!Configure::read('Croogo.installed') || !$salted) {
