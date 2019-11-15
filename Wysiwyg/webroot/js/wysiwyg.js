@@ -37,6 +37,28 @@ Croogo.Wysiwyg.resetDirty = function() {
 Croogo.Wysiwyg.browser = function() {
 };
 
+Croogo.Wysiwyg._$btnContainer = null;
+
+Croogo.Wysiwyg._addButtonContainer = function($el) {
+	if (Croogo.Wysiwyg._$btnContainer == null) {
+		var $btnContainer = $el.siblings('.btn-group');
+		if ($btnContainer.length == 0) {
+				$btnContainer = $('<div class="btn-group float-right"/>');
+		}
+		$btnContainer.insertBefore($el);
+		Croogo.Wysiwyg._$btnContainer = $btnContainer;
+	}
+};
+
+Croogo.Wysiwyg.addButton = function($el, title, onButtonClicked) {
+	Croogo.Wysiwyg._addButtonContainer($el);
+	var $btn = $('<button type="button"/>')
+		.attr('class', 'btn btn-sm btn-outline-secondary')
+		.html(title)
+		.on('click', onButtonClicked);
+	Croogo.Wysiwyg._$btnContainer.append($btn);
+};
+
 if (typeof jQuery != 'undefined') {
 	$(document).ready(function() {
 		Croogo.Wysiwyg.browser();
