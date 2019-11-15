@@ -2,7 +2,7 @@
 
 use Migrations\AbstractMigration;
 
-class AssetsInitialMigration extends AbstractMigration
+class FileManagerInitialMigration extends AbstractMigration
 {
 
     public $description = '';
