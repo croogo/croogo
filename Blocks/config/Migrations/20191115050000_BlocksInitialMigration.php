@@ -6,6 +6,45 @@ class BlocksInitialMigration extends AbstractMigration
 {
     public function up()
     {
+        $this->table('regions')
+            ->addColumn('title', 'string', [
+                'default' => null,
+                'limit' => 100,
+                'null' => false,
+            ])
+            ->addColumn('alias', 'string', [
+                'default' => null,
+                'limit' => 100,
+                'null' => false,
+            ])
+            ->addColumn('description', 'text', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('block_count', 'integer', [
+                'default' => 0,
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addTimestamps('created', 'updated')
+            ->addColumn('updated_by', 'integer', [
+                'default' => null,
+                'limit' => 20,
+                'null' => true,
+            ])
+            ->addColumn('created_by', 'integer', [
+                'default' => null,
+                'limit' => 20,
+                'null' => false,
+            ])
+            ->addIndex(
+                [
+                    'alias',
+                ],
+                ['unique' => true]
+            )
+            ->create();
 
         $this->table('blocks')
             ->addColumn('region_id', 'integer', [
@@ -97,46 +136,6 @@ class BlocksInitialMigration extends AbstractMigration
             ->addForeignKey('region_id', 'regions', ['id'], [
                 'constraint' => 'fk_blocks2regions',
                 'delete' => 'RESTRICT',
-            ])
-            ->addIndex(
-                [
-                    'alias',
-                ],
-                ['unique' => true]
-            )
-            ->create();
-
-        $this->table('regions')
-            ->addColumn('title', 'string', [
-                'default' => null,
-                'limit' => 100,
-                'null' => false,
-            ])
-            ->addColumn('alias', 'string', [
-                'default' => null,
-                'limit' => 100,
-                'null' => false,
-            ])
-            ->addColumn('description', 'text', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
-            ])
-            ->addColumn('block_count', 'integer', [
-                'default' => 0,
-                'limit' => 11,
-                'null' => false,
-            ])
-            ->addTimestamps('created', 'updated')
-            ->addColumn('updated_by', 'integer', [
-                'default' => null,
-                'limit' => 20,
-                'null' => true,
-            ])
-            ->addColumn('created_by', 'integer', [
-                'default' => null,
-                'limit' => 20,
-                'null' => false,
             ])
             ->addIndex(
                 [
