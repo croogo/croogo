@@ -1464,6 +1464,11 @@ class PluginManager extends Plugin
             EventManager::loadListeners();
         }, 'Registering plugin listeners');
 
+        $setupFile = ROOT . '/config/croogo.php';
+        if (file_exists ($setupFile)) {
+            require_once $setupFile;
+        }
+
         time(function () {
             Croogo::dispatchEvent('Croogo.bootstrapComplete');
         }, 'event-Croogo.bootstrapComplete', 'Event: Croogo.bootstrapComplete');
