@@ -309,7 +309,7 @@ class LayoutHelper extends Helper
             $roleId = $this->getView()->getRequest()->getSession()->read('Auth.User.role_id');
         } else {
             // Public
-            $roleId = 3;
+            $roleId = 2;
         }
 
         return $roleId;
