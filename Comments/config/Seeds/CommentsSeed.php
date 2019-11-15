@@ -11,7 +11,6 @@ class CommentsSeed extends AbstractSeed
             'parent_id' => null,
             'model' => 'Croogo/Nodes.Nodes',
             'foreign_key' => '1',
-            'user_id' => '0',
             'name' => 'Mr Croogo',
             'email' => 'email@example.com',
             'website' => 'http://www.croogo.org',

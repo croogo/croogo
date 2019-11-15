@@ -24,9 +24,9 @@ class CommentsInitialMigration extends AbstractMigration
                 'null' => false,
             ])
             ->addColumn('user_id', 'integer', [
-                'default' => 0,
+                'default' => null,
                 'limit' => 20,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('name', 'string', [
                 'default' => null,
