@@ -119,6 +119,10 @@ class NodesInitialMigration extends AbstractMigration
                 'null' => true,
             ])
             ->addTimestamps('created', 'updated')
+            ->addForeignKey('user_id', 'users', ['id'], [
+                'constraint' => 'fk_nodes2users',
+                'delete' => 'RESTRICT',
+            ])
             ->addIndex([
                 'type', 'slug',
             ], [

@@ -104,6 +104,10 @@ class UsersInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => true,
             ])
+            ->addForeignKey('role_id', 'roles', ['id'], [
+                'constraint' => 'fk_users2roles',
+                'delete' => 'RESTRICT',
+            ])
             ->create();
 
         $this->table('roles_users')
@@ -123,6 +127,14 @@ class UsersInitialMigration extends AbstractMigration
                 'null' => true,
             ])
             ->addTimestamps('created', 'updated')
+            ->addForeignKey('user_id', 'users', ['id'], [
+                'constraint' => 'fk_roles_users2users',
+                'delete' => 'RESTRICT',
+            ])
+            ->addForeignKey('role_id', 'roles', ['id'], [
+                'constraint' => 'fk_roles_users2roles',
+                'delete' => 'RESTRICT',
+            ])
             ->addIndex(
                 [
                     'user_id',

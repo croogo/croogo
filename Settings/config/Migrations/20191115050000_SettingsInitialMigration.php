@@ -25,7 +25,7 @@ class SettingsInitialMigration extends AbstractMigration
             ])
             ->addColumn('locale', 'string', [
                 'default' => null,
-                'limit' => 5,
+                'limit' => 15,
                 'null' => false,
             ])
             ->addColumn('status', 'boolean', [
@@ -48,6 +48,10 @@ class SettingsInitialMigration extends AbstractMigration
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
+            ])
+            ->addIndex(['locale'], [
+                'name' => 'ix_languages_locale',
+                'unique' => true,
             ])
             ->create();
 

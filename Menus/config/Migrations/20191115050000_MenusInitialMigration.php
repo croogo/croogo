@@ -26,7 +26,7 @@ class MenusInitialMigration extends AbstractMigration
             ->addColumn('class', 'string', [
                 'default' => null,
                 'limit' => 255,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('description', 'text', [
                 'default' => null,
@@ -93,6 +93,10 @@ class MenusInitialMigration extends AbstractMigration
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
+            ])
+            ->addForeignKey('menu_id', 'menus', ['id'], [
+                'constraint' => 'fk_links2menus',
+                'delete' => 'RESTRICT',
             ])
             ->create();
 

@@ -104,6 +104,10 @@ class CommentsInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => true,
             ])
+            ->addForeignKey('user_id', 'users', ['id'], [
+                'constraint' => 'fk_comments2users',
+                'delete' => 'RESTRICT',
+            ])
             ->addIndex(
                 [
                     'model',

@@ -39,6 +39,10 @@ class DashboardsInitialMigration extends AbstractMigration
                 'null' => false,
             ])
             ->addTimestamps('created', 'updated')
+            ->addForeignKey('user_id', 'users', ['id'], [
+                'constraint' => 'fk_dashboards2users',
+                'delete' => 'RESTRICT',
+            ])
             ->create();
     }
 

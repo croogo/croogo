@@ -33,6 +33,14 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'null' => true,
             ])
             ->addTimestamps('created', 'updated')
+            ->addForeignKey('term_id', 'terms', ['id'], [
+                'constraint' => 'fk_taxonomies2terms',
+                'delete' => 'RESTRICT',
+            ])
+            ->addForeignKey('vocabulary_id', 'vocabularies', ['id'], [
+                'constraint' => 'fk_taxonomies2vocabularies',
+                'delete' => 'RESTRICT',
+            ])
             ->create();
 
         $this->table('terms')
@@ -266,6 +274,11 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'null' => false,
             ])
             ->addTimestamps('created', 'updated')
+            ->addForeignKey('taxonomy_id', 'taxonomies', ['id'], [
+                'constraint' => 'fk_model_taxonomies2taxonomies',
+                'update' => 'CASCADE',
+                'delete' => 'CASCADE',
+            ])
             ->addIndex(
                 [
                     'model', 'foreign_key', 'taxonomy_id',

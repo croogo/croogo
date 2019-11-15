@@ -94,6 +94,10 @@ class BlocksInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => true,
             ])
+            ->addForeignKey('region_id', 'regions', ['id'], [
+                'constraint' => 'fk_blocks2regions',
+                'delete' => 'RESTRICT',
+            ])
             ->addIndex(
                 [
                     'alias',

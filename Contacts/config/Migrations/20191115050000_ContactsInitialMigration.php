@@ -183,6 +183,10 @@ class ContactsInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => true,
             ])
+            ->addForeignKey('contact_id', 'contacts', ['id'], [
+                'constraint' => 'fk_messages2contacts',
+                'delete' => 'RESTRICT',
+            ])
             ->create();
     }
 
