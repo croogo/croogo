@@ -104,7 +104,7 @@ class LinksSeed extends AbstractSeed
             'status' => '1',
             'lft' => '1',
             'rght' => '2',
-            'visibility_roles' => '',
+            'visibility_roles' => '["2","3"]',
             'params' => '',
             'created_by' => 1,
         ],

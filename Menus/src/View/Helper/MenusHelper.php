@@ -29,6 +29,7 @@ class MenusHelper extends Helper
 
     public $helpers = [
         'Html',
+        'Layout',
     ];
 
     /**
@@ -154,7 +155,12 @@ class MenusHelper extends Helper
             return false;
         }
         $items = [];
+        $roleId = $this->Layout->getRoleId();
         foreach ($menu['threaded'] as $item) {
+            if (!empty($item->visibility_roles) && !in_array($roleId, $item->visibility_roles)) {
+                continue;
+            }
+
             $url = $item->link->getUrl();
             try {
                 $items[] = $this->Html->link($item->title, $url, [
