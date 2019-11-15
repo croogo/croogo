@@ -231,6 +231,7 @@ class CroogoTheme
         }
 
         Cache::clearAll();
+        (new PluginManager())->activate($theme);
         $settings = TableRegistry::get('Croogo/Settings.Settings');
 
         return $settings->write('Site.' . $type, $theme);

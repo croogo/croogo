@@ -674,8 +674,12 @@ class PluginManager extends Plugin
             unset($pluginPaths['Croogo']); //Otherwise we get croogo plugins twice!
 
             if (isset($pluginPaths[$plugin])) {
+                $activationFile = $pluginPaths[$plugin] . 'config/PluginActivation.php';
                 $configFile = $pluginPaths[$plugin] . 'config' . DS . $className . '.php';
-                if (file_exists($configFile) && include $configFile) {
+                if (
+                    (file_exists($configFile) && include $configFile) ||
+                    (file_exists($activationFile) && include $activationFile)
+                ) {
                     $fqcn = App::className($plugin . '.' . $className, 'Config');
                     if (!$fqcn) {
                         $this->log(sprintf(
