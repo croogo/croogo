@@ -183,7 +183,7 @@ class LinksSeed extends AbstractSeed
             'title' => 'Entries (RSS)',
             'class' => 'entries-rss',
             'description' => '',
-            'link' => 'plugin:Croogo%2fNodes/controller:Nodes/action:promoted/_ext:rss',
+            'link' => 'plugin:Croogo%2fNodes/controller:Nodes/action:feed/_ext:rss',
             'target' => '',
             'rel' => '',
             'status' => '1',

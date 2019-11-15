@@ -270,6 +270,11 @@ class NodesController extends AppController
         $this->set('nodes', $this->Paginator->paginate($query));
     }
 
+    public function feed()
+    {
+        return $this->setAction('promoted');
+    }
+
     /**
      * Search
      *

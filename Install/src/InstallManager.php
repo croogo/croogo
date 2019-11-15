@@ -280,6 +280,7 @@ class InstallManager
             //            'controllers/Croogo\Comments/Comments/delete' => [$registered],
             'controllers/Croogo\Contacts/Contacts/view' => [$public],
             'controllers/Croogo\Nodes/Nodes/index' => [$public],
+            'controllers/Croogo\Nodes/Nodes/feed' => [$public],
             'controllers/Croogo\Nodes/Nodes/term' => [$public],
             'controllers/Croogo\Nodes/Nodes/promoted' => [$public],
             'controllers/Croogo\Nodes/Nodes/search' => [$public],
