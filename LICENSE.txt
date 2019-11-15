@@ -2,6 +2,7 @@ The MIT License
 
 Croogo : A CakePHP powered Content Management System (http://www.croogo.org)
 Copyright 2011-2013, Fahad Ibnay Heylaal <contact@fahad19.com> and other contributors
+Copyright 2011-2019, Rachman Chavik <rchavik@gmail.com> and other contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
