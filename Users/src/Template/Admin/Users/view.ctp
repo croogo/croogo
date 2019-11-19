@@ -39,16 +39,16 @@ $this->append('main');
             <td><?= h($user->timezone) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __d('croogo', 'Updated By') ?></th>
-            <td><?= $this->Number->format($user->updated_by) ?></td>
+            <th scope="row"><?= __d('croogo', 'Modified By') ?></th>
+            <td><?= $this->Number->format($user->modified_by) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __d('croogo', 'Created By') ?></th>
             <td><?= $this->Number->format($user->created_by) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __d('croogo', 'Updated') ?></th>
-            <td><?= $this->Time->i18nFormat($user->updated) ?></td>
+            <th scope="row"><?= __d('croogo', 'Modified') ?></th>
+            <td><?= $this->Time->i18nFormat($user->modified) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __d('croogo', 'Created') ?></th>

@@ -56,8 +56,8 @@ $this->append('main');
             <td><?= $this->Number->format($message->id) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __d('croogo', 'Updated') ?></th>
-            <td><?= $this->Time->i18nFormat($message->updated) ?></td>
+            <th scope="row"><?= __d('croogo', 'Modified') ?></th>
+            <td><?= $this->Time->i18nFormat($message->modified) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __d('croogo', 'Created') ?></th>
