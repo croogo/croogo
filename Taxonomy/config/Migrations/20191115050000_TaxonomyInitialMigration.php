@@ -33,7 +33,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => false,
             ])
-            ->addColumn('updated_by', 'integer', [
+            ->addColumn('modified_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
@@ -96,7 +96,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => false,
             ])
-            ->addColumn('updated_by', 'integer', [
+            ->addColumn('modified_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
@@ -216,7 +216,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => false,
             ])
-            ->addColumn('updated_by', 'integer', [
+            ->addColumn('modified_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,

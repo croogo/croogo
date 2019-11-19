@@ -28,7 +28,7 @@ class BlocksInitialMigration extends AbstractMigration
                 'null' => false,
             ])
             ->addTimestamps('created', 'modified')
-            ->addColumn('updated_by', 'integer', [
+            ->addColumn('modified_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,
@@ -128,7 +128,7 @@ class BlocksInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => false,
             ])
-            ->addColumn('updated_by', 'integer', [
+            ->addColumn('modified_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
                 'null' => true,

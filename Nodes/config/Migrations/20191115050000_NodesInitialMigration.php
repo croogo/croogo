@@ -103,7 +103,7 @@ class NodesInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => false,
             ])
-            ->addColumn('updated_by', 'integer', [
+            ->addColumn('modified_by', 'integer', [
                 'default' => null,
                 'limit' => 11,
                 'null' => true,

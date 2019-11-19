@@ -47,7 +47,7 @@ class FileManagerInitialMigration extends AbstractMigration
             ->addColumn('created_by', 'integer', [
                 'null' => true,
             ])
-            ->addColumn('updated_by', 'integer', [
+            ->addColumn('modified_by', 'integer', [
                 'null' => true,
             ])
             ->addIndex(['hash'], [
