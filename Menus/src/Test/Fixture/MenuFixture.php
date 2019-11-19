@@ -20,7 +20,7 @@ class MenuFixture extends CroogoTestFixture
         'params' => ['type' => 'text', 'null' => true, 'default' => null],
         'publish_start' => ['type' => 'datetime', 'null' => true, 'default' => null],
         'publish_end' => ['type' => 'datetime', 'null' => true, 'default' => null],
-        'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+        'modified' => ['type' => 'datetime', 'null' => false, 'default' => null],
         'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
@@ -39,7 +39,7 @@ class MenuFixture extends CroogoTestFixture
             'weight' => null,
             'link_count' => 4,
             'params' => '',
-            'updated' => '2009-08-19 12:21:06',
+            'modified' => '2009-08-19 12:21:06',
             'created' => '2009-07-22 01:49:53'
         ],
         [
@@ -51,7 +51,7 @@ class MenuFixture extends CroogoTestFixture
             'weight' => null,
             'link_count' => 2,
             'params' => '',
-            'updated' => '2009-08-19 12:22:42',
+            'modified' => '2009-08-19 12:22:42',
             'created' => '2009-08-19 12:22:42'
         ],
         [
@@ -63,7 +63,7 @@ class MenuFixture extends CroogoTestFixture
             'weight' => null,
             'link_count' => 4,
             'params' => '',
-            'updated' => '2009-09-12 06:33:29',
+            'modified' => '2009-09-12 06:33:29',
             'created' => '2009-09-12 06:33:29'
         ],
         [
@@ -75,7 +75,7 @@ class MenuFixture extends CroogoTestFixture
             'weight' => null,
             'link_count' => 2,
             'params' => '',
-            'updated' => '2009-09-12 23:30:24',
+            'modified' => '2009-09-12 23:30:24',
             'created' => '2009-09-12 23:30:24'
         ],
     ];

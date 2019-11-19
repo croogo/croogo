@@ -26,7 +26,7 @@ class LinkFixture extends CroogoTestFixture
         'params' => ['type' => 'text', 'null' => true, 'default' => null],
         'publish_start' => ['type' => 'datetime', 'null' => true, 'default' => null],
         'publish_end' => ['type' => 'datetime', 'null' => true, 'default' => null],
-        'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+        'modified' => ['type' => 'datetime', 'null' => false, 'default' => null],
         'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
@@ -50,7 +50,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 4,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-10-06 23:14:21',
+            'modified' => '2009-10-06 23:14:21',
             'created' => '2009-08-19 12:23:33'
         ],
         [
@@ -68,7 +68,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 6,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-10-06 23:14:45',
+            'modified' => '2009-10-06 23:14:45',
             'created' => '2009-08-19 12:34:56'
         ],
         [
@@ -86,7 +86,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 2,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-10-06 21:17:06',
+            'modified' => '2009-10-06 21:17:06',
             'created' => '2009-09-06 21:32:54'
         ],
         [
@@ -104,7 +104,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 6,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-09-12 03:45:53',
+            'modified' => '2009-09-12 03:45:53',
             'created' => '2009-09-06 21:34:57'
         ],
         [
@@ -122,7 +122,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 5,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-10-06 23:13:06',
+            'modified' => '2009-10-06 23:13:06',
             'created' => '2009-09-12 03:52:23'
         ],
         [
@@ -140,7 +140,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 2,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-09-12 06:34:09',
+            'modified' => '2009-09-12 06:34:09',
             'created' => '2009-09-12 06:34:09'
         ],
         [
@@ -158,7 +158,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 8,
             'visibility_roles' => '[\"1\",\"2\"]',
             'params' => '',
-            'updated' => '2009-09-12 06:35:22',
+            'modified' => '2009-09-12 06:35:22',
             'created' => '2009-09-12 06:34:41'
         ],
         [
@@ -176,7 +176,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 4,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-09-12 23:31:59',
+            'modified' => '2009-09-12 23:31:59',
             'created' => '2009-09-12 23:31:59'
         ],
         [
@@ -194,7 +194,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 2,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-10-07 03:25:25',
+            'modified' => '2009-10-07 03:25:25',
             'created' => '2009-09-12 23:38:43'
         ],
         [
@@ -212,7 +212,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 8,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-09-16 07:54:13',
+            'modified' => '2009-09-16 07:54:13',
             'created' => '2009-09-16 07:53:33'
         ],
         [
@@ -230,7 +230,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 4,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-10-27 17:46:22',
+            'modified' => '2009-10-27 17:46:22',
             'created' => '2009-10-27 17:46:22'
         ],
         [
@@ -248,7 +248,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 6,
             'visibility_roles' => '',
             'params' => '',
-            'updated' => '2009-10-27 17:46:54',
+            'modified' => '2009-10-27 17:46:54',
             'created' => '2009-10-27 17:46:54'
         ],
         [
@@ -266,7 +266,7 @@ class LinkFixture extends CroogoTestFixture
             'rght' => 8,
             'visibility_roles' => '["3"]',
             'params' => '',
-            'updated' => '2009-10-27 17:46:54',
+            'modified' => '2009-10-27 17:46:54',
             'created' => '2009-10-27 17:46:54'
         ],
     ];

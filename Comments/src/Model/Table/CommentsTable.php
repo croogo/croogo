@@ -57,14 +57,7 @@ class CommentsTable extends CroogoTable
         $this->addBehavior('Croogo/Core.Cached', [
             'groups' => ['comments', 'nodes']
         ]);
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
-        ]);
+        $this->addBehavior('Timestamp');
 
         $this->searchManager()
             ->add('status', 'Search.Value', [

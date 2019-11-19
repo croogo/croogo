@@ -307,7 +307,7 @@ class UsersController extends AppController
                 'timezone',
                 'status',
                 'created',
-                'updated',
+                'modified',
             ])
             ->contain([
             'Roles' => [

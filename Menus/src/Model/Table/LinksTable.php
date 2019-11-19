@@ -51,14 +51,7 @@ class LinksTable extends CroogoTable
             'Menus' => ['link_count'],
         ]);
 
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always',
-                ],
-            ],
-        ]);
+        $this->addBehavior('Timestamp');
 
         $this->addBehavior('Croogo/Core.Publishable');
         $this->addBehavior('Croogo/Core.Visibility');

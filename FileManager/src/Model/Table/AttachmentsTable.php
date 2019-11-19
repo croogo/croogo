@@ -341,7 +341,7 @@ class AttachmentsTable extends CroogoTable
             'hash' => $hash,
             'status' => true,
             'created' => date('Y-m-d H:i:s', $stat[9]),
-            'updated' => date('Y-m-d H:i:s', time()),
+            'modified' => date('Y-m-d H:i:s', time()),
         ]);
 
         return $attachment;

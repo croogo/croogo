@@ -15,7 +15,7 @@ $this->append('table-heading');
         $this->Paginator->sort('column'),
         $this->Paginator->sort('collapsed'),
         $this->Paginator->sort('status'),
-        $this->Paginator->sort('updated'),
+        $this->Paginator->sort('modified'),
         $this->Paginator->sort('created'),
         __d('croogo', 'Actions'),
     ]);
@@ -44,7 +44,7 @@ $this->append('table-heading');
                 ]);
             ?>
         </td>
-        <td><?= $this->Time->i18nFormat($dashboard->updated) ?>&nbsp;</td>
+        <td><?= $this->Time->i18nFormat($dashboard->modified) ?>&nbsp;</td>
         <td><?= $this->Time->i18nFormat($dashboard->created) ?>&nbsp;</td>
         <td class="item-actions">
             <?php
