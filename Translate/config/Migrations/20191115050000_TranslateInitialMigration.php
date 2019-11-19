@@ -42,7 +42,7 @@ class TranslateInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,

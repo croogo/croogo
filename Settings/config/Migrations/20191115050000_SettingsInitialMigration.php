@@ -38,7 +38,7 @@ class SettingsInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
@@ -96,7 +96,7 @@ class SettingsInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => false,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,

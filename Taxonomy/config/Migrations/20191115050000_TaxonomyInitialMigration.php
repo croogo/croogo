@@ -27,7 +27,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
@@ -90,7 +90,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
@@ -138,7 +138,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addForeignKey('term_id', 'terms', ['id'], [
                 'constraint' => 'fk_taxonomies2terms',
                 'delete' => 'RESTRICT',
@@ -210,7 +210,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 255,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
@@ -248,7 +248,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addIndex(
                 [
                     'type_id', 'vocabulary_id',
@@ -273,7 +273,7 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => false,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addForeignKey('taxonomy_id', 'taxonomies', ['id'], [
                 'constraint' => 'fk_model_taxonomies2taxonomies',
                 'update' => 'CASCADE',

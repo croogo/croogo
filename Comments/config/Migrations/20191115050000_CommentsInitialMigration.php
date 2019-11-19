@@ -93,7 +93,7 @@ class CommentsInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,

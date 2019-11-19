@@ -43,7 +43,7 @@ class FileManagerInitialMigration extends AbstractMigration
             ->addColumn('asset_count', 'integer', [
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'null' => true,
             ])
@@ -94,7 +94,7 @@ class FileManagerInitialMigration extends AbstractMigration
                 'null' => true, 'default' => null, 'length' => 32,
                 'comment' => 'Gaufrette Storage Adapter Class',
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addIndex(['hash', 'path'], [
                 'name' => 'ix_assets_hash',
             ])
@@ -123,7 +123,7 @@ class FileManagerInitialMigration extends AbstractMigration
             ->addColumn('url', 'string', [
                 'length' => 512, 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('params', 'text', [
                 'null' => true, 'default' => null,
             ])

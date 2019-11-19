@@ -108,7 +108,7 @@ class ContactsInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => false,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
@@ -172,7 +172,7 @@ class ContactsInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => false,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('updated_by', 'integer', [
                 'default' => null,
                 'limit' => 20,

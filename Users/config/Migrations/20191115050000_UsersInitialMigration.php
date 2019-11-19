@@ -18,7 +18,7 @@ class UsersInitialMigration extends AbstractMigration
                 'limit' => 100,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
@@ -93,7 +93,7 @@ class UsersInitialMigration extends AbstractMigration
                 'limit' => 40,
                 'null' => false,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addColumn('created_by', 'integer', [
                 'default' => null,
                 'limit' => 20,
@@ -126,7 +126,7 @@ class UsersInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
+            ->addTimestamps('created', 'modified')
             ->addForeignKey('user_id', 'users', ['id'], [
                 'constraint' => 'fk_roles_users2users',
                 'delete' => 'RESTRICT',
