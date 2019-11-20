@@ -21,5 +21,10 @@ Router::plugin('Croogo/Example', ['path' => '/'], function (RouteBuilder $routeB
         ]);
     });
 
+    $routeBuilder->connect('/example/:action/*', [
+        'plugin' => 'Croogo/Example',
+        'controller' => 'Example',
+    ]);
+
     $routeBuilder->fallbacks();
 });
