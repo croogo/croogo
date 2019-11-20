@@ -13,6 +13,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Core\PluginApplicationInterface;
+use Cake\Database\SchemaCache;
 use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Datasource\Exception\MissingDatasourceConfigException;
@@ -540,16 +541,21 @@ class PluginManager extends Plugin
             return true;
         }
 
+        $connectionName = static::migrationConnectionName();
         $options = [
-            'connection' => static::migrationConnectionName()
+            'connection' => $connectionName,
         ];
         if ($plugin !== 'app') {
             $options['plugin'] = $plugin;
         }
 
         try {
-            return $this->_getMigrations()
+            $migrated = $this->_getMigrations()
                 ->migrate($options);
+            $connection = ConnectionManager::get($connectionName);
+            $schemaCache = new SchemaCache($connection);
+            $schemaCache->clear();
+            return $migrated;
         } catch (\Exception $e) {
             $this->migrationErrors[] = $e->getMessage();
         }
