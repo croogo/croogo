@@ -15,11 +15,11 @@ class BlocksSyncTimestampFields extends AbstractMigration
         $this->table('regions')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
 
         $this->table('blocks')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
     }
 }

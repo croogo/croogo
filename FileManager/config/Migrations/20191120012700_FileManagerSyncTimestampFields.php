@@ -14,15 +14,15 @@ class FileManagerSyncTimestampFields extends AbstractMigration
     {
         $this->table('assets')
             ->renameColumn('updated', 'modified')
-            ->save();
+            ->update();
 
         $this->table('attachments')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
 
         $this->table('asset_usages')
             ->renameColumn('updated', 'modified')
-            ->save();
+            ->update();
     }
 }

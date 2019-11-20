@@ -15,11 +15,11 @@ class SettingsSyncTimestampFields extends AbstractMigration
         $this->table('settings')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
 
         $this->table('languages')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
     }
 }

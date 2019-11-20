@@ -15,6 +15,6 @@ class CommentsSyncTimestampFields extends AbstractMigration
         $this->table('comments')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
     }
 }

@@ -15,15 +15,15 @@ class UsersSyncTimestampFields extends AbstractMigration
         $this->table('users')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
 
         $this->table('roles')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
 
         $this->table('roles_users')
             ->renameColumn('updated', 'modified')
-            ->save();
+            ->update();
     }
 }

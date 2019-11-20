@@ -15,10 +15,11 @@ class ContactsSyncTimestampFields extends AbstractMigration
         $this->table('contacts')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
+
         $this->table('messages')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
     }
 }

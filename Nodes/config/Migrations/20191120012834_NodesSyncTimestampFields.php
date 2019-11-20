@@ -15,6 +15,6 @@ class NodesSyncTimestampFields extends AbstractMigration
         $this->table('nodes')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
     }
 }

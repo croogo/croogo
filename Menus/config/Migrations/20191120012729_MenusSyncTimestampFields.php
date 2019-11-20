@@ -15,11 +15,11 @@ class MenusSyncTimestampFields extends AbstractMigration
         $this->table('menus')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
 
         $this->table('links')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
     }
 }

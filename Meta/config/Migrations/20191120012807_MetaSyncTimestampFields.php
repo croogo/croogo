@@ -15,6 +15,6 @@ class MetaSyncTimestampFields extends AbstractMigration
         $this->table('meta')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
     }
 }

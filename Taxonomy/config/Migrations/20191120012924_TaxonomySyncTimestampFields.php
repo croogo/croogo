@@ -15,28 +15,28 @@ class TaxonomySyncTimestampFields extends AbstractMigration
         $this->table('terms')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
 
         $this->table('vocabularies')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
 
         $this->table('taxonomies')
             ->renameColumn('updated', 'modified')
-            ->save();
+            ->update();
 
         $this->table('types')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
 
         $this->table('types_vocabularies')
             ->renameColumn('updated', 'modified')
-            ->save();
+            ->update();
 
         $this->table('model_taxonomies')
             ->renameColumn('updated', 'modified')
-            ->save();
+            ->update();
     }
 }

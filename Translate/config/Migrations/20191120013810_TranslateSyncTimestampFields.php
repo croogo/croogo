@@ -15,6 +15,6 @@ class TranslateSyncTimestampFields extends AbstractMigration
         $this->table('i18n')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
-            ->save();
+            ->update();
     }
 }

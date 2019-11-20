@@ -14,6 +14,6 @@ class DashboardsSyncTimestampFields extends AbstractMigration
     {
         $this->table('dashboards')
             ->renameColumn('updated', 'modified')
-            ->save();
+            ->update();
     }
 }
