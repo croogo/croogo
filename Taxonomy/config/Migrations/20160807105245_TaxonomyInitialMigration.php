@@ -290,11 +290,11 @@ class TaxonomyInitialMigration extends AbstractMigration
 
     public function down()
     {
+        $this->table('model_taxonomies')->drop()->save();
         $this->table('taxonomies')->drop()->save();
         $this->table('terms')->drop()->save();
         $this->table('types')->drop()->save();
         $this->table('vocabularies')->drop()->save();
         $this->table('types_vocabularies')->drop()->save();
-        $this->table('model_taxonomies')->drop()->save();
     }
 }
