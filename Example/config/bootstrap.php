@@ -93,21 +93,21 @@ CroogoNav::add('sidebar', 'extensions.children.example', [
 Wysiwyg::setActions([
     'Croogo/Example.Admin/Example/rteExample' => [
         [
-            'elements' => 'ExampleBasic',
+            'elements' => '#ExampleBasic',
             'preset' => 'basic',
         ],
         [
-            'elements' => 'ExampleStandard',
+            'elements' => '#ExampleStandard',
             'preset' => 'standard',
             'language' => 'ja',
         ],
         [
-            'elements' => 'ExampleFull',
+            'elements' => '#ExampleFull',
             'preset' => 'full',
             'language' => Configure::read('Site.locale'),
         ],
         [
-            'elements' => 'ExampleCustom',
+            'elements' => '#ExampleCustom',
             'toolbar' => [
                 ['Format', 'Bold', 'Italic'],
                 ['Copy', 'Paste'],
@@ -128,7 +128,7 @@ Croogo::hookAdminRowAction('Croogo/Nodes.Admin/Nodes/index', 'Example', 'prefix:
 
 /* Row action with link options */
 Croogo::hookAdminRowAction('Croogo/Nodes.Admin/Nodes/index', 'Button with Icon', [
-    'plugin:Croogo%2fExample/controller:Example/action:index/:id' => [
+    'prefix:admin/plugin:Croogo%2fExample/controller:Example/action:index/:id' => [
         'options' => [
             'icon' => 'key',
             'button' => 'success',
@@ -138,10 +138,10 @@ Croogo::hookAdminRowAction('Croogo/Nodes.Admin/Nodes/index', 'Button with Icon',
 
 /* Row action with icon */
 Croogo::hookAdminRowAction('Croogo/Nodes.Admin/Nodes/index', 'Icon Only', [
-    'plugin:Croogo%2fExample/controller:Example/action:index/:id' => [
+    'prefix:admin/plugin:Croogo%2fExample/controller:Example/action:index/:id' => [
         'title' => false,
         'options' => [
-            'icon' => 'picture-o',
+            'icon' => 'image',
             'tooltip' => [
                 'data-title' => 'A nice and simple action with tooltip',
                 'data-placement' => 'left',
