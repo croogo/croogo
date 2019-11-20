@@ -3,14 +3,8 @@ use Migrations\AbstractMigration;
 
 class TaxonomySyncTimestampFields extends AbstractMigration
 {
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * http://docs.phinx.org/en/latest/migrations.html#the-change-method
-     * @return void
-     */
-    public function change()
+
+    public function up()
     {
         $this->table('terms')
             ->renameColumn('updated', 'modified')
@@ -23,7 +17,7 @@ class TaxonomySyncTimestampFields extends AbstractMigration
             ->update();
 
         $this->table('taxonomies')
-            ->renameColumn('updated', 'modified')
+            ->addTimestamps('updated', 'modified')
             ->update();
 
         $this->table('types')
@@ -32,11 +26,45 @@ class TaxonomySyncTimestampFields extends AbstractMigration
             ->update();
 
         $this->table('types_vocabularies')
-            ->renameColumn('updated', 'modified')
+            ->addTimestamps('updated', 'modified')
             ->update();
 
         $this->table('model_taxonomies')
-            ->renameColumn('updated', 'modified')
+            ->addTimestamps('updated', 'modified')
             ->update();
     }
+
+    public function down()
+    {
+        $this->table('terms')
+            ->renameColumn('modified', 'update')
+            ->renameColumn('modified_by', 'updated_by')
+            ->update();
+
+        $this->table('vocabularies')
+            ->renameColumn('modified', 'update')
+            ->renameColumn('modified_by', 'updated_by')
+            ->update();
+
+        $this->table('taxonomies')
+            ->removeColumn('updated')
+            ->removeColumn('modified')
+            ->update();
+
+        $this->table('types')
+            ->renameColumn('updated', 'modified')
+            ->renameColumn('updated_by', 'modified_by')
+            ->update();
+
+        $this->table('types_vocabularies')
+            ->removeColumn('updated')
+            ->removeColumn('modified')
+            ->update();
+
+        $this->table('model_taxonomies')
+            ->removeColumn('updated')
+            ->removeColumn('modified')
+            ->update();
+    }
+
 }
