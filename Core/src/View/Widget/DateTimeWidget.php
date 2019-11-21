@@ -75,19 +75,13 @@ class DateTimeWidget extends CakeDateTimeWidget
         }
 
         $widget = <<<html
-            <input
-                type="hidden"
-                name="${name}"
-                value="$val"
-                id="$id"
-            />
             <div class="input-group $type $class">
                 <input
                     type="text"
                     class="form-control"
-                    name="${name}_dp"
-                    value="$val"
-                    id="${id}_dp"
+                    name="${name}"
+                    value="{$val}"
+                    id="${id}"
                     role="$role"
                     data-related="{$id}"
                     data-timestamp="$timestamp"
@@ -187,6 +181,6 @@ html;
             return [];
         }
 
-        return [$data['name'], $data['name'] . '_dp'];
+        return [$data['name']];
     }
 }
