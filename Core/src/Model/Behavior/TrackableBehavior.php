@@ -92,7 +92,51 @@ class TrackableBehavior extends Behavior
     }
 
     /**
-     * Fill the created_by and modified_by fields
+     * Fill the created_by and modified_by fields in an entity
+     *
+     */
+    public function beforeSave(Event $event, $options = [])
+    {
+        if (!$this->_hasTrackableFields()) {
+            return true;
+        }
+
+        list($userId, $createdByField, $modifiedByField) = $this->getFieldValues($event, $options);
+
+        $entity = $event->getData('entity');
+        if (empty($entity[$createdByField])) {
+            if ($entity->isNew()) {
+                $entity->{$createdByField} = $userId;
+            }
+        }
+        $entity->{$modifiedByField} = $userId;
+
+        return true;
+    }
+
+
+    /**
+     * Fill the created_by and modified_by fields from request
+     **/
+    public function beforeMarshal(Event $event, $options = [])
+    {
+        if (!$this->_hasTrackableFields()) {
+            return true;
+        }
+
+        list($userId, $createdByField, $modifiedByField) = $this->getFieldValues($event, $options);
+
+        $data = $event->getData('data');
+        if (empty($data[$createdByField])) {
+            $data[$createdByField] = $userId;
+        }
+        $data[$modifiedByField] = $userId;
+
+        return true;
+    }
+
+    /**
+     * Get values for use during beforeSave and beforeMarshal
      *
      * Note: Since shells do not have Sessions, created_by/modified_by fields
      * will not be populated. If a shell needs to populate these fields, you
@@ -101,12 +145,11 @@ class TrackableBehavior extends Behavior
      *   Configure::write('Trackable.User', array('id' => 1));
      *
      * Note that value stored in this variable overrides session data.
+     *
+     * @return array Array of [userId, createdByField, modifiedByField]
      */
-    public function beforeSave(Event $event, $options = [])
+    private function getFieldValues(Event $event, $options = [])
     {
-        if (!$this->_hasTrackableFields()) {
-            return true;
-        }
         $config = $this->getConfig();
 
         $User = TableRegistry::get($config['userModel']);
@@ -127,16 +170,8 @@ class TrackableBehavior extends Behavior
         }
 
         $createdByField = $config['fields']['created_by'];
-        $updatedByField = $config['fields']['modified_by'];
+        $modifiedByField = $config['fields']['modified_by'];
 
-        $entity = $event->getData('entity');
-        if (empty($entity->{$createdByField})) {
-            if ($entity->isNew()) {
-                $entity->{$createdByField} = $user[$userPk];
-            }
-        }
-        $entity->{$updatedByField} = $userId;
-
-        return true;
+        return [$userId, $createdByField, $modifiedByField];
     }
 }
