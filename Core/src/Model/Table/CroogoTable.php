@@ -140,7 +140,7 @@ class CroogoTable extends Table
             $this->_editFields = $editFields;
         }
         if (empty($this->_editFields)) {
-            $this->_editFields = array_keys($this->schema());
+            $this->_editFields = $this->schema()->columns();
             $id = array_search('id', $this->_editFields);
             if ($id !== false) {
                 unset($this->_editFields[$id]);
