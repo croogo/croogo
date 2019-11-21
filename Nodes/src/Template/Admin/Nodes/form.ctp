@@ -94,7 +94,6 @@ $this->start('tab-content');
                     'plugin' => 'Croogo/Users',
                     'controller' => 'Users',
                     'action' => 'lookup',
-                    '_ext' => 'json',
                 ]),
             ],
         ]);
@@ -114,7 +113,6 @@ $this->start('tab-content');
                     'controller' => 'Nodes',
                     'action' => 'lookup',
                     'type' => $node->type,
-                    '_ext' => 'json',
                 ]),
             ],
         ]);
