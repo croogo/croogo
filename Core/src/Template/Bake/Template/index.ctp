@@ -27,8 +27,12 @@ $this->append('action-buttons');
 <%
 
     $done = [];
+    $excludedModels = ['TrackableCreator', 'TrackableUpdater'];
     foreach ($associations as $type => $data):
         foreach ($data as $alias => $details):
+            if (in_array($alias, $excludedModels)):
+                continue;
+            endif;
             if (!empty($details['navLink']) && $details['controller'] !== $this->name && !in_array($details['controller'], $done)):
 %>
         echo $this->Croogo->adminAction(__('List <%= $this->_pluralHumanName($alias) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'index']);
@@ -99,7 +103,7 @@ $this->append('table-body');
         $actions[] = $this->Croogo->adminRowActions(<%= $pk %>);
         $actions[] = $this->Croogo->adminRowAction('', ['action' => 'view', <%= $pk %>], ['icon' => 'read']);
         $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', <%= $pk %>], ['icon' => 'update']);
-        $actions[] = $this->Croogo->adminRowAction('', ['action' => 'delete', <%= $pk %>], ['icon' => 'delete']);
+        $actions[] = $this->Croogo->adminRowAction('', ['action' => 'delete', <%= $pk %>], ['icon' => 'delete'], __('Delete {0}?', '<%= $singularHumanName %>'));
 ?>
         <td class="actions">
             <div class="item-actions">
