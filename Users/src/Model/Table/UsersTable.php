@@ -57,14 +57,7 @@ class UsersTable extends CroogoTable
             'type' => 'requester'
         ]);
         $this->addBehavior('Search.Search');
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
-        ]);
+        $this->addBehavior('Timestamp');
         $this->addBehavior('Croogo/Core.Cached', [
             'groups' => ['users']
         ]);

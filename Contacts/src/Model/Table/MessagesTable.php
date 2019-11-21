@@ -37,14 +37,7 @@ class MessagesTable extends CroogoTable
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Search.Search');
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
-        ]);
+        $this->addBehavior('Timestamp');
 
         $this->searchManager()
             ->value('contact_id')

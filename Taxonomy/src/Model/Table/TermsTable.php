@@ -32,14 +32,7 @@ class TermsTable extends CroogoTable
     public function initialize(array $config)
     {
         $this->addBehavior('Search.Search');
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
-        ]);
+        $this->addBehavior('Timestamp');
         $this->addBehavior('Croogo/Core.Trackable');
 
         $this->belongsToMany('Croogo/Taxonomy.Vocabularies', [

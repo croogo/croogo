@@ -20,7 +20,7 @@ $tableHeaders = $this->Html->tableHeaders([
     $this->Paginator->sort('title', __d('croogo', 'Title')),
     $this->Paginator->sort('alias', __d('croogo', 'Alias')),
     $this->Paginator->sort('region_id', __d('croogo', 'Region')),
-    $this->Paginator->sort('updated', __d('croogo', 'Updated')),
+    $this->Paginator->sort('modified', __d('croogo', 'Modified')),
     $this->Paginator->sort('status', __d('croogo', 'Status')),
     __d('croogo', 'Actions'),
 ]);
@@ -92,7 +92,7 @@ foreach ($blocks as $block) {
         $title,
         $block->alias,
         $block->region->title,
-        $block->updated,
+        $block->modified,
         $this->element('Croogo/Core.admin/toggle', [
             'id' => $block->id,
             'status' => (int)$block->status,

@@ -13,7 +13,7 @@ use const PHP_SESSION_ACTIVE;
 /**
  * Trackable Behavior
  *
- * Populate `created_by` and `updated_by` fields from session data.
+ * Populate `created_by` and `modified_by` fields from session data.
  *
  * @package  Croogo.Croogo.Model.Behavior
  * @since    1.6
@@ -31,7 +31,7 @@ class TrackableBehavior extends Behavior
         'userModel' => 'Croogo/Users.Users',
         'fields' => [
             'created_by' => 'created_by',
-            'updated_by' => 'updated_by',
+            'modified_by' => 'modified_by',
             ],
         ];
 
@@ -64,7 +64,7 @@ class TrackableBehavior extends Behavior
         $fields = $this->getConfig('fields');
 
         return $this->_table->hasField($fields['created_by']) &&
-            $this->_table->hasField($fields['updated_by']);
+            $this->_table->hasField($fields['modified_by']);
     }
 
     /**
@@ -85,16 +85,16 @@ class TrackableBehavior extends Behavior
                 ],
                 'TrackableUpdater' => [
                     'className' => $config['userModel'],
-                    'foreignKey' => $config['fields']['updated_by'],
+                    'foreignKey' => $config['fields']['modified_by'],
                 ],
             ],
         ]);
     }
 
     /**
-     * Fill the created_by and updated_by fields
+     * Fill the created_by and modified_by fields
      *
-     * Note: Since shells do not have Sessions, created_by/updated_by fields
+     * Note: Since shells do not have Sessions, created_by/modified_by fields
      * will not be populated. If a shell needs to populate these fields, you
      * can simulate a logged in user by setting `Trackable.Auth` config:
      *
@@ -127,7 +127,7 @@ class TrackableBehavior extends Behavior
         }
 
         $createdByField = $config['fields']['created_by'];
-        $updatedByField = $config['fields']['updated_by'];
+        $updatedByField = $config['fields']['modified_by'];
 
         $entity = $event->getData('entity');
         if (empty($entity->{$createdByField})) {

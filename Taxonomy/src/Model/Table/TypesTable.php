@@ -32,14 +32,7 @@ class TypesTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
-        ]);
+        $this->addBehavior('Timestamp');
         $this->addBehavior('Croogo/Core.Url', [
             'url' => [
                 'plugin' => 'Croogo/Nodes',

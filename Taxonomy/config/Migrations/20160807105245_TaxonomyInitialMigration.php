@@ -138,7 +138,6 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
             ->addForeignKey('term_id', 'terms', ['id'], [
                 'constraint' => 'fk_taxonomies2terms',
                 'delete' => 'RESTRICT',
@@ -248,7 +247,6 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addTimestamps('created', 'updated')
             ->addIndex(
                 [
                     'type_id', 'vocabulary_id',
@@ -273,7 +271,6 @@ class TaxonomyInitialMigration extends AbstractMigration
                 'limit' => 20,
                 'null' => false,
             ])
-            ->addTimestamps('created', 'updated')
             ->addForeignKey('taxonomy_id', 'taxonomies', ['id'], [
                 'constraint' => 'fk_model_taxonomies2taxonomies',
                 'update' => 'CASCADE',
@@ -290,11 +287,11 @@ class TaxonomyInitialMigration extends AbstractMigration
 
     public function down()
     {
+        $this->table('model_taxonomies')->drop()->save();
         $this->table('taxonomies')->drop()->save();
         $this->table('terms')->drop()->save();
         $this->table('types')->drop()->save();
         $this->table('vocabularies')->drop()->save();
         $this->table('types_vocabularies')->drop()->save();
-        $this->table('model_taxonomies')->drop()->save();
     }
 }
