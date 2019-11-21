@@ -111,14 +111,24 @@
 						}
 					}
 					param[options.queryField] = q;
-					$.get(options.url, $.param(param), function (json) {
+
+					var onSuccess = function (json) {
 						$.each(json.data, function (i, result) {
-							if (typeof map[result[options.displayField]] == 'undefined') {
-								map[result[options.displayField]] = result[options.primaryKey];
-								results.push(result[options.displayField]);
+							if (typeof map[result.attributes[options.displayField]] == 'undefined') {
+								map[result.attributes[options.displayField]] = result[options.primaryKey];
+								results.push(result.attributes[options.displayField]);
 							}
 						});
 						return process(results);
+					};
+
+					$.get({
+						url: options.url,
+						data: param,
+						headers: {
+							'Accept': 'application/vnd.api+json',
+						},
+						success: onSuccess,
 					});
 				}
 			});

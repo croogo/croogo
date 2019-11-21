@@ -33,7 +33,7 @@ class AppController extends Controller
                         'Users.status' => true,
                     ],
                 ],
-                'Form',
+                'Croogo/Acl.ApiForm',
             ],
             'authorize' => [
                 AuthComponent::ALL => [
@@ -100,7 +100,7 @@ class AppController extends Controller
             'listeners' => [
                 'Crud.Search',
                 'Crud.RelatedModels',
-                'Crud.Api',
+                'CrudJsonApi.JsonApi',
             ]
         ]);
 

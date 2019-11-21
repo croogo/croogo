@@ -4,7 +4,6 @@ namespace Croogo\Taxonomy\Controller\Api\V10;
 
 use Cake\Event\Event;
 use Croogo\Core\Controller\Api\AppController;
-use Croogo\Core\Croogo;
 
 /**
  * Taxonomies Controller
