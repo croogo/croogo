@@ -3,7 +3,7 @@
 namespace Croogo\Core\Model\Behavior;
 
 use Cake\Datasource\EntityInterface;
-use Cake\Log\LogTrait;
+use Cake\Log\Log;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Table;
@@ -35,8 +35,6 @@ use PDOException;
  */
 class CopyableBehavior extends Behavior
 {
-
-    use LogTrait;
 
     /**
      * Behavior settings
@@ -130,7 +128,7 @@ class CopyableBehavior extends Behavior
                 'associated' => true,
             ]);
         } catch (PDOException $e) {
-            $this->log('Error executing _copyRecord: ' . $e->getMessage());
+            Log:error('Error executing _copyRecord: ' . $e->getMessage());
         }
 
         return $result;

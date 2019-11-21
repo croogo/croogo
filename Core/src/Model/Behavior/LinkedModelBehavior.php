@@ -4,7 +4,7 @@ namespace Croogo\Core\Model\Behavior;
 
 use Cake\Database\Exception;
 use Cake\Error\Debugger;
-use Cake\Log\LogTrait;
+use Cake\Log\Log;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -13,7 +13,6 @@ use Cake\ORM\TableRegistry;
 
 class LinkedModelBehavior extends Behavior
 {
-    use LogTrait;
 
     protected $_defaultConfig = [
         'modelField' => 'model',
@@ -27,7 +26,7 @@ class LinkedModelBehavior extends Behavior
                 try {
                     $entity->related = $this->relatedTable($entity)->get($entity->get($this->config('foreignKeyField')));
                 } catch (Exception $e) {
-                    $this->log(Debugger::trace());
+                    Log::error(Debugger::trace());
                 }
 
                 return $entity;
