@@ -20,10 +20,12 @@ $siteTagline = Configure::read('Site.tagline');
 
     <title><?= $this->fetch('title'); ?> - <?= $siteTitle; ?></title>
     <?php
+    $rightRegionBlocks = $this->Regions->blocks('right');
 //    echo $this->Meta->meta();
     echo $this->Layout->feed();
-    $this->element('stylesheets');
     echo $this->Layout->js();
+    $this->element('stylesheets');
+    $this->element('javascripts');
     echo $this->Blocks->get('css');
     echo $this->Blocks->get('script');
     ?>
@@ -70,7 +72,7 @@ $siteTagline = Configure::read('Site.tagline');
                     ?>
                 </div>
                 <div class="<?= $this->Theme->getCssClass('columnRight') ?>">
-                    <?= $this->Regions->blocks('right'); ?>
+                    <?= $rightRegionBlocks; ?>
                 </div>
             </div>
         </div>
@@ -116,7 +118,6 @@ $siteTagline = Configure::read('Site.tagline');
 
 
     <?php
-    $this->element('javascripts');
     echo $this->Blocks->get('scriptBottom');
     ?>
 </body>
