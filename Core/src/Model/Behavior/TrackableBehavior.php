@@ -104,6 +104,11 @@ class TrackableBehavior extends Behavior
         list($userId, $createdByField, $modifiedByField) = $this->getFieldValues($event, $options);
 
         $entity = $event->getData('entity');
+
+        if (empty($userId)) {
+            return true;
+        }
+
         if (empty($entity[$createdByField])) {
             if ($entity->isNew()) {
                 $entity->{$createdByField} = $userId;
@@ -163,10 +168,6 @@ class TrackableBehavior extends Behavior
 
         if ($user && array_key_exists($userPk, $user)) {
             $userId = $user[$userPk];
-        }
-
-        if (empty($user) || empty($userId)) {
-            return true;
         }
 
         $createdByField = $config['fields']['created_by'];
