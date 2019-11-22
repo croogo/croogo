@@ -83,7 +83,7 @@ class CroogoHelper extends Helper
      */
     public function adminScript($url, $options = [])
     {
-        $options = Hash::merge(['block' => 'scriptBottom'], $options);
+        $options = Hash::merge(['block' => 'scriptBottom', 'defer' => true], $options);
         $request = $this->getView()->getRequest();
         if ($request->is('ajax') || $request->getParam('prefix') !== 'admin') {
             return null;

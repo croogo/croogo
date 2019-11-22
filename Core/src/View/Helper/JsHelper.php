@@ -104,7 +104,7 @@ class JsHelper extends Helper
     {
         $defaults = [
             'onDomReady' => !$this->_View->getRequest()->is('ajax'),
-            'cache' => false, 'clear' => true, 'safe' => true
+            'cache' => false, 'clear' => true, 'safe' => true, 'defer' => true,
         ];
         $options += $defaults;
         $script = implode("\n", $this->getBuffer($options['clear']));
