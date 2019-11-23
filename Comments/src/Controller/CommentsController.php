@@ -183,13 +183,18 @@ class CommentsController extends AppController
      */
     protected function _spamProtection($continue, $spamProtection, $node)
     {
-        if (!empty($this->getRequest()->data) &&
+        $request = $this->getRequest();
+        $name = $request->getData('name');
+        $email = $request->getData('email');
+        $website = $request->getData('website');
+        $body = $request->getData('body');
+        if (!empty($body) &&
             $spamProtection &&
             $continue === true) {
-            $this->Akismet->setCommentAuthor($this->getRequest()->data['Comment']['name']);
-            $this->Akismet->setCommentAuthorEmail($this->getRequest()->data['Comment']['email']);
-            $this->Akismet->setCommentAuthorURL($this->getRequest()->data['Comment']['website']);
-            $this->Akismet->setCommentContent($this->getRequest()->data['Comment']['body']);
+            $this->Akismet->setCommentAuthor($name);
+            $this->Akismet->setCommentAuthorEmail($email);
+            $this->Akismet->setCommentAuthorURL($website);
+            $this->Akismet->setCommentContent($body);
             if ($this->Akismet->isCommentSpam()) {
                 $continue = false;
                 $this->Flash->error(__d('croogo', 'Sorry, the comment appears to be spam.'));
