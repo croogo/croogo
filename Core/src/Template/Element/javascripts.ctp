@@ -1,12 +1,12 @@
 <?php
 $this->Html->script([
     'jquery/jquery.min',
+    'core/bootstrap.min',
 ], [
     'block' => true,
 ]);
 
 $this->Html->script([
-    'core/bootstrap.min',
     'core/popper.min',
     'jquery-easing/jquery.easing.min',
 ], [
@@ -17,5 +17,6 @@ $this->Html->script([
 $this->Html->script([
     'theme',
 ], [
+    'block' => true,
     'defer' => true,
 ]);
