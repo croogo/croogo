@@ -8,7 +8,7 @@ use Cake\Log\Log;
 use Cake\Network\Session;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Hash;
-use Croogo\Core\Configure\CroogoJsonReader;
+use Croogo\Core\Configure\JsonReader;
 use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\CroogoTestFixture;
 
@@ -79,7 +79,7 @@ class CroogoControllerTestCase extends TestCase
 //      $Setting = ClassRegistry::init('Settings.Setting');
 //      $Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
 //      Configure::drop('settings');
-//      Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS ));
+//      Configure::config('settings', new JsonReader(dirname($Setting->settingsPath) . DS ));
         Log::drop('stdout');
         Log::drop('stderr');
 //      $Setting->writeConfiguration();

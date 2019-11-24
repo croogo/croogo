@@ -10,9 +10,9 @@
  * @link     http://www.croogo.org
  */
 
-namespace Croogo\Core;
+namespace Croogo\Core\Utility;
 
-class CroogoJson
+class JsonUtility
 {
 
     /**

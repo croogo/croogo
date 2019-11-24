@@ -4,11 +4,11 @@ namespace Croogo\Core\Configure;
 
 use Cake\Core\Configure\ConfigEngineInterface;
 use Cake\Core\Plugin;
-use Croogo\Core\CroogoJson;
+use Croogo\Core\Utility\JsonUtility;
 use Croogo\Core\Exception\Exception;
 
 /**
- * CroogoJsonReader
+ * JsonReader
  *
  * @package  Croogo.Croogo.Configure
  * @since    1.5
@@ -16,7 +16,7 @@ use Croogo\Core\Exception\Exception;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoJsonReader implements ConfigEngineInterface
+class JsonReader implements ConfigEngineInterface
 {
 
     /**
@@ -88,7 +88,7 @@ class CroogoJsonReader implements ConfigEngineInterface
         if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
             $options |= JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT;
         }
-        $contents = CroogoJson::stringify($data, $options);
+        $contents = JsonUtility::stringify($data, $options);
 
         return $this->_writeFile($this->_path . $filename, $contents);
     }
