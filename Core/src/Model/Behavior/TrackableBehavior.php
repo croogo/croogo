@@ -4,6 +4,7 @@ namespace Croogo\Core\Model\Behavior;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Log\Log;
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -168,6 +169,9 @@ class TrackableBehavior extends Behavior
 
         if ($user && array_key_exists($userPk, $user)) {
             $userId = $user[$userPk];
+        } else {
+            Log::error('Trackable cannot obtain userId');
+            $userId = null;
         }
 
         $createdByField = $config['fields']['created_by'];

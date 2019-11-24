@@ -3,6 +3,7 @@
 namespace Croogo\Settings\Shell;
 
 use Cake\Console\Shell;
+use Cake\Core\Configure;
 use Croogo\Core\Plugin;
 
 /**
@@ -165,6 +166,7 @@ class SettingsShell extends Shell
                 'Settings.key' => $key,
             ])
             ->first();
+        Configure::write('Trackable.Auth.User', ['id' => 1]);
         $this->out(__d('croogo', 'Updating %s', $key), 2);
         $ask = __d('croogo', "Confirm update");
         if ($setting || $this->params['create']) {
