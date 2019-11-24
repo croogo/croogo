@@ -3,15 +3,15 @@ namespace Croogo\Core\Test\TestCase\View\Helper;
 
 use Cake\View\View;
 use Croogo\Core\TestSuite\CroogoTestCase;
-use Croogo\Core\View\Helper\CroogoFormHelper;
+use Croogo\Core\View\Helper\FormHelper;
 
-class CroogoFormHelperTest extends CroogoTestCase
+class FormHelperTest extends CroogoTestCase
 {
 
     /**
-     * @var CroogoFormHelper
+     * @var Croogo\Core\View\Helper\FormHelper
      */
-    private $CroogoForm;
+    private $Form;
 
     public function setUp()
     {
@@ -19,7 +19,7 @@ class CroogoFormHelperTest extends CroogoTestCase
 
         $controller = null;
         $this->View = new View($controller);
-        $this->Form = new CroogoFormHelper($this->View);
+        $this->Form = new FormHelper($this->View);
     }
 
     public function tearDown()

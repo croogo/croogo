@@ -2,7 +2,7 @@
 
 namespace Croogo\Core\View\Helper;
 
-use BootstrapUI\View\Helper\FormHelper;
+use BootstrapUI\View\Helper\FormHelper as BaseFormHelper;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\View\View;
@@ -13,7 +13,7 @@ use Croogo\Extensions\CroogoTheme;
  *
  * @package Croogo.Croogo.View.Helper
  */
-class CroogoFormHelper extends FormHelper
+class FormHelper extends BaseFormHelper
 {
 
     public $helpers = [
@@ -21,7 +21,7 @@ class CroogoFormHelper extends FormHelper
         'Url',
         'Croogo/Core.Theme',
         'Croogo/Core.Croogo',
-        'Croogo/Core.CroogoHtml',
+        'Croogo/Core.Html',
     ];
 
     /**

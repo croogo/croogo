@@ -130,7 +130,7 @@ class LayoutHelper extends Helper
             $validKeys
         );
 
-        if ($this->_View->helpers()->has('CroogoHtml')) {
+        if ($this->_View->helpers()->has('Html') && $this->_View->helpers()->Html instanceof HtmlHelper) {
             unset($validKeys['css']);
             $croogoSetting['themeSettings'] = Hash::merge(
                 $croogoSetting['themeSettings'],
@@ -169,7 +169,7 @@ class LayoutHelper extends Helper
             return $this->Html->icon($icon, compact('class'));
         } else {
             if (empty($this->_View->Html)) {
-                $this->_View->Helpers->load('Croogo/Core.CroogoHtml');
+                $this->_View->Helpers->load('Croogo/Core.Html');
             }
 
             return $this->_View->Html->icon($icon, compact('class'));

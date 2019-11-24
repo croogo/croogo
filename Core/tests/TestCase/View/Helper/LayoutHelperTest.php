@@ -7,7 +7,7 @@ use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\View\View;
 use Croogo\Core\TestSuite\CroogoTestCase;
-use Croogo\Core\View\Helper\CroogoHtmlHelper;
+use Croogo\Core\View\Helper\HtmlHelper;
 use Croogo\Core\View\Helper\LayoutHelper;
 
 class LayoutHelperTest extends CroogoTestCase
@@ -41,7 +41,7 @@ class LayoutHelperTest extends CroogoTestCase
         ];
         $view = new View($request, new Response());
         $this->Layout = new LayoutHelper($view);
-        $this->Html = new CroogoHtmlHelper($view);
+        $this->Html = new HtmlHelper($view);
         $this->_appEncoding = Configure::read('App.encoding');
         $this->_asset = Configure::read('Asset');
         $this->_debug = Configure::read('debug');

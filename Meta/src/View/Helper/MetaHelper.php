@@ -18,7 +18,7 @@ use Cake\View\Helper;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  *
- * @property \Croogo\Core\View\Helper\CroogoHtmlHelper $Html
+ * @property \Croogo\Core\View\Helper\HtmlHelper $Html
  */
 class MetaHelper extends Helper
 {
@@ -30,10 +30,10 @@ class MetaHelper extends Helper
         'Croogo/Core.Layout',
         'Croogo/Core.Croogo',
         'Html' => [
-            'className' => 'Croogo/Core.CroogoHtml'
+            'className' => 'Croogo/Core.Html'
         ],
         'Form' => [
-            'className' => 'Croogo/Core.CroogoForm'
+            'className' => 'Croogo/Core.Form'
         ],
     ];
 

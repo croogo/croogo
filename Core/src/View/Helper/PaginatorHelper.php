@@ -2,7 +2,7 @@
 
 namespace Croogo\Core\View\Helper;
 
-use Cake\View\Helper\PaginatorHelper;
+use Cake\View\Helper\PaginatorHelper as BasePaginatorHelper;
 use Cake\View\View;
 
 /**
@@ -10,7 +10,7 @@ use Cake\View\View;
  *
  * @package Croogo.Croogo.View.Helper
  */
-class CroogoPaginatorHelper extends PaginatorHelper
+class PaginatorHelper extends BasePaginatorHelper
 {
 
     /**

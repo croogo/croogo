@@ -6,9 +6,9 @@ use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\View\View;
 use Croogo\Core\TestSuite\CroogoTestCase;
-use Croogo\Core\View\Helper\CroogoHtmlHelper;
+use Croogo\Core\View\Helper\HtmlHelper;
 
-class CroogoHtmlHelperTest extends CroogoTestCase
+class HtmlHelperTest extends CroogoTestCase
 {
 
     public $fixtures = [
@@ -16,9 +16,9 @@ class CroogoHtmlHelperTest extends CroogoTestCase
     ];
 
     /**
-     * @var CroogoHtmlHelper
+     * @var Croogo\Core\View\Helper\HtmlHelper
      */
-    private $CroogoHtml;
+    private $Html;
 
     public function setUp()
     {
@@ -26,7 +26,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase
 
         $controller = null;
         $this->View = new View(new Request, new Response);
-        $this->Html = new CroogoHtmlHelper($this->View);
+        $this->Html = new HtmlHelper($this->View);
     }
 
     public function tearDown()

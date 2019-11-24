@@ -61,7 +61,7 @@ class UsersControllerTest extends CroogoControllerTestCase
         ]);
         $this->controller->helpers = [
             'Html' => [
-                'className' => 'Croogo.CroogoHtml',
+                'className' => 'Croogo/Core.Html',
             ],
         ];
 

@@ -33,7 +33,7 @@ class CroogoHelper extends Helper
     public $helpers = [
         'Form',
         'Html' => [
-            'className' => 'Croogo/Core.CroogoHtml'
+            'className' => 'Croogo/Core.Html'
         ],
         'Url',
         'Croogo/Core.Layout',

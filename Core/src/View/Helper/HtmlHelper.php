@@ -2,7 +2,7 @@
 
 namespace Croogo\Core\View\Helper;
 
-use BootstrapUI\View\Helper\HtmlHelper;
+use BootstrapUI\View\Helper\HtmlHelper as BaseHtmlHelper;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\View\View;
@@ -14,7 +14,7 @@ use Croogo\Extensions\CroogoTheme;
  *
  * @package Croogo.Croogo.View.Helper
  */
-class CroogoHtmlHelper extends HtmlHelper
+class HtmlHelper extends BaseHtmlHelper
 {
 
     public $helpers = [

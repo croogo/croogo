@@ -27,22 +27,6 @@ use Exception;
 class InstallController extends Controller
 {
 
-/**
- * Helpers
- *
- * @var array
- * @access public
- */
-//    public $helpers = [
-//        'Html' => [
-//            'className' => 'CroogoHtml',
-//        ],
-//        'Form' => [
-//            'className' => 'CroogoForm',
-//        ],
-//        'Croogo.Layout',
-//    ];
-
     const STEPS = [
         'Welcome', 'Database', 'Admin user', 'Completed'
     ];
@@ -70,10 +54,10 @@ class InstallController extends Controller
         $this->viewBuilder()->setHelpers([
             'Croogo/Core.Theme',
             'Html' => [
-                'className' => 'Croogo/Core.CroogoHtml',
+                'className' => 'Croogo/Core.Html',
             ],
             'Form' => [
-                'className' => 'Croogo/Core.CroogoForm',
+                'className' => 'Croogo/Core.Form',
             ],
         ]);
     }

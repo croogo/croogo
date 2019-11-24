@@ -25,7 +25,7 @@ class DashboardsHelper extends Helper
 {
 
     public $helpers = [
-        'Html' => ['className' => 'Croogo/Core.CroogoHtml'],
+        'Html' => ['className' => 'Croogo/Core.Html'],
         'Croogo/Core.Layout',
         'Croogo/Core.Theme',
     ];

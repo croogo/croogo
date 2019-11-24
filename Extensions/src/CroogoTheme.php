@@ -131,26 +131,26 @@ class CroogoTheme
                     '' => [
                         'helpers' => [
                             'Html' => [
-                                'className' => 'Croogo/Core.CroogoHtml',
+                                'className' => 'Croogo/Core.Html',
                             ],
                             'Form' => [
-                                'className' => 'Croogo/Core.CroogoForm',
+                                'className' => 'Croogo/Core.Form',
                             ],
                             'Paginator' => [
-                                'className' => 'Croogo/Core.CroogoPaginator',
+                                'className' => 'Croogo/Core.Paginator',
                             ],
                         ],
                     ],
                     'admin' => [
                         'helpers' => [
                             'Html' => [
-                                'className' => 'Croogo/Core.CroogoHtml',
+                                'className' => 'Croogo/Core.Html',
                             ],
                             'Form' => [
-                                'className' => 'Croogo/Core.CroogoForm',
+                                'className' => 'Croogo/Core.Form',
                             ],
                             'Paginator' => [
-                                'className' => 'Croogo/Core.CroogoPaginator',
+                                'className' => 'Croogo/Core.Paginator',
                             ],
                             'Breadcrumbs'
                         ],
