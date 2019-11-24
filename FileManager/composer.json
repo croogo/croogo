@@ -3,7 +3,7 @@
     "description": "Croogo FileManager Plugin",
     "require": {
         "ext-gd": "*",
-        "croogo/core": "^4.0.0-beta.4",
+        "croogo/core": "^4.0",
         "intervention/image": "^2.4.1",
         "league/flysystem": "^1.0"
     },

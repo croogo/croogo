@@ -2,7 +2,7 @@
     "name": "croogo/install",
     "description": "Croogo Install Plugin",
     "require": {
-        "croogo/core": "^4.0.0-beta.4"
+        "croogo/core": "^4.0"
     },
     "license": "MIT",
     "authors": [

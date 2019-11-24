@@ -2,7 +2,7 @@
     "name": "croogo/meta",
     "description": "Croogo Meta Plugin",
     "require": {
-        "croogo/core": "^4.0.0-beta.4"
+        "croogo/core": "^4.0"
     },
     "license": "MIT",
     "authors": [
