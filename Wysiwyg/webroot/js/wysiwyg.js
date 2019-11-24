@@ -59,6 +59,13 @@ Croogo.Wysiwyg.addButton = function($el, title, onButtonClicked) {
 		.html(title)
 		.on('click', onButtonClicked);
 	Croogo.Wysiwyg._$btnContainer[elementId].append($btn);
+	var buttons = $('.btn', Croogo.Wysiwyg._$btnContainer[elementId]);
+	if (buttons.length == 1) {
+		setTimeout(function() {
+			$('.btn:first-child', Croogo.Wysiwyg._$btnContainer[elementId])
+				.trigger('click');
+		}, 300);
+	}
 };
 
 if (typeof jQuery != 'undefined') {
