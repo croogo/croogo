@@ -26,7 +26,7 @@ class WysiwygHelper extends Helper
      * @access public
      */
     public $helpers = [
-        'Html',
+        'Croogo',
         'Url'
     ];
 
@@ -42,7 +42,7 @@ class WysiwygHelper extends Helper
         $currentAction = Router::getActionPath($this->getView()->getRequest(), true);
         $included = in_array($currentAction, $actions);
         if ($included) {
-            $this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => 'script']);
+            $this->Croogo->adminScript('Croogo/Wysiwyg.wysiwyg.js');
         }
     }
 }

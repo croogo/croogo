@@ -7,11 +7,9 @@ use Cake\view\Form\NullContext;
 
 $tableHeaderClass = $this->Theme->getCssClass('tableHeaderClass');
 
-$this->Html->script([
+$this->Croogo->adminScript([
     'Croogo/FileManager.admin.js',
     'Croogo/FileManager.assets.js',
-], [
-    'block' => 'scriptBottom',
 ]);
 
 $model = isset($model) ? $model : null;

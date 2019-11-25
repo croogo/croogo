@@ -3,7 +3,7 @@
 use Cake\Routing\Router;
 
 $this->extend('Croogo/Core./Common/admin_edit');
-$this->Html->script(['Croogo/Nodes.admin'], ['block' => true]);
+$this->Croogo->adminScript(['Croogo/Nodes.admin.js']);
 
 $this->Breadcrumbs->add(__d('croogo', 'Content'), ['action' => 'index']);
 
