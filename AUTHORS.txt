@@ -10,8 +10,8 @@ Kyle Robinson Young <kyle@dontkry.com>
 Derbois Aymeric <aymeric@occi-tech.com>
 Pierre Martin <pierre@occi-tech.com>
 Paul Gardner <phpmagpie@webbedit.co.uk>
-chadrien <chadrien@chadrien.fr>
 Mike Tallroth <mike.tallroth@gmail.com>
+chadrien <chadrien@chadrien.fr>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 Christopher M. Depré <mail@chris-depre.de>
 Heath Nail <sitedyno@gmail.com>
@@ -32,6 +32,7 @@ Paulino Calderon <paulino@calder0n.com>
 pinchsoftware <contact@pinchsoft.com>
 ADmad <ADmad@users.noreply.github.com>
 Ceeram <c33ram@gmail.com>
+Flavien Beninca <flavien.beninca@gmail.com>
 Giovanni Olivera <giovanni@commit42.fr>
 Grégory Salvan <gregory@occi-tech.com>
 Hadrien Collongues <chadrien@chadrien.fr>
@@ -66,7 +67,6 @@ Arie Sutanto <asutanto@xintesa.com>
 Cezary Nowak <korpirkor@users.noreply.github.com>
 Dirk Brünsicke <d1rk@gmx.de>
 DirtyF <frank.taillandier@gmail.com>
-Flavien Beninca <flavien.beninca@gmail.com>
 Gilles Bedel <gilles@occi-tech.com>
 HT-Studios <github@ht-studios.de>
 Joachim Nyqvist <Joachim@JNyqvist.se>
