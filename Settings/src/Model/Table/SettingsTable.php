@@ -7,12 +7,14 @@ use Cake\Core\Configure;
 use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
+use Cake\Log\Log;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use Croogo\Acl\AclGenerator;
 use Croogo\Core\Model\Table\CroogoTable;
+use Croogo\Core\PluginManager;
 
 /**
  * Setting
@@ -177,4 +179,63 @@ class SettingsTable extends CroogoTable
 
         return false;
     }
+
+    /**
+     * Update Croogo.version in settings
+     */
+    public function updateVersionInfo()
+    {
+        $gitDir = realpath(PluginManager::path('Croogo/Core') . '..') . DS . '.git';
+        if (!file_exists($gitDir)) {
+            Log::error('Git repository not found');
+
+            return false;
+        }
+        if (!is_dir($gitDir)) {
+            $gitDir = dirname($gitDir);
+        }
+
+        $git = trim(shell_exec('which git'));
+        if (empty($git)) {
+            Log::error('Git executable not found');
+
+            return false;
+        }
+
+        chdir($gitDir);
+        $version = trim(shell_exec('git describe --tags'));
+        if ($version) {
+            return $this->write('Croogo.version', $version);
+        }
+    }
+
+    /**
+     * Update Croogo.appVersion in settings
+     */
+    public function updateAppVersionInfo()
+    {
+        $gitDir = realpath(ROOT . DS . '.git');
+        if (!file_exists($gitDir)) {
+            Log::error('Git repository not found');
+
+            return false;
+        }
+        if (!is_dir($gitDir)) {
+            $gitDir = dirname($gitDir);
+        }
+
+        $git = trim(shell_exec('which git'));
+        if (empty($git)) {
+            Log::error('Git executable not found');
+
+            return false;
+        }
+
+        chdir($gitDir);
+        $version = trim(shell_exec('git describe --tags'));
+        if ($version) {
+            return $this->write('Croogo.appVersion', $version);
+        }
+    }
+
 }

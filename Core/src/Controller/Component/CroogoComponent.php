@@ -104,21 +104,6 @@ class CroogoComponent extends Component
      */
     protected function _adminData()
     {
-        if (!Configure::read('Croogo.version')) {
-            if (Plugin::isLoaded('Croogo/Settings')) {
-                /* FIXME
-                if ($this->getController()->Settings instanceof Model) {
-                    if (file_exists(APP . 'VERSION.txt')) {
-                        $file = APP . 'VERSION.txt';
-                    } else {
-                        $file = dirname(Plugin::path('Croogo')) . DS . 'VERSION.txt';
-                    }
-                    $version = trim(file_get_contents($file));
-                    $this->_controller->Setting->write('Croogo.version', $version);
-                }
-                */
-            }
-        }
         $_siteTitle = Configure::read('Site.title');
         $this->_controller->set(compact('_siteTitle'));
         $this->_adminMenus();

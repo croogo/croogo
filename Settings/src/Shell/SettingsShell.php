@@ -3,8 +3,10 @@
 namespace Croogo\Settings\Shell;
 
 use Cake\Console\Shell;
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Croogo\Core\Plugin;
+use Croogo\Core\PluginManager;
 
 /**
  * Settings Shell
@@ -30,6 +32,7 @@ class SettingsShell extends Shell
     public function initialize()
     {
         $this->loadModel('Croogo/Settings.Settings');
+        Configure::write('Trackable.Auth.User', ['id' => 1]);
     }
 
     /**
@@ -235,28 +238,7 @@ class SettingsShell extends Shell
      */
     public function updateVersionInfo()
     {
-        $gitDir = realpath(Plugin::path('Croogo/Core') . '..') . DS . '.git';
-        if (!file_exists($gitDir)) {
-            $this->err('Git repository not found');
-
-            return false;
-        }
-        if (!is_dir($gitDir)) {
-            $gitDir = dirname($gitDir);
-        }
-
-        $git = trim(shell_exec('which git'));
-        if (empty($git)) {
-            $this->err('Git executable not found');
-
-            return false;
-        }
-
-        chdir($gitDir);
-        $version = trim(shell_exec('git describe --tags'));
-        if ($version) {
-            $this->runCommand(['write', 'Croogo.version', $version]);
-        }
+        return $this->Settings->updateVersionInfo();
     }
 
     /**
@@ -264,27 +246,6 @@ class SettingsShell extends Shell
      */
     public function updateAppVersionInfo()
     {
-        $gitDir = realpath(ROOT . DS . '.git');
-        if (!file_exists($gitDir)) {
-            $this->err('Git repository not found');
-
-            return false;
-        }
-        if (!is_dir($gitDir)) {
-            $gitDir = dirname($gitDir);
-        }
-
-        $git = trim(shell_exec('which git'));
-        if (empty($git)) {
-            $this->err('Git executable not found');
-
-            return false;
-        }
-
-        chdir($gitDir);
-        $version = trim(shell_exec('git describe --tags'));
-        if ($version) {
-            $this->runCommand(['write', 'Croogo.appVersion', $version]);
-        }
+        return $this->Settings->updateAppVersionInfo();
     }
 }

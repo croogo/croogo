@@ -131,6 +131,9 @@ class InstallManager
             $Setting->write('Access Control.autoLoginDuration', '');
         }
 
+        $Setting->updateVersionInfo();
+        $Setting->updateAppVersionInfo();
+
         return $Setting->write('Croogo.installed', true);
     }
 
