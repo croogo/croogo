@@ -1,11 +1,27 @@
 <?php
+
+use Cake\Database\Driver\Postgres;
+use Cake\Database\Driver\Sqlite;
 use Migrations\AbstractMigration;
+use Phinx\Util\Literal;
 
 class TaxonomySyncTimestampFields extends AbstractMigration
 {
 
     public function up()
     {
+        $adapter = $this->getAdapter();
+        $connection = $adapter->getCakeConnection();
+        $driver = $connection->getDriver();
+
+        $timestampDefault = 'CURRENT_TIMESTAMP';
+        if ($driver instanceof Postgres) {
+            $timestampDefault = Literal::from('now()');
+        }
+        if ($driver instanceof Sqlite) {
+            $timestampDefault = "(datetime(CURRENT_TIMESTAMP, 'utc'))";
+        }
+
         $this->table('terms')
             ->renameColumn('updated', 'modified')
             ->renameColumn('updated_by', 'modified_by')
@@ -17,8 +33,14 @@ class TaxonomySyncTimestampFields extends AbstractMigration
             ->update();
 
         $this->table('taxonomies')
-            ->addTimestamps('updated', 'modified')
-            ->update();
+            ->addColumn('created', 'timestamp', [
+                'null' => false,
+                'default' => $timestampDefault,
+            ])
+            ->addColumn('modified', 'timestamp', [
+                'null' => true,
+            ])
+           ->update();
 
         $this->table('types')
             ->renameColumn('updated', 'modified')
@@ -26,11 +48,23 @@ class TaxonomySyncTimestampFields extends AbstractMigration
             ->update();
 
         $this->table('types_vocabularies')
-            ->addTimestamps('updated', 'modified')
+            ->addColumn('created', 'timestamp', [
+                'null' => false,
+                'default' => $timestampDefault,
+            ])
+            ->addColumn('modified', 'timestamp', [
+                'null' => true,
+            ])
             ->update();
 
         $this->table('model_taxonomies')
-            ->addTimestamps('updated', 'modified')
+            ->addColumn('created', 'timestamp', [
+                'null' => false,
+                'default' => $timestampDefault,
+            ])
+            ->addColumn('modified', 'timestamp', [
+                'null' => true,
+            ])
             ->update();
     }
 
