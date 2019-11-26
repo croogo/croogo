@@ -104,14 +104,7 @@ class NodesController extends AppController
             $query->cache($cacheName, $cacheConfig);
         }
 
-        $query->orderDesc($query->newExpr()
-            ->addCase([
-                $query->newExpr()
-                    ->isNotNull($this->Nodes->aliasField('publish_start'))
-            ], [
-                new IdentifierExpression($this->Nodes->aliasField('publish_start')),
-                new IdentifierExpression($this->Nodes->aliasField('created')),
-            ]));
+        $query->orderDesc($this->Nodes->aliasField('publish_start'));
 
         $nodes = $this->paginate($query);
         $this->set(compact('type', 'nodes'));
@@ -223,14 +216,7 @@ class NodesController extends AppController
             $query->cache($cacheName, $cacheConfig);
         }
 
-        $query->orderDesc($query->newExpr()
-            ->addCase([
-                $query->newExpr()
-                    ->isNotNull($this->Nodes->aliasField('publish_start'))
-            ], [
-                new IdentifierExpression($this->Nodes->aliasField('publish_start')),
-                new IdentifierExpression($this->Nodes->aliasField('created')),
-            ]));
+        $query->orderDesc($this->Nodes->aliasField('publish_start'));
 
         $nodes = $this->paginate($query);
 
@@ -263,7 +249,7 @@ class NodesController extends AppController
 
         if (!$this->getRequest()->getQuery('sort')) {
             $query->order([
-                $this->Nodes->aliasField('created') => 'desc',
+                $this->Nodes->aliasField('publish_start') => 'desc',
             ]);
         }
 

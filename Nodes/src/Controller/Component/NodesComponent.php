@@ -73,7 +73,7 @@ class NodesComponent extends Component
             'find' => 'all',
             'findOptions' => [],
             'conditions' => [],
-            'order' => 'Nodes.created DESC',
+            'order' => 'Nodes.publish_start DESC',
             'limit' => 5,
         ];
 
