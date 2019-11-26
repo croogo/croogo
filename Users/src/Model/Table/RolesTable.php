@@ -24,5 +24,6 @@ class RolesTable extends CroogoTable
             'type' => 'requester'
         ]);
         $this->addBehavior('Search.Search');
+        $this->addBehavior('Croogo/Core.Trackable');
     }
 }

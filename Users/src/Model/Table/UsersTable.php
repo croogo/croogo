@@ -58,6 +58,7 @@ class UsersTable extends CroogoTable
         ]);
         $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Croogo/Core.Cached', [
             'groups' => ['users']
         ]);

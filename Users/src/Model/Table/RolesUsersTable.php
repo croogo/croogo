@@ -26,6 +26,8 @@ class RolesUsersTable extends CroogoTable
         $this->belongsTo('Roles', [
             'className' => 'Croogo/Users.Roles',
         ]);
+
+        $this->addBehavior('Croogo/Core.Trackable');
     }
 
     /**
