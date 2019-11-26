@@ -113,4 +113,19 @@ class PublishableBehavior extends Behavior
 
         return $query;
     }
+
+    /**
+     * Populate publish_start
+     */
+    public function beforeMarshal(Event $event, $options = [])
+    {
+        $data = $event->getData('data');
+        if (array_key_exists('publish_start', $data)) {
+            if (empty($data['publish_start'])) {
+                $data['publish_start'] = new \DateTime();
+            }
+        }
+        return true;
+    }
+
 }
