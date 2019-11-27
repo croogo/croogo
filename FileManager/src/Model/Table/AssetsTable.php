@@ -29,11 +29,11 @@ class AssetsTable extends CroogoTable
             'className' => 'Croogo/FileManager.Attachments',
             'foreignKey' => 'foreign_key',
             'conditions' => [
-                'Assets.model' => 'Attachments',
+                $this->aliasField('model') => 'Attachments',
             ],
             'counterCache' => 'asset_count',
             'counterScope' => [
-                'Assets.model' => 'Attachments',
+                $this->aliasField('model') => 'Attachments',
             ],
         ]);
 

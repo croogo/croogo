@@ -151,23 +151,25 @@ class AttachmentsTable extends CroogoTable
             $foreignKey = $options['foreign_key'];
             unset($options['foreign_key']);
         }
+        $assetsJoinConditions = [
+            $this->Assets->aliasField('model') . ' = \'Attachments\'',
+            $this->Assets->aliasField('foreign_key') . ' = ' . $this->aliasField('id'),
+        ];
+        $assetUsagesJoinConditions = [
+            $this->Assets->aliasField('id') . ' = ' . $this->Assets->AssetUsages->aliasField('asset_id'),
+        ];
         $this->associations()->remove('Assets');
         $this->addAssociations([
             'hasOne' => [
                 'Assets' => [
                     'className' => 'Croogo/FileManager.Assets',
                     'foreignKey' => false,
-                    'conditions' => [
-                        'Assets.model = \'Attachments\'',
-                        'Assets.foreign_key = Attachments.id',
-                    ],
+                    'conditions' => $assetsJoinConditions,
                 ],
                 'AssetUsages' => [
                     'className' => 'Croogo/FileManager.AssetUsages',
                     'foreignKey' => false,
-                    'conditions' => [
-                        'Assets.id = AssetUsages.asset_id',
-                    ],
+                    'conditions' => $assetUsagesJoinConditions,
                 ],
             ]
         ]);
@@ -176,8 +178,8 @@ class AttachmentsTable extends CroogoTable
 
         if (isset($model) && isset($foreignKey)) {
             $query->where([
-                'AssetUsages.model' => $model,
-                'AssetUsages.foreign_key' => $foreignKey,
+                $this->Assets->AssetUsages->aliasField('model') => $model,
+                $this->Assets->AssetUsages->aliasField('foreign_key') => $foreignKey,
             ]);
         }
 
@@ -213,6 +215,13 @@ class AttachmentsTable extends CroogoTable
             $all = $options['all'];
             unset($options['all']);
         }
+        $assetsJoinConditions = [
+            $this->Assets->aliasField('model') . ' = \'Attachments\'',
+            $this->Assets->aliasField('foreign_key') . ' = ' . $this->aliasField('id'),
+        ];
+        $assetUsagesJoinConditions = [
+            $this->Assets->aliasField('id') . ' = ' . $this->Assets->AssetUsages->aliasField('asset_id'),
+        ];
         $this->associations()->remove('Assets');
         $this->addAssociations([
             'hasOne' => [
@@ -220,17 +229,12 @@ class AttachmentsTable extends CroogoTable
                     'className' => 'Croogo/FileManager.Assets',
                     'foreignKey' => false,
                     'dependent' => true,
-                    'conditions' => [
-                        'Assets.model = \'Attachments\'',
-                        'Assets.foreign_key = Attachments.id',
-                    ],
+                    'conditions' => $assetsJoinConditions,
                 ],
                 'AssetUsages' => [
                     'className' => 'Croogo/FileManager.AssetUsages',
                     'foreignKey' => false,
-                    'conditions' => [
-                        'Assets.id = AssetUsages.asset_id',
-                    ],
+                    'conditions' => $assetUsagesJoinConditions,
                 ],
             ]
         ]);
@@ -240,8 +244,8 @@ class AttachmentsTable extends CroogoTable
         if ($assetId && !isset($all)) {
             $conditions = [
                 'OR' => [
-                    'Assets.id' => $assetId,
-                    'Assets.parent_asset_id' => $assetId,
+                    $this->Assets->aliasField('id') => $assetId,
+                    $this->Assets->aliasField('parent_asset_id') => $assetId,
                 ],
             ];
             $query->orWhere($conditions);
