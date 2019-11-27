@@ -119,6 +119,7 @@ $siteTagline = Configure::read('Site.tagline');
 
     <?php
     echo $this->Blocks->get('scriptBottom');
+    echo $this->Js->writeBuffer();
     ?>
 </body>
 </html>
