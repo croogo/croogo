@@ -94,7 +94,8 @@ class LayoutHelper extends Helper
             'controller' => null,
             'action' => null,
             'prefix' => null,
-            'named' => null,
+            'pass' => null,
+            '?' => null,
         ];
         $croogo['params'] = array_intersect_key(
             array_merge($validKeys, $request->getAttribute('params')),
