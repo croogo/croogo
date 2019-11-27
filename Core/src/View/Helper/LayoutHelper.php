@@ -211,16 +211,6 @@ class LayoutHelper extends Helper
                 unset($url['pass']);
             }
 
-            if (isset($url['named'])) {
-                foreach ((array)$url['named'] as $namedField => $namedRoute) {
-                    if (is_numeric($namedField)) {
-                        $namedField = $namedRoute;
-                    }
-                    $url[$namedRoute] = $item->get($namedField);
-                }
-                unset($url['named']);
-            }
-
             try {
                 $out = $this->Html->link($out, $url, $options);
             } catch (MissingRouteException $e) {
