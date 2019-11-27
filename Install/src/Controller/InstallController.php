@@ -224,7 +224,8 @@ class InstallController extends Controller
         $user = $this->Users->get(1);
 
         if ($this->getRequest()->is('put')) {
-            $this->Users->patchEntity($user, $this->getRequest()->getData());
+            Configure::write('Trackable.Auth.User.id', 1);
+            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
             $install = new InstallManager();
             $result = $install->createAdminUser($user);
             if ($result === true) {
