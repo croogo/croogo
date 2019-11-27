@@ -6,7 +6,7 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
@@ -258,7 +258,7 @@ class Croogo
     {
         if (is_string($object)) {
             $objectName = $object;
-        } elseif ($object instanceof Request) {
+        } elseif ($object instanceof ServerRequest) {
             $pluginPath = $controller = null;
             $namespace = 'Controller';
             if (!empty($object->getParam('plugin'))) {
