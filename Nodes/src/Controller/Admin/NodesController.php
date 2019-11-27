@@ -130,7 +130,7 @@ class NodesController extends AppController
                 ];
             } else {
                 $this->paginate['order'] = [
-                    $this->Nodes->aliasField('created') => 'DESC',
+                    $this->Nodes->aliasField('publish_start') => 'DESC',
                 ];
             };
         }

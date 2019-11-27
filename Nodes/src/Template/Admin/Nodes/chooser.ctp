@@ -4,7 +4,7 @@
         echo __d('croogo', 'Sort by:');
         echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), ['class' => 'sort']);
         echo ', ' . $this->Paginator->sort('title', __d('croogo', 'Title'), ['class' => 'sort']);
-        echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), ['class' => 'sort']);
+        echo ', ' . $this->Paginator->sort('publish_start', __d('croogo', 'Published'), ['class' => 'sort']);
         ?>
     </div>
     <div class="float-right">
@@ -59,7 +59,7 @@
                     $this->Layout->status($node->promote),
                 ];
                 $popup[] = [__d('croogo', 'Status'), $this->Layout->status($node->status)];
-                $popup[] = [__d('croogo', 'Created'), $node->created];
+                $popup[] = [__d('croogo', 'Published'), $node->publish_start];
                 $popup = implode('<br>', array_map(function ($el) {
                     return implode(': ', $el);
                 }, $popup));

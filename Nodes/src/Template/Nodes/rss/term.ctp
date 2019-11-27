@@ -7,7 +7,7 @@ $items = $this->Rss->items($nodes->toArray(), function ($item) use ($Url) {
         'link' => $Url->build($item->url->getUrl(), true),
         'guid' => $Url->build($item->url->getUrl(), true),
         'description' => $item->body,
-        'pubDate' => $item->created,
+        'pubDate' => $item->publish_start,
     ];
 });
 
