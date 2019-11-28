@@ -22,7 +22,7 @@ endif;
 $this->append('action-buttons');
     if (isset($type)):
         echo $this->Croogo->adminAction(__d('croogo', 'New %s', $type->title), [
-            'action' => 'create',
+            'action' => 'add',
             $type->alias,
         ]);
     else:
