@@ -42,6 +42,7 @@ foreach ($caches as $cache => $engine):
         'button' => false,
         'class' => 'red',
         'icon' => 'delete',
+        'escapeTitle' => false,
         'method' => 'post',
         'tooltip' => [
             'data-title' => __d('croogo', 'Clear cache: %s', $cache),
