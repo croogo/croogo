@@ -200,7 +200,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
      *
      * @return bool
      */
-    protected function _securityError($type)
+    public function _securityError($type = null, $exception = null)
     {
         switch ($type) {
             case 'auth':
@@ -218,13 +218,18 @@ class AppController extends \App\Controller\AppController implements HookableCom
             default:
                 break;
         }
-        $this->set(compact('type'));
-        $this->response = $this->render('../Errors/security');
+        $message = $exception ? $exception->getMessage() : null;
+        $this->set(compact('type', 'message'));
+        if ($this->getRequest()->getParam('prefix') == 'admin') {
+            $theme = Configure::read('Site.admin_theme');
+        } else {
+            $theme = Configure::read('Site.theme');
+        }
+        $template = $theme . './Error/security';
+        $this->response = $this->render($template);
         $this->response->statusCode(400);
         $this->response->send();
-        $this->_stop();
-
-        return false;
+        exit(-1);
     }
 
     /**

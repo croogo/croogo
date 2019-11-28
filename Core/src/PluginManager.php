@@ -1324,7 +1324,11 @@ class PluginManager extends Plugin
             ]
         ]);
         Croogo::hookComponent('*', 'Croogo/Acl.Filter');
-        Croogo::hookComponent('*', 'Security');
+        Croogo::hookComponent('*', [
+            'Security' => [
+                'blackHoleCallback' => '_securityError',
+            ],
+        ]);
         Croogo::hookComponent('*', 'Acl.Acl');
         Croogo::hookComponent('*', 'Auth');
         Croogo::hookComponent('*', 'Flash');
