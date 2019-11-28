@@ -2,6 +2,8 @@
 
 namespace Croogo\Core\Action\Admin;
 
+use Cake\Controller\Controller;
+use Cake\Utility\Hash;
 use Crud\Action\BaseAction;
 use Crud\Event\Subject;
 use Crud\Traits\FindMethodTrait;
@@ -44,10 +46,14 @@ class MoveUpAction extends BaseAction
         'saveOptions' => [],
         'messages' => [
             'success' => [
-                'text' => 'Successfully moved {name} up'
+                'params' => [
+                    'type' => 'success',
+                ],
             ],
             'error' => [
-                'text' => 'Could not move {name} up'
+                'params' => [
+                    'type' => 'error',
+                ],
             ]
         ],
         'redirect' => [
@@ -76,6 +82,24 @@ class MoveUpAction extends BaseAction
         ],
         'serialize' => []
     ];
+
+    /**
+     * Constructor
+     */
+    public function __construct(Controller $controller, $config = [])
+    {
+        $this->_defaultConfig = Hash::merge([
+            'messages' => [
+                'success' => [
+                    'text' => __d('croogo', '{name} moved up successfully'),
+                ],
+                'error' => [
+                    'text' => 'Could not move {name} up',
+                ],
+            ],
+        ], $this->_defaultConfig);
+        parent::__construct($controller, $config);
+    }
 
     /**
      * HTTP PUT handler

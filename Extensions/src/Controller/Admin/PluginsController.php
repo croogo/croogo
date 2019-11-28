@@ -222,15 +222,15 @@ class PluginsController extends AppController
             throw new Exception(__d('croogo', 'Invalid plugin'));
         }
 
-        $class = 'success';
+        $element = 'success';
         $result = $this->_CroogoPlugin->move('down', $plugin);
         if ($result === true) {
             $message = __d('croogo', 'Plugin %s has been moved down', $plugin);
         } else {
             $message = $result;
-            $class = 'error';
+            $element = 'error';
         }
-        $this->Flash->set($message, ['params' => compact('class')]);
+        $this->Flash->set($message, compact('element'));
 
         return $this->redirect($this->referer());
     }

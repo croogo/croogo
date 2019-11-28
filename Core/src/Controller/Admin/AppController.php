@@ -49,6 +49,7 @@ class AppController extends CroogoAppController
                     'className' => 'Croogo/Core.Admin/Add',
                     'messages' => [
                         'success' => [
+                            'text' => __d('croogo', '{name} created successfully'),
                             'params' => [
                                 'type' => 'success',
                                 'class' => ''
@@ -66,6 +67,7 @@ class AppController extends CroogoAppController
                     'className' => 'Croogo/Core.Admin/Edit',
                     'messages' => [
                         'success' => [
+                            'text' => __d('croogo', '{name} updated successfully'),
                             'params' => [
                                 'type' => 'success',
                                 'class' => ''
