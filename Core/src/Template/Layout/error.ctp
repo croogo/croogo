@@ -27,6 +27,7 @@ $this->loadHelper('Croogo/Menus.Menus');
 //    echo $this->Meta->meta();
     echo $this->Layout->feed();
     $this->element('stylesheets');
+    $this->element('javascripts');
     echo $this->Layout->js();
     echo $this->Blocks->get('css');
     echo $this->Blocks->get('script');
@@ -116,8 +117,8 @@ $this->loadHelper('Croogo/Menus.Menus');
 
 
     <?php
-    $this->element('javascripts');
     echo $this->Blocks->get('scriptBottom');
+    echo $this->Js->writeBuffer();
     ?>
 </body>
 </html>
