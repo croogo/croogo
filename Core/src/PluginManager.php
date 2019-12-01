@@ -1296,7 +1296,7 @@ class PluginManager extends Plugin
         Configure::config('settings', new DatabaseConfig());
         try {
             Configure::load('settings', 'settings');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
             Log::error('You can ignore the above error during installation');
         }
