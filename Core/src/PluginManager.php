@@ -768,7 +768,7 @@ class PluginManager extends Plugin
             try {
                 static::load($plugin);
             } catch (MissingPluginException $e) {
-                return __d('Plugin "%s" could not be actived.', $plugin);
+                return __d('croogo', 'Plugin "%s" could not be actived.', $plugin);
             }
 
             $this->addBootstrap($plugin);
