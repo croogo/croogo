@@ -76,9 +76,9 @@ $this->append('action-buttons');
 
     if (!$all) :
         $listUrl['?']['all'] = true;
-        $listTitle = __d('assets', 'List All Attachments');
+        $listTitle = __d('croogo', 'List All Attachments');
     else :
-        $listTitle = __d('assets', 'List Attachments');
+        $listTitle = __d('croogo', 'List Attachments');
     endif;
     echo $this->Croogo->adminAction($listTitle, $listUrl, [
         'button' => 'outline-success',
@@ -91,8 +91,8 @@ $this->append('action-buttons');
         '&nbsp;',
         $this->Paginator->sort('title', __d('croogo', 'Title')) . ' ' .
         $this->Paginator->sort('filename', __d('croogo', 'Filename')) . ' ' .
-        $this->Paginator->sort('width', __d('assets', 'Width')) . ' ' .
-        $this->Paginator->sort('height', __d('assets', 'Height')) . ' ' .
+        $this->Paginator->sort('width', __d('croogo', 'Width')) . ' ' .
+        $this->Paginator->sort('height', __d('croogo', 'Height')) . ' ' .
         $this->Paginator->sort('filesize', __d('croogo', 'Size')),
         __d('croogo', 'Actions'),
     ]);
@@ -202,7 +202,7 @@ $this->append('action-buttons');
                 $actions[] = $this->Croogo->adminRowAction('', $detailUrl, [
                     'icon' => 'suitcase',
                     'escapeTitle' => false,
-                    'tooltip' => __d('assets', 'View other sizes'),
+                    'tooltip' => __d('croogo', 'View other sizes'),
                 ]);
             endif;
         endif;

@@ -187,7 +187,7 @@ foreach ($attachments as $attachment) :
             'icon' => 'suitcase',
             'escapeTitle' => false,
             'data-toggle' => 'browse',
-            'tooltip' => __d('assets', 'View other sizes'),
+            'tooltip' => __d('croogo', 'View other sizes'),
         ]);
 
         $action[] = $this->Croogo->adminRowAction('', $changeTypeUrl, [
@@ -195,7 +195,7 @@ foreach ($attachments as $attachment) :
             'escapeTitle' => false,
             'class' => 'set-featured-image',
             'data-pk' => $attachment->asset_usage->id,
-            'tooltip' => __d('assets', 'Set as FeaturedImage'),
+            'tooltip' => __d('croogo', 'Set as FeaturedImage'),
         ]);
     endif;
 
@@ -204,7 +204,7 @@ foreach ($attachments as $attachment) :
         'escapeTitle' => false,
         'class' => 'unregister-usage red',
         'data-id' => $attachment->asset_usage->id,
-        'tooltip' => __d('assets', 'Unregister asset from this resource'),
+        'tooltip' => __d('croogo', 'Unregister asset from this resource'),
     ]);
     $row[] = '<span class="actions">' . implode('&nbsp;', $action) . '</span>';
     $rows[] = $row;
@@ -234,36 +234,36 @@ $uploadUrl = [
 if (!isset($_assetButtons)) :
     $this->append('action-buttons');
     echo $this->Croogo->adminAction(
-        __d('assets', 'Reload'),
+        __d('croogo', 'Reload'),
         $browseUrl,
         [
             'div' => false,
             'icon' => 'refresh',
             'iconSize' => 'small',
             'data-toggle' => 'refresh',
-            'tooltip' => __d('assets', 'Reload asset list for this content'),
+            'tooltip' => __d('croogo', 'Reload asset list for this content'),
         ]
     );
     echo $this->Croogo->adminAction(
-        __d('assets', 'Browse'),
+        __d('croogo', 'Browse'),
         $browseUrl,
         [
             'div' => false,
             'icon' => 'folder-open',
             'iconSize' => 'small',
             'data-toggle' => 'browse',
-            'tooltip' => __d('assets', 'Browse available assets'),
+            'tooltip' => __d('croogo', 'Browse available assets'),
         ]
     );
     echo $this->Croogo->adminAction(
-        __d('assets', 'Upload'),
+        __d('croogo', 'Upload'),
         $uploadUrl,
         [
             'div' => false,
             'icon' => 'upload',
             'iconSize' => 'small',
             'data-toggle' => 'browse',
-            'tooltip' => __d('assets', 'Upload new asset for this content'),
+            'tooltip' => __d('croogo', 'Upload new asset for this content'),
         ]
     );
     $this->end();

@@ -48,7 +48,7 @@ $actions = [
     'Admin/Types/edit',
     'Admin/Vocabularies/edit',
 ];
-$tabTitle = __d('assets', 'Assets');
+$tabTitle = __d('croogo', 'Assets');
 foreach ($actions as $action) :
     list($controller, ) = explode('/', $action);
     Croogo::hookAdminTab($action, $tabTitle, 'Croogo/FileManager.admin/asset_list');

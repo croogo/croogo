@@ -13,7 +13,7 @@ $cancelIcon = $this->Html->icon('delete');
         <!-- The fileinput-button span is used to style the file input field as button -->
         <span class="btn btn-outline-success fileinput-button">
             <?php echo $addIcon; ?>
-            <span><?php echo __d('assets', 'Add files'); ?></span>
+            <span><?php echo __d('croogo', 'Add files'); ?></span>
             <?php echo $this->Form->input('asset.file', [
                 'label' => false,
                 'div' => false,
@@ -67,14 +67,14 @@ $cancelIcon = $this->Html->icon('delete');
         <td>
             {% if (!i && !o.options.autoUpload) { %}
                 <button class="btn btn-sm btn-primary start" disabled
-                    title="<?php echo __d('assets', 'Start'); ?>"
+                    title="<?php echo __d('croogo', 'Start'); ?>"
                 >
                     <?php echo $uploadIcon; ?>
                 </button>
             {% } %}
             {% if (!i) { %}
                 <button class="btn btn-sm btn-warning cancel"
-                    title="<?php echo __d('assets', 'Cancel'); ?>"
+                    title="<?php echo __d('croogo', 'Cancel'); ?>"
                 >
                     <?php echo $cancelIcon; ?>
                 </button>
@@ -113,7 +113,7 @@ $cancelIcon = $this->Html->icon('delete');
         <td>
             {% if (file.deleteUrl) { %}
                 <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}
-                    title="<?php echo __d('assets', 'Delete'); ?>"
+                    title="<?php echo __d('croogo', 'Delete'); ?>"
                 >
                     <?= $cancelIcon ?>
                 </button>

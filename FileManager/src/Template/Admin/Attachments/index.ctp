@@ -62,7 +62,7 @@ $this->append('table-heading');
                 'icon' => 'suitcase',
                 'escapeTitle' => false,
                 'data-toggle' => 'browse',
-                'tooltip' => __d('assets', 'View other sizes'),
+                'tooltip' => __d('croogo', 'View other sizes'),
             ]);
 
             $actions[] = $this->Croogo->adminRowActions($attachment->id);
