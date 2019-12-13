@@ -15,7 +15,7 @@ if (!$this->getRequest()->is('ajax')) :
         'Croogo/Core.core/underscore-min',
         'Croogo/Core.core/bootstrap3-typeahead.min',
         'Croogo/Core.core/moment-timezone-with-data',
-        'Croogo/Core.core/bootstrap-datetimepicker.min',
+        'Croogo/Core.core/tempusdominus-bootstrap-4.min',
         'Croogo/Core.core/typeahead_autocomplete',
         'Croogo/Core.core/ekko-lightbox.min.js',
         'Croogo/Core.core/select2.full.min.js',

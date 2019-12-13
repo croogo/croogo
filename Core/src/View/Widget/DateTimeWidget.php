@@ -5,6 +5,7 @@
  */
 namespace Croogo\Core\View\Widget;
 
+use Cake\Chronos\ChronosInterface;
 use Cake\Core\Configure;
 use Cake\Database\Type;
 use Cake\I18n\FrozenTime;
@@ -14,6 +15,7 @@ use Cake\Utility\Hash;
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
 use Croogo\Extensions\CroogoTheme;
+use DateTime;
 use DateTimeInterface;
 
 class DateTimeWidget extends CakeDateTimeWidget
@@ -60,8 +62,7 @@ class DateTimeWidget extends CakeDateTimeWidget
         }
 
         if ($val instanceof DateTimeInterface) {
-            $val = new FrozenTime($val);
-            $timestamp = $val->format('U');
+            $val = $val->format(DateTime::ATOM);
         }
 
         $request = Router::getRequest();
@@ -75,21 +76,23 @@ class DateTimeWidget extends CakeDateTimeWidget
         }
 
         $widget = <<<html
-            <div class="input-group $type $class">
+            <div class="input-group $type $class" 
+                data-target-input="nearest"
+                id="{$id}"
+                role="$role"
+                data-timezone="$timezone"
+                data-locale="$locale"
+                data-format="$format"
+                data-minDate="$minDate"
+                data-maxDate="$maxDate"
+            >
                 <input
                     type="text"
-                    class="form-control"
-                    name="${name}"
+                    class="form-control datetimepicker-input"
+                    name="{$name}"
                     value="{$val}"
-                    id="${id}"
-                    role="$role"
-                    data-related="{$id}"
-                    data-timestamp="$timestamp"
-                    data-timezone="$timezone"
-                    data-locale="$locale"
-                    data-format="$format"
-                    data-minDate="$minDate"
-                    data-maxDate="$maxDate"
+                    data-target="#{$id}"
+                    data-toggle="datetimepicker"
                     $required
                 />
 html;
@@ -99,7 +102,7 @@ html;
             $themeData = CroogoTheme::config(Configure::read('Site.admin_theme'));
             $iconSet = Hash::extract($themeData, 'settings.iconDefaults.iconSet')[0];
             $widget .= <<<html
-                <div class="input-group-append">
+                <div class="input-group-append" data-target="#{$id}" data-toggle="datetimepicker">
                     <span class="input-group-text">
                     <i class="$iconSet fa-calendar"></i>
                     </span>

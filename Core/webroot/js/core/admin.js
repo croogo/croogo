@@ -269,20 +269,26 @@ Admin.iconClass = function (icon, includeDefault) {
 };
 
 Admin.dateTimeFields = function(datePickers) {
+  $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+      icons: {
+        time: Admin.iconClass('clock'),
+        date: Admin.iconClass('calendar'),
+        up: Admin.iconClass('chevron-up'),
+        down: Admin.iconClass('chevron-down'),
+        previous: Admin.iconClass('chevron-left'),
+        next: Admin.iconClass('chevron-right'),
+        today: Admin.iconClass('screenshot'),
+        clear: Admin.iconClass('trash'),
+        close: Admin.iconClass('remove')
+      }
+    }
+  );
+
   datePickers = typeof datePickers !== 'undefined' ? datePickers : $('[role=datetime-picker]');
 
   datePickers.each(function () {
-
     var picker = $(this);
     var date = null;
-
-    if (picker.data('timestamp') && picker.data('timezone')) {
-      var timezone = picker.data('timezone');
-      date = moment(picker.data('timestamp') * 1000);
-      date = date.tz(timezone)
-    }
-
-    var sDate = date ? date : picker.val();
 
     picker.on('dp.change', function(e) {
       var sDate = "";
@@ -296,25 +302,16 @@ Admin.dateTimeFields = function(datePickers) {
 
     var dpOptions = {
       locale: picker.data('locale'),
-      format: picker.data('format'),
-      date: date ? date : picker.val(),
-      icons: {
-        time: Admin.iconClass('clock'),
-        date: Admin.iconClass('calendar'),
-        up: Admin.iconClass('chevron-up'),
-        down: Admin.iconClass('chevron-down'),
-        previous: Admin.iconClass('chevron-left'),
-        next: Admin.iconClass('chevron-right'),
-        today: Admin.iconClass('screenshot'),
-        clear: Admin.iconClass('trash'),
-        close: Admin.iconClass('remove')
-      }
+      format: picker.data('format')
     };
     if (picker.data('mindate')) {
       dpOptions.minDate = picker.data('mindate');
     }
     if (picker.data('maxdate')) {
       dpOptions.maxDate = picker.data('maxdate');
+    }
+    if (picker.data('timezone')) {
+      dpOptions.timeZone = picker.data('timezone');
     }
     picker.datetimepicker(dpOptions);
   });
