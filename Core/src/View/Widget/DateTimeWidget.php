@@ -15,6 +15,7 @@ use Cake\Utility\Hash;
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
 use Croogo\Extensions\CroogoTheme;
+use DateTime;
 use DateTimeInterface;
 
 class DateTimeWidget extends CakeDateTimeWidget
@@ -61,7 +62,7 @@ class DateTimeWidget extends CakeDateTimeWidget
         }
 
         if ($val instanceof DateTimeInterface) {
-            $val = $val->format(ChronosInterface::ATOM);
+            $val = $val->format(DateTime::ATOM);
         }
 
         $request = Router::getRequest();
