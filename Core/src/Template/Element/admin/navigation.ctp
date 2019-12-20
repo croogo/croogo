@@ -6,12 +6,8 @@
 
     $cacheKey = 'adminnav_' . $this->Layout->getRoleId() . '_' . $this->getRequest()->getPath() . '_' . md5(serialize($this->getRequest()->getQuery()));
     echo Cache::remember($cacheKey, function () {
-        return $this->Croogo->adminMenus(Nav::items(), [
-            'htmlAttributes' => [
-                'id' => 'sidebar-menu',
-                'class' => 'nav sidebar-inner',
-            ],
-        ]);
+        $this->loadHelper('Croogo/Core.AdminMenu');
+        return $this->AdminMenu->render(Nav::items());
     }, 'croogo_menus');
     ?>
 </div>
