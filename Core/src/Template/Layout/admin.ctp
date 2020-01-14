@@ -17,7 +17,7 @@ $showActions = isset($showActions) ? $showActions : true;
 
         ?>
     </head>
-    <body id="body" class="header-fixed sidebar-fixed sidebar-dark header-light">
+    <body id="body" class="header-fixed sidebar-fixed-offcanvas sidebar-dark header-dark sidebar-collapse">
         <div class="wrapper">
 
             <aside class="left-sidebar bg-sidebar">
