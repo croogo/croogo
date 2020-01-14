@@ -91,7 +91,7 @@ class AdminMenuHelper extends Helper
             'icon' => isset($item['icon'])
                 ? $this->formatTemplate('listItemIcon', [
                     'attrs' => $templater->formatAttributes([
-                        'class' => 'fa fa-' . $item['icon'],
+                        'class' => 'mdi mdi-' . $item['icon'],
                     ]),
                 ])
                 : null,

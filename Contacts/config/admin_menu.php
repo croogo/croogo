@@ -5,7 +5,7 @@ namespace Croogo\Contacts\Config;
 use Croogo\Core\Nav;
 
 Nav::add('sidebar', 'contacts', [
-    'icon' => 'comments',
+    'icon' => 'comment-multiple',
     'title' => __d('croogo', 'Contacts'),
     'url' => [
         'prefix' => 'admin',

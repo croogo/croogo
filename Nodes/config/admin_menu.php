@@ -5,7 +5,7 @@ namespace Croogo\Nodes\Config;
 use Croogo\Core\Nav;
 
 Nav::add('sidebar', 'content', [
-    'icon' => 'edit',
+    'icon' => 'playlist-edit',
     'title' => __d('croogo', 'Content'),
     'url' => [
         'prefix' => 'admin',

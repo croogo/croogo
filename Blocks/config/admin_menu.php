@@ -5,7 +5,7 @@ namespace Croogo\Blocks\Config;
 use Croogo\Core\Nav;
 
 Nav::add('sidebar', 'blocks', [
-    'icon' => 'columns',
+    'icon' => 'view-grid',
     'title' => __d('croogo', 'Blocks'),
     'url' => [
         'prefix' => 'admin',

@@ -101,10 +101,11 @@ html;
         if ($addon) {
             $themeData = CroogoTheme::config(Configure::read('Site.admin_theme'));
             $iconSet = Hash::extract($themeData, 'settings.iconDefaults.iconSet')[0];
+            $iconPrefix = Hash::extract($themeData, 'settings.iconDefaults.prefix')[0];
             $widget .= <<<html
                 <div class="input-group-append" data-target="#{$id}" data-toggle="datetimepicker">
                     <span class="input-group-text">
-                    <i class="$iconSet fa-calendar"></i>
+                    <i class="$iconSet $iconPrefix-calendar"></i>
                     </span>
                 </div>
 html;
