@@ -76,7 +76,7 @@ class DateTimeWidget extends CakeDateTimeWidget
         }
 
         $widget = <<<html
-            <div class="input-group $type $class" 
+            <div class="input-group $type $class"
                 data-target-input="nearest"
                 id="{$id}"
                 role="$role"

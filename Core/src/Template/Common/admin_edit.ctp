@@ -33,6 +33,7 @@ $rowClass = $this->Theme->getCssClass('row');
 $columnLeft = $this->Theme->getCssClass('columnLeft');
 $columnRight = $this->Theme->getCssClass('columnRight');
 $columnFull = $this->Theme->getCssClass('columnFull');
+$tabHeadingClass = $this->Theme->getCssClass('tabHeadingClass');
 $tabContentClass = $this->Theme->getCssClass('tabContentClass');
 
 if ($pageHeading = trim($this->fetch('page-heading'))) :
@@ -86,7 +87,7 @@ if (!$this->exists('left-column')) :
     $tabContent .= $this->Croogo->adminTabs();
 
     $this->start('left-column');
-    echo $this->Html->tag('ul', $tabHeading, ['class' => 'nav nav-tabs']);
+    echo $this->Html->tag('ul', $tabHeading, ['class' => $tabHeadingClass]);
     echo $this->Html->div($tabContentClass, $tabContent);
     $this->end();
 endif;
