@@ -1,6 +1,7 @@
 <?php
 
 if (!$this->getRequest()->is('ajax')) :
+    echo $this->Html->scriptBlock('window.isCollapsed = true;');
     echo $this->Layout->js();
     echo $this->Html->script([
         'Croogo/Core.jquery/jquery.min.js',
