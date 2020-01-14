@@ -1,6 +1,12 @@
 #bulk-action .form-group,
 .table-search .form-group {
+  display: inline-flex;
   margin-right: 0.25rem;
+}
+
+#bulk-action .btn {
+  display: inline-flex;
+  padding: 0.3rem 1rem;
 }
 
 #top-right-menu .fas,
@@ -10,4 +16,26 @@
 
 .extensions-themes .badge {
   margin: 0 8px 8px 0;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+span.slug {
+  font-weight: bold;
+  padding: 6px;
+}
+
+.input-group span.slug {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1;
 }
