@@ -39,3 +39,12 @@ span.slug {
   white-space: nowrap;
   flex: 1;
 }
+
+.card-footer > * {
+  margin-right: 4px;
+}
+
+.card-buttons .btn,
+.form-inline .btn {
+  margin-right: 4px;
+}
