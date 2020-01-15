@@ -15,7 +15,7 @@ Admin.navigation = function () {
   var $topLevelMenus = $('#sidebar-menu > li > .hasChild');
 
   // no item is current, fallback to current controller index
-  var $current = $('.nav-sidebar .current');
+  var $current = $('#sidebar-menu .active');
   if ($current.length == 0) {
     var selector = _.template('a.sidebar-item[href^="<%= basePath %>admin/' +
       '<%= params.plugin %>/' +
@@ -26,82 +26,15 @@ Admin.navigation = function () {
       $(selector(Croogo)).addClass('current');
     }
   }
+
   // traverse parent elements and mark as current
-  $($current.selector).parentsUntil('.nav-sidebar', 'ul').each(function () {
-    $(this).siblings('a.sidebar-item').addClass('current')
-  });
-  if (window.innerWidth >= 979) {
-    $('.current', $sidebar)
-      .parents('.sub-nav')
-      .last()
-      .toggle()
-      .siblings('.sidebar-item')
-      .addClass('current')
-  }
+  $('#sidebar-menu .active').parentsUntil('#sidebar-menu', 'ul').each(function () {
+    var list = $(this).parent('li');
+    list.addClass('active');
 
-  var dropdownOpen = function () {
-    $(this)
-      .addClass('dropdown-open')
-      .removeClass('dropdown-close')
-      .siblings('.sidebar-item')
-      .addClass('dropdown-open')
-      .removeClass('dropdown-close');
-  };
-
-  var dropdownClose = function () {
-    $(this)
-      .addClass('dropdown-close')
-      .removeClass('dropdown-open')
-      .siblings('.sidebar-item')
-      .addClass('dropdown-close')
-      .removeClass('dropdown-open');
-  };
-
-  $topLevelMenus.on('click blur', function (e) {
-    var $this = $(this);
-    var $ul = $(this).next('ul');
-    var sidebarWidth = $sidebar.width();
-
-    if (e.type == 'blur' && window.innerWidth > 979) {
-      return;
+    if (window.innerWidth >= 979) {
+      $('a:first', list).trigger('click');
     }
 
-    if ($ul.is(':visible')) {
-
-      var onComplete = function () {
-        dropdownClose.call($ul.get(0));
-        $ul.css({'margin-left': sidebarWidth + 'px', 'margin-top': 'inherit'})
-      };
-
-      if (window.innerWidth <= 979) {
-        $ul.removeAttr('z-index').fadeOut('fast');
-      } else {
-        $ul.slideUp('fast', onComplete);
-      }
-    } else {
-      $topLevelMenus.siblings('ul:visible').slideUp('fast', function () {
-        dropdownClose.call(this);
-      });
-      dropdownOpen.call(this);
-      if (window.innerWidth <= 979) {
-        if (e.type == 'click') {
-          $ul.css(
-            {'position': 'absolute', 'margin-left': sidebarWidth + 1 + 'px', 'margin-top': '-42px'});
-          $ul.css({'z-index': 99}).fadeIn('fast');
-        }
-      } else {
-        $ul.css({'margin-left': 0, 'position': 'relative', 'margin-top': '0px'});
-        $ul.slideDown('fast');
-      }
-    }
-    e.stopPropagation();
-    return false;
-  });
-
-  $(window).on('resize', function () {
-    $('#sidebar-menu > li ul:visible').each(function () {
-      $(this).css({'position': 'relative', 'margin-top': '0px'}).toggle();
-      dropdownClose.call(this);
-    });
   });
 };

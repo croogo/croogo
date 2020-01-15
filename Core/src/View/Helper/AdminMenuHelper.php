@@ -9,7 +9,6 @@ use Cake\View\StringTemplateTrait;
 
 class AdminMenuHelper extends Helper
 {
-
     use StringTemplateTrait;
 
     public $helpers = [
@@ -24,7 +23,6 @@ class AdminMenuHelper extends Helper
             'listItemLink' => '<a{{attrs}}>{{icon}}{{content}}{{caret}}</a>{{children}}',
             'listItemIcon' => '<i{{attrs}}></i>',
 
-            'submenuList' => '<ul{{attrs}}><div class="sub-menu">{{content}}</div></ul>',
         ],
 
         'attributes' => [
@@ -37,6 +35,11 @@ class AdminMenuHelper extends Helper
             ],
         ],
     ];
+
+    /**
+     * Internal variable holding the current url being processed
+     */
+    private $menuUrl = null;
 
     public function render($items, $options = [])
     {
@@ -60,9 +63,17 @@ class AdminMenuHelper extends Helper
 
     protected function listItem($item, $options = [])
     {
-        return $this->formatTemplate('listItem', [
+        $this->menuUrl = $this->Url->build($item['url']);
+        $options = [
             'content' => $this->listItemLink($item, $options),
-        ]);
+        ];
+        if ($this->menuUrl == env('REQUEST_URI')) {
+            $options['attrs'] = $this->templater()->formatAttributes([
+                'class' => 'active',
+            ]);
+        }
+
+        return $this->formatTemplate('listItem', $options);
     }
 
     protected function listItemLink($item, $options = [])
@@ -71,7 +82,8 @@ class AdminMenuHelper extends Helper
         $hasChildren = !empty($item['children']);
         $targetId = Inflector::slug(strtolower($item['title']));
         $listItemAttrs = $options['listItemAttrs'];
-        $listItemAttrs['href'] = $this->Url->build($item['url']);
+        $listItemAttrs['href'] = $this->menuUrl;
+
         if ($hasChildren) {
             $listItemAttrs['data-target'] = '#' . $targetId;
             $listItemAttrs['data-toggle'] = 'collapse';
@@ -79,10 +91,9 @@ class AdminMenuHelper extends Helper
             $childOptions = $options;
             $childOptions['submenuListAttrs'] = [
                 'id' => $targetId,
-                'class' => 'collapse',
+                'class' => 'sub-menu collapse',
                 'data-toggle' => 'collapse',
             ];
-
         }
 
         return $this->formatTemplate('listItemLink', [
@@ -108,7 +119,7 @@ class AdminMenuHelper extends Helper
         }
 
         $submenuListAttrs = $options['submenuListAttrs'];
-        return $this->formatTemplate('submenuList', [
+        return $this->formatTemplate('list', [
             'content' => $output,
             'attrs' => $this->templater()->formatAttributes($submenuListAttrs),
         ]);
