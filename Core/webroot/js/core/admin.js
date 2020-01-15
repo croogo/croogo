@@ -133,7 +133,7 @@ Admin.formFeedback = function () {
   var activateErrorTab = function(e) {
     var pane = $(e.target).closest('.tab-pane').get(0);
     var selector = 'a[href="#' + pane.attributes['id'].value + '"]';
-    $('#content .nav-tabs').find(selector).tab('show')
+    $('#inner-content .nav-tabs').find(selector).tab('show')
   };
   $('form input').on('invalid', _.debounce(activateErrorTab, 150))
 };
@@ -183,20 +183,20 @@ Admin.removeHash = function() {
  */
 Admin.extra = function () {
   var hash = document.location.hash;
-  var $tabs = $('#content .nav-tabs');
+  var $tabs = $('.nav-tabs');
   if (hash && hash.match("^#tab_")) {
     // Activates tab if hash starting with tab_* is given
     $tabs.find('a[href="' + hash.replace('tab_', '') + '"]').tab('show');
     Admin.removeHash();
   } else {
-    // Activates the first tab in #content by default
+    // Activates the first tab in #inner-content by default
     $tabs.find('li:first-child a').tab('show');
   }
 
   // Apply buttons jump to current tab for persistence
-  $('#content [name="_apply"]').click(function () {
+  $('#inner-content [name="_apply"]').click(function () {
     var activeTab = $tabs.find('.active[data-toggle=tab]').attr('href');
-    var form = $('#content form:first');
+    var form = $('#inner-content form:first');
     var action = form.attr('action').split('#')[0];
     form.attr('action', action + activeTab.replace('#', '#tab_'));
   });
