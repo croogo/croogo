@@ -16,7 +16,6 @@ if (!$this->getRequest()->is('ajax')) :
         //'Croogo/Core.core/bootstrap.min.js',
         'Croogo/Core.jquery/jquery.slug',
         'Croogo/Core.jquery/jquery.hoverIntent.minified',
-        'Croogo/Core.core/underscore-min',
         'Croogo/Core.core/bootstrap3-typeahead.min',
         'Croogo/Core.core/moment-timezone-with-data',
         'Croogo/Core.core/tempusdominus-bootstrap-4.min',
@@ -30,6 +29,7 @@ if (!$this->getRequest()->is('ajax')) :
         'async' => true,
     ]);
     echo $this->Html->script([
+        'Croogo/Core.core/underscore-min',
         'Croogo/Core.core/admin',
     ], [
         'defer' => true,
