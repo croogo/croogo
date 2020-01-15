@@ -43,7 +43,7 @@ $showActions = isset($showActions) ? $showActions : true;
                             <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                         </g>
                         </svg>
-                        <span class="brand-name">Croogo</span>
+                        <span class="brand-name"><?= $_siteTitle ?></span>
                     </a>
                 </div>
                     <?= $this->element('Croogo/Core.admin/navigation') ?>
