@@ -8,13 +8,13 @@ $formStart = $this->Form->create(false, ['url' => ['action' => 'login']]);
 $body = $this->Form->input('username', [
     'placeholder' => __d('croogo', 'Username'),
     'label' => false,
-    'prepend' => $this->Html->icon('user', ['class' => 'fa-fw']),
+    'prepend' => $this->Html->icon('account'),
     'required' => true,
 ]);
 $body .= $this->Form->input('password', [
     'placeholder' => __d('croogo', 'Password'),
     'label' => false,
-    'prepend' => $this->Html->icon('key', ['class' => 'fa-fw']),
+    'prepend' => $this->Html->icon('key'),
     'required' => true,
 ]);
 if (Configure::read('Access Control.autoLoginDuration')) :
@@ -37,9 +37,11 @@ $footer .= $this->Form->button(__d('croogo', 'Log In'), ['class' => 'btn btn-pri
 $formEnd = $this->Form->end();
 
 ?>
-<div class="card rounded-plus bg-faded">
-    <div class="card-header">
-        <h5 class="card-title"><?= $this->fetch('title') ?></h5>
+<div class="card">
+    <div class="card-header bg-primary">
+        <div class="app-brand">
+        <h5 class="card-title"><span class="brand-name"><?= $this->fetch('title') ?></span></h5>
+        </div>
     </div>
     <?= $formStart ?>
     <div class="card-body">
