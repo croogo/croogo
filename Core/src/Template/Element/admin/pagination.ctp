@@ -1,5 +1,5 @@
-<div class="pagination-wrapper">
-    <p>
+<div class="pagination-wrapper mt-5">
+    <p class="text-center my-3">
         <?php
         echo $this->Paginator->counter([
             'format' => __d('croogo',
@@ -7,7 +7,7 @@
         ]);
         ?>
     </p>
-    <ul class="pagination justify-content-center pagination-sm">
+    <ul class="pagination justify-content-center">
         <?= $this->Paginator->first('< ' . __d('croogo', 'first')) ?>
         <?= $this->Paginator->prev('< ' . __d('croogo', 'prev')) ?>
         <?= $this->Paginator->numbers() ?>

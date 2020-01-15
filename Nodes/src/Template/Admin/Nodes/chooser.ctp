@@ -81,7 +81,7 @@
 </div>
 <div class="row">
     <div class="pagination-wrapper">
-        <ul class="pagination justify-content-center pagination-sm">
+        <ul class="pagination justify-content-center">
             <?= $this->Paginator->numbers() ?>
         </ul>
     </div>
