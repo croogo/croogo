@@ -22,7 +22,7 @@ $showActions = isset($showActions) ? $showActions : true;
 
             <aside class="left-sidebar bg-sidebar">
 
-                <div id="sidebar" class="sidebar sidebar-with-footer">
+                <div id="sidebar" class="sidebar">
 
                 <div class="app-brand">
                     <a href="javascript:void(0)">
