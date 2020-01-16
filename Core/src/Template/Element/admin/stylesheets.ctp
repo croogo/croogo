@@ -2,7 +2,7 @@
 
 if (!$this->getRequest()->is('ajax')) :
     echo $this->Html->css([
-        'Croogo/Core.core/sleek.min.css',
+        '//unpkg.com/sleek-dashboard/dist/assets/css/sleek.min.css',
         'Croogo/Core.core/tempusdominus-bootstrap-4.min',
         'Croogo/Core.core/typeaheadjs',
         'Croogo/Core.core/ekko-lightbox.min.css',

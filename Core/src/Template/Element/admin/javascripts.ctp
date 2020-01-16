@@ -8,9 +8,9 @@ if (!$this->getRequest()->is('ajax')) :
         'Croogo/Core.core/moment-with-locales',
     ]);
     echo $this->Html->script([
-        'Croogo/Core.core/sleek.bundle.min.js',
-        'Croogo/Core.core/plugins/nprogress/nprogress.js',
-        'Croogo/Core.core/plugins/slimscrollbar/jquery.slimscroll.min.js',
+        '//unpkg.com/sleek-dashboard/dist/assets/js/sleek.bundle.js',
+        '//pagecdn.io/lib/nprogress/v0.2.0/nprogress.js',
+        '//cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js',
         'Croogo/Core.jquery/jquery-ui.min.js',
         //'Croogo/Core.core/popper.min.js',
         //'Croogo/Core.core/bootstrap.min.js',
