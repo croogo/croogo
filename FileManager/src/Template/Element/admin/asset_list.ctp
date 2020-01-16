@@ -278,7 +278,7 @@ endif;
 
 $script = <<<EOF
     if (typeof $.fn.select2 == 'function') {
-        $('.change-usage-type').select2();
+        $('.change-usage-type:visible').select2(Croogo.themeSettings.select2Defaults);
     }
     Assets.init();
 EOF;

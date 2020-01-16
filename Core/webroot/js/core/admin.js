@@ -215,7 +215,17 @@ Admin.extra = function () {
   }
 
   if (typeof $.fn.select2 !== 'undefined') {
-    $('select:not(".no-select2")').select2(Croogo.themeSettings.select2Defaults);
+    $('select:not(".no-select2"):visible').select2(Croogo.themeSettings.select2Defaults);
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+      var selects = $('select:not(".no-select2"):visible', $(e.target.attributes['href'].value));
+      for (var s of selects) {
+        var $s = $(s);
+        if (!$s.data('select2')) {
+          $s.select2(Croogo.themeSettings.select2Defaults);
+        }
+      }
+    });
   }
 };
 
