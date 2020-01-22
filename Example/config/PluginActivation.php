@@ -64,6 +64,8 @@ class PluginActivation
             'class' => 'example',
             // Roles which link is visible. Empty string means visible to all
             'visibility_roles' => '["1","2","3"]',
+            // Default to admin user
+            'created_by' => 1,
         ]));
     }
 
@@ -95,7 +97,7 @@ class PluginActivation
         // Main menu: delete Example link
         $link = $Links->find()
             ->where([
-                'Links.link' => 'plugin:Croogo%2fExample/controller:Example/action:index',
+                'Links.title' => 'Example',
             ])
             ->contain([
                 'Menus' => [
