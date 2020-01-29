@@ -45,6 +45,7 @@ echo $this->Form->input('params', [
     'label' => __d('croogo', 'Params'),
     'type' => 'stringlist',
 ]);
+echo $this->Form->input('class');
 echo $this->Html->tabEnd();
 
 $this->end();
