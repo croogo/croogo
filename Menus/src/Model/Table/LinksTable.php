@@ -53,6 +53,7 @@ class LinksTable extends CroogoTable
 
         $this->addBehavior('Timestamp');
 
+        $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Croogo/Core.Publishable');
         $this->addBehavior('Croogo/Core.Visibility');
         $this->addBehavior('Search.Search');
