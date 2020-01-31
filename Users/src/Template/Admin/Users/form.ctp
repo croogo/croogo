@@ -52,6 +52,7 @@ echo $this->Form->input('website', [
 ]);
 echo $this->Form->input('timezone', [
     'type' => 'select',
+    'required' => true,
     'empty' => true,
     'options' => Time::listTimezones(),
     'label' => __d('croogo', 'Timezone'),
@@ -60,6 +61,7 @@ echo $this->Form->input('timezone', [
 echo $this->Form->input('role_id', [
     'label' => __d('croogo', 'Role'),
     'class' => 'c-select',
+    'required' => true,
     'empty' => true,
 ]);
 echo $this->Html->tabEnd();
