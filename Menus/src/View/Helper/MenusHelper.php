@@ -261,6 +261,7 @@ class MenusHelper extends Helper
         ];
         $options = array_merge($_options, $options);
 
+        $roleId = $this->Layout->getRoleId();
         $output = '';
         foreach ($links as $link) {
             $linkAttr = $options['linkAttributes'] + [
@@ -270,6 +271,10 @@ class MenusHelper extends Helper
                 'title' => $link->description,
                 'class' => $link->class,
             ];
+
+            if (!empty($link->visibility_roles) && !in_array($roleId, $link->visibility_roles)) {
+                continue;
+            }
 
             $linkAttr = $this->_mergeLinkParams($link, 'liAttr', $linkAttr);
 
