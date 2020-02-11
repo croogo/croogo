@@ -99,9 +99,15 @@ AclPermissions.permissionToggle = function() {
 
     // now load it
     var target = $this.parent();
-    $.post(loadUrl, null, function(data, textStatus, jqXHR) {
-      target.html(data);
-      AclPermissions.permissionToggle();
+    $.post({
+      url: loadUrl,
+      headers: {
+        'X-CSRF-Token': Admin.getCookie('csrfToken'),
+      },
+      success: function(data) {
+        target.html(data);
+        AclPermissions.permissionToggle();
+      }
     });
 
     return false;
