@@ -12,6 +12,7 @@ $siteTitle = Configure::read('Site.title');
 $siteTagline = Configure::read('Site.tagline');
 
 $this->loadHelper('Croogo/Core.Layout');
+$this->loadHelper('Croogo/Core.Js');
 $this->loadHelper('Croogo/Core.Theme');
 $this->loadHelper('Croogo/Menus.Menus');
 
