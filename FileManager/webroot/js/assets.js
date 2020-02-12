@@ -134,6 +134,9 @@ Assets.resizeAsset = function(e) {
     method: 'post',
     url: $target.attr('href'),
     data: postData,
+    headers: {
+      'X-CSRF-Token': Admin.getCookie('csrfToken'),
+    },
     accepts: {
       'json': 'application/json',
     },
@@ -148,7 +151,7 @@ Assets.resizeAsset = function(e) {
   })
   .fail(function(xhr, textStatus, errorThrown) {
     console.log(xhr, textStatus, errorThrown);
-    if (typeof xhr.responseJSON.message !== 'undefined') {
+    if (xhr.responseJSON && typeof xhr.responseJSON.message !== 'undefined') {
       return alert(xhr.responseJSON.message);
     }
     return alert(errorThrown);
