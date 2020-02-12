@@ -25,5 +25,6 @@ class RolesTable extends CroogoTable
         ]);
         $this->addBehavior('Search.Search');
         $this->addBehavior('Croogo/Core.Trackable');
+        $this->addBehavior('Croogo/Core.Aliasable');
     }
 }
