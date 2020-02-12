@@ -10,6 +10,7 @@ use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Croogo\Core\Exception\Exception;
 use Croogo\Core\Nav;
 
@@ -25,15 +26,6 @@ use Croogo\Core\Nav;
  */
 class CroogoComponent extends Component
 {
-
-    /**
-     * Default Role ID
-     *
-     * Default is 3 (public)
-     *
-     * @var integer
-     */
-    protected $_defaultRoleId = 3;
 
     /**
      * Blocks data: contains parsed value of bb-code like strings
@@ -168,8 +160,11 @@ class CroogoComponent extends Component
     public function roleId()
     {
         $roleId = $this->_controller->request->getSession()->read('Auth.User.role_id');
+        if ($roleId) {
+            return $roleId;
+        }
 
-        return $roleId ? $roleId : $this->_defaultRoleId;
+        return TableRegistry::get('Croogo/Users.Roles')->byAlias('public');
     }
 
     /**
