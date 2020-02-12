@@ -117,7 +117,11 @@ Assets.unregisterAssetUsage = function(e) {
 Assets.resizeAsset = function(e) {
   e && e.preventDefault();
 
-  var width = parseInt(prompt('Resize to width: ', 300));
+  var inputWidth = prompt('Resize to width: ', 300)
+  if (inputWidth === null) {
+    return;
+  }
+  var width = parseInt(inputWidth);
   if (isNaN(width)) {
     return alert('Invalid number');
   }
