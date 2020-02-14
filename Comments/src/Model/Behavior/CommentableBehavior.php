@@ -43,6 +43,9 @@ class CommentableBehavior extends Behavior
             'className' => App::shortName(get_class($this->_table), 'Model/Table', 'Table'),
             'foreignKey' => 'foreign_key'
         ]);
+        $this->_table->Comments->addBehavior('CounterCache', [
+            $this->_table->getAlias() => ['comment_count'],
+        ]);
     }
 
     /**
