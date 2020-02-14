@@ -3,9 +3,9 @@
 use Cake\Core\Configure;
 
 ?>
-<div id="comment-<?= $comment->id; ?>" class="comment-level-<?= $level ?> comment<?php if ($node['Node']['user_id'] == $comment->user_id) {
+<div id="comment-<?= $comment->id; ?>" class="comment-level-<?= $level ?> comment<?php if (isset($entity) && $entity->user_id == $comment->user_id):
     echo ' author';
-                 } ?>">
+endif ?>">
     <div class="comment-info">
         <span class="avatar"><?= $this->Html->image('http://www.gravatar.com/avatar/' . md5(strtolower($comment->email)) . '?s=32'); ?></span>
         <span class="name">

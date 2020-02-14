@@ -1,5 +1,6 @@
 <?php
 $captcha = (isset($captcha)) ? $captcha : false;
+$entity = isset($entity) ? $entity : null;
 ?>
 <div class="comment-form">
     <h6><?= h(__d('croogo', 'Add new comment')); ?></h6>
@@ -13,7 +14,7 @@ $captcha = (isset($captcha)) ? $captcha : false;
         if (isset($parentComment)):
         echo $this->element('Croogo/Comments.comment', [
             'comment' => $parentComment,
-            'node' => null,
+            'entity' => $entity,
             'level' => 1,
             'hideReplyButton' => true,
         ]);

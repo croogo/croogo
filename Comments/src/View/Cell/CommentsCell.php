@@ -14,7 +14,7 @@ class CommentsCell extends Cell
     {
         $this->loadModel('Croogo/Nodes.Nodes');
 
-        $node = $this->Nodes->get($nodeId, [
+        $entity = $this->Nodes->get($nodeId, [
             'contain' => [
                 'Comments' => function (Query $query) {
                     $query->find('threaded');
@@ -24,7 +24,7 @@ class CommentsCell extends Cell
             ]
         ]);
 
-        $this->set('node', $node);
+        $this->set('entity', $entity);
     }
 
     public function commentFormNode(Node $node, Type $type, Comment $comment = null, Comment $parentComment = null)
