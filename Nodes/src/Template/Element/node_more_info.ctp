@@ -20,7 +20,7 @@ if ($this->Nodes->commentsEnabled() && $this->getRequest()->getParam('action') !
     } else {
         $commentCount = $this->Nodes->field('comment_count') . ' ' . __d('croogo', 'Comments');
     }
-    echo $this->Html->link($commentCount, array_merge($this->Nodes->field('url')->getUrl()), ['#' => 'comments']);
+    echo $this->Html->link($commentCount, array_merge($this->Nodes->field('url')->getUrl(), ['#' => 'comments']));
 }
 ?>
 </div>
