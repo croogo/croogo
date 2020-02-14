@@ -26,9 +26,11 @@ use Cake\Core\Configure;
                 'plugin' => 'Croogo/Comments',
                 'controller' => 'Comments',
                 'action' => 'add',
-                urlencode($comment->model),
-                $comment->foreign_key,
-                $comment->id,
+                '?' => [
+                    'model' => $comment->model,
+                    'foreign_key' => $comment->foreign_key,
+                    'parent_id' => $comment->id,
+                ],
             ], [
                 'class' => 'btn btn-sm btn-outline-secondary',
             ]); ?>

@@ -35,13 +35,12 @@ class CommentsCell extends Cell
             'plugin' => 'Croogo/Comments',
             'controller' => 'Comments',
             'action' => 'add',
-            urlencode('Croogo/Nodes.Nodes'),
-            $node->id,
+            '?' => [
+                'model' => 'Croogo/Nodes.Nodes',
+                'foreign_key' => $node->id,
+                'parent_id' => $parentComment ? $parentComment->id : null,
+            ],
         ];
-
-        if (isset($this->request->getParam('pass')[2])) {
-            $formUrl[] = $this->request->getParam('pass')[2];
-        }
 
         $this->set('title', $node->title);
         $this->set('url', $node->url);
