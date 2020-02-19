@@ -33,10 +33,7 @@ foreach ($behaviors as $behavior => $behaviorData) {
 }
 %>
 <?php
-namespace
-use const ModelTable;
-
-<%= $namespace %>Table;
+namespace <%= $namespace %>\Model\Table;
 
 <%
 $uses = [
