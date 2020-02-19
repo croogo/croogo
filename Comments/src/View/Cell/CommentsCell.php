@@ -14,7 +14,7 @@ class CommentsCell extends Cell
     {
         $this->loadModel('Croogo/Nodes.Nodes');
 
-        $node = $this->Nodes->get($nodeId, [
+        $entity = $this->Nodes->get($nodeId, [
             'contain' => [
                 'Comments' => function (Query $query) {
                     $query->find('threaded');
@@ -24,7 +24,7 @@ class CommentsCell extends Cell
             ]
         ]);
 
-        $this->set('node', $node);
+        $this->set('entity', $entity);
     }
 
     public function commentFormNode(Node $node, Type $type, Comment $comment = null, Comment $parentComment = null)
@@ -35,13 +35,12 @@ class CommentsCell extends Cell
             'plugin' => 'Croogo/Comments',
             'controller' => 'Comments',
             'action' => 'add',
-            urlencode('Croogo/Nodes.Nodes'),
-            $node->id,
+            '?' => [
+                'model' => 'Croogo/Nodes.Nodes',
+                'foreign_key' => $node->id,
+                'parent_id' => $parentComment ? $parentComment->id : null,
+            ],
         ];
-
-        if (isset($this->request->getParam('pass')[2])) {
-            $formUrl[] = $this->request->getParam('pass')[2];
-        }
 
         $this->set('title', $node->title);
         $this->set('url', $node->url);

@@ -25,7 +25,7 @@ $this->Nodes->set($node);
 
     if ($type->comment_status == 2 && $this->Nodes->field('comment_status') == 2) {
         echo $this->cell('Croogo/Comments.Comments::commentFormNode', [
-            'mode' => $node,
+            'entity' => $node,
             'type' => $type
         ]);
     }

@@ -76,8 +76,11 @@ class CommentsController extends AppController
      * @access public
      * @throws UnexpectedValueException
      */
-    public function add($model, $foreignKey = null, $parentId = null)
+    public function add($model = null, $foreignKey = null, $parentId = null)
     {
+        $model = $model ?: $this->request->getQuery('model');
+        $foreignKey = $foreignKey ?: $this->request->getQuery('foreign_key');
+        $parentId = $parentId ?: $this->request->getQuery('parent_id');
         if (!$foreignKey) {
             $this->Flash->error(__d('croogo', 'Invalid id'));
 
