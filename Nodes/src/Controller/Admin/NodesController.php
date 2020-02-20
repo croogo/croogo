@@ -3,6 +3,7 @@
 namespace Croogo\Nodes\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\Utility\Hash;
 use Croogo\Core\Controller\Component\CroogoComponent;
 use Croogo\Nodes\Model\Table\NodesTable;
 use Croogo\Taxonomy\Controller\Component\TaxonomiesComponent;
@@ -266,6 +267,23 @@ class NodesController extends AppController
     }
 
     /**
+     * @param \Cake\Event\Event $event
+     * @return void
+     */
+    public function afterCrudSave(Event $event)
+    {
+        $entityErrors = $event->getSubject()->entity->getErrors();
+        if (!empty($entityErrors)) {
+            $errors = Hash::flatten($entityErrors);
+            $message = [];
+            foreach ($errors as $field => $error) {
+                $message[] = "$field: $error";
+            }
+            $this->Crud->action()->setConfig('messages.error.text', implode(', ', $message));
+        }
+    }
+
+    /**
      * @return array
      */
     public function implementedEvents()
@@ -277,6 +295,7 @@ class NodesController extends AppController
             'Crud.beforeRender' => 'beforeCrudRender',
             'Crud.beforeSave' => 'beforeCrudSave',
             'Crud.beforeRedirect' => 'beforeCrudRedirect',
+            'Crud.afterSave' => 'afterCrudSave',
         ];
     }
 
