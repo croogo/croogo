@@ -137,10 +137,14 @@ class BulkProcessComponent extends Component
             $table->addBehavior('Croogo/Core.BulkProcess');
         }
 
-        $processed = $table->processAction($action, $ids);
-        $eventName = 'Controller.' . $Controller->getName() . '.after' . ucfirst($action);
+        try {
+            $processed = $table->processAction($action, $ids);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+        }
 
-        if ($processed) {
+        if (isset($processed)) {
+            $eventName = 'Controller.' . $Controller->getName() . '.after' . ucfirst($action);
             if (!empty($messageMap[$action])) {
                 $message = $messageMap[$action];
             } else {
@@ -149,7 +153,7 @@ class BulkProcessComponent extends Component
             $flashMethod = 'success';
             Croogo::dispatchEvent($eventName, $Controller, compact($ids));
         } else {
-            $message = __d('croogo', 'An error occured');
+            $message = $message ?: __d('croogo', 'An error occured');
             $flashMethod = 'error';
         }
         $this->Flash->{$flashMethod}($message);

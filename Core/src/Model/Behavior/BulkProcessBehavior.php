@@ -181,6 +181,7 @@ class BulkProcessBehavior extends Behavior
         } catch (\Exception $exception) {
             Log::critical(__FUNCTION__ . ': ' . $exception->getMessage());
 
+            throw $exception;
             return false;
         }
     }
