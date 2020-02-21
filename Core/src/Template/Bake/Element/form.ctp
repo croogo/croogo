@@ -1,13 +1,13 @@
 <%
-use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 
 $fields = collection($fields)
     ->filter(function($field) use ($schema) {
-        return $schema->columnType($field) !== 'binary';
+        return $schema->getColumnType($field) !== 'binary';
     });
 
 
-$displayField = $modelObject->displayField() ?: null;
+$displayField = $modelObject->getDisplayField() ?: null;
 
 if (isset($modelObject) && $modelObject->behaviors()->has('Tree')) {
     $fields = $fields->reject(function ($field) {
@@ -56,7 +56,7 @@ $this->append('action-buttons');
 $this->end();
 <%
 
-$primaryTab = strtolower(Inflector::slug($singularHumanName, '-'));
+$primaryTab = strtolower(Text::slug($singularHumanName, '-'));
 
 %>
 $this->append('form-start', $this->Form->create($<%= $singularVar %>));
@@ -79,7 +79,7 @@ $this->append('tab-content');
                 continue;
             }
             if (!in_array($field, ['created', 'modified', 'updated'])) {
-                $fieldData = $schema->column($field);
+                $fieldData = $schema->getColumn($field);
                 if (in_array($fieldData['type'], ['date', 'datetime', 'time']) && (!empty($fieldData['null']))) {
 %>
         echo $this->Form->input('<%= $field %>', ['empty' => true]);
