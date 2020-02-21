@@ -3,6 +3,7 @@
 namespace Croogo\Meta\Model\Table;
 
 use Croogo\Core\Model\Table\CroogoTable;
+use Croogo\Meta\Model\Entity\Meta;
 
 /**
  * Meta
@@ -31,6 +32,7 @@ class MetaTable extends CroogoTable
     public function initialize(array $config)
     {
         $this->setTable('meta');
+        $this->setEntityClass(Meta::class);
         $this->addBehavior('Timestamp');
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Croogo/Core.Cached', [
