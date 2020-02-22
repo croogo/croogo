@@ -51,7 +51,8 @@ Meta.removeMeta = function () {
   $('div.meta a.remove-meta').click(function (e) {
     var aRemoveMeta = $(this);
     var spinnerClass = Admin.iconClass('spinner', false);
-    if (aRemoveMeta.attr('rel') != '') {
+    var rel = parseInt(aRemoveMeta.attr('rel'), 10);
+    if (rel != '' && !isNaN(rel)) {
       if (!confirm('Remove this meta field?')) {
         return false;
       }
