@@ -47,6 +47,10 @@ class MetaController extends AppController
             'relatedModels' => false
         ]);
 
+        if ($this->getRequest()->getParam('action') == 'deleteMeta') {
+            $this->Security->setConfig('validatePost', false);
+        }
+
         $this->_setupPrg();
     }
 
@@ -74,6 +78,9 @@ class MetaController extends AppController
      */
     public function deleteMeta($id = null)
     {
+        if (!$this->getRequest()->is('post')) {
+            throw new \Exception('Invalid request method');
+        }
         $Meta = TableRegistry::get('Croogo/Meta.Meta');
         $success = false;
         $meta = $Meta->findById($id)->first();

@@ -60,17 +60,37 @@ Meta.removeMeta = function () {
       aRemoveMeta
         .addClass('disabled')
         .prepend(Meta._spinner);
-      $.getJSON(aRemoveMeta.attr('href') + '.json', function (data) {
-        if (data.success) {
-          aRemoveMeta.closest('.meta').remove();
-        } else {
-          // error
-        }
 
+      var removeSpinner = function() {
         aRemoveMeta
           .removeClass('disabled')
           .find('i.' + spinnerClass)
           .remove();
+      }
+
+      $.ajax({
+        url: aRemoveMeta.attr('href'),
+        method: 'post',
+        dataType: 'json',
+        headers: {
+          'X-CSRF-Token': Admin.getCookie('csrfToken'),
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          if (typeof (xhr.responseJSON.message) !== 'undefined') {
+            alert(xhr.responseJSON.message);
+          } else {
+            alert(errorThrown);
+          }
+          removeSpinner();
+        },
+        success: function (data) {
+          if (data.success) {
+            aRemoveMeta.closest('.meta').remove();
+          } else {
+            // error
+          }
+          removeSpinner();
+        }
       });
     } else {
       aRemoveMeta.closest('.meta').remove();
