@@ -77,7 +77,7 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
             $storage['path'] = '/assets/' . $fullpath;
             $storage['filename'] = $file['name'];
             $storage['filesize'] = $file['size'];
-            $storage['hash'] = sha1($raw);
+            $storage['hash'] = $key;
             $storage['mime_type'] = $mimeType;
             $storage['width'] = $imageInfo['width'];
             $storage['height'] = $imageInfo['height'];
