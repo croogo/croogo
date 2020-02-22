@@ -70,7 +70,7 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
 
             $prefix = null;
             if (empty($storage['path'])) {
-                $prefix = FileStorageUtils::trimPath(FileStorageUtils::randomPath($file['name']));
+                $prefix = FileStorageUtils::trimPath(FileStorageUtils::randomPath($raw));
             }
             $fullpath = $prefix . '/' . $key . '.' . $extension;
             $result = $filesystem->write($fullpath, $raw);
