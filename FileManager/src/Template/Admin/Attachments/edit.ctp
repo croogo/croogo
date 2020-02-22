@@ -54,9 +54,9 @@ $this->append('tab-content');
         $this->end();
 
         $this->append('panels');
-        $redirect = ['action' => 'index'];
+        $redirect = $this->getRequest()->getQuery('redirect') ?: ['action' => 'index'];
         if ($this->getRequest()->getSession()->check('Wysiwyg.redirect')) {
-            $redirect = $this->getRequest()->getSsession()->read('Wysiwyg.redirect');
+            $redirect = $this->getRequest()->getSession()->read('Wysiwyg.redirect');
         }
         if ($this->getRequest()->getQuery('model')) {
             $redirect = array_merge(

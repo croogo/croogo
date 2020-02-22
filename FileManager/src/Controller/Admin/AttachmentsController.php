@@ -301,6 +301,9 @@ class AttachmentsController extends AppController
             if ($this->Attachments->save($attachment)) {
                 $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
 
+                $redirect = $this->getRequest()->getQuery('redirect') ?: [
+                    'action' => 'index',
+                ];
                 return $this->redirect($redirect);
             } else {
                 $this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));

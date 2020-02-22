@@ -37,6 +37,13 @@ else :
     endif;
 endif;
 
+$editUrl = [
+    'prefix' => 'admin',
+    'plugin' => 'Croogo/FileManager',
+    'controller' => 'Attachments',
+    'action' => 'edit',
+];
+
 $detailUrl = [
     'prefix' => 'admin',
     'plugin' => 'Croogo/FileManager',
@@ -181,6 +188,21 @@ foreach ($attachments as $attachment) :
     $row[] = $preview;
     $row[] = $typeCell;
     $row[] = $this->Number->toReadableSize($attachment->asset->filesize);
+
+
+    $attachmentEditUrl = array_merge($editUrl, [
+        $attachment->id,
+        '?' => [
+            'redirect' => $this->getRequest()->getAttribute('here'),
+        ],
+    ]);
+    $action[] = $this->Croogo->adminRowAction('', $attachmentEditUrl, [
+        'icon' => 'update',
+        'escapeTitle' => false,
+        'class' => 'asset-edit',
+        'data-id' => $attachment->id,
+        'tooltip' => __d('croogo', 'Edit Attachment'),
+    ]);
 
     if ($mimeType === 'image') :
         $action[] = $this->Croogo->adminRowAction('', $detailUrl, [
