@@ -31,12 +31,15 @@ class AssetsTable extends CroogoTable
             'conditions' => [
                 $this->aliasField('model') => 'Attachments',
             ],
-            'counterCache' => 'asset_count',
-            'counterScope' => [
-                $this->aliasField('model') => 'Attachments',
-            ],
         ]);
 
+        $this->addBehavior('CounterCache', [
+            'Attachments' => [
+                'asset_count' => [
+                    $this->aliasField('model') => 'Attachments',
+                ],
+            ],
+        ]);
         $this->addBehavior('Timestamp');
         $this->addBehavior('Search.Search');
         $this->addBehavior('Croogo/Core.Trackable');
