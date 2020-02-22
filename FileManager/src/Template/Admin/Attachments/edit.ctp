@@ -102,6 +102,15 @@ $this->append('tab-content');
             echo $this->Html->endBox();
         endif;
 
+        if (preg_match('/^video/', $attachment->asset->mime_type)) :
+            echo $this->Html->beginBox(__d('croogo', 'Preview')) .
+            $this->Html->media($attachment->asset->path, [
+                'width' => 200,
+                'controls' => true,
+            ]);
+            echo $this->Html->endBox();
+        endif;
+
         $this->end();
 
         $this->append('form-end', $this->Form->end());
