@@ -335,6 +335,9 @@ class NodesController extends AppController
     public function move($id, $direction = 'up', $step = '1')
     {
         $node = $this->Nodes->get($id);
+        $this->Nodes->behaviors()->Tree->setConfig('scope', [
+            'type' => $node->type,
+        ]);
         if ($direction == 'up') {
             if ($this->Nodes->moveUp($node)) {
                 $this->Flash->success(__d('croogo', 'Content moved up'));
