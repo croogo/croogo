@@ -87,6 +87,11 @@ class MetaHelper extends Helper
                 $output .= sprintf($template, $this->Url->build($value, [
                     'fullBase' => true,
                 ]));
+            } else if (strstr($key, 'og:')) {
+                $output .= $this->Html->meta([
+                    'property' => $key,
+                    'content' => $value,
+                ]);
             } else {
                 $output .= $this->Html->meta([
                     'name' => $key,

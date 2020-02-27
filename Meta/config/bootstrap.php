@@ -4,7 +4,7 @@ use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 use Croogo\Core\Croogo;
 
-Configure::write('Meta.keys', [
+Croogo::mergeConfig('Meta.keys', [
     // Uncomment if you need keywords.
     /*
     'meta_keywords' => [
