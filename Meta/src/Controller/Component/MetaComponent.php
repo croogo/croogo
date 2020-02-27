@@ -48,9 +48,7 @@ class MetaComponent extends Component
             ]);
         $data = [];
         foreach ($defaultMeta as $meta) {
-            if (strstr($meta->key, 'meta_') && $meta->value) {
-                $data[str_replace('meta_', '', $meta->key)] = $meta->value;
-            }
+            $data[$meta->key] = $meta->value;
         }
         Configure::write('Meta.data', $data);
     }

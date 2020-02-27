@@ -27,6 +27,7 @@ class MetaHelper extends Helper
      * Helpers
      */
     public $helpers = [
+        'Url',
         'Croogo/Core.Layout',
         'Croogo/Core.Croogo',
         'Html' => [
@@ -68,30 +69,30 @@ class MetaHelper extends Helper
         if (count($nodeMeta) > 0) {
             $metaForLayout = [];
             foreach ($nodeMeta as $index => $meta) {
-                if (strstr($meta->key, 'meta_') && $meta->value) {
-                    $key = str_replace('meta_', '', $meta->key);
-                    $metaForLayout[$key] = $meta->value;
-                }
+                $metaForLayout[$meta->key] = $meta->value;
             }
         }
 
         $metaForLayout = array_merge($_metaForLayout, $metaForLayout);
 
         $output = '';
-        foreach ($metaForLayout as $name => $content) {
-            if (is_array($content) && isset($content['content'])) {
-                $attr = key($content);
-                $attrValue = $content[$attr];
-                $value = $content['content'];
+        foreach ($metaForLayout as $key => $value) {
+            if (strstr($key, 'meta_')) {
+                $output .= $this->Html->meta([
+                    'name' => str_replace('meta_', '', $key),
+                    'content' => $value,
+                ]);
+            } else if (strstr($key, 'rel_')) {
+                $template = '<link rel="canonical" href="%s"/>';
+                $output .= sprintf($template, $this->Url->build($value, [
+                    'fullBase' => true,
+                ]));
             } else {
-                $attr = 'name';
-                $attrValue = $name;
-                $value = $content;
+                $output .= $this->Html->meta([
+                    'name' => $key,
+                    'content' => $value,
+                ]);
             }
-            $output .= $this->Html->meta([
-                $attr => $attrValue,
-                'content' => $value
-            ]);
         }
 
         return $output;
