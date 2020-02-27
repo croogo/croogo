@@ -7,6 +7,7 @@ use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Response;
+use Cake\Http\ResponseEmitter;
 use Cake\Http\ServerRequest;
 use Cake\View\Exception\MissingTemplateException;
 use Croogo\Core\Croogo;
@@ -226,9 +227,10 @@ class AppController extends \App\Controller\AppController implements HookableCom
             $theme = Configure::read('Site.theme');
         }
         $template = $theme . './Error/security';
-        $this->response = $this->render($template);
-        $this->response->statusCode(400);
-        $this->response->send();
+        $response = $this->render($template);
+        $response = $response->withStatus(400);
+        $emitter = new ResponseEmitter();
+        $emitter->emit($this->response);
         exit(-1);
     }
 
