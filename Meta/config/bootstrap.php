@@ -12,11 +12,13 @@ Croogo::mergeConfig('Meta.keys', [
     ],
     */
     'meta_description' => [
-        'label' => __d('seolite', 'Description'),
+        'label' => __d('croogo', 'Description'),
+        'help' => __d('croogo', 'When empty, excerpt or first paragraph of body will be used'),
     ],
     'rel_canonical' => [
         'label' => __d('seolite', 'Canonical Page'),
         'type' => 'text',
+        'help' => __d('croogo', 'When empty, value from Permalink will be used'),
     ],
 ]);
 

@@ -22,6 +22,9 @@ foreach ($keys as $key => $keyOptions):
     if (isset($keyOptions['type'])):
         $valueOptions['type'] = $keyOptions['type'];
     endif;
+    if (isset($keyOptions['help'])):
+        $valueOptions['help'] = $keyOptions['help'];
+    endif;
     echo $this->Meta->field($key, $metaValue, $metaId, [
         'uuid' => $i,
         'tab' => false,

@@ -7,6 +7,7 @@ use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
+use Croogo\Core\Utility\StringConverter;
 
 /**
  * Meta Helper
@@ -63,13 +64,34 @@ class MetaHelper extends Helper
     public function meta($metaForLayout = [])
     {
         $_metaForLayout = Configure::read('Meta.data');
-        $nodeMeta = isset($this->_View->viewVars['node']['meta'])
-            ? $this->_View->viewVars['node']['meta']
+        $node = $this->getView()->get('node');
+        $node = $node ?: $this->getView()->get('entity');
+        $nodeMeta = isset($node['meta'])
+            ? $node['meta']
             : [];
         if (count($nodeMeta) > 0) {
             $metaForLayout = [];
             foreach ($nodeMeta as $index => $meta) {
                 $metaForLayout[$meta->key] = $meta->value;
+            }
+        }
+
+        // fallback for meta_description from node
+        $key = 'meta_description';
+        if ($node && !array_key_exists($key, $metaForLayout)) {
+            $converter = new StringConverter();
+            if (!empty($node['excerpt'])) {
+                $metaForLayout[$key] = $node['excerpt'];
+            } else {
+                $metaForLayout[$key] = $converter->firstPara($node['body']);
+            }
+        }
+
+        // fallback for rel_canonical from node
+        $key = 'rel_canonical';
+        if ($node && !array_key_exists($key, $metaForLayout)) {
+            if (!empty($node['path'])) {
+                $metaForLayout[$key] = $node['path'];
             }
         }
 
@@ -82,12 +104,12 @@ class MetaHelper extends Helper
                     'name' => str_replace('meta_', '', $key),
                     'content' => $value,
                 ]);
-            } else if (strstr($key, 'rel_')) {
+            } elseif (strstr($key, 'rel_')) {
                 $template = '<link rel="canonical" href="%s"/>';
                 $output .= sprintf($template, $this->Url->build($value, [
                     'fullBase' => true,
                 ]));
-            } else if (strstr($key, 'og:')) {
+            } elseif (strstr($key, 'og:')) {
                 $output .= $this->Html->meta([
                     'property' => $key,
                     'content' => $value,
