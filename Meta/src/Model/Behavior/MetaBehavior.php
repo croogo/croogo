@@ -67,11 +67,6 @@ class MetaBehavior extends Behavior
                         return $entity;
                     }
                     $this->_table->dispatchEvent('Model.Meta.formatFields', compact('entity'));
-                    $customFields = [];
-                    if (!empty($entity->meta)) {
-                        $customFields = Hash::combine($entity->meta, '{n}.key', '{n}.value');
-                    }
-                    $entity->custom_fields = $customFields;
 
                     return $entity;
                 });
@@ -98,23 +93,19 @@ class MetaBehavior extends Behavior
      * @param ArrayObject $options
      * @return void
      */
-    protected function _prepareMeta(ArrayObject $data, ArrayObject $options)
+    protected function _prepareMeta(Event $event)
     {
-        if (isset($data['meta']) &&
-            is_array($data['meta']) &&
-            count($data['meta']) > 0 &&
-            !Hash::numeric(array_keys($data['meta']))
+        $data = $event->getData('data');
+        $options = $event->getData('options');
+        if (isset($options['associated']) &&
+            !(isset($options['associated']['Meta']) || in_array('Meta', $options['associated']))
         ) {
-            $meta = $data['meta'];
-            $data['meta'] = [];
-            $i = 0;
-            foreach ($meta as $metaArray) {
-                $data['meta'][$i] = $metaArray;
-                $i++;
-            }
-
-            if (isset($options['associated']) && !(isset($options['associated']['Meta']) || in_array('Meta', $options['associated']))) {
-                $options['associated'][] = 'Meta';
+            $options['associated'][] = 'Meta';
+        }
+        foreach ($data['meta'] as &$meta) {
+            $meta['model'] = $this->_table->getRegistryAlias();
+            if (isset($data['id'])) {
+                $meta['foreign_key'] = $data['id'];
             }
         }
 
@@ -129,7 +120,7 @@ class MetaBehavior extends Behavior
      */
     public function beforeMarshal(Event $event)
     {
-        $this->_prepareMeta($event->getData('data'), $event->getData('options'));
+        $this->_prepareMeta($event);
     }
 
     public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
@@ -139,13 +130,9 @@ class MetaBehavior extends Behavior
         }
 
         if (isset($options['associated']) &&
-            !(isset($options['associated']['meta']) || in_array('meta', $options['associated']))
+            !(isset($options['associated']['Meta']) || in_array('Meta', $options['associated']))
         ) {
-            $options['associated'][] = 'meta';
-        }
-
-        foreach ($entity->meta as &$meta) {
-            $meta->model = $entity->getSource();
+            $options['associated'][] = 'Meta';
         }
     }
 }

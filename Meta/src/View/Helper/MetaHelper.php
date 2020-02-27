@@ -61,19 +61,16 @@ class MetaHelper extends Helper
      */
     public function meta($metaForLayout = [])
     {
-        $_metaForLayout = [];
-        if (is_array(Configure::read('Meta'))) {
-            $_metaForLayout = Configure::read('Meta');
-        }
-
-        if (count($metaForLayout) == 0 &&
-            isset($this->_View->viewVars['node']['custom_fields']) &&
-            count($this->_View->viewVars['node']['custom_fields']) > 0) {
+        $_metaForLayout = Configure::read('Meta.data');
+        $nodeMeta = isset($this->_View->viewVars['node']['meta'])
+            ? $this->_View->viewVars['node']['meta']
+            : [];
+        if (count($nodeMeta) > 0) {
             $metaForLayout = [];
-            foreach ($this->_View->viewVars['node']['custom_fields'] as $key => $value) {
-                if (strstr($key, 'meta_')) {
-                    $key = str_replace('meta_', '', $key);
-                    $metaForLayout[$key] = $value;
+            foreach ($nodeMeta as $index => $meta) {
+                if (strstr($meta->key, 'meta_') && $meta->value) {
+                    $key = str_replace('meta_', '', $meta->key);
+                    $metaForLayout[$key] = $meta->value;
                 }
             }
         }
@@ -112,6 +109,7 @@ class MetaHelper extends Helper
     public function field($key = '', $value = null, $id = null, $options = [])
     {
         $_options = [
+            'uuid' => Text::uuid(),
             'key' => [
                 'label' => __d('croogo', 'Key'),
                 'value' => $key,
@@ -124,7 +122,7 @@ class MetaHelper extends Helper
             ],
         ];
         $options = Hash::merge($_options, $options);
-        $uuid = Text::uuid();
+        $uuid = $options['uuid'];
         $isTab = isset($options['tab']);
 
         if ($isTab) {
@@ -137,7 +135,11 @@ class MetaHelper extends Helper
         }
         $fields = '';
         if ($id != null) {
-            $fields .= $this->Form->input('meta.' . $uuid . '.id', ['type' => 'hidden', 'value' => $id]);
+            $fields .= $this->Form->input('meta.' . $uuid . '.id', [
+                'type' => 'hidden',
+                'value' => $id,
+                'class' => 'meta-id',
+            ]);
             $this->Form->unlockField('meta.' . $uuid . '.id');
         }
         $options['value']['data-metafield'] = $key;
@@ -155,12 +157,15 @@ class MetaHelper extends Helper
             $actions = $this->Html->link(
                 __d('croogo', 'Remove'),
                 $deleteUrl,
-                ['class' => 'btn btn-outline-danger remove-meta', 'rel' => $id]
+                ['class' => 'btn btn-outline-danger remove-meta', 'rel' => 'meta-field-' . $id]
             );
             $actions = $this->Html->tag('div', $actions, ['class' => 'actions my-3']);
         }
 
-        $output = $this->Html->tag('div', $fields . $actions, ['class' => 'meta']);
+        $output = $this->Html->tag('div', $fields . $actions, [
+            'class' => 'meta-field',
+            'id' => 'meta-field-' . $id,
+        ]);
 
         return $output;
     }

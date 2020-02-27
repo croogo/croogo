@@ -3,6 +3,7 @@
 namespace Croogo\Meta\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
 
@@ -32,7 +33,26 @@ class MetaComponent extends Component
                 }
             }
             $controller->Security->setConfig('unlockedFields', $unlockedFields);
+        } else {
+            $this->loadMeta();
         }
+    }
+
+    protected function loadMeta()
+    {
+        $Meta = TableRegistry::get('Croogo/Meta.Meta');
+        $defaultMeta = $Meta->find()
+            ->select(['key', 'value'])
+            ->where([
+                'foreign_key IS' => null,
+            ]);
+        $data = [];
+        foreach ($defaultMeta as $meta) {
+            if (strstr($meta->key, 'meta_') && $meta->value) {
+                $data[str_replace('meta_', '', $meta->key)] = $meta->value;
+            }
+        }
+        Configure::write('Meta.data', $data);
     }
 
     /**
@@ -49,7 +69,7 @@ class MetaComponent extends Component
             return;
         }
         $title = __d('croogo', 'Custom Fields');
-        $element = 'Croogo/Meta.admin/meta_tab';
+        $element = 'Croogo/Meta.admin/custom_fields_box';
         $controllerName = $this->request->getParam('controller');
         Croogo::hookAdminBox("Admin/$controllerName/add", $title, $element);
         Croogo::hookAdminBox("Admin/$controllerName/edit", $title, $element);

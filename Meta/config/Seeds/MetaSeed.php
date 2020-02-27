@@ -9,25 +9,25 @@ class MetaSeed extends AbstractSeed
 
         [
             'model' => '',
-            'key' => 'Meta.description',
+            'key' => 'meta_description',
             'value' => 'Croogo - A CakePHP powered Content Management System',
             'created_by' => 1,
         ],
         [
             'model' => '',
-            'key' => 'Meta.generator',
+            'key' => 'meta_generator',
             'value' => 'Croogo - Content Management System',
             'created_by' => 1,
         ],
         [
             'model' => '',
-            'key' => 'Meta.robots',
+            'key' => 'meta_robots',
             'value' => 'index, follow',
             'created_by' => 1,
         ],
         [
             'model' => '',
-            'key' => 'Meta.keywords',
+            'key' => 'meta_keywords',
             'value' => 'croogo, Croogo',
             'created_by' => 1,
         ],
