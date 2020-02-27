@@ -26,12 +26,6 @@ class MetaSeed extends AbstractSeed
             'created_by' => 1,
         ],
         [
-            'model' => '',
-            'key' => 'meta_keywords',
-            'value' => 'croogo, Croogo',
-            'created_by' => 1,
-        ],
-        [
             'model' => 'Croogo/Nodes.Nodes',
             'foreign_key' => '1',
             'key' => 'meta_keywords',
