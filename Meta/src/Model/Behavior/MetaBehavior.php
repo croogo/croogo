@@ -39,7 +39,8 @@ class MetaBehavior extends Behavior
                 'Meta.model' => $this->_table->getRegistryAlias(),
             ],
             'order' => 'Meta.key ASC',
-            'cascadeCallbacks' => true
+            'cascadeCallbacks' => true,
+            'saveStrategy' => 'replace',
         ]);
 
         $this->_table->Meta
@@ -102,6 +103,9 @@ class MetaBehavior extends Behavior
         ) {
             $options['associated'][] = 'Meta';
         }
+        $data['meta'] = array_filter($data['meta'], function($meta) {
+            return !empty($meta['value']);
+        });
         foreach ($data['meta'] as &$meta) {
             $meta['model'] = $this->_table->getRegistryAlias();
             if (isset($data['id'])) {
