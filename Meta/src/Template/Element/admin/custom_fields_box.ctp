@@ -1,6 +1,7 @@
 <div class="meta-fields">
     <?php
 
+    use Cake\Core\Configure;
     use Cake\Utility\Hash;
 
     if (isset($entity) && !empty($entity->meta)) {
@@ -10,8 +11,14 @@
         $fields = $fieldsKeyToId = [];
     }
     if (count($fields) > 0) {
+        $metaKeys = array_keys(Configure::read('Meta.keys'));
+        $i = 0;
         foreach ($fields as $fieldKey => $fieldValue) {
-            echo $this->Meta->field($fieldKey, $fieldValue, $fieldsKeyToId[$fieldKey]);
+            $id = isset($fieldsKeyToId[$fieldKey]) ? $fieldsKeyToId[$fieldKey] : $i;
+            if (!in_array($fieldKey, $metaKeys)):
+                echo $this->Meta->field($fieldKey, $fieldValue, $id);
+            endif;
+            $i++;
         }
     }
     ?>
@@ -22,4 +29,3 @@ echo $this->Html->link(
     ['plugin' => 'Croogo/Meta', 'controller' => 'Meta', 'action' => 'addMeta'],
     ['class' => 'add-meta btn btn-secondary']
 );
-

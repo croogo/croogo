@@ -39,6 +39,7 @@ $this->end();
 
 $this->start('tab-content');
     echo $this->Html->tabStart('node-main');
+        echo $this->Form->input('id');
         echo $this->Form->input('title', [
             'label' => false,
             'placeholder' => __d('croogo', '%s title', h($type->title)),

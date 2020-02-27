@@ -7,6 +7,7 @@ use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
+use Croogo\Core\Utility\StringConverter;
 
 /**
  * Meta Helper
@@ -27,6 +28,7 @@ class MetaHelper extends Helper
      * Helpers
      */
     public $helpers = [
+        'Url',
         'Croogo/Core.Layout',
         'Croogo/Core.Croogo',
         'Html' => [
@@ -61,40 +63,63 @@ class MetaHelper extends Helper
      */
     public function meta($metaForLayout = [])
     {
-        $_metaForLayout = [];
-        if (is_array(Configure::read('Meta'))) {
-            $_metaForLayout = Configure::read('Meta');
+        $_metaForLayout = Configure::read('Meta.data');
+        $node = $this->getView()->get('node');
+        $node = $node ?: $this->getView()->get('entity');
+        $nodeMeta = isset($node['meta'])
+            ? $node['meta']
+            : [];
+        if (count($nodeMeta) > 0) {
+            $metaForLayout = [];
+            foreach ($nodeMeta as $index => $meta) {
+                $metaForLayout[$meta->key] = $meta->value;
+            }
         }
 
-        if (count($metaForLayout) == 0 &&
-            isset($this->_View->viewVars['node']['custom_fields']) &&
-            count($this->_View->viewVars['node']['custom_fields']) > 0) {
-            $metaForLayout = [];
-            foreach ($this->_View->viewVars['node']['custom_fields'] as $key => $value) {
-                if (strstr($key, 'meta_')) {
-                    $key = str_replace('meta_', '', $key);
-                    $metaForLayout[$key] = $value;
-                }
+        // fallback for meta_description from node
+        $key = 'meta_description';
+        if ($node && !array_key_exists($key, $metaForLayout)) {
+            $converter = new StringConverter();
+            if (!empty($node['excerpt'])) {
+                $metaForLayout[$key] = $node['excerpt'];
+            } else {
+                $metaForLayout[$key] = $converter->firstPara($node['body']);
+            }
+        }
+
+        // fallback for rel_canonical from node
+        $key = 'rel_canonical';
+        if ($node && !array_key_exists($key, $metaForLayout)) {
+            if (!empty($node['path'])) {
+                $metaForLayout[$key] = $node['path'];
             }
         }
 
         $metaForLayout = array_merge($_metaForLayout, $metaForLayout);
 
         $output = '';
-        foreach ($metaForLayout as $name => $content) {
-            if (is_array($content) && isset($content['content'])) {
-                $attr = key($content);
-                $attrValue = $content[$attr];
-                $value = $content['content'];
+        foreach ($metaForLayout as $key => $value) {
+            if (strstr($key, 'meta_')) {
+                $output .= $this->Html->meta([
+                    'name' => str_replace('meta_', '', $key),
+                    'content' => $value,
+                ]);
+            } elseif (strstr($key, 'rel_')) {
+                $template = '<link rel="canonical" href="%s"/>';
+                $output .= sprintf($template, $this->Url->build($value, [
+                    'fullBase' => true,
+                ]));
+            } elseif (strstr($key, 'og:')) {
+                $output .= $this->Html->meta([
+                    'property' => $key,
+                    'content' => $value,
+                ]);
             } else {
-                $attr = 'name';
-                $attrValue = $name;
-                $value = $content;
+                $output .= $this->Html->meta([
+                    'name' => $key,
+                    'content' => $value,
+                ]);
             }
-            $output .= $this->Html->meta([
-                $attr => $attrValue,
-                'content' => $value
-            ]);
         }
 
         return $output;
@@ -112,6 +137,7 @@ class MetaHelper extends Helper
     public function field($key = '', $value = null, $id = null, $options = [])
     {
         $_options = [
+            'uuid' => Text::uuid(),
             'key' => [
                 'label' => __d('croogo', 'Key'),
                 'value' => $key,
@@ -124,7 +150,7 @@ class MetaHelper extends Helper
             ],
         ];
         $options = Hash::merge($_options, $options);
-        $uuid = Text::uuid();
+        $uuid = $options['uuid'];
         $isTab = isset($options['tab']);
 
         if ($isTab) {
@@ -137,7 +163,11 @@ class MetaHelper extends Helper
         }
         $fields = '';
         if ($id != null) {
-            $fields .= $this->Form->input('meta.' . $uuid . '.id', ['type' => 'hidden', 'value' => $id]);
+            $fields .= $this->Form->input('meta.' . $uuid . '.id', [
+                'type' => 'hidden',
+                'value' => $id,
+                'class' => 'meta-id',
+            ]);
             $this->Form->unlockField('meta.' . $uuid . '.id');
         }
         $options['value']['data-metafield'] = $key;
@@ -155,12 +185,15 @@ class MetaHelper extends Helper
             $actions = $this->Html->link(
                 __d('croogo', 'Remove'),
                 $deleteUrl,
-                ['class' => 'btn btn-outline-danger remove-meta', 'rel' => $id]
+                ['class' => 'btn btn-outline-danger remove-meta', 'rel' => 'meta-field-' . $id]
             );
             $actions = $this->Html->tag('div', $actions, ['class' => 'actions my-3']);
         }
 
-        $output = $this->Html->tag('div', $fields . $actions, ['class' => 'meta']);
+        $output = $this->Html->tag('div', $fields . $actions, [
+            'class' => 'meta-field',
+            'id' => 'meta-field-' . $id,
+        ]);
 
         return $output;
     }

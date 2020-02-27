@@ -25,11 +25,13 @@ Meta.documentReady = function () {
 Meta.addMeta = function () {
   $('a.add-meta').click(function (e) {
     var aAddMeta = $(this);
+    var metaCount = $('.meta-field').length;
+
     var spinnerClass = Admin.iconClass('spinner', false);
     aAddMeta
       .addClass('disabled')
       .prepend(Meta._spinner);
-    $.get(aAddMeta.attr('href'), function (data) {
+    $.get(aAddMeta.attr('href'), { count: metaCount }, function (data) {
       aAddMeta.closest('.' + Croogo.themeSettings.css.boxBodyClass).find('.meta-fields').append(data);
       $('div.meta a.remove-meta').unbind();
       Meta.removeMeta();
@@ -48,11 +50,13 @@ Meta.addMeta = function () {
  * @return void
  */
 Meta.removeMeta = function () {
-  $('div.meta a.remove-meta').click(function (e) {
+  $('div.meta-field a.remove-meta').click(function (e) {
+    e.preventDefault();
     var aRemoveMeta = $(this);
     var spinnerClass = Admin.iconClass('spinner', false);
-    var rel = parseInt(aRemoveMeta.attr('rel'), 10);
-    if (rel != '' && !isNaN(rel)) {
+    var rel = aRemoveMeta.attr('rel');
+    var removeId = aRemoveMeta.parents('.meta-field').find('.meta-id').val();
+    if (removeId != '' && /^[-+]?(\d+|Infinity)$/.test(removeId)) {
       if (!confirm('Remove this meta field?')) {
         return false;
       }
@@ -85,7 +89,8 @@ Meta.removeMeta = function () {
         },
         success: function (data) {
           if (data.success) {
-            aRemoveMeta.closest('.meta').remove();
+            var el = $('#' + rel);
+            el.hide(250, function() { el.remove(); });
           } else {
             // error
           }
@@ -93,10 +98,10 @@ Meta.removeMeta = function () {
         }
       });
     } else {
-      aRemoveMeta.closest('.meta').remove();
+      var el = $('#' + rel);
+      el.hide(250, function() { el.remove(); });
     }
 
-    e.preventDefault();
     return false;
   });
 };

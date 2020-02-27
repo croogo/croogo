@@ -21,7 +21,7 @@ $siteTagline = Configure::read('Site.tagline');
     <title><?= $this->fetch('title'); ?> - <?= $siteTitle; ?></title>
     <?php
     $rightRegionBlocks = $this->Regions->blocks('right');
-//    echo $this->Meta->meta();
+    echo $this->Meta->meta();
     echo $this->Layout->feed();
     echo $this->Layout->js();
     $this->element('stylesheets');
