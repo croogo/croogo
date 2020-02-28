@@ -27,5 +27,5 @@
 echo $this->Html->link(
     __d('croogo', 'Add another field'),
     ['plugin' => 'Croogo/Meta', 'controller' => 'Meta', 'action' => 'addMeta'],
-    ['class' => 'add-meta btn btn-secondary']
+    ['class' => 'add-meta btn btn-outline-secondary']
 );
