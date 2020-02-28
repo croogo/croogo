@@ -26,6 +26,27 @@
   margin-top: 1rem;
 }
 
+header.masthead {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+header.masthead video {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /* Size the video to fit the container. */
+    min-width: 100%;
+    min-height: 100%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 0;
+}
+
 header.masthead .page-heading,
 header.masthead .intro-text,
 header.masthead .post-heading {

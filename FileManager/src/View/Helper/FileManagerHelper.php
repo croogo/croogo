@@ -123,6 +123,11 @@ class FileManagerHelper extends Helper
         return $icon;
     }
 
+    public function filename2mime($filename)
+    {
+        return $this->FileManager->filename2mime($filename);
+    }
+
     /**
      * Breadcrumb
      *
