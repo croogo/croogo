@@ -33,6 +33,19 @@ header.masthead {
     overflow: hidden;
 }
 
+header.masthead iframe.youtube-embed {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: 0;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
 header.masthead video {
     position: absolute;
     left: 50%;

@@ -45,6 +45,14 @@ endif;
 
 $mastheadStyle = $mastheadAttrs ? implode(';', $mastheadAttrs) : null;
 
+if (isset($node->meta)):
+    $ogVideo = collection($node->meta)->firstMatch(['key' => 'og:video']);
+    if ($ogVideo && substr($ogVideo->value, -3) == 'mp4'):
+        $bgImageUrl = $ogVideo->value;
+        $ext = 'mp4';
+    endif;
+endif;
+
 ?>
 <header class="masthead" style="<?= $mastheadStyle ?>">
 <?php if ($ext === 'mp4'): ?>
@@ -52,6 +60,18 @@ $mastheadStyle = $mastheadAttrs ? implode(';', $mastheadAttrs) : null;
         <source src=<?= $bgImageUrl ?>>
     </video>
 <?php endif; ?>
+
+<?php if (isset($ogVideo) && strstr($ogVideo->value, 'youtu.be') !== false): ?>
+    <?php $parsed = parse_url($ogVideo->value); ?>
+    <iframe src="https://youtube.com/embed<?= $parsed['path'] ?>?controls=0"
+        class="youtube-embed"
+        allowfullscreen
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    >
+    </iframe>
+<?php endif; ?>
+
     <div class="container">
 
         <?php if (empty($mastheadWrapperClass)) : ?>
