@@ -31,9 +31,13 @@ if (!isset($bgImagePath)) :
 endif;
 
 $bgImageUrl = $this->Url->webroot($bgImagePath);
-$mastheadAttrs = [
-    "background-image: url($bgImageUrl)",
-];
+$ext = strtolower(pathinfo($bgImageUrl, PATHINFO_EXTENSION));
+$mastheadAttrs = [];
+if ($ext === 'jpg' || $ext === 'png'):
+    $mastheadAttrs = [
+        "background-image: url($bgImageUrl)",
+    ];
+endif;
 
 if (isset($contact)) :
     $mastheadAttrs[] = 'background-color: #222';
@@ -43,6 +47,11 @@ $mastheadStyle = $mastheadAttrs ? implode(';', $mastheadAttrs) : null;
 
 ?>
 <header class="masthead" style="<?= $mastheadStyle ?>">
+<?php if ($ext === 'mp4'): ?>
+    <video controls loop muted playsinline>
+        <source src=<?= $bgImageUrl ?>>
+    </video>
+<?php endif; ?>
     <div class="container">
 
         <?php if (empty($mastheadWrapperClass)) : ?>
