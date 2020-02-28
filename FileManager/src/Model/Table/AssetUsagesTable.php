@@ -3,6 +3,7 @@
 namespace Croogo\FileManager\Model\Table;
 
 use ArrayObject;
+use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -46,4 +47,13 @@ class AssetUsagesTable extends CroogoTable
 
         return true;
     }
+
+    /**
+     * After Save Handler
+     */
+    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        Cache::clearGroup('nodes');
+    }
+
 }
