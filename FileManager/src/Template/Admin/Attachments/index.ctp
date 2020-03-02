@@ -56,7 +56,7 @@ $this->append('table-heading');
         $mimeType = explode('/', $attachment->asset->mime_type);
         $mimeType = $mimeType['0'];
         $assetCount = $attachment->asset_count . '&nbsp;';
-        if ($mimeType == 'image') {
+        if ($mimeType == 'image' || $mimeType == 'video') {
             $detailUrl['?']['id'] = $attachment->id;
             $actions[] = $this->Croogo->adminRowAction('', $detailUrl, [
                 'icon' => 'suitcase',
@@ -66,21 +66,24 @@ $this->append('table-heading');
             ]);
 
             $actions[] = $this->Croogo->adminRowActions($attachment->id);
-            $resizeUrl = array_merge(
-                [
-                    'action' => 'resize',
-                    $attachment->id,
-                    '_ext' => 'json'
-                ],
-                ['?' => $query]
-            );
 
-            $actions[] = $this->Croogo->adminRowAction('', $resizeUrl, [
-                'icon' => $this->Theme->getIcon('resize'),
-                'escapeTitle' => false,
-                'tooltip' => __d('croogo', 'Resize this item'),
-                'data-toggle' => 'resize-asset'
-            ]);
+            if ($mimeType == 'image'):
+                $resizeUrl = array_merge(
+                    [
+                        'action' => 'resize',
+                        $attachment->id,
+                        '_ext' => 'json'
+                    ],
+                    ['?' => $query]
+                );
+
+                $actions[] = $this->Croogo->adminRowAction('', $resizeUrl, [
+                    'icon' => $this->Theme->getIcon('resize'),
+                    'escapeTitle' => false,
+                    'tooltip' => __d('croogo', 'Resize this item'),
+                    'data-toggle' => 'resize-asset'
+                ]);
+            endif;
         }
 
         $editUrl = array_merge(
