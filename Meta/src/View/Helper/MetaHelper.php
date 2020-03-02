@@ -72,7 +72,12 @@ class MetaHelper extends Helper
         if (count($nodeMeta) > 0) {
             $metaForLayout = [];
             foreach ($nodeMeta as $index => $meta) {
-                $metaForLayout[$meta->key] = $meta->value;
+                $value = $meta->value;
+                if (strstr($value, 'youtu.be') !== false) {
+                    $parsed = parse_url($value);
+                    $value = sprintf('https://youtube.com/embed%s', $parsed['path']);
+                }
+                $metaForLayout[$meta->key] = $value;
             }
         }
 
