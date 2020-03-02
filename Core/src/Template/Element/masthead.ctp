@@ -2,6 +2,8 @@
 
 use Cake\Core\Configure;
 
+$this->loadHelper('Croogo/FileManager.FileManager');
+
 if (isset($node)) :
     $mastheadTitle = $node->title;
     $mastheadSubheading = $node->excerpt;
@@ -31,9 +33,9 @@ if (!isset($bgImagePath)) :
 endif;
 
 $bgImageUrl = $this->Url->webroot($bgImagePath);
-$ext = strtolower(pathinfo($bgImageUrl, PATHINFO_EXTENSION));
+list($mimeType, $mimeSubtype) = explode('/', $this->FileManager->filename2mime($bgImageUrl));
 $mastheadAttrs = [];
-if ($ext === 'jpg' || $ext === 'png'):
+if ($mimeType == 'image'):
     $mastheadAttrs = [
         "background-image: url($bgImageUrl)",
     ];
@@ -49,15 +51,15 @@ if (isset($node->meta)):
     $ogVideo = collection($node->meta)->firstMatch(['key' => 'og:video']);
     if ($ogVideo && substr($ogVideo->value, -3) == 'mp4'):
         $bgImageUrl = $ogVideo->value;
-        $ext = 'mp4';
+        $mimeType = 'video';
     endif;
 endif;
 
 ?>
 <header class="masthead" style="<?= $mastheadStyle ?>">
-<?php if ($ext === 'mp4'): ?>
-    <video controls loop muted playsinline>
-        <source src=<?= $bgImageUrl ?>>
+<?php if ($mimeType === 'video'): ?>
+    <video controls playsinline>
+        <source src="<?= $bgImageUrl ?>">
     </video>
 <?php endif; ?>
 

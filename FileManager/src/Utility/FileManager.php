@@ -161,6 +161,7 @@ class FileManager
         'wav'     => 'audio/x-wav',
         'wbmp'    => 'image/vnd.wap.wbmp',
         'wbxml'   => 'application/vnd.wap.wbxml',
+        'webm'    => 'video/webm',
         'wml'     => 'text/vnd.wap.wml',
         'wmlc'    => 'application/vnd.wap.wmlc',
         'wmls'    => 'text/vnd.wap.wmlscript',
@@ -263,7 +264,7 @@ class FileManager
         if (isset($this->ext2MimeType[$ext])) {
             return $this->ext2MimeType[$ext];
         }
-        Log::warning('Cannot get mimeType for ' .$filename);
+        Log::warning('Cannot get mimeType for ' . $filename);
         return null;
     }
 
