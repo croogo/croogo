@@ -119,9 +119,10 @@ $this->append('table-heading');
                 ]);
                 break;
             case 'video':
-                $thumbnail = $this->Html->media($attachment->asset->path, [
+                $thumbnail = $this->Html->media([$attachment->asset->path], [
                     'width' => 200,
-                    'controls' => true,
+                    'controls', 'playsinline',
+                    'poster' => $attachment->asset->poster_path ?: null,
                 ]);
                 break;
             default:

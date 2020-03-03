@@ -46,6 +46,12 @@ class FileManagerEventHandler implements EventListenerInterface
         $request = $controller->request;
         $attachment = $event->getData('attachment');
 
+        // create poster for video, ideally should be done via a job queue
+        $Attachments = TableRegistry::get('Croogo/FileManager.Attachments');
+        if (strstr($attachment->asset->mime_type, 'video') !== false) {
+            $Attachments->createVideoThumbnail($attachment->id);
+        }
+
         if (empty($attachment->asset->asset_usage)) {
             Log::error('No asset usage record to register');
 

@@ -140,6 +140,13 @@ class LinkedAssetsBehavior extends Behavior
                     }
                     $assetUsage->versions = $versions;
 
+                    if (strstr($assetUsage->asset->mime_type, 'video') !== false && (
+                        isset($versions[0]) &&
+                        strstr($versions[0]->mime_type, 'image') !== false
+                    )) {
+                        $assetUsage->asset->poster_path = $versions[0]->path;
+                    }
+
                     $result[$key][$assetUsage->type][] = $assetUsage->asset;
 
                 //} else {

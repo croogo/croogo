@@ -9,7 +9,11 @@ if (isset($node)) :
     $mastheadSubheading = $node->excerpt;
     $mastheadWrapperClass = "post-heading";
     if (isset($node->linked_assets['FeaturedImage'][0])) :
-        $bgImagePath = $node->linked_assets['FeaturedImage'][0]->path;
+        $media = $node->linked_assets['FeaturedImage'][0];
+        $bgImagePath = $media->path;
+        if (isset($media->poster_path)):
+            $posterPath = $media->poster_path;
+        endif;
     endif;
 elseif (isset($contact)) :
     $mastheadTitle = $contact->title;
@@ -58,9 +62,12 @@ endif;
 ?>
 <header class="masthead" style="<?= $mastheadStyle ?>">
 <?php if ($mimeType === 'video'): ?>
-    <video controls playsinline>
-        <source src="<?= $bgImageUrl ?>">
-    </video>
+    <?= $this->Html->media([$bgImageUrl], [
+            'tag' => 'video',
+            'fullBase' => true,
+            'controls', 'playsinline',
+            'poster' => isset($posterPath) ? $posterPath : null,
+    ]) ?>
 <?php endif; ?>
 
 <?php if (isset($ogVideo) && strstr($ogVideo->value, 'youtu.be') !== false): ?>

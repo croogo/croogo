@@ -126,9 +126,10 @@ foreach ($attachments as $attachment) :
             'title' => $attachment->title
         ]);
     elseif ($mimeType === 'video') :
-        $thumbnail = $this->Html->media($attachment->asset->path, [
+        $thumbnail = $this->Html->media([$attachment->asset->path], [
             'width' => 200,
-            'controls' => true,
+            'controls', 'playsinline',
+            'poster' => $attachment->asset->poster_path ?: null,
         ]);
     else :
         $imgUrl = $this->Html->image('Croogo/Core./img/icons/page_white.png') . ' ';

@@ -183,7 +183,28 @@ class AttachmentsTable extends CroogoTable
             ]);
         }
 
+        $query->formatResults([$this, 'getVideoPoster']);
+
         return $query;
+    }
+
+    public function getVideoPoster($results) {
+        return $results->map(function($result) {
+            if (strstr($result['asset']['mime_type'], 'video') !== false) {
+                $poster = $this->Assets->find()
+                    ->select(['path'])
+                    ->matching('Attachments')
+                    ->where([
+                        'parent_asset_id' => $result['asset']['id'],
+                        'mime_type LIKE' => 'image/%',
+                    ])
+                    ->first();
+                if ($poster) {
+                    $result['asset']['poster_path'] = $poster->path;
+                }
+            }
+            return $result;
+        });
     }
 
     /**
