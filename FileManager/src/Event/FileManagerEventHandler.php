@@ -5,6 +5,7 @@ namespace Croogo\FileManager\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
+use Char0n\FFMpegPHP\Movie;
 use Croogo\Core\Croogo;
 use Croogo\Core\Nav;
 
@@ -48,7 +49,10 @@ class FileManagerEventHandler implements EventListenerInterface
 
         // create poster for video, ideally should be done via a job queue
         $Attachments = TableRegistry::get('Croogo/FileManager.Attachments');
-        if (strstr($attachment->asset->mime_type, 'video') !== false) {
+        if (
+            strstr($attachment->asset->mime_type, 'video') !== false &&
+            class_exists('Char0n\FFMpegPHP\Movie')
+        ) {
             $Attachments->createVideoThumbnail($attachment->id);
         }
 
