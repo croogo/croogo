@@ -112,6 +112,7 @@
     },
     "suggest": {
         "admad/cakephp-jwt-auth": "CakePHP JWT Authenticate plugin",
+        "char0n/ffmpeg-php": "PHP wrapper for FFmpeg application",
         "croogo/locale": "Localization for Croogo"
     },
     "minimum-stability": "dev",
