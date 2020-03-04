@@ -2,12 +2,18 @@
 
 use Cake\Core\Configure;
 
+$this->loadHelper('Croogo/FileManager.FileManager');
+
 if (isset($node)) :
     $mastheadTitle = $node->title;
     $mastheadSubheading = $node->excerpt;
     $mastheadWrapperClass = "post-heading";
     if (isset($node->linked_assets['FeaturedImage'][0])) :
-        $bgImagePath = $node->linked_assets['FeaturedImage'][0]->path;
+        $media = $node->linked_assets['FeaturedImage'][0];
+        $bgImagePath = $media->path;
+        if (isset($media->poster_path)):
+            $posterPath = $media->poster_path;
+        endif;
     endif;
 elseif (isset($contact)) :
     $mastheadTitle = $contact->title;
@@ -31,9 +37,9 @@ if (!isset($bgImagePath)) :
 endif;
 
 $bgImageUrl = $this->Url->webroot($bgImagePath);
-$ext = strtolower(pathinfo($bgImageUrl, PATHINFO_EXTENSION));
+list($mimeType, $mimeSubtype) = explode('/', $this->FileManager->filename2mime($bgImageUrl));
 $mastheadAttrs = [];
-if ($ext === 'jpg' || $ext === 'png'):
+if ($mimeType == 'image'):
     $mastheadAttrs = [
         "background-image: url($bgImageUrl)",
     ];
@@ -49,16 +55,19 @@ if (isset($node->meta)):
     $ogVideo = collection($node->meta)->firstMatch(['key' => 'og:video']);
     if ($ogVideo && substr($ogVideo->value, -3) == 'mp4'):
         $bgImageUrl = $ogVideo->value;
-        $ext = 'mp4';
+        $mimeType = 'video';
     endif;
 endif;
 
 ?>
 <header class="masthead" style="<?= $mastheadStyle ?>">
-<?php if ($ext === 'mp4'): ?>
-    <video controls loop muted playsinline>
-        <source src=<?= $bgImageUrl ?>>
-    </video>
+<?php if ($mimeType === 'video'): ?>
+    <?= $this->Html->media([$bgImageUrl], [
+            'tag' => 'video',
+            'fullBase' => true,
+            'controls', 'playsinline',
+            'poster' => isset($posterPath) ? $posterPath : null,
+    ]) ?>
 <?php endif; ?>
 
 <?php if (isset($ogVideo) && strstr($ogVideo->value, 'youtu.be') !== false): ?>

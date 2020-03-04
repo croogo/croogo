@@ -9,10 +9,10 @@ use Cake\Filesystem\Folder;
 use Cake\Log\LogTrait;
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
+use Char0n\FFMpegPHP\Movie;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\FileManager\Utility\StorageManager;
 use Exception;
-use FFmpegMovie;
 use finfo;
 use Intervention\Image\ImageManagerStatic as Image;
 use InvalidArgumentException;
@@ -183,7 +183,28 @@ class AttachmentsTable extends CroogoTable
             ]);
         }
 
+        $query->formatResults([$this, 'getVideoPoster']);
+
         return $query;
+    }
+
+    public function getVideoPoster($results) {
+        return $results->map(function($result) {
+            if (strstr($result['asset']['mime_type'], 'video') !== false) {
+                $poster = $this->Assets->find()
+                    ->select(['path'])
+                    ->matching('Attachments')
+                    ->where([
+                        'parent_asset_id' => $result['asset']['id'],
+                        'mime_type LIKE' => 'image/%',
+                    ])
+                    ->first();
+                if ($poster) {
+                    $result['asset']['poster_path'] = $poster->path;
+                }
+            }
+            return $result;
+        });
     }
 
     /**
@@ -494,10 +515,10 @@ class AttachmentsTable extends CroogoTable
      * @param int $h New Height
      * @param array $options Options array
      */
-    public function createVideoThumbnail($id, $w, $h, $options = [])
+    public function createVideoThumbnail($id, $w = null, $h = null, $options = [])
     {
-        if (!class_exists('FFmpegMovie')) {
-            throw new RunTimeException('FFmpegMovie class not found');
+        if (!class_exists('Char0n\FFMpegPHP\Movie')) {
+            throw new RunTimeException('Char0n\FFMpegPHP\Movie class not found');
         }
         $this->recursive = -1;
 
@@ -514,8 +535,12 @@ class AttachmentsTable extends CroogoTable
         $thumbnailPath = $info['dirname'] . DS . $filename;
         $writePath = rtrim(WWW_ROOT, '/') . $thumbnailPath;
 
-        $ffmpeg = new FFmpegMovie($path, null);
-        $frame = $ffmpeg->getFrame(null, $w, $h);
+        $ffmpeg = new Movie($path, null);
+        $frameCount = $ffmpeg->getFrameCount();
+        $width = $ffmpeg->getFrameWidth();
+        $height = $ffmpeg->getFrameHeight();
+        $posterFrameIndex = intval($frameCount / 4);
+        $frame = $ffmpeg->getFrame($posterFrameIndex, $w, $h);
         imagejpeg($frame->toGDImage(), $writePath, 100);
 
         $fp = fopen($writePath, 'r');
@@ -533,8 +558,8 @@ class AttachmentsTable extends CroogoTable
             'foreign_key' => $asset->foreign_key,
             'adapter' => $adapter,
             'mime_type' => 'image/jpeg',
-            'width' => $w,
-            'height' => $h,
+            'width' => $width,
+            'height' => $height,
             'filesize' => $stat[7],
         ]);
 

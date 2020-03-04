@@ -5,6 +5,7 @@ namespace Croogo\FileManager\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
+use Char0n\FFMpegPHP\Movie;
 use Croogo\Core\Croogo;
 use Croogo\Core\Nav;
 
@@ -45,6 +46,15 @@ class FileManagerEventHandler implements EventListenerInterface
         $controller = $event->getSubject();
         $request = $controller->request;
         $attachment = $event->getData('attachment');
+
+        // create poster for video, ideally should be done via a job queue
+        $Attachments = TableRegistry::get('Croogo/FileManager.Attachments');
+        if (
+            strstr($attachment->asset->mime_type, 'video') !== false &&
+            class_exists('Char0n\FFMpegPHP\Movie')
+        ) {
+            $Attachments->createVideoThumbnail($attachment->id);
+        }
 
         if (empty($attachment->asset->asset_usage)) {
             Log::error('No asset usage record to register');

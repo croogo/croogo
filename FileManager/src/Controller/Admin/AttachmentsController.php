@@ -158,6 +158,8 @@ class AttachmentsController extends AppController
             $query->find($finder);
         }
 
+        $query->formatResults([$this->Attachments, 'getVideoPoster']);
+
         $this->set('attachments', $this->paginate($query));
 
         if ($this->getRequest()->getQuery('links') || $this->getRequest()->getQuery('chooser')) {
