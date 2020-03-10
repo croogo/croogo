@@ -70,23 +70,15 @@ $this->end();
 $this->start('panels');
     echo $this->Html->beginBox(__d('croogo', 'Publishing'));
 
-    $out =
-        $this->Form->button(__d('croogo', 'Apply'), [
-            'name' => 'apply',
-            'class' => 'btn-outline-primary',
-        ]) .
-        $this->Form->button(__d('croogo', 'Save'), [
-            'class' => 'btn-outline-success',
-        ]) .
-        $this->Html->link(__d('croogo', 'Cancel'), ['action' => 'index',
-            '?' => [
-                'id' => $this->getRequest()->query('id'),
-                'model' => urldecode($this->getRequest()->query('model')),
+        echo $this->element('admin/buttons', [
+            'cancelUrl' => [
+                'action' => 'index',
+                '?' => [
+                    'id' => $this->getRequest()->query('id'),
+                    'model' => urldecode($this->getRequest()->query('model')),
+                ],
             ],
-        ], [
-            'class' => 'cancel',
-            'button' => 'outline-danger'
         ]);
-    echo $this->Html->div('card-buttons d-flex justify-content-center', $out);
+
     echo $this->Html->endBox();
-    $this->end();
+$this->end();

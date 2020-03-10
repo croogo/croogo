@@ -180,7 +180,7 @@ class TranslateController extends AppController
                         'locale' => $locale,
                     ],
                 ];
-                if (isset($this->getRequest()->data['apply'])) {
+                if (isset($this->getRequest()->data['_apply'])) {
                     $redirect['action'] = 'edit';
                 }
 
