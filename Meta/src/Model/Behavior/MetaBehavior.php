@@ -103,13 +103,16 @@ class MetaBehavior extends Behavior
         ) {
             $options['associated'][] = 'Meta';
         }
-        $data['meta'] = array_filter($data['meta'], function($meta) {
-            return !empty($meta['value']);
-        });
-        foreach ($data['meta'] as &$meta) {
-            $meta['model'] = $this->_table->getRegistryAlias();
-            if (isset($data['id'])) {
-                $meta['foreign_key'] = $data['id'];
+
+        if (isset($data['meta'])) {
+            $data['meta'] = array_filter($data['meta'], function($meta) {
+                return !empty($meta['value']);
+            });
+            foreach ($data['meta'] as &$meta) {
+                $meta['model'] = $this->_table->getRegistryAlias();
+                if (isset($data['id'])) {
+                    $meta['foreign_key'] = $data['id'];
+                }
             }
         }
 
