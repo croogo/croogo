@@ -127,6 +127,11 @@ class UsersTable extends CroogoTable
     public function activate(User $user)
     {
         $user->activation_key = null;
+        $user->status = true;
+
+        $this->dispatchEvent('Model.Users.beforeActivation', [
+            'user' => $user,
+        ]);
 
         if (!$this->save($user)) {
             return false;
