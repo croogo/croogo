@@ -170,13 +170,13 @@ class NodesTable extends CroogoTable
     public function saveNode(Node $node, $typeAlias = self::DEFAULT_TYPE)
     {
         // $node = $this->formatNode($node, $typeAlias);
-        $event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('node', 'typeAlias'));
+        $event = Croogo::dispatchEvent('Model.Nodes.beforeSaveNode', $this, compact('node', 'typeAlias'));
         if ($event->isStopped()) {
             return $event->result;
         }
 
         $result = $this->save($node);
-        Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, $event->data);
+        Croogo::dispatchEvent('Model.Nodes.afterSaveNode', $this, $event->data);
 
         return $result;
     }
@@ -332,7 +332,7 @@ class NodesTable extends CroogoTable
             ]);
         }
 
-        $event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, [
+        $event = Croogo::dispatchEvent('Model.Nodes.beforeSaveNode', $this, [
             'node' => $node,
             'typeAlias' => $node->type
         ]);
@@ -344,7 +344,7 @@ class NodesTable extends CroogoTable
     public function afterSave(Event $event)
     {
         $node = $event->getData()['entity'];
-        $event = Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, [
+        $event = Croogo::dispatchEvent('Model.Nodes.afterSaveNode', $this, [
             'node' => $node,
             'typeAlias' => $node->type
         ]);

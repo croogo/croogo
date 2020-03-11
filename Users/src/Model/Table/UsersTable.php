@@ -111,7 +111,7 @@ class UsersTable extends CroogoTable
             return false;
         }
 
-        $this->dispatchEvent('Users.registered', [
+        $this->dispatchEvent('Model.Users.registered', [
             'user' => $user
         ]);
 
@@ -132,7 +132,7 @@ class UsersTable extends CroogoTable
             return false;
         }
 
-        $this->dispatchEvent('Users.activated', [
+        $this->dispatchEvent('Model.Users.activated', [
             'user' => $user
         ]);
 
