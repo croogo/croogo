@@ -150,8 +150,7 @@ class UsersTable extends CroogoTable
         // Generate a unique activation key
         $user->activation_key = $this->generateActivationKey();
 
-        Croogo::dispatchEvent(
-            'Model.Users.beforeResetPassword',
+        Croogo::dispatchEvent('Model.Users.beforeResetPassword',
             $this,
             compact('user')
         );
@@ -169,8 +168,7 @@ class UsersTable extends CroogoTable
             return false;
         }
 
-        Croogo::dispatchEvent(
-            'Model.Users.afterResetPassword',
+        Croogo::dispatchEvent('Model.Users.afterResetPassword',
             $this,
             compact('email', 'user')
         );
@@ -184,8 +182,7 @@ class UsersTable extends CroogoTable
             ->viewVars(compact('user'))
             ->send('registrationActivation', [$user]);
 
-        Croogo::dispatchEvent(
-            'Model.Users.afterActivationEmail',
+        Croogo::dispatchEvent('Model.Users.afterActivationEmail',
             $this,
             compact('email', 'user')
         );
