@@ -18,10 +18,10 @@ $associationFields = collection($fields)
 
 $groupedFields = collection($fields)
     ->filter(function($field) use ($schema) {
-        return $schema->columnType($field) !== 'binary';
+        return $schema->getColumnType($field) !== 'binary';
     })
     ->groupBy(function($field) use ($schema, $associationFields) {
-        $type = $schema->columnType($field);
+        $type = $schema->getColumnType($field);
         if (isset($associationFields[$field])) {
             return 'string';
         }

@@ -3,7 +3,7 @@ use Cake\Utility\Inflector;
 
 $fields = collection($fields)
     ->filter(function($field) use ($schema) {
-        return !in_array($schema->columnType($field), ['binary', 'text']);
+        return !in_array($schema->getColumnType($field), ['binary', 'text']);
     });
 
 if (isset($modelObject) && $modelObject->behaviors()->has('Tree')) {
@@ -80,7 +80,7 @@ $this->append('table-body');
             }
         }
         if ($isKey !== true) {
-            $columnType = $schema->columnType($field);
+            $columnType = $schema->getColumnType($field);
             if (in_array($columnType, ['date', 'datetime'])) {
 %>
         <td><?= $this->Time->i18nFormat($<%= $singularVar %>-><%= $field %>) ?></td>
