@@ -19,13 +19,21 @@
 use Cake\Utility\Inflector;
 
 $defaultModel = $name;
+
+if (class_exists("$namespace\Controller$prefix\AppController")) {
+    $context = 'controller';
+    $parent = 'AppController';
+} else {
+    $context = 'nocontroller';
+    $parent = 'CroogoController';
+}
 %>
 <?php
 
 namespace <%= $namespace %>\Controller<%= $prefix %>;
 
-<% if (class_exists("$namespace\Controller\$prefix\AppController")): %>
-use <%= $namespace %>\Controller<%= $prefix %>\AppController as CroogoController;
+<% if ($context == 'controller'): %>
+use <%= $namespace %>\Controller<%= $prefix %>\AppController;
 <% else: %>
 use Croogo\Core\Controller<%= $prefix %>\AppController as CroogoController;
 <% endif; %>
@@ -41,7 +49,7 @@ foreach ($components as $component):
  * @property <%= $classInfo['fqn'] %> $<%= $classInfo['name'] %>
 <% endforeach; %>
  */
-class <%= $name %>Controller extends CroogoController
+class <%= $name %>Controller extends <%= $parent %>
 {
 <%
 echo $this->Bake->arrayProperty('helpers', $helpers, ['indent' => false]);
