@@ -1,0 +1,22 @@
+<?php
+
+namespace {{ namespace }}\Config;
+
+use Croogo\Core\Nav;
+
+Nav::add('sidebar', '{{ plugin|lower }}', [
+    'icon' => 'columns',
+    'title' => __d('croogo', '{{ plugin }}'),
+    'weight' => 31,
+    'children' => [
+        'child' => [
+            'title' => __d('croogo', 'Child'),
+            'url' => [
+                'prefix' => 'admin',
+                'plugin' => '{{ plugin }}',
+                'controller' => 'child',
+                'action' => 'index',
+            ],
+        ],
+    ],
+]);

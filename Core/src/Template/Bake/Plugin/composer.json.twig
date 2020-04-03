@@ -1,0 +1,22 @@
+{% set namespace = namespace|replace({'\\': '\\\\'}) %}
+{
+    "name": "{{ package }}",
+    "description": "{{ plugin }} plugin for Croogo",
+    "require": {
+        "croogo/core": "^4.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "{{ namespace }} Development Team",
+            "email": "team@{{ plugin }}.org"
+        }
+    ],
+    "type": "cakephp-plugin",
+    "autoload": {
+        "psr-4": {
+            "{{ namespace }}\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

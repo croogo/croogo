@@ -1,0 +1,12 @@
+<?php
+
+use Croogo\Dashboards\CroogoDashboard;
+
+$config = [
+    '{{ plugin|lower }}.welcome' => [
+        'title' => __d('croogo', '{{ plugin }}'),
+        'cell' => '{{ plugin }}.Dashboard::welcome',
+        'weight' => 1,
+        'column' => CroogoDashboard::FULL,
+    ],
+];
