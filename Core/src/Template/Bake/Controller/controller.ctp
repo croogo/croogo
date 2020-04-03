@@ -25,7 +25,7 @@ $defaultModel = $name;
 namespace <%= $namespace %>\Controller<%= $prefix %>;
 
 <% if (class_exists("$namespace\Controller\$prefix\AppController")): %>
-use <%= $namespace %>\Controller<%= $prefix %>AppController as CroogoController;
+use <%= $namespace %>\Controller<%= $prefix %>\AppController as CroogoController;
 <% else: %>
 use Croogo\Core\Controller<%= $prefix %>\AppController as CroogoController;
 <% endif; %>
