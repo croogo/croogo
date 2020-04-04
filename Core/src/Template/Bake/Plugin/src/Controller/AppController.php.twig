@@ -7,31 +7,4 @@ use Croogo\Core\Controller\AppController as CroogoController;
 
 class AppController extends CroogoController
 {
-
-    /**
-     * Load the theme component with the site theme specified
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->loadComponent('Crud.Crud', [
-            'actions' => [
-                'index' => [
-                    'className' => 'Croogo/Core.Admin/Index'
-                ],
-            ],
-            'listeners' => [
-                'Crud.Redirect',
-                'Crud.Search',
-                'Crud.RelatedModels',
-                'Croogo/Core.Flash',
-            ]
-        ]);
-
-        $this->Theme->setConfig('theme', Configure::read('Site.theme'));
-    }
-
 }
