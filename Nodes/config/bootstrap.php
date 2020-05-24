@@ -30,15 +30,24 @@ Wysiwyg::setActions([
         [
             'elements' => '#NodeBody',
         ],
+        [
+            'elements' => '#NodeExcerpt',
+        ],
     ],
     'Croogo/Nodes.Admin/Nodes/edit' => [
         [
             'elements' => '#NodeBody',
         ],
+        [
+            'elements' => '#NodeExcerpt',
+        ],
     ],
     'Croogo/Translate.Admin/Translate/edit' => [
         [
             'elements' => "[id^='translations'][id$='body']",
+        ],
+        [
+            'elements' => "[id^='translations'][id$='excerpt']",
         ],
     ],
 ]);
