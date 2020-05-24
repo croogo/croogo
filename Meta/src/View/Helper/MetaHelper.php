@@ -86,7 +86,7 @@ class MetaHelper extends Helper
         if ($node && !array_key_exists($key, $metaForLayout)) {
             $converter = new StringConverter();
             if (!empty($node['excerpt'])) {
-                $metaForLayout[$key] = $node['excerpt'];
+                $metaForLayout[$key] = strip_tags($node['excerpt']);
             } else {
                 $metaForLayout[$key] = $converter->firstPara($node['body']);
             }

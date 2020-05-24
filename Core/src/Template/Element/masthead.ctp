@@ -6,7 +6,7 @@ $this->loadHelper('Croogo/FileManager.FileManager');
 
 if (isset($node)) :
     $mastheadTitle = $node->title;
-    $mastheadSubheading = $node->excerpt;
+    $mastheadSubheading = strip_tags($node->excerpt);
     $mastheadWrapperClass = "post-heading";
     if (isset($node->linked_assets['FeaturedImage'][0])) :
         $media = $node->linked_assets['FeaturedImage'][0];
