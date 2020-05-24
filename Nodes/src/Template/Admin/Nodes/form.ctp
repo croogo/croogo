@@ -64,6 +64,7 @@ $this->start('tab-content');
         ]);
         echo $this->Form->input('excerpt', [
             'label' => __d('croogo', 'Excerpt'),
+            'id' => 'NodeExcerpt',
         ]);
         echo $this->Html->tabEnd();
         $this->end();
