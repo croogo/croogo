@@ -128,17 +128,6 @@ class SettingsSeed extends AbstractSeed
             'params' => ''
         ],
         [
-            'key' => 'Writing.wysiwyg',
-            'value' => '1',
-            'title' => 'Enable WYSIWYG editor',
-            'description' => '',
-            'input_type' => 'checkbox',
-            'editable' => '1',
-            'weight' => '17',
-            'created_by' => 1,
-            'params' => ''
-        ],
-        [
             'key' => 'Comment.level',
             'value' => '1',
             'title' => '',

@@ -190,17 +190,6 @@ class SettingsFixture extends CroogoTestFixture
             'params' => ''
         ],
         [
-            'id' => 23,
-            'key' => 'Writing.wysiwyg',
-            'value' => '1',
-            'title' => 'Enable WYSIWYG editor',
-            'description' => '',
-            'input_type' => 'checkbox',
-            'editable' => 1,
-            'weight' => 17,
-            'params' => ''
-        ],
-        [
             'id' => 24,
             'key' => 'Comment.level',
             'value' => '1',

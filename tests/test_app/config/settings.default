@@ -35,9 +35,6 @@
 		"recaptcha_private_key": "your-private-key",
 		"recaptcha_public_key": "your-public-key"
 	},
-	"Writing": {
-		"wysiwyg": 1
-	},
 	"Access Control": {
 		"multiRole" : 0,
 		"rowLevel": 0
