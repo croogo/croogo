@@ -12,7 +12,7 @@ $replyAllowed = (
     echo ' author';
 endif ?>">
     <div class="comment-info">
-        <span class="avatar"><?= $this->Html->image('http://www.gravatar.com/avatar/' . md5(strtolower($comment->email)) . '?s=32'); ?></span>
+        <span class="avatar"><?= $this->Html->image('https://www.gravatar.com/avatar/' . md5(strtolower($comment->email)) . '?s=32'); ?></span>
         <span class="name">
             <?php if ($comment->website) : ?>
                 <?= $this->Html->link($comment->name, $comment->website, ['target' => '_blank']); ?>
