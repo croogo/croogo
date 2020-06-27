@@ -8,8 +8,8 @@ Wouter van Os <wouter@wouter0100.nl>
 Damien Biasotto <damien@occi-tech.com>
 Kyle Robinson Young <kyle@dontkry.com>
 Derbois Aymeric <aymeric@occi-tech.com>
-Pierre Martin <pierre@occi-tech.com>
 Mike Tallroth <mike.tallroth@gmail.com>
+Pierre Martin <pierre@occi-tech.com>
 Paul Gardner <phpmagpie@webbedit.co.uk>
 chadrien <chadrien@chadrien.fr>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
@@ -71,6 +71,7 @@ Gilles Bedel <gilles@occi-tech.com>
 HT-Studios <github@ht-studios.de>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
+Lartak <webmaster@lartak.fr>
 Livia Scapin <livia.scapin@orca-services.ch>
 Léo Haddad <scoup001@gmail.com>
 Manuel Tancoigne <m.tancoigne@gmail.com>
