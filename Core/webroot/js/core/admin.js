@@ -118,8 +118,8 @@ Admin.formFeedback = function () {
     submitButtons
       .addClass('disabled');
 
-    if (el.originalEvent.explicitOriginalTarget) {
-      var $button = $(el.originalEvent.explicitOriginalTarget);
+    if (el.originalEvent.submitter) {
+      var $button = $(el.originalEvent.submitter);
       if ($button.find('i').length == 0) {
         $button
           .prepend(' ')
