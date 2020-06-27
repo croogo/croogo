@@ -94,8 +94,8 @@ class FilterComponent extends Component
             ],
         ]);
         if ($this->_config('autoLoginDuration')) {
-            if (!function_exists('mcrypt_encrypt')) {
-                $notice = __d('croogo', '"AutoLogin" (Remember Me) disabled since mcrypt_encrypt is not available');
+            if (!function_exists('mcrypt_encrypt') && !function_exists('openssl_encrypt')) {
+                $notice = __d('croogo', '"AutoLogin" (Remember Me) disabled since mcrypt_encrypt or openssl_encrypt is not available');
                 $this->log($notice, LOG_CRIT);
                 if ($this->_controller->request->getParam('prefix') == 'admin') {
                     $this->_controller->Flash->error($notice);

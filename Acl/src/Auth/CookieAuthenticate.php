@@ -101,8 +101,8 @@ class CookieAuthenticate extends BaseAuthenticate
         }
 
         $config = $this->getConfig();
-        if (!function_exists('mcrypt_encrypt')) {
-            throw new Exception('Cannot use encryption, mcrypt_encrypt() is required');
+        if (!function_exists('mcrypt_encrypt') && !function_exists('openssl_encrypt')) {
+            throw new Exception('Cannot use encryption, either mcrypt_encrypt() or openssl_encrypt() is required');
         }
 
         list(, $model) = pluginSplit($config['userModel']);

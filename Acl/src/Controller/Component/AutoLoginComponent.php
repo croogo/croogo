@@ -57,7 +57,7 @@ class AutoLoginComponent extends Component
         );
 
         // skip autologin when mcrypt is not available
-        if (!function_exists('mcrypt_decrypt')) {
+        if (!function_exists('mcrypt_decrypt') && !function_exists('openssl_decrypt')) {
             return;
         }
 

@@ -131,7 +131,7 @@ class InstallManager
         PluginManager::load('Croogo/Settings', ['routes' => true]);
         $Setting = TableRegistry::get('Croogo/Settings.Settings');
         $Setting->removeBehavior('Cached');
-        if (!function_exists('mcrypt_decrypt')) {
+        if (!function_exists('mcrypt_decrypt') && !function_exists('openssl_decrypt')) {
             $Setting->write('Access Control.autoLoginDuration', '');
         }
 
