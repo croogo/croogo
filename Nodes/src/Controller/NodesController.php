@@ -188,7 +188,7 @@ class NodesController extends AppController
             ->cache($cacheKey, 'nodes_term')
             ->firstOrFail();
 
-            if (isset($type->params['nodes_per_page']) && empty($this->getRequest()->getParam('limit'))) {
+            if (isset($type->params['nodes_per_page']) && empty($this->getRequest()->getQuery('limit'))) {
                 $limit = $type->params['nodes_per_page'];
             }
             $query
