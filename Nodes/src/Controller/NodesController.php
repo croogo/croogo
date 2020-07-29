@@ -188,7 +188,7 @@ class NodesController extends AppController
             ->cache($cacheKey, 'nodes_term')
             ->firstOrFail();
 
-            if (isset($type->params['nodes_per_page']) && empty($this->getRequest()->getQuery('limit'))) {
+            if (isset($type->params['nodes_per_page']) && empty($this->getRequest()->getParam('limit'))) {
                 $limit = $type->params['nodes_per_page'];
             }
             $query
@@ -210,7 +210,7 @@ class NodesController extends AppController
             if (isset($type)) {
                 $cacheNamePrefix .= '_' . $type->alias;
             }
-            $this->paginate['page'] = $this->getRequest()->getParam('page') ?: 1;
+            $this->paginate['page'] = $this->getRequest()->getQuery('page') ?: 1;
             $cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit;
             $cacheConfig = 'nodes_term';
             $query->cache($cacheName, $cacheConfig);
