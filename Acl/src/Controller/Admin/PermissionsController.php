@@ -145,6 +145,6 @@ class PermissionsController extends AppController
 
         $this->viewBuilder()->autoLayout(false);
 
-        $this->set(compact('acoId', 'aroId', 'data', 'success', 'permitted'));
+        $this->set(compact('acoId', 'aroId', 'success', 'permitted'));
     }
 }
