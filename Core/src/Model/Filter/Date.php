@@ -23,7 +23,7 @@ class Date extends Base
      *
      * @return bool
      */
-    public function process()
+    public function process(): bool
     {
         $start = $this->value();
         if (!is_scalar($start)) {

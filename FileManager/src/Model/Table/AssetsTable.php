@@ -16,7 +16,7 @@ class AssetsTable extends CroogoTable
         'file' => 'checkFileUpload'
     ];
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('assets');
 
@@ -45,7 +45,7 @@ class AssetsTable extends CroogoTable
         $this->addBehavior('Croogo/Core.Trackable');
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->requirePresence('adapter', 'create');

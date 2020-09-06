@@ -2,7 +2,7 @@
 
 namespace Croogo\Comments\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 
 /**
  * Comments Controller
@@ -16,7 +16,7 @@ use Cake\Event\Event;
  */
 class CommentsController extends AppController
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -54,7 +54,7 @@ class CommentsController extends AppController
         $query->find('relatedEntity');
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforePaginate' => 'beforePaginate',
@@ -62,7 +62,7 @@ class CommentsController extends AppController
         ];
     }
 
-    public function beforeCrudRedirect(Event $event)
+    public function beforeCrudRedirect(EventInterface $event)
     {
         if ($this->redirectToSelf($event)) {
             return;

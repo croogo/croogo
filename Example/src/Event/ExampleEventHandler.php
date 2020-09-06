@@ -22,7 +22,7 @@ class ExampleEventHandler implements EventListenerInterface
      *
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.Users.adminLoginSuccessful' => [

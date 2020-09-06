@@ -16,7 +16,7 @@ use Exception;
  */
 class ExceptionRenderer extends CakeExceptionRenderer
 {
-    protected function _getController()
+    protected function _getController(): Controller
     {
         if (!$request = Router::getRequest(true)) {
             $request = ServerRequestFactory::fromGlobals();
@@ -44,7 +44,7 @@ class ExceptionRenderer extends CakeExceptionRenderer
         }
         if (empty($controller)) {
             $controller = new Controller($request, $response);
-            $controller->viewBuilder()->className('Croogo/Core.Croogo');
+            $controller->viewBuilder()->setClassName('Croogo/Core.Croogo');
         }
 
         return $controller;

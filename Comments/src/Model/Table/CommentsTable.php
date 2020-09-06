@@ -4,7 +4,7 @@ namespace Croogo\Comments\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Mailer\MailerAwareTrait;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use Croogo\Comments\Model\Entity\Comment;
@@ -41,7 +41,7 @@ class CommentsTable extends CroogoTable
         'type',
     ];
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setEntityClass('Croogo/Comments.Comment');
 
@@ -61,7 +61,7 @@ class CommentsTable extends CroogoTable
 
         $this->searchManager()
             ->add('status', 'Search.Value', [
-                'field' => 'status'
+                'fields' => 'status'
             ]);
 
         $this->getEventManager()->on($this->getMailer('Croogo/Comments.Comment'));
@@ -71,7 +71,7 @@ class CommentsTable extends CroogoTable
      * @param \Cake\Validation\Validator $validator Validator object
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         return $validator
             ->notBlank('body', 'You must write a comment.')

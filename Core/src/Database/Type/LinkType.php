@@ -2,14 +2,29 @@
 
 namespace Croogo\Core\Database\Type;
 
-use Cake\Database\Driver;
-use Cake\Database\Type;
+use Cake\Database\DriverInterface;
+use Cake\Database\TypeInterface;
+use Cake\Utility\Text;
 use Croogo\Core\Link;
+use PDO;
 
-class LinkType extends Type
+class LinkType implements TypeInterface
 {
+    public function getBaseType(): ?string
+    {
+        return ParamsType::class;
+    }
 
-    public function toPHP($value, Driver $driver)
+    public function getName(): ?string {
+        return 'Params';
+    }
+
+    public function newId()
+    {
+        return Text::uuid();
+    }
+
+    public function toPHP($value, DriverInterface $driver)
     {
         if (stristr($value, 'controller:')) {
             return Link::createFromLinkString($value);
@@ -42,8 +57,16 @@ class LinkType extends Type
         }
     }
 
-    public function toDatabase($value, Driver $driver)
+    public function toDatabase($value, DriverInterface $driver)
     {
         return (string)$value;
     }
-}
+
+    public function toStatement($value, DriverInterface $driver)
+    {
+        if ($value === null) {
+            return PDO::PARAM_NULL;
+        }
+
+        return PDO::PARAM_STR;
+    }}

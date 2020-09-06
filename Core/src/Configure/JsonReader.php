@@ -42,7 +42,7 @@ class JsonReader implements ConfigEngineInterface
      * @params $key string name key to read
      * @throws Exception
      */
-    public function read($key)
+    public function read(string $key): array
     {
         if (strpos($key, '..') !== false) {
             throw new Exception(__d('croogo', 'Cannot load configuration files with ../ in them.'));
@@ -71,7 +71,7 @@ class JsonReader implements ConfigEngineInterface
     /**
      * Dumps the state of Configure data into an json string.
      */
-    public function dump($filename, array $data)
+    public function dump(string $filename, array $data): bool
     {
         $runtime = [
             'routes' => '',

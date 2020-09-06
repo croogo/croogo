@@ -19,7 +19,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class ContactsTable extends CroogoTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
@@ -29,7 +29,7 @@ class ContactsTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules
             ->add($rules->isUnique(
@@ -40,7 +40,7 @@ class ContactsTable extends CroogoTable
         return $rules;
     }
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setDisplayField('title');
         $this->setEntityClass('Croogo/Contacts.Contact');

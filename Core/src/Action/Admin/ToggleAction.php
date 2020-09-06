@@ -2,6 +2,7 @@
 
 namespace Croogo\Core\Action\Admin;
 
+use Cake\Http\Response;
 use Crud\Action\BaseAction;
 use Exception;
 
@@ -20,7 +21,7 @@ class ToggleAction extends BaseAction
      * @throws Exception
      * @return void
      */
-    protected function _post($id = null, $status = null)
+    protected function _post($id = null, $status = null): ?Response
     {
         if (empty($id) || $status === null) {
             throw new Exception(__d('croogo', 'Invalid content'));

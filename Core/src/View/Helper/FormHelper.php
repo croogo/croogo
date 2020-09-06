@@ -120,12 +120,9 @@ class FormHelper extends BaseFormHelper
     }
 
     /**
-     * Generate input options array
-     *
-     * @param array $fieldName Options list
-     * @return array
+     * @inheritdoc
      */
-    protected function _parseOptions($fieldName, $options)
+    protected function _parseOptions(string $fieldName, $options): array
     {
         $options = parent::_parseOptions($fieldName, $options);
 
@@ -200,7 +197,7 @@ class FormHelper extends BaseFormHelper
      * @return string A formatted opening FORM tag
      * @see FormHelper::create()
      */
-    public function create($model = null, array $options = [])
+    public function create($model = null, array $options = []): string
     {
         if (!empty($options['fieldAccess'])) {
             $this->_fieldAccess = $this->_setupFieldAccess($options['fieldAccess']);
@@ -216,7 +213,7 @@ class FormHelper extends BaseFormHelper
         return $this->control($fieldName, $options);
     }
 
-    public function control($fieldName, array $options = [])
+    public function control($fieldName, array $options = []): string
     {
         if (!$this->_isEditable($fieldName)) {
             return null;
@@ -241,7 +238,7 @@ class FormHelper extends BaseFormHelper
     {
         $displayKey = $displayValue = null;
         $request = $this->getView()->getRequest();
-        list(, $table) = pluginSplit($this->context()->entity()->getSource());
+        list(, $table) = pluginSplit($this->getContext()->entity()->getSource());
         if (isset($request->getData($table)[$field])) {
             $displayKey = $request->getData($table)[$field];
         }

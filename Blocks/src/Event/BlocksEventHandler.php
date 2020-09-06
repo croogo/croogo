@@ -33,7 +33,7 @@ class BlocksEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Helper.Nodes.beforeSetNode' => [

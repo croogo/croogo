@@ -5,6 +5,7 @@ namespace Croogo\Install\Shell;
 use App\Console\Installer;
 use App\Controller\Component\AuthComponent;
 use Cake\Cache\Cache;
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
@@ -28,7 +29,7 @@ use Exception;
 class InstallShell extends Shell
 {
 
-    public function startup()
+    public function startup(): void
     {
         $options = ['bootstrap' => true, 'routes' => true];
         $plugins = array_merge(PluginManager::$corePlugins, PluginManager::$bundledPlugins);
@@ -42,7 +43,7 @@ class InstallShell extends Shell
     /**
      * Display help/options
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         $drivers = ['Mysql', 'Postgres', 'Sqlite', 'Sqlserver'];
         $parser = parent::getOptionParser();
@@ -132,7 +133,7 @@ class InstallShell extends Shell
     public function main()
     {
         Installer::setSecuritySalt(ROOT, new BufferIO());
-        $this->out();
+        $this->out('');
         $this->out('Database settings:');
         $install['datasource'] = $this->_in(__d('croogo', 'DataSource'), [
             'Mysql',
@@ -164,9 +165,10 @@ class InstallShell extends Shell
 
                 return $this->_stop();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->err($e->getMessage());
             $this->err('Please verify you have the correct credentials');
+            throw $e;
 
             return $this->_stop();
         }
@@ -185,7 +187,7 @@ class InstallShell extends Shell
         }
 
         if (empty($this->args)) {
-            $this->out();
+            $this->out('');
             $this->out('Create Admin user:');
         }
 
@@ -224,7 +226,7 @@ class InstallShell extends Shell
             $this->err('Error creating admin user: ' . $e->getMessage());
         }
 
-        $this->out();
+        $this->out('');
         $this->success('Congratulations, Croogo has been installed successfully.');
         Cache::clearAll();
     }

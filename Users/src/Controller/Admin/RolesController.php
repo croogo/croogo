@@ -18,7 +18,7 @@ class RolesController extends AppController
 {
     public $modelClass = 'Croogo/Users.Roles';
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -27,7 +27,7 @@ class RolesController extends AppController
         ]);
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforeRedirect' => 'beforeCrudRedirect',

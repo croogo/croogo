@@ -37,12 +37,4 @@ class PaginatorHelper extends BasePaginatorHelper
         parent::__construct($View, $config);
     }
 
-    /**
-     * @param array $options
-     * @return bool
-     */
-    public function numbers(array $options = [])
-    {
-        return parent::numbers($options);
-    }
 }

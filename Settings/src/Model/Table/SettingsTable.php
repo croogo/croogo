@@ -1,15 +1,17 @@
 <?php
+declare(strict_types=1);
 
 namespace Croogo\Settings\Model\Table;
 
 use ArrayObject;
 use Cake\Core\Configure;
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use Croogo\Acl\AclGenerator;
@@ -30,7 +32,7 @@ use Croogo\Core\PluginManager;
 class SettingsTable extends CroogoTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->notBlank('key', __d('croogo', 'Key cannot be empty.'));
@@ -38,7 +40,7 @@ class SettingsTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules
             ->add($rules->isUnique(
@@ -52,7 +54,7 @@ class SettingsTable extends CroogoTable
     /**
      * @param array $config
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Croogo/Core.Trackable');
 //        $this->addBehavior('Croogo/Core.Ordered', [
@@ -75,9 +77,9 @@ class SettingsTable extends CroogoTable
 
     /**
      * @param Table $schema
-     * @return Table
+     * @return TableSchemaInterface
      */
-    protected function _initializeSchema(TableSchema $schema)
+    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
         $schema->setColumnType('params', 'params');
 

@@ -8,7 +8,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
-use Croogo\Core\Core\Exception\Exception;
+use Cake\Core\Exception\Exception;
 use Croogo\Extensions\CroogoTheme;
 use Croogo\Taxonomy\Model\Entity\Type;
 use Croogo\Taxonomy\Model\Table\TaxonomiesTable;

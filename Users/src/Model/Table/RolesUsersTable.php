@@ -18,7 +18,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class RolesUsersTable extends CroogoTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->belongsTo('Users', [
             'className' => 'Croogo/Users.Users',

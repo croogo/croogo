@@ -4,7 +4,7 @@ namespace Croogo\FileManager\Model\Behavior;
 
 use ArrayObject;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
@@ -26,7 +26,7 @@ class LinkedAssetsBehavior extends Behavior
      * @param array $config
      * @return void
      */
-    public function initialize(array $config = [])
+    public function initialize(array $config): void
     {
         $this->_table->addAssociations([
             'hasMany' => [
@@ -50,7 +50,7 @@ class LinkedAssetsBehavior extends Behavior
      *
      * @return Query
      */
-    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
+    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, bool $primary)
     {
         //if ($model->findQueryType == 'list') {
             //return $query;

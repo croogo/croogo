@@ -9,7 +9,7 @@ class AssetUsagesController extends AppController
         'Croogo/FileManager.AssetUsages',
     ];
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -57,7 +57,7 @@ class AssetUsagesController extends AppController
 
     public function changeType()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
         $result = true;
         $data = ['pk' => null, 'value' => null];
         if (isset($this->getRequest()->data['pk'])) {

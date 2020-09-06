@@ -20,7 +20,7 @@ class DashboardsEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Croogo.setupAdminDashboardData' => [

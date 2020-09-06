@@ -2,7 +2,7 @@
 
 namespace Croogo\Menus\Model\Table;
 
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -22,7 +22,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class LinksTable extends CroogoTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'));
@@ -38,7 +38,7 @@ class LinksTable extends CroogoTable
         return $validator;
     }
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Tree');
         $this->addBehavior('Croogo/Core.Cached', [
@@ -72,7 +72,7 @@ class LinksTable extends CroogoTable
             ]);
     }
 
-    protected function _initializeSchema(TableSchema $table)
+    protected function _initializeSchema(TableSchemaInterface $table): TableSchemaInterface
     {
         $table->setColumnType('visibility_roles', 'encoded');
         $table->setColumnType('link', 'link');

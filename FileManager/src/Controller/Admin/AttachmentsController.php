@@ -2,8 +2,9 @@
 
 namespace Croogo\FileManager\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Response;
+use Cake\Http\Exception\NotFoundException;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
@@ -41,7 +42,7 @@ class AttachmentsController extends AppController
         'limit' => 5,
     ];
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         $this->loadComponent('Search.Prg', [
@@ -60,7 +61,7 @@ class AttachmentsController extends AppController
      * @return void
      * @access public
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
@@ -240,8 +241,8 @@ class AttachmentsController extends AppController
             if ($attachment) {
                 $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
                 $url = [];
-                if (isset($saved->asset->asset_usage[0])) {
-                    $usage = $saved->asset->asset_usage[0];
+                if (isset($attachment->asset->asset_usage[0])) {
+                    $usage = $attachment->asset->asset_usage[0];
                     if (!empty($usage->model) && !empty($usage->foreign_key)) {
                         $url['?']['model'] = $usage->model;
                         $url['?']['foreign_key'] = $usage->foreign_key;
@@ -272,7 +273,7 @@ class AttachmentsController extends AppController
      * @return \Cake\Http\Response|void
      * @access public
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
 
@@ -321,7 +322,7 @@ class AttachmentsController extends AppController
      * @return \Cake\Http\Response|void
      * @access public
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         if (!$id) {
             $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));

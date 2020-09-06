@@ -34,11 +34,11 @@ class UsersTable extends CroogoTable
     ];
 
     public $filterArgs = [
-        'name' => ['type' => 'like', 'field' => ['Users.name', 'Users.username']],
+        'name' => ['type' => 'like', 'fields' => ['Users.name', 'Users.username']],
         'role_id' => ['type' => 'value'],
     ];
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $multiRole = Configure::read('Access Control.multiRole');
 
@@ -67,7 +67,7 @@ class UsersTable extends CroogoTable
 
         $this->searchManager()
             ->add('name', 'Search.Like', [
-                'field' => ['Users.name', 'Users.username', 'Users.email'],
+                'fields' => ['Users.name', 'Users.username', 'Users.email'],
                 'before' => true,
                 'after' => true,
             ]);
@@ -201,7 +201,7 @@ class UsersTable extends CroogoTable
                 'verify_password',
             ]
         ]);
-        if ($user->errors()) {
+        if ($user->getErrors()) {
             return $user;
         }
 
@@ -210,7 +210,7 @@ class UsersTable extends CroogoTable
         return $user;
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         return $validator
             ->add('username', [
@@ -273,7 +273,7 @@ class UsersTable extends CroogoTable
                     'last' => true
                 ]
             ])
-            ->allowEmpty('website')
+            ->allowEmptyString('website')
             ->add('website', [
                 'url' => [
                     'rule' => 'url',

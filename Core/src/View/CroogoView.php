@@ -24,7 +24,7 @@ class CroogoView extends AppView
      * @param bool $cached Set to false to force a refresh of view paths. Default true.
      * @return array paths
      */
-    protected function _paths($plugin = null, $cached = true)
+    protected function _paths(?string $plugin = null, bool $cached = true): array
     {
         if ($cached === true) {
             if ($plugin === null && !empty($this->_paths)) {

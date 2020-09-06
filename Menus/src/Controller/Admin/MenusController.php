@@ -2,7 +2,7 @@
 
 namespace Croogo\Menus\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 
 /**
  * Menus Controller
@@ -17,14 +17,14 @@ use Cake\Event\Event;
 class MenusController extends AppController
 {
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         if ($this->getRequest()->getParam('action') === 'toggle') {
@@ -36,7 +36,7 @@ class MenusController extends AppController
      * @param \Cake\Event\Event $event
      * @return void
      */
-    public function beforeCrudRedirect(Event $event)
+    public function beforeCrudRedirect(EventInterface $event)
     {
         if ($this->redirectToSelf($event)) {
             return;

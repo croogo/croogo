@@ -34,7 +34,7 @@ class TypeRoute extends Route
      * @param string $method The HTTP method of the request being parsed.
      * @return array|false An array of request parameters, or false on failure.
      */
-    public function parse($url, $method = '')
+    public function parse(string $url, string $method): ?array
     {
         $url = parent::parse($url, $method);
         if ($this->_checkType($url['type'])) {
@@ -57,7 +57,7 @@ class TypeRoute extends Route
      *   directory and other url params.
      * @return string|false Either a string URL for the parameters if they match or false.
      */
-    public function match(array $url, array $context = [])
+    public function match(array $url, array $context = []): ?string
     {
         if (empty($url['type'])) {
             return false;

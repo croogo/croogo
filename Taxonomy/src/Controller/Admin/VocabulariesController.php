@@ -19,7 +19,7 @@ use Cake\Event\Event;
  */
 class VocabulariesController extends AppController
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -42,7 +42,7 @@ class VocabulariesController extends AppController
         $this->set('types', $this->Vocabularies->Types->pluginTypes($entity->plugin));
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.afterSave' => 'afterCrudSave',

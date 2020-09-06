@@ -17,7 +17,7 @@ use Croogo\Translate\Translations;
 class TranslateEventHandler implements EventListenerInterface
 {
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Croogo.bootstrapComplete' => [
@@ -58,7 +58,7 @@ class TranslateEventHandler implements EventListenerInterface
                 'controller' => 'Translate',
                 'action' => 'index',
                 'id' => $entity->get('id'),
-                'model' => $entity->source(),
+                'model' => $entity->getSource(),
             ], [
                 'icon' => 'translate',
             ]);

@@ -24,7 +24,7 @@ use Croogo\Menus\Model\Table\LinksTable;
  */
 class LinksController extends AppController
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -63,7 +63,7 @@ class LinksController extends AppController
      *
      * @return \Cake\Network\Response|null|void
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $link = $this->Links->get($id);
 
@@ -220,7 +220,7 @@ class LinksController extends AppController
         $event->getSubject()->url['menu_id'] = $entity->menu_id;
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforeRender' => 'beforeCrudRender',

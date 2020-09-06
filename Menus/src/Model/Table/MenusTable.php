@@ -2,7 +2,7 @@
 
 namespace Croogo\Menus\Model\Table;
 
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\RulesChecker;
@@ -23,7 +23,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class MenusTable extends CroogoTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
@@ -32,7 +32,7 @@ class MenusTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules
             ->add($rules->isUnique(
@@ -43,7 +43,7 @@ class MenusTable extends CroogoTable
         return $rules;
     }
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Croogo/Core.Cached', [
             'groups' => [
@@ -64,7 +64,7 @@ class MenusTable extends CroogoTable
         ]);
     }
 
-    protected function _initializeSchema(TableSchema $table)
+    protected function _initializeSchema(TableSchemaInterface $table): TableSchemaInterface
     {
         $table->setColumnType('params', 'params');
 

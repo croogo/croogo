@@ -18,7 +18,7 @@ use Croogo\Nodes\Model\Entity\Node;
  */
 class CommentableBehavior extends Behavior
 {
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->_table->hasMany('Comments', [
             'className' => 'Croogo/Comments.Comments',

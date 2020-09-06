@@ -5,7 +5,7 @@ namespace Croogo\Nodes\Controller;
 use Cake\Core\Configure;
 use Cake\Database\Expression\IdentifierExpression;
 use Cake\I18n\I18n;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 use Croogo\Nodes\Model\Table\NodesTable;
 
@@ -34,7 +34,7 @@ class NodesController extends AppController
      * @return void
      * @throws \Exception
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 

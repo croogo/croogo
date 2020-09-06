@@ -20,7 +20,7 @@ class TypesController extends AppController
 {
     public $modelClass = 'Croogo/Taxonomy.Types';
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -29,7 +29,7 @@ class TypesController extends AppController
         ]);
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforePaginate' => 'beforePaginate',

@@ -37,7 +37,7 @@ class AliasableBehavior extends Behavior
      */
     protected $_byAlias = [];
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->reload();
     }

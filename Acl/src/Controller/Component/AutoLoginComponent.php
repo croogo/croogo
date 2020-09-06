@@ -4,7 +4,7 @@ namespace Croogo\Acl\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 
 /**
  * Provides "Remember me" feature (via CookieAuthenticate) by listening to
@@ -47,7 +47,7 @@ class AutoLoginComponent extends Component
     /**
      * Component startup
      */
-    public function startup(Event $event)
+    public function startup(EventInterface $event)
     {
         $this->_Controller = $controller = $event->getSubject();
         $controller->getEventManager()->on(
@@ -99,7 +99,7 @@ class AutoLoginComponent extends Component
      *
      * @return bool
      */
-    public function onAdminLoginSuccessful(Event $event)
+    public function onAdminLoginSuccessful(EventInterface $event)
     {
         $request = $event->getSubject()->request;
         $remember = $request->getData('remember');
@@ -120,7 +120,7 @@ class AutoLoginComponent extends Component
      *
      * @return bool
      */
-    public function onAdminLogoutSuccessful($event)
+    public function onAdminLogoutSuccessful(EventInterface $event)
     {
         $this->_registry->Cookie->delete($this->getConfig('cookieName'));
 

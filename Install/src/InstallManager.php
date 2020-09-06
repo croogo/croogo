@@ -210,7 +210,7 @@ class InstallManager
         $croogoPlugin = $this->_getCroogoPlugin();
         $result = $croogoPlugin->migrate($plugin);
         if (!$result) {
-            $this->log($croogoPlugin->migrationErrors);
+            $this->log(print_r($croogoPlugin->migrationErrors, true));
         }
 
         return $result;
@@ -335,9 +335,10 @@ class InstallManager
 class DummyShell extends Shell
 {
     use LogTrait;
-    public function out($msg = null, $newlines = 1, $level = Shell::NORMAL)
+    public function out($message, int $newlines = 1, int $level = Shell::NORMAL): ?int
     {
-        $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
+        $msg = preg_replace('/\<\/?\w+\>/', null, $message);
         $this->log($msg);
+        return parent::out($message, $newlines, $level);
     }
 }

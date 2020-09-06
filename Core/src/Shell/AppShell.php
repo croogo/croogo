@@ -3,6 +3,7 @@
 namespace Croogo\Core\Shell;
 
 use Cake\Console\Shell;
+use Psr\Log\LogLevel;
 
 /**
  * Base class for Croogo Shell
@@ -11,28 +12,27 @@ use Cake\Console\Shell;
  */
 class AppShell extends Shell
 {
-
     /**
      * Convenience method for out() that encloses message between <info /> tag
      */
-    public function info($message = null, $newlines = 1, $level = Shell::NORMAL)
+    public function info($message, $newlines = 1, $level = Shell::NORMAL): ?int
     {
-        $this->out('<info>' . $message . '</info>', $newlines, $level);
+        return $this->out('<info>' . $message . '</info>', $newlines, $level);
     }
 
     /**
      * Convenience method for out() that encloses message between <warning /> tag
      */
-    public function warn($message = null, $newlines = 1, $level = Shell::NORMAL)
+    public function warn($message, int $newlines = 1): int
     {
-        $this->out('<warning>' . $message . '</warning>', $newlines, $level);
+        return $this->out('<warning>' . $message . '</warning>', $newlines, Shell::NORMAL);
     }
 
     /**
      * Convenience method for out() that encloses message between <success /> tag
      */
-    public function success($message = null, $newlines = 1, $level = Shell::NORMAL)
+    public function success($message, int $newlines = 1, int $level = Shell::NORMAL): ?int
     {
-        $this->out('<success>' . $message . '</success>', $newlines, $level);
+        return $this->out('<success>' . $message . '</success>', $newlines, $level);
     }
 }

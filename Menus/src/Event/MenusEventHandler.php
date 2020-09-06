@@ -19,7 +19,7 @@ class MenusEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.Links.afterPublish' => [

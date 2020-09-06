@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Croogo\Core\Model\Table;
 
@@ -66,7 +67,7 @@ class CroogoTable extends Table
         parent::__construct($config);
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Model.initialize' => 'onModelInitialized',

@@ -41,7 +41,7 @@ class ViewHelpersPanel extends DebugPanel
         return count($this->_loadedViewHelpers);
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.shutdown' => 'afterFilter'

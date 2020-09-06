@@ -43,7 +43,7 @@ class ComponentsPanel extends DebugPanel
         return count($this->_loadedComponents);
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.shutdown' => 'afterFilter'

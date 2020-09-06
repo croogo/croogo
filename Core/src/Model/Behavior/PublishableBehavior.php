@@ -45,7 +45,7 @@ class PublishableBehavior extends Behavior
      *
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->_CroogoStatus = new Status();
     }

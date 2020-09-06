@@ -23,7 +23,7 @@ class BlocksController extends AppController
         ]
     ];
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         $this->loadModel('Croogo/Users.Roles');
@@ -84,7 +84,7 @@ class BlocksController extends AppController
         $this->set('roles', $this->Roles->find('list'));
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforePaginate' => 'beforePaginate',

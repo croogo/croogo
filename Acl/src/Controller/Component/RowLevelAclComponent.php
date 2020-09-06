@@ -52,7 +52,7 @@ class RowLevelAclComponent extends Component
      * attaches Acl and RowLevelAcl behavior to the controller's primary model and
      * hook the appropriate admin tabs
      */
-    public function initialize(array $settings)
+    public function initialize(array $settings): void
     {
         $controller = $this->getController();
         $Model = $controller->{$controller->name};

@@ -18,7 +18,7 @@ class AclEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Dispatcher.beforeDispatch' => [

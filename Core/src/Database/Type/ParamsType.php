@@ -3,8 +3,9 @@
 namespace Croogo\Core\Database\Type;
 
 use ArrayObject;
-use Cake\Database\Driver;
-use Cake\Database\Type;
+use Cake\Database\DriverInterface;
+use Cake\Database\TypeInterface;
+use Cake\Utility\Text;
 use Croogo\Core\Utility\StringConverter;
 use PDO;
 
@@ -15,15 +16,24 @@ use PDO;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ParamsType extends Type
+class ParamsType implements TypeInterface
 {
 
-    /**
-     * @param $value
-     * @param Driver $driver
-     * @return array
-     */
-    public function toPHP($value, Driver $driver)
+    public function getBaseType(): ?string
+    {
+        return ParamsType::class;
+    }
+
+    public function getName(): ?string {
+        return 'Params';
+    }
+
+    public function newId()
+    {
+        return Text::uuid();
+    }
+
+    public function toPHP($value, DriverInterface $driver)
     {
         if (empty($value) || $value === null) {
             return new ArrayObject();
@@ -32,10 +42,6 @@ class ParamsType extends Type
         return $this->paramsToArray($value);
     }
 
-    /**
-     * @param $value
-     * @return array
-     */
     public function marshal($value)
     {
         if (is_array($value) || $value === null) {
@@ -45,22 +51,12 @@ class ParamsType extends Type
         return $this->paramsToArray($value);
     }
 
-    /**
-     * @param $value
-     * @param Driver $driver
-     * @return array
-     */
-    public function toDatabase($value, Driver $driver)
+    public function toDatabase($value, DriverInterface $driver)
     {
         return $this->arrayToParams($value);
     }
 
-    /**
-     * @param $value
-     * @param Driver $driver
-     * @return int
-     */
-    public function toStatement($value, Driver $driver)
+    public function toStatement($value, DriverInterface $driver)
     {
         if ($value === null) {
             return PDO::PARAM_NULL;

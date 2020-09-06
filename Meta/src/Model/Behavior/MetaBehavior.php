@@ -4,7 +4,7 @@ namespace Croogo\Meta\Model\Behavior;
 
 use ArrayObject;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -29,7 +29,7 @@ class MetaBehavior extends Behavior
      * @param array $config
      * @return void
      */
-    public function initialize(array $config = [])
+    public function initialize(array $config): void
     {
         $this->_table->hasMany('Meta', [
             'className' => 'Croogo/Meta.Meta',
@@ -58,7 +58,7 @@ class MetaBehavior extends Behavior
      *
      * @return array
      */
-    public function beforeFind(Event $event, Query $query)
+    public function beforeFind(EventInterface $event, Query $query)
     {
         $query
             ->contain(['Meta'])
@@ -78,23 +78,16 @@ class MetaBehavior extends Behavior
 
     /**
      * Prepare data
-     *
-     * @param array $data
-     * @return array
      */
-    public function prepareData($data)
+    public function prepareData(EventInterface $data)
     {
         return $this->_prepareMeta($data);
     }
 
     /**
      * Protected method for MetaBehavior::prepareData()
-     *
-     * @param ArrayObject $data
-     * @param ArrayObject $options
-     * @return void
      */
-    protected function _prepareMeta(Event $event)
+    protected function _prepareMeta(EventInterface $event)
     {
         $data = $event->getData('data');
         $options = $event->getData('options');
@@ -125,12 +118,12 @@ class MetaBehavior extends Behavior
      * @param Event $event Event object
      * @return void
      */
-    public function beforeMarshal(Event $event)
+    public function beforeMarshal(EventInterface $event)
     {
         $this->_prepareMeta($event);
     }
 
-    public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
+    public function beforeSave(EventInterface $event, Entity $entity, ArrayObject $options)
     {
         if (!$entity->has('meta')) {
             return;

@@ -185,7 +185,7 @@ class Router extends CakeRouter
         }
     }
 
-    public static function url($url = null, $full = false)
+    public static function url($url = null, $full = false): string
     {
         if ($url instanceof Link) {
             $url = $url->getUrl();

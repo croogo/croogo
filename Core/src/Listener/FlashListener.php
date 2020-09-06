@@ -8,7 +8,7 @@ use Crud\Listener\BaseListener;
 
 class FlashListener extends BaseListener
 {
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Crud.setFlash' => ['callable' => 'onSetFlash'],

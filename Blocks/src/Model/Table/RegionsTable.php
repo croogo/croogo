@@ -38,7 +38,7 @@ class RegionsTable extends CroogoTable
         'active' => true,
     ];
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
@@ -47,7 +47,7 @@ class RegionsTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules
             ->add($rules->isUnique(
@@ -58,7 +58,7 @@ class RegionsTable extends CroogoTable
         return $rules;
     }
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setEntityClass('Croogo/Blocks.Region');
         $this->addAssociations([
@@ -85,7 +85,7 @@ class RegionsTable extends CroogoTable
 
         $this->searchManager()
             ->add('title', 'Search.Like', [
-                'field' => $this->aliasField('title'),
+                'fields' => $this->aliasField('title'),
                 'before' => true,
                 'after' => true,
             ]);

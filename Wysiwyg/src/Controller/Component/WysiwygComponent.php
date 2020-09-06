@@ -3,6 +3,7 @@
 namespace Croogo\Wysiwyg\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Controller\Controller;
 
 /**
  * Wysiwyg Component

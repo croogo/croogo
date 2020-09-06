@@ -22,7 +22,7 @@ class TranslateBehavior extends CakeTranslateBehavior
     /**
      * initialize
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->_translationTable->addBehavior('Croogo/Core.Trackable');

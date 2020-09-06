@@ -63,7 +63,7 @@ class EventManager extends CakeEventManager
     public static function loadListeners()
     {
         $eventManager = EventManager::instance();
-        $cached = Cache::read('EventHandlers', 'cached_settings');
+        $cached = (array)Cache::read('EventHandlers', 'cached_settings');
         if ($cached === false) {
             $eventHandlers = Configure::read('EventHandlers');
             $validKeys = ['eventKey' => null, 'options' => []];

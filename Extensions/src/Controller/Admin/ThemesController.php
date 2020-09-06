@@ -32,7 +32,7 @@ class ThemesController extends AppController
     /**
      * Constructor
      */
-    public function initialize(array $config = [])
+    public function initialize(array $config = []): void
     {
         parent::initialize($config);
         $this->_CroogoTheme = new CroogoTheme();
@@ -144,7 +144,7 @@ class ThemesController extends AppController
      * @param string $alias
      * @return \Cake\Http\Response|void
      */
-    public function delete($alias = null)
+    public function delete($alias)
     {
         if (!$alias) {
             $alias = $this->getRequest()->getQuery('theme');

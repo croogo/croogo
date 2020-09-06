@@ -2,7 +2,7 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -30,7 +30,7 @@ class TypesTable extends CroogoTable
         'description',
     ];
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Timestamp');
         $this->addBehavior('Croogo/Core.Url', [
@@ -57,7 +57,7 @@ class TypesTable extends CroogoTable
      * @param \Cake\Validation\Validator $validator Validator
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notBlank('title', __d('croogo', 'Title cannot be empty.'));
         $validator->notBlank('alias', __d('croogo', 'Alias cannot be empty.'));
@@ -65,7 +65,7 @@ class TypesTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(
             ['alias'],
@@ -96,7 +96,7 @@ class TypesTable extends CroogoTable
         return $this->find('list', compact('conditions'));
     }
 
-    protected function _initializeSchema(TableSchema $table)
+    protected function _initializeSchema(TableSchemaInterface $table): TableSchemaInterface
     {
         $table->setColumnType('params', 'params');
 

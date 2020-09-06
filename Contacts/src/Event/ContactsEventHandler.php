@@ -18,7 +18,7 @@ class ContactsEventHandler implements EventListenerInterface
     /**
      * implementEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [];
     }

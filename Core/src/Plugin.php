@@ -5,12 +5,13 @@ namespace Croogo\Core;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
+use Cake\Routing\RouteBuilder;
 use Cake\Utility\Security;
 
 class Plugin extends BasePlugin
 {
 
-    public function bootstrap(PluginApplicationInterface $app)
+    public function bootstrap(PluginApplicationInterface $app): void
     {
         parent::bootstrap($app);
 
@@ -30,7 +31,7 @@ class Plugin extends BasePlugin
      * @param \Cake\Routing\RouteBuilder $routes The route builder to update.
      * @return void
      */
-    public function routes($routes)
+    public function routes(RouteBuilder $routes): void
     {
         parent::routes($routes);
         Router::homepage();

@@ -58,7 +58,7 @@ class HtmlHelper extends BaseHtmlHelper
     /**
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         $events = parent::implementedEvents();
         $events['Helper.Layout.beforeFilter'] = [
@@ -109,7 +109,7 @@ class HtmlHelper extends BaseHtmlHelper
      * @param array $options Options list
      * @return string Completed img tag
      */
-    public function image($path, array $options = [])
+    public function image($path, array $options = []): string
     {
         $class = $this->Theme->getCssClass('imageClass');
         if (empty($options['class'])) {
@@ -179,7 +179,7 @@ class HtmlHelper extends BaseHtmlHelper
      * @param array $options Icon html attributes
      * @return string Icon markup
      */
-    public function icon($name, array $options = [])
+    public function icon($name, array $options = []): string
     {
         $iconDefaults = $this->getConfig('iconDefaults');
 
@@ -229,7 +229,7 @@ class HtmlHelper extends BaseHtmlHelper
      * @param array $options Array of HTML attributes.
      * @return string An `<a />` element.
      */
-    public function link($title, $url = null, array $options = [])
+    public function link($title, $url = null, array $options = []): string
     {
         $defaults = ['escape' => true];
         $options = is_null($options) ? [] : $options;

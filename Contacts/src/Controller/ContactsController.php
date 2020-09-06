@@ -4,8 +4,10 @@ namespace Croogo\Contacts\Controller;
 
 use Cake\Core\Configure;
 use Cake\Mailer\Email;
+use Croogo\Contacts\Model\Entity\Contact;
 use Croogo\Contacts\Model\Entity\Message;
 use Croogo\Core\Croogo;
+use Cake\Network\Exception\SocketException;
 
 /**
  * Class ContactsController
@@ -13,7 +15,7 @@ use Croogo\Core\Croogo;
 class ContactsController extends AppController
 {
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -85,9 +87,9 @@ class ContactsController extends AppController
      * @return bool
      * @access protected
      */
-    protected function _validation($continue, $contact, Message $message)
+    protected function _validation($continue, Contact $contact, Message $message)
     {
-        if ($message->errors() || $continue === false) {
+        if ($message->getErrors() || $continue === false) {
             return false;
         }
 
@@ -102,11 +104,11 @@ class ContactsController extends AppController
      * Spam protection
      *
      * @param bool $continue
-     * @param array $contact
+     * @param \Croogo\Contacts\Model\Entity\Contact $contact
      * @return bool
      * @access protected
      */
-    protected function _spamProtection($continue, $contact, Message $message)
+    protected function _spamProtection($continue, Contact $contact, Message $message)
     {
         if (!$contact->message_spam_protection || $continue === false) {
             return $continue;
@@ -131,7 +133,7 @@ class ContactsController extends AppController
      * @return bool
      * @access protected
      */
-    protected function _captcha($continue, $contact, Message $message)
+    protected function _captcha($continue, Contact $contact, Message $message)
     {
         if (!$contact->message_captcha || $continue === false) {
             return $continue;
@@ -154,7 +156,7 @@ class ContactsController extends AppController
      * @return bool
      * @access protected
      */
-    protected function _sendEmail($continue, $contact, Message $message)
+    protected function _sendEmail($continue, Contact $contact, Message $message)
     {
         if (!$contact->message_notify || $continue === false) {
             return $continue;

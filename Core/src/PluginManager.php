@@ -15,6 +15,7 @@ use Cake\Core\Plugin;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Database\SchemaCache;
 use Cake\Database\Type;
+use Cake\Database\TypeFactory;
 use Cake\Datasource\ConnectionManager;
 use Cake\Datasource\Exception\MissingDatasourceConfigException;
 use Cake\Filesystem\Folder;
@@ -104,6 +105,8 @@ class PluginManager extends Plugin
         'Croogo/Taxonomy',
         'Croogo/Users',
     ];
+
+    protected static $_loader;
 
     /**
      * __construct
@@ -266,7 +269,7 @@ class PluginManager extends Plugin
                 return $manifestData['name'];
             }
         }
-        $composerFile = $pluginPath . $alias . DS . 'composer.json';
+        $composerFile = $pluginPath . DS . 'composer.json';
 
         if (file_exists($composerFile)) {
             $composerData = json_decode(file_get_contents($composerFile), true);
@@ -877,6 +880,15 @@ class PluginManager extends Plugin
         );
     }
 
+    public static function _includeFile($file, $ignoreMissing)
+    {
+        if ($ignoreMissing && !is_file($file)) {
+            return false;
+        }
+
+        return include $file;
+    }
+
     /**
      * Loads a plugin and optionally loads bootstrapping and routing files.
      *
@@ -1111,7 +1123,7 @@ class PluginManager extends Plugin
      * @throws \Cake\Core\Exception\MissingPluginException if the folder for plugin was not found or plugin has not
      *     been loaded
      */
-    public static function path($plugin)
+    public static function path(string $plugin): string
     {
         if (strstr($plugin, 'Croogo/')) {
             return realpath(parent::path('Croogo/Core') . '..' . DS . substr($plugin, 7) . DS) . DS;
@@ -1227,7 +1239,7 @@ class PluginManager extends Plugin
         if (file_exists(ROOT . DS . 'config' . DS . 'database.php')) {
             Configure::load('database', 'default');
             ConnectionManager::drop('default');
-            ConnectionManager::config(Configure::consume('Datasources'));
+            ConnectionManager::setConfig(Configure::consume('Datasources'));
         }
 
         try {
@@ -1238,9 +1250,9 @@ class PluginManager extends Plugin
         }
 
         // Map our custom types
-        Type::map('params', 'Croogo\Core\Database\Type\ParamsType');
-        Type::map('encoded', 'Croogo\Core\Database\Type\EncodedType');
-        Type::map('link', 'Croogo\Core\Database\Type\LinkType');
+        TypeFactory::map('params', 'Croogo\Core\Database\Type\ParamsType');
+        TypeFactory::map('encoded', 'Croogo\Core\Database\Type\EncodedType');
+        TypeFactory::map('link', 'Croogo\Core\Database\Type\LinkType');
 
         /**
          * Cache configuration
@@ -1348,7 +1360,9 @@ class PluginManager extends Plugin
              */
             $siteLocale = Configure::read('Site.locale');
             Configure::write('App.defaultLocale', $siteLocale);
-            I18n::setLocale($siteLocale);
+            if ($siteLocale) {
+                I18n::setLocale($siteLocale);
+            }
 
             /**
              * Assets

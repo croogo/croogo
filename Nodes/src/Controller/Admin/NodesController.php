@@ -29,7 +29,7 @@ class NodesController extends AppController
      * @throws \Crud\Error\Exception\MissingActionException
      * @throws \Crud\Error\Exception\ActionNotConfiguredException
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -286,7 +286,7 @@ class NodesController extends AppController
     /**
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforeFind' => 'beforeCrudFind',

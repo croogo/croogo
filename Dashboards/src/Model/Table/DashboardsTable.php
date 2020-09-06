@@ -17,7 +17,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class DashboardsTable extends CroogoTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('dashboards');
         $this->addBehavior('Timestamp');

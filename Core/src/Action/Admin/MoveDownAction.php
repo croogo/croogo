@@ -3,6 +3,7 @@
 namespace Croogo\Core\Action\Admin;
 
 use Cake\Controller\Controller;
+use Cake\Network\Response
 use Cake\Utility\Hash;
 use Crud\Action\BaseAction;
 use Crud\Event\Subject;
@@ -107,7 +108,7 @@ class MoveDownAction extends BaseAction
      * @param mixed $id Record id
      * @return void|\Cake\Network\Response
      */
-    protected function _put($id, $step = 1)
+    protected function _put($id, $step = 1): ?Response
     {
         $subject = $this->_subject();
         $subject->set(['id' => $id]);
@@ -131,7 +132,7 @@ class MoveDownAction extends BaseAction
      * @param mixed $id Record id
      * @return void|\Cake\Network\Response
      */
-    protected function _post($id = null)
+    protected function _post($id = null): ?Response
     {
         return $this->_put($id);
     }
@@ -142,7 +143,7 @@ class MoveDownAction extends BaseAction
      * @param \Crud\Event\Subject $subject Event subject
      * @return \Cake\Network\Response
      */
-    protected function _success(Subject $subject)
+    protected function _success(Subject $subject): Response
     {
         $subject->set(['success' => true, 'created' => false]);
         $this->_trigger('afterSave', $subject);
@@ -163,7 +164,7 @@ class MoveDownAction extends BaseAction
      * @param \Crud\Event\Subject $subject Event subject
      * @return \Cake\Network\Response
      */
-    protected function _error(Subject $subject)
+    protected function _error(Subject $subject): ?Response
     {
         $subject->set(['success' => false, 'created' => false]);
         $this->_trigger('afterSave', $subject);

@@ -2,8 +2,10 @@
 
 namespace Croogo\Core\Controller;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Routing\Router;
 
 /**
@@ -25,7 +27,7 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
 {
     use HookableComponentTrait;
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->_dispatchBeforeInitialize();
 
@@ -49,7 +51,7 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
      *
      * @return void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         if ($this->getRequest()->is('json')) {

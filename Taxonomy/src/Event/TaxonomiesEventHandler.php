@@ -21,7 +21,7 @@ class TaxonomiesEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Croogo.setupAdminData' => [

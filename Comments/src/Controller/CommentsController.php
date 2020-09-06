@@ -28,7 +28,7 @@ class CommentsController extends AppController
      */
     public $presetVars = true;
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 

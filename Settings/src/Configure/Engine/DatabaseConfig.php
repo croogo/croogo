@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Croogo\Settings\Configure\Engine;
 
 use Cake\Cache\Cache;
@@ -20,7 +22,7 @@ class DatabaseConfig implements ConfigEngineInterface
      * @param string $key Key to read.
      * @return array An array of data to merge into the runtime configuration
      */
-    public function read($key)
+    public function read(string $key): array
     {
         timerStart('Loading settings from database');
 
@@ -61,10 +63,10 @@ class DatabaseConfig implements ConfigEngineInterface
      * @param array $data The data to dump.
      * @return bool True on success or false on failure.
      */
-    public function dump($key, array $data)
+    public function dump(string $key, array $data): bool
     {
         Log::debug($key);
-        Log::debug($data);
+        Log::debug(print_r($data, true));
 
         return true;
     }

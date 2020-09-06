@@ -112,7 +112,7 @@ class AclCachedAuthorize extends BaseAuthorize
      * check request request authorization
      *
      */
-    public function authorize($user, ServerRequest $request)
+    public function authorize($user, ServerRequest $request): bool
     {
         // Admin role is allowed to perform all actions, bypassing ACL
         if ($this->_isAdmin($user)) {

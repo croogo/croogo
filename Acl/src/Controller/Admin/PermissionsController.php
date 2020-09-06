@@ -4,6 +4,7 @@ namespace Croogo\Acl\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Croogo\Core\Croogo;
 
 /**
@@ -19,7 +20,7 @@ use Croogo\Core\Croogo;
 class PermissionsController extends AppController
 {
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -34,7 +35,7 @@ class PermissionsController extends AppController
      *
      * @return void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         if ($this->getRequest()->getParam('action') == 'toggle') {

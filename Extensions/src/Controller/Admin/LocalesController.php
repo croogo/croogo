@@ -209,7 +209,7 @@ class LocalesController extends AppController
      * @param string $locale
      * @return \Cake\Http\Response|void
      */
-    public function edit($locale = null)
+    public function edit($locale)
     {
         $this->set('title_for_layout', sprintf(__d('croogo', 'Edit locale: %s'), $locale));
 
@@ -254,7 +254,7 @@ class LocalesController extends AppController
      * @param string $locale
      * @return \Cake\Http\Response|void
      */
-    public function delete($locale = null)
+    public function delete($locale)
     {
         $poFile = $this->__getPoFile($locale);
 

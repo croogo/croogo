@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Croogo\Core\Model\Behavior;
 
@@ -48,7 +49,7 @@ class TrackableBehavior extends Behavior
     /**
      * Setup
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         if ($this->_hasTrackableFields()) {
             $this->_setupBelongsTo();

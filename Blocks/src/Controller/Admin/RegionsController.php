@@ -18,7 +18,7 @@ class RegionsController extends AppController
 {
     public $modelClass = 'Croogo/Blocks.Regions';
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -30,7 +30,7 @@ class RegionsController extends AppController
         ]);
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforeRedirect' => 'beforeCrudRedirect',

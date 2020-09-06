@@ -8,6 +8,7 @@ namespace Croogo\Core\View\Widget;
 use Cake\Chronos\ChronosInterface;
 use Cake\Core\Configure;
 use Cake\Database\Type;
+use Cake\Database\TypeFactory;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 use Cake\Routing\Router;
@@ -29,7 +30,7 @@ class DateTimeWidget extends CakeDateTimeWidget
      * @return string A generated select box.
      * @throws \RuntimeException When option data is invalid.
      */
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         $id = $data['id'];
         $name = $data['name'];
@@ -54,10 +55,10 @@ class DateTimeWidget extends CakeDateTimeWidget
             switch ($type) {
                 case 'date':
                 case 'time':
-                    $val = Type::build($type)->marshal($val);
+                    $val = TypeFactory::build($type)->marshal($val);
                     break;
                 default:
-                    $val = Type::build('datetime')->marshal($val);
+                    $val = TypeFactory::build('datetime')->marshal($val);
             }
         }
 
@@ -178,7 +179,7 @@ html;
      * @param array $data The data to render.
      * @return array Array of fields to secure.
      */
-    public function secureFields(array $data)
+    public function secureFields(array $data): array
     {
         if (!isset($data['name']) || $data['name'] === '') {
             return [];

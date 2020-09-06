@@ -19,7 +19,7 @@ use Cake\Utility\Inflector;
 class TranslateController extends AppController
 {
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         $this->loadModel('Croogo/Settings.Settings');
@@ -96,7 +96,7 @@ class TranslateController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $id = $this->getRequest()->getQuery('id', $id);
         $modelAlias = urldecode($this->getRequest()->query('model'));

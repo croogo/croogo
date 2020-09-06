@@ -18,7 +18,7 @@ class LegacyLocalAttachmentStorageHandler extends BaseStorageHandler implements 
     /**
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'FileStorage.beforeSave' => 'onBeforeSave',

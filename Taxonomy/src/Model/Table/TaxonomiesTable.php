@@ -9,7 +9,7 @@ class TaxonomiesTable extends CroogoTable
 
     protected $_displayField = 'title';
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->belongsTo('Croogo/Taxonomy.Terms');
         $this->belongsTo('Croogo/Taxonomy.Vocabularies');

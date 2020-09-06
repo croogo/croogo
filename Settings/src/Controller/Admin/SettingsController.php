@@ -2,8 +2,8 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
-use Cake\Event\Event;
-use Cake\Utility\Inflector;
+use Cake\Event\EventInterface;
+use Cake\Utility\Text;
 use Exception;
 
 /**
@@ -18,21 +18,21 @@ use Exception;
  */
 class SettingsController extends AppController
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
         $this->_setupPrg();
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
 
-    public function beforeCrudRedirect(Event $event)
+    public function beforeCrudRedirect(EventInterface $event)
     {
         if ($this->redirectToSelf($event)) {
             return;
@@ -127,7 +127,7 @@ success:
         $ext = strtolower(substr($name, $dotPosition + 1));
 
         $relativePath = DS . 'uploads' . DS .
-            Inflector::slug($filename, '-') . '.' .
+            Text::slug($filename, '-') . '.' .
             $ext;
         $targetDir = WWW_ROOT . 'uploads';
         if (!is_dir($targetDir)) {

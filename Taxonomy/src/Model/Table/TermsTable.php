@@ -3,7 +3,7 @@
 namespace Croogo\Taxonomy\Model\Table;
 
 use ArrayObject;
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
@@ -29,7 +29,7 @@ use Exception;
 class TermsTable extends CroogoTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp');
@@ -54,7 +54,7 @@ class TermsTable extends CroogoTable
             ]);
     }
 
-    protected function _initializeSchema(TableSchema $table)
+    protected function _initializeSchema(TableSchemaInterface $table): TableSchemaInterface
     {
         $table->setColumnType('params', 'params');
 
@@ -65,7 +65,7 @@ class TermsTable extends CroogoTable
      * @param \Cake\Validation\Validator $validator
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'The title cannot be empty'))
@@ -85,7 +85,7 @@ class TermsTable extends CroogoTable
      * @param \Cake\ORM\RulesChecker $rules
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules
             ->add($rules->isUnique(

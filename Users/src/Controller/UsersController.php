@@ -22,7 +22,7 @@ class UsersController extends AppController
     /**
      * {inheritdoc}
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         $this->Auth->allow(['logout']);
@@ -207,7 +207,7 @@ class UsersController extends AppController
      */
     public function login()
     {
-        $session = $this->getRequest()->session();
+        $session = $this->getRequest()->getSession();
         if (!$this->getRequest()->is('post')) {
             $redirectUrl = $this->Auth->redirectUrl();
             if ($redirectUrl != '/' && !$session->check('Croogo.redirect')) {

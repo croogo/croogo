@@ -15,7 +15,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class ModelTaxonomiesTable extends CroogoTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('model_taxonomies');
     }

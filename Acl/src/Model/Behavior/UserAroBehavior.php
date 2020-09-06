@@ -26,7 +26,7 @@ class UserAroBehavior extends Behavior
     /**
      * Setup
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->_setupMultirole($this->_table);
     }

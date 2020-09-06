@@ -2,6 +2,7 @@
 
 namespace Croogo\Core\Shell;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Utility\Security;
 use Croogo\Acl\AclGenerator;
 
@@ -20,10 +21,10 @@ class CroogoShell extends AppShell
     /**
      * Display help/options
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         $parser = parent::getOptionParser();
-        $parser->description(__d('croogo', 'Croogo Utilities'))
+        $parser->setDescription(__d('croogo', 'Croogo Utilities'))
             ->addSubcommand('password', [
                 'help' => 'Get hashed password',
                 'parser' => [

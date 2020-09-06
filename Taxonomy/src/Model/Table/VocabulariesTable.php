@@ -12,7 +12,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class VocabulariesTable extends CroogoTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('ADmad/Sequence.Sequence', [
             'order' => 'weight',
@@ -35,7 +35,7 @@ class VocabulariesTable extends CroogoTable
      * @param \Cake\Validation\Validator $validator
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'The title cannot be empty'))
@@ -48,7 +48,7 @@ class VocabulariesTable extends CroogoTable
      * @param \Cake\ORM\RulesChecker $rules
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(
             ['alias'],

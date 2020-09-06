@@ -9,7 +9,7 @@ use Croogo\Comments\Model\Entity\Comment;
 
 class CommentMailer extends Mailer
 {
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Model.afterSave' => 'onCommentPosted'

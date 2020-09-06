@@ -136,7 +136,7 @@ class BulkProcessBehavior extends Behavior
      */
     public function bulkPromote($ids)
     {
-        $field = $this->config('fields.promote');
+        $field = $this->setConfig('fields.promote');
 
         return $this->_saveStatus($ids, $field, Status::PROMOTED);
     }
@@ -149,7 +149,7 @@ class BulkProcessBehavior extends Behavior
      */
     public function bulkUnpromote($ids)
     {
-        $field = $this->config('fields.promote');
+        $field = $this->setConfig('fields.promote');
 
         return $this->_saveStatus($ids, $field, Status::UNPROMOTED);
     }

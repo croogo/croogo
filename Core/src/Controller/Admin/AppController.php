@@ -3,7 +3,7 @@
 namespace Croogo\Core\Controller\Admin;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Croogo\Core\Controller\AppController as CroogoAppController;
 use Croogo\Core\Croogo;
 use Crud\Controller\ControllerTrait;
@@ -29,7 +29,7 @@ class AppController extends CroogoAppController
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -104,7 +104,7 @@ class AppController extends CroogoAppController
      *
      * @return void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $this->viewBuilder()->setLayout('admin');
 
@@ -138,7 +138,7 @@ class AppController extends CroogoAppController
         return $this->Crud->execute();
     }
 
-    protected function redirectToSelf(Event $event)
+    protected function redirectToSelf(EventInterface $event)
     {
         $subject = $event->getSubject();
         if ($subject->success) {

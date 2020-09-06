@@ -3,6 +3,7 @@
 namespace Croogo\Users\Shell;
 
 use Cake\Core\Configure;
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Croogo\Users\Model\Entity\User;
 
@@ -21,7 +22,7 @@ class UsersShell extends Shell
     /**
      * Initialize
      */
-    public function initialize()
+    public function initialize(): void
     {
         Configure::write('Trackable.Auth.User', ['id' => 1]);
         $this->loadModel('Croogo/Users.Users');
@@ -30,7 +31,7 @@ class UsersShell extends Shell
     /**
      * getOptionParser
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         return parent::getOptionParser()
             ->addSubCommand('create', [

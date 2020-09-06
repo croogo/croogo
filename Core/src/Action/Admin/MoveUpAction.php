@@ -3,6 +3,7 @@
 namespace Croogo\Core\Action\Admin;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 use Cake\Utility\Hash;
 use Crud\Action\BaseAction;
 use Crud\Event\Subject;
@@ -105,9 +106,9 @@ class MoveUpAction extends BaseAction
      * HTTP PUT handler
      *
      * @param mixed $id Record id
-     * @return void|\Cake\Network\Response
+     * @return void|\Cake\Http\Response
      */
-    protected function _put($id, $step = 1)
+    protected function _put($id, $step = 1): ?Response
     {
         $subject = $this->_subject();
         $subject->set(['id' => $id]);
@@ -129,9 +130,9 @@ class MoveUpAction extends BaseAction
      * Thin proxy for _put
      *
      * @param mixed $id Record id
-     * @return void|\Cake\Network\Response
+     * @return void|\Cake\Http\Response
      */
-    protected function _post($id = null)
+    protected function _post($id = null): ?Response
     {
         return $this->_put($id);
     }
@@ -140,9 +141,9 @@ class MoveUpAction extends BaseAction
      * Success callback
      *
      * @param \Crud\Event\Subject $subject Event subject
-     * @return \Cake\Network\Response
+     * @return \Cake\Http\Response
      */
-    protected function _success(Subject $subject)
+    protected function _success(Subject $subject): ?Response
     {
         $subject->set(['success' => true, 'created' => false]);
         $this->_trigger('afterSave', $subject);
@@ -161,9 +162,9 @@ class MoveUpAction extends BaseAction
      * Error callback
      *
      * @param \Crud\Event\Subject $subject Event subject
-     * @return \Cake\Network\Response
+     * @return \Cake\Http\Response
      */
-    protected function _error(Subject $subject)
+    protected function _error(Subject $subject): ?Response
     {
         $subject->set(['success' => false, 'created' => false]);
         $this->_trigger('afterSave', $subject);

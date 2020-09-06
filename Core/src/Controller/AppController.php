@@ -6,10 +6,12 @@ use Cake\Controller\Exception\MissingActionException;
 use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\Http\ResponseEmitter;
 use Cake\Http\ServerRequest;
 use Cake\View\Exception\MissingTemplateException;
+use Closure;
 use Croogo\Core\Croogo;
 
 /**
@@ -75,7 +77,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
     /**
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->_dispatchBeforeInitialize();
 
@@ -87,7 +89,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
     /**
      * {@inheritDoc}
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         parent::beforeRender($event);
 
@@ -100,7 +102,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
     /**
      * {@inheritDoc}
      */
-    public function render($view = null, $layout = null)
+    public function render(?string $template = null, ?string $layout = null): Response
     {
         if ($this->getRequest()->getParam('prefix') === 'admin') {
             Croogo::dispatchEvent('Croogo.setupAdminData', $this);
@@ -108,12 +110,12 @@ class AppController extends \App\Controller\AppController implements HookableCom
 
         // Just render normal when we aren't in a edit or add action
         if (!in_array($this->getRequest()->getParam('action'), ['edit', 'add'])) {
-            return parent::render($view, $layout);
+            return parent::render($template, $layout);
         }
 
         try {
             // First try the edit or add view
-            return parent::render($view, $layout);
+            return parent::render($template, $layout);
         } catch (MissingTemplateException $e) {
             // Secondly, when the template isn't found, try form view
             return parent::render('form', $layout);
@@ -125,11 +127,11 @@ class AppController extends \App\Controller\AppController implements HookableCom
      *
      * @throws MissingActionException
      */
-    public function invokeAction()
+    public function invokeAction(Closure $action, array $args): void
     {
         $request = $this->request;
         try {
-            return parent::invokeAction();
+            parent::invokeAction($action, $args);
         } catch (MissingActionException $e) {
             $params = $request->params;
             $prefix = isset($params['prefix']) ? $params['prefix'] : '';
@@ -141,7 +143,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
                 if ($this->{$component}->isValidAction($action)) {
                     $this->setRequest($request);
 
-                    return $this->{$component}->{$action}($this);
+                    $this->{$component}->{$action}($this);
                 }
             }
             throw $e;
@@ -154,7 +156,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
      * @return void
      * @throws MissingComponentException
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $aclFilterComponent = 'Filter';
@@ -173,9 +175,9 @@ class AppController extends \App\Controller\AppController implements HookableCom
                 )
             ) {
                 $this->viewBuilder()->setLayout('maintenance');
-                $this->response->statusCode(503);
+                $this->response = $this->response->withStatus(503);
                 $this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
-                $this->viewBuilder()->templatePath('Maintenance');
+                $this->viewBuilder()->setTemplatePath('Maintenance');
                 $this->render('Croogo/Core.blank');
             }
         }

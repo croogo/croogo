@@ -3,7 +3,7 @@
 namespace Croogo\Blocks\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
@@ -30,7 +30,7 @@ class BlocksTable extends CroogoTable
         'published' => true,
     ];
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
@@ -39,7 +39,7 @@ class BlocksTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules
             ->add($rules->isUnique(
@@ -50,7 +50,7 @@ class BlocksTable extends CroogoTable
         return $rules;
     }
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setEntityClass('Croogo/Blocks.Block');
 
@@ -88,11 +88,11 @@ class BlocksTable extends CroogoTable
             ->add('title', 'Search.Like', [
                 'before' => true,
                 'after' => true,
-                'field' => $this->aliasField('title')
+                'fields' => $this->aliasField('title')
             ]);
     }
 
-    protected function _initializeSchema(TableSchema $table)
+    protected function _initializeSchema(TableSchemaInterface $table): TableSchemaInterface
     {
         $table->setColumnType('visibility_roles', 'encoded');
         $table->setColumnType('visibility_paths', 'encoded');

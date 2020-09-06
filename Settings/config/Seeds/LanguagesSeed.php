@@ -33,9 +33,16 @@ class LanguagesSeed extends AbstractSeed
             ];
             I18n::setLocale($locale);
             $data['native'] = Locale::getDisplayRegion($locale);
+
+            try {
+                $Table->insert([$data])->save();
+            } catch (\Exception $e) {
+                dump($e);
+                dump($data);
+            }
+
             $records[] = $data;
         }
 
-        $Table->insert($records)->save();
     }
 }

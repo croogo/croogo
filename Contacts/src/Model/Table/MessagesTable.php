@@ -18,7 +18,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class MessagesTable extends CroogoTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setEntityClass('Croogo/Contacts.Message');
         $this->belongsTo('Contacts', [
@@ -45,7 +45,7 @@ class MessagesTable extends CroogoTable
                 'field' => 'Messages.created'
             ])
             ->add('search', 'Search.Like', [
-                'field' => [
+                'fields' => [
                     'Messages.name', 'Messages.email', 'Messages.title',
                     'Messages.body',
                 ],
@@ -57,7 +57,7 @@ class MessagesTable extends CroogoTable
             ]);
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $notBlankMessage = __d('croogo', 'This field cannot be left blank.');
         $validator->notBlank('name', $notBlankMessage);

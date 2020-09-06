@@ -115,7 +115,7 @@ class AccessComponent extends Component
     public function isUrlAuthorized($user, $url)
     {
         if (is_string($url)) {
-            $request = new ServerRequest($url);
+            $request = new ServerRequest(['url' => $url]);
             $params = Router::parseRequest($request);
             $request = $request->withAttribute('params', $params);
         } else {

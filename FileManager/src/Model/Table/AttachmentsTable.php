@@ -40,7 +40,7 @@ class AttachmentsTable extends CroogoTable
      * @param array $config
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('attachments');
 

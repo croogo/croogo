@@ -30,7 +30,7 @@ class TaxonomizableBehavior extends Behavior
      * @param array $config
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->_setupRelationships();
 
@@ -46,7 +46,7 @@ class TaxonomizableBehavior extends Behavior
     /**
      * Setup Event handlers
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         $events = parent::implementedEvents();
 //        $events['Model.Node.beforeSaveNode'] = 'beforeSaveNode';
@@ -153,10 +153,10 @@ class TaxonomizableBehavior extends Behavior
             $terms = Hash::extract($vocabulary, 'taxonomies.{n}.id');
             $selected = count(array_intersect($selectedTerms, $terms));
             if ($vocabulary->required && $selected == 0) {
-                $entity->errors($fieldName, $requiredError);
+                $entity->setError($fieldName, $requiredError);
             }
             if (!$vocabulary->multiple && $selected > 1) {
-                $entity->errors($fieldName, $multipleError);
+                $entity->setError($fieldName, $multipleError);
             }
         }
     }

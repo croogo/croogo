@@ -29,7 +29,7 @@ class MetaTable extends CroogoTable
         'value',
     ];
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('meta');
         $this->setEntityClass(Meta::class);

@@ -4,6 +4,7 @@ namespace Croogo\Nodes\Event;
 
 use Cake\Cache\Cache;
 use Cake\Core\Plugin;
+use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
@@ -23,7 +24,7 @@ class NodesEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Croogo.bootstrapComplete' => [
@@ -56,7 +57,7 @@ class NodesEventHandler implements EventListenerInterface
     /**
      * Setup admin data
      */
-    public function onSetupAdminData($event)
+    public function onSetupAdminData(EventInterface $event)
     {
         $View = $event->getSubject();
 
@@ -114,7 +115,7 @@ class NodesEventHandler implements EventListenerInterface
      *
      * @return void
      */
-    public function onSetupLinkChooser($event)
+    public function onSetupLinkChooser(EventInterface $event)
     {
         $typesTable = TableRegistry::get('Croogo/Taxonomy.Types');
         $types = $typesTable->find('all', [
@@ -146,7 +147,7 @@ class NodesEventHandler implements EventListenerInterface
      * @param CakeEvent $event
      * @return void
      */
-    public function onAfterBulkProcess($event)
+    public function onAfterBulkProcess(EventInterface $event)
     {
         Cache::clearGroup('nodes', 'nodes');
         Cache::clearGroup('nodes', 'nodes_view');

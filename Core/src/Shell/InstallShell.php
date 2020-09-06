@@ -3,6 +3,7 @@
 namespace Croogo\Core\Shell;
 
 use Cake\Console\ConsoleIo;
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Exception\ConsoleException;
 use Cake\Core\Exception\Exception;
 use Cake\ORM\Locator\LocatorInterface;
@@ -139,7 +140,7 @@ class InstallShell extends AppShell
     /**
      * Display help/options
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         return parent::getOptionParser()
             ->setDescription(__d('croogo', 'Download, Install & Activate Plugins & Themes'))

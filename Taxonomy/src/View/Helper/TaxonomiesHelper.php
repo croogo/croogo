@@ -23,7 +23,7 @@ class TaxonomiesHelper extends Helper
         'Html',
     ];
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Helper.Layout.beforeFilter' => 'filter',

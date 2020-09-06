@@ -21,7 +21,7 @@ class AppController extends CroogoController
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 

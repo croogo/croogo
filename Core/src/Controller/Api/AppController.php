@@ -7,6 +7,7 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
+use Cake\Event\EventInterface;
 
 /**
  * Base Api Controller
@@ -68,7 +69,7 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -112,7 +113,7 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
@@ -120,7 +121,7 @@ class AppController extends Controller
             $this->Auth->user('role_id') != 1
         ) {
             if (!$this->getRequest()->is('whitelisted')) {
-                $this->response->statusCode(503);
+                $this->response = $this->response->withStatus(503);
             }
         }
     }

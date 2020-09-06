@@ -16,7 +16,7 @@ use Cake\Event\Event;
  */
 class MessagesController extends AppController
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -69,7 +69,7 @@ class MessagesController extends AppController
         }
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforePaginate' => 'beforePaginate',

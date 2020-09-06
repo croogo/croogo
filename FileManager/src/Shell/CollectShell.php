@@ -2,13 +2,14 @@
 
 namespace Croogo\FileManager\Shell;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
 
 class CollectShell extends Shell
 {
 
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         return parent::getOptionParser()
             ->setDescription(__d('croogo', 'Scan directory and import record to database'))
@@ -49,7 +50,7 @@ class CollectShell extends Shell
                     $errors++;
                 }
             }
-            $this->out();
+            $this->out('');
             if ($tasks - $errors > 0) {
                 $this->out('<warning>' . __d('croogo', 'Task has %s tasks and %s errors?', $tasks, $errors) . '</warning>');
                 $continue = $this->in('Continue?', ['Y', 'n'], 'n');

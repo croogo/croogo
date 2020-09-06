@@ -59,7 +59,7 @@ class MetaComponent extends Component
     protected function _adminTabs()
     {
         $controller = $this->_registry->getController();
-        $table = TableRegistry::get($controller->modelClass);
+        $table = TableRegistry::get($controller->getName());
         if ($table &&
             !$table->behaviors()
                 ->has('Meta')

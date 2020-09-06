@@ -21,7 +21,7 @@ class ActionsController extends AppController
 
     private $Acos;
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -77,7 +77,7 @@ class ActionsController extends AppController
      *
      * @param int $id
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $aco = $this->Acos->get($id);
 
@@ -111,7 +111,7 @@ class ActionsController extends AppController
      *
      * @param int $id
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $aco = $this->Acos->get($id);
 

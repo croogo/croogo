@@ -2,7 +2,7 @@
 
 namespace Croogo\Meta\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 use Croogo\Meta\Controller\AppController;
 
@@ -25,7 +25,7 @@ class MetaController extends AppController
      */
     public $presetVars = true;
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -54,14 +54,14 @@ class MetaController extends AppController
         $this->_setupPrg();
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
-        $this->Crud->on('Crud.beforePaginate', function (Event $event) {
+        $this->Crud->on('Crud.beforePaginate', function (EventInterface $event) {
             $event->getSubject()->query->where(['model' => '']);
         });
-        $this->Crud->on('Crud.beforeSave', function (Event $event) {
+        $this->Crud->on('Crud.beforeSave', function (EventInterface $event) {
             $entity = $event->getSubject()->entity;
             if (empty($entity->model)) {
                 $entity->model = '';

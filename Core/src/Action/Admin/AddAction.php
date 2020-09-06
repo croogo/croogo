@@ -6,9 +6,9 @@ use Crud\Action\AddAction as CrudAddAction;
 
 class AddAction extends CrudAddAction
 {
-    protected function _get()
+    protected function _get($id = null): void
     {
-        parent::_get();
+        parent::_get($id);
 
         $this->_controller()->set([
             'editFields' => $this->getConfig('editFields'),

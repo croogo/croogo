@@ -2,7 +2,7 @@
 
 namespace Croogo\Nodes\Model\Table;
 
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
 use Cake\ORM\Query;
@@ -16,7 +16,7 @@ use Croogo\Nodes\Model\Entity\Node;
 
 class NodesTable extends CroogoTable
 {
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Tree');
         $this->addBehavior('Croogo/Core.BulkProcess', [
@@ -84,7 +84,7 @@ class NodesTable extends CroogoTable
             ]);
     }
 
-    protected function _initializeSchema(TableSchema $table)
+    protected function _initializeSchema(TableSchemaInterface $table): TableSchemaInterface
     {
         $table->setColumnType('visibility_roles', 'encoded');
 
@@ -129,7 +129,7 @@ class NodesTable extends CroogoTable
      * @param \Cake\Validation\Validator $validator Validator
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notBlank('title', __d('croogo', 'Please supply a title.'));
 
@@ -138,7 +138,7 @@ class NodesTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->isUnique(['slug', 'type'], __d('croogo', 'The slug has already been taken.'));
         $rules->add(function (Node $node) {
@@ -167,7 +167,7 @@ class NodesTable extends CroogoTable
      * @param $typeAlias string Node type alias
      * @return mixed see Model::saveAll()
      */
-    public function saveNode(Node $node, $typeAlias = self::DEFAULT_TYPE)
+    public function saveNode(Node $node, $typeAlias = 'post')
     {
         // $node = $this->formatNode($node, $typeAlias);
         $event = Croogo::dispatchEvent('Model.Nodes.beforeSaveNode', $this, compact('node', 'typeAlias'));
@@ -189,7 +189,7 @@ class NodesTable extends CroogoTable
      * @return array formatted data
      * @throws InvalidArgumentException
      */
-    public function formatNode($data, $typeAlias = self::DEFAULT_TYPE)
+    public function formatNode($data, $typeAlias = 'post')
     {
         $roles = $type = [];
 

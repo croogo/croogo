@@ -2,6 +2,7 @@
 
 namespace Croogo\Settings\Shell;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\Core\App;
 use Cake\Core\Configure;
@@ -29,7 +30,7 @@ class SettingsShell extends Shell
     /**
      * Initialize
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadModel('Croogo/Settings.Settings');
         Configure::write('Trackable.Auth.User', ['id' => 1]);
@@ -38,7 +39,7 @@ class SettingsShell extends Shell
     /**
      * getOptionParser
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         return parent::getOptionParser()
             ->setDescription('Croogo Settings utility')
@@ -132,7 +133,7 @@ class SettingsShell extends Shell
             if ($this->params['all'] === true) {
                 $key = null;
             } else {
-                $this->out($this->OptionParser->help('get'));
+                $this->out($this->OptionParser->help('read'));
 
                 return;
             }
@@ -149,7 +150,7 @@ class SettingsShell extends Shell
         foreach ($settings as $data) {
             $this->out(__d('croogo', "    %-30s: %s", $data->key, $data->value));
         }
-        $this->out();
+        $this->out('');
     }
 
     /**

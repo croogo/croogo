@@ -2,14 +2,28 @@
 
 namespace Croogo\Core\Database\Type;
 
-use Cake\Database\Driver;
-use Cake\Database\Type;
+use Cake\Database\DriverInterface;
+use Cake\Database\TypeInterface;
+use Cake\Utility\Text;
 use PDO;
 
-class EncodedType extends Type
+class EncodedType implements TypeInterface
 {
+    public function getBaseType(): ?string
+    {
+        return EncodedType::class;
+    }
 
-    public function toPHP($value, Driver $driver)
+    public function getName(): ?string {
+        return 'Encoded';
+    }
+
+    public function newId()
+    {
+        return Text::uuid();
+    }
+
+    public function toPHP($value, DriverInterface $driver)
     {
         if (empty($value) || $value === null) {
             return $value;
@@ -30,7 +44,7 @@ class EncodedType extends Type
         return $this->decodeData($value);
     }
 
-    public function toDatabase($value, Driver $driver)
+    public function toDatabase($value, DriverInterface $driver)
     {
         // Make it possible to do LIKE checks like %"1"%
         if ((is_string($value)) && (preg_match('/\%\".*\"\%/', $value))) {
@@ -40,7 +54,7 @@ class EncodedType extends Type
         return $this->encodeData($value);
     }
 
-    public function toStatement($value, Driver $driver)
+    public function toStatement($value, DriverInterface $driver)
     {
         if ($value === null) {
             return PDO::PARAM_NULL;

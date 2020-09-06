@@ -3,8 +3,8 @@
 namespace Croogo\Core\Model\Behavior;
 
 use Cake\Cache\Cache;
+use Cake\Cache\InvalidArgumentException;
 use Cake\ORM\Behavior;
-use InvalidArgumentException;
 
 /**
  * Cached Behavior

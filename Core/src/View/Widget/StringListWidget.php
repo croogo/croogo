@@ -16,7 +16,7 @@ class StringListWidget implements WidgetInterface
         $this->_templates = $templates;
     }
 
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         $values = [];
         foreach ((array)$data['val'] as $k => $v) {
@@ -38,7 +38,7 @@ class StringListWidget implements WidgetInterface
         ]);
     }
 
-    public function secureFields(array $data)
+    public function secureFields(array $data): array
     {
         return [$data['name']];
     }

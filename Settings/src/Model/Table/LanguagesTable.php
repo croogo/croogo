@@ -23,7 +23,7 @@ class LanguagesTable extends CroogoTable
     /**
      * Initialize
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('ADmad/Sequence.Sequence', [
@@ -42,7 +42,7 @@ class LanguagesTable extends CroogoTable
             ->add('locale', 'Search.Like', $likeOptions);
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
@@ -53,7 +53,7 @@ class LanguagesTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules
             ->add($rules->isUnique(

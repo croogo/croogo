@@ -3,7 +3,7 @@
 namespace Croogo\Dashboards\Controller\Admin;
 
 use Cake\Core\Exception\Exception;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Utility\Hash;
 
 /**
@@ -19,7 +19,7 @@ use Cake\Utility\Hash;
 class DashboardsController extends AppController
 {
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
@@ -33,7 +33,7 @@ class DashboardsController extends AppController
      *
      * Load the dashboards helper
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         parent::beforeRender($event);
 
@@ -113,7 +113,7 @@ class DashboardsController extends AppController
      * @param int $id Dashboard id
      * @return \Cake\Http\Response|void
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         if (!$id) {
             $this->Flash->error(__d('croogo', 'Invalid id for Dashboard'));

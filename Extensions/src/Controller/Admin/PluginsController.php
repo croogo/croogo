@@ -3,7 +3,7 @@
 namespace Croogo\Extensions\Controller\Admin;
 
 use Cake\Core\Exception\Exception;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Croogo\Core\PluginManager;
 use Croogo\Extensions\ExtensionsInstaller;
 
@@ -26,7 +26,7 @@ class PluginsController extends AppController
     public function __get($name)
     {
         if ($name == 'corePlugins') {
-            return Plugin::$corePlugins;
+            return PluginManager::$corePlugins;
         }
     }
 
@@ -35,7 +35,7 @@ class PluginsController extends AppController
      *
      * @return void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 

@@ -3,6 +3,7 @@
 namespace Croogo\Core\Shell;
 
 use App\Controller\AppController;
+use Cake\Console\ConsoleOptionParser;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -136,7 +137,7 @@ class ExtShell extends AppShell
     /**
      * Display help/options
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         return parent::getOptionParser()
             ->setDescription(__d('croogo', 'Activate Plugins & Themes'))
@@ -290,7 +291,7 @@ class ExtShell extends AppShell
             if (!$active && !$all) {
                 continue;
             }
-            $data = $CroogoTheme->getThemeData($theme);
+            $data = $CroogoTheme->getData($theme);
             $author = isset($data['author']) ? $data['author'] : '';
             $this->out(__d('croogo', '%-20s%-50s%s', $theme, $author, $status));
         }

@@ -9,7 +9,7 @@ use Cake\Core\Plugin as CakePlugin;
 class Plugin extends BasePlugin
 {
 
-    public function bootstrap(PluginApplicationInterface $app)
+    public function bootstrap(PluginApplicationInterface $app): void
     {
         if (!CakePlugin::isLoaded('Migrations')) {
             $app->addPlugin('Migrations', ['autoload' => true, 'classBase' => false]);

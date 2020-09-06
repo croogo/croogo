@@ -8,9 +8,10 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Utility\File;
 use Composer\IO\BufferIO;
+use Croogo\Core\PluginManager;
 use Croogo\Install\InstallManager;
 use Exception;
 
@@ -31,7 +32,7 @@ class InstallController extends Controller
         'Welcome', 'Database', 'Admin user', 'Completed'
     ];
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadComponent('Flash');
 
@@ -44,7 +45,7 @@ class InstallController extends Controller
      * @return void
      * @access public
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
@@ -217,7 +218,7 @@ class InstallController extends Controller
     {
         $this->_check();
         if (!Plugin::isLoaded('Croogo/Users')) {
-            Plugin::load('Croogo/Users');
+            PluginManager::load('Croogo/Users');
         }
         $this->loadModel('Croogo/Users.Users');
 
