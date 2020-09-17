@@ -17,10 +17,15 @@ $cancelLabel = $this->Html->icon('times') . $cancelText;
 <div class="clearfix">
     <div class="card-buttons d-flex justify-content-center">
     <?php
-        echo $this->Form->button($saveLabel, ['class' => 'btn-outline-success']);
+        echo $this->Form->button($saveLabel, [
+            'class' => 'btn-outline-success',
+            'escapeTitle' => false,
+        ]);
     if ($applyText) :
-        echo $this->Form->button($applyLabel, ['class' => 'btn-outline-primary',
+        echo $this->Form->button($applyLabel, [
+            'class' => 'btn-outline-primary',
             'name' => '_apply',
+            'escapeTitle' => false,
         ]);
     endif;
         echo $this->Html->link($cancelLabel, $cancelUrl, [
