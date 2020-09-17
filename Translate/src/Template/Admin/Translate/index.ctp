@@ -58,7 +58,7 @@ $this->start('action-buttons');
                 continue;
             endif;
             $out .= $this->Croogo->adminAction($languageDisplay, [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Translate',
                 'controller' => 'Translate',
                 'action' => 'edit',

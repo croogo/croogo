@@ -26,7 +26,7 @@ if (Configure::read('Access Control.autoLoginDuration')) :
 endif;
 
 $footer = $this->Html->link(__d('croogo', 'Forgot password?'), [
-    'prefix' => 'admin',
+    'prefix' => 'Admin',
     'plugin' => 'Croogo/Users',
     'controller' => 'Users',
     'action' => 'forgot',

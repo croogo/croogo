@@ -141,7 +141,7 @@ class CroogoTheme
                             ],
                         ],
                     ],
-                    'admin' => [
+                    'Admin' => [
                         'helpers' => [
                             'Html' => [
                                 'className' => 'Croogo/Core.Html',

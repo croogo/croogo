@@ -8,7 +8,7 @@ Nav::add('sidebar', 'settings', [
     'icon' => 'cog',
     'title' => __d('croogo', 'Settings'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Settings',
         'controller' => 'Settings',
         'action' => 'prefix',
@@ -19,7 +19,7 @@ Nav::add('sidebar', 'settings', [
         'site' => [
             'title' => __d('croogo', 'Site'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Settings',
                 'controller' => 'Settings',
                 'action' => 'prefix',
@@ -31,7 +31,7 @@ Nav::add('sidebar', 'settings', [
         'theme' => [
             'title' => __d('croogo', 'Theme'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Settings',
                 'controller' => 'Settings',
                 'action' => 'prefix',
@@ -43,7 +43,7 @@ Nav::add('sidebar', 'settings', [
         'reading' => [
             'title' => __d('croogo', 'Reading'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Settings',
                 'controller' => 'Settings',
                 'action' => 'prefix',
@@ -55,7 +55,7 @@ Nav::add('sidebar', 'settings', [
         'comment' => [
             'title' => __d('croogo', 'Comment'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Settings',
                 'controller' => 'Settings',
                 'action' => 'prefix',
@@ -67,7 +67,7 @@ Nav::add('sidebar', 'settings', [
         'service' => [
             'title' => __d('croogo', 'Service'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Settings',
                 'controller' => 'Settings',
                 'action' => 'prefix',
@@ -79,7 +79,7 @@ Nav::add('sidebar', 'settings', [
         'languages' => [
             'title' => __d('croogo', 'Languages'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Settings',
                 'controller' => 'Languages',
                 'action' => 'index',
@@ -90,7 +90,7 @@ Nav::add('sidebar', 'settings', [
         'cache' => [
             'title' => __d('croogo', 'Cache'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Settings',
                 'controller' => 'Caches',
                 'action' => 'index',

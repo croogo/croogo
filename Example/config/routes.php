@@ -4,7 +4,7 @@ use Cake\Routing\RouteBuilder;
 use Croogo\Core\Router;
 
 Router::plugin('Croogo/Example', ['path' => '/'], function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('Admin', function (RouteBuilder $routeBuilder) {
         $routeBuilder->setExtensions(['json']);
 
         $routeBuilder->connect('/route/here', [
@@ -14,7 +14,7 @@ Router::plugin('Croogo/Example', ['path' => '/'], function (RouteBuilder $routeB
         ]);
 
         $routeBuilder->connect('/example/:action/*', [
-            'prefix' => 'admin',
+            'prefix' => 'Admin',
             'plugin' => 'Croogo/Example',
             'controller' => 'Example',
         ]);

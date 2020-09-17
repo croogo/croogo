@@ -64,7 +64,7 @@ class MenusHelper extends Helper
     public function beforeRender($viewFile)
     {
         $request = $this->getView()->getRequest();
-        if (($request->getParam('prefix') === 'admin') && (!$request->is('ajax'))) {
+        if (($request->getParam('prefix') === 'Admin') && (!$request->is('ajax'))) {
             $this->_adminMenu();
             if ($request->getParam('plugin') == 'Croogo/Menus') {
                 $this->_View->Js->buffer('Links.init();');
@@ -90,7 +90,7 @@ class MenusHelper extends Helper
             Nav::add('sidebar', 'menus.children.' . $menu->alias, [
                 'title' => $menu->title,
                 'url' => [
-                    'prefix' => 'admin',
+                    'prefix' => 'Admin',
                     'plugin' => 'Croogo/Menus',
                     'controller' => 'Links',
                     'action' => 'index',

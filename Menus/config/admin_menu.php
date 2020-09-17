@@ -8,7 +8,7 @@ Nav::add('sidebar', 'menus', [
     'icon' => 'sitemap',
     'title' => __d('croogo', 'Menus'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Menus',
         'controller' => 'Menus',
         'action' => 'index',
@@ -18,7 +18,7 @@ Nav::add('sidebar', 'menus', [
         'menus' => [
             'title' => __d('croogo', 'Menus'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Menus',
                 'controller' => 'Menus',
                 'action' => 'index',

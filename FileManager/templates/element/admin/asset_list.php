@@ -38,14 +38,14 @@ else :
 endif;
 
 $editUrl = [
-    'prefix' => 'admin',
+    'prefix' => 'Admin',
     'plugin' => 'Croogo/FileManager',
     'controller' => 'Attachments',
     'action' => 'edit',
 ];
 
 $detailUrl = [
-    'prefix' => 'admin',
+    'prefix' => 'Admin',
     'plugin' => 'Croogo/FileManager',
     'controller' => 'Attachments',
     'action' => 'browse',
@@ -57,14 +57,14 @@ $detailUrl = [
 ];
 
 $changeTypeUrl = [
-    'prefix' => 'admin',
+    'prefix' => 'Admin',
     'plugin' => 'Croogo/FileManager',
     'controller' => 'AssetUsages',
     'action' => 'change_type',
 ];
 
 $assetListUrl = $this->Url->build([
-    'prefix' => 'admin',
+    'prefix' => 'Admin',
     'plugin' => 'Croogo/FileManager',
     'controller' => 'Attachments',
     'action' => 'listing',
@@ -75,7 +75,7 @@ $assetListUrl = $this->Url->build([
 ]);
 
 $unregisterUsageUrl = [
-    'prefix' => 'admin',
+    'prefix' => 'Admin',
     'plugin' => 'Croogo/FileManager',
     'controller' => 'AssetUsages',
     'action' => 'unregister',
@@ -245,7 +245,7 @@ $browseUrl = array_merge(
 );
 
 $uploadUrl = [
-    'prefix' => 'admin',
+    'prefix' => 'Admin',
     'plugin' => 'Croogo/FileManager',
     'controller' => 'Attachments',
     'action' => 'add',

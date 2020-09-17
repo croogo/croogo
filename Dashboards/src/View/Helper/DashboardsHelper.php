@@ -48,7 +48,7 @@ class DashboardsHelper extends Helper
     public function beforeRender($viewFile)
     {
         $request = $this->getView()->getRequest();
-        if ($request->getParam('prefix') === 'admin') {
+        if ($request->getParam('prefix') === 'Admin') {
             Croogo::dispatchEvent('Croogo.setupAdminDashboardData', $this->_View);
         }
     }

@@ -37,7 +37,7 @@ class TranslateEventHandler implements EventListenerInterface
     public function onBeforeRender($event)
     {
         $View = $event->getSubject();
-        if ($View->getRequest()->getParam('prefix') !== 'admin') {
+        if ($View->getRequest()->getParam('prefix') !== 'Admin') {
             return;
         }
         if (empty($View->viewVars['viewVar'])) {

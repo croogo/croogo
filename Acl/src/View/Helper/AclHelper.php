@@ -74,7 +74,7 @@ class AclHelper extends Helper
     {
         if (is_array($url)) {
             if (isset($url['admin']) && $url['admin'] == true && empty($url['prefix'])) {
-                $url['prefix'] = 'admin';
+                $url['prefix'] = 'Admin';
             }
             $prefix = isset($url['prefix']) ? $url['prefix'] : null;
             $plugin = empty($url['plugin']) ? null : str_replace('/', '\\', Inflector::camelize($url['plugin'])) . '/';

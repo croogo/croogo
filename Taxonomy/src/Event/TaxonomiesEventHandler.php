@@ -46,7 +46,7 @@ class TaxonomiesEventHandler implements EventListenerInterface
             Nav::add('sidebar', 'content.children.taxonomy.children.' . $v->alias, [
                 'title' => $v->title,
                 'url' => [
-                    'prefix' => 'admin',
+                    'prefix' => 'Admin',
                     'plugin' => 'Croogo/Taxonomy',
                     'controller' => 'Taxonomies',
                     'action' => 'index',
@@ -78,7 +78,7 @@ class TaxonomiesEventHandler implements EventListenerInterface
                 $linkChoosers[$title] = [
                     'description' => h($vocabulary->description),
                     'url' => [
-                        'prefix' => 'admin',
+                        'prefix' => 'Admin',
                         'plugin' => 'Croogo/Taxonomy',
                         'controller' => 'Taxonomies',
                         'action' => 'index',

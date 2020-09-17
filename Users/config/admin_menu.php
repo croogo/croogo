@@ -8,7 +8,7 @@ Nav::add('sidebar', 'users', [
     'icon' => 'user',
     'title' => __d('croogo', 'Users'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Users',
         'controller' => 'Users',
         'action' => 'index',
@@ -18,7 +18,7 @@ Nav::add('sidebar', 'users', [
         'users' => [
             'title' => __d('croogo', 'Users'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Users',
                 'controller' => 'Users',
                 'action' => 'index',
@@ -28,7 +28,7 @@ Nav::add('sidebar', 'users', [
         'roles' => [
             'title' => __d('croogo', 'Roles'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Users',
                 'controller' => 'Roles',
                 'action' => 'index',

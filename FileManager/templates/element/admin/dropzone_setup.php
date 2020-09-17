@@ -12,7 +12,7 @@ echo $this->Html->tag(
         'data-csrf-token' => $this->getRequest()->getParam('_csrfToken'),
         'data-url' => $this->Url->build([
             'action' => 'add',
-            'prefix' => 'admin',
+            'prefix' => 'Admin',
             'controller' => 'Attachments',
             'plugin' => 'Croogo/FileManager'
         ], true),
@@ -26,7 +26,7 @@ echo $this->Html->tag(
 $this->Form->create(null, [
     'url' => [
         'action' => 'add',
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'controller' => 'Attachments',
         'plugin' => 'Croogo/FileManager'
     ],

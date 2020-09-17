@@ -131,7 +131,7 @@ class FileManagerEventHandler implements EventListenerInterface
         Nav::add('media.children.attachments', [
             'title' => __d('croogo', 'Attachments'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/FileManager',
                 'controller' => 'Attachments',
                 'action' => 'index',

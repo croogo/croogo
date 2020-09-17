@@ -73,7 +73,7 @@ class NodesEventHandler implements EventListenerInterface
             Nav::add('sidebar', 'content.children.create.children.' . $type->alias, [
                 'title' => $type->title,
                 'url' => [
-                    'prefix' => 'admin',
+                    'prefix' => 'Admin',
                     'plugin' => 'Croogo/Nodes',
                     'controller' => 'Nodes',
                     'action' => 'add',
@@ -127,7 +127,7 @@ class NodesEventHandler implements EventListenerInterface
                 'title' => h($type->title),
                 'description' => $type->description,
                 'url' => [
-                    'prefix' => 'admin',
+                    'prefix' => 'Admin',
                     'plugin' => 'Croogo/Nodes',
                     'controller' => 'Nodes',
                     'action' => 'index',

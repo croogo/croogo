@@ -21,7 +21,7 @@ class Translations
      */
     public static function translateModels()
     {
-        $path = 'prefix:admin/plugin:Croogo%2fTranslate/controller:Translate/action:index/?id=:id&model={{model}}';
+        $path = 'prefix:Admin/plugin:Croogo%2fTranslate/controller:Translate/action:index/?id=:id&model={{model}}';
         foreach (Configure::read('Translate.models') as $encoded => $config) {
             $model = base64_decode($encoded);
             Croogo::hookBehavior($model, 'Croogo/Translate.Translate', $config);

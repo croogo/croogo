@@ -52,7 +52,7 @@ class NodesComponent extends Component
     public function startup(Event $event)
     {
         $controller = $event->getSubject();
-        if (($controller->request->getParam('prefix') !== 'admin') && !$controller->request->getParam('requested')) {
+        if (($controller->getRequest()->getParam('prefix') !== 'Admin') && !$controller->getRequest()->getParam('requested')) {
             $this->nodes();
         }
     }

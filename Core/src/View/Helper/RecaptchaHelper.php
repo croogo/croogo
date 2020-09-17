@@ -31,7 +31,7 @@ class RecaptchaHelper extends Helper
         if ($this->getView()->getRequest()->is('ajax')) {
             return;
         }
-        if ($this->getView()->getRequest()->getParam('prefix') === 'admin') {
+        if ($this->getView()->getRequest()->getParam('prefix') === 'Admin') {
             return;
         }
         $this->Html->script(self::SECURE_API_URL, ['block' => true]);

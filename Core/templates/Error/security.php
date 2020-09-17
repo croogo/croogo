@@ -3,7 +3,7 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
-$this->layout = $this->request->getParam('prefix') == 'admin' ? 'admin_error' : 'error';
+$this->layout = $this->request->getParam('prefix') === 'Admin' ? 'admin_error' : 'error';
 
 ?>
 <div class="text-center">

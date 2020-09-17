@@ -104,7 +104,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
      */
     public function render(?string $template = null, ?string $layout = null): Response
     {
-        if ($this->getRequest()->getParam('prefix') === 'admin') {
+        if ($this->getRequest()->getParam('prefix') === 'Admin') {
             Croogo::dispatchEvent('Croogo.setupAdminData', $this);
         }
 
@@ -170,7 +170,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
         ) {
             if (!$this->getRequest()->is('whitelisted') &&
                 !(
-                    $this->getRequest()->getParam('prefix') == 'admin' &&
+                    $this->getRequest()->getParam('prefix') === 'Admin' &&
                     $this->getRequest()->getParam('action') === 'login'
                 )
             ) {
@@ -184,7 +184,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
 
         if (!$this->getRequest()->is('api')) {
             $this->Security->blackHoleCallback = '_securityError';
-            if ($this->getRequest()->getParam('action') == 'delete' && $this->getRequest()->getParam('prefix') == 'admin') {
+            if ($this->getRequest()->getParam('action') == 'delete' && $this->getRequest()->getParam('prefix') === 'Admin') {
                 $this->getRequest()->allowMethod('post');
             }
         }
@@ -223,7 +223,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
         }
         $message = $exception ? $exception->getMessage() : null;
         $this->set(compact('type', 'message'));
-        if ($this->getRequest()->getParam('prefix') == 'admin') {
+        if ($this->getRequest()->getParam('prefix') === 'Admin') {
             $theme = Configure::read('Site.admin_theme');
         } else {
             $theme = Configure::read('Site.theme');

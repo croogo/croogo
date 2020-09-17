@@ -4,7 +4,7 @@ use Cake\Routing\RouteBuilder;
 use Croogo\Core\Router;
 
 Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
-    $route->prefix('admin', function (RouteBuilder $route) {
+    $route->prefix('Admin', function (RouteBuilder $route) {
         $route->setExtensions(['json']);
 
         $route->scope('/users', [], function (RouteBuilder $route) {

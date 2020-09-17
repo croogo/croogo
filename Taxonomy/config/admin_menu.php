@@ -7,7 +7,7 @@ use Croogo\Core\Nav;
 Nav::add('sidebar', 'content.children.content_types', [
     'title' => __d('croogo', 'Content Types'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Taxonomy',
         'controller' => 'Types',
         'action' => 'index',
@@ -18,7 +18,7 @@ Nav::add('sidebar', 'content.children.content_types', [
 Nav::add('sidebar', 'content.children.taxonomy', [
     'title' => __d('croogo', 'Taxonomy'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Taxonomy',
         'controller' => 'Vocabularies',
         'action' => 'index',
@@ -28,7 +28,7 @@ Nav::add('sidebar', 'content.children.taxonomy', [
         'list' => [
             'title' => __d('croogo', 'List'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Taxonomy',
                 'controller' => 'Vocabularies',
                 'action' => 'index',
@@ -38,7 +38,7 @@ Nav::add('sidebar', 'content.children.taxonomy', [
         'add_new' => [
             'title' => __d('croogo', 'Add new'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Taxonomy',
                 'controller' => 'Vocabularies',
                 'action' => 'add',

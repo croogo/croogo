@@ -8,7 +8,7 @@ Nav::add('sidebar', 'blocks', [
     'icon' => 'columns',
     'title' => __d('croogo', 'Blocks'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Blocks',
         'controller' => 'Blocks',
         'action' => 'index',
@@ -18,7 +18,7 @@ Nav::add('sidebar', 'blocks', [
         'blocks' => [
             'title' => __d('croogo', 'Blocks'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Blocks',
                 'controller' => 'Blocks',
                 'action' => 'index',
@@ -27,7 +27,7 @@ Nav::add('sidebar', 'blocks', [
         'regions' => [
             'title' => __d('croogo', 'Regions'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Blocks',
                 'controller' => 'Regions',
                 'action' => 'index',

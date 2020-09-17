@@ -8,7 +8,7 @@ Nav::add('sidebar', 'content', [
     'icon' => 'edit',
     'title' => __d('croogo', 'Content'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Nodes',
         'controller' => 'Nodes',
         'action' => 'index',
@@ -18,7 +18,7 @@ Nav::add('sidebar', 'content', [
         'list' => [
             'title' => __d('croogo', 'List'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Nodes',
                 'controller' => 'Nodes',
                 'action' => 'index',
@@ -28,7 +28,7 @@ Nav::add('sidebar', 'content', [
         'create' => [
             'title' => __d('croogo', 'Create'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Nodes',
                 'controller' => 'Nodes',
                 'action' => 'create',

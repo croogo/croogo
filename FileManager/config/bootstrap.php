@@ -6,7 +6,7 @@ use Croogo\FileManager\Utility\StorageManager;
 use Croogo\Wysiwyg\Wysiwyg;
 
 Configure::write('Wysiwyg.attachmentBrowseUrl', [
-    'prefix' => 'admin',
+    'prefix' => 'Admin',
     'plugin' => 'Croogo/FileManager',
     'controller' => 'Attachments',
     'action' => 'browse',

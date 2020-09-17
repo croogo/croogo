@@ -73,7 +73,7 @@ class CroogoView extends AppView
         parent::loadHelpers();
 
         $prefix = $this->getRequest()->getParam('prefix') ?: '';
-        if ($prefix === 'admin') {
+        if ($prefix === 'Admin') {
             $this->loadHelper('Croogo/Core.Croogo');
         }
 

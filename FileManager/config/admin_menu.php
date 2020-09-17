@@ -8,7 +8,7 @@ Nav::add('sidebar', 'media', [
     'icon' => 'image',
     'title' => __d('croogo', 'Media'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/FileManager',
         'controller' => 'Attachments',
         'action' => 'index',
@@ -18,7 +18,7 @@ Nav::add('sidebar', 'media', [
         'attachments' => [
             'title' => __d('croogo', 'Attachments'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/FileManager',
                 'controller' => 'Attachments',
                 'action' => 'index',
@@ -27,7 +27,7 @@ Nav::add('sidebar', 'media', [
         'file_manager' => [
             'title' => __d('croogo', 'File Manager'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/FileManager',
                 'controller' => 'FileManager',
                 'action' => 'browse',

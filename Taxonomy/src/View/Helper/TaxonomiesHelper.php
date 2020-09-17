@@ -36,7 +36,7 @@ class TaxonomiesHelper extends Helper
     public function beforeRender($viewFile)
     {
         $request = $this->getView()->getRequest();
-        if ($request->getParam('prefix') === 'admin' && !$request->is('ajax')) {
+        if ($request->getParam('prefix') === 'Admin' && !$request->is('ajax')) {
             $this->_adminTabs();
         }
     }

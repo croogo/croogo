@@ -59,7 +59,7 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
         }
         $viewBuilder = $this->viewBuilder();
         $viewBuilder->setClassName('Croogo/Core.Croogo');
-        if ($this->getRequest()->getParam('prefix') === 'admin') {
+        if ($this->getRequest()->getParam('prefix') === 'Admin') {
             $adminTheme = Configure::read('Site.admin_theme');
             if ($adminTheme) {
                 $viewBuilder->setTheme($adminTheme);

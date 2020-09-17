@@ -5,7 +5,7 @@ use Cake\Core\App;
 $this->extend('Croogo/Core./Common/admin_index');
 
 $clearUrl = [
-    'prefix' => 'admin',
+    'prefix' => 'Admin',
     'plugin' => 'Croogo/Settings',
     'controller' => 'Caches',
     'action' => 'clear',

@@ -85,7 +85,7 @@ class CroogoHelper extends Helper
     {
         $options = Hash::merge(['block' => true, 'defer' => true], $options);
         $request = $this->getView()->getRequest();
-        if ($request->is('ajax') || $request->getParam('prefix') !== 'admin') {
+        if ($request->is('ajax') || $request->getParam('prefix') !== 'Admin') {
             return null;
         }
 

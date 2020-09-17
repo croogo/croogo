@@ -8,7 +8,7 @@ Nav::add('sidebar', 'extensions', [
     'icon' => 'magic',
     'title' => __d('croogo', 'Extensions'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Extensions',
         'controller' => 'Plugins',
         'action' => 'index',
@@ -18,7 +18,7 @@ Nav::add('sidebar', 'extensions', [
         'themes' => [
             'title' => __d('croogo', 'Themes'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Extensions',
                 'controller' => 'Themes',
                 'action' => 'index',
@@ -28,7 +28,7 @@ Nav::add('sidebar', 'extensions', [
         'locales' => [
             'title' => __d('croogo', 'Locales'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Extensions',
                 'controller' => 'Locales',
                 'action' => 'index',
@@ -38,7 +38,7 @@ Nav::add('sidebar', 'extensions', [
         'plugins' => [
             'title' => __d('croogo', 'Plugins'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Extensions',
                 'controller' => 'Plugins',
                 'action' => 'index',

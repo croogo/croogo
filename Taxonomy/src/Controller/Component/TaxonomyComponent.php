@@ -80,8 +80,9 @@ class TaxonomyComponent extends Component
             $this->Terms = TableRegistry::get('Croogo/Taxonomy.Terms');
         }
 
-        if ($this->controller->request->getParam('prefix') !== 'admin' &&
-            !$this->controller->request->getParam('requested')
+        $request = $this->controller->getRequest();
+        if ($request->getParam('prefix') !== 'Admin' &&
+            !$request->getParam('requested')
         ) {
             $this->types();
             $this->vocabularies();

@@ -26,14 +26,14 @@ use Croogo\Core\Router; ?>
         'You can start with %s or jump in and %s.',
         $this->Html->link(__d('croogo', 'configuring your site'), [
             'plugin' => 'Croogo/Settings',
-            'prefix' => 'admin',
+            'prefix' => 'Admin',
             'controller' => 'Settings',
             'action' => 'prefix',
             'Site',
         ]),
         $this->Html->link(__d('croogo', 'create a blog post'), [
             'plugin' => 'Croogo/Nodes',
-            'prefix' => 'admin',
+            'prefix' => 'Admin',
             'controller' => 'Nodes',
             'action' => 'add',
             'blog',

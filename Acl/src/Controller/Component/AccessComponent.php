@@ -39,7 +39,7 @@ class AccessComponent extends Component
     {
         $controller = $event->getSubject();
         $this->_controller = $controller;
-        if ($controller->request->getParam('prefix') != 'admin') {
+        if ($controller->getRequest()->getParam('prefix') != 'Admin') {
             return;
         }
 

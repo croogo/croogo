@@ -70,7 +70,7 @@ class BlocksComponent extends Component
      */
     public function startup(Event $event)
     {
-        if ($this->request->getParam('prefix') !== 'admin' && !$this->request->getParam('requested')) {
+        if ($this->controller->getRequest()->getParam('prefix') !== 'Admin' && !$this->controller->getRequest()->getParam('requested')) {
             $this->blocks();
         }
     }

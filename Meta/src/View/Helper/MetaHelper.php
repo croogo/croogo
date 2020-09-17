@@ -41,7 +41,7 @@ class MetaHelper extends Helper
 
     public $settings = [
         'deleteUrl' => [
-            'prefix' => 'admin', 'plugin' => 'Croogo/Meta',
+            'prefix' => 'Admin', 'plugin' => 'Croogo/Meta',
             'controller' => 'Meta', 'action' => 'deleteMeta',
         ],
     ];

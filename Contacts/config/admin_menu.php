@@ -8,7 +8,7 @@ Nav::add('sidebar', 'contacts', [
     'icon' => 'comments',
     'title' => __d('croogo', 'Contacts'),
     'url' => [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Contacts',
         'controller' => 'Contacts',
         'action' => 'index',
@@ -18,7 +18,7 @@ Nav::add('sidebar', 'contacts', [
         'contacts' => [
             'title' => __d('croogo', 'Contacts'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Contacts',
                 'controller' => 'Contacts',
                 'action' => 'index',
@@ -27,7 +27,7 @@ Nav::add('sidebar', 'contacts', [
         'messages' => [
             'title' => __d('croogo', 'Messages'),
             'url' => [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Contacts',
                 'controller' => 'Messages',
                 'action' => 'index',

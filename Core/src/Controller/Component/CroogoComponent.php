@@ -131,7 +131,7 @@ class CroogoComponent extends Component
                     'title' => __d('croogo', 'Profile'),
                     'icon' => 'user',
                     'url' => [
-                        'prefix' => 'admin',
+                        'prefix' => 'Admin',
                         'plugin' => 'Croogo/Users',
                         'controller' => 'Users',
                         'action' => 'view',
@@ -145,7 +145,7 @@ class CroogoComponent extends Component
                     'icon' => 'power-off',
                     'title' => __d('croogo', 'Logout'),
                     'url' => [
-                        'prefix' => 'admin',
+                        'prefix' => 'Admin',
                         'plugin' => 'Croogo/Users',
                         'controller' => 'Users',
                         'action' => 'logout',

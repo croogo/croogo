@@ -29,7 +29,7 @@ class TermsController extends AppController
     public $name = 'Terms';
 
     protected $_redirectUrl = [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Taxonomy',
         'controller' => 'Vocabularies',
         'action' => 'index',

@@ -4,7 +4,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Breadcrumbs
     ->add(__d('croogo', 'Settings'), [
-        'prefix' => 'admin',
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Settings',
         'controller' => 'Settings',
         'action' => 'index',

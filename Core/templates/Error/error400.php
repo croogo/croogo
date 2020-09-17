@@ -3,7 +3,7 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
-if ($this->request->getParam('prefix') !== 'admin'):
+if ($this->request->getParam('prefix') !== 'Admin'):
     $this->setLayout('error');
 endif;
 

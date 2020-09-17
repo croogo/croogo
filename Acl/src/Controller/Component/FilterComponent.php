@@ -98,7 +98,7 @@ class FilterComponent extends Component
             if (!function_exists('mcrypt_encrypt') && !function_exists('openssl_encrypt')) {
                 $notice = __d('croogo', '"AutoLogin" (Remember Me) disabled since mcrypt_encrypt or openssl_encrypt is not available');
                 $this->log($notice, LOG_CRIT);
-                if ($this->_controller->getRequest()->getParam('prefix') == 'admin') {
+                if ($this->_controller->getRequest()->getParam('prefix') == 'Admin') {
                     $this->_controller->Flash->error($notice);
                 }
                 if (isset($this->_controller->Settings)) {
@@ -126,7 +126,7 @@ class FilterComponent extends Component
             ]
         ]);
 
-        if ($this->_controller->getRequest()->getParam('prefix') == 'admin' &&
+        if ($this->_controller->getRequest()->getParam('prefix') == 'Admin' &&
             !$this->_controller->Auth->user()) {
             $this->_controller->Auth->setConfig('authError', false);
         }
@@ -147,9 +147,9 @@ class FilterComponent extends Component
             'controller' => 'Users',
             'action' => 'login',
         ]);
-        if ($this->_controller->getRequest()->getParam('prefix') === 'admin') {
+        if ($this->_controller->getRequest()->getParam('prefix') === 'Admin') {
             $this->_controller->Auth->setConfig('loginAction', [
-                'prefix' => 'admin',
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Users',
                 'controller' => 'Users',
                 'action' => 'login',
@@ -160,7 +160,7 @@ class FilterComponent extends Component
             'controller' => 'Users',
             'action' => 'login',
         ]);
-        if ($this->_controller->getRequest()->getParam('prefix') == 'admin') {
+        if ($this->_controller->getRequest()->getParam('prefix') == 'Admin') {
             $dashboardUrl = Configure::read('Site.dashboard_url');
             if (is_string($dashboardUrl)) {
                 $converter = new StringConverter();
