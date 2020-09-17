@@ -23,35 +23,35 @@ $this->end();
 
 $this->append('tab-content');
 
-echo $this->Html->tabStart('block-basic') . $this->Form->input('title', [
+echo $this->Html->tabStart('block-basic') . $this->Form->control('title', [
         'label' => __d('croogo', 'Title'),
         'data-slug' => '#alias',
-    ]) . $this->Form->input('alias', [
+    ]) . $this->Form->control('alias', [
         'label' => __d('croogo', 'Alias'),
         'help' => __d('croogo', 'unique name for your block'),
-    ]) . $this->Form->input('region_id', [
+    ]) . $this->Form->control('region_id', [
         'label' => __d('croogo', 'Region'),
         'help' => __d('croogo', 'if you are not sure, choose \'none\''),
         'class' => 'c-select',
-    ]) . $this->Form->input('body', [
+    ]) . $this->Form->control('body', [
         'label' => __d('croogo', 'Body'),
-    ]) . $this->Form->input('class', [
+    ]) . $this->Form->control('class', [
         'label' => __d('croogo', 'Class'),
-    ]) . $this->Form->input('element', [
+    ]) . $this->Form->control('element', [
         'label' => __d('croogo', 'Element'),
-    ]) . $this->Form->input('cell', [
+    ]) . $this->Form->control('cell', [
         'label' => __d('croogo', 'Cell'),
     ]);
 echo $this->Html->tabEnd();
 
-echo $this->Html->tabStart('block-visibilities') . $this->Form->input('visibility_paths', [
+echo $this->Html->tabStart('block-visibilities') . $this->Form->control('visibility_paths', [
         'type' => 'stringlist',
         'label' => __d('croogo', 'Visibility Paths'),
         'help' => __d('croogo', 'Enter one URL per line. Leave blank if you want this Block to appear in all pages.'),
     ]);
 echo $this->Html->tabEnd();
 
-echo $this->Html->tabStart('block-params') . $this->Form->input('params', [
+echo $this->Html->tabStart('block-params') . $this->Form->control('params', [
         'type' => 'stringlist',
         'label' => __d('croogo', 'Params'),
     ]);
@@ -63,13 +63,13 @@ $this->append('panels');
 echo $this->Html->beginBox(__d('croogo', 'Publishing'));
 echo $this->element('Croogo/Core.admin/buttons', ['type' => 'block']);
 echo $this->element('Croogo/Core.admin/publishable');
-echo $this->Form->input('show_title', [
+echo $this->Form->control('show_title', [
     'label' => __d('croogo', 'Show title ?'),
 ]);
 echo $this->Html->endBox();
 
 echo $this->Html->beginBox(__d('croogo', 'Access control'));
-echo $this->Form->input('visibility_roles', [
+echo $this->Form->control('visibility_roles', [
     'class' => 'c-select',
     'options' => $roles,
     'multiple' => true,

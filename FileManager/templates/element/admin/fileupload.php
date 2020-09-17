@@ -14,7 +14,7 @@ $cancelIcon = $this->Html->icon('delete');
         <span class="btn btn-outline-success fileinput-button">
             <?php echo $addIcon; ?>
             <span><?php echo __d('croogo', 'Add files'); ?></span>
-            <?php echo $this->Form->input('asset.file', [
+            <?php echo $this->Form->control('asset.file', [
                 'label' => false,
                 'div' => false,
                 'type' => 'file',

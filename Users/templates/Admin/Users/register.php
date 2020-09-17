@@ -9,12 +9,12 @@ $this->setLayout('admin_login');
     <?= $this->Form->create('User');?>
         <fieldset>
         <?php
-            echo $this->Form->input('username');
-            echo $this->Form->input('password', ['value' => '']);
-            echo $this->Form->input('verify_password', ['type' => 'password', 'value' => '']);
-            echo $this->Form->input('name');
-            echo $this->Form->input('email');
-            echo $this->Form->input('website');
+            echo $this->Form->control('username');
+            echo $this->Form->control('password', ['value' => '']);
+            echo $this->Form->control('verify_password', ['type' => 'password', 'value' => '']);
+            echo $this->Form->control('name');
+            echo $this->Form->control('email');
+            echo $this->Form->control('website');
 
             echo $this->Form->submit(__d('croogo', 'Register'), [
                 'class' => 'btn btn-success',

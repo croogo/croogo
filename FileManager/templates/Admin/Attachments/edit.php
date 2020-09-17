@@ -30,21 +30,21 @@ $this->end();
 
 $this->append('tab-content');
     echo $this->Html->tabStart('attachment-main');
-        echo $this->Form->input('id');
+        echo $this->Form->control('id');
 
-        echo $this->Form->input('title', [
+        echo $this->Form->control('title', [
             'label' => __d('croogo', 'Title'),
         ]);
-        echo $this->Form->input('excerpt', [
+        echo $this->Form->control('excerpt', [
             'label' => __d('croogo', 'Excerpt'),
         ]);
 
-        echo $this->Form->input('file_url', [
+        echo $this->Form->control('file_url', [
             'label' => __d('croogo', 'File URL'),
             'value' => $this->Url->build($attachment->asset->path, true),
             'readonly' => 'readonly']);
 
-        echo $this->Form->input('file_type', [
+        echo $this->Form->control('file_type', [
             'label' => __d('croogo', 'Mime Type'),
             'value' => $attachment->asset->mime_type,
             'readonly' => 'readonly']);

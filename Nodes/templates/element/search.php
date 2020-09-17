@@ -15,7 +15,7 @@ $this->Form->unlockField('q');
 <div class="input-group">
 
     <?=
-        $this->Form->input('q', [
+        $this->Form->control('q', [
             'label' => false,
             'default' => $this->getRequest()->getQuery('q'),
             'templates' => [

@@ -50,7 +50,7 @@ if ($formStart = trim($this->fetch('form-start'))) :
 else :
     echo $this->Form->create($entity);
     if (isset($this->getRequest()->data[$modelClass]['id'])) :
-        echo $this->Form->input('id');
+        echo $this->Form->control('id');
     endif;
 endif;
 
@@ -74,7 +74,7 @@ if (!$this->exists('left-column')) :
                     'tooltip' => ucfirst($field),
                 ];
             }
-            $content .= $this->Form->input($field, $opts);
+            $content .= $this->Form->control($field, $opts);
         endforeach;
     endif;
 

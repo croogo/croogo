@@ -80,7 +80,7 @@ if (empty($this->fetch('action-buttons'))) {
                                     'tooltip' => ucfirst($field),
                                 ];
                             }
-                            $content .= $this->Form->input($field, $opts);
+                            $content .= $this->Form->control($field, $opts);
                         endforeach;
                     endif;
                     ?>

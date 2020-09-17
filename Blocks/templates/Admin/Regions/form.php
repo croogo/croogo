@@ -27,10 +27,10 @@ $this->end();
 
 $this->append('tab-content');
 
-echo $this->Html->tabStart('region-main') . $this->Form->input('title', [
+echo $this->Html->tabStart('region-main') . $this->Form->control('title', [
         'label' => __d('croogo', 'Title'),
         'data-slug' => '#alias'
-    ]) . $this->Form->input('alias', [
+    ]) . $this->Form->control('alias', [
         'label' => __d('croogo', 'Alias'),
     ]);
 echo $this->Html->tabEnd();

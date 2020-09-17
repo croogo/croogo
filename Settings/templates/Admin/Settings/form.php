@@ -26,23 +26,23 @@ echo $this->Croogo->adminTab(__d('croogo', 'Misc'), '#setting-misc');
 $this->end();
 
 $this->start('tab-content');
-echo $this->Html->tabStart('setting-basic') . $this->Form->input('key', [
+echo $this->Html->tabStart('setting-basic') . $this->Form->control('key', [
         'help' => __d('croogo', "e.g., 'Site.title'"),
         'label' => __d('croogo', 'Key'),
-    ]) . $this->Form->input('value', [
+    ]) . $this->Form->control('value', [
         'label' => __d('croogo', 'Value'),
     ]) . $this->Html->tabEnd();
 
-echo $this->Html->tabStart('setting-misc') . $this->Form->input('title', [
+echo $this->Html->tabStart('setting-misc') . $this->Form->control('title', [
         'label' => __d('croogo', 'Title'),
-    ]) . $this->Form->input('description', [
+    ]) . $this->Form->control('description', [
         'label' => __d('croogo', 'Description'),
-    ]) . $this->Form->input('input_type', [
+    ]) . $this->Form->control('input_type', [
         'label' => __d('croogo', 'Input Type'),
         'help' => __d('croogo', "e.g., 'text' or 'textarea'"),
-    ]) . $this->Form->input('editable', [
+    ]) . $this->Form->control('editable', [
         'label' => __d('croogo', 'Editable'),
-    ]) . $this->Form->input('params', [
+    ]) . $this->Form->control('params', [
         'label' => __d('croogo', 'Params'),
     ]) . $this->Html->tabEnd();
 

@@ -67,11 +67,11 @@ $this->append('tab-content');
 
 if (isset($model) && isset($foreignKey)) :
     $assetUsage = 'asset.asset_usage.0.';
-    echo $this->Form->input($assetUsage . 'model', [
+    echo $this->Form->control($assetUsage . 'model', [
         'type' => 'hidden',
         'value' => $model,
     ]);
-    echo $this->Form->input($assetUsage . 'foreign_key', [
+    echo $this->Form->control($assetUsage . 'foreign_key', [
         'type' => 'hidden',
         'value' => $foreignKey,
     ]);
@@ -80,25 +80,25 @@ endif;
         echo $this->element('Croogo/FileManager.admin/fileupload');
 
 if (isset($model) && isset($foreignKey)) :
-    echo $this->Form->input($assetUsage . 'featured_image', [
+    echo $this->Form->control($assetUsage . 'featured_image', [
         'type' => 'checkbox',
         'label' => 'Featured Image',
     ]);
 endif;
 
-        echo $this->Form->input('asset.adapter', [
+        echo $this->Form->control('asset.adapter', [
             'type' => 'select',
             'default' => 'LocalAttachment',
             'options' => StorageManager::configured(),
         ]);
-        echo $this->Form->input('excerpt', [
+        echo $this->Form->control('excerpt', [
             'label' => __d('croogo', 'Caption'),
         ]);
-        echo $this->Form->input('title');
-        echo $this->Form->input('status', [
+        echo $this->Form->control('title');
+        echo $this->Form->control('status', [
             'type' => 'hidden', 'value' => true,
         ]);
-        echo $this->Form->input('asset.model', [
+        echo $this->Form->control('asset.model', [
             'type' => 'hidden',
             'value' => 'Attachments',
         ]);

@@ -33,7 +33,7 @@ $this->end();
 <?php endif ?>
 
 <?php
-echo $this->Form->input('driver', [
+echo $this->Form->control('driver', [
     'placeholder' => __d('croogo', 'Database'),
     'empty' => false,
     'options' => [
@@ -43,31 +43,31 @@ echo $this->Form->input('driver', [
         Cake\Database\Driver\Sqlserver::class => 'Microsoft SQL Server',
     ],
 ]);
-echo $this->Form->input('host', [
+echo $this->Form->control('host', [
     'placeholder' => __d('croogo', 'Host'),
     'tooltip' => __d('croogo', 'Database hostname or IP Address'),
     'prepend' => $this->Html->icon('home'),
     'label' => __d('croogo', 'Host'),
 ]);
-echo $this->Form->input('username', [
+echo $this->Form->control('username', [
     'placeholder' => __d('croogo', 'Login'),
     'tooltip' => __d('croogo', 'Database login/username'),
     'prepend' => $this->Html->icon('user'),
     'label' => __d('croogo', 'Login'),
 ]);
-echo $this->Form->input('password', [
+echo $this->Form->control('password', [
     'placeholder' => __d('croogo', 'Password'),
     'tooltip' => __d('croogo', 'Database password'),
     'prepend' => $this->Html->icon('key'),
     'label' => __d('croogo', 'Password'),
 ]);
-echo $this->Form->input('database', [
+echo $this->Form->control('database', [
     'placeholder' => __d('croogo', 'Name'),
     'tooltip' => __d('croogo', 'Database name'),
     'prepend' => $this->Html->icon('briefcase'),
     'label' => __d('croogo', 'Name'),
 ]);
-echo $this->Form->input('port', [
+echo $this->Form->control('port', [
     'placeholder' => __d('croogo', 'Port'),
     'tooltip' => __d('croogo', 'Database port (leave blank if unknown)'),
     'prepend' => $this->Html->icon('asterisk'),

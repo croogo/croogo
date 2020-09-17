@@ -74,7 +74,7 @@ $this->append('tab-content');
             }
             if (isset($keyFields[$field])) {
 %>
-        echo $this->Form->input('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true]);
+        echo $this->Form->control('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true]);
 <%
                 continue;
             }
@@ -82,11 +82,11 @@ $this->append('tab-content');
                 $fieldData = $schema->getColumn($field);
                 if (in_array($fieldData['type'], ['date', 'datetime', 'time']) && (!empty($fieldData['null']))) {
 %>
-        echo $this->Form->input('<%= $field %>', ['empty' => true]);
+        echo $this->Form->control('<%= $field %>', ['empty' => true]);
 <%
                 } else {
 %>
-        echo $this->Form->input('<%= $field %>');
+        echo $this->Form->control('<%= $field %>');
 <%
                 }
             }
@@ -94,7 +94,7 @@ $this->append('tab-content');
         if (!empty($associations['BelongsToMany'])) {
             foreach ($associations['BelongsToMany'] as $assocName => $assocData) {
 %>
-            echo $this->Form->input('<%= $assocData['property'] %>._ids', [
+            echo $this->Form->control('<%= $assocData['property'] %>._ids', [
                 'empty' => true,
                 'options' => $<%= $assocData['variable'] %>,
             ]);

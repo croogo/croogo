@@ -20,7 +20,7 @@ $this->end();
 
 $this->append('tab-content');
 echo $this->Html->tabStart('filemanager-rename');
-echo $this->Form->input('name', [
+echo $this->Form->control('name', [
     'type' => 'text',
     'label' => __d('croogo', 'New name'),
 ]);

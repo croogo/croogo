@@ -150,7 +150,7 @@ $this->append('action-buttons');
 $this->end();
 
 $this->start('bulk-action');
-    echo $this->Form->input('action', [
+    echo $this->Form->control('action', [
         'label' => false,
         'class' => 'c-select',
         'options' => [

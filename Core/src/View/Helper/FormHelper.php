@@ -208,11 +208,6 @@ class FormHelper extends BaseFormHelper
         return parent::create($model, $options);
     }
 
-    public function input($fieldName, array $options = [])
-    {
-        return $this->control($fieldName, $options);
-    }
-
     public function control($fieldName, array $options = []): string
     {
         if (!$this->_isEditable($fieldName)) {
@@ -296,7 +291,7 @@ class FormHelper extends BaseFormHelper
             'type' => 'hidden',
             'default' => $default,
         ]);
-        $out = $this->input($fieldName, $hiddenOptions);
+        $out = $this->control($fieldName, $hiddenOptions);
 
         $this->unlockField($fieldName);
 
@@ -317,7 +312,7 @@ class FormHelper extends BaseFormHelper
             'default' => $default,
             'autocomplete' => 'off',
         ]);
-        $out .= $this->input("autocomplete_${field}", $autocomplete);
+        $out .= $this->control("autocomplete_${field}", $autocomplete);
 
         return $out;
     }

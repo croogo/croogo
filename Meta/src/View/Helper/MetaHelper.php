@@ -168,7 +168,7 @@ class MetaHelper extends Helper
         }
         $fields = '';
         if ($id != null) {
-            $fields .= $this->Form->input('meta.' . $uuid . '.id', [
+            $fields .= $this->Form->control('meta.' . $uuid . '.id', [
                 'type' => 'hidden',
                 'value' => $id,
                 'class' => 'meta-id',
@@ -176,8 +176,8 @@ class MetaHelper extends Helper
             $this->Form->unlockField('meta.' . $uuid . '.id');
         }
         $options['value']['data-metafield'] = $key;
-        $fields .= $this->Form->input('meta.' . $uuid . '.key', $options['key']);
-        $fields .= $this->Form->input('meta.' . $uuid . '.value', $options['value']);
+        $fields .= $this->Form->control('meta.' . $uuid . '.key', $options['key']);
+        $fields .= $this->Form->control('meta.' . $uuid . '.value', $options['value']);
         $this->Form->unlockField('meta.' . $uuid . '.key');
         $this->Form->unlockField('meta.' . $uuid . '.value');
         $fields = $this->Html->tag('div', $fields, ['class' => 'fields']);

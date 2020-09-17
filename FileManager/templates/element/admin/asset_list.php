@@ -168,7 +168,7 @@ foreach ($attachments as $attachment) :
 
     $detailUrl['?']['asset_id'] = $attachment->asset->id;
 
-    $typeCell = $this->Form->input('usage-type', [
+    $typeCell = $this->Form->control('usage-type', [
         'type' => 'select',
         'label' => false,
         'options' => [

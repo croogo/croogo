@@ -12,7 +12,7 @@ if ($entity->role_id) {
 $selected = $entity->roles ?
     Hash::extract($entity->roles, '{n}.id') :
     [];
-echo $this->Form->input('roles._ids', [
+echo $this->Form->control('roles._ids', [
     'value' => $selected,
     'class' => 'c-select',
     'options' => $validRoles,

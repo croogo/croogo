@@ -8,14 +8,14 @@ $this->Form->setTemplates([
     'submitContainer' => '{{content}}',
 ]);
 
-echo $this->Form->input('filter', [
+echo $this->Form->control('filter', [
     'title' => __d('croogo', 'Search'),
     'placeholder' => __d('croogo', 'Search...'),
     'tooltip' => false,
     'default' => $this->getRequest()->getQuery('filter'),
 ]);
 
-echo $this->Form->input('type', [
+echo $this->Form->control('type', [
     'options' => $nodeTypes,
     'empty' => __d('croogo', 'Type'),
     'class' => 'c-select',
@@ -23,7 +23,7 @@ echo $this->Form->input('type', [
 ]);
 
 if (!$this->getRequest()->getQuery('chooser')) :
-    echo $this->Form->input('status', [
+    echo $this->Form->control('status', [
         'options' => [
             '1' => __d('croogo', 'Published'),
             '0' => __d('croogo', 'Unpublished'),
@@ -33,7 +33,7 @@ if (!$this->getRequest()->getQuery('chooser')) :
         'default' => $this->getRequest()->getQuery('status'),
     ]);
 
-    echo $this->Form->input('promote', [
+    echo $this->Form->control('promote', [
         'options' => [
             '1' => __d('croogo', 'Yes'),
             '0' => __d('croogo', 'No'),

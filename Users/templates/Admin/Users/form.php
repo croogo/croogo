@@ -38,19 +38,19 @@ $this->end();
 $this->append('tab-content');
 
 echo $this->Html->tabStart('user-main');
-echo $this->Form->input('username', [
+echo $this->Form->control('username', [
     'label' => __d('croogo', 'Username'),
 ]);
-echo $this->Form->input('name', [
+echo $this->Form->control('name', [
     'label' => __d('croogo', 'Name'),
 ]);
-echo $this->Form->input('email', [
+echo $this->Form->control('email', [
     'label' => __d('croogo', 'Email'),
 ]);
-echo $this->Form->input('website', [
+echo $this->Form->control('website', [
     'label' => __d('croogo', 'Website'),
 ]);
-echo $this->Form->input('timezone', [
+echo $this->Form->control('timezone', [
     'type' => 'select',
     'required' => true,
     'empty' => true,
@@ -58,7 +58,7 @@ echo $this->Form->input('timezone', [
     'label' => __d('croogo', 'Timezone'),
     'class' => 'c-select',
 ]);
-echo $this->Form->input('role_id', [
+echo $this->Form->control('role_id', [
     'label' => __d('croogo', 'Role'),
     'class' => 'c-select',
     'required' => true,
@@ -72,24 +72,24 @@ echo $this->Html->beginBox(__d('croogo', 'Publishing'));
 echo $this->element('Croogo/Core.admin/buttons', ['type' => 'user']);
 
 if ($this->getRequest()->getParam('action') == 'add') :
-    echo $this->Form->input('notification', [
+    echo $this->Form->control('notification', [
         'label' => __d('croogo', 'Send Activation Email'),
         'type' => 'checkbox',
         'class' => false,
     ]);
 endif;
 
-echo $this->Form->input('status', [
+echo $this->Form->control('status', [
     'label' => __d('croogo', 'Active'),
 ]);
 
 $showPassword = !empty($user->status);
 if ($this->getRequest()->getParam('action') == 'add') :
-    $out = $this->Form->input('password', [
+    $out = $this->Form->control('password', [
         'label' => __d('croogo', 'Password'),
         'disabled' => !$showPassword,
     ]);
-    $out .= $this->Form->input('verify_password', [
+    $out .= $this->Form->control('verify_password', [
         'label' => __d('croogo', 'Verify Password'),
         'disabled' => !$showPassword,
         'type' => 'password',

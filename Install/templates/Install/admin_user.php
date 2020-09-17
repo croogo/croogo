@@ -4,19 +4,19 @@ $this->assign('before', $this->Form->create($user, [
 ]));
 ?>
 <?php
-echo $this->Form->input('username', [
+echo $this->Form->control('username', [
     'placeholder' => __d('croogo', 'Username'),
     'prepend' => $this->Html->icon('user'),
     'label' => __d('croogo', 'Username'),
     'value' => '',
 ]);
-echo $this->Form->input('password', [
+echo $this->Form->control('password', [
     'placeholder' => __d('croogo', 'New Password'),
     'value' => '',
     'prepend' => $this->Html->icon('key'),
     'label' => __d('croogo', 'New Password'),
 ]);
-echo $this->Form->input('verify_password', [
+echo $this->Form->control('verify_password', [
     'placeholder' => __d('croogo', 'Verify Password'),
     'type' => 'password',
     'value' => '',

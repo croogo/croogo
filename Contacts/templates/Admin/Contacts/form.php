@@ -22,48 +22,48 @@ $this->end();
 
 $this->append('tab-content');
 
-echo $this->Html->tabStart('contact-basic') . $this->Form->input('id') . $this->Form->input('title', [
+echo $this->Html->tabStart('contact-basic') . $this->Form->control('id') . $this->Form->control('title', [
         'label' => __d('croogo', 'Title'),
         'data-slug' => '#alias',
-    ]) . $this->Form->input('alias', [
+    ]) . $this->Form->control('alias', [
         'label' => __d('croogo', 'Alias'),
-    ]) . $this->Form->input('email', [
+    ]) . $this->Form->control('email', [
         'label' => __d('croogo', 'Email'),
-    ]) . $this->Form->input('body', [
+    ]) . $this->Form->control('body', [
         'label' => __d('croogo', 'Body'),
     ]);
     echo $this->Html->tabEnd();
 
-    echo $this->Html->tabStart('contact-details') . $this->Form->input('name', [
+    echo $this->Html->tabStart('contact-details') . $this->Form->control('name', [
         'label' => __d('croogo', 'Name'),
-    ]) . $this->Form->input('position', [
+    ]) . $this->Form->control('position', [
         'label' => __d('croogo', 'Position'),
-    ]) . $this->Form->input('address', [
+    ]) . $this->Form->control('address', [
         'label' => __d('croogo', 'Address'),
-    ]) . $this->Form->input('address2', [
+    ]) . $this->Form->control('address2', [
         'label' => __d('croogo', 'Address2'),
-    ]) . $this->Form->input('state', [
+    ]) . $this->Form->control('state', [
         'label' => __d('croogo', 'State'),
-    ]) . $this->Form->input('country', [
+    ]) . $this->Form->control('country', [
         'label' => __d('croogo', 'Country'),
-    ]) . $this->Form->input('postcode', [
+    ]) . $this->Form->control('postcode', [
         'label' => __d('croogo', 'Post Code'),
-    ]) . $this->Form->input('phone', [
+    ]) . $this->Form->control('phone', [
         'label' => __d('croogo', 'Phone'),
-    ]) . $this->Form->input('fax', [
+    ]) . $this->Form->control('fax', [
         'label' => __d('croogo', 'Fax'),
     ]);
     echo $this->Html->tabEnd();
 
-    echo $this->Html->tabStart('contact-message') . $this->Form->input('message_status', [
+    echo $this->Html->tabStart('contact-message') . $this->Form->control('message_status', [
         'label' => __d('croogo', 'Let users leave a message'),
-    ]) . $this->Form->input('message_archive', [
+    ]) . $this->Form->control('message_archive', [
         'label' => __d('croogo', 'Save messages in database'),
-    ]) . $this->Form->input('message_notify', [
+    ]) . $this->Form->control('message_notify', [
         'label' => __d('croogo', 'Notify by email instantly'),
-    ]) . $this->Form->input('message_spam_protection', [
+    ]) . $this->Form->control('message_spam_protection', [
         'label' => __d('croogo', 'Spam protection (requires Akismet API key)'),
-    ]) . $this->Form->input('message_captcha', [
+    ]) . $this->Form->control('message_captcha', [
         'label' => __d('croogo', 'Use captcha? (requires Recaptcha API key)'),
     ]);
 
@@ -79,7 +79,7 @@ echo $this->Html->tabStart('contact-basic') . $this->Form->input('id') . $this->
     $this->append('panels');
     echo $this->Html->beginBox(__d('croogo', 'Publishing'));
     echo $this->element('Croogo/Core.admin/buttons', ['type' => 'contact']);
-    echo $this->Form->input('status', [
+    echo $this->Form->control('status', [
         'label' => __d('croogo', 'Published'),
     ]);
     echo $this->Html->endBox();

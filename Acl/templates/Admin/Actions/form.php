@@ -22,7 +22,7 @@ $this->end();
 
 $this->append('tab-content');
 
-    echo $this->Form->input('parent_id', [
+    echo $this->Form->control('parent_id', [
         'options' => $acos,
         'empty' => true,
         'label' => __d('croogo', 'Parent'),
@@ -30,7 +30,7 @@ $this->append('tab-content');
     $this->Form->templates([
         'class' => 'span10',
     ]);
-    echo $this->Form->input('alias', [
+    echo $this->Form->control('alias', [
         'label' => __d('croogo', 'Alias'),
     ]);
 

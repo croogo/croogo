@@ -68,17 +68,17 @@ $this->end();
 
 $this->append('tab-content');
     echo $this->Html->tabStart('term-basic');
-        echo $this->Form->input('title', [
+        echo $this->Form->control('title', [
             'label' => __d('croogo', 'Title'),
             'data-slug' => '#slug',
         ]);
 
-        echo $this->Form->input('slug', [
+        echo $this->Form->control('slug', [
             'label' => __d('croogo', 'Slug'),
         ]);
 
         if ($action === 'add') :
-            echo $this->Form->input('taxonomies.0.vocabulary_id', [
+            echo $this->Form->control('taxonomies.0.vocabulary_id', [
                 'type' => 'hidden',
                 'value' => $vocabularyId,
             ]);
@@ -86,17 +86,17 @@ $this->append('tab-content');
 
         if ($action === 'edit') :
             if (isset($vocabularyId)) :
-                echo $this->Form->input('taxonomies.0.id', ['type' => 'hidden']);
-                echo $this->Form->input('taxonomies.0.term_id', ['type' => 'hidden']);
-                echo $this->Form->input('taxonomies.0.vocabulary_id', ['type' => 'hidden']);
-                echo $this->Form->input('taxonomies.0.parent_id', [
+                echo $this->Form->control('taxonomies.0.id', ['type' => 'hidden']);
+                echo $this->Form->control('taxonomies.0.term_id', ['type' => 'hidden']);
+                echo $this->Form->control('taxonomies.0.vocabulary_id', ['type' => 'hidden']);
+                echo $this->Form->control('taxonomies.0.parent_id', [
                     'options' => $parentTree,
                     'empty' => '(no parent)',
                     'label' => __d('croogo', 'Parent'),
                     'class' => 'c-select',
                 ]);
             else :
-                echo $this->Form->input('taxonomies._ids', [
+                echo $this->Form->control('taxonomies._ids', [
                     'type' => 'select',
                     'multiple' => true,
                     'value' => array_keys($taxonomies),
@@ -105,14 +105,14 @@ $this->append('tab-content');
             endif;
         endif;
 
-        echo $this->Form->input('description', [
+        echo $this->Form->control('description', [
             'label' => __d('croogo', 'Description'),
         ]);
 
         echo $this->Html->tabEnd();
 
         echo $this->Html->tabStart('term-misc');
-        echo $this->Form->input('params', [
+        echo $this->Form->control('params', [
             'label' => __d('croogo', 'Params'),
             'type' => 'stringlist',
         ]);

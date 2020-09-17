@@ -23,17 +23,17 @@ $this->end();
 
 $this->append('tab-content');
 
-echo $this->Html->tabStart('message-main') . $this->Form->input('name', [
+echo $this->Html->tabStart('message-main') . $this->Form->control('name', [
         'label' => __d('croogo', 'Name'),
-    ]) . $this->Form->input('email', [
+    ]) . $this->Form->control('email', [
         'label' => __d('croogo', 'Email'),
-    ]) . $this->Form->input('title', [
+    ]) . $this->Form->control('title', [
         'label' => __d('croogo', 'Title'),
-    ]) . $this->Form->input('body', [
+    ]) . $this->Form->control('body', [
         'label' => __d('croogo', 'Body'),
-    ]) . $this->Form->input('phone', [
+    ]) . $this->Form->control('phone', [
         'label' => __d('croogo', 'Phone'),
-    ]) . $this->Form->input('address', [
+    ]) . $this->Form->control('address', [
         'label' => __d('croogo', 'Address'),
     ]);
     echo $this->Html->tabEnd();

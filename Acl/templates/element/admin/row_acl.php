@@ -7,7 +7,7 @@ foreach ($rolePermissions as $role) {
         continue;
     }
     $field = 'rolePermissions.' . $role['id'];
-    $input = $this->Form->input($field, [
+    $input = $this->Form->control($field, [
         'type' => 'checkbox',
         'checked' => $role['allowed'] ? true : false,
         'label' => $role['title'],

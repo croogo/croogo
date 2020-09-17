@@ -27,16 +27,16 @@ $this->end();
 
 $this->start('tab-content');
 echo $this->Html->tabStart('language-main');
-echo $this->Form->input('title', [
+echo $this->Form->control('title', [
     'label' => __d('croogo', 'Title'),
 ]);
-echo $this->Form->input('native', [
+echo $this->Form->control('native', [
     'label' => __d('croogo', 'Native'),
 ]);
-echo $this->Form->input('locale', [
+echo $this->Form->control('locale', [
     'label' => __d('croogo', 'Locale'),
 ]);
-echo $this->Form->input('alias', [
+echo $this->Form->control('alias', [
     'label' => __d('croogo', 'Alias'),
     'help' => __d('croogo', 'Locale alias, typically a two letter country/locale code'),
 ]);
@@ -46,7 +46,7 @@ $this->end();
 $this->start('panels');
 echo $this->Html->beginBox(__d('croogo', 'Publishing'));
 echo $this->element('Croogo/Core.admin/buttons', ['type' => 'language']);
-echo $this->Form->input('status', [
+echo $this->Form->control('status', [
     'label' => __d('croogo', 'Status'),
 ]);
 echo $this->Html->endBox();

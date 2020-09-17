@@ -26,14 +26,14 @@ $this->end();
 
 $this->append('tab-content');
 echo $this->Html->tabStart('menu-basic');
-echo $this->Form->input('title', [
+echo $this->Form->control('title', [
     'label' => __d('croogo', 'Title'),
     'data-slug' => '#alias'
 ]);
-echo $this->Form->input('alias', [
+echo $this->Form->control('alias', [
     'label' => __d('croogo', 'Alias'),
 ]);
-echo $this->Form->input('description', [
+echo $this->Form->control('description', [
     'label' => __d('croogo', 'Description'),
 ]);
 echo $this->Html->tabEnd();
@@ -41,11 +41,11 @@ $this->end();
 
 $this->append('tab-content');
 echo $this->Html->tabStart('menu-misc');
-echo $this->Form->input('params', [
+echo $this->Form->control('params', [
     'label' => __d('croogo', 'Params'),
     'type' => 'stringlist',
 ]);
-echo $this->Form->input('class');
+echo $this->Form->control('class');
 echo $this->Html->tabEnd();
 
 $this->end();

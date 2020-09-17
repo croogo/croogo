@@ -94,7 +94,7 @@ $this->end();
 
 $this->start('bulk-action');
 
-echo $this->Form->input('action', [
+echo $this->Form->control('action', [
     'class' => 'c-select',
     'label' => __d('croogo', 'Bulk actions'),
     'options' => [

@@ -21,12 +21,12 @@ $this->end();
 
 $this->append('tab-content');
 echo $this->Html->tabStart('filemanager-createfile');
-echo $this->Form->input('name', [
+echo $this->Form->control('name', [
         'type' => 'text',
         'label' => __d('croogo', 'Filename'),
         'prepend' => $path,
     ]);
-echo $this->Form->input('content', [
+echo $this->Form->control('content', [
     'type' => 'textarea',
     'label' => __d('croogo', 'Content')
 ]);

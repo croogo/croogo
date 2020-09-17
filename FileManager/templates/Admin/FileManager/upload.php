@@ -22,7 +22,7 @@ $this->end();
 
 $this->append('tab-content');
 echo $this->Html->tabStart('filemanager-upload');
-echo $this->Form->input('file', [
+echo $this->Form->control('file', [
     'type' => 'file',
     'label' => '',
     'class' => 'file'

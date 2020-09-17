@@ -20,11 +20,11 @@ $this->end();
 
 $this->start('tab-content');
 echo $this->Html->tabStart('role-main');
-echo $this->Form->input('title', [
+echo $this->Form->control('title', [
     'label' => __d('croogo', 'Title'),
     'data-slug' => '#alias'
 ]);
-echo $this->Form->input('alias', [
+echo $this->Form->control('alias', [
     'label' => __d('croogo', 'Alias'),
 ]);
 echo $this->Html->tabEnd();

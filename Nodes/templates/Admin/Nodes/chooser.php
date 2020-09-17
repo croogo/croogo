@@ -9,7 +9,7 @@
     </div>
     <div class="float-right">
         <?= $this->element('Croogo/Nodes.admin/nodes_search') ?>
-        <?= $this->Form->input('chooser', ['type' => 'hidden', 'default' => true]); ?>
+        <?= $this->Form->control('chooser', ['type' => 'hidden', 'default' => true]); ?>
     </div>
 </div>
 <hr>

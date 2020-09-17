@@ -146,7 +146,7 @@ $this->append('table-body');
 $this->end();
 
 $this->start('bulk-action');
-echo $this->Form->input('action', [
+echo $this->Form->control('action', [
     'label' => __d('croogo', 'Bulk actions'),
     'class' => 'c-select',
     'options' => [

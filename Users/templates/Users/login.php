@@ -3,8 +3,8 @@
     <?= $this->Form->create(null, ['url' => ['action' => 'login']]);?>
         <fieldset>
         <?php
-            echo $this->Form->input('username');
-            echo $this->Form->input('password');
+            echo $this->Form->control('username');
+            echo $this->Form->control('password');
         ?>
         </fieldset>
     <?= $this->Form->submit('Submit') ?>

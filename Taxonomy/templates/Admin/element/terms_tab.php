@@ -38,6 +38,6 @@ if (count($taxonomies) > 0) :
                 'required' => true,
             ];
         endif;
-        echo $this->Form->input('taxonomy_data.' . $vocabularyId, $inputOptions);
+        echo $this->Form->control('taxonomy_data.' . $vocabularyId, $inputOptions);
     endforeach;
 endif;

@@ -7,7 +7,7 @@ $this->assign('title', __d('croogo', 'Forgot Password'));
     <h2><?= $this->fetch('title') ?></h2>
     <?= $this->Form->create('User', ['url' => ['controller' => 'Users', 'action' => 'forgot']]);?>
         <fieldset>
-        <?= $this->Form->input('username', [
+        <?= $this->Form->control('username', [
             'label' => __d('croogo', 'Username'),
             'required' => true,
         ]) ?>

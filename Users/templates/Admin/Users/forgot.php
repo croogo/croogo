@@ -12,13 +12,13 @@ $formStart = $this->Form->create('Users', [
     ],
 ]);
 
-    $body = $this->Form->input('username', [
+    $body = $this->Form->control('username', [
         'label' => false,
         'placeholder' => __d('croogo', 'Username/Email'),
         'prepend' => $this->Html->icon('user', ['class' => 'fa-fw']),
         'required' => true,
     ]);
-    $footer = $this->Form->input(__d('croogo', 'Submit'), [
+    $footer = $this->Form->control(__d('croogo', 'Submit'), [
         'type' => 'submit',
         'class' => 'btn btn-primary',
     ]);

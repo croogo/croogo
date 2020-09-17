@@ -21,7 +21,7 @@ if (!empty($searchFields)) :
         'submitContainer' => '{{content}}',
     ]);
     if ($this->getRequest()->getQuery('chooser')) :
-        echo $this->Form->input('chooser', [
+        echo $this->Form->control('chooser', [
             'type' => 'hidden',
             'value' => $this->getRequest()->getQuery('chooser'),
         ]);
@@ -43,7 +43,7 @@ if (!empty($searchFields)) :
         $label = __(Inflector::humanize(Inflector::underscore($label)));
         $options['placeholder'] = __d('croogo', $label);
         $this->Form->unlockField($field);
-        echo $this->Form->input($field, $options);
+        echo $this->Form->control($field, $options);
     }
 
     echo $this->Form->submit(__d('croogo', 'Filter'), ['type' => 'submit', 'class' => 'btn-outline-success']);

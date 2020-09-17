@@ -20,7 +20,7 @@ echo $this->Croogo->adminTab(__d('croogo', 'Directory'), '#filemanager-createdir
 $this->end();
 
 $this->append('tab-content');
-echo $this->Html->tabStart('filemanager-createdir') . $this->Form->input('name', [
+echo $this->Html->tabStart('filemanager-createdir') . $this->Form->control('name', [
         'type' => 'text',
         'label' => __d('croogo', 'Directory name'),
         'prepend' => $path,

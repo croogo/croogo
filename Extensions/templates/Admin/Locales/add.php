@@ -26,7 +26,7 @@ echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#locales-upload');
 $this->end();
 
 $this->append('tab-content');
-echo $this->Html->tabStart('locales-upload') . $this->Form->input('Locale.file', [
+echo $this->Html->tabStart('locales-upload') . $this->Form->control('Locale.file', [
         'type' => 'file',
         'class' => 'c-file'
     ]);

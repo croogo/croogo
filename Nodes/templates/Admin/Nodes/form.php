@@ -39,15 +39,15 @@ $this->end();
 
 $this->start('tab-content');
     echo $this->Html->tabStart('node-main');
-        echo $this->Form->input('id');
-        echo $this->Form->input('title', [
+        echo $this->Form->control('id');
+        echo $this->Form->control('title', [
             'label' => false,
             'placeholder' => __d('croogo', '%s title', h($type->title)),
             'data-slug' => '#slug',
             'data-slug-editable' => true,
             'data-slug-edit-class' => 'btn btn-outline-secondary',
         ]);
-        echo $this->Form->input('slug', [
+        echo $this->Form->control('slug', [
             'class' => 'slug',
             'label' => __d('croogo', 'Permalink'),
             'prepend' => str_replace('_placeholder', '', $this->Url->build([
@@ -57,12 +57,12 @@ $this->start('tab-content');
                 'slug' => '_placeholder'
             ], ['fullbase' => true]))
         ]);
-        echo $this->Form->input('body', [
+        echo $this->Form->control('body', [
             'label' => __d('croogo', 'Body'),
             'id' => 'NodeBody',
             'class' => !$type->format_use_wysiwyg ? 'no-wysiwyg' : ''
         ]);
-        echo $this->Form->input('excerpt', [
+        echo $this->Form->control('excerpt', [
             'label' => __d('croogo', 'Excerpt'),
             'id' => 'NodeExcerpt',
         ]);
@@ -76,7 +76,7 @@ $this->start('tab-content');
         echo $this->element('Croogo/Core.admin/buttons', ['type' => h($type->title)]);
         echo $this->element('Croogo/Core.admin/publishable');
 
-        echo $this->Form->input('promote', [
+        echo $this->Form->control('promote', [
         'label' => __d('croogo', 'Promoted to front page'),
         ]);
         echo $this->Html->endBox();
@@ -122,7 +122,7 @@ $this->start('tab-content');
         echo $this->Html->endBox();
 
         echo $this->Html->beginBox(__d('croogo', 'Access control'));
-        echo $this->Form->input('visibility_roles', [
+        echo $this->Form->control('visibility_roles', [
         'class' => 'c-select',
         'options' => $roles,
         'multiple' => true,

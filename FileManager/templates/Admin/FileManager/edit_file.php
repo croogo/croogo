@@ -21,7 +21,7 @@ echo $this->Croogo->adminTab(__d('croogo', 'Edit'), '#filemanager-edit');
 $this->end();
 
 $this->append('tab-content');
-echo $this->Html->tabStart('filemanager-edit') . $this->Form->input('content', [
+echo $this->Html->tabStart('filemanager-edit') . $this->Form->control('content', [
         'type' => 'textarea',
         'value' => $content,
         'label' => false,

@@ -47,17 +47,17 @@ $this->end();
 $this->append('tab-content');
 
     echo $this->Html->tabStart('link-basic');
-        echo $this->Form->input('menu_id', [
+        echo $this->Form->control('menu_id', [
             'selected' => $menu->id,
             'class' => 'c-select'
         ]);
-        echo $this->Form->input('parent_id', [
+        echo $this->Form->control('parent_id', [
             'title' => __d('croogo', 'Parent'),
             'options' => $parentLinks,
             'empty' => __d('croogo', '(no parent)'),
             'class' => 'c-select'
         ]);
-        echo $this->Form->input('title', [
+        echo $this->Form->control('title', [
             'label' => __d('croogo', 'Title'),
         ]);
 
@@ -84,7 +84,7 @@ $this->append('tab-content');
             endif;
         endif;
 
-        echo $this->Form->input('link', [
+        echo $this->Form->control('link', [
             'label' => __d('croogo', 'Link'),
             'linkChooser' => true,
             'class' => 'no-select2 link-chooser',
@@ -96,19 +96,19 @@ $this->append('tab-content');
         echo $this->Html->tabEnd();
 
         echo $this->Html->tabStart('link-misc');
-        echo $this->Form->input('description', [
+        echo $this->Form->control('description', [
             'label' => __d('croogo', 'Description'),
         ]);
-        echo $this->Form->input('class', [
+        echo $this->Form->control('class', [
             'label' => __d('croogo', 'Class'),
         ]);
-        echo $this->Form->input('rel', [
+        echo $this->Form->control('rel', [
             'label' => __d('croogo', 'Rel'),
         ]);
-        echo $this->Form->input('target', [
+        echo $this->Form->control('target', [
             'label' => __d('croogo', 'Target'),
         ]);
-        echo $this->Form->input('params', [
+        echo $this->Form->control('params', [
             'label' => __d('croogo', 'Params'),
             'type' => 'stringlist',
         ]);
@@ -129,7 +129,7 @@ $this->append('tab-content');
         echo $this->Html->endBox();
 
         echo $this->Html->beginBox(__d('croogo', 'Access control'));
-        echo $this->Form->input('visibility_roles', [
+        echo $this->Form->control('visibility_roles', [
             'class' => 'c-select',
             'options' => $roles,
             'multiple' => true,

@@ -22,7 +22,7 @@ $this->end();
 
 $this->append('tab-content');
     echo $this->Html->tabStart('locale-content') .
-        $this->Form->input('content', array(
+        $this->Form->control('content', array(
             'label' => __d('croogo', 'Content'),
             'data-placement' => 'top',
             'value' => $content,

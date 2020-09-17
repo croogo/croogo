@@ -39,14 +39,14 @@ class SettingsFormHelper extends Helper
             'data-title' => $setting->description,
         ];
         if ($setting->value == 1) {
-            $output = $this->Form->input('setting-' . $setting->id, [
+            $output = $this->Form->control('setting-' . $setting->id, [
                 'type' => $setting->input_type,
                 'checked' => 'checked',
                 'tooltip' => $tooltip,
                 'label' => $label
             ]);
         } else {
-            $output = $this->Form->input('setting-' . $setting->id, [
+            $output = $this->Form->control('setting-' . $setting->id, [
                 'type' => $setting->input_type,
                 'tooltip' => $tooltip,
                 'label' => $label
@@ -63,7 +63,7 @@ class SettingsFormHelper extends Helper
      * @param string $label Input label
      * @return string
      */
-    public function input(Setting $setting, $label)
+    public function control(Setting $setting, $label)
     {
         $output = '';
         $inputType = ($setting->input_type != null) ? $setting->input_type : 'text';
@@ -75,7 +75,7 @@ class SettingsFormHelper extends Helper
             $selected = json_decode($setting->value);
 
             $options = $setting->options;
-            $output = $this->Form->input('setting-' . $setting->id, [
+            $output = $this->Form->control('setting-' . $setting->id, [
                 'label' => $setting->title,
                 'multiple' => $multiple,
                 'options' => $options,
@@ -85,14 +85,14 @@ class SettingsFormHelper extends Helper
             $output = $this->_inputCheckbox($setting, $label);
         } elseif ($setting->input_type == 'radio') {
             $options = $setting->options;
-            $output = $this->Form->input('setting-' . $setting->id, [
+            $output = $this->Form->control('setting-' . $setting->id, [
                 'label' => $setting->title,
                 'type' => 'radio',
                 'options' => $options,
                 'value' => $setting->value,
             ]);
         } elseif ($setting->input_type == 'file') {
-            $output = $this->Form->input('setting-' . $setting->id, [
+            $output = $this->Form->control('setting-' . $setting->id, [
                 'label' => $setting->title,
                 'type' => 'file',
             ]);
@@ -108,7 +108,7 @@ class SettingsFormHelper extends Helper
                         'escape' => false,
                     ]
                 );
-                $output .= $this->_View->Form->input('_clearbackground', [
+                $output .= $this->_View->Form->control('_clearbackground', [
                     'type' => 'checkbox',
                     'label' => 'Delete Theme Background Image',
                 ]);
@@ -133,7 +133,7 @@ class SettingsFormHelper extends Helper
                 $options['options'] = $setting->options;
             }
 
-            $output = $this->Form->input('setting-' . $setting->id, $options);
+            $output = $this->Form->control('setting-' . $setting->id, $options);
         }
 
         return $output;

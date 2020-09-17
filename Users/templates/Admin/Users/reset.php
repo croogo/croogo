@@ -4,21 +4,21 @@ $this->setLayout('admin_login');
 
 echo $this->Form->create($user);
 
-    echo $this->Form->input('password', [
+    echo $this->Form->control('password', [
         'type' => 'password',
         'placeholder' => __d('croogo', 'New password'),
         'label' => false,
         'value' => '',
     ]);
 
-    echo $this->Form->input('verify_password', [
+    echo $this->Form->control('verify_password', [
         'type' => 'password',
         'placeholder' => __d('croogo', 'Verify Password'),
         'label' => false,
         'value' => '',
     ]);
 
-    echo $this->Form->input(__d('croogo', 'Reset'), [
+    echo $this->Form->control(__d('croogo', 'Reset'), [
         'type' => 'submit',
         'class' => 'btn btn-primary',
         'templates' => [

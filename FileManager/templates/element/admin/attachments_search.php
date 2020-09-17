@@ -15,7 +15,7 @@ $chooserType = isset($this->getRequest()->query['chooser_type']) ? $this->getReq
             'submitContainer' => '{{content}}',
         ]
     );
-    echo $this->Form->input(
+    echo $this->Form->control(
         'chooser_type',
         [
             'type' => 'hidden',
@@ -23,7 +23,7 @@ $chooserType = isset($this->getRequest()->query['chooser_type']) ? $this->getReq
         ]
     );
 
-    echo $this->Form->input(
+    echo $this->Form->control(
         'chooser',
         [
             'type' => 'hidden',
@@ -31,7 +31,7 @@ $chooserType = isset($this->getRequest()->query['chooser_type']) ? $this->getReq
         ]
     );
 
-    echo $this->Form->input(
+    echo $this->Form->control(
         'filter',
         [
             'label' => false,
@@ -41,7 +41,7 @@ $chooserType = isset($this->getRequest()->query['chooser_type']) ? $this->getReq
         ]
     );
 
-    echo $this->Form->input(
+    echo $this->Form->control(
         __d('croogo', 'Filter'),
         [
             'type' => 'submit',
