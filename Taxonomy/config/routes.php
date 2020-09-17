@@ -13,8 +13,8 @@ $routes->plugin('Croogo/Taxonomy', ['path' => '/'], function (RouteBuilder $rout
 });
 
 $routes->plugin('Croogo/Taxonomy', ['path' => '/'], function (RouteBuilder $route) {
-    $route->prefix('api', function (RouteBuilder $route) {
-        $route->prefix('v10', ['path' => '/v1.0'], function (RouteBuilder $route) {
+    $route->prefix('Api', function (RouteBuilder $route) {
+        $route->prefix('V10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);
 
             $route->resources('Taxonomies');

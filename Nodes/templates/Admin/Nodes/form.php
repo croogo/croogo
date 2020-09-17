@@ -92,7 +92,7 @@ $this->start('tab-content');
                 'data-queryField' => 'name',
                 'data-relatedElement' => '#user-id',
                 'data-url' => Router::url([
-                    'prefix' => 'api/v10',
+                    'prefix' => 'Api/V10',
                     'plugin' => 'Croogo/Users',
                     'controller' => 'Users',
                     'action' => 'lookup',
@@ -110,7 +110,7 @@ $this->start('tab-content');
                 'data-queryField' => 'title',
                 'data-relatedElement' => '#parent-id',
                 'data-url' => $this->Url->build([
-                    'prefix' => 'api/v10',
+                    'prefix' => 'Api/V10',
                     'plugin' => 'Croogo/Nodes',
                     'controller' => 'Nodes',
                     'action' => 'lookup',
