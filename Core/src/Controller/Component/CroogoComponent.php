@@ -244,7 +244,7 @@ class CroogoComponent extends Component
      */
     protected function _setupViewPaths(Controller $controller)
     {
-        $defaultViewPaths = App::path('Template');
+        $defaultViewPaths = App::path('templates');
         $pos = array_search(APP . 'Template' . DS, $defaultViewPaths);
         if ($pos !== false) {
             $viewPaths = array_splice($defaultViewPaths, 0, $pos + 1);
@@ -252,7 +252,7 @@ class CroogoComponent extends Component
             $viewPaths = $defaultViewPaths;
         }
         if ($controller->viewBuilder()->getTheme()) {
-            $themePaths = App::path('Template', $controller->viewBuilder()->getTheme());
+            $themePaths = App::path('templates', $controller->viewBuilder()->getTheme());
             foreach ($themePaths as $themePath) {
                 $viewPaths[] = $themePath;
                 if ($controller->getPlugin()) {
@@ -261,7 +261,7 @@ class CroogoComponent extends Component
             }
         }
         if ($controller->getPlugin()) {
-            $viewPaths = array_merge($viewPaths, App::path('Template', $controller->getPlugin()));
+            $viewPaths = array_merge($viewPaths, App::path('templates', $controller->getPlugin()));
         }
         $viewPaths = array_merge($viewPaths, $defaultViewPaths);
 
@@ -285,7 +285,7 @@ class CroogoComponent extends Component
         foreach ($templates as $template) {
             foreach ($templatePaths as $templatePath) {
                 $templatePath = $templatePath . $this->_viewPath() . DS . $template;
-                if (file_exists($templatePath . '.ctp')) {
+                if (file_exists($templatePath . '.php')) {
                     $controller->viewBuilder()->setTemplate($this->_viewPath() . DS . $template);
 
                     return;

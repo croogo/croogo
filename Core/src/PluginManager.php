@@ -151,7 +151,7 @@ class PluginManager extends Plugin
         $plugins = [];
         $this->folder = new Folder;
         $registered = Configure::read('plugins');
-        $pluginPaths = Hash::merge(App::path('Plugin'), $registered);
+        $pluginPaths = Hash::merge(App::classPath('Plugin'), $registered);
         unset($pluginPaths['Croogo']); //Otherwise we get croogo plugins twice!
         foreach ($pluginPaths as $pluginName => $pluginPath) {
             $this->folder->path = $pluginPath;
