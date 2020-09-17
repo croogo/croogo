@@ -81,8 +81,9 @@ class CroogoComponent extends Component
     {
         $this->_controller = $event->getSubject();
 
-        if ($this->_controller->request->getParam('prefix') == 'admin') {
-            if (!$this->_controller->request->getParam('requested')) {
+        $request = $this->_controller->getRequest();
+        if ($request->getParam('prefix') == 'Admin') {
+            if (!$request->getParam('requested')) {
                 $this->_adminData();
             }
         }
@@ -115,7 +116,7 @@ class CroogoComponent extends Component
             ],
         ]);
 
-        $user = $this->getController()->request->getSession()->read('Auth.User');
+        $user = $this->_controller->getRequest()->getSession()->read('Auth.User');
         if (empty($user)) {
             return;
         }
@@ -161,7 +162,7 @@ class CroogoComponent extends Component
      */
     public function roleId()
     {
-        $roleId = $this->_controller->request->getSession()->read('Auth.User.role_id');
+        $roleId = $this->_controller->getRequest()->getSession()->read('Auth.User.role_id');
         if ($roleId) {
             return $roleId;
         }
@@ -285,7 +286,7 @@ class CroogoComponent extends Component
             foreach ($templatePaths as $templatePath) {
                 $templatePath = $templatePath . $this->_viewPath() . DS . $template;
                 if (file_exists($templatePath . '.ctp')) {
-                    $controller->viewBuilder()->template($this->_viewPath() . DS . $template);
+                    $controller->viewBuilder()->setTemplate($this->_viewPath() . DS . $template);
 
                     return;
                 }
@@ -296,10 +297,10 @@ class CroogoComponent extends Component
     protected function _viewPath()
     {
         $viewPath = $this->_controller->getName();
-        if (!empty($this->request->getParam('prefix'))) {
+        if (!empty($this->_controller->getRequest()->getParam('prefix'))) {
             $prefixes = array_map(
                 'Cake\Utility\Inflector::camelize',
-                explode('/', $this->_controller->request->params['prefix'])
+                explode('/', $this->_controller->getRequest()->getParam('prefix'))
             );
             $viewPath = implode(DS, $prefixes) . DS . $viewPath;
         }

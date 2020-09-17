@@ -103,7 +103,7 @@ class BlocksComponent extends Component
         $alias = $this->Blocks->getAlias();
         $roleId = $this->controller->Croogo->roleId();
         $status = $this->Blocks->status();
-        $request = $this->controller->request;
+        $request = $this->controller->getRequest();
         $slug = Text::slug(strtolower($request->getPath()));
         $Filter = new VisibilityFilter($request);
         foreach ($regions as $regionId => $regionAlias) {

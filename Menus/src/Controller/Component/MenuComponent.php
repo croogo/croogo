@@ -53,7 +53,8 @@ class MenuComponent extends Component
         }
 
         $controller = $event->getSubject();
-        if (($controller->request->getParam('prefix') !== 'admin') && !$controller->request->getParam('requested')) {
+        $request = $controller->getRequest();
+        if (($request->getParam('prefix') !== 'Admin') && !$request->getParam('requested')) {
             $this->menus();
         } else {
             $this->_adminData();

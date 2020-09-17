@@ -48,7 +48,7 @@ class ThemeComponent extends Component
      */
     public function loadThemeSettings($theme)
     {
-        $prefix = $this->request->getParam('prefix');
+        $prefix = $this->_controller->getRequest()->getParam('prefix');
         $croogoTheme = new CroogoTheme();
         $settings = $croogoTheme->getData($theme)['settings'];
 

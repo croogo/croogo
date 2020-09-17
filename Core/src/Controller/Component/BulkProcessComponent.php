@@ -40,7 +40,7 @@ class BulkProcessComponent extends Component
     public function beforeFilter(Event $event)
     {
         $this->_controller = $event->getSubject();
-        if ($this->_controller->request->getParam('action') == 'process') {
+        if ($this->_controller->getRequest()->getParam('action') == 'process') {
             $this->_controller->Security->setConfig('validatePost', false);
         }
     }

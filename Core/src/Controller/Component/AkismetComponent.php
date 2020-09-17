@@ -109,13 +109,13 @@ class AkismetComponent extends Component
 
         // Start to populate the comment data
         $this->comment['blog'] = $this->blogURL;
-        $this->comment['user_agent'] = $this->request->header('user-agent') ?: 'Unknown';
+        $this->comment['user_agent'] = $this->getController()->getRequest()->getHeader('user-agent') ?: 'Unknown';
 
-        if ($this->request->referer()) {
-            $this->comment['referrer'] = $this->request->referer();
+        if ($this->getController()->getRequest()->referer()) {
+            $this->comment['referrer'] = $this->getController()->getRequest()->referer();
         }
 
-        $this->comment['user_ip'] = $this->request->clientIp();
+        $this->comment['user_ip'] = $this->getController()->getRequest()->clientIp();
     }
 
     /**

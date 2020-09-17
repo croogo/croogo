@@ -61,8 +61,9 @@ class AccessComponent extends Component
         Croogo::hookAdminTab('Admin/Roles/edit', $title, $element);
 
         $id = null;
-        if (!empty($this->_controller->request->getParam('pass')[0])) {
-            $id = $this->_controller->request->getParam('pass')[0];
+        $request = $this->_controller->getRequest();
+        if (!empty($request->getParam('pass')[0])) {
+            $id = $request->getParam('pass')[0];
         }
         $this->_controller->set('parents', $this->_controller->Roles->allowedParents($id));
     }

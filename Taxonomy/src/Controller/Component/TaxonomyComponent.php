@@ -251,7 +251,7 @@ class TaxonomyComponent extends Component
         if (isset($vocabulary->types[0])) {
             $defaultType = $vocabulary->types[0];
         }
-        $typeId = $this->request->getQuery('type_id');
+        $typeId = $this->getController()->getRequest()->getQuery('type_id');
         if ($typeId) {
             $defaultType = collection($vocabulary['types'])->match([
                 'id' => $typeId,

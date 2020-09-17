@@ -9,7 +9,7 @@ class ChooserListener extends BaseListener
 {
     public function beforeFilter(Event $event)
     {
-        if (!$this->_controller()->request->getQuery('chooser')) {
+        if (!$this->_controller()->getRequest()->getQuery('chooser')) {
             return;
         }
 

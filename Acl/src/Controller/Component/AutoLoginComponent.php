@@ -101,7 +101,7 @@ class AutoLoginComponent extends Component
      */
     public function onAdminLoginSuccessful(EventInterface $event)
     {
-        $request = $event->getSubject()->request;
+        $request = $event->getSubject()->getRequest();
         $remember = $request->getData('remember');
         $expires = Configure::read('Access Control.autoLoginDuration');
         if (strtotime($expires) === false) {

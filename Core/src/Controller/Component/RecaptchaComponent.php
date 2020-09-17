@@ -48,7 +48,7 @@ class RecaptchaComponent extends Component
             return;
         }
 
-        if (in_array($this->request->getParam('action'), $this->getConfig('actions'))) {
+        if (in_array($controller->getRequest()->getParam('action'), $this->getConfig('actions'))) {
             $controller->Security->validatePost = false;
         }
 

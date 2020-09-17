@@ -20,14 +20,15 @@ class MetaComponent extends Component
     public function startup()
     {
         $controller = $this->_registry->getController();
-        if ($controller->request->getParam('prefix') === 'admin') {
+        $request = $controller->getRequest();
+        if ($request->getParam('prefix') === 'Admin') {
             $this->_adminTabs();
 
-            if (empty($controller->request->getData('meta'))) {
+            if (empty($request->getData('meta'))) {
                 return;
             }
             $unlockedFields = [];
-            foreach ($controller->request->getData('meta') as $uuid => $fields) {
+            foreach ($request->getData('meta') as $uuid => $fields) {
                 foreach ($fields as $field => $vals) {
                     $unlockedFields[] = 'meta.' . $uuid . '.' . $field;
                 }

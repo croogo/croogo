@@ -13,6 +13,9 @@ use Cake\Event\Event;
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ *
+ * @property \Croogo\Core\Controller\Component\BulkProcessComponent $BulkProcess
+ * @property \Croogo\Contacts\Model\Table\MessagesTable $Messages
  */
 class MessagesController extends AppController
 {
@@ -40,7 +43,7 @@ class MessagesController extends AppController
     public function process()
     {
         $Messages = $this->Messages;
-        list($action, $ids) = $this->BulkProcess->getRequestVars($Messages->alias());
+        list($action, $ids) = $this->BulkProcess->getRequestVars($Messages->aliasField($Messages->getPrimaryKey()));
 
         $messageMap = [
             'delete' => __d('croogo', 'Messages deleted'),
