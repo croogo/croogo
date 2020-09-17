@@ -25,18 +25,6 @@ use Exception;
 class AttachmentsController extends AppController
 {
 
-    /**
-     * Helpers used by the Controller
-     *
-     * @var array
-     * @access public
-     */
-    public $helpers = [
-        'Croogo/FileManager.AssetsImage',
-        'Croogo/FileManager.FileManager',
-        'Text',
-    ];
-
     public $paginate = [
         'paramType' => 'querystring',
         'limit' => 5,
@@ -45,6 +33,13 @@ class AttachmentsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+
+        $this->viewBuilder()->setHelpers([
+            'Croogo/FileManager.AssetsImage',
+            'Croogo/FileManager.FileManager',
+            'Text',
+        ]);
+
         $this->loadComponent('Search.Search', [
             'actions' => [
                 'index', 'browse', 'listings',
