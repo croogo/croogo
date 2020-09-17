@@ -558,11 +558,9 @@ class CroogoHelper extends Helper
     }
 
     /**
-     * @param $target
-     *
-     * @return \Cake\View\Cell
+     * @param $target string ID of target element
      */
-    public function linkChooser($target)
+    public function linkChooser(string $target): string
     {
         $linkChooser = $this->_View->element('Croogo/Core.admin/modal', [
             'id' => 'link-chooser',
@@ -572,7 +570,7 @@ class CroogoHelper extends Helper
             $this->_View->append('page-footer', $linkChooser);
         }
 
-        return $this->_View->cell('Croogo/Core.Admin/LinkChooser', [$target]);
+        return $this->_View->cell('Croogo/Core.Admin/LinkChooser', [$target])->render();
     }
 
     /**
