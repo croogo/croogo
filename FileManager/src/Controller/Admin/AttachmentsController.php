@@ -45,7 +45,7 @@ class AttachmentsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadComponent('Search.Prg', [
+        $this->loadComponent('Search.Search', [
             'actions' => [
                 'index', 'browse', 'listings',
             ],

@@ -258,7 +258,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
      */
     protected function _setupPrg()
     {
-        $this->loadComponent('Search.Prg', [
+        $this->loadComponent('Search.Search', [
             'queryStringWhitelist' => ['sort', 'direction', 'limit', 'chooser'],
             'actions' => ['index']
         ]);

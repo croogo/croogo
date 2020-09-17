@@ -41,13 +41,13 @@ class NodesController extends AppController
         $this->loadComponent('Paginator', [
             'limit' => Configure::read('Reading.nodes_per_page'),
         ]);
-        $this->loadComponent('Search.Prg', ['actions' => true]);
+        $this->loadComponent('Search.Search', ['actions' => true]);
         $this->loadComponent('Croogo/Core.BulkProcess');
         $this->loadComponent('Croogo/Core.Recaptcha', [
             'actions' => ['view']
         ]);
 
-        $this->Prg->getConfig('actions', ['index', 'search', 'term']);
+        $this->Search->getConfig('actions', ['index', 'search', 'term']);
     }
 
     /**
