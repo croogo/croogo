@@ -3,7 +3,7 @@
 use Cake\Routing\RouteBuilder;
 use Croogo\Core\Router;
 
-Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route) {
+$routes->plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('Admin', function (RouteBuilder $route) {
         $route->setExtensions(['json']);
 

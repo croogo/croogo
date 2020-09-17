@@ -1,9 +1,8 @@
 <?php
 
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 
-Router::plugin('Croogo/Settings', ['path' => '/'], function (RouteBuilder $route) {
+$routes->plugin('Croogo/Settings', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('Admin', function (RouteBuilder $route) {
         $route->setExtensions(['json']);
 

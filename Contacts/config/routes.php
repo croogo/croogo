@@ -1,10 +1,9 @@
 <?php
 
 use Cake\Routing\RouteBuilder;
-use Croogo\Core\Router;
 
-Router::plugin('Croogo/Contacts', ['path' => '/'], function (RouteBuilder $route) {
-    $route->prefix('admin', function (RouteBuilder $route) {
+$routes->plugin('Croogo/Contacts', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('Admin', function (RouteBuilder $route) {
         $route->setExtensions(['json']);
 
         $route->scope('/contacts', [], function (RouteBuilder $route) {
@@ -12,6 +11,6 @@ Router::plugin('Croogo/Contacts', ['path' => '/'], function (RouteBuilder $route
         });
     });
 
-    Router::build($route, '/contact', ['controller' => 'Contacts', 'action' => 'view', 'contact']);
-    Router::build($route, '/contact/*', ['controller' => 'Contacts', 'action' => 'view']);
+    $route->connect('/contact', ['controller' => 'Contacts', 'action' => 'view', 'contact']);
+    $route->connect('/contact/*', ['controller' => 'Contacts', 'action' => 'view']);
 });

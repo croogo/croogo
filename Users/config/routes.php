@@ -3,23 +3,26 @@
 use Cake\Routing\RouteBuilder;
 use Croogo\Core\Router;
 
-Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
+$routes->plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('Admin', function (RouteBuilder $route) {
         $route->setExtensions(['json']);
 
         $route->scope('/users', [], function (RouteBuilder $route) {
-            $route->fallbacks();
+            $route->connect('/users', ['prefix' => 'Admin', 'controller' => 'Users', 'action' => 'index']);
+            $route->connect('/users/:action/*', ['prefix' => 'Admin', 'controller' => 'Users']);
+            $route->connect('/roles', ['prefix' => 'Admin', 'controller' => 'Roles', 'action' => 'index']);
+            $route->connect('/roles/:action/*', ['prefix' => 'Admin', 'controller' => 'Roles']);
         });
     });
 
-    Router::build($route, '/register', ['controller' => 'Users', 'action' => 'add']);
-    Router::build($route, '/user/:username', ['controller' => 'Users', 'action' => 'view'], ['pass' => ['username']]);
+    $route->connect('/register', ['controller' => 'Users', 'action' => 'add']);
+    $route->connect('/user/:username', ['controller' => 'Users', 'action' => 'view'], ['pass' => ['username']]);
 
-    Router::build($route, '/users', ['controller' => 'Users', 'action' => 'index']);
-    Router::build($route, '/users/:action/*', ['controller' => 'Users']);
+    $route->connect('/users', ['controller' => 'Users', 'action' => 'index']);
+    $route->connect('/users/:action/*', ['controller' => 'Users']);
 });
 
-Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
+$routes->plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('api', function (RouteBuilder $route) {
         $route->prefix('v10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);

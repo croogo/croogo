@@ -2,10 +2,9 @@
 
 use Cake\Core\Configure;
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Croogo\Core\Utility\StringConverter;
 
-Router::prefix('admin', function (RouteBuilder $routeBuilder) {
+$routes->prefix('Admin', function (RouteBuilder $routeBuilder) {
     $dashboardUrl = Configure::read('Site.dashboard_url');
     if (!$dashboardUrl) {
         return;
@@ -19,7 +18,7 @@ Router::prefix('admin', function (RouteBuilder $routeBuilder) {
     $routeBuilder->connect('/', $dashboardUrl);
 });
 
-Router::plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+$routes->plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $routeBuilder) {
     $routeBuilder->prefix('Admin', function (RouteBuilder $routeBuilder) {
         $routeBuilder->setExtensions(['json']);
 

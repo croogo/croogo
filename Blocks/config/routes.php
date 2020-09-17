@@ -1,19 +1,21 @@
 <?php
 
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 
-Router::plugin('Croogo/Blocks', ['path' => '/'], function (RouteBuilder $route) {
-    $route->prefix('admin', function (RouteBuilder $route) {
+$routes->plugin('Croogo/Blocks', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('Admin', function (RouteBuilder $route) {
         $route->setExtensions(['json']);
 
         $route->scope('/blocks', [], function (RouteBuilder $route) {
-            $route->fallbacks();
+            $route->connect('/blocks', ['prefix' => 'Admin', 'controller' => 'Blocks', 'action' => 'index']);
+            $route->connect('/blocks/:action/*', ['prefix' => 'Admin', 'controller' => 'Blocks']);
+            $route->connect('/regions', ['prefix' => 'Admin', 'controller' => 'Regions', 'action' => 'index']);
+            $route->connect('/regions/:action/*', ['prefix' => 'Admin', 'controller' => 'Regions']);
         });
     });
 });
 
-Router::plugin('Croogo/Blocks', ['path' => '/'], function (RouteBuilder $route) {
+$routes->plugin('Croogo/Blocks', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('api', function (RouteBuilder $route) {
         $route->prefix('v10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);
