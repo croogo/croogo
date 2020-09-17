@@ -2,6 +2,7 @@
 
 namespace Croogo\Users\Shell;
 
+use Cake\Core\Configure;
 use Cake\Console\Shell;
 use Croogo\Users\Model\Entity\User;
 
@@ -22,6 +23,7 @@ class UsersShell extends Shell
      */
     public function initialize()
     {
+        Configure::write('Trackable.Auth.User', ['id' => 1]);
         $this->loadModel('Croogo/Users.Users');
     }
 
