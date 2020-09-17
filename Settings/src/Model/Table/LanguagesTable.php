@@ -27,7 +27,7 @@ class LanguagesTable extends CroogoTable
     {
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('ADmad/Sequence.Sequence', [
-            'order' => 'weight',
+            'sequenceField' => 'weight',
         ]);
         $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp');

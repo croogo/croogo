@@ -15,7 +15,7 @@ class VocabulariesTable extends CroogoTable
     public function initialize(array $config): void
     {
         $this->addBehavior('ADmad/Sequence.Sequence', [
-            'order' => 'weight',
+            'sequenceField' => 'weight',
         ]);
 
         $this->addBehavior('Timestamp');

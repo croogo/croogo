@@ -67,7 +67,7 @@ class BlocksTable extends CroogoTable
         $this->addBehavior('Croogo/Core.Publishable');
         $this->addBehavior('Croogo/Core.Visibility');
         $this->addBehavior('ADmad/Sequence.Sequence', [
-            'order' => 'weight',
+            'sequenceField' => 'weight',
             'scope' => ['region_id'],
         ]);
         $this->addBehavior('Croogo/Core.Cached', [

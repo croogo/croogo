@@ -22,7 +22,7 @@ class DashboardsTable extends CroogoTable
         $this->setTable('dashboards');
         $this->addBehavior('Timestamp');
         $this->addBehavior('ADmad/Sequence.Sequence', [
-            'order' => 'weight',
+            'sequenceField' => 'weight',
             'scope' => ['user_id', 'column'],
         ]);
         $this->belongsTo('Users', [
