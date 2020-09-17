@@ -56,8 +56,9 @@ class AssetsFilterHelper extends Helper
      */
     public function filter(Event $event)
     {
-        $content =& $event->result['content'];
-        $options =& $event->result['options'];
+        $result = $event->getResult();
+        $content =& $result['content'];
+        $options =& $result['options'];
         $converter = new StringConverter();
         $conditions = [];
         $identifier = '';

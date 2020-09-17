@@ -38,14 +38,10 @@ class TaxonomiesEventHandler implements EventListenerInterface
      */
     public function onSetupAdminData($event)
     {
-        $View = $event->getSubject();
+        $controller = $event->getSubject();
 
-        if (empty($View->viewVars['vocabulariesForAdminLayout'])) {
-            $vocabularies = [];
-        } else {
-            $vocabularies = $View->viewVars['vocabulariesForAdminLayout'];
-        }
-        foreach ($vocabularies as $v) {
+        $vocabularies = $controller->viewBuilder()->getVar('vocabulariesForAdminLayout');
+        foreach ($vocabularies as $k => $v) {
             $weight = 9999 + $v->weight;
             Nav::add('sidebar', 'content.children.taxonomy.children.' . $v->alias, [
                 'title' => $v->title,

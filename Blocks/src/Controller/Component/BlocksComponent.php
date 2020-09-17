@@ -112,7 +112,7 @@ class BlocksComponent extends Component
 
             $visibilityCachePrefix = 'visibility_' . $slug . '_' . $cacheKey;
             $blocks = Cache::read($visibilityCachePrefix, 'croogo_blocks');
-            if ($blocks === false) {
+            if ($blocks === null) {
                 $blocks = $this->Blocks->find('regionPublished', [
                     'regionId' => $regionId,
                     'roleId' => $roleId,

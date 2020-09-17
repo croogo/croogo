@@ -120,7 +120,7 @@ class PublishableBehavior extends Behavior
     public function beforeMarshal(Event $event, $options = [])
     {
         $data = $event->getData('data');
-        if (array_key_exists('publish_start', $data)) {
+        if (property_exists($data, 'publish_start')) {
             if (empty($data['publish_start'])) {
                 $data['publish_start'] = new \DateTime();
             }

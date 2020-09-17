@@ -287,7 +287,7 @@ class Croogo
             $options = Hash::merge(Configure::read($configKey . '.*'), $options);
         }
 
-        if ($option) {
+        if (!empty($options[$option])) {
             return $options[$option];
         }
 

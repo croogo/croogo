@@ -55,8 +55,8 @@ class BulkProcessComponent extends Component
      */
     public function getRequestVars($model, $primaryKey = 'id')
     {
-        $data = $this->_controller->request->getData($model);
-        $action = $this->_controller->request->getData('action');
+        $data = (array)$this->_controller->getRequest()->getData($model);
+        $action = $this->_controller->getRequest()->getData('action');
         $ids = [];
         foreach ($data as $id => $value) {
             if (is_array($value) && !empty($value[$primaryKey])) {
