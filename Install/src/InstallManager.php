@@ -111,7 +111,7 @@ class InstallManager
             return __d('croogo', 'Could not connect to database.');
         }
 
-        $configPath = ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'app.php';
+        $configPath = ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'app_local.php';
         foreach (['host', 'username', 'password', 'database', 'driver'] as $field) {
             if (isset($config[$field]) && (!empty($config[$field] || $field == 'password'))) {
                 $this->_updateDatasourceConfig($configPath, $field, $config[$field]);
