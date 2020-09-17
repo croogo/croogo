@@ -20,8 +20,6 @@ use Croogo\Core\Croogo;
 class UsersController extends AppController
 {
 
-    public $modelClass = 'Croogo/Users.Users';
-
     public $paginate = [
         'limit' => 10,
         'order' => [

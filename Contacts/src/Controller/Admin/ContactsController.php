@@ -16,7 +16,6 @@ use Cake\Event\EventInterface;
  */
 class ContactsController extends AppController
 {
-    public $modelClass = 'Croogo/Contacts.Contacts';
 
     public function initialize(): void
     {

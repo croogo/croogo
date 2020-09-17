@@ -16,7 +16,6 @@ use Cake\Event\Event;
  */
 class RegionsController extends AppController
 {
-    public $modelClass = 'Croogo/Blocks.Regions';
 
     public function initialize(): void
     {

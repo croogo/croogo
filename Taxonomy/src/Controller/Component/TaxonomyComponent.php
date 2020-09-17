@@ -205,7 +205,7 @@ class TaxonomyComponent extends Component
     public function prepareCommonData(Type $type, $options = [])
     {
         $options = Hash::merge([
-            'modelClass' => $this->controller->modelClass,
+            'modelClass' => $this->controller->getName(),
         ], $options);
         $typeAlias = $type->alias;
         list(, $modelClass) = pluginSplit($options['modelClass']);
@@ -217,7 +217,7 @@ class TaxonomyComponent extends Component
                 sprintf(
                     'Model %s not found in controller %s',
                     $modelClass,
-                    $this->controller->name
+                    $this->controller->getName()
                 )
             );
         }

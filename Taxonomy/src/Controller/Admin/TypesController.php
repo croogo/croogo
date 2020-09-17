@@ -18,7 +18,6 @@ use Cake\Event\Event;
  */
 class TypesController extends AppController
 {
-    public $modelClass = 'Croogo/Taxonomy.Types';
 
     public function initialize(): void
     {

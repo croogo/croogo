@@ -243,7 +243,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
     {
         $config = Configure::read('Access Control');
         if (isset($config['rowLevel']) && $config['rowLevel'] == true) {
-            if (strpos($config['models'], str_replace('/', '\/', $this->modelClass)) === false) {
+            if (strpos($config['models'], str_replace('/', '\/', $this->getName())) === false) {
                 return;
             }
             if ($this->getRequest()->getParam('controller')) {

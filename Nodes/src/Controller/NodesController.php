@@ -387,7 +387,7 @@ class NodesController extends AppController
         if (isset($this->Taxonomies)) {
             $this->Taxonomies->prepareCommonData($type);
         }
-        $Node = $this->{$this->modelClass};
+        $Node = $this->{$this->getName()};
         if (!empty($this->getRequest()->data[$Node->alias]['parent_id'])) {
             $Node->id = $this->getRequest()->data[$Node->alias]['parent_id'];
             $parentTitle = $Node->field('title');

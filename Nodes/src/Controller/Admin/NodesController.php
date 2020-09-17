@@ -75,7 +75,7 @@ class NodesController extends AppController
      */
     public function updatePaths()
     {
-        $Node = $this->{$this->modelClass};
+        $Node = $this->{$this->getName()};
         if ($Node->updateAllNodesPaths()) {
             $messageFlash = __d('croogo', 'Paths updated.');
             $class = 'success';
