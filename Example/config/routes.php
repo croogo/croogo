@@ -6,7 +6,6 @@ use Croogo\Core\Router;
 Router::plugin('Croogo/Example', ['path' => '/'], function (RouteBuilder $routeBuilder) {
     $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
         $routeBuilder->setExtensions(['json']);
-        $routeBuilder->applyMiddleware('csrf');
 
         $routeBuilder->connect('/route/here', [
             'plugin' => 'Croogo/Example',

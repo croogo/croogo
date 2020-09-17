@@ -17,7 +17,6 @@ Router::addUrlFilter(function ($params, $request = null) {
 
 Router::plugin('Croogo/Translate', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('admin', function (RouteBuilder $route) {
-        $route->applyMiddleware('csrf');
         $route->scope('/translate', [], function (RouteBuilder $route) {
             $route->fallbacks();
         });
