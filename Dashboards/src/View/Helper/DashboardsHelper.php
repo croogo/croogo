@@ -79,8 +79,9 @@ class DashboardsHelper extends Helper
 
         $cssSetting = $this->Theme->settings('css');
 
-        if (!empty($this->_View->viewVars['boxes_for_dashboard'])) {
-            $boxesForLayout = collection($this->_View->viewVars['boxes_for_dashboard'])->combine('alias', function ($entity) {
+        $boxesForLayout = $this->getView()->get('boxes_for_dashboard');
+        if (!empty($boxesForLayout)) {
+            $boxesForLayout = collection($boxesForLayout)->combine('alias', function ($entity) {
                 return $entity;
             })->toArray();
             $dashboards = [];

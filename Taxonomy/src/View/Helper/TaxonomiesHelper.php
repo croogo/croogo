@@ -48,7 +48,8 @@ class TaxonomiesHelper extends Helper
     {
         $request = $this->getView()->getRequest();
         $controller = $request->getParam('controller');
-        if (empty($this->getView()->viewVars['taxonomies']) || $controller == 'Terms') {
+        $taxonomies = $this->getView()->get('taxonomies');
+        if (empty($taxonomies) || $controller == 'Terms') {
             return;
         }
         $title = __d('croogo', 'Terms');
@@ -109,8 +110,9 @@ class TaxonomiesHelper extends Helper
         $options = array_merge($_options, $options);
 
         $output = '';
-        if (isset($this->_View->viewVars['vocabulariesForLayout'][$vocabularyAlias]['threaded'])) {
-            $vocabulary = $this->_View->viewVars['vocabulariesForLayout'][$vocabularyAlias];
+        $vocabulariesForLayout = $this->_View->get('vocabulariesForLayout');
+        if (isset($vocabulariesForLayout[$vocabularyAlias]['threaded'])) {
+            $vocabulary = $vocabulariesForLayout[$vocabularyAlias];
             $output .= $this->_View->element(
                 $options['element'],
                 [

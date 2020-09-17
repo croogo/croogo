@@ -245,11 +245,9 @@ class FormHelper extends BaseFormHelper
 
         if (substr($field, -3) === '_id') {
             $varName = Inflector::variable(Inflector::pluralize(substr($field, 0, -3)));
-            if (isset($this->_View->viewVars[$varName])) {
-                $lookupData = $this->_View->viewVars[$varName];
-                if (isset($lookupData[$displayKey])) {
-                    $displayValue = $lookupData[$displayKey];
-                }
+            $lookupData = $this->getView()->get($varName);
+            if (isset($lookupData[$displayKey])) {
+                $displayValue = $lookupData[$displayKey];
             }
         }
 

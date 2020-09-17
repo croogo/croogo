@@ -77,10 +77,10 @@ class MenusHelper extends Helper
      */
     protected function _adminMenu()
     {
-        if (empty($this->_View->viewVars['menus_for_admin_layout'])) {
+        $menus = $this->_View->get('menus_for_admin_layout');
+        if (empty($menus)) {
             return;
         }
-        $menus = $this->_View->viewVars['menus_for_admin_layout'];
         if (!Nav::check('sidebar', 'menus')) {
             return;
         }
@@ -150,7 +150,8 @@ class MenusHelper extends Helper
      */
     protected function verticalNav($menuAlias, $options = [])
     {
-        $menu = Hash::get($this->_View->viewVars, "menusForLayout.$menuAlias");
+        $menusForLayout = $this->_View->get('menusForLayout');
+        $menu = Hash::get($menusForLayout, "$menuAlias");
         if (!$menu) {
             return false;
         }
@@ -207,10 +208,11 @@ class MenusHelper extends Helper
         ];
         $options = array_merge($_options, $options);
 
-        if (!isset($this->_View->viewVars['menusForLayout'][$menuAlias])) {
+        $menusForLayout = $this->_View->get('menusForLayout');
+        if (!isset($menusForLayout[$menuAlias])) {
             return false;
         }
-        $menu = $this->_View->viewVars['menusForLayout'][$menuAlias];
+        $menu = $menusForLayout[$menuAlias];
         $output = $this->_View->element($options['element'], [
             'menu' => $menu,
             'options' => $options,

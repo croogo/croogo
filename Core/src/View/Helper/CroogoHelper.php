@@ -461,16 +461,19 @@ class CroogoHelper extends Helper
                     ],
                 ], $tab);
 
+                $typeAlias = $this->getView()->get('typeAlias');
+                $viewVar = $this->getView()->get('viewVar');
+
                 if (!isset($tab['options']['type']) ||
                     (isset($tab['options']['type']) &&
-                        (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))
+                        (in_array($typeAlias, $tab['options']['type'])))
                 ) {
                     $domId = strtolower(Inflector::singularize($request->getParam('controller'))) .
                         '-' .
                         strtolower(Text::slug($title, '-'));
                     if ($this->adminTabs) {
-                        if (isset($this->_View->viewVars['viewVar'])) {
-                            $entity = $this->_View->viewVars[$this->_View->viewVars['viewVar']];
+                        if (isset($viewVar)) {
+                            $entity = $this->_View->get($viewVar);
                             $tab['options']['elementData']['entity'] = $entity;
                         }
                         $output .= $this->Html->tabStart($domId);

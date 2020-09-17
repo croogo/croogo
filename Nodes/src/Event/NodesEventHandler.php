@@ -59,14 +59,14 @@ class NodesEventHandler implements EventListenerInterface
      */
     public function onSetupAdminData(EventInterface $event)
     {
-        $View = $event->getSubject();
+        $controller = $event->getSubject();
 
-        if (!isset($View->viewVars['typesForAdminLayout'])) {
+        $typesForAdminLayout = $controller->viewBuilder()->getVar('typesForAdminLayout');
+        if (empty($typesForAdminLayout)) {
             return;
         }
 
-        $types = $View->viewVars['typesForAdminLayout'];
-        foreach ($types as $type) {
+        foreach ($typesForAdminLayout as $type) {
             if (!empty($type->plugin)) {
                 continue;
             }

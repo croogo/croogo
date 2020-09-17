@@ -34,7 +34,8 @@ class RegionsHelper extends Helper
      */
     public function isEmpty($regionAlias)
     {
-        if (!empty($this->_View->viewVars['blocksForLayout'][$regionAlias])) {
+        $blocksForLayout = $this->_View->get('blocksForLayout');
+        if (!empty($blocksForLayout[$regionAlias])) {
             return false;
         } else {
             return true;
@@ -143,7 +144,8 @@ class RegionsHelper extends Helper
         ], $options);
 
         $defaultElement = 'Croogo/Blocks.block';
-        $blocks = $this->_View->viewVars['blocksForLayout'][$regionAlias];
+        $blocksForLayout = $this->_View->get('blocksForLayout');
+        $blocks = $blocksForLayout[$regionAlias];
         foreach ($blocks as $block) {
             $output .= $this->block($block, $regionAlias, $options);
         }
