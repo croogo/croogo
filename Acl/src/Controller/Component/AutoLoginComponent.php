@@ -61,7 +61,8 @@ class AutoLoginComponent extends Component
             return;
         }
 
-        $this->_registry->Cookie->configKey($this->getConfig('cookieName'), $this->getConfig('cookieConfig'));
+        // FIXME
+        // $this->_registry->Cookie->configKey($this->getConfig('cookieName'), $this->getConfig('cookieConfig'));
 
         $setting = $this->_registry->Auth->getConfig('authenticate.all');
         list(, $this->_userModel) = pluginSplit($setting['userModel']);
@@ -109,7 +110,8 @@ class AutoLoginComponent extends Component
         }
         if ($request->is('post') && $remember) {
             $data = $this->_cookie($request);
-            $this->_registry->Cookie->write($this->getConfig('cookieName'), $data);
+            // FIXME
+            // $this->_registry->Cookie->write($this->getConfig('cookieName'), $data);
         }
 
         return true;
@@ -122,7 +124,8 @@ class AutoLoginComponent extends Component
      */
     public function onAdminLogoutSuccessful(EventInterface $event)
     {
-        $this->_registry->Cookie->delete($this->getConfig('cookieName'));
+        // FIXME
+        // $this->_registry->Cookie->delete($this->getConfig('cookieName'));
 
         return true;
     }
