@@ -47,7 +47,7 @@ class UsersController extends AppController
      */
     public function add()
     {
-        $user = $this->Users->newEntity();
+        $user = $this->Users->newEntity([]);
 
         $this->set('user', $user);
 

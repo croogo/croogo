@@ -262,7 +262,7 @@ class AttachmentsController extends AppController
             // noop
         }
 
-        $attachment = $this->Attachments->newEntity();
+        $attachment = $this->Attachments->newEntity([]);
         $this->set(compact('attachment'));
     }
 

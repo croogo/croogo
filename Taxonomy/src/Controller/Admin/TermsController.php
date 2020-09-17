@@ -186,7 +186,7 @@ class TermsController extends AppController
         $this->Taxonomy->ensureVocabularyIdExists($vocabularyId);
         $vocabulary = $this->Terms->Vocabularies->get($vocabularyId);
 
-        $term = $this->Terms->newEntity();
+        $term = $this->Terms->newEntity([]);
         $taxonomies = [];
 
         if ($request->is('post')) {

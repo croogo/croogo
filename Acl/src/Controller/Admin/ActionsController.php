@@ -48,7 +48,7 @@ class ActionsController extends AppController
      */
     public function add()
     {
-        $aco = $this->Acos->newEntity();
+        $aco = $this->Acos->newEntity([]);
 
         if ($this->getRequest()->is('post')) {
             $aco = $this->Acos->patchEntity($aco, $this->getRequest()->data());

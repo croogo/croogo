@@ -45,7 +45,7 @@ class CommentsCell extends Cell
         $this->set('title', $node->title);
         $this->set('url', $node->url);
         $this->set('formUrl', $formUrl);
-        $this->set('comment', $comment ?: $this->Comments->newEntity());
+        $this->set('comment', $comment ?: $this->Comments->newEntity([]));
         $this->set('parentComment', $parentComment);
         $this->set('captcha', $type->comment_captcha);
         $this->set('loggedInUser', $this->request->getSession()->read('Auth.User'));

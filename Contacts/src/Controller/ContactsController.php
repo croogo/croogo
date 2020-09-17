@@ -50,7 +50,7 @@ class ContactsController extends AppController
         if (!$contact->message_status) {
             $continue = false;
         }
-        $message = $this->Contacts->Messages->newEntity();
+        $message = $this->Contacts->Messages->newEntity([]);
         if ($this->getRequest()->is('post') && $continue === true) {
             $message = $this->Contacts->Messages->patchEntity($message, $this->getRequest()->data);
             $message->contact_id = $contact->id;
