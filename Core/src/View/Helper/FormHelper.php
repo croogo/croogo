@@ -233,7 +233,7 @@ class FormHelper extends BaseFormHelper
     {
         $displayKey = $displayValue = null;
         $request = $this->getView()->getRequest();
-        list(, $table) = pluginSplit($this->getContext()->entity()->getSource());
+        list(, $table) = pluginSplit($this->_getContext()->entity()->getSource());
         if (isset($request->getData($table)[$field])) {
             $displayKey = $request->getData($table)[$field];
         }
