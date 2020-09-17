@@ -25,7 +25,7 @@ class TaxonomiesTable extends CroogoTable
 
         $this->searchManager()
             ->add('vocab', 'Search.Value', [
-                'field' => $this->Vocabularies->aliasField('alias'),
+                'fields' => $this->Vocabularies->aliasField('alias'),
             ]);
     }
 

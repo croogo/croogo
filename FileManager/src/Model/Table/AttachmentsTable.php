@@ -62,7 +62,7 @@ class AttachmentsTable extends CroogoTable
 
         $this->searchManager()
             ->add('title', 'Search.Like', [
-                'field' => $this->Assets->aliasField('filename'),
+                'fields' => $this->Assets->aliasField('filename'),
                 'before' => true,
                 'after' => true,
             ])
@@ -70,24 +70,24 @@ class AttachmentsTable extends CroogoTable
                 'callback' => [$this, 'filterAttachments'],
             ])
             ->add('filename', 'Search.Like', [
-                'field' => $this->Assets->aliasField('filename'),
+                'fields' => $this->Assets->aliasField('filename'),
                 'before' => true,
                 'after' => true,
             ])
             ->value('model', [
-                'field' => $this->Assets->AssetUsages->aliasField('model'),
+                'fields' => $this->Assets->AssetUsages->aliasField('model'),
             ])
             ->value('foreign_key', [
-                'field' => $this->Assets->AssetUsages->aliasField('foreign_key'),
+                'fields' => $this->Assets->AssetUsages->aliasField('foreign_key'),
             ])
             ->value('asset_id', [
-                'field' => $this->Assets->aliasField('id'),
+                'fields' => $this->Assets->aliasField('id'),
             ])
             ->value('id', [
-                'field' => $this->aliasField('id'),
+                'fields' => $this->aliasField('id'),
             ])
             ->value('type', [
-                'field' => $this->Assets->AssetUsages->aliasField('type'),
+                'fields' => $this->Assets->AssetUsages->aliasField('type'),
             ]);
     }
 

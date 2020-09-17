@@ -30,7 +30,7 @@ class Date extends Base
             return false;
         }
 
-        $field = $this->field();
+        $field = current($this->fields());
         $end = new DateTime($start);
         $end = $end->add(new DateInterval('P1D'));
         $conditions = [

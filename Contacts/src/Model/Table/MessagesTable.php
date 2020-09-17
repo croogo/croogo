@@ -42,7 +42,7 @@ class MessagesTable extends CroogoTable
         $this->searchManager()
             ->value('contact_id')
             ->add('created', 'Croogo/Core.Date', [
-                'field' => 'Messages.created'
+                'fields' => 'Messages.created'
             ])
             ->add('search', 'Search.Like', [
                 'fields' => [
@@ -53,7 +53,7 @@ class MessagesTable extends CroogoTable
                 'after' => true,
             ])
             ->value('status', [
-                'field' => $this->aliasField('status'),
+                'fields' => $this->aliasField('status'),
             ]);
     }
 

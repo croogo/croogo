@@ -60,13 +60,13 @@ class LinksTable extends CroogoTable
 
         $this->searchManager()
             ->add('menu_id', 'Search.Value', [
-                'field' => 'menu_id'
+                'fields' => 'menu_id'
             ])
             ->add('menuAlias', 'Search.Finder', [
                 'finder' => 'filterByMenuAlias',
             ])
             ->add('title', 'Search.Like', [
-                'field' => 'title',
+                'fields' => 'title',
                 'before' => true,
                 'after' => true
             ]);

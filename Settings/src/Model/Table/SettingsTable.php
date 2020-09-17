@@ -71,7 +71,7 @@ class SettingsTable extends CroogoTable
         $this->searchManager()
             ->add('key', 'Search.Like', [
                 'after' => true,
-                'field' => $this->aliasField('key'),
+                'fields' => $this->aliasField('key'),
             ]);
     }
 

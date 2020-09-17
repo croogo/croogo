@@ -64,23 +64,23 @@ class NodesTable extends CroogoTable
                 'finder' => 'filterNodes'
             ])
             ->add('title', 'Search.Like', [
-                'field' => $this->aliasField('title'),
+                'fields' => $this->aliasField('title'),
                 'before' => true,
                 'after' => true
             ])
             ->add('slug', 'Search.Like', [
-                'field' => $this->aliasField('slug'),
+                'fields' => $this->aliasField('slug'),
                 'before' => true,
                 'after' => true
             ])
             ->add('type', 'Search.Value', [
-                'field' => $this->aliasField('type')
+                'fields' => $this->aliasField('type')
             ])
             ->add('status', 'Search.Value', [
-                'field' => $this->aliasField('status')
+                'fields' => $this->aliasField('status')
             ])
             ->add('promote', 'Search.Value', [
-                'field' => $this->aliasField('promote')
+                'fields' => $this->aliasField('promote')
             ]);
     }
 
