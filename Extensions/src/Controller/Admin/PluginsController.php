@@ -186,7 +186,7 @@ class PluginsController extends AppController
      *
      * @throws Exception
      */
-    public function moveup()
+    public function moveUp()
     {
         $plugin = $this->getRequest()->query('name');
         $this->getRequest()->allowMethod('post');
@@ -213,7 +213,7 @@ class PluginsController extends AppController
      *
      * @throws Exception
      */
-    public function movedown()
+    public function moveDown()
     {
         $plugin = $this->getRequest()->query('name');
         $this->getRequest()->allowMethod('post');

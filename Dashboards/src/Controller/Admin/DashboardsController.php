@@ -147,7 +147,7 @@ class DashboardsController extends AppController
      * @param int $step Step
      * @return \Cake\Http\Response|void
      */
-    public function moveup($id, $step = 1)
+    public function moveUp($id, $step = 1)
     {
         $dashboard = $this->Dashboards->get($id);
         $dashboard->weight = $dashboard->weight - $step;
@@ -167,7 +167,7 @@ class DashboardsController extends AppController
      * @param int $step Step
      * @return \Cake\Http\Response|void
      */
-    public function movedown($id, $step = 1)
+    public function moveDown($id, $step = 1)
     {
         $dashboard = $this->Dashboards->get($id);
         $dashboard->weight = $dashboard->weight + $step;

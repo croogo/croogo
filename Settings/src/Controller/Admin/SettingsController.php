@@ -148,7 +148,7 @@ success:
      * @return \Cake\Http\Response|void
      * @access public
      */
-    public function moveup($id, $step = 1)
+    public function moveUp($id, $step = 1)
     {
         if ($this->Setting->moveUp($id, $step)) {
             $this->Flash->success(__d('croogo', 'Moved up successfully'));
@@ -176,7 +176,7 @@ success:
      * @return \Cake\Http\Response|void
      * @access public
      */
-    public function movedown($id, $step = 1)
+    public function moveDown($id, $step = 1)
     {
         if ($this->Setting->moveDown($id, $step)) {
             $this->Flash->success(__d('croogo', 'Moved down successfully'));

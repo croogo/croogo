@@ -90,7 +90,7 @@ class LinksController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
-    public function moveup($id, $step = 1)
+    public function moveUp($id, $step = 1)
     {
         try {
             $link = $this->Links->get($id);
@@ -127,7 +127,7 @@ class LinksController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
-    public function movedown($id, $step = 1)
+    public function moveDown($id, $step = 1)
     {
         try {
             $link = $this->Links->get($id);
