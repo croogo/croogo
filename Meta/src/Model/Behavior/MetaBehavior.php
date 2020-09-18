@@ -61,18 +61,25 @@ class MetaBehavior extends Behavior
      */
     public function beforeFind(EventInterface $event, Query $query)
     {
-        $query
-            ->contain(['Meta'])
-            ->formatResults(function ($resultSet) {
-                return $resultSet->map(function ($entity) {
-                    if (!$entity instanceof EntityInterface) {
-                        return $entity;
-                    }
-                    $this->_table->dispatchEvent('Model.Meta.formatFields', compact('entity'));
+        $query->traverse(function ($value, $clause) use ($query) {
+            if (
+                $clause === 'select' &&
+                (count($value) === 0 || in_array($this->getTable()->getPrimaryKey(), $value))
+            ) {
+                $query
+                    ->contain(['Meta'])
+                    ->formatResults(function ($resultSet) {
+                        return $resultSet->map(function ($entity) {
+                            if (!$entity instanceof EntityInterface) {
+                                return $entity;
+                            }
+                            $this->_table->dispatchEvent('Model.Meta.formatFields', compact('entity'));
 
-                    return $entity;
-                });
-            });
+                            return $entity;
+                        });
+                    });
+            }
+        });
 
         return $query;
     }

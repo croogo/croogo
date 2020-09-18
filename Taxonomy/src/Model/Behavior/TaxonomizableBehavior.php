@@ -291,13 +291,22 @@ class TaxonomizableBehavior extends Behavior
      */
     public function beforeFind(Event $event, Query $query)
     {
-        return $query->contain([
-            'Taxonomies' => [
-                'Terms',
-                'Vocabularies',
-            ],
-            'Types',
-        ]);
+        $query->traverse(function ($value, $clause) use ($query) {
+            if (
+                $clause === 'select' &&
+                (count($value) === 0 || in_array($this->getTable()->getPrimaryKey(), $value))
+            ) {
+                return $query->contain([
+                    'Taxonomies' => [
+                        'Terms',
+                        'Vocabularies',
+                    ],
+                    'Types',
+                ]);
+            }
+        });
+
+        return $query;
     }
 
     /**

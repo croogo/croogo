@@ -53,35 +53,18 @@ class LinkedAssetsBehavior extends Behavior
      */
     public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, bool $primary)
     {
-        //if ($model->findQueryType == 'list') {
-            //return $query;
-        //}
+        $query->traverse(function ($value, $clause) use ($query) {
+            if (
+                $clause === 'select' &&
+                (count($value) === 0 || in_array($this->getTable()->getPrimaryKey(), $value))
+            ) {
+                $query->contain('AssetUsages.Assets');
+                $query->contain('AssetUsages.Assets.Attachments');
 
-        /*
-        if (!isset($query['contain'])) {
-            $contain = array();
-            $relationCheck = array('belongsTo', 'hasMany', 'hasOne', 'hasAndBelongsToMany');
-            foreach ($relationCheck as $relation) {
-                if ($model->{$relation}) {
-                    $contain = Hash::merge($contain, array_keys($model->{$relation}));
-                }
+                $query->formatResults(function ($resultSet) {
+                    return $this->_formatResults($resultSet);
+                });
             }
-            if ($model->recursive >= 0 || $query['recursive'] >= 0 ) {
-                $query = Hash::merge(array('contain' => $contain), $query);
-            }
-        }
-        if (isset($query['contain'])) {
-            if (!isset($query['contain']['AssetsAssetUsage'])) {
-                $query['contain']['AssetsAssetUsage'] = 'AssetsAsset';
-            }
-        }
-        */
-
-        $query->contain('AssetUsages.Assets');
-        $query->contain('AssetUsages.Assets.Attachments');
-
-        $query->formatResults(function ($resultSet) {
-            return $this->_formatResults($resultSet);
         });
 
         return $query;
