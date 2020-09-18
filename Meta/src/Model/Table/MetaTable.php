@@ -53,7 +53,7 @@ class MetaTable extends CroogoTable
     {
         $this->_quoted = $this->getConnection()
             ->getDriver()
-            ->enableAutoQuoting();
+            ->isAutoQuotingEnabled();
         $this->getConnection()
             ->getDriver()
             ->enableAutoQuoting();
