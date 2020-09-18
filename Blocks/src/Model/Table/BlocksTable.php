@@ -103,7 +103,7 @@ class BlocksTable extends CroogoTable
 
     public function afterSave()
     {
-        Cache::clear(false, 'croogo_blocks');
+        Cache::clear('croogo_blocks');
     }
 
     public function findPublished(Query $query, array $options = [])

@@ -779,7 +779,7 @@ class PluginManager extends Plugin
                 $pluginActivation->onActivation($this->_Controller);
             }
 
-            Cache::clear(false, 'croogo_menus');
+            Cache::clear('croogo_menus');
             Cache::delete('file_map', '_cake_core_');
 
             return true;
@@ -828,7 +828,7 @@ class PluginManager extends Plugin
             }
             static::unload($plugin);
 
-            Cache::clear(false, 'croogo_menus');
+            Cache::clear('croogo_menus');
             Cache::delete('file_map', '_cake_core_');
 
             return true;

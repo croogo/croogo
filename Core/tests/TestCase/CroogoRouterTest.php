@@ -121,7 +121,7 @@ class CroogoRouterTest extends TestCase
             'description' => '',
         ]));
         $table->save($type);
-        Cache::clear(false, 'croogo_types');
+        Cache::clear('croogo_types');
         $type = $table->findByAlias('press-release')->first();
         Router::routableContentTypes();
 
@@ -139,7 +139,7 @@ class CroogoRouterTest extends TestCase
             'routes' => true
         ];
         $table->save($type);
-        Cache::clear(false, 'croogo_types');
+        Cache::clear('croogo_types');
         Router::reload();
         Router::routableContentTypes();
 
