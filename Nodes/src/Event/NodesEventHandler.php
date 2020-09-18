@@ -119,7 +119,7 @@ class NodesEventHandler implements EventListenerInterface
     {
         $typesTable = TableRegistry::get('Croogo/Taxonomy.Types');
         $types = $typesTable->find('all', [
-            'fields' => ['alias', 'title', 'description'],
+            'fields' => ['id', 'alias', 'title', 'description'],
         ]);
         $linkChoosers = [];
         foreach ($types as $type) {

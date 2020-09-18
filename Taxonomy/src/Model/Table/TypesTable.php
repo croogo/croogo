@@ -3,6 +3,7 @@
 namespace Croogo\Taxonomy\Model\Table;
 
 use Cake\Database\Schema\TableSchemaInterface;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -102,4 +103,10 @@ class TypesTable extends CroogoTable
 
         return parent::_initializeSchema($table);
     }
+
+    public function findList(Query $query, array $options): Query
+    {
+        return $query->select(['id', 'title']);
+    }
+
 }
