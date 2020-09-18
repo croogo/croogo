@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Croogo\Taxonomy\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 
 /**
  * Types Controller
@@ -38,7 +38,7 @@ class TypesController extends AppController
         ];
     }
 
-    public function beforePaginate(Event $event)
+    public function beforePaginate(EventInterface $event)
     {
         /** @var \Cake\ORM\Query $query */
         $query = $event->getSubject()->query;
@@ -48,7 +48,7 @@ class TypesController extends AppController
         ]);
     }
 
-    public function beforeCrudFind(Event $event)
+    public function beforeCrudFind(EventInterface $event)
     {
         /** @var \Cake\ORM\Query $query */
         $query = $event->getSubject()->query;
@@ -57,7 +57,7 @@ class TypesController extends AppController
         ]);
     }
 
-    public function beforeCrudRedirect(Event $event)
+    public function beforeCrudRedirect(EventInterface $event)
     {
         if ($this->redirectToSelf($event)) {
             return;

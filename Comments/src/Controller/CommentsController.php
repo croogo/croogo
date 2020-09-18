@@ -49,7 +49,7 @@ class CommentsController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Comments'));
 
-        if ($this->request->getParam('_ext') != 'rss') {
+        if ($this->getRequest()->getParam('_ext') != 'rss') {
             return $this->redirect('/');
         }
 
@@ -79,9 +79,10 @@ class CommentsController extends AppController
      */
     public function add($model = null, $foreignKey = null, $parentId = null)
     {
-        $model = $model ?: $this->request->getQuery('model');
-        $foreignKey = $foreignKey ?: $this->request->getQuery('foreign_key');
-        $parentId = $parentId ?: $this->request->getQuery('parent_id');
+        $request = $this->getRequest();
+        $model = $model ?: $request->getQuery('model');
+        $foreignKey = $foreignKey ?: $request->getQuery('foreign_key');
+        $parentId = $parentId ?: $request->getQuery('parent_id');
         if (!$foreignKey) {
             $this->Flash->error(__d('croogo', 'Invalid id'));
 

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Croogo\Meta\Model\Table;
 
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Meta\Model\Entity\Meta;
 
@@ -47,7 +49,7 @@ class MetaTable extends CroogoTable
     /**
      * @return void
      */
-    public function beforeSave()
+    public function beforeSave(EventInterface $event)
     {
         $this->_quoted = $this->getConnection()
             ->getDriver()
@@ -60,7 +62,7 @@ class MetaTable extends CroogoTable
     /**
      * @return void
      */
-    public function afterSave()
+    public function afterSave(EventInterface $event)
     {
         $this->getConnection()
             ->getDriver()

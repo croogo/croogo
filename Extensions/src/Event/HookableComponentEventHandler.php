@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Croogo\Extensions\Event;
 
 use Cake\Controller\Controller;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\Utility\Hash;
 use Croogo\Core\Controller\HookableComponentInterface;
@@ -31,7 +31,7 @@ class HookableComponentEventHandler implements EventListenerInterface
      * @param Event $event
      * @return void
      */
-    public function initialize(Event $event)
+    public function initialize(EventInterface $event)
     {
         /* @var \Cake\Controller\Controller|\Croogo\Core\Controller\HookableComponentInterface $controller */
         $controller = $event->getSubject();

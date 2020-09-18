@@ -312,10 +312,11 @@ class CroogoComponent extends Component
     public function protectToggleAction()
     {
         $controller = $this->getController();
-        if ($controller->request->getParam('action') !== 'toggle') {
+        $request = $controller->getRequest();
+        if ($request->getParam('action') !== 'toggle') {
             return;
         }
-        if (!$controller->request->is('post')) {
+        if (!$request->is('post')) {
             throw new MethodNotAllowedException();
         }
         $controller->Security->setConfig('validatePost', false);

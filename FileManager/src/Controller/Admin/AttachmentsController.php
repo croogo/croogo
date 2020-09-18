@@ -393,7 +393,7 @@ class AttachmentsController extends AppController
     public function process()
     {
         $Attachments = $this->Attachments;
-        list($action, $ids) = $this->BulkProcess->getRequestVars($Attachments->alias());
+        list($action, $ids) = $this->BulkProcess->getRequestVars($Attachments->getAlias());
 
         $messageMap = [
             'delete' => __d('croogo', 'Attachments deleted'),

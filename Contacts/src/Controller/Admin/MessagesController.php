@@ -44,7 +44,7 @@ class MessagesController extends AppController
     public function process()
     {
         $Messages = $this->Messages;
-        list($action, $ids) = $this->BulkProcess->getRequestVars($Messages->aliasField($Messages->getPrimaryKey()));
+        list($action, $ids) = $this->BulkProcess->getRequestVars($Messages->getAlias());
 
         $messageMap = [
             'delete' => __d('croogo', 'Messages deleted'),

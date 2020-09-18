@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Croogo\Core\Model\Behavior;
 
-use Cake\Event\Event;
+use ArrayObject;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior\TreeBehavior as CakeTree;
 use Cake\ORM\Query;
 
@@ -15,7 +16,7 @@ use Cake\ORM\Query;
 class TreeBehavior extends CakeTree
 {
 
-    public function beforeFind(Event $event, Query $query, $options)
+    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, bool $primary)
     {
         $scope = $this->setConfig('scope');
         if ($scope) {

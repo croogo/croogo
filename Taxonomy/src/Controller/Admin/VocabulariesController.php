@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Croogo\Taxonomy\Controller\Admin;
 
 use Cake\Cache\Cache;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 
 /**
  * Vocabularies Controller
@@ -32,7 +32,7 @@ class VocabulariesController extends AppController
         ]);
     }
 
-    public function beforeCrudRender(Event $event)
+    public function beforeCrudRender(EventInterface $event)
     {
         if (!isset($event->getSubject()->entity)) {
             return;
@@ -52,12 +52,12 @@ class VocabulariesController extends AppController
         ];
     }
 
-    public function beforeCrudFind(Event $event)
+    public function beforeCrudFind(EventInterface $event)
     {
         return $event->getSubject()->query->contain('Types');
     }
 
-    public function afterCrudSave(Event $event)
+    public function afterCrudSave(EventInterface $event)
     {
         Cache::clearAll();
     }

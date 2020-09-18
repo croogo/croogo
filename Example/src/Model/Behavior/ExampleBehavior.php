@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Croogo\Example\Model\Behavior;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -27,7 +27,7 @@ class ExampleBehavior extends Behavior
      * @param array $query
      * @return array
      */
-    public function beforeFind(Event $event, Query $query)
+    public function beforeFind(EventInterface $event, Query $query)
     {
         $query->formatResults(function ($results) {
             return $results->map(function ($result) {

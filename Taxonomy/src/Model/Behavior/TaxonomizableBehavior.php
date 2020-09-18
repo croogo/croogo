@@ -5,7 +5,7 @@ namespace Croogo\Taxonomy\Model\Behavior;
 
 use ArrayObject;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\ORM\Behavior;
@@ -268,7 +268,7 @@ class TaxonomizableBehavior extends Behavior
      *
      * @return void
      */
-    public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
+    public function beforeSave(EventInterface $event, Entity $entity, ArrayObject $options)
     {
         if (!$entity->has('taxonomy_data')) {
             return;
@@ -289,7 +289,7 @@ class TaxonomizableBehavior extends Behavior
      *
      * @return array|Query
      */
-    public function beforeFind(Event $event, Query $query)
+    public function beforeFind(EventInterface $event, Query $query)
     {
         $query->traverse(function ($value, $clause) use ($query) {
             if (

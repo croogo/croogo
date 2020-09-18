@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Croogo\Core\Model\Behavior;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
@@ -66,7 +66,7 @@ class PublishableBehavior extends Behavior
      *
      * @return array Options passed to Model::find()
      */
-    public function beforeFind(Event $event, Query $query, $options)
+    public function beforeFind(EventInterface $event, Query $query, $options)
     {
         $table = $this->_table;
         $config = $this->getConfig();
@@ -118,7 +118,7 @@ class PublishableBehavior extends Behavior
     /**
      * Populate publish_start
      */
-    public function beforeMarshal(Event $event, $options = [])
+    public function beforeMarshal(EventInterface $event, $options = [])
     {
         $data = $event->getData('data');
         if (property_exists($data, 'publish_start')) {

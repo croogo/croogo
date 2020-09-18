@@ -24,7 +24,7 @@ class DashboardsController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($event->getSubject()->request->getParam('action') === 'save') {
+        if ($event->getSubject()->getRequest()->getParam('action') === 'save') {
             $this->components()->unload('Security');
         }
     }
@@ -94,7 +94,7 @@ class DashboardsController extends AppController
         if (!$userId) {
             throw new Exception('You must be logged in');
         }
-        $data = Hash::insert($this->getRequest()->data['dashboard'], '{n}.user_id', $userId);
+        $data = Hash::insert($this->getRequest()->getData('dashboard'), '{n}.user_id', $userId);
         $dashboardIds = array_filter(Hash::extract($data, '{n}.id'));
         $query = $this->Dashboards->find();
         if ($dashboardIds) {
@@ -102,7 +102,7 @@ class DashboardsController extends AppController
         }
         $entities = $query->toArray();
         $patched = $this->Dashboards->patchEntities($entities, $data);
-        $this->Dashboards->connection()->getDriver()->enableAutoQuoting();
+        $this->Dashboards->getConnection()->getDriver()->enableAutoQuoting();
         $results = $this->Dashboards->saveMany($patched);
         $this->set(compact('results'));
         $this->set('_serialize', 'results');

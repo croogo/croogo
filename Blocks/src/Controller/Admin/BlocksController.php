@@ -56,7 +56,7 @@ class BlocksController extends AppController
     public function process()
     {
         $Blocks = $this->Blocks;
-        list($action, $ids) = $this->BulkProcess->getRequestVars($Blocks->alias());
+        list($action, $ids) = $this->BulkProcess->getRequestVars($Blocks->getAlias());
 
         $options = [
             'messageMap' => [

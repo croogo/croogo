@@ -60,7 +60,7 @@ class MetaComponent extends Component
      */
     protected function _adminTabs()
     {
-        $controller = $this->_registry->getController();
+        $controller = $this->getController();
         $table = TableRegistry::get($controller->getName());
         if ($table &&
             !$table->behaviors()
@@ -70,7 +70,7 @@ class MetaComponent extends Component
         }
         $title = __d('croogo', 'Custom Fields');
         $element = 'Croogo/Meta.admin/custom_fields_box';
-        $controllerName = $this->request->getParam('controller');
+        $controllerName = $controller->getRequest()->getParam('controller');
         Croogo::hookAdminBox("Admin/$controllerName/add", $title, $element);
         Croogo::hookAdminBox("Admin/$controllerName/edit", $title, $element);
     }

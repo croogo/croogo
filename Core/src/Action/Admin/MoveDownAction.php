@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Croogo\Core\Action\Admin;
 
 use Cake\Controller\Controller;
-use Cake\Network\Response
+use Cake\Http\Response;
 use Cake\Utility\Hash;
 use Crud\Action\BaseAction;
 use Crud\Event\Subject;
@@ -115,7 +115,7 @@ class MoveDownAction extends BaseAction
         $subject->set(['id' => $id]);
 
         $entity = $this->_findRecord($id, $subject);
-        $entity->set($this->config('field'), $entity->get($this->config('field')) + $step);
+        $entity->set($this->getConfig('field'), $entity->get($this->getConfig('field')) + $step);
 
         $this->_trigger('beforeMoveUp', $subject);
         if (call_user_func([$this->_table(), $this->saveMethod()], $entity, $this->saveOptions())) {
@@ -152,8 +152,8 @@ class MoveDownAction extends BaseAction
         $this->setFlash('success', $subject);
 
         $redirect = ['action' => 'index'];
-        if ($this->_controller()->request->referer()) {
-            $redirect = $this->_controller()->request->referer();
+        if ($this->_controller()->getRequest()->referer()) {
+            $redirect = $this->_controller()->getRequest()->referer();
         }
 
         return $this->_redirect($subject, $redirect);

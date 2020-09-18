@@ -167,7 +167,7 @@ class LinksController extends AppController
     public function process($menuId = null)
     {
         $Links = $this->Links;
-        list($action, $ids) = $this->BulkProcess->getRequestVars($Links->alias());
+        list($action, $ids) = $this->BulkProcess->getRequestVars($Links->getAlias());
 
         $redirect = ['action' => 'index'];
 

@@ -73,8 +73,9 @@ class RecaptchaComponent extends Component
      */
     public function verify()
     {
-        if ($this->request->getData('g-recaptcha-response')) {
-            $captcha = $this->request->getData('g-recaptcha-response');
+        $request = $this->getController()->getRequest();
+        if ($request->getData('g-recaptcha-response')) {
+            $captcha = $request->getData('g-recaptcha-response');
             $response = $this->_getApiResponse($captcha);
 
             if (!$response->success) {
@@ -92,7 +93,7 @@ class RecaptchaComponent extends Component
      *
      * @return array Body of the reCAPTCHA response
      */
-    protected function _getApiResponse($captcha)
+    protected function _getApiResponse($captcha): object
     {
         $data = [
             'secret' => $this->_privateKey,
@@ -103,7 +104,7 @@ class RecaptchaComponent extends Component
         $HttpSocket = new Client();
         $request = $HttpSocket->post(self::SITE_VERIFY_URL, $data);
 
-        return json_decode($request->body());
+        return json_decode($request->getBody());
     }
 
     /**

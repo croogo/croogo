@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Croogo\Core\Model\Behavior;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -28,7 +28,7 @@ class UrlBehavior extends Behavior
         'pass' => []
     ];
 
-    public function beforeFind(Event $event, Query $query, $options)
+    public function beforeFind(EventInterface $event, Query $query, $options)
     {
         $query->formatResults(function ($results) {
             return $results->map(function ($row) {
