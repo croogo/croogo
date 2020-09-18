@@ -48,7 +48,12 @@ class AppController extends Controller
 
             'unauthorizedRedirect' => false,
             'checkAuthInd' => 'Controller.initialize',
-            'loginAction' => false,
+            'loginAction' => [
+                'prefix' => 'Admin',
+                'plugin' => 'Croogo/Users',
+                'controller' => 'Users',
+                'action' => 'login',
+            ],
         ];
 
         if (Plugin::isLoaded('ADmad/JwtAuth')) {
