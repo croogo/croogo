@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //phpcs:ignoreFile
 /**
  * Akismet anti-comment spam service

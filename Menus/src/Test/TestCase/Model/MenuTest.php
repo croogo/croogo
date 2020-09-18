@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Croogo\Menus\Test\TestCase\Model;
 
 use Croogo\TestSuite\CroogoTestCase;

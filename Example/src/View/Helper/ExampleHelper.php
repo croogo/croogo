@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Croogo\Example\View\Helper;
 
 use App\View\Helper\AppHelper;

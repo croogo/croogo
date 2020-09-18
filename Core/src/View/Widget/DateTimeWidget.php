@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Originally copyright FriendsOfCake from the friendsofcake/crud-view package.
  *
