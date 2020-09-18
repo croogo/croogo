@@ -42,6 +42,9 @@ class TaxonomiesEventHandler implements EventListenerInterface
         $controller = $event->getSubject();
 
         $vocabularies = $controller->viewBuilder()->getVar('vocabulariesForAdminLayout');
+        if (!$vocabularies) {
+            return;
+        }
         foreach ($vocabularies as $k => $v) {
             $weight = 9999 + $v->weight;
             Nav::add('sidebar', 'content.children.taxonomy.children.' . $v->alias, [

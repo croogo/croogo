@@ -40,5 +40,6 @@ class ToggleAction extends BaseAction
         }
 
         $this->_controller()->set(compact('id', 'status'));
+        return null;
     }
 }

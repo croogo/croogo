@@ -62,7 +62,7 @@ class MessagesTable extends CroogoTable
     {
         $notBlankMessage = __d('croogo', 'This field cannot be left blank.');
         $validator->notBlank('name', $notBlankMessage);
-        $validator->email('email', __d('croogo', 'Please provide a valid email address.'));
+        $validator->email('email', false, __d('croogo', 'Please provide a valid email address.'));
         $validator->notBlank('title', $notBlankMessage);
         $validator->notBlank('body', $notBlankMessage);
 

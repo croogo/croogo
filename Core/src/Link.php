@@ -33,7 +33,7 @@ class Link extends ArrayObject
         $copy = $this->getArrayCopy();
         unset($copy['pass']);
         foreach ($copy as $key => $val) {
-            if (is_array($val)) {
+            if (!is_string($val)) {
                 continue;
             }
             $val = urldecode($val);

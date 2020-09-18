@@ -71,7 +71,7 @@ class AssetsFilterHelper extends Helper
             $identifier = $options['model'] . '.' . $options['id'];
         }
 
-        preg_match_all('/\[(image):[ ]*([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+        preg_match_all('/\[(image):[ ]*([A-Za-z0-9_\-]*)(.*?)\]/i', (string)$content, $tagMatches);
         $AssetUsages = TableRegistry::get('Croogo/FileManager.AssetUsages');
 
         for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
