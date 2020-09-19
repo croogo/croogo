@@ -37,8 +37,6 @@ class UsersController extends AppController
     {
         parent::initialize();
 
-        //$this->loadComponent('RequestHandler');
-
         $this->Crud->setConfig('actions.index', [
             'displayFields' => $this->Users->displayFields(),
             'searchFields' => ['role_id', 'name']

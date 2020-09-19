@@ -76,7 +76,7 @@ class PermissionsController extends AppController
         $this->set(compact('acos', 'roles', 'level'));
 
         $aros = $this->Aros->getRoles($roles);
-        if ($root && $this->RequestHandler->ext == 'json') {
+        if ($root && $this->getRequest()->is('json')) {
             $options = array_intersect_key(
                 $this->getRequest()->getQuery(),
                 ['perms' => null, 'urls' => null]

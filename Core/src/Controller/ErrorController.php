@@ -32,10 +32,6 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
     {
         $this->_dispatchBeforeInitialize();
 
-        if (count(Router::extensions()) && !isset($this->RequestHandler)) {
-            $this->loadComponent('RequestHandler');
-        }
-
         $eventManager = $this->getEventManager();
         if (isset($this->Auth)) {
             $eventManager->off($this->Auth);

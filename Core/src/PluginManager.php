@@ -1345,7 +1345,6 @@ class PluginManager extends Plugin
         Croogo::hookComponent('*', 'Acl.Acl');
         Croogo::hookComponent('*', 'Auth');
         Croogo::hookComponent('*', 'Flash');
-        //Croogo::hookComponent('*', 'RequestHandler');
         Croogo::hookComponent('*', 'Croogo/Core.Theme');
 
         Croogo::hookHelper('*', 'Croogo/Core.Js');

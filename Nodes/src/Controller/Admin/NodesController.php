@@ -34,7 +34,6 @@ class NodesController extends AppController
     {
         parent::initialize();
 
-        //$this->loadComponent('RequestHandler');
         $this->loadComponent('Croogo/Core.BulkProcess');
         $this->loadComponent('Croogo/Core.Recaptcha');
         $this->loadComponent('Croogo/Core.BulkProcess');

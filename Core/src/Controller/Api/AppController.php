@@ -80,7 +80,6 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('Auth', $this->setupAuthConfig());
-        $this->loadComponent('RequestHandler');
 
         $this->loadComponent('Crud.Crud', [
             'actions' => [
