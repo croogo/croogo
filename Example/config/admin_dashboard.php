@@ -2,7 +2,7 @@
 
 use Croogo\Dashboards\CroogoDashboard;
 
-$config = [
+return  [
     'example.welcome' => [
         'title' => __d('croogo', 'Welcome'),
         'cell' => 'Croogo/Example.ExampleDashboard::welcome',

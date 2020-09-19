@@ -101,7 +101,7 @@ class MetaHelper extends Helper
             }
         }
 
-        $metaForLayout = array_merge($_metaForLayout, $metaForLayout);
+        $metaForLayout = array_merge((array)$_metaForLayout, $metaForLayout);
 
         $output = '';
         foreach ($metaForLayout as $key => $value) {

@@ -126,7 +126,7 @@ class NodesController extends AppController
     public function term()
     {
         if (!$this->getRequest()->getParam('type')) {
-            $this->getRequest()->setParam('type', 'post');
+            $this->setRequest($this->getRequest()->withParam('type', 'post'));
         }
 
         $locale = I18n::getLocale();
@@ -137,8 +137,8 @@ class NodesController extends AppController
         if (!$termSlug && $vocab) {
             $termSlug = $vocab;
             $vocab = null;
-            $this->getRequest()->setParam('vocab', $vocab);
-            $this->getRequest()->setParam('term', $termSlug);
+            $this->setRequest($this->getRequest()->withParam('vocab', $vocab));
+            $this->setRequest($this->getRequest()->withParam('term', $termSlug));
         }
 
         if ($vocab) {
