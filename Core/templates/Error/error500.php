@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @var \App\View\AppView $this
+ */
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
@@ -13,7 +15,7 @@ if (Configure::read('debug')) :
     $this->layout = 'dev_error';
 
     $this->assign('title', $message);
-    $this->assign('templateName', 'error500.ctp');
+    $this->assign('templateName', 'error500.php');
 
     $this->start('file');
 ?>
@@ -33,10 +35,6 @@ if (Configure::read('debug')) :
 <?php endif; ?>
 <?php
     echo $this->element('auto_table_warning');
-
-    if (extension_loaded('xdebug')) :
-        xdebug_print_function_stack();
-    endif;
 
     $this->end();
 endif;
