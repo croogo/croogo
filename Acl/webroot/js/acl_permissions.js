@@ -102,7 +102,7 @@ AclPermissions.permissionToggle = function() {
     $.post({
       url: loadUrl,
       headers: {
-        'X-CSRF-Token': Admin.getCookie('csrfToken'),
+        'X-CSRF-Token': Admin.getCsrfToken(),
       },
       success: function(data) {
         target.html(data);

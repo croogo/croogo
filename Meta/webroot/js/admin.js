@@ -77,7 +77,7 @@ Meta.removeMeta = function () {
         method: 'post',
         dataType: 'json',
         headers: {
-          'X-CSRF-Token': Admin.getCookie('csrfToken'),
+          'X-CSRF-Token': Admin.getCsrfToken(),
         },
         error: function(xhr, textStatus, errorThrown) {
           if (typeof (xhr.responseJSON.message) !== 'undefined') {

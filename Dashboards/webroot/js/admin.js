@@ -53,7 +53,7 @@ Dashboard.saveDashboard = function(e, ui) {
     },
     headers: {
       'Accept': 'application/json',
-      'X-CSRF-Token': Admin.getCookie('csrfToken'),
+      'X-CSRF-Token': Admin.getCsrfToken(),
     },
     success: saveCallback
   });

@@ -24,6 +24,10 @@ Admin.getCookie = function(cookieName) {
     ) || null;
 }
 
+Admin.getCsrfToken = function() {
+  return Croogo.csrfToken || '';
+}
+
 /**
  * Forms
  *
@@ -41,7 +45,7 @@ Admin.form = function () {
     $.post({
       url: url,
       headers: {
-        'X-CSRF-Token': Admin.getCookie('csrfToken'),
+        'X-CSRF-Token': Admin.getCsrfToken(),
       },
       success: function (data) {
         $this.parent().html(data);

@@ -106,6 +106,8 @@ class LayoutHelper extends Helper
             $croogo = Hash::merge($croogo, Configure::read('Js'));
         }
 
+        $croogo['csrfToken'] = $request->getAttribute('csrfToken');
+
         return $this->Html->scriptBlock('var Croogo = ' . json_encode($croogo) . ';');
     }
 

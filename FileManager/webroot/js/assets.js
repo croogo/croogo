@@ -45,7 +45,7 @@ Assets.changeUsageType = function(e) {
     data: postData,
     headers: {
       'Accept': 'application/json',
-      'X-CSRF-Token': Admin.getCookie('csrfToken'),
+      'X-CSRF-Token': Admin.getCsrfToken(),
     },
     success: function(data, textStatus) {
       if ($target.hasClass('select2-hidden-accessible')) {
@@ -101,7 +101,7 @@ Assets.unregisterAssetUsage = function(e) {
     data: postData,
     headers: {
       'Accept': 'application/json',
-      'X-CSRF-Token': Admin.getCookie('csrfToken'),
+      'X-CSRF-Token': Admin.getCsrfToken(),
     },
     success: function(data, textStatus) {
       if (data == true) {
@@ -135,7 +135,7 @@ Assets.resizeAsset = function(e) {
     url: $target.attr('href'),
     data: postData,
     headers: {
-      'X-CSRF-Token': Admin.getCookie('csrfToken'),
+      'X-CSRF-Token': Admin.getCsrfToken(),
     },
     accepts: {
       'json': 'application/json',
