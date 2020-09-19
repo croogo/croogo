@@ -58,7 +58,6 @@ class LayoutHelper extends Helper
         'Html',
         'Number',
         'Paginator',
-        'Rss',
         'Text',
         'Time',
         'Xml',
@@ -68,6 +67,7 @@ class LayoutHelper extends Helper
         'Image',
         'Layout',
         'Recaptcha',
+        'Rss',
     ];
 
     /**

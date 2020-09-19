@@ -2,19 +2,18 @@
 
 use Cake\Core\Configure;
 
-$this->assign('title', $type->title);
+$this->loadHelper('Croogo/Core.Rss');
 
 $channel = [
     'title' => Configure::read('Site.title'),
-    'description' => Configure::read('Site.tagline'),
 ];
 
-$Url = $this->Url;
 $items = $this->Rss->items($nodes->toArray(), function ($item) use ($Url) {
+    $itemUrl = $this->Url->build($item->url->getUrl(), ['fullBase' => true]);
     return [
         'title' => $item->title,
-        'link' => $Url->build($item->url->getUrl(), true),
-        'guid' => $Url->build($item->url->getUrl(), true),
+        'link' => $itemUrl,
+        'guid' => $itemUrl,
         'description' => $item->body,
         'pubDate' => $item->publish_start,
     ];

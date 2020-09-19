@@ -1,14 +1,22 @@
 <?php
 
-$Url = $this->Url;
+use Cake\Core\Configure;
+
+$this->loadHelper('Croogo/Core.Rss');
+
+$channel = [
+    'title' => Configure::read('Site.title') . ' | ' . $type->title,
+];
+
 $items = $this->Rss->items($nodes->toArray(), function ($item) use ($Url) {
+    $itemUrl = $this->Url->build($item->url->getUrl(), ['fullBase' => true]);
     return [
         'title' => $item->title,
-        'link' => $Url->build($item->url->getUrl(), true),
-        'guid' => $Url->build($item->url->getUrl(), true),
+        'link' => $itemUrl,
+        'guid' => $itemUrl,
         'description' => $item->body,
         'pubDate' => $item->publish_start,
     ];
 });
 
-$this->set('items', $items);
+$this->set(compact('channel', 'items'));

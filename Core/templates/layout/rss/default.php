@@ -7,7 +7,11 @@ if (!isset($channel)) :
 endif;
 
 if (!isset($channel['title'])) :
-    $channel['title'] = $this->fetch('title') . ' - ' . Configure::read('Site.title');
+    $channel['title'] = Configure::read('Site.title');
+endif;
+
+if (!isset($channel['title'])) :
+    $channel['description'] = Configure::read('Site.tagline');
 endif;
 
 $channelEl = $this->Rss->channel([], $channel, $items);
