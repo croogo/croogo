@@ -1,5 +1,10 @@
 <?php
 
+if (empty($type)):
+    echo $this->Html->div('alert alert-danger', __d('croogo', 'Invalid type'));
+    return;
+endif;
+
 use Cake\Routing\Router;
 
 $this->extend('Croogo/Core./Common/admin_edit');

@@ -56,6 +56,16 @@ class CroogoView extends AppView
 
     public function render(?string $template = null, $layout = null): string
     {
+        if (in_array($this->getRequest()->getParam('action'), ['edit', 'add'])) {
+            try {
+                // First try the edit or add template
+                return parent::render($template, $layout);
+            } catch (MissingTemplateException $e) {
+                // Secondly, when isn't found, try form template
+                return parent::render('form', $layout);
+            }
+        }
+
         try {
             return parent::render($template, $layout);
         } catch (MissingTemplateException $e) {

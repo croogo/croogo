@@ -108,18 +108,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
             Croogo::dispatchEvent('Croogo.setupAdminData', $this);
         }
 
-        // Just render normal when we aren't in a edit or add action
-        if (!in_array($this->getRequest()->getParam('action'), ['edit', 'add'])) {
-            return parent::render($template, $layout);
-        }
-
-        try {
-            // First try the edit or add view
-            return parent::render($template, $layout);
-        } catch (MissingTemplateException $e) {
-            // Secondly, when the template isn't found, try form view
-            return parent::render('form', $layout);
-        }
+        return parent::render($template, $layout);
     }
 
     /**

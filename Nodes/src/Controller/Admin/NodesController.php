@@ -212,16 +212,17 @@ class NodesController extends AppController
                 return;
         }
         if (!$typeAlias) {
-            $typeAlias = 'node';
+            $typeAlias = 'post';
         }
 
-        $type = $this->Nodes
-            ->Taxonomies
-            ->Vocabularies
-            ->Types
+        $type = $this->Nodes->Taxonomies->Vocabularies->Types
             ->findByAlias($typeAlias)
             ->contain('Vocabularies')
             ->first();
+
+        if (!$type) {
+            return;
+        }
 
         $this->set('type', $type);
 
