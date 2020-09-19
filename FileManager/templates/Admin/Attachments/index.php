@@ -146,7 +146,7 @@ $this->append('table-heading');
             [
                 $this->Html->div(null, h($attachment->title)) .
                 $this->Html->link(
-                    $this->Url->build($path, true),
+                    $this->Url->build($path, ['fullBase' => true]),
                     $path,
                     [
                         'target' => '_blank',

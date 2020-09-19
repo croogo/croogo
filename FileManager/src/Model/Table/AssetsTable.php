@@ -86,9 +86,9 @@ class AssetsTable extends CroogoTable
         return true;
     }
 
-    public function checkFileUpload($check)
+    public function checkFileUpload($uploadErrorCode)
     {
-        switch ($check['file']['error']) {
+        switch ($uploadErrorCode) {
             case UPLOAD_ERR_INI_SIZE:
                 return 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
             case UPLOAD_ERR_FORM_SIZE:

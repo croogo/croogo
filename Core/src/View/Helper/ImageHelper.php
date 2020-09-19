@@ -168,6 +168,9 @@ class ImageHelper extends HtmlHelper
         $sw = $sourceSize[0];
         $sh = $sourceSize[1];
 
+        $w = (int)ceil($w);
+        $h = (int)ceil($h);
+
         $image = call_user_func('imagecreatefrom' . $format, $source);
         if (function_exists('imagecreatetruecolor')) {
             $temp = imagecreatetruecolor($w, $h);

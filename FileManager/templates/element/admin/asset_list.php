@@ -104,8 +104,6 @@ $headers = [
     $this->loadHelper('Croogo/FileManager.AssetsImage');
 //}
 
-$this->Form->unlockField('usage-type');
-
 $rows = [];
 foreach ($attachments as $attachment) :
     $row = $action = [];

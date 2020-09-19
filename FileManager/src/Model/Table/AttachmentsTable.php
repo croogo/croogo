@@ -285,20 +285,22 @@ class AttachmentsTable extends CroogoTable
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options = null)
     {
-        if (!empty($entity->asset->file['name'])) {
-            $file = $entity->asset->file;
+        /** @var \Laminas\Diactoros\UploadedFile */
+        $assetFile = $entity->asset->file;
+        $clientFilename = $assetFile->getClientFilename();
+        if (!empty($clientFilename)) {
             $attachment = $entity;
             if (empty($attachment->title)) {
-                $attachment->title = $file['name'];
+                $attachment->title = $clientFilename;
             }
             if (empty($attachment->slug)) {
-                $attachment->slug = $file['name'];
+                $attachment->slug = $clientFilename;
             }
             if (empty($attachment->hash)) {
                 if (empty($file['tmp_name'])) {
                     return 'Uploaded file is empty';
                 } else {
-                    $attachment->hash = sha1_file($file['tmp_name']);
+                    $attachment->hash = sha1($assetFile->getStream()->getContents());
                 }
             }
         }
@@ -487,7 +489,7 @@ class AttachmentsTable extends CroogoTable
             if (!is_dir($dir)) {
                 throw new InvalidArgumentException(__('{0} is not a directory', $dir));
             }
-            $folder = new Folder($dir, false, false);
+            $folder = new Folder($dir, false, null);
             if ($options['recursive']) {
                 $files = $folder->findRecursive($regex, false);
             } else {

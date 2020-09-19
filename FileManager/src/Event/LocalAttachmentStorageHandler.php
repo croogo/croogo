@@ -52,21 +52,22 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
             return true;
         }
 
+        /** @var \Laminas\Diactoros\UploadedFile */
         $file = $storage->file;
         $filesystem = StorageManager::adapter($storage->adapter);
         try {
-            if (!file_exists($file['tmp_name'])) {
-                throw new Exception($this->Attachments->Assets->checkFileUpload($storage));
+            if ($file->getError() !== UPLOAD_ERR_OK) {
+                throw new Exception($this->Attachments->Assets->checkFileUpload($file->getError()));
             }
-            $raw = file_get_contents($file['tmp_name']);
+            $raw = $file->getStream()->getContents();
             $key = sha1($raw);
-            $extension = strtolower(FileStorageUtils::fileExtension($file['name']));
+            $extension = strtolower(FileStorageUtils::fileExtension($file->getClientFilename()));
 
-            $imageInfo = $this->__getImageInfo($file['tmp_name']);
+            $imageInfo = $this->__getImageInfo($raw);
             if (isset($imageInfo['mimeType'])) {
                 $mimeType = $imageInfo['mimeType'];
             } else {
-                $mimeType = $file['type'];
+                $mimeType = $file->getClientMediaType();
             }
 
             $prefix = null;
@@ -76,8 +77,8 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
             $fullpath = $prefix . '/' . $key . '.' . $extension;
             $result = $filesystem->write($fullpath, $raw);
             $storage['path'] = '/assets/' . $fullpath;
-            $storage['filename'] = $file['name'];
-            $storage['filesize'] = $file['size'];
+            $storage['filename'] = $file->getClientFilename();
+            $storage['filesize'] = $file->getSize();
             $storage['hash'] = $key;
             $storage['mime_type'] = $mimeType;
             $storage['width'] = $imageInfo['width'];

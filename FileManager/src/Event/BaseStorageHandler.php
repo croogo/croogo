@@ -76,27 +76,25 @@ abstract class BaseStorageHandler
             return;
         }
 
-        return $imgTags->item(0)->getAttribute('src');
+        /** @var DOMNode */
+        $domNode = $imgTags->item(0);
+        return $domNode ? $domNode->getAttribute('src') : '';
     }
 
     /**
      * TODO: refactor this out and use Imagine in the future
      */
-    protected function __getImageInfo($path)
+    protected function __getImageInfo($blob)
     {
-        if (!file_exists($path)) {
-            return [];
-        }
-
         $fp = finfo_open(FILEINFO_MIME_TYPE);
-        $mimeType = finfo_file($fp, $path);
+        $mimeType = finfo_buffer($fp, $blob);
 
         switch ($mimeType) {
             case 'image/jpeg':
             case 'image/jpg':
             case 'image/png':
             case 'image/gif':
-                $size = getimagesize($path);
+                $size = getimagesizefromstring($blob, $imageInfo);
                 list($width, $height) = $size;
                 break;
             default:

@@ -76,7 +76,7 @@ class FileManagerEventHandler implements EventListenerInterface
             Log::error('Asset Usage registration failed');
             Log::error(print_r($Usage->validationErrors, true));
         }
-        $event->result = $result;
+        $event->setResult($result);
     }
 
     /**
