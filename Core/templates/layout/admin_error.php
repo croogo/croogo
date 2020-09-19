@@ -1,3 +1,14 @@
+<?php
+
+$this->loadHelper('Croogo/Core.Croogo');
+$this->loadHelper('Html', ['className' => 'Croogo/Core.Html']);
+$this->loadHelper('Croogo/Core.Layout');
+$this->loadHelper('Croogo/Core.Js');
+$this->loadHelper('Croogo/Core.Theme');
+$this->loadHelper('Croogo/Menus.Menus');
+$this->loadHelper('Croogo/Meta.Meta');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
