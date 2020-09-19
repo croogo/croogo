@@ -23,5 +23,6 @@ $routes->plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $routeBui
         $routeBuilder->setExtensions(['json']);
 
         $routeBuilder->connect('/link-chooser/*', ['controller' => 'LinkChooser', 'action' => 'linkChooser']);
+        $routeBuilder->fallbacks();
     });
 });
