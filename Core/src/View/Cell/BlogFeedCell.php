@@ -22,7 +22,7 @@ class BlogFeedCell extends Cell
     protected function getPosts()
     {
         $posts = Cache::read('croogo_blog_feed_posts');
-        if ($posts === false) {
+        if ($posts === null) {
             $xml = Xml::build(file_get_contents('https://blog.croogo.org/promoted.rss'));
 
             $data = Xml::toArray($xml);

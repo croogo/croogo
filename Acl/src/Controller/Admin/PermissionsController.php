@@ -83,7 +83,7 @@ class PermissionsController extends AppController
             );
             $cacheName = 'permissions_aco_' . $root->id;
             $permissions = Cache::read($cacheName, 'permissions');
-            if ($permissions === false) {
+            if ($permissions === null) {
                 $permissions = $this->Permissions->format($acos, $aros, $options);
                 Cache::write($cacheName, $permissions, 'permissions');
             }

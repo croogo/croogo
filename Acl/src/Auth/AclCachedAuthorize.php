@@ -127,7 +127,7 @@ class AclCachedAuthorize extends BaseAuthorize
         $action = $this->action($request);
 
         $cacheName = 'permissions_' . (string)$user['id'];
-        if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
+        if (($permissions = Cache::read($cacheName, 'permissions')) === null) {
             $permissions = [];
             Cache::write($cacheName, $permissions, 'permissions');
         }
@@ -233,7 +233,7 @@ class AclCachedAuthorize extends BaseAuthorize
         $action = $this->getConfig('actionMap')[$request->param('action')];
 
         $cacheName = 'permissions_content_' . strval($user['id']);
-        if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
+        if (($permissions = Cache::read($cacheName, 'permissions')) === null) {
             $permissions = [];
             Cache::write($cacheName, $permissions, 'permissions');
         }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Croogo\Taxonomy\Model\Table;
 
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Croogo\Core\Model\Table\CroogoTable;
 
 class TaxonomiesTable extends CroogoTable
