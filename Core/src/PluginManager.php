@@ -1280,11 +1280,6 @@ class PluginManager extends Plugin
         }
 
         /**
-         * Default Acl plugin.  Custom Acl plugin should override this value.
-         */
-        Configure::write('Site.acl_plugin', 'Croogo/Acl');
-
-        /**
          * Default API Route Prefix. This can be overriden in settings.
          */
         Configure::write('Croogo.Api.path', 'api');
@@ -1437,7 +1432,7 @@ class PluginManager extends Plugin
         /**
          * Plugins
          */
-        $aclPlugin = Configure::read('Site.acl_plugin');
+        $aclPlugin = 'Croogo/Acl';
         $pluginBootstraps = Configure::read('Hook.bootstraps');
         $plugins = array_filter(explode(',', $pluginBootstraps));
 

@@ -148,11 +148,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $aclFilterComponent = 'Filter';
-        if (empty($this->{$aclFilterComponent})) {
-            throw new MissingComponentException(['class' => $aclFilterComponent]);
-        }
-        $this->{$aclFilterComponent}->auth();
+        $this->Filter->auth();
 
         if (Configure::read('Site.status') == 0 &&
             $this->Auth->user('role_id') != 1

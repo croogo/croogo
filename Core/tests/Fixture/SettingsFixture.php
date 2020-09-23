@@ -278,17 +278,6 @@ class SettingsFixture extends CroogoTestFixture
             'params' => ''
         ],
         [
-            'id' => 34,
-            'key' => 'Site.acl_plugin',
-            'value' => 'Croogo/Acl',
-            'title' => 'Acl Plugin',
-            'description' => '',
-            'input_type' => '',
-            'editable' => 0,
-            'weight' => 25,
-            'params' => ''
-        ],
-        [
             'id' => 35,
             'key' => 'Croogo.installed',
             'value' => '1',

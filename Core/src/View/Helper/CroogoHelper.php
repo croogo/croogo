@@ -58,7 +58,7 @@ class CroogoHelper extends Helper
      */
     public function __construct(View $View, $settings = [])
     {
-        $this->helpers[] = Configure::read('Site.acl_plugin') . '.' . Configure::read('Site.acl_plugin');
+        $this->helpers[] = 'Croogo/Acl.Acl';
         parent::__construct($View, $settings);
         $this->_CroogoStatus = new Status();
         $this->_ParamsType = new ParamsType;
