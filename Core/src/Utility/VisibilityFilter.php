@@ -36,6 +36,7 @@ class VisibilityFilter
      */
     protected $_urlKeys = [
         'admin' => false,
+        'prefix' => false,
         'plugin' => false,
         'controller' => false,
         'action' => false,

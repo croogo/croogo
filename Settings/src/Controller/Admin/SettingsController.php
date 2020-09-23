@@ -159,7 +159,7 @@ success:
 
         if (!$redirect = $this->referer()) {
             $redirect = [
-                'admin' => true,
+                'prefix' => 'Admin',
                 'plugin' => 'Croogo/Settings',
                 'controller' => 'Settings',
                 'action' => 'index'

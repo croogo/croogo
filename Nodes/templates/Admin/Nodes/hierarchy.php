@@ -66,7 +66,7 @@ $this->append('action-buttons');
             <span>
             <?php
                 echo $this->Html->link($node->title, [
-                    'admin' => false,
+                    'prefix' => null,
                     'controller' => 'Nodes',
                     'action' => 'view',
                     'type' => $node->type,

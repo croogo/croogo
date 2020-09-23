@@ -42,7 +42,7 @@ $(document).ready(function () {
   if (Croogo.params.controller == 'Users') {
     Users.documentReady();
 
-    if (Croogo.params.action == 'add' && Croogo.params.prefix == 'admin') {
+    if (Croogo.params.action == 'add' && Croogo.params.prefix == 'Admin') {
       Users.statusControl();
     }
   }

@@ -50,7 +50,7 @@ class ExampleEventHandler implements EventListenerInterface
         $message = sprintf('Welcome %s.  Have a nice day', $Controller->Auth->user('name'));
         $Controller->Flash->success($message);
         $Controller->redirect([
-            'admin' => true,
+            'prefix' => 'Admin',
             'plugin' => 'Croogo/Example',
             'controller' => 'Example',
             'action' => 'index',

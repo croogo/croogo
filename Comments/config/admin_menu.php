@@ -7,7 +7,7 @@ use Croogo\Core\Nav;
 Nav::add('sidebar', 'content.children.comments', [
     'title' => __d('croogo', 'Comments'),
     'url' => [
-        'admin' => true,
+        'prefix' => 'Admin',
         'plugin' => 'Croogo/Comments',
         'controller' => 'Comments',
         'action' => 'index',

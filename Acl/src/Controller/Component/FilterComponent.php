@@ -186,7 +186,7 @@ class FilterComponent extends Component
 
         $config = Configure::read('Acl');
         if (!empty($config['Auth']) && is_array($config['Auth'])) {
-            $isAdminRequest = !empty($this->_controller->getRequest()->getParam('admin'));
+            $isAdminRequest = $this->_controller->getRequest()->getParam('prefix') === 'Admin';
             $authActions = [
                 'loginAction',
                 'loginRedirect',
@@ -194,7 +194,7 @@ class FilterComponent extends Component
                 'unauthorizedRedirect',
             ];
             foreach ($config['Auth'] as $property => $value) {
-                $isAdminRoute = !empty($value['admin']);
+                $isAdminRoute = !empty($value['prefix']) && $value['prefix'] === 'Admin';
                 $isAuthAction = in_array($property, $authActions);
                 if (!is_string($value) && $isAdminRequest !== $isAdminRoute && $isAuthAction) {
                     continue;
