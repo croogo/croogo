@@ -26,5 +26,5 @@ $this->assign('title', 'Home');
     endforeach;
     ?>
 
-    <?= $this->element('pagination', compact('nodes', 'type')) ?>
+    <?= $this->element('pagination', compact('nodes')) ?>
 </div>

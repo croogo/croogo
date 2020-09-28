@@ -34,5 +34,5 @@ $this->assign('title', __d('croogo', 'Search Results: %s', h($q)));
     endforeach;
     ?>
 
-    <?= $this->element('pagination', compact('nodes', 'type')) ?>
+    <?= $this->element('pagination', compact('nodes')) ?>
 </div>

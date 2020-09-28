@@ -31,12 +31,12 @@ class CommentMailer extends Mailer
 
     public function notifyAboutComment(Comment $comment)
     {
-        $this->to(Configure::read('Site.email'))
-            ->subject('[' . Configure::read('Site.title') . '] ' .
+        $this->setTo(Configure::read('Site.email'))
+            ->setSubject('[' . Configure::read('Site.title') . '] ' .
                 __d('croogo', 'New comment posted'))
-            ->viewVars([
+            ->setViewVars([
                 'comment' => $comment
             ])
-            ->template('Croogo/Comments.comment');
+            ->viewBuilder()->setTemplate('Croogo/Comments.comment');
     }
 }

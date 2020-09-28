@@ -6,9 +6,11 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Breadcrumbs->add(__d('croogo', 'Content'), ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']);
 
-if (isset($criteria['Comment.status'])) {
+$status = $this->getRequest()->getQuery('status');
+
+if ($status) {
     $this->Breadcrumbs->add(__d('croogo', 'Comments'), ['action' => 'index']);
-    if ($criteria['Comment.status'] == '1') {
+    if ($status == '1') {
         $this->Breadcrumbs->add(__d('croogo', 'Published'), $this->getRequest()->getRequestTarget());
         $this->assign('title', __d('croogo', 'Comments: Published'));
     } else {

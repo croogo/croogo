@@ -48,7 +48,7 @@ class CommentsController extends AppController
         $this->BulkProcess->process($this->Comments, $action, $ids, $options);
     }
 
-    public function beforePaginate(Event $event)
+    public function beforePaginate(EventInterface $event)
     {
         $query = $event->getSubject()->query;
 

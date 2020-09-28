@@ -25,7 +25,7 @@ class LinkedModelBehavior extends Behavior
         $query->formatResults(function (ResultSet $resultSet) {
             return $resultSet->map(function (Entity $entity) {
                 try {
-                    $entity->related = $this->relatedTable($entity)->get($entity->get($this->config('foreignKeyField')));
+                    $entity->related = $this->relatedTable($entity)->get($entity->get($this->getConfig('foreignKeyField')));
                 } catch (Exception $e) {
                     Log::error(Debugger::trace());
                 }
@@ -43,6 +43,6 @@ class LinkedModelBehavior extends Behavior
      */
     public function relatedTable(Entity $comment)
     {
-        return TableRegistry::get($comment->get($this->config('modelField')));
+        return TableRegistry::get($comment->get($this->getConfig('modelField')));
     }
 }

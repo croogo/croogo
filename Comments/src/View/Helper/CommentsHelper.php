@@ -37,7 +37,7 @@ class CommentsHelper extends Helper
     {
         $request = $this->getView()->getRequest();
         $controller = $request->getParam('controller');
-        if ($controller === 'Types' || empty($this->_View->viewVars['type']->comment_status)) {
+        if ($controller === 'Types' || empty($this->_View->get('type')->comment_status)) {
             return;
         }
         $title = __d('croogo', 'Comments');

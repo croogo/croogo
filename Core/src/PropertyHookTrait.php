@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 namespace Croogo\Core;
 
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Association\BelongsToMany;
+use Cake\ORM\Association\HasMany;
+use Cake\ORM\Association\HasOne;
 use Cake\Utility\Hash;
+use UnexpectedValueException;
 
 trait PropertyHookTrait
 {
@@ -29,8 +34,25 @@ trait PropertyHookTrait
         $relTypes = ['hasOne', 'hasMany', 'belongsTo', 'belongsToMany'];
         if (in_array($property, $relTypes)) {
             $associations = $this->associations();
+            $alias = key($value);
+            $options = $value[$alias];
 
-            return $associations ? $associations->addAssociations($property, $value) : false;
+            switch ($property) {
+                case 'hasOne':
+                    $association = new HasOne($alias, $options);
+                break;
+                case 'hasMany':
+                    $association = new HasMany($alias, $options);
+                break;
+                case 'belongsTo':
+                    $association = new BelongsTo($alias, $options);
+                break;
+                case 'belongsToMany':
+                    $association = new BelongsToMany($alias, $options);
+                break;
+            }
+
+            return $associations ? $associations->add($property, $association) : null;
         }
 
         if ($merge && $this->{$property}) {

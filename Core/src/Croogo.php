@@ -300,12 +300,8 @@ class Croogo
      *
      * @param string $configKey
      */
-    public static function applyHookProperties($configKey, $object = null)
+    public static function applyHookProperties($configKey, $object)
     {
-        if (empty($object)) {
-            $object = self;
-        }
-
         $hookProperties = self::options($configKey, $object);
         if (is_array($hookProperties)) {
             foreach ($hookProperties as $property => $value) {
