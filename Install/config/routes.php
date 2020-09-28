@@ -2,8 +2,8 @@
 
 use Cake\Routing\Router;
 
-Router::connect('/*', []);
+$routes->connect('/*', []);
 
-Router::plugin('Croogo/Install', ['path' => '/install'], function ($route) {
+$routes->plugin('Croogo/Install', ['path' => '/install'], function ($route) {
     $route->fallbacks();
 });
