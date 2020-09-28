@@ -6,6 +6,7 @@ namespace Croogo\Settings\Controller\Admin;
 use Cake\Event\EventInterface;
 use Cake\Utility\Text;
 use Exception;
+use Laminas\Diactoros\UploadedFile;
 
 /**
  * Settings Controller
@@ -69,16 +70,10 @@ class SettingsController extends AppController
                     }
                     $setting = $this->Settings->get($id);
 
-                    if (is_array($value)) {
-                        if (array_key_exists('tmp_name', $value)) {
-                            if (!empty($value['tmp_name'])) {
-                                $value = $this->_handleUpload($setting, $value);
-                            } else {
-                                continue;
-                            }
-                        } else {
-                            $value = json_encode($value);
-                        }
+                    if ($value instanceof UploadedFile) {
+                        $value = $this->_handleUpload($setting, $value);
+                    } else {
+                        $value = json_encode($value);
                     }
 
                     $setting->value = $value;
@@ -109,16 +104,16 @@ success:
         $this->set(compact('prefix', 'settings'));
     }
 
-    protected function _handleUpload($setting, $value)
+    protected function _handleUpload($setting, UploadedFile $value): string
     {
-        $name = $value['name'];
+        $name = $value->getClientFilename();
 
         $currentBg = WWW_ROOT . $setting->value;
         if (file_exists($currentBg) && is_file($currentBg)) {
             unlink($currentBg);
         }
 
-        $contentType = mime_content_type($value['tmp_name']);
+        $contentType = $value->getClientMediaType();
         if (substr($contentType, 0, 5) !== 'image') {
             throw new Exception('Invalid file type');
         }
@@ -135,7 +130,7 @@ success:
             mkdir($targetDir, 0777);
         }
         $targetFile = WWW_ROOT . $relativePath;
-        move_uploaded_file($value['tmp_name'], $targetFile);
+        $value->moveTo($targetFile);
         $value = str_replace('\\', '/', $relativePath);
 
         return $value;
