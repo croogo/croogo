@@ -53,7 +53,7 @@ class ContactsController extends AppController
         }
         $message = $this->Contacts->Messages->newEntity([]);
         if ($this->getRequest()->is('post') && $continue === true) {
-            $message = $this->Contacts->Messages->patchEntity($message, $this->getRequest()->data);
+            $message = $this->Contacts->Messages->patchEntity($message, $this->getRequest()->getData());
             $message->contact_id = $contact->id;
             Croogo::dispatchEvent('Controller.Contacts.beforeMessage', $this);
 
@@ -166,16 +166,16 @@ class ContactsController extends AppController
         $email = new Email();
         $siteTitle = Configure::read('Site.title');
         try {
-            $email->from($message->email)
-                ->to($contact->email)
-                ->subject(__d('croogo', '[%s] %s', $siteTitle, $contact->title))
-                ->template('Croogo/Contacts.contact')
-                ->viewVars([
+            $email->setFrom($message->email)
+                ->setTo($contact->email)
+                ->setSubject(__d('croogo', '[%s] %s', $siteTitle, $contact->title))
+                ->setViewVars([
                     'contact' => $contact,
                     'message' => $message,
-                ]);
+                ])
+                ->viewBuilder()->setTemplate('Croogo/Contacts.contact');
             if ($this->viewBuilder()->getTheme()) {
-                $email->theme($this->viewBuilder()->getTheme());
+                $email->viewBuilder()->setTheme($this->viewBuilder()->getTheme());
             }
             if (!$email->send()) {
                 $continue = false;

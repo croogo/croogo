@@ -49,7 +49,7 @@ if ($formStart = trim($this->fetch('form-start'))) :
     echo $formStart;
 else :
     echo $this->Form->create($entity);
-    if (isset($this->getRequest()->data[$modelClass]['id'])) :
+    if ($this->getRequest()->getData('id') !== null) :
         echo $this->Form->control('id');
     endif;
 endif;

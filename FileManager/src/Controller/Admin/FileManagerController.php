@@ -174,8 +174,8 @@ class FileManagerController extends AppController
      */
     public function deleteFile()
     {
-        if (!empty($this->getRequest()->data['path'])) {
-            $path = $this->getRequest()->data['path'];
+        if (!empty($this->getRequest()->getData('path'))) {
+            $path = $this->getRequest()->getData('path');
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
@@ -209,8 +209,8 @@ class FileManagerController extends AppController
      */
     public function deleteDirectory()
     {
-        if (!empty($this->getRequest()->data['path'])) {
-            $path = $this->getRequest()->data['path'];
+        if (!empty($this->getRequest()->getData('path'))) {
+            $path = $this->getRequest()->getData('path');
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
@@ -255,10 +255,10 @@ class FileManagerController extends AppController
         }
 
         if ($this->getRequest()->is('post') || $this->getRequest()->is('put')) {
-            if (!is_null($this->getRequest()->data('name')) &&
-                !empty($this->getRequest()->data['name'])
+            if (!is_null($this->getRequest()->getData('name')) &&
+                !empty($this->getRequest()->getData('name'))
             ) {
-                $newName = trim($this->getRequest()->data['name']);
+                $newName = trim($this->getRequest()->getData('name'));
                 $oldName = array_pop($pathFragments);
                 $newPath = DIRECTORY_SEPARATOR .
                     implode(DIRECTORY_SEPARATOR, $pathFragments) .
@@ -290,7 +290,7 @@ class FileManagerController extends AppController
 
             return $this->redirect($redirectUrl);
         }
-        $this->getRequest()->data('name', array_pop($pathFragments));
+        $this->getRequest()->getData('name', array_pop($pathFragments));
         $this->set('path', $path);
     }
 
@@ -314,9 +314,9 @@ class FileManagerController extends AppController
             return $this->redirect($this->referer());
         }
 
-        if (!empty($this->getRequest()->data)) {
+        if (!empty($this->getRequest()->getData())) {
             $this->folder = new Folder;
-            if ($this->folder->create($path . $this->getRequest()->data['name'])) {
+            if ($this->folder->create($path . $this->getRequest()->getData('name'))) {
                 $this->Flash->success(__d('croogo', 'Directory created successfully.'));
                 $redirectUrl = $this->_browsePathUrl($path);
 
@@ -349,8 +349,8 @@ class FileManagerController extends AppController
             return $this->redirect($this->referer());
         }
 
-        if (!empty($this->getRequest()->data)) {
-            if (file_put_contents($path . $this->getRequest()->data['name'], $this->getRequest()->data['content'])) {
+        if (!empty($this->getRequest()->getData())) {
+            if (file_put_contents($path . $this->getRequest()->getData('name'), $this->getRequest()->getData('content'))) {
                 $this->Flash->success(__d('croogo', 'File created successfully.'));
                 $redirectUrl = $this->_browsePathUrl($path);
 

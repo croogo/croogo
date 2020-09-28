@@ -164,9 +164,9 @@ class TranslateController extends AppController
             ->where([$Model->aliasField('id') => $id])
             ->first();
 
-        if (!empty($this->getRequest()->data)) {
+        if (!empty($this->getRequest()->getData())) {
             $entity->_locale = $locale;
-            $entity->accessible('_translations', true);
+            $entity->setAccess('_translations', true);
             $entity = $Model->patchEntity($entity, $this->getRequest()->getData(), [
                 'translations' => true,
             ]);
@@ -181,7 +181,7 @@ class TranslateController extends AppController
                         'locale' => $locale,
                     ],
                 ];
-                if (isset($this->getRequest()->data['_apply'])) {
+                if ($this->getRequest()->getData('_apply') !== null) {
                     $redirect['action'] = 'edit';
                 }
 

@@ -52,8 +52,8 @@ class ActionsController extends AppController
         $aco = $this->Acos->newEntity([]);
 
         if ($this->getRequest()->is('post')) {
-            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->data());
-            if ($this->getRequest()->data('parent_id') == null) {
+            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->getData());
+            if ($this->getRequest()->getData('parent_id') == null) {
                 $aco->parent_id = 1;
                 $acoType = 'controller';
             } else {
@@ -83,8 +83,8 @@ class ActionsController extends AppController
         $aco = $this->Acos->get($id);
 
         if ($this->getRequest()->is('put')) {
-            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->data());
-            if ($this->getRequest()->data('parent_id') == null) {
+            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->getData());
+            if ($this->getRequest()->getData('parent_id') == null) {
                 $aco->parent_id = 1;
                 $acoType = 'controller';
             } else {

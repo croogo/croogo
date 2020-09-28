@@ -133,9 +133,9 @@ class LocalesController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Upload a new locale'));
 
-        if ($this->getRequest()->is('post') && !empty($this->getRequest()->data)) {
-            $file = $this->getRequest()->data['Locale']['file'];
-            unset($this->getRequest()->data['Locale']['file']);
+        if ($this->getRequest()->is('post') && !empty($this->getRequest()->getData())) {
+            $file = $this->getRequest()->getData('file');
+            unset($this->getRequest()->getData('file'));
 
             // get locale name
             $zip = zip_open($file['tmp_name']);
@@ -237,9 +237,9 @@ class LocalesController extends AppController
             'schema' => true,
         ];
 
-        if (!empty($this->getRequest()->data)) {
+        if (!empty($this->getRequest()->getData())) {
             // save
-            if ($file->write($this->getRequest()->data('content'))) {
+            if ($file->write($this->getRequest()->getData('content'))) {
                 $this->Flash->success(__d('croogo', 'Locale updated successfully'));
 
                 return $this->redirect(['action' => 'index']);

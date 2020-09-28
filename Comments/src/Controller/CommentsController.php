@@ -218,7 +218,7 @@ class CommentsController extends AppController
      */
     protected function _captcha($continue, $captchaProtection, $node)
     {
-        if (!empty($this->getRequest()->data) &&
+        if (!empty($this->getRequest()->getData()) &&
             $captchaProtection &&
             $continue === true &&
             !$this->Recaptcha->verify($this->request)) {

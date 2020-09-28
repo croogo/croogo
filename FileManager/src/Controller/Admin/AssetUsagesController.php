@@ -61,10 +61,10 @@ class AssetUsagesController extends AppController
         $this->viewBuilder()->setClassName('Json');
         $result = true;
         $data = ['pk' => null, 'value' => null];
-        if (isset($this->getRequest()->data['pk'])) {
-            $data = $this->getRequest()->data;
-        } elseif (isset($this->getRequest()->query['pk'])) {
-            $data = $this->getRequest()->query;
+        if (isset($this->getRequest()->getData('pk'))) {
+            $data = $this->getRequest()->getData();
+        } elseif (isset($this->getRequest()->getQuery('pk'))) {
+            $data = $this->getRequest()->getQuery();
         }
 
         $id = $data['pk'];
