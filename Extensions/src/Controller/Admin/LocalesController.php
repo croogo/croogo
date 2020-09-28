@@ -135,7 +135,8 @@ class LocalesController extends AppController
 
         if ($this->getRequest()->is('post') && !empty($this->getRequest()->getData())) {
             $file = $this->getRequest()->getData('file');
-            unset($this->getRequest()->getData('file'));
+            // FIXME: port for cake 4.1
+            // unset($this->getRequest()->getData('file'));
 
             // get locale name
             $zip = zip_open($file['tmp_name']);
