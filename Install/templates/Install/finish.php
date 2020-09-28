@@ -19,6 +19,7 @@ use Croogo\Core\Router; ?>
 ) ?>
 </p>
 
+<?php if (false): ?>
 <p>
     <?php
     echo __d(
@@ -41,6 +42,7 @@ use Croogo\Core\Router; ?>
     );
     ?>
 </p>
+<?php endif; ?>
 
 <blockquote>
     <h3><?= __d('croogo', 'Resources') ?></h3>
