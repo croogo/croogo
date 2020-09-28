@@ -482,7 +482,7 @@ class PluginManager extends Plugin
         $plugin = [Inflector::underscore($plugin), Inflector::camelize($plugin)];
 
         foreach ($configureKeys as $configureKey) {
-            $hooks = explode(',', Configure::read($configureKey));
+            $hooks = explode(',', (string)Configure::read($configureKey));
             foreach ($hooks as $hook) {
                 if (in_array($hook, $plugin)) {
                     return true;
@@ -1433,7 +1433,7 @@ class PluginManager extends Plugin
          * Plugins
          */
         $aclPlugin = 'Croogo/Acl';
-        $pluginBootstraps = Configure::read('Hook.bootstraps');
+        $pluginBootstraps = (string)Configure::read('Hook.bootstraps');
         $plugins = array_filter(explode(',', $pluginBootstraps));
 
         if (!in_array($aclPlugin, $plugins)) {
