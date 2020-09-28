@@ -9,7 +9,7 @@ $this->Breadcrumbs
     ->add('Example', ['controller' => 'Example', 'action' => 'index'])
     ->add('RTE Example', $this->getRequest()->getRequestTarget());
 
-echo $this->Form->create('Example');
+echo $this->Form->create(null);
 
 $options = ['type' => 'textarea'];
 $rteConfigs = Configure::read('Wysiwyg.actions.' . base64_encode('Croogo/Example.Admin/Example/rteExample'));
@@ -19,7 +19,7 @@ foreach (['basic', 'standard', 'full', 'custom'] as $preset) :
     $query = sprintf('{n}[elements=#Example%s]', Inflector::camelize($preset));
     $presetConfig = Hash::extract($rteConfigs, $query);
     $pre = '<blockquote><pre>' . print_r($presetConfig[0], true) . '</pre></blockquote>';
-    echo $this->Form->input($preset, Hash::merge([
+    echo $this->Form->control($preset, Hash::merge([
         'id' => 'Example' . ucfirst($preset),
         'value' => $para . $pre,
     ], $options));

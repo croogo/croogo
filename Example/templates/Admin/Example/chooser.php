@@ -13,7 +13,7 @@ echo $this->element('Croogo/Core.admin/modal', [
     'id' => 'link-chooser',
 ]);
 
-echo $this->Form->input('node_id', [
+echo $this->Form->control('node_id', [
     'type' => 'text',
     'data-attr' => 'data-chooser-id',
     'append' => $this->Html->link(
@@ -38,7 +38,7 @@ echo $this->Form->input('node_id', [
 )
 ]);
 
-echo $this->Form->input('node_url', [
+echo $this->Form->control('node_url', [
     'type' => 'text',
     'data-attr' => 'rel',
     'append' => $this->Html->link(
@@ -63,7 +63,7 @@ echo $this->Form->input('node_url', [
 )
 ]);
 
-echo $this->Form->input('block_id', [
+echo $this->Form->control('block_id', [
     'type' => 'text',
     'data-attr' => 'data-chooser-id',
     'append' => $this->Html->link(
@@ -88,7 +88,7 @@ echo $this->Form->input('block_id', [
 )
 ]);
 
-echo $this->Form->input('block_title', [
+echo $this->Form->control('block_title', [
     'type' => 'text',
     'data-attr' => 'data-chooser-title',
     'append' => $this->Html->link(
@@ -113,7 +113,7 @@ echo $this->Form->input('block_title', [
 )
 ]);
 
-echo $this->Form->input('user_id', [
+echo $this->Form->control('user_id', [
     'type' => 'text',
     'data-attr' => 'data-chooser-id',
     'append' => $this->Html->link(
