@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Croogo\Comments\Controller;
 
-use App\Network\Email\Email;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Croogo\Core\Status;

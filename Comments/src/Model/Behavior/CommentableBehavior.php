@@ -53,41 +53,6 @@ class CommentableBehavior extends Behavior
     }
 
     /**
-     * Setup behavior
-     *
-     * @return void
-     */
-    public function setup(Model $model, $config = [])
-    {
-        $this->settings[$model->getAlias()] = $config;
-
-        $this->_setupRelationships($model);
-    }
-
-    /**
-     * Setup relationships
-     *
-     * @return void
-     */
-    protected function _setupRelationships(Model $model)
-    {
-        $model->bindModel([
-            'hasMany' => [
-                'Comment' => [
-                    'className' => 'Comments.Comment',
-                    'foreignKey' => 'foreign_key',
-                    'dependent' => true,
-                    'limit' => 5,
-                    'conditions' => [
-                        'model' => $model->getAlias(),
-                        'status' => (bool)1,
-                    ],
-                ],
-            ],
-        ], false);
-    }
-
-    /**
      * Get Comment settings from Type
      *
      * @param Node $node Model data to check
@@ -124,18 +89,4 @@ class CommentableBehavior extends Behavior
         ];
     }
 
-    /**
-     * Convenience method for Comment::add()
-     *
-     * @return bool
-     * @see Comment::add()
-     */
-    public function addComment(Model $Model, $data, $options = [])
-    {
-        if (!isset($Model->id)) {
-            throw new UnexpectedValueException('Id is not set');
-        }
-
-        return $Model->Comment->add($data, $Model->alias, $Model->id, $options);
-    }
 }
