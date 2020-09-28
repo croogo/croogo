@@ -87,7 +87,7 @@ class AcosTable extends \Acl\Model\Table\AcosTable
         // AROs
         $roles = [];
         if (count($allowRoles) > 0) {
-            $roles = TableRegistry::get('Croogo/Users.Roles')->find('list', [
+            $roles = TableRegistry::getTableLocator()->get('Croogo/Users.Roles')->find('list', [
                 'conditions' => [
                     'Roles.alias IN' => $allowRoles,
                 ],
@@ -99,7 +99,7 @@ class AcosTable extends \Acl\Model\Table\AcosTable
         }
 
         $this->createFromPath($action);
-        $Permission = TableRegistry::get('Croogo/Acl.Permissions');
+        $Permission = TableRegistry::getTableLocator()->get('Croogo/Acl.Permissions');
         foreach ($roles as $roleId => $roleAlias) {
             $Permission->allow(['model' => 'Roles', 'foreign_key' => $roleId], $action);
         }

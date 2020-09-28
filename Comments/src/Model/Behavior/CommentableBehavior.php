@@ -73,7 +73,7 @@ class CommentableBehavior extends Behavior
             return $defaultSetting;
         }
 
-        $types = TableRegistry::get('Croogo/Taxonomy.Types');
+        $types = TableRegistry::getTableLocator()->get('Croogo/Taxonomy.Types');
         $type = $types->find()->where([
             $types->aliasField('alias') => $node->type,
         ])->first();

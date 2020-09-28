@@ -60,7 +60,7 @@ class TranslateController extends AppController
             ]);
         }
 
-        $Model = TableRegistry::get($modelAlias);
+        $Model = TableRegistry::getTableLocator()->get($modelAlias);
         $displayField = $Model->displayField();
         $record = $Model->get($id);
         if (!isset($record->id)) {
@@ -142,7 +142,7 @@ class TranslateController extends AppController
             ]);
         }
 
-        $Model = TableRegistry::get($modelAlias);
+        $Model = TableRegistry::getTableLocator()->get($modelAlias);
         $displayField = $Model->displayField();
         $record = $Model->get($id);
         if (!$record->id) {
@@ -236,7 +236,7 @@ class TranslateController extends AppController
             ]);
         }
 
-        $Model = TableRegistry::get($modelAlias);
+        $Model = TableRegistry::getTableLocator()->get($modelAlias);
         $record = $Model->get($id);
         if (!isset($record->id)) {
             $this->Flash->error(__d('croogo', 'Invalid record.'));

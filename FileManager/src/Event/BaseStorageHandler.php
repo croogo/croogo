@@ -38,7 +38,7 @@ abstract class BaseStorageHandler
         $this->_storage = $storage;
 
         try {
-            $this->Attachments = TableRegistry::get('Croogo/FileManager.Attachments');
+            $this->Attachments = TableRegistry::getTableLocator()->get('Croogo/FileManager.Attachments');
         } catch (Exception $e) {
             $this->log(App::shortName(get_class($this), 'Event', 'StorageHandler') . ': ' . $e->getMessage(), LOG_CRIT);
         }
@@ -151,7 +151,7 @@ abstract class BaseStorageHandler
     {
         $hash = $attachment->hash;
         $path = $attachment->import_path;
-        $Assets = TableRegistry::get('Croogo/FileManager.Assets');
+        $Assets = TableRegistry::getTableLocator()->get('Croogo/FileManager.Assets');
         $existing = $Assets->find()
             ->where([
                 'OR' => [

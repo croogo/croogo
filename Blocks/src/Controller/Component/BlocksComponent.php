@@ -59,7 +59,7 @@ class BlocksComponent extends Component
         if (isset($this->controller->Blocks)) {
             $this->Blocks = $this->controller->Blocks;
         } else {
-            $this->Blocks = TableRegistry::get('Croogo/Blocks.Blocks');
+            $this->Blocks = TableRegistry::getTableLocator()->get('Croogo/Blocks.Blocks');
         }
     }
 

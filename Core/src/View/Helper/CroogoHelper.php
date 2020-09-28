@@ -121,7 +121,7 @@ class CroogoHelper extends Helper
         $out = null;
         $sorted = Hash::sort($menus, '{s}.weight', 'ASC');
         if (empty($this->Role)) {
-            $this->Role = TableRegistry::get('Croogo/Users.Roles');
+            $this->Role = TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
             $this->Role->addBehavior('Croogo/Core.Aliasable');
         }
         $currentRole = $this->Role->byId($this->Layout->getRoleId());

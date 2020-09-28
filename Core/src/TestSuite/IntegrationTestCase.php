@@ -90,7 +90,7 @@ class IntegrationTestCase extends CakeIntegrationTestCase
     public function user($user)
     {
         if (is_string($user)) {
-            $user = TableRegistry::get('Croogo/Users.Users')
+            $user = TableRegistry::getTableLocator()->get('Croogo/Users.Users')
                 ->findByUsername($user);
         }
         if ($user instanceof Query) {

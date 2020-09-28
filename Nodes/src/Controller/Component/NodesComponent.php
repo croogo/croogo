@@ -40,7 +40,7 @@ class NodesComponent extends Component
         if (isset($this->controller->Nodes)) {
             $this->Nodes = $this->controller->Nodes;
         } else {
-            $this->Nodes = TableRegistry::get('Croogo/Nodes.Nodes');
+            $this->Nodes = TableRegistry::getTableLocator()->get('Croogo/Nodes.Nodes');
         }
     }
 

@@ -43,6 +43,6 @@ class LinkedModelBehavior extends Behavior
      */
     public function relatedTable(Entity $comment)
     {
-        return TableRegistry::get($comment->get($this->getConfig('modelField')));
+        return TableRegistry::getTableLocator()->get($comment->get($this->getConfig('modelField')));
     }
 }

@@ -49,7 +49,7 @@ class FileManagerEventHandler implements EventListenerInterface
         $attachment = $event->getData('attachment');
 
         // create poster for video, ideally should be done via a job queue
-        $Attachments = TableRegistry::get('Croogo/FileManager.Attachments');
+        $Attachments = TableRegistry::getTableLocator()->get('Croogo/FileManager.Attachments');
         if (
             strstr($attachment->asset->mime_type, 'video') !== false &&
             class_exists('Char0n\FFMpegPHP\Movie')
@@ -64,7 +64,7 @@ class FileManagerEventHandler implements EventListenerInterface
         }
 
         $usage = $attachment->asset->asset_usage[0];
-        $Usage = TableRegistry::get('Croogo/FileManager.AssetUsages');
+        $Usage = TableRegistry::getTableLocator()->get('Croogo/FileManager.AssetUsages');
         $data = $Usage->newEntity([
             'asset_id' => $attachment->asset->id,
             'model' => $usage['model'],

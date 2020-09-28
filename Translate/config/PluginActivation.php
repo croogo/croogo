@@ -35,7 +35,7 @@ class PluginActivation
      */
     public function onActivation(&$controller)
     {
-        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $Acos->addAco('Croogo\Translate/Admin/Translate/index');
         $Acos->addAco('Croogo\Translate/Admin/Translate/edit');
         $Acos->addAco('Croogo\Translate/Admin/Translate/delete');
@@ -62,7 +62,7 @@ class PluginActivation
      */
     public function onDeactivation(&$controller)
     {
-        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $Acos->removeAco('Croogo\Translate');
     }
 }

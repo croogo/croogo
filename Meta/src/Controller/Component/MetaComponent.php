@@ -42,7 +42,7 @@ class MetaComponent extends Component
 
     protected function loadMeta()
     {
-        $Meta = TableRegistry::get('Croogo/Meta.Meta');
+        $Meta = TableRegistry::getTableLocator()->get('Croogo/Meta.Meta');
         $defaultMeta = $Meta->find()
             ->select(['key', 'value'])
             ->where([
@@ -61,7 +61,7 @@ class MetaComponent extends Component
     protected function _adminTabs()
     {
         $controller = $this->getController();
-        $table = TableRegistry::get($controller->getName());
+        $table = TableRegistry::getTableLocator()->get($controller->getName());
         if ($table &&
             !$table->behaviors()
                 ->has('Meta')

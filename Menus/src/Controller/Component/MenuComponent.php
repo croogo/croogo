@@ -50,7 +50,7 @@ class MenuComponent extends Component
         if (isset($this->controller->Link)) {
             $this->Links = $this->controller->Links;
         } else {
-            $this->Links = TableRegistry::get('Croogo/Menus.Links');
+            $this->Links = TableRegistry::getTableLocator()->get('Croogo/Menus.Links');
         }
 
         $controller = $event->getSubject();

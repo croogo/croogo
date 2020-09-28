@@ -88,7 +88,7 @@ class AccessComponent extends Component
         if (strpos($action, $actionPath) === false) {
             $action = str_replace('//', '/', $actionPath . '/' . $action);
         }
-        $Aco = TableRegistry::get('Croogo/Acl.Acos');
+        $Aco = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $Aco->addAco($action, $allowRoles);
     }
 
@@ -110,7 +110,7 @@ class AccessComponent extends Component
         if (strpos($action, $actionPath) === false) {
             $action = str_replace('//', '/', $actionPath . '/' . $action);
         }
-        $Aco = TableRegistry::get('Croogo/Acl.Acos');
+        $Aco = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $Aco->removeAco($action);
     }
 

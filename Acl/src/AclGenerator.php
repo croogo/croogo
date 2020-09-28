@@ -19,7 +19,7 @@ class AclGenerator extends AclExtras
      */
     public function __construct()
     {
-        $this->Aco = TableRegistry::get('Croogo/Acl.Acos');
+        $this->Aco = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $this->_buildPrefixes();
     }
 
@@ -81,7 +81,7 @@ class AclGenerator extends AclExtras
         }
         $models = json_decode($models, true);
 
-        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $query = $Acos->node('contents');
         if ($query) {
             $parent = $query->first();
@@ -93,7 +93,7 @@ class AclGenerator extends AclExtras
             $parent = $Acos->save($entity);
         }
         foreach ($models as $model) {
-            $Model = TableRegistry::get($model);
+            $Model = TableRegistry::getTableLocator()->get($model);
             $rows = $Model->find()
                 ->select('id')
                 ->all();

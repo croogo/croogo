@@ -26,7 +26,7 @@ class ActionsController extends AppController
     {
         parent::initialize();
 
-        $this->Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $this->Acos = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
     }
 
     /**

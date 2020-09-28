@@ -72,7 +72,7 @@ class AssetsFilterHelper extends Helper
         }
 
         preg_match_all('/\[(image):[ ]*([A-Za-z0-9_\-]*)(.*?)\]/i', (string)$content, $tagMatches);
-        $AssetUsages = TableRegistry::get('Croogo/FileManager.AssetUsages');
+        $AssetUsages = TableRegistry::getTableLocator()->get('Croogo/FileManager.AssetUsages');
 
         for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
             $assets = $converter->parseString('image|i', $tagMatches[0][$i]);

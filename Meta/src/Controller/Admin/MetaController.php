@@ -82,7 +82,7 @@ class MetaController extends AppController
         if (!$this->getRequest()->is('post')) {
             throw new \Exception('Invalid request method');
         }
-        $Meta = TableRegistry::get('Croogo/Meta.Meta');
+        $Meta = TableRegistry::getTableLocator()->get('Croogo/Meta.Meta');
         $success = false;
         $meta = $Meta->findById($id)->first();
         if ($meta !== null && $Meta->delete($meta)) {

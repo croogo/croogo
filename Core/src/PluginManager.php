@@ -1089,7 +1089,7 @@ class PluginManager extends Plugin
             if (!Configure::read('Croogo.installed')) {
                 throw new Exception('Unable to save Hook.bootstraps when Croogo is not fully installed');
             }
-            $Settings = TableRegistry::get('Croogo/Settings.Settings');
+            $Settings = TableRegistry::getTableLocator()->get('Croogo/Settings.Settings');
         }
 
         return $Settings->write('Hook.bootstraps', implode(',', $bootstraps));

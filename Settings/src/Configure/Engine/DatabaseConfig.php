@@ -28,7 +28,7 @@ class DatabaseConfig implements ConfigEngineInterface
         timerStart('Loading settings from database');
 
         $values = Cache::remember('configure-settings-' . $key, function () use ($key) {
-            $settings = TableRegistry::get('Croogo/Settings.Settings')->find('list', [
+            $settings = TableRegistry::getTableLocator()->get('Croogo/Settings.Settings')->find('list', [
                 'keyField' => 'key',
                 'valueField' => function (Setting $setting) {
                     if ($setting->type === 'integer') {
@@ -42,7 +42,7 @@ class DatabaseConfig implements ConfigEngineInterface
             $settings = Hash::expand($settings);
 
             if (empty($setting['Meta'])) {
-                $settings['Meta'] = TableRegistry::get('Croogo/Meta.Meta')
+                $settings['Meta'] = TableRegistry::getTableLocator()->get('Croogo/Meta.Meta')
                     ->find('list', ['keyField' => 'key', 'valueField' => 'value'])
                     ->where(['model' => ''])
                     ->cache('configure-settings-query-' . $key . '-meta', 'cached_settings')

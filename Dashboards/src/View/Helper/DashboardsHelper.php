@@ -73,7 +73,7 @@ class DashboardsHelper extends Helper
             CroogoDashboard::FULL => [],
         ];
         if (empty($this->Roles)) {
-            $this->Roles = TableRegistry::get('Croogo/Users.Roles');
+            $this->Roles = TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
             $this->Roles->addBehavior('Croogo/Core.Aliasable');
         }
         $currentRole = $this->Roles->byId($this->Layout->getRoleId());

@@ -48,7 +48,7 @@ class AclHelper extends Helper
         parent::__construct($View, $settings);
         $plugin = 'Croogo/Acl';
         /* TODO: App::uses('AclPermission', $plugin . '.Model'); */
-        $this->Permissions = TableRegistry::get($plugin . '.Permissions');
+        $this->Permissions = TableRegistry::getTableLocator()->get($plugin . '.Permissions');
 
         $this->Acl = new AclComponent(new ComponentRegistry());
     }

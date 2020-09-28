@@ -105,7 +105,7 @@ class FilterComponent extends Component
                 if (isset($this->_controller->Settings)) {
                     $Setting = $this->_controller->Settings;
                 } else {
-                    $Setting = TableRegistry::get('Croogo/Settings.Settings');
+                    $Setting = TableRegistry::getTableLocator()->get('Croogo/Settings.Settings');
                 }
                 $Setting->write('Access Control.autoLoginDuration', '');
             }

@@ -70,7 +70,7 @@ class TaxonomiesEventHandler implements EventListenerInterface
      */
     public function onSetupLinkChooser($event)
     {
-        $vocabulariesTable = TableRegistry::get('Croogo/Taxonomy.Vocabularies');
+        $vocabulariesTable = TableRegistry::getTableLocator()->get('Croogo/Taxonomy.Vocabularies');
         $vocabularies = $vocabulariesTable->find('all')->contain([
             'Types'
         ]);

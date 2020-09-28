@@ -150,7 +150,7 @@ class NodesTable extends CroogoTable
                 return true;
             }
 
-            return (bool)TableRegistry::get('Croogo/Taxonomy.Types')
+            return (bool)TableRegistry::getTableLocator()->get('Croogo/Taxonomy.Types')
                 ->findByAlias($node->type)
                 ->count();
         }, 'validType', [

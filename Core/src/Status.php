@@ -122,7 +122,7 @@ class Status implements ArrayAccess
         $allow = false;
 
         if ($roleId && $roleId !== 1) {
-            $Permission = TableRegistry::get('Acl.Permissions');
+            $Permission = TableRegistry::getTableLocator()->get('Acl.Permissions');
             try {
                 $allow = $Permission->check(['model' => 'Roles', 'foreign_key' => $roleId], 'controllers/Croogo\Nodes/Admin/Nodes/edit');
             } catch (Exception $e) {

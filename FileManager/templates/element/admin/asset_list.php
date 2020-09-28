@@ -82,7 +82,7 @@ $unregisterUsageUrl = [
 ];
 
 if (!isset($attachments)) :
-    $Attachment = TableRegistry::get('Croogo/FileManager.Attachments');
+    $Attachment = TableRegistry::getTableLocator()->get('Croogo/FileManager.Attachments');
     if (isset($id)) :
         $attachments = $Attachment->find('modelAttachments', [
             'model' => $model,

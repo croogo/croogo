@@ -220,7 +220,7 @@ class InstallShell extends Shell
 
         try {
             $this->out('Setting up admin user. Please wait...');
-            $Install = TableRegistry::get('Croogo/Install.Install');
+            $Install = TableRegistry::getTableLocator()->get('Croogo/Install.Install');
             $Install->addAdminUser($user);
             $InstallManager->installCompleted();
         } catch (Exception $e) {

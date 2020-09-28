@@ -156,7 +156,7 @@ class CookieAuthenticate extends BaseAuthenticate
             $conditions = array_merge($conditions, $this->settings['scope']);
         }
 
-        $query = TableRegistry::get($userModel)->find()
+        $query = TableRegistry::getTableLocator()->get($userModel)->find()
             ->where($conditions);
 
         if (!empty($config['contain'])) {

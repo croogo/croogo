@@ -36,7 +36,7 @@ class RowLevelAclBehavior extends Behavior
         $saved = $Table->Aco->save($aco);
 
         $user = $_SESSION['Auth']['User'];
-        $Permissions = TableRegistry::get('Permissions');
+        $Permissions = TableRegistry::getTableLocator()->get('Permissions');
         if ($entity->isNew() && !empty($user['id'])) {
             $aro = ['Users' => $user];
             $Permissions->allow($aro, $aco->alias);

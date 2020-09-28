@@ -72,13 +72,13 @@ class TaxonomyComponent extends Component
         if ((isset($this->controller->Taxonomies)) && ($this->controller->Taxonomies instanceof TaxonomiesTable)) {
             $this->Taxonomies = $this->controller->Taxonomies;
         } else {
-            $this->Taxonomies = TableRegistry::get('Croogo/Taxonomy.Taxonomies');
+            $this->Taxonomies = TableRegistry::getTableLocator()->get('Croogo/Taxonomy.Taxonomies');
         }
 
         if ((isset($this->controller->Terms)) && ($this->controller->Terms instanceof TermsTable)) {
             $this->Terms = $this->controller->Terms;
         } else {
-            $this->Terms = TableRegistry::get('Croogo/Taxonomy.Terms');
+            $this->Terms = TableRegistry::getTableLocator()->get('Croogo/Taxonomy.Terms');
         }
 
         $request = $this->controller->getRequest();

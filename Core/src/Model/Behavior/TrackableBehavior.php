@@ -160,7 +160,7 @@ class TrackableBehavior extends Behavior
     {
         $config = $this->getConfig();
 
-        $User = TableRegistry::get($config['userModel']);
+        $User = TableRegistry::getTableLocator()->get($config['userModel']);
         $userAlias = $User->getAlias();
         $userPk = $User->getPrimaryKey();
 

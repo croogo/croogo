@@ -118,7 +118,7 @@ class NodesEventHandler implements EventListenerInterface
      */
     public function onSetupLinkChooser(EventInterface $event)
     {
-        $typesTable = TableRegistry::get('Croogo/Taxonomy.Types');
+        $typesTable = TableRegistry::getTableLocator()->get('Croogo/Taxonomy.Types');
         $types = $typesTable->find('all', [
             'fields' => ['id', 'alias', 'title', 'description'],
         ]);

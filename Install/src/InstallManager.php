@@ -130,7 +130,7 @@ class InstallManager
     public function installCompleted()
     {
         PluginManager::load('Croogo/Settings', ['routes' => true]);
-        $Setting = TableRegistry::get('Croogo/Settings.Settings');
+        $Setting = TableRegistry::getTableLocator()->get('Croogo/Settings.Settings');
         $Setting->removeBehavior('Cached');
         if (!function_exists('mcrypt_decrypt') && !function_exists('openssl_decrypt')) {
             $Setting->write('Access Control.autoLoginDuration', '');
@@ -235,8 +235,8 @@ class InstallManager
      */
     public function createAdminUser($user)
     {
-        $Users = TableRegistry::get('Croogo/Users.Users');
-        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $Users = TableRegistry::getTableLocator()->get('Croogo/Users.Users');
+        $Roles = TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
         $Roles->addBehavior('Croogo/Core.Aliasable');
 
         $user->name = $user['username'];
@@ -274,10 +274,10 @@ class InstallManager
             };
         }
 
-        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $Roles = TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
         $Roles->addBehavior('Croogo/Core.Aliasable');
 
-        $Permission = TableRegistry::get('Croogo/Acl.Permissions');
+        $Permission = TableRegistry::getTableLocator()->get('Croogo/Acl.Permissions');
         $admin = 'Role-admin';
         $public = 'Role-public';
         $registered = 'Role-registered';

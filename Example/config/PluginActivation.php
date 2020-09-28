@@ -38,11 +38,11 @@ class PluginActivation
     public function onActivation(&$controller)
     {
         // ACL: set ACOs with permissions
-        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $Acos->addAco('Croogo\Example/Admin/Example/index'); // ExampleController::admin_index()
         $Acos->addAco('Croogo\Example/Example/index', ['registered', 'public']); // ExampleController::index()
 
-        $Links = TableRegistry::get('Croogo/Menus.Links');
+        $Links = TableRegistry::getTableLocator()->get('Croogo/Menus.Links');
 
         // Main menu: add an Example link
         $mainMenu = $Links->Menus->findByAlias('main')->first();
@@ -89,10 +89,10 @@ class PluginActivation
     public function onDeactivation(&$controller)
     {
         // ACL: remove ACOs with permissions
-        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $Acos->removeAco('Croogo\Example'); // Plugin ACOs and it's actions will be removed
 
-        $Links = TableRegistry::get('Croogo/Menus.Links');
+        $Links = TableRegistry::getTableLocator()->get('Croogo/Menus.Links');
 
         // Main menu: delete Example link
         $link = $Links->find()

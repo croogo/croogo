@@ -168,7 +168,7 @@ class CroogoComponent extends Component
             return $roleId;
         }
 
-        return TableRegistry::get('Croogo/Users.Roles')->byAlias('public');
+        return TableRegistry::getTableLocator()->get('Croogo/Users.Roles')->byAlias('public');
     }
 
     /**
