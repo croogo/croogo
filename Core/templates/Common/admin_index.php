@@ -174,7 +174,7 @@ $tableFooters = trim($this->fetch('table-footer'));
             if ($pagingBlock = $this->fetch('paging')) :
                 echo $pagingBlock;
             else :
-                if (isset($this->Paginator) && $this->getRequest()->getParam('paging')) :
+                if ($this->helpers()->has('Paginator') && $this->getRequest()->getAttribute('paging')) :
                     echo $this->element('Croogo/Core.admin/pagination');
                 endif;
             endif;
