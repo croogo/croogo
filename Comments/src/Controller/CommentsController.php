@@ -100,7 +100,7 @@ class CommentsController extends AppController
         $roleId = $this->Croogo->roleId();
         $Model = $this->Comments->{$modelAlias};
         $entity = $Model->find()->where([
-            $Model->aliasField($Model->primaryKey()) => $foreignKey,
+            $Model->aliasField($Model->getPrimaryKey()) => $foreignKey,
             $Model->aliasField('status') . ' IN' => $Model->status($roleId, 'approval'),
         ])->first();
 
@@ -136,8 +136,9 @@ class CommentsController extends AppController
         $continue = $this->_captcha($continue, $captchaProtection, $entity);
         $success = false;
         $comment = null;
-        if (!empty($this->getRequest()->data) && $continue === true) {
-            $comment = $this->Comments->newEntity($this->getRequest()->data);
+        $data = $this->getRequest()->getData();
+        if (!empty($data) && $continue === true) {
+            $comment = $this->Comments->newEntity($data);
             $comment->ip = $this->getRequest()->clientIp();
             $comment->status = $autoApprove ? Status::APPROVED : Status::PENDING;
 
@@ -169,11 +170,9 @@ class CommentsController extends AppController
             }
         }
 
-        if ($parentId) {
-            $parentComment = $this->Comments->get($parentId);
-        }
+        $parentComment = !empty($parentId) ? $this->Comments->get($parentId) : null;
 
-        $this->set(compact('success', 'entity', 'type', 'model', 'foreignKey', 'parentId', 'comment', 'parentComment'));
+        $this->set(compact('success', 'entity', 'model', 'foreignKey', 'parentId', 'comment', 'parentComment'));
     }
 
     /**

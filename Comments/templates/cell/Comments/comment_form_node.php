@@ -22,11 +22,11 @@ $entity = isset($entity) ? $entity : null;
     ?>
     <?= $this->Form->create($comment, ['url' => $formUrl]); ?>
     <?php if (!$loggedInUser) : ?>
-        <?= $this->Form->input('name', ['label' => __d('croogo', 'Name')]); ?>
-        <?= $this->Form->input('email', ['label' => __d('croogo', 'Email')]); ?>
-        <?= $this->Form->input('website', ['label' => __d('croogo', 'Website')]); ?>
+        <?= $this->Form->control('name', ['label' => __d('croogo', 'Name')]); ?>
+        <?= $this->Form->control('email', ['label' => __d('croogo', 'Email')]); ?>
+        <?= $this->Form->control('website', ['label' => __d('croogo', 'Website')]); ?>
     <?php endif; ?>
-    <?= $this->Form->input('body', ['label' => false]); ?>
+    <?= $this->Form->control('body', ['label' => false]); ?>
     <?php if ($captcha) : ?>
         <?= $this->Recaptcha->display(); ?>
     <?php endif; ?>

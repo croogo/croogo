@@ -14,9 +14,9 @@ $this->end();
 
 $this->append('tab-content');
 
-echo $this->Html->tabStart('comment-main') . $this->Form->input('id') . $this->Form->input('title', [
+echo $this->Html->tabStart('comment-main') . $this->Form->control('id') . $this->Form->control('title', [
         'label' => __d('croogo', 'Title'),
-    ]) . $this->Form->input('body', [
+    ]) . $this->Form->control('body', [
         'label' => __d('croogo', 'Body'),
     ]);
 echo $this->Html->tabEnd();
@@ -28,10 +28,10 @@ echo $this->element('Croogo/Core.admin/buttons', ['type' => 'comments']);
 echo $this->Html->endBox();
 
 echo $this->Html->beginBox(__d('croogo', 'Contact'));
-echo $this->Form->input('name', ['label' => __d('croogo', 'Name')]);
-echo $this->Form->input('email', ['label' => __d('croogo', 'Email')]);
-echo $this->Form->input('website', ['label' => __d('croogo', 'Website')]);
-echo $this->Form->input('ip', [
+echo $this->Form->control('name', ['label' => __d('croogo', 'Name')]);
+echo $this->Form->control('email', ['label' => __d('croogo', 'Email')]);
+echo $this->Form->control('website', ['label' => __d('croogo', 'Website')]);
+echo $this->Form->control('ip', [
     'disabled' => 'disabled',
     'label' => __d('croogo', 'Ip'),
 ]);

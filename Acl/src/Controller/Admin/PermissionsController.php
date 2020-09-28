@@ -145,7 +145,7 @@ class PermissionsController extends AppController
             Cache::delete('permissions_public', 'permissions');
         }
 
-        $this->viewBuilder()->autoLayout(false);
+        $this->viewBuilder()->disableAutoLayout();
 
         $this->set(compact('acoId', 'aroId', 'success', 'permitted'));
     }

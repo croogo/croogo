@@ -177,7 +177,7 @@ class CommentsTable extends CroogoTable
         }
 
         $level = $this->find('path', ['for' => $commentId])
-            ->select([$this->aliasField($this->primaryKey())])
+            ->select([$this->aliasField($this->getPrimaryKey())])
             ->count();
 
         return Configure::read('Comment.level') > $level;
