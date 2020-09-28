@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Croogo\Core\Model\Table;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Cake\ORM\AssociationCollection;
+use Cake\ORM\BehaviorRegistry;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -63,6 +65,14 @@ class CroogoTable extends Table
      */
     public function __construct(array $config)
     {
+        if (empty($this->_associations)) {
+            $this->_associations = new AssociationCollection();
+        }
+        if (empty($this->_behaviors)) {
+            $this->_behaviors = new BehaviorRegistry();
+            $this->_behaviors->setTable($this);
+        }
+
         Croogo::applyHookProperties('Hook.table_properties', $this);
 
         parent::__construct($config);
@@ -75,7 +85,7 @@ class CroogoTable extends Table
         ];
     }
 
-    public function onModelInitialized(Event $event)
+    public function onModelInitialized(EventInterface $event)
     {
         foreach ($this->hookedBehaviors as $behavior => $config) {
             $this->addBehavior($behavior, $config);
