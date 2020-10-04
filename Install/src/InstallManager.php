@@ -98,6 +98,7 @@ class InstallManager
         ConnectionManager::setConfig('default', $config);
 
         try {
+            /** @var \Cake\Database\Connection */
             $db = ConnectionManager::get('default');
             $db->connect();
         } catch (MissingConnectionException $e) {
