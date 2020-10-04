@@ -239,7 +239,7 @@ class FileManager
         if (is_dir($oldPath)) {
             $Folder = new Folder($oldPath);
 
-            return $Folder->move(['from' => $oldPath, 'to' => $newPath]);
+            return $Folder->move($newPath, ['from' => $oldPath]);
         } else {
             return rename($oldPath, $newPath);
         }
