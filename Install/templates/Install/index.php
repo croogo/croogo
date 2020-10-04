@@ -56,6 +56,21 @@ if ($versions['cake']) {
         '</span></p>';
 }
 
+if (count($drivers) === 0) {
+    $check = false;
+    echo '<p><span class="badge badge-danger">' .
+        __d('croogo', 'No database driver found') .
+        '</span></p>';
+} else {
+    echo '<p><span class="badge badge-success">' .
+        __d(
+        'croogo',
+        'Available Database drivers: %s',
+        join(', ', array_values($drivers))
+        ) .
+        '</span></p>';
+}
+
 if ($check) {
     $out = $this->Html->link(__d('croogo', 'Start installation'), [
         'action' => 'database',

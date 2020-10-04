@@ -8,12 +8,13 @@ use Cake\Core\App;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Croogo\Core\PluginManager;
 use Croogo\Extensions\Exception\MissingThemeException;
-
+use InvalidArgumentException;
 use UnexpectedValueException;
 
 /**

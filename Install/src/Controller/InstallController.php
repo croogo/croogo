@@ -8,9 +8,12 @@ use Cake\Cache\Cache;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Database\Driver\Mysql;
+use Cake\Database\Driver\Sqlite;
+use Cake\Database\Driver\Postgres;
+use Cake\Database\Driver\Sqlserver;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventInterface;
-use Cake\Utility\File;
 use Composer\IO\BufferIO;
 use Croogo\Core\PluginManager;
 use Croogo\Install\InstallManager;
@@ -71,6 +74,20 @@ class InstallController extends Controller
      */
     protected function _check()
     {
+        if (extension_loaded('pdo_mysql')):
+            $drivers[Mysql::class] = 'MySQL';
+        endif;
+        if (extension_loaded('pdo_sqlite')):
+            $drivers[Sqlite::class] = 'SQLite';
+        endif;
+        if (extension_loaded('pdo_pgsql')):
+            $drivers[Postgres::class] = 'PostgreSQL';
+        endif;
+        if (extension_loaded('pdo_sqlsrv')):
+            $drivers[Sqlserver::class] = 'Microsoft SQL Server';
+        endif;
+        $this->set(compact('drivers'));
+
         if (Configure::read('Croogo.installed') && Configure::read('Install.secured')) {
             $this->Flash->error('Already Installed');
 
@@ -130,13 +147,14 @@ class InstallController extends Controller
         $context = [
             'schema' => true,
             'defaults' => [
-                'driver' => 'Cake\Database\Driver\Mysql',
+                'driver' => '',
                 'host' => 'localhost',
                 'username' => 'root',
                 'database' => 'croogo',
             ],
         ];
         try {
+            /** @var \Cake\Database\Connection */
             $connection = ConnectionManager::get('default');
             $config = $connection->config();
             $currentConfiguration['exists'] = !empty($config) && !($config['username'] === 'my_app' && $config['database'] === 'my_app');
@@ -161,6 +179,7 @@ class InstallController extends Controller
     {
         $this->_check();
 
+        /** @var \Cake\Database\Connection */
         $connection = ConnectionManager::get('default');
         $connection->cacheMetadata(false);
         $schemaCollection = $connection->getSchemaCollection();

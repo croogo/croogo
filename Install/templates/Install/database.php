@@ -33,15 +33,15 @@ $this->end();
 <?php endif ?>
 
 <?php
+$validDrivers = array_merge([
+    '' => __d('croogo', 'Please choose'),
+], $drivers);
+
 echo $this->Form->control('driver', [
     'placeholder' => __d('croogo', 'Database'),
     'empty' => false,
-    'options' => [
-        Cake\Database\Driver\Mysql::class => 'MySQL',
-        Cake\Database\Driver\Sqlite::class => 'SQLite',
-        Cake\Database\Driver\Postgres::class => 'PostgreSQL',
-        Cake\Database\Driver\Sqlserver::class => 'Microsoft SQL Server',
-    ],
+    'options' => $validDrivers,
+    'required' => true,
 ]);
 echo $this->Form->control('host', [
     'placeholder' => __d('croogo', 'Host'),
