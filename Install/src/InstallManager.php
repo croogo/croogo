@@ -20,8 +20,6 @@ class InstallManager
     const PHP_VERSION = '7.1.30';
     const CAKE_VERSION = '3.8.0';
 
-    const DATASOURCE_REGEX = "/(\'Datasources'\s\=\>\s\[\n\s*\'default\'\s\=\>\s\[\n\X*\'__FIELD__\'\s\=\>\s\').*(\'\,)(?=\X*\'test\'\s\=\>\s)/";
-
     use LogTrait;
 
     /**
@@ -68,22 +66,6 @@ class InstallManager
         ];
     }
 
-    protected function _updateDatasourceConfig($path, $field, $value)
-    {
-        $config = file_get_contents($path);
-        $config = preg_replace(
-            str_replace('__FIELD__', $field, InstallManager::DATASOURCE_REGEX),
-            '$1' . addslashes($value) . '$2',
-            $config
-        );
-
-        if (function_exists('opcache_reset')) {
-            opcache_reset();
-        }
-
-        return file_put_contents($path, $config);
-    }
-
     public function createDatabaseFile($config)
     {
         $config += $this->defaultConfig;
@@ -113,11 +95,7 @@ class InstallManager
         }
 
         $configPath = ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'app.php';
-        foreach (['host', 'username', 'password', 'database', 'driver'] as $field) {
-            if (isset($config[$field]) && (!empty($config[$field] || $field == 'password'))) {
-                $this->_updateDatasourceConfig($configPath, $field, $config[$field]);
-            }
-        }
+        DatasourceConfigUpdater::update($configPath, $config);
 
         return true;
     }

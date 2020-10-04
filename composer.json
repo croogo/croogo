@@ -37,6 +37,7 @@
         "friendsofcake/crud-json-api": "^0.5.4",
         "friendsofcake/search": "^5.3",
         "friendsofcake/bootstrap-ui": "^2.0.0-beta6",
+        "nikic/php-parser": "^4.10.2",
         "intervention/image": "^2.4.1",
         "league/flysystem": "^1.0"
     },
