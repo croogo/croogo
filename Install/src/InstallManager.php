@@ -9,6 +9,7 @@ use Cake\Core\Plugin;
 use Cake\Database\Exception\MissingConnectionException;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\LogTrait;
+use Cake\Utility\Security;
 use Cake\ORM\TableRegistry;
 use Croogo\Acl\AclGenerator;
 use Croogo\Core\Database\SequenceFixer;
@@ -64,6 +65,31 @@ class InstallManager
             'php' => version_compare(phpversion(), static::PHP_VERSION, '>='),
             'cake' => version_compare(Configure::version(), static::CAKE_VERSION, '>='),
         ];
+    }
+
+    /**
+     * Set the security.salt value in application config file
+     *
+     * @return string Success or error message
+     */
+    public function replaceSalt()
+    {
+        $file = ROOT . '/config/app.php';
+        $content = file_get_contents($file);
+        $newKey = hash('sha256', Security::randomBytes(64));
+
+        $content = str_replace('__SALT__', $newKey, $content, $count);
+
+        if ($count == 0) {
+            return 'No Security.salt placeholder to replace.';
+        }
+
+        $result = file_put_contents($file, $content);
+        if ($result) {
+            return 'Updated Security.salt value in config/' . $file;
+        }
+
+        return 'Unable to update Security.salt value.';
     }
 
     public function createDatabaseFile($config)

@@ -2,7 +2,6 @@
 
 namespace Croogo\Install\Controller;
 
-use App\Console\Installer;
 use Cake\Cache\Cache;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
@@ -14,7 +13,6 @@ use Cake\Database\Driver\Sqlserver;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\ORM\Exception\PersistenceFailedException;
-use Composer\IO\BufferIO;
 use Croogo\Install\InstallManager;
 use Exception;
 
@@ -35,11 +33,15 @@ class InstallController extends Controller
         'Welcome', 'Database', 'Admin user', 'Completed'
     ];
 
+    /** @var \Croogo\Install\InstallManager */
+    protected $installManager;
+
     public function initialize()
     {
         $this->loadComponent('Flash');
 
         parent::initialize();
+        $this->installManager = new InstallManager();
     }
 
     /**
@@ -73,6 +75,7 @@ class InstallController extends Controller
      */
     protected function _check()
     {
+        $this->installManager->replaceSalt();
         if (extension_loaded('pdo_mysql')):
             $drivers[Mysql::class] = 'MySQL';
         endif;
@@ -127,11 +130,8 @@ class InstallController extends Controller
             return $this->redirect(['action' => 'adminuser']);
         }
 
-        Installer::setSecuritySalt(ROOT, new BufferIO());
-
         if ($this->getRequest()->is('post')) {
-            $InstallManager = new InstallManager();
-            $result = $InstallManager->createDatabaseFile($this->getRequest()->getData());
+            $result = $this->installManager->createDatabaseFile($this->getRequest()->getData());
             if ($result !== true) {
                 $this->Flash->error($result);
             } else {
@@ -192,9 +192,8 @@ class InstallController extends Controller
             return;
         }
 
-        $install = new InstallManager();
         set_time_limit(10 * MINUTE);
-        $result = $install->setupDatabase();
+        $result = $this->installManager->setupDatabase();
 
         if ($result !== true) {
             $this->Flash->error($result === false ? __d('croogo', 'There was a problem installing Croogo') : $result);
@@ -208,10 +207,9 @@ class InstallController extends Controller
     public function acl()
     {
         try {
-            $install = new InstallManager();
-            $install->controller = $this;
-            $install->setupAcos();
-            $install->setupGrants();
+            $this->installManager->controller = $this;
+            $this->installManager->setupAcos();
+            $this->installManager->setupGrants();
 
             return $this->redirect(['action' => 'adminUser']);
         } catch (Exception $e) {
@@ -271,8 +269,7 @@ class InstallController extends Controller
     {
         $this->_check();
 
-        $install = new InstallManager();
-        $install->installCompleted();
+        $this->installManager->installCompleted();
 
         $this->set('user', $this->getRequest()->getSession()->read('Install.user'));
         $this->getRequest()->getSession()->destroy();

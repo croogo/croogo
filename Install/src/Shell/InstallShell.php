@@ -2,16 +2,12 @@
 
 namespace Croogo\Install\Shell;
 
-use App\Console\Installer;
-use App\Controller\Component\AuthComponent;
 use Cake\Cache\Cache;
 use Cake\Console\Shell;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Exception\PersistenceFailedException;
-use Cake\ORM\Locator\TableLocator;
 use Cake\ORM\TableRegistry;
-use Composer\IO\BufferIO;
 use Croogo\Acl\AclGenerator;
 use Croogo\Core\PluginManager;
 use Croogo\Install\InstallManager;
@@ -133,7 +129,9 @@ class InstallShell extends Shell
 
     public function main()
     {
-        Installer::setSecuritySalt(ROOT, new BufferIO());
+        $InstallManager = new InstallManager();
+        $this->out();
+        $this->out($InstallManager->replaceSalt());
         $this->out();
         $this->out('Database settings:');
         $install['datasource'] = $this->_in(__d('croogo', 'DataSource'), [
@@ -150,7 +148,6 @@ class InstallShell extends Shell
         //$install['prefix'] = $this->_in(__d('croogo', 'Prefix'), null, '', 'prefix');
         $install['port'] = $this->_in(__d('croogo', 'Port'), null, null, 'port');
 
-        $InstallManager = new InstallManager();
         $isFileCreated = $InstallManager->createDatabaseFile($install);
         if ($isFileCreated !== true) {
             $this->err($isFileCreated);
