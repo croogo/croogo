@@ -2,9 +2,9 @@
 
 namespace Croogo\Install\Model\Table;
 
+use Cake\ORM\Exception\PersistenceFailedException;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\File;
 
 class InstallTable extends Table
 {
@@ -33,7 +33,7 @@ class InstallTable extends Table
      * Create admin user
      *
      * @var array $user User datas
-     * @return If user is created
+     * @return \Cake\Datasource\EntityInterface|false
      */
     public function addAdminUser($user)
     {
@@ -50,10 +50,12 @@ class InstallTable extends Table
         $user['activation_key'] = md5(uniqid());
         $entity = $Users->get(1);
         $entity = $Users->patchEntity($entity, $user);
-        if ($entity->getErrors()) {
-            $this->err('Unable to create administrative user. Validation errors:');
-
-            return $this->err($entity->getErrors());
+        $errors = $entity->getErrors();
+        if ($errors) {
+            $field = key($errors);
+            $validationErrors = $errors[$field];
+            $message = $validationErrors[key($validationErrors)];
+            throw new PersistenceFailedException($entity, __d('croogo', 'Unable to create administrative user. Validation errors: %s (%s)', $message, $field));
         }
         $saved = $Users->save($entity);
 

@@ -205,31 +205,6 @@ class InstallManager
         return $croogoPlugin->seed($plugin);
     }
 
-    /**
-     * Create admin user
-     *
-     * @var User $user User entity
-     * @return If user is created
-     */
-    public function createAdminUser($user)
-    {
-        $Users = TableRegistry::get('Croogo/Users.Users');
-        $Roles = TableRegistry::get('Croogo/Users.Roles');
-        $Roles->addBehavior('Croogo/Core.Aliasable');
-
-        $user->name = $user['username'];
-        $user->email = '';
-        $user->timezone = 'UTC';
-        $user->role_id = $Roles->byAlias('superadmin');
-        $user->status = true;
-        $user->activation_key = md5(uniqid());
-        if ($user->getErrors()) {
-            return __d('croogo', 'Unable to create administrative user. Validation errors:');
-        }
-
-        return $Users->save($user) !== false;
-    }
-
     public function setupAcos()
     {
         Cache::clearAll();

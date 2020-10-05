@@ -8,6 +8,8 @@ use Cake\Cache\Cache;
 use Cake\Console\Shell;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
+use Cake\ORM\Exception\PersistenceFailedException;
+use Cake\ORM\Locator\TableLocator;
 use Cake\ORM\TableRegistry;
 use Composer\IO\BufferIO;
 use Croogo\Acl\AclGenerator;
@@ -217,11 +219,10 @@ class InstallShell extends Shell
 
         try {
             $this->out('Setting up admin user. Please wait...');
-            $Install = TableRegistry::get('Croogo/Install.Install');
-            $Install->addAdminUser($user);
+            $user = TableRegistry::getTableLocator()->get('Croogo/Install.Install')->addAdminUser($user);
             $InstallManager->installCompleted();
-        } catch (Exception $e) {
-            $this->err('Error creating admin user: ' . $e->getMessage());
+        } catch (PersistenceFailedException $e) {
+            $this->abort('Error creating admin user: ' . $e->getMessage());
         }
 
         $this->out();

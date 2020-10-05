@@ -13,6 +13,7 @@ use Cake\Database\Driver\Postgres;
 use Cake\Database\Driver\Sqlserver;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
+use Cake\ORM\Exception\PersistenceFailedException;
 use Composer\IO\BufferIO;
 use Croogo\Install\InstallManager;
 use Exception;
@@ -244,15 +245,14 @@ class InstallController extends Controller
 
         if ($this->getRequest()->is('put')) {
             Configure::write('Trackable.Auth.User.id', 1);
-            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
-            $install = new InstallManager();
-            $result = $install->createAdminUser($user);
-            if ($result === true) {
-                $this->getRequest()->getSession()->write('Install.user', $user);
+            try {
+                $result = $this->Install->addAdminUser($this->getRequest()->getData());
+                $this->getRequest()->getSession()->write('Install.user', $result);
 
                 return $this->redirect(['action' => 'finish']);
+            } catch (PersistenceFailedException $e) {
+                $this->Flash->error($e->getMessage());
             }
-            $this->Flash->error($result);
         }
 
         $this->set('user', $user);
