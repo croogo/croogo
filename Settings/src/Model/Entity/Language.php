@@ -10,6 +10,6 @@ class Language extends Entity
 
     protected function _getLabel()
     {
-        return $this->_properties['native'] ?: $this->_properties['title'];
+        return $this->native ?: $this->title;
     }
 }

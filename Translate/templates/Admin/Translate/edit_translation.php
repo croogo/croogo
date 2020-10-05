@@ -29,7 +29,7 @@ $this->append('form-start', $this->Form->create($entity, [
     'url' => [
         'plugin' => 'Croogo/Translate',
         'controller' => 'Translate',
-        'action' => 'edit',
+        'action' => 'editTranslation',
         $id,
         '?' => [
             'id' => $entity->id,
@@ -49,7 +49,7 @@ $this->append('tab-content');
     echo $this->Html->tabStart('translate-main');
 foreach ($fields as $field) :
     $name = '_translations.' . $locale . '.' . $field;
-    echo $this->Form->input($name, [
+    echo $this->Form->control($name, [
         'default' => $entity->get($field),
     ]);
 endforeach;
@@ -58,7 +58,7 @@ endforeach;
     echo $this->Html->tabStart('translate-original');
 foreach ($fields as $field) :
     $name = '_original.' . $field;
-    echo $this->Form->input($name, [
+    echo $this->Form->control($name, [
         'value' => $entity->$field,
         'readonly' => true,
     ]);
@@ -74,8 +74,8 @@ $this->start('panels');
             'cancelUrl' => [
                 'action' => 'index',
                 '?' => [
-                    'id' => $this->getRequest()->query('id'),
-                    'model' => urldecode($this->getRequest()->query('model')),
+                    'id' => $this->getRequest()->getQuery('id'),
+                    'model' => urldecode($this->getRequest()->getQuery('model')),
                 ],
             ],
         ]);

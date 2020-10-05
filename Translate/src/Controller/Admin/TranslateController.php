@@ -34,8 +34,8 @@ class TranslateController extends AppController
      */
     public function index()
     {
-        $id = $this->getRequest()->query('id');
-        $modelAlias = $this->getRequest()->query('model');
+        $id = $this->getRequest()->getQuery('id');
+        $modelAlias = $this->getRequest()->getQuery('model');
         if ($id == null) {
             $this->Flash->error(__d('croogo', 'Invalid ID.'));
 
@@ -61,7 +61,7 @@ class TranslateController extends AppController
         }
 
         $Model = TableRegistry::getTableLocator()->get($modelAlias);
-        $displayField = $Model->displayField();
+        $displayField = $Model->getDisplayField();
         $record = $Model->get($id);
         if (!isset($record->id)) {
             $this->Flash->error(__d('croogo', 'Invalid record.'));
@@ -97,11 +97,11 @@ class TranslateController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function edit($id)
+    public function editTranslation()
     {
-        $id = $this->getRequest()->getQuery('id', $id);
-        $modelAlias = urldecode($this->getRequest()->query('model'));
-        $locale = $this->getRequest()->query('locale');
+        $id = $this->getRequest()->getQuery('id');
+        $modelAlias = urldecode($this->getRequest()->getQuery('model'));
+        $locale = $this->getRequest()->getQuery('locale');
 
         if (!$id && empty($this->getRequest()->getData())) {
             $this->Flash->error(__d('croogo', 'Invalid ID.'));
@@ -113,7 +113,7 @@ class TranslateController extends AppController
             ]);
         }
 
-        if (!$this->getRequest()->query('locale')) {
+        if (!$locale) {
             $this->Flash->error(__d('croogo', 'Invalid locale'));
 
             return $this->redirect([
@@ -129,7 +129,7 @@ class TranslateController extends AppController
 
         $language = $this->Languages->find()
             ->where([
-                'locale' => $this->getRequest()->query('locale'),
+                'locale' => $locale,
                 'status' => 1,
             ])->first();
         if (!$language->id) {
@@ -143,7 +143,7 @@ class TranslateController extends AppController
         }
 
         $Model = TableRegistry::getTableLocator()->get($modelAlias);
-        $displayField = $Model->displayField();
+        $displayField = $Model->getDisplayField();
         $record = $Model->get($id);
         if (!$record->id) {
             $this->Flash->error(__d('croogo', 'Invalid record.'));
@@ -182,7 +182,7 @@ class TranslateController extends AppController
                     ],
                 ];
                 if ($this->getRequest()->getData('_apply') !== null) {
-                    $redirect['action'] = 'edit';
+                    $redirect['action'] = 'editTranslation';
                 }
 
                 return $this->redirect($redirect);
@@ -210,7 +210,7 @@ class TranslateController extends AppController
      * @param string $locale
      * @return \Cake\Http\Response|void
      */
-    public function delete($id = null, $modelAlias = null, $locale = null)
+    public function deleteTranslation($id = null, $modelAlias = null, $locale = null)
     {
         if ($locale == null || $id == null) {
             $this->Flash->error(__d('croogo', 'Invalid Locale or ID'));
@@ -256,8 +256,10 @@ class TranslateController extends AppController
 
         return $this->redirect([
             'action' => 'index',
-            'id' => $id,
-            'model' => $modelAlias,
+            '?' => [
+                'id' => $id,
+                'model' => $modelAlias,
+            ],
         ]);
     }
 }

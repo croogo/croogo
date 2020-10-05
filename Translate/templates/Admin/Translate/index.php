@@ -7,7 +7,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $plugin = 'Croogo/Nodes';
 $controller = 'Nodes';
-$modelPath = $this->getRequest()->query('model');
+$modelPath = $this->getRequest()->getQuery('model');
 list($plugin, $model) = pluginSplit($modelPath);
 $controller = $model;
 
@@ -61,7 +61,7 @@ $this->start('action-buttons');
                 'prefix' => 'Admin',
                 'plugin' => 'Croogo/Translate',
                 'controller' => 'Translate',
-                'action' => 'edit',
+                'action' => 'editTranslation',
                 '?' => [
                     'id' => $id,
                     'model' => $modelAlias,
@@ -103,7 +103,7 @@ $this->start('action-buttons');
     foreach ($translations->_translations as $locale => $entity) :
         $actions = [];
         $actions[] = $this->Croogo->adminRowAction('', [
-            'action' => 'edit',
+            'action' => 'editTranslation',
             '?' => [
                 'id' => $id,
                 'model' => $modelAlias,
@@ -114,7 +114,7 @@ $this->start('action-buttons');
             'tooltip' => __d('croogo', 'Edit this item'),
         ]);
         $actions[] = $this->Croogo->adminRowAction('', [
-            'action' => 'delete',
+            'action' => 'deleteTranslation',
             $id,
             urlencode($modelAlias),
             $locale,

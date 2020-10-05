@@ -283,7 +283,7 @@ class LocalesController extends AppController
      */
     private function __getPoFile($locale)
     {
-        $paths = App::path('Locale');
+        $paths = App::path('locales');
         foreach ($paths as $path) {
             $poFile = $path . $locale . DS . 'croogo.po';
 

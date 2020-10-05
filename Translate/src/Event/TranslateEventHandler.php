@@ -41,11 +41,11 @@ class TranslateEventHandler implements EventListenerInterface
         if ($View->getRequest()->getParam('prefix') !== 'Admin') {
             return;
         }
-        if (empty($View->viewVars['viewVar'])) {
+        $viewVar = $View->get('viewVar');
+        if (empty($viewVar)) {
             return;
         }
-        $viewVar = $View->viewVars['viewVar'];
-        $entity = $View->viewVars[$viewVar];
+        $entity = $View->get($viewVar);
         if (!$entity instanceof EntityInterface) {
             return;
         }

@@ -26,7 +26,7 @@ class TranslateBehavior extends CakeTranslateBehavior
     public function initialize(array $config): void
     {
         parent::initialize($config);
-        $this->_translationTable->addBehavior('Croogo/Core.Trackable');
+        $this->getStrategy()->getTranslationTable()->addBehavior('Croogo/Core.Trackable');
     }
 
     /**
@@ -34,7 +34,8 @@ class TranslateBehavior extends CakeTranslateBehavior
      */
     public function deleteTranslation(EntityInterface $entity, string $locale)
     {
-        $runtimeModelAlias = $this->_translationTable->getAlias();
+        $translationTable = $this->getStrategy()->getTranslationTable();
+        $runtimeModelAlias = $translationTable->getAlias();
         list(, $targetModel) = pluginSplit($this->_table->getAlias());
         $deleteCond = [
             $runtimeModelAlias . '.model' => $targetModel,
@@ -42,7 +43,7 @@ class TranslateBehavior extends CakeTranslateBehavior
             $runtimeModelAlias . '.locale' => $locale,
         ];
 
-        return $this->_translationTable->deleteAll($deleteCond);
+        return $translationTable->deleteAll($deleteCond);
     }
 
     /**

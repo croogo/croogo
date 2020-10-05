@@ -6,7 +6,6 @@ namespace Croogo\Translate\Middleware;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\I18n\I18n;
-use Cake\Network\Request;
 use Cake\Utility\Hash;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -104,8 +103,8 @@ class I18nMiddleware
             $lang = $default;
         }
 
-        $cakeRequest = new Request();
-        $browserLangs = $cakeRequest->acceptLanguage();
+        /** @var \Cake\Http\ServerRequest $request */
+        $browserLangs = $request->acceptLanguage();
         foreach ($browserLangs as $k => $langKey) {
             if (strpos($langKey, '-') !== false) {
                 $browserLangs[$k] = substr($langKey, 0, 2);
