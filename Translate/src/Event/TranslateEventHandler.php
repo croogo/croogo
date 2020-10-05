@@ -58,8 +58,10 @@ class TranslateEventHandler implements EventListenerInterface
                 'plugin' => 'Croogo/Translate',
                 'controller' => 'Translate',
                 'action' => 'index',
-                'id' => $entity->get('id'),
-                'model' => $entity->getSource(),
+                '?' => [
+                    'id' => $entity->get('id'),
+                    'model' => $entity->getSource(),
+                ],
             ], [
                 'icon' => 'translate',
             ]);
