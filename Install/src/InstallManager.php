@@ -75,7 +75,7 @@ class InstallManager
      */
     public function replaceSalt()
     {
-        $file = ROOT . '/config/app.php';
+        $file = ROOT . '/config/app_local.php';
         $content = file_get_contents($file);
         $newKey = hash('sha256', Security::randomBytes(64));
 
