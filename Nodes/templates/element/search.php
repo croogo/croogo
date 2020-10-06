@@ -21,6 +21,7 @@ $this->Form->unlockField('q');
             'templates' => [
                 'inputContainer' => '{{content}}',
             ],
+            'required' => true,
         ]);
 ?>
 
