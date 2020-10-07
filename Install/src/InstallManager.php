@@ -19,8 +19,8 @@ use Exception;
 
 class InstallManager
 {
-    const PHP_VERSION = '7.1.30';
-    const CAKE_VERSION = '3.8.0';
+    const PHP_VERSION = '7.2.0';
+    const CAKE_VERSION = '4.1.4';
 
     use LogTrait;
 
