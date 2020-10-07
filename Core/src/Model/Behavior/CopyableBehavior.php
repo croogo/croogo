@@ -53,6 +53,8 @@ class CopyableBehavior extends Behavior
     /**
      * The full results of Model::find() that are modified and saved
      * as a new copy.
+     *
+     * @var \Cake\Datasource\EntityInterface
      */
     public $record;
 
@@ -182,11 +184,11 @@ class CopyableBehavior extends Behavior
      * Strips primary keys and other unwanted fields
      * from hasOne and hasMany records.
      *
-     * @param object $table model object
-     * @param array $record
-     * @return array $record
+     * @param \Cake\ORM\Table $table Table
+     * @param \Cake\Datasource\EntityInterface $record Record
+     * @return \Cake\Datasource\EntityInterface Converted record
      */
-    protected function _convertChildren(Table $table, Entity $record)
+    protected function _convertChildren(Table $table, EntityInterface $record): EntityInterface
     {
         $assocs = $table->associations();
         $children = array_merge($assocs->getByType('HasMany'), $assocs->getByType('HasOne'));
@@ -213,7 +215,7 @@ class CopyableBehavior extends Behavior
 
                 $foreignKey = $val->getForeignKey();
                 if ($child->has($foreignKey)) {
-                    $child->unsetProperty($foreignKey);
+                    $child->unset($foreignKey);
                 }
 
                 $child = $this->_convertChildren($val->getTarget(), $child);
@@ -234,32 +236,32 @@ class CopyableBehavior extends Behavior
      * Plugins can also perform custom/additional data conversion by listening
      * on `Behavior.Copyable.convertData`
      *
-     * @return \Cake\ORM\Entity $this->record
      */
-    protected function _convertData()
+    protected function _convertData(): EntityInterface
     {
-        $this->record = clone $this->record;
-        $this->_stripFields($this->record);
+        $record = clone $this->record;
+        $record = $this->_stripFields($record);
 
-        $this->record = $this->_convertHabtm($this->_table, $this->record);
-        $this->record = $this->_convertChildren($this->_table, $this->record);
+        $record = $this->_convertHabtm($record);
+        $record = $this->_convertChildren($this->_table, $record);
 
         $autoFields = (array)$this->getConfig('autoFields');
         $slugFields = ['slug', 'alias'];
         foreach ($autoFields as $field) {
-            if (!$this->record->has($field)) {
+            /** @var \Cake\Datasource\EntityInterface $record */
+            if (!$record->has($field)) {
                 continue;
             }
             if (in_array($field, $slugFields)) {
-                $this->record->{$field} .= '-copy';
+                $record->{$field} .= '-copy';
             } else {
-                $this->record->{$field} .= ' (copy)';
+                $record->{$field} .= ' (copy)';
             }
         }
 
         $eventName = 'Behavior.Copyable.convertData';
         $event = Croogo::dispatchEvent($eventName, $this->_table, [
-            'record' => $this->record,
+            'record' => $record,
         ]);
 
         $this->record = $event->getData('record');
@@ -275,17 +277,16 @@ class CopyableBehavior extends Behavior
      * HABTM join tables may contain extra information (sorting
      * order, etc).
      *
-     * @param \Cake\ORM\Table $table Table object
-     * @param \Cake\ORM\Entity $record
-     * @return \Cake\ORM\Entity Modified $record
+     * @param \Cake\Datasource\EntityInterface $record Original Record
+     * @return \Cake\Datasource\EntityInterface Modified record
      */
-    protected function _convertHabtm(Table $table, $record)
+    protected function _convertHabtm(EntityInterface $record): EntityInterface
     {
         if (!$this->getConfig('habtm')) {
             return $record;
         }
 
-        $belongsToMany = $table->associations()->getByType('BelongsToMany');
+        $belongsToMany = $this->_table->associations()->getByType('BelongsToMany');
         foreach ($belongsToMany as $key => $val) {
             // retrieve the reverse association
             $hasMany = $val->getTarget()->association($val->junction()->getAlias());
@@ -299,7 +300,7 @@ class CopyableBehavior extends Behavior
                 $joinVal = $this->_stripFields($joinVal);
                 $foreignKey = $val->getForeignKey();
                 if ($joinVal->has($foreignKey)) {
-                    $joinVal->unsetProperty($foreignKey);
+                    $joinVal->unset($foreignKey);
                 }
             }
         }
@@ -339,15 +340,15 @@ class CopyableBehavior extends Behavior
      * Strips unwanted fields from $record, taken from
      * the 'stripFields' setting.
      *
-     * @param array $record
-     * @return \Cake\ORM\Entity
+     * @param \Cake\Datasource\EntityInterface $record Original Record
+     * @return \Cake\Datasource\EntityInterface Stripped record
      */
-    protected function _stripFields($record)
+    protected function _stripFields(EntityInterface $record): EntityInterface
     {
         $stripFields = (array)$this->getConfig('stripFields');
         foreach ($stripFields as $field) {
             if ($record->has($field)) {
-                $record->unsetProperty($field);
+                $record->unset($field);
                 $record->isNew(true);
             }
         }
