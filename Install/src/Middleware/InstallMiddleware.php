@@ -16,6 +16,7 @@ class InstallMiddleware
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
+        /** @var \Cake\Http\ServerRequest $request */
         $plugin = $request->getParam('plugin');
         if (!in_array($plugin, ['Croogo/Install', 'DebugKit'])) {
             $url = [

@@ -33,7 +33,7 @@ class HookableComponentEventHandler implements EventListenerInterface
      */
     public function initialize(EventInterface $event)
     {
-        /* @var \Cake\Controller\Controller|\Croogo\Core\Controller\HookableComponentInterface $controller */
+        /** @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
 
         if (!$controller instanceof HookableComponentInterface) {

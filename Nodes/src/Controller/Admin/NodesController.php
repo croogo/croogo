@@ -1,27 +1,32 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * Croogo : A CakePHP powered Content Management System (http://www.croogo.org)
+ * Copyright (c) Fahad Ibnay Heylaal <contact@fahad19.com> and other contributors
+ * Copyright (c) Rachman Chavik <rchavik@gmail.com> and other contributors
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
+ */
 namespace Croogo\Nodes\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Utility\Hash;
-use Croogo\Core\Controller\Component\CroogoComponent;
-use Croogo\Nodes\Model\Table\NodesTable;
-use Croogo\Taxonomy\Controller\Component\TaxonomiesComponent;
 use Croogo\Taxonomy\Model\Entity\Type;
 
 /**
  * Nodes Controller
  *
- * @property NodesTable Nodes
- * @property CroogoComponent Croogo
- * @property TaxonomiesComponent Taxonomies
- * @category Nodes.Controller
- * @package  Croogo.Nodes
- * @version  1.0
- * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
- * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link     http://www.croogo.org
+ * @property \Crud\Controller\Component\CrudComponent $Crud
+ * @property \Croogo\Nodes\Model\Table\NodesTable $Nodes
+ * @property \Croogo\Core\Controller\Component\CroogoComponent $Croogo
+ * @property \Croogo\Taxonomy\Controller\Component\TaxonomyComponent $Taxonomy
  */
 class NodesController extends AppController
 {
@@ -119,7 +124,7 @@ class NodesController extends AppController
      * @throws \Crud\Error\Exception\MissingActionException
      * @throws \Crud\Error\Exception\ActionNotConfiguredException
      */
-    public function beforePaginate(Event $event)
+    public function beforePaginate(EventInterface $event)
     {
         /** @var \Cake\ORM\Query $query */
         $query = $event->getSubject()->query;
@@ -171,7 +176,9 @@ class NodesController extends AppController
 
         if (!empty($this->getRequest()->getQuery('links')) || $this->getRequest()->getQuery('chooser')) {
             $this->viewBuilder()->setLayout('admin_popup');
-            $this->Crud->action()->view('chooser');
+            /** @var \Crud\Action\IndexAction */
+            $action = $this->Crud->action();
+            $action->view('chooser');
         }
     }
 
@@ -179,7 +186,7 @@ class NodesController extends AppController
      * @param Event $event
      * @return void
      */
-    public function beforeLookup(Event $event)
+    public function beforeLookup(EventInterface $event)
     {
         /** @var \Cake\ORM\Query $query */
         $query = $event->getSubject()->query;
@@ -193,7 +200,7 @@ class NodesController extends AppController
      * @param Event $event
      * @return void
      */
-    public function beforeCrudRender(Event $event)
+    public function beforeCrudRender(EventInterface $event)
     {
         if (!isset($event->getSubject()->entity)) {
             return;
@@ -233,7 +240,7 @@ class NodesController extends AppController
      * @param \Cake\Event\Event $event
      * @return void
      */
-    public function beforeCrudFind(Event $event)
+    public function beforeCrudFind(EventInterface $event)
     {
         $event->getSubject()->query->contain(['Users', 'Parent']);
     }
@@ -242,7 +249,7 @@ class NodesController extends AppController
      * @param \Cake\Event\Event $event
      * @return void
      */
-    public function beforeCrudSave(Event $event)
+    public function beforeCrudSave(EventInterface $event)
     {
         $entity = $event->getSubject()->entity;
         if (($this->getRequest()->getParam('action') === 'add') && ($this->getRequest()->getParam('pass.0'))) {
@@ -256,22 +263,14 @@ class NodesController extends AppController
         ]);
     }
 
-    /**
-     * @param \Cake\Event\Event $event
-     * @return void
-     */
-    public function beforeCrudRedirect(Event $event)
+    public function beforeCrudRedirect(EventInterface $event)
     {
         if ($this->redirectToSelf($event)) {
             return;
         }
     }
 
-    /**
-     * @param \Cake\Event\Event $event
-     * @return void
-     */
-    public function afterCrudSave(Event $event)
+    public function afterCrudSave(EventInterface $event)
     {
         $entityErrors = $event->getSubject()->entity->getErrors();
         if (!empty($entityErrors)) {
@@ -284,9 +283,6 @@ class NodesController extends AppController
         }
     }
 
-    /**
-     * @return array
-     */
     public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
@@ -302,7 +298,7 @@ class NodesController extends AppController
 
     /**
      * Set common form variables to views
-     * @param array|Type $type Type data
+     * @param Type $type Type data
      */
     protected function _setCommonVariables(Type $type)
     {
@@ -365,10 +361,10 @@ class NodesController extends AppController
             $type = $this->Nodes->Types->findByAlias($typeAlias)->first();
             $this->set(compact('type'));
         }
-        $this->Crud->on('beforePaginate', function (Event $event) {
+        $this->Crud->on('beforePaginate', function (EventInterface $event) {
             $event->getSubject()->query->find('treelist');
         });
-        $this->Crud->on('afterPaginate', function (Event $event) {
+        $this->Crud->on('afterPaginate', function (EventInterface $event) {
             $subject = $event->getSubject();
             $nodes = [];
             foreach ($subject->entities as $id => $title) {
