@@ -120,6 +120,7 @@ $this->start('action-buttons');
             $locale,
         ], [
             'icon' => $this->Theme->getIcon('delete'),
+            'class' => 'delete',
             'tooltip' => __d('croogo', 'Remove this item'),
             'method' => 'post',
         ], __d('croogo', 'Are you sure?'));
