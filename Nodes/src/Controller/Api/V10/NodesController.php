@@ -32,6 +32,11 @@ class NodesController extends AppController
 
     public function lookup()
     {
+        // FIXME: Things get broken when Translate is activated
+        $this->Nodes->behaviors()->reset();
+        $this->Nodes->addBehavior('Search.Search');
+        $this->Nodes->associations()->remove('I18n');
+
         return $this->Crud->execute();
     }
 }
