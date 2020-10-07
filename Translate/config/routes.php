@@ -1,7 +1,7 @@
 <?php
 
 use Cake\Routing\RouteBuilder;
-use Croogo\Core\Router;
+use Croogo\Core\Routing\Router;
 
 Router::addUrlFilter(function ($params, $request = null) {
     if (!$request) {

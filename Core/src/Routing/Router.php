@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Croogo\Core;
+namespace Croogo\Core\Routing;
 
 use Cake\Core\Configure;
 use Cake\Database\Exception\MissingConnectionException;
@@ -10,6 +10,8 @@ use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router as CakeRouter;
 use Cake\Utility\Inflector;
+use Croogo\Core\Link;
+use Croogo\Core\PluginManager;
 use Croogo\Core\Utility\StringConverter;
 
 /**

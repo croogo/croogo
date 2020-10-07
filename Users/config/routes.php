@@ -1,7 +1,6 @@
 <?php
 
 use Cake\Routing\RouteBuilder;
-use Croogo\Core\Router;
 
 $routes->plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('Admin', function (RouteBuilder $route) {

@@ -5,7 +5,7 @@ namespace Croogo\Wysiwyg\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper;
-use Croogo\Core\Router;
+use Croogo\Core\Routing\Router;
 
 /**
  * Wysiwyg Helper
