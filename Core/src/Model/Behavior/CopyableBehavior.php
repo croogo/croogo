@@ -130,6 +130,10 @@ class CopyableBehavior extends Behavior
 
         $result = false;
         try {
+            // FIXME: Remove Translate when attached
+            if ($this->_table->hasBehavior('Translate')) {
+                $this->_table->removeBehavior('Translate');
+            }
             $result = $this->_table->save($this->record, [
                 'associated' => true,
             ]);
