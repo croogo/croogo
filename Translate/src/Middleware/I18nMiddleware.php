@@ -67,7 +67,6 @@ class I18nMiddleware
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
         $config = $this->getConfig();
-        $url = $request->getUri()->getPath();
 
         $langs = $config['languages'];
         $requestParams = $request->getAttribute('params');

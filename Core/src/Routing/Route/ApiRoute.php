@@ -37,9 +37,9 @@ class ApiRoute extends Route
      * @return mixed Boolean false on failure, otherwise an array or parameters
      * @see Route::parse()
      */
-    public function parse($url)
+    public function parse(string $url, string $method): ?array
     {
-        $parsed = parent::parse($url);
+        $parsed = parent::parse($url, $method);
         if (!isset($parsed['api']) || !isset($parsed['prefix'])) {
             return false;
         }
@@ -55,7 +55,7 @@ class ApiRoute extends Route
      * @return mixed Either a string URL for the parameters if they match or false.
      * @see Route::match()
      */
-    public function match(array $url, array $context = [])
+    public function match(array $url, array $context = []): ?string
     {
         if (isset($url['prefix']) && isset($url['action'])) {
             $prefix = $url['prefix'];
