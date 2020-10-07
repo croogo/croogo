@@ -5,7 +5,7 @@ namespace Croogo\Translate\Model\Behavior;
 
 use ArrayObject;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\I18n\I18n;
 use Cake\ORM\Behavior\TranslateBehavior as CakeTranslateBehavior;
 use Cake\ORM\Table;
@@ -49,10 +49,19 @@ class TranslateBehavior extends CakeTranslateBehavior
     /**
      * When missing, populate _locale with default value
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
     {
         if (empty($data['_locale'])) {
             $data['_locale'] = I18n::getDefaultLocale();
         }
     }
+
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    {
+        if ($entity->isNew()) {
+            return;
+        }
+        return $this->strategy->beforeSave($event, $entity, $options);
+    }
+
 }
