@@ -15,10 +15,7 @@ use Croogo\Core\PluginManager;
 use Croogo\Core\Utility\StringConverter;
 
 /**
- * Router
- *
- * NOTE: Do not use this class as a substitute of Router class.
- * Use it only for Router::connect()
+ * @inheritdoc
  *
  * @package  Croogo.Croogo.Lib
  * @version  1.0
@@ -209,5 +206,19 @@ class Router extends CakeRouter
             $url = $converter->linkStringToArray($homeUrl);
             Router::connect('/', $url);
         }
+    }
+
+    public static function createRouteBuilder(string $path, array $options = []): RouteBuilder
+    {
+        $defaults = [
+            'routeClass' => static::defaultRouteClass(),
+            'extensions' => static::$_defaultExtensions,
+        ];
+        $options += $defaults;
+
+        return new RouteBuilder(static::$_collection, $path, [], [
+            'routeClass' => $options['routeClass'],
+            'extensions' => $options['extensions'],
+        ]);
     }
 }
