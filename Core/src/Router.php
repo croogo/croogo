@@ -8,7 +8,6 @@ use Cake\Database\Exception\MissingConnectionException;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router as CakeRouter;
 use Cake\Utility\Inflector;
 use Croogo\Core\Utility\StringConverter;
@@ -27,20 +26,6 @@ use Croogo\Core\Utility\StringConverter;
  */
 class Router extends CakeRouter
 {
-
-    /**
-     * Helper method to setup both default and localized route
-     */
-    public static function build(RouteBuilder $builder, $path, $defaults, $options = [])
-    {
-        if (PluginManager::isLoaded('Croogo/Translate')) {
-            $languages = Configure::read('I18n.languages');
-            $i18nPath = '/:lang' . $path;
-            $i18nOptions = array_merge($options, ['lang' => implode('|', $languages)]);
-            $builder->connect($i18nPath, $defaults, $i18nOptions);
-        }
-        $builder->connect($path, $defaults, $options);
-    }
 
     /**
      * Check wether request is a API call.
