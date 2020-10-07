@@ -5,6 +5,7 @@ namespace Croogo\Extensions;
 
 use Cake\Core\App;
 use Cake\Filesystem\Folder;
+use Cake\Log\Log;
 use Croogo\Core\Exception\Exception;
 use ZipArchive;
 

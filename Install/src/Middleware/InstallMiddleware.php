@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Croogo\Install\Middleware;
 
 use Cake\Routing\Router;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * Class InstallMiddleware
