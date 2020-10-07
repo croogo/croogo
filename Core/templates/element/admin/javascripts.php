@@ -6,10 +6,10 @@ if (!$this->getRequest()->is('ajax')) :
         'Croogo/Core.jquery/jquery.min.js',
         'Croogo/Core.core/moment-with-locales',
         'Croogo/Core.core/underscore-min',
+        'Croogo/Core.core/popper.min.js',
     ]);
     echo $this->Html->script([
         'Croogo/Core.jquery/jquery-ui.min.js',
-        'Croogo/Core.core/popper.min.js',
         'Croogo/Core.core/bootstrap.min.js',
         'Croogo/Core.jquery/jquery.slug',
         'Croogo/Core.jquery/jquery.hoverIntent.minified',
