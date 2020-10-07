@@ -47,49 +47,6 @@ class HookableComponentEventHandler implements EventListenerInterface
     }
 
     /**
-     * Setup the components array
-     *
-     * @param void
-     * @return void
-     */
-    protected function _setupComponents()
-    {
-        $components = [];
-
-        $components = Hash::merge(
-            $this->_defaultComponents,
-            $this->_appComponents
-        );
-
-        foreach ($components as $component => $config) {
-            if (!is_array($config)) {
-                $component = $config;
-                $config = [];
-            }
-
-            $this->loadComponent($component, $config);
-        }
-    }
-
-    /**
-     * @param $name
-     * @param array $config
-     *
-     * @return mixed
-     */
-    public function loadComponent($name, array $config = [])
-    {
-        list(, $prop) = pluginSplit($name);
-        list(, $modelProp) = pluginSplit($this->modelClass);
-        $component = $this->components()->load($name, $config);
-        if ($prop !== $modelProp) {
-            $this->{$prop} = $component;
-        }
-
-        return $component;
-    }
-
-    /**
      * @param Controller $controller
      *
      * @return array
