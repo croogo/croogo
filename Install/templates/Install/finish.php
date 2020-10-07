@@ -1,7 +1,7 @@
 <?php
 $this->assign('title', __d('croogo', 'Successful'));
 
-use Croogo\Core\Router; ?>
+use Croogo\Core\Routing\Router; ?>
 <p class="success">
     <?= __d(
     'croogo',

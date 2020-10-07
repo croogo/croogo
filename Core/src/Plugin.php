@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Routing\RouteBuilder;
 use Cake\Utility\Security;
+use Croogo\Core\Routing\Router;
 
 class Plugin extends BasePlugin
 {

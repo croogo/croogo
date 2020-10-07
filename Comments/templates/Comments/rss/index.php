@@ -3,6 +3,8 @@
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 
+$this->loadHelper('Croogo/Core.Rss');
+
 $channel = [
     'title' => __d('croogo', 'Comments') . ' - ' . Configure::read('Site.title'),
     'description' => Configure::read('Site.tagline'),

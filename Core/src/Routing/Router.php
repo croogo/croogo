@@ -1,23 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Croogo\Core;
+namespace Croogo\Core\Routing;
 
 use Cake\Core\Configure;
 use Cake\Database\Exception\MissingConnectionException;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router as CakeRouter;
 use Cake\Utility\Inflector;
+use Croogo\Core\Link;
+use Croogo\Core\PluginManager;
 use Croogo\Core\Utility\StringConverter;
 
 /**
- * Router
- *
- * NOTE: Do not use this class as a substitute of Router class.
- * Use it only for Router::connect()
+ * @inheritdoc
  *
  * @package  Croogo.Croogo.Lib
  * @version  1.0
@@ -27,20 +25,6 @@ use Croogo\Core\Utility\StringConverter;
  */
 class Router extends CakeRouter
 {
-
-    /**
-     * Helper method to setup both default and localized route
-     */
-    public static function build(RouteBuilder $builder, $path, $defaults, $options = [])
-    {
-        if (PluginManager::isLoaded('Croogo/Translate')) {
-            $languages = Configure::read('I18n.languages');
-            $i18nPath = '/:lang' . $path;
-            $i18nOptions = array_merge($options, ['lang' => implode('|', $languages)]);
-            $builder->connect($i18nPath, $defaults, $i18nOptions);
-        }
-        $builder->connect($path, $defaults, $options);
-    }
 
     /**
      * Check wether request is a API call.
@@ -126,32 +110,32 @@ class Router extends CakeRouter
      */
     public static function contentType($aliasRegex, $routeBuilder)
     {
-        static::build($routeBuilder, '/:type', [
+        $routeBuilder->connect('/{type}', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index',
         ], [
             'type' => $aliasRegex,
         ]);
-        static::build($routeBuilder, '/:type/archives/*', [
+        $routeBuilder->connect('/{type}/archives/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index',
         ], [
             'type' => $aliasRegex,
         ]);
-        static::build($routeBuilder, '/:type/:slug', [
+        $routeBuilder->connect('/{type}/{slug}', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'view',
         ], [
             'type' => $aliasRegex,
             'slug' => '[a-z0-9-_]+',
         ]);
-        static::build($routeBuilder, '/:type/term/:term/*', [
+        $routeBuilder->connect('/{type}/term/{term}/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'term',
         ], [
             'type' => $aliasRegex,
         ]);
-        static::build($routeBuilder, '/:type/:vocab/:term/*', [
+        $routeBuilder->connect('/{type}/{vocab}/{term}/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'term',
         ], [
@@ -222,5 +206,19 @@ class Router extends CakeRouter
             $url = $converter->linkStringToArray($homeUrl);
             Router::connect('/', $url);
         }
+    }
+
+    public static function createRouteBuilder(string $path, array $options = []): RouteBuilder
+    {
+        $defaults = [
+            'routeClass' => static::defaultRouteClass(),
+            'extensions' => static::$_defaultExtensions,
+        ];
+        $options += $defaults;
+
+        return new RouteBuilder(static::$_collection, $path, [], [
+            'routeClass' => $options['routeClass'],
+            'extensions' => $options['extensions'],
+        ]);
     }
 }
