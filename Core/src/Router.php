@@ -126,32 +126,32 @@ class Router extends CakeRouter
      */
     public static function contentType($aliasRegex, $routeBuilder)
     {
-        static::build($routeBuilder, '/:type', [
+        $routeBuilder->connect('/{type}', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index',
         ], [
             'type' => $aliasRegex,
         ]);
-        static::build($routeBuilder, '/:type/archives/*', [
+        $routeBuilder->connect('/{type}/archives/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index',
         ], [
             'type' => $aliasRegex,
         ]);
-        static::build($routeBuilder, '/:type/:slug', [
+        $routeBuilder->connect('/{type}/{slug}', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'view',
         ], [
             'type' => $aliasRegex,
             'slug' => '[a-z0-9-_]+',
         ]);
-        static::build($routeBuilder, '/:type/term/:term/*', [
+        $routeBuilder->connect('/{type}/term/{term}/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'term',
         ], [
             'type' => $aliasRegex,
         ]);
-        static::build($routeBuilder, '/:type/:vocab/:term/*', [
+        $routeBuilder->connect('/{type}/{vocab}/{term}/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'term',
         ], [

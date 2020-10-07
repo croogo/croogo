@@ -4,7 +4,7 @@ use Cake\Core\Configure;
 use Cake\Routing\RouteBuilder;
 use Croogo\Core\Utility\StringConverter;
 
-$routes->prefix('Admin', function (RouteBuilder $routeBuilder) {
+$routes->prefix('Admin', function (RouteBuilder $route) {
     $dashboardUrl = Configure::read('Site.dashboard_url');
     if (!$dashboardUrl) {
         return;
@@ -15,14 +15,12 @@ $routes->prefix('Admin', function (RouteBuilder $routeBuilder) {
         $dashboardUrl = $converter->linkStringToArray($dashboardUrl);
     }
 
-    $routeBuilder->connect('/', $dashboardUrl);
+    $route->connect('/', $dashboardUrl);
 });
 
-$routes->plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('Admin', function (RouteBuilder $routeBuilder) {
-        $routeBuilder->setExtensions(['json']);
-
-        $routeBuilder->connect('/link-chooser/*', ['controller' => 'LinkChooser', 'action' => 'linkChooser']);
-        $routeBuilder->fallbacks();
+$routes->plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('Admin', function (RouteBuilder $route) {
+        $route->connect('/link-chooser/*', ['controller' => 'LinkChooser', 'action' => 'linkChooser']);
+        $route->fallbacks();
     });
 });

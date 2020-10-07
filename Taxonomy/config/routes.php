@@ -10,9 +10,7 @@ $routes->plugin('Croogo/Taxonomy', ['path' => '/'], function (RouteBuilder $rout
             $route->fallbacks();
         });
     });
-});
 
-$routes->plugin('Croogo/Taxonomy', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('Api', function (RouteBuilder $route) {
         $route->prefix('V10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);
