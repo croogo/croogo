@@ -102,7 +102,7 @@ class SettingsTable extends CroogoTable
     {
         $this->getConnection()->getDriver()->enableAutoQuoting(false);
         if ($entity->key == 'Access Control.rowLevel') {
-            if ($entity->value == true && $entity->_original['value'] == false) {
+            if ($entity->value == true && $entity->getOriginal('value') == false) {
                 $aclGenerator = new AclGenerator();
                 $aclGenerator->syncContentAcos();
             }

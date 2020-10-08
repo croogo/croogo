@@ -72,7 +72,7 @@ class SettingsController extends AppController
 
                     if ($value instanceof UploadedFile) {
                         $value = $this->_handleUpload($setting, $value);
-                    } else {
+                    } else if (is_array($value)) {
                         $value = json_encode($value);
                     }
 
