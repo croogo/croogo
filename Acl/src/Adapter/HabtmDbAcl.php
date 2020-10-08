@@ -32,6 +32,7 @@ class HabtmDbAcl extends CachedDbAcl
      */
     public function initialize(Component $component)
     {
+        parent::initialize($component);
         if (!empty($component->settings['habtm'])) {
             $this->settings = array_merge($this->settings, $component->settings['habtm']);
         }
@@ -63,8 +64,8 @@ class HabtmDbAcl extends CachedDbAcl
 
         $joinModel = $assoc->junction();
 
-        $userField = $assoc->foreignKey();
-        $groupField = $assoc->targetForeignKey();
+        $userField = $assoc->getForeignKey();
+        $groupField = $assoc->getTargetForeignKey();
 
         $node = $this->Acl->Aro->node($aro)->first();
         $userId = $node->foreign_key;

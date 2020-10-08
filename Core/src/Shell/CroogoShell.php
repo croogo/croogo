@@ -61,6 +61,7 @@ class CroogoShell extends AppShell
     public function syncContentAcos()
     {
         $aclGenerator = new AclGenerator();
+        $aclGenerator->setShell($this);
 
         return $aclGenerator->syncContentAcos();
     }

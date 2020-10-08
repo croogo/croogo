@@ -79,7 +79,7 @@ class AclGenerator extends AclExtras
             $message = 'No models are configured for row level access control';
             $this->out($message);
         }
-        $models = json_decode($models, true);
+        $models = (array)json_decode($models, true);
 
         $Acos = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $query = $Acos->node('contents');
@@ -102,12 +102,15 @@ class AclGenerator extends AclExtras
                     $node = $Acos->node($row);
                 } catch (\Exception $e) {
                     $aco = $Acos->newEntity([
-                        'model' => $Model->alias(),
+                        'model' => $Model->getAlias(),
                         'foreign_key' => $row->id,
-                        'alias' => sprintf('%s.%s', $Model->alias(), $row->id),
+                        'alias' => sprintf('%s.%s', $Model->getAlias(), $row->id),
                         'parent_id' => $parent->id,
                     ]);
                     $saved = $Acos->save($aco);
+                    if ($saved) {
+                        $this->out('Created aco node: ' . $saved->alias);
+                    }
                 }
             }
         }
