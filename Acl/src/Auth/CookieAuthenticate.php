@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Croogo\Acl\Auth;
 
 use Cake\Auth\BaseAuthenticate;
-use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Security;
 
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using COOKIE
@@ -56,14 +56,15 @@ class CookieAuthenticate extends BaseAuthenticate
      *
      * return boolean|array User data or boolean False when data is invalid
      */
-    protected function _verify($cookie)
+    protected function _verify(string $cookie)
     {
+        $cookie = json_decode($cookie, true);
         if (empty($cookie['data'])) {
             return false;
         }
 
         $data = $cookie['data'];
-        $mac = hash_hmac('sha256', $data, Configure::read('Security.salt'));
+        $mac = hash_hmac('sha256', $data, Security::getSalt());
         if ($mac !== $cookie['mac']) {
             return false;
         }
@@ -97,10 +98,6 @@ class CookieAuthenticate extends BaseAuthenticate
      */
     public function getUser(ServerRequest $request)
     {
-        if (!$this->_registry->has('Cookie')) {
-            throw new Exception('CookieComponent is not loaded');
-        }
-
         $config = $this->getConfig();
         if (!function_exists('mcrypt_encrypt') && !function_exists('openssl_encrypt')) {
             throw new Exception('Cannot use encryption, either mcrypt_encrypt() or openssl_encrypt() is required');
@@ -110,11 +107,8 @@ class CookieAuthenticate extends BaseAuthenticate
 
         $cookieName = $config['cookie']['name'];
         unset($config['cookie']['name']);
-        $this->_registry->Cookie->configKey($cookieName, [
-            'httpOnly' => true,
-        ]);
-        $cookie = $this->_registry->Cookie->read($cookieName);
-        $data = $this->_verify($cookie);
+        $cookie = $request->getCookie($cookieName);
+        $data = $cookie ? $this->_verify($cookie) : false;
         if (!$data) {
             return false;
         }

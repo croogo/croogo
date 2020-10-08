@@ -74,10 +74,6 @@ class FilterComponent extends Component
     {
         if (!$this->_registry->has('Croogo/Acl.AutoLogin')) {
             $this->_registry->load('Croogo/Acl.AutoLogin');
-            if (!$this->_registry->has('Cookie')) {
-                // FIXME
-                // $this->_registry->load('Cookie');
-            }
         }
 
         //Configure AuthComponent
@@ -109,7 +105,7 @@ class FilterComponent extends Component
                 }
                 $Setting->write('Access Control.autoLoginDuration', '');
             }
-            // $this->_controller->Auth->setConfig('authenticate', ['Croogo/Acl.Cookie']);
+            $this->_controller->Auth->setConfig('authenticate', ['Croogo/Acl.Cookie']);
         }
         if ($this->_config('multiColumn')) {
             $this->_controller->Auth->setConfig('authenticate', ['Croogo/Acl.MultiColumn']);

@@ -5,7 +5,11 @@ namespace Croogo\Acl\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Core\Configure;
+use Cake\Http\ServerRequest;
 use Cake\Event\EventInterface;
+use Cake\Http\Cookie\Cookie;
+use Cake\I18n\FrozenTime;
+use Cake\Utility\Security;
 
 /**
  * Provides "Remember me" feature (via CookieAuthenticate) by listening to
@@ -32,6 +36,8 @@ class AutoLoginComponent extends Component
 
     /**
      * Controller instance
+     *
+     * @var \Cake\Controller\Controller
      */
     protected $_Controller;
 
@@ -62,9 +68,6 @@ class AutoLoginComponent extends Component
             return;
         }
 
-        // FIXME
-        // $this->_registry->Cookie->configKey($this->getConfig('cookieName'), $this->getConfig('cookieConfig'));
-
         $setting = $this->_registry->Auth->getConfig('authenticate.all');
         list(, $this->_userModel) = pluginSplit($setting['userModel']);
         $this->_fields = $setting['fields'];
@@ -80,7 +83,7 @@ class AutoLoginComponent extends Component
      *
      * @return array cookie data
      */
-    protected function _cookie($request)
+    protected function _cookie(ServerRequest $request)
     {
         $time = time();
         $username = $request->getData($this->_fields['username']);
@@ -91,7 +94,7 @@ class AutoLoginComponent extends Component
             'username' => $username,
         ]);
 
-        $mac = hash_hmac('sha256', $data, Configure::read('Security.salt'));
+        $mac = hash_hmac('sha256', $data, Security::getSalt());
 
         return compact('mac', 'data');
     }
@@ -103,7 +106,10 @@ class AutoLoginComponent extends Component
      */
     public function onAdminLoginSuccessful(EventInterface $event)
     {
-        $request = $event->getSubject()->getRequest();
+        /** @var \Cake\Controller\Controller */
+        $controller = $event->getSubject();
+        /** @var \Cake\Http\ServerRequest */
+        $request = $controller->getRequest();
         $remember = $request->getData('remember');
         $expires = Configure::read('Access Control.autoLoginDuration');
         if (strtotime($expires) === false) {
@@ -111,8 +117,9 @@ class AutoLoginComponent extends Component
         }
         if ($request->is('post') && $remember) {
             $data = $this->_cookie($request);
-            // FIXME
-            // $this->_registry->Cookie->write($this->getConfig('cookieName'), $data);
+            $expiresAt = new FrozenTime($expires);
+            $cookie = new Cookie($this->_config['cookieName'], $data, $expiresAt, null, null, null, true, 'Strict');
+            $controller->setResponse($controller->getResponse()->withCookie($cookie));
         }
 
         return true;
@@ -125,8 +132,9 @@ class AutoLoginComponent extends Component
      */
     public function onAdminLogoutSuccessful(EventInterface $event)
     {
-        // FIXME
-        // $this->_registry->Cookie->delete($this->getConfig('cookieName'));
+        /** @var \Cake\Controller\Controller */
+        $controller = $event->getSubject();
+        $controller->setResponse($controller->getResponse()->withExpiredCookie(new Cookie($this->_config['cookieName'])));
 
         return true;
     }
