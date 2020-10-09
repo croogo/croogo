@@ -12,20 +12,14 @@ use Croogo\Core\Controller\Api\AppController;
 class LinksController extends AppController
 {
 
-    public function initialize(): void
-    {
-        parent::initialize();
-        $this->Auth->allow([
-            'index',
-        ]);
-    }
-
     public function index()
     {
         $this->Crud->on('beforePaginate', function (Event $event) {
+            /** @var \Cake\Datasource\QueryInterface $query */
+            $query = $event->getSubject()->query;
             $sort = $this->getRequest()->getQuery('sort');
             if (!$sort) {
-                $event->getSubject()->query->sortBy('lft', 'ASC');
+                $query->order(['lft' => 'ASC']);
             }
         });
         return $this->Crud->execute();

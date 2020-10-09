@@ -2,6 +2,7 @@
     <ul>
     <?php
     foreach ($nodesList as $node) {
+        $node->url->prefix = false;
         if ($options['link']) {
             echo '<li>';
             echo $this->Html->link($node->title, $node->url->getUrl(0));

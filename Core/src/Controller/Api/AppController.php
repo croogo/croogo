@@ -7,8 +7,8 @@ use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Event\Event;
 use Cake\Event\EventInterface;
+use Cake\Http\ResponseEmitter;
 
 /**
  * Base Api Controller
@@ -107,10 +107,29 @@ class AppController extends Controller
                 'Crud.Search',
                 'Crud.RelatedModels',
                 'CrudJsonApi.JsonApi',
+                'CrudJsonApi.Pagination',
             ]
         ]);
 
         Configure::write('debug', false);
+        $this->setupCors();
+    }
+
+    /** Setup CORS header */
+    protected function setupCors()
+    {
+        $this->response = $this->response->cors($this->request)
+            ->allowOrigin((array)Configure::read('Cors.allowOrigin'))
+            ->allowMethods((array)Configure::read('Cors.allowMethods'))
+            ->allowHeaders((array)Configure::read('Cors.allowHeaders'))
+            ->maxAge((int)Configure::read('Cors.maxAge'))
+            ->build();
+
+        if ($this->request->is('options')) {
+            $emitter = new ResponseEmitter();
+            $emitter->emit($this->response);
+            exit;
+        }
     }
 
     /**

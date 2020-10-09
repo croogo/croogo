@@ -53,6 +53,9 @@ class TypesTable extends CroogoTable
         $this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
             'through' => 'Croogo/Taxonomy.TypesVocabularies',
         ]);
+
+        $this->searchManager()
+            ->value('alias');
     }
 
     /**

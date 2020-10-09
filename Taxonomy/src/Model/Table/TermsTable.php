@@ -52,7 +52,8 @@ class TermsTable extends CroogoTable
                         ]);
                     });
                 },
-            ]);
+            ])
+            ->value('slug');
     }
 
     protected function _initializeSchema(TableSchemaInterface $table): TableSchemaInterface

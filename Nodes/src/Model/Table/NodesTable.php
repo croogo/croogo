@@ -57,11 +57,24 @@ class NodesTable extends CroogoTable
             'foreignKey' => 'parent_id',
         ]);
 
-        $this->searchManager()
+    }
+
+    public function searchManager()
+    {
+        $searchManager = $this->behaviors()->Search->searchManager();
+        $searchManager
             ->add('q', 'Search.Finder', [
                 'finder' => 'filterPublishedNodes'
             ])
-            ->add('filter', 'Search.Finder', [
+            ->like('filter', [
+                'before' => true,
+                'after' => true,
+                'fields' => [
+                    $this->aliasField('type'),
+                    $this->aliasField('slug'),
+                ],
+            ])
+            ->add('filter-nodes', 'Search.Finder', [
                 'finder' => 'filterNodes'
             ])
             ->add('title', 'Search.Like', [
@@ -74,8 +87,10 @@ class NodesTable extends CroogoTable
                 'before' => true,
                 'after' => true
             ])
-            ->add('type', 'Search.Value', [
-                'fields' => $this->aliasField('type')
+            ->add('type', 'Search.Like', [
+                'fields' => $this->aliasField('type'),
+                'before' => true,
+                'after' => true
             ])
             ->add('status', 'Search.Value', [
                 'fields' => $this->aliasField('status')
@@ -83,6 +98,7 @@ class NodesTable extends CroogoTable
             ->add('promote', 'Search.Value', [
                 'fields' => $this->aliasField('promote')
             ]);
+        return $searchManager;
     }
 
     protected function _initializeSchema(TableSchemaInterface $table): TableSchemaInterface

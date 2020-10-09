@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Croogo\Taxonomy\Controller\Api\V10;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Croogo\Core\Controller\Api\AppController;
 
 /**
@@ -12,21 +12,18 @@ use Croogo\Core\Controller\Api\AppController;
 class TaxonomiesController extends AppController
 {
 
-    public function initialize(): void
-    {
-        parent::initialize();
-        $this->Auth->allow([
-            'index',
-        ]);
-    }
-
     public function index()
     {
-        $this->Crud->on('beforePaginate', function (Event $event) {
+        $this->Crud->on('beforePaginate', function (EventInterface $event) {
             return $event->getSubject()->query
                 ->leftJoinWith('Terms')
                 ->leftJoinWith('Vocabularies');
         });
+        return $this->Crud->execute();
+    }
+
+    public function view()
+    {
         return $this->Crud->execute();
     }
 

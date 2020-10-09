@@ -15,10 +15,22 @@ $routes->plugin('Croogo/Taxonomy', ['path' => '/'], function (RouteBuilder $rout
         $route->prefix('V10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);
 
-            $route->resources('Taxonomies');
-            $route->resources('Terms');
-            $route->resources('Types');
-            $route->resources('Vocabularies');
+            $route->resources('Taxonomies', [
+                'only' => ['index', 'view'],
+            ]);
+
+            $route->resources('Terms', [
+                'only' => ['index', 'view'],
+            ]);
+
+            $route->connect('/types', ['controller' => 'Types', 'action' => 'index']);
+            $route->resources('Types', [
+                'only' => ['index', 'view'],
+            ]);
+
+            $route->resources('Vocabularies', [
+                'only' => ['index', 'view'],
+            ]);
         });
     });
 });

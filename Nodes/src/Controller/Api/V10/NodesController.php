@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Croogo\Nodes\Controller\Api\V10;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Croogo\Core\Utility\StringConverter;
 use Croogo\Core\Controller\Api\AppController;
 
 /**
@@ -12,20 +13,16 @@ use Croogo\Core\Controller\Api\AppController;
 class NodesController extends AppController
 {
 
-    public function initialize(): void
-    {
-        parent::initialize();
-        $this->Auth->allow([
-            'index',
-        ]);
-    }
-
     public function index()
     {
-        $this->Crud->on('beforePaginate', function (Event $event) {
-            $event->getSubject()->query
-                ->find('view')
-                ->contain(['Users']);
+        $this->Crud->on('afterPaginate', function (EventInterface $event) {
+            $entities = $event->getSubject()->entities;
+            $stringConverter = new StringConverter();
+            foreach ($entities as $entity) {
+                if (empty($entity->excerpt)) {
+                    $entity->excerpt = $stringConverter->firstPara($entity->body);
+                }
+            }
         });
         return $this->Crud->execute();
     }

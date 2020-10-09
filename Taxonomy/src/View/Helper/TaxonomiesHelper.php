@@ -147,6 +147,7 @@ class TaxonomiesHelper extends Helper
                 $termOutput = $this->Html->link(
                     $term->term->title,
                     [
+                        'prefix' => false,
                         'plugin' => $options['plugin'],
                         'controller' => $options['controller'],
                         'action' => $options['action'],

@@ -16,5 +16,9 @@ class VocabulariesController extends AppController
         return $this->Crud->execute();
     }
 
+    public function view()
+    {
+        return $this->Crud->execute();
+    }
 }
 

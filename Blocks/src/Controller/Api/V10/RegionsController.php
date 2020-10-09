@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Croogo\Taxonomy\Controller\Api\V10;
+namespace Croogo\Blocks\Controller\Api\V10;
 
 use Croogo\Core\Controller\Api\AppController;
 
 /**
- * Types Controller
+ * Regions Controller
  */
-class TypesController extends AppController
+class RegionsController extends AppController
 {
 
     public function index()
@@ -20,5 +20,5 @@ class TypesController extends AppController
     {
         return $this->Crud->execute();
     }
-}
 
+}

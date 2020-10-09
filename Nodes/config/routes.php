@@ -14,7 +14,11 @@ $routes->plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) 
         $route->prefix('V10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);
 
+            $route->connect('/nodes', ['controller' => 'Nodes', 'action' => 'index']);
             $route->resources('Nodes', [
+                'only' => [
+                    'index', 'view', 'lookup',
+                ],
                 'map' => [
                     'lookup' => [
                         'action' => 'lookup',

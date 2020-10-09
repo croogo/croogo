@@ -1135,7 +1135,7 @@ class PluginManager extends Plugin
             return $path;
         }
 
-        $paths = App::path('Plugin');
+        $paths = App::classPath('plugins');
         $pluginPath = str_replace('/', DIRECTORY_SEPARATOR, $plugin);
         foreach ($paths as $path) {
             if (!is_dir($path . $pluginPath)) {

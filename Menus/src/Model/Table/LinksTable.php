@@ -126,7 +126,7 @@ class LinksTable extends CroogoTable
         return $query
             ->innerJoinWith('Menus')
             ->where([
-                $this->Menus->aliasField('alias') => $options['menuAlias'],
+                $this->Menus->aliasField('alias') => $options['search']['menuAlias'],
                 $this->aliasField('status') => 1,
             ]);
     }
