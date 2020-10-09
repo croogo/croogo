@@ -23,4 +23,12 @@ $routes->plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $route) {
         $route->connect('/link-chooser/*', ['controller' => 'LinkChooser', 'action' => 'linkChooser']);
         $route->fallbacks();
     });
+
+    $route->connect('/.well-known/:controller/*', [
+        'action' => 'index',
+        '_ext' => 'json',
+    ], [
+        'controller' => '(jwks)',
+    ]);
+
 });

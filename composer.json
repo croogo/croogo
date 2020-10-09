@@ -33,6 +33,7 @@
         "cakephp/acl": "^0.7.0",
         "cakephp/plugin-installer": "~1.2",
         "admad/cakephp-sequence": "^3.0.1",
+        "firebase/php-jwt": "^5.2.0",
         "friendsofcake/crud": "^6.0",
         "friendsofcake/crud-json-api": "^1.0.0",
         "friendsofcake/search": "^6.0",
