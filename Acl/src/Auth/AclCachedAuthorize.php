@@ -157,7 +157,7 @@ class AclCachedAuthorize extends BaseAuthorize
             return $allowed;
         }
 
-        $primaryKey = $Model->primaryKey();
+        $primaryKey = $Model->getPrimaryKey();
         $ids = [];
         if ($request->is('get') && $request->getParam('pass.0')) {
             // collect id from actions such as: Nodes/admin_edit/1
