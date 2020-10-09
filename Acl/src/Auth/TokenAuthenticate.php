@@ -1,13 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Croogo\Acl\Controller\Component\Auth;
+namespace Croogo\Acl\Auth;
 
 use Cake\Auth\BaseAuthenticate;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Exception\Exception;
 use Cake\Http\Response;
+use Cake\Http\ResponseEmitter;
 use Cake\Http\ServerRequest;
+use Cake\ORM\TableRegistry;
 
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using Token
@@ -54,7 +56,7 @@ class TokenAuthenticate extends BaseAuthenticate
         ],
         'parameter' => '_token',
         'header' => 'X-ApiToken',
-        'userModel' => 'User',
+        'userModel' => 'Croogo/Users.Users',
         'scope' => [],
         'recursive' => 0,
         'contain' => null,
@@ -85,8 +87,9 @@ class TokenAuthenticate extends BaseAuthenticate
     {
         $user = $this->getUser($request);
         if (!$user) {
-            $response->statusCode(401);
-            $response->send();
+            $response = $response->withStatus(401);
+            $emitter = new ResponseEmitter();
+            $emitter->emit($response);
         }
 
         return $user;
@@ -95,13 +98,13 @@ class TokenAuthenticate extends BaseAuthenticate
     /**
      * Get token information from the request.
      *
-     * @param Request $request Request object.
+     * @param \Cake\Http\ServerRequest $request Request object.
      * @return mixed Either false or an array of user information
      */
     public function getUser(ServerRequest $request)
     {
         if (!empty($this->settings['header'])) {
-            $token = $request->header($this->settings['header']);
+            $token = current($request->getHeader($this->settings['header']));
             if ($token) {
                 return $this->_findUser($token, null);
             }
@@ -134,18 +137,20 @@ class TokenAuthenticate extends BaseAuthenticate
         if (!empty($this->settings['scope'])) {
             $conditions = array_merge($conditions, $this->settings['scope']);
         }
-        $result = ClassRegistry::init($userModel)->find('first', [
-            'conditions' => $conditions,
-            'recursive' => (int)$this->settings['recursive'],
-            'contain' => $this->settings['contain'],
-        ]);
-        if (empty($result) || empty($result[$model])) {
+        $user = TableRegistry::getTableLocator()->get($userModel)->find()
+            ->where($conditions)
+            ->contain($this->settings['contain'])
+            ->first();
+        if (!$user) {
             return false;
         }
-        $user = $result[$model];
-        unset($user[$fields['password']]);
-        unset($result[$model]);
+        $user->unset('password');
 
-        return array_merge($user, $result);
+        return $user->toArray();
+    }
+
+    public function unauthenticated(ServerRequest $request, Response $response)
+    {
+        return $response->withStatus(401);
     }
 }

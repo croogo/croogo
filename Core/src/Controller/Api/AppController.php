@@ -36,6 +36,7 @@ class AppController extends Controller
                     ],
                 ],
                 'Croogo/Acl.ApiForm',
+                'Croogo/Acl.Token',
             ],
             'authorize' => [
                 AuthComponent::ALL => [
