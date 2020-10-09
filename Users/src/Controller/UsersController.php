@@ -224,7 +224,7 @@ class UsersController extends AppController
         if (!$user) {
             Croogo::dispatchEvent('Controller.Users.loginFailure', $this);
 
-            $this->Flash->error($this->Auth->config('authError'));
+            $this->Flash->error($this->Auth->getConfig('authError'));
 
             return $this->redirect($this->Auth->loginAction);
         }
@@ -259,7 +259,7 @@ class UsersController extends AppController
     public function logout()
     {
         Croogo::dispatchEvent('Controller.Users.beforeLogout', $this);
-        $this->getRequest()->session()->delete('Croogo.redirect');
+        $this->getRequest()->getSession()->delete('Croogo.redirect');
 
         $this->Flash->success(__d('croogo', 'Log out successful.'), 'auth');
 
