@@ -10,9 +10,7 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
-use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Inflector;
 
 /**
  * An authentication adapter for AuthComponent. Provides similar functionality
@@ -83,25 +81,18 @@ class AclCachedAuthorize extends BaseAuthorize
      */
     public function action(ServerRequest $request, $path = '/:plugin/:prefix/:controller/:action')
     {
-        $apiPath = Configure::read('Croogo.Api.path');
         if (!$request->is('api')) {
             return parent::action($request, $path);
         }
 
-        $api = isset($request['api']) ? $apiPath : null;
-        if (isset($request['prefix'])) {
-            $prefix = $request['prefix'];
-            $action = str_replace($request['prefix'] . '_', '', $request['action']);
-        } else {
-            $prefix = null;
-            $action = $request['action'];
-        }
-        $plugin = empty($request['plugin']) ? null : str_replace('/', '\\', Inflector::camelize($request['plugin']));
-        $controller = Inflector::camelize($request['controller']);
+        $prefix = $request->getParam('prefix');
+        $plugin = str_replace('/', '\\', $request->getParam('plugin'));
+        $controller = $request->getParam('controller');
+        $action = $request->getParam('action');
 
         $path = str_replace(
-            [$apiPath, ':prefix', ':plugin', ':controller', ':action'],
-            [$api, $prefix, $plugin, $controller, $action],
+            [':prefix', ':plugin', ':controller', ':action'],
+            [$prefix, $plugin, $controller, $action],
             $this->getConfig('actionPath') . $path
         );
         $path = str_replace('//', '/', $path);
@@ -121,7 +112,7 @@ class AclCachedAuthorize extends BaseAuthorize
         }
 
         $allowed = false;
-        $Acl = $this->_registry->load('Acl');
+        $Acl = $this->_registry->load('Acl.Acl');
         list($plugin, $userModel) = pluginSplit($this->getConfig('userModel'));
 
         $action = $this->action($request);
