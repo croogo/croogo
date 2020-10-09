@@ -79,6 +79,7 @@ class ExtShell extends AppShell
         $this->_Controller = new AppController($Request, $Response);
         $this->_Controller->startupProcess();
         $this->_CroogoPlugin->setController($this->_Controller);
+        Configure::write('Trackable.Auth.User', ['id' => 1]);
         $this->initialize();
     }
 

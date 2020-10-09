@@ -680,7 +680,7 @@ class PluginManager extends Plugin
             $className = 'PluginActivation';
 
             $registered = Configure::read('plugins');
-            $pluginPaths = Hash::merge(App::path('Plugin'), $registered);
+            $pluginPaths = Hash::merge(App::classPath('plugins'), $registered);
             unset($pluginPaths['Croogo']); //Otherwise we get croogo plugins twice!
 
             if (isset($pluginPaths[$plugin])) {
