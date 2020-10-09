@@ -21,6 +21,7 @@ if ($this->getRequest()->getParam('action') == 'edit') {
 $this->start('action-buttons');
 if ($this->getRequest()->getParam('action') == 'edit') :
     echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), ['action' => 'resetPassword', $user->id]);
+    echo $this->Croogo->adminAction(__d('croogo', 'Reset token'), ['action' => 'resetToken', $user->id]);
 endif;
 $this->end();
 

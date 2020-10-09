@@ -209,6 +209,28 @@ class UsersController extends AppController
     }
 
     /**
+     * Reset Token
+     */
+    public function resetToken($id = null)
+    {
+        $user = $this->Users->get($id);
+
+        if ($this->getRequest()->is('put')) {
+            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
+
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__d('croogo', 'Token has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__d('croogo', 'Token could not be reset. Please, try again.'));
+            }
+        }
+
+        $this->set('user', $user);
+    }
+
+    /**
      * Admin login
      *
      * @return \Cake\Http\Response|void
