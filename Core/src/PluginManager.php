@@ -15,7 +15,6 @@ use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Database\SchemaCache;
-use Cake\Database\Type;
 use Cake\Database\TypeFactory;
 use Cake\Datasource\ConnectionManager;
 use Cake\Datasource\Exception\MissingDatasourceConfigException;
@@ -30,6 +29,7 @@ use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Croogo\Core\Event\EventManager;
 use Croogo\Settings\Configure\Engine\DatabaseConfig;
+use DirectoryIterator;
 use InvalidArgumentException;
 use Migrations\Migrations;
 
@@ -145,6 +145,7 @@ class PluginManager extends Plugin
     /**
      * Get plugin aliases (folder names)
      *
+     * @param string $type Type of plugin (plugin|theme)
      * @return array
      */
     public function getPlugins($type = 'plugin')
@@ -152,7 +153,17 @@ class PluginManager extends Plugin
         $plugins = [];
         $this->folder = new Folder;
         $registered = Configure::read('plugins');
-        $pluginPaths = Hash::merge(App::classPath('Plugin'), $registered);
+
+        $configuredPaths = Configure::read('App.paths.plugins');
+        foreach ($configuredPaths as $configuredPath) {
+            foreach (new DirectoryIterator($configuredPath) as $fileInfo) {
+                $pluginDirectory = $fileInfo->getFilename();
+                if($fileInfo->isDot() || $fileInfo->isFile() || strpos($pluginDirectory, '.') === 0) continue;
+                $pluginPaths[$pluginDirectory] = $configuredPath . $pluginDirectory . DIRECTORY_SEPARATOR;
+            }
+        }
+
+        $pluginPaths = Hash::merge($pluginPaths, $registered);
         unset($pluginPaths['Croogo']); //Otherwise we get croogo plugins twice!
         foreach ($pluginPaths as $pluginName => $pluginPath) {
             $this->folder->path = $pluginPath;
@@ -1244,6 +1255,7 @@ class PluginManager extends Plugin
         }
 
         try {
+            /** @var \Cake\Database\Connection $defaultConnection*/
             $defaultConnection = ConnectionManager::get('default');
             $dbConfigExists = $defaultConnection->connect();
         } catch (Exception $e) {
