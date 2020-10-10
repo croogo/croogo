@@ -7,9 +7,9 @@ $this->Breadcrumbs->add(__d('croogo', 'Menus'), ['controller' => 'Menus', 'actio
 
 if ($this->getRequest()->getParam('action') == 'add') {
     $this->Breadcrumbs->add(h($menu->title), [
-                'action' => 'index',
-                '?' => ['menu_id' => $menu->id],
-            ])
+        'action' => 'index',
+            '?' => ['menu_id' => $menu->id],
+        ])
         ->add(__d('croogo', 'Add'), $this->getRequest()->getRequestTarget());
     $formUrl = [
         'action' => 'add',
@@ -25,6 +25,7 @@ if ($this->getRequest()->getParam('action') == 'edit') {
         ->add($link->title, $this->getRequest()->getRequestTarget());
     $formUrl = [
         'action' => 'edit',
+        $link->id,
         '?' => [
             'menu_id' => $menu->id,
         ],
@@ -35,9 +36,6 @@ $this->append('form-start', $this->Form->create($link, [
     'url' => $formUrl,
     'class' => 'protected-form',
 ]));
-
-//$inputDefaults = $this->Form->getTemplates();
-//$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
 $this->append('tab-heading');
     echo $this->Croogo->adminTab(__d('croogo', 'Link'), '#link-basic');
