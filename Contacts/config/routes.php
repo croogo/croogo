@@ -7,6 +7,7 @@ $routes->plugin('Croogo/Contacts', ['path' => '/'], function (RouteBuilder $rout
         $route->setExtensions(['json']);
 
         $route->scope('/contacts', [], function (RouteBuilder $route) {
+            $route->connect('/', ['controller' => 'Contacts']);
             $route->fallbacks();
         });
     });

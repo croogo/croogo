@@ -5,6 +5,7 @@ use Cake\Routing\RouteBuilder;
 $routes->plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('Admin', function (RouteBuilder $route) {
         $route->scope('/users', [], function (RouteBuilder $route) {
+            $route->connect('/', ['controller' => 'Users']);
             $route->fallbacks();
         });
     });

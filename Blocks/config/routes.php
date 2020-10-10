@@ -5,6 +5,7 @@ use Cake\Routing\RouteBuilder;
 $routes->plugin('Croogo/Blocks', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('Admin', function (RouteBuilder $route) {
         $route->scope('/blocks', [], function (RouteBuilder $route) {
+            $route->connect('/', ['controller' => 'Blocks']);
             $route->fallbacks();
         });
     });

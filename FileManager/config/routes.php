@@ -7,6 +7,7 @@ $routes->plugin('Croogo/FileManager', ['path' => '/'], function (RouteBuilder $r
         $route->setExtensions(['json']);
 
         $route->scope('/file-manager', [], function (RouteBuilder $route) {
+            $route->connect('/', ['controller' => 'FileManager']);
             $route->fallbacks();
         });
     });

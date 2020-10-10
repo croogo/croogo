@@ -6,6 +6,7 @@ use Croogo\Core\Routing\Router;
 $routes->plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('Admin', function (RouteBuilder $route) {
         $route->scope('/nodes', [], function (RouteBuilder $route) {
+            $route->connect('/', ['controller' => 'Nodes']);
             $route->fallbacks();
         });
     });

@@ -5,6 +5,7 @@ use Cake\Routing\RouteBuilder;
 $routes->plugin('Croogo/Menus', ['path' => '/'], function (RouteBuilder $route) {
     $route->prefix('Admin', function (RouteBuilder $route) {
         $route->scope('/menus', [], function (RouteBuilder $route) {
+            $route->connect('/', ['controller' => 'Menus']);
             $route->fallbacks();
         });
     });
