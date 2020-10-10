@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Croogo\Extensions\Controller\Admin;
 
-use UnexpectedValueException;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
-use Cake\Network\Exception\BadRequestException;
+use Cake\Http\Exception\BadRequestException;
 use Croogo\Extensions\CroogoTheme;
 use Croogo\Extensions\Exception\MissingThemeException;
 use Croogo\Extensions\ExtensionsInstaller;
@@ -80,7 +79,7 @@ class ThemesController extends AppController
         $type = $this->getRequest()->getQuery('type') ?: 'theme';
 
         if (!$theme) {
-            throw new UnexpectedValueException();
+            throw new BadRequestException();
         }
         try {
             $this->_CroogoTheme->activate($theme, $type);

@@ -62,7 +62,9 @@ $activeThemes = [$currentTheme['name'], $currentBackendTheme['name']];
 if ($theme['isFrontendTheme'] && $currentTheme['name'] != $theme['name']) :
     $out .= $this->Form->postLink(__d('croogo', 'Activate Frontend'), [
             'action' => 'activate',
-            'theme' => $theme['name'],
+            '?' => [
+                'theme' => $theme['name'],
+            ],
         ], [
             'button' => 'outline-secondary btn-sm',
             'icon' => $this->Theme->getIcon('power-on'),
