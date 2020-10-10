@@ -151,6 +151,7 @@ class PluginManager extends Plugin
     public function getPlugins($type = 'plugin')
     {
         $plugins = [];
+        $pluginPaths = [];
         $this->folder = new Folder;
         $registered = Configure::read('plugins');
 
