@@ -84,6 +84,7 @@ Mohammed Mahgoub <mmahgoub@gmail.com>
 Nicholas Craig <nick@threadgroup.com>
 Paulo Pinto <paulorpinto@gmail.com>
 Robbert Noordzij <robbert@xseeding.nl>
+Robert Vincic <robert.vincic@gmail.com>
 Sam Bernard <sam@sambernard.net>
 SplicePHP <admin@splicephp.com>
 Wiena Lorentz <lorentz@xintesa.com>
@@ -101,3 +102,4 @@ stefanozoffoli <stefano.zoffoli@librasoftsnc.it>
 stelioschar <stelioschar@gmail.com>
 stickler-ci <support@stickler-ci.com>
 webdevan <github@webdevan.co.za>
+Вадим Дунькин <vadimushka.d@gmail.com>
