@@ -41,18 +41,18 @@ class CroogoView extends AppView
         $pluginPaths = $themePaths = [];
         if (!empty($plugin)) {
             for ($i = 0, $count = count($templatePaths); $i < $count; $i++) {
-                $pluginPaths[] = $templatePaths[$i] . 'Plugin' . DIRECTORY_SEPARATOR . $plugin . DIRECTORY_SEPARATOR;
+                $pluginPaths[] = $templatePaths[$i] . 'plugins' . DIRECTORY_SEPARATOR . $plugin . DIRECTORY_SEPARATOR;
             }
             $pluginPaths = array_merge($pluginPaths, App::path(static::NAME_TEMPLATE, $plugin));
         }
 
         if (!empty($this->theme)) {
             $themePaths = App::path(static::NAME_TEMPLATE, Inflector::camelize($this->theme));
-            array_unshift($themePaths, APP . 'Template' . DIRECTORY_SEPARATOR . 'Plugin' . DIRECTORY_SEPARATOR . $this->theme . DIRECTORY_SEPARATOR);
+            array_unshift($themePaths, ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'Plugin' . DIRECTORY_SEPARATOR . $this->theme . DIRECTORY_SEPARATOR);
 
             if ($plugin) {
                 foreach (array_reverse($themePaths) as $path) {
-                    array_unshift($themePaths, $path . 'Plugin' . DIRECTORY_SEPARATOR . $plugin . DIRECTORY_SEPARATOR);
+                    array_unshift($themePaths, $path . 'plugins' . DIRECTORY_SEPARATOR . $plugin . DIRECTORY_SEPARATOR);
                 }
             }
         }
@@ -61,7 +61,7 @@ class CroogoView extends AppView
             $themePaths,
             $pluginPaths,
             $templatePaths,
-            [dirname(__DIR__) . DIRECTORY_SEPARATOR . static::NAME_TEMPLATE . DIRECTORY_SEPARATOR]
+            [dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . static::NAME_TEMPLATE . DIRECTORY_SEPARATOR]
         );
 
         if ($plugin !== null) {
@@ -122,9 +122,11 @@ class CroogoView extends AppView
         try {
             return parent::render($template, $layout);
         } catch (MissingTemplateException $e) {
+            // when template for requested extension (eg: rss/json) is not found, throw a 400 instead of 500 error
             if ($this->getRequest()->getParam('_ext')) {
                 throw new NotFoundException(null, null);
             }
+            throw $e;
         }
     }
 
