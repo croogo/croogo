@@ -21,12 +21,12 @@ Croogo::translateModel('Croogo/Contacts.Contacts', [
 Wysiwyg::setActions([
     'Croogo/Contacts.Admin/Contacts/add' => [
         [
-            'elements' => 'body',
+            'elements' => '#body',
         ],
     ],
     'Croogo/Contacts.Admin/Contacts/edit' => [
         [
-            'elements' => 'body',
+            'elements' => '#body',
         ],
     ],
 ]);

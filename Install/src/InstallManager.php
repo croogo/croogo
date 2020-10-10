@@ -281,8 +281,8 @@ class InstallManager
             'controllers/Croogo\Users/Users/forgot' => [$public],
             'controllers/Croogo\Users/Users/reset' => [$public],
             'controllers/Croogo\Users/Users/login' => [$public],
-            'controllers/Croogo\Users/Users/logout' => [$registered],
-            'controllers/Croogo\Users/Admin/Users/logout' => [$registered],
+            'controllers/Croogo\Users/Users/logout' => [$public, $registered],
+            'controllers/Croogo\Users/Admin/Users/logout' => [$public, $registered],
             'controllers/Croogo\Users/Users/view' => [$registered],
 
             'controllers/Croogo\Dashboards/Admin/Dashboards' => [$admin],
