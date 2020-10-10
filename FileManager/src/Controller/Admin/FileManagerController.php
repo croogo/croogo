@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Croogo\FileManager\Controller\Admin;
 
-use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
@@ -28,7 +26,7 @@ class FileManagerController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        $this->FileManager = new FileManager();
+        $this->fileManager = new FileManager();
         $this->viewBuilder()
             ->setHelpers([
                 'Croogo/Core.Image',
@@ -111,7 +109,7 @@ class FileManagerController extends AppController
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
-        if (!$this->FileManager->isEditable($path)) {
+        if (!$this->fileManager->isEditable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
@@ -147,7 +145,7 @@ class FileManagerController extends AppController
         $path = $this->getRequest()->getQuery('path') ?: APP;
         $this->set(compact('path'));
 
-        if (isset($path) && !$this->FileManager->isDeletable($path)) {
+        if (isset($path) && !$this->fileManager->isDeletable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 
             return $this->redirect($this->referer());
@@ -180,7 +178,7 @@ class FileManagerController extends AppController
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if (!$this->FileManager->isDeletable($path)) {
+        if (!$this->fileManager->isDeletable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
@@ -215,7 +213,7 @@ class FileManagerController extends AppController
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if (isset($path) && !$this->FileManager->isDeletable($path)) {
+        if (isset($path) && !$this->fileManager->isDeletable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
@@ -248,7 +246,7 @@ class FileManagerController extends AppController
         $path = $this->getRequest()->query('path');
         $pathFragments = array_filter(explode(DIRECTORY_SEPARATOR, $path));
 
-        if (!$this->FileManager->isEditable($path)) {
+        if (!$this->fileManager->isEditable($path)) {
             $this->Flash->error(__d('croogo', 'Path "%s" cannot be renamed', $path));
 
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
@@ -271,7 +269,7 @@ class FileManagerController extends AppController
                         $message = __d('croogo', '%s already exists', $newName);
                         $alertType = 'error';
                     } else {
-                        if ($this->FileManager->rename($path, $newPath)) {
+                        if ($this->fileManager->rename($path, $newPath)) {
                             $message = __d('croogo', '"%s" has been renamed to "%s"', $oldName, $newName);
                             $alertType = 'success';
                         } else {
@@ -308,7 +306,7 @@ class FileManagerController extends AppController
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if (isset($path) && !$this->FileManager->isDeletable($path)) {
+        if (isset($path) && !$this->fileManager->isDeletable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 
             return $this->redirect($this->referer());
@@ -343,7 +341,7 @@ class FileManagerController extends AppController
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if (isset($path) && !$this->FileManager->isEditable($path)) {
+        if (isset($path) && !$this->fileManager->isEditable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 
             return $this->redirect($this->referer());

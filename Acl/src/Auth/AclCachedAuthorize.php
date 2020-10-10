@@ -152,7 +152,8 @@ class AclCachedAuthorize extends BaseAuthorize
         // bail out when controller's primary model does not want row level acl
         $controller = $this->_registry->getController();
         $model = $controller->getName();
-        $Model = $controller->{$model};
+        /** @var \Cake\ORM\Table $Model */
+        $Model = $controller->loadModel();
         if ($Model && !$Model->behaviors()->has('RowLevelAcl')) {
             return $allowed;
         }
@@ -173,7 +174,7 @@ class AclCachedAuthorize extends BaseAuthorize
                 }
             }
 
-            $id = $request->param('pass.0');
+            $id = $request->getParam('pass.0');
             if ($id) {
                 $ids[] = $id;
             }
@@ -204,7 +205,7 @@ class AclCachedAuthorize extends BaseAuthorize
      */
     protected function _authorizeByContent($user, ServerRequest $request, $id)
     {
-        if (!isset($this->getConfig('actionMap')[$request->params['action']])) {
+        if (!isset($this->getConfig('actionMap')[$request->getParam('action')])) {
             $message = __d(
                 'croogo',
                 '_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
@@ -217,11 +218,11 @@ class AclCachedAuthorize extends BaseAuthorize
 
         list($plugin, $userModel) = pluginSplit($this->getConfig('userModel'));
         $acoNode = [
-            'model' => $this->_registry->getController()->name,
+            'model' => $this->_registry->getController()->getName(),
             'foreign_key' => $id,
         ];
         $alias = sprintf('%s.%s', $acoNode['model'], $acoNode['foreign_key']);
-        $action = $this->getConfig('actionMap')[$request->param('action')];
+        $action = $this->getConfig('actionMap')[$request->getParam('action')];
 
         $cacheName = 'permissions_content_' . strval($user['id']);
         if (($permissions = Cache::read($cacheName, 'permissions')) === null) {

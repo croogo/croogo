@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Croogo\Acl\Model\Behavior;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\TableRegistry;
 
@@ -23,9 +23,9 @@ class RowLevelAclBehavior extends Behavior
      * creator. If 'RolePermission' is present, 'grant' or 'inherit' permissions
      * for the role.
      */
-    public function afterSave(Event $event)
+    public function afterSave(EventInterface $event)
     {
-        $entity = $event->data['entity'];
+        $entity = $event->getData('entity');
         if (!$entity || !$entity->id) {
             return;
         }
