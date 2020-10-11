@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Croogo\Users\Mailer;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Mailer\Mailer;
 use Croogo\Users\Model\Entity\User;
 
@@ -23,6 +23,7 @@ class UserMailer extends Mailer
 
     public function resetPassword(User $user)
     {
+        $this->viewBuilder()->setTemplate('Croogo/Users.forgot_password');
         return $this
             ->setProfile('default')
             ->setTo($user->email)
@@ -30,12 +31,12 @@ class UserMailer extends Mailer
             ->setEmailFormat('both')
             ->setViewVars([
                 'user' => $user
-            ])
-            ->viewBuilder()->setTemplate('Croogo/Users.forgot_password');
+            ]);
     }
 
     public function registrationActivation(User $user)
     {
+        $this->viewBuilder()->setTemplate('Croogo/Users.register');
         return $this
             ->setProfile('default')
             ->setTo($user->email)
@@ -43,11 +44,10 @@ class UserMailer extends Mailer
             ->setEmailFormat('both')
             ->setViewVars([
                 'user' => $user
-            ])
-            ->viewBuilder()->setTemplate('Croogo/Users.register');
+            ]);
     }
 
-    public function onRegistration(Event $event, User $user)
+    public function onRegistration(EventInterface $event, User $user)
     {
         $this->send('registrationActivation', [$user]);
     }

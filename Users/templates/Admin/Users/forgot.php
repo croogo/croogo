@@ -5,7 +5,7 @@ $this->setLayout('admin_login');
 $title = __d('croogo', 'Forgot Password');
 $this->assign('title', $title);
 
-$formStart = $this->Form->create('Users', [
+$formStart = $this->Form->create(null, [
     'url' => [
         'controller' => 'Users',
         'action' => 'forgot',

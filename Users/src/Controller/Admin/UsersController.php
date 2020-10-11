@@ -426,8 +426,12 @@ class UsersController extends AppController
 
         $user = $this->Users
             ->find()
-            ->where(['username' => $username])
-            ->orWhere(['email' => $username])
+            ->where([
+                'OR' => [
+                    'username' => $username,
+                    'email' => $username,
+                ],
+            ])
             ->first();
         if (!$user) {
             $this->Flash->error(__d('croogo', 'Invalid username.'));

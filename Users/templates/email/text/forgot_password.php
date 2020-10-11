@@ -10,7 +10,7 @@ echo __d('croogo', 'Hello %s', $user->name) ?>,
         'action' => 'reset',
         $user->username,
         $user->activation_key,
-    ], true);
+    ], ['fullBase' => true]);
     echo __d('croogo', 'Please visit this link to reset your password: %s', $url);
     ?>
 
