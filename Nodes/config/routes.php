@@ -33,8 +33,8 @@ $routes->plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) 
     $route->setExtensions(['rss']);
 
     $route->connect('/', ['controller' => 'Nodes', 'action' => 'promoted']);
-    $route->connect('/feed', ['controller' => 'Nodes', 'action' => 'feed', '_ext' => 'rss']);
-    $route->connect('/promoted', ['controller' => 'Nodes', 'action' => 'feed', '_ext' => 'rss']);
+    $route->connect('/feed', ['controller' => 'Nodes', 'action' => 'feed']);
+    $route->connect('/promoted', ['controller' => 'Nodes', 'action' => 'feed']);
     $route->connect('/search', ['controller' => 'Nodes', 'action' => 'search']);
 
     // Content types

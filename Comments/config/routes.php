@@ -11,5 +11,6 @@ $routes->plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $rout
 
     $route->setExtensions(['rss']);
 
+    $route->connect('/comments', ['controller' => 'Comments']);
     $route->fallbacks();
 });
