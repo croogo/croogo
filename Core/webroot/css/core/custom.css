@@ -4,6 +4,7 @@
 }
 
 #top-right-menu .fas,
+.btn-group .btn .fas,
 .card-buttons .btn .fas {
   margin-right: 0.5rem;
 }

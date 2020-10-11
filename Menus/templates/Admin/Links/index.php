@@ -10,7 +10,12 @@ $this->Breadcrumbs->add(__d('croogo', 'Menus'), ['controller' => 'Menus', 'actio
     ->add(h(__d('croogo', $menu->title)), $this->getRequest()->getRequestTarget());
 
 $this->append('action-buttons');
-echo $this->Croogo->adminAction(__d('croogo', 'New link'), ['action' => 'add', 'menu_id' => $menu->id]);
+echo $this->Croogo->adminAction(__d('croogo', 'New link'), [
+    'action' => 'add',
+    '?' => [
+        'menu_id' => $menu->id,
+    ],
+]);
 $this->end();
 
 $this->append('form-start', $this->Form->create(null, [

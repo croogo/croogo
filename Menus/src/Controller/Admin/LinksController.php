@@ -218,7 +218,7 @@ class LinksController extends AppController
         }
 
         $entity = $event->getSubject()->entity;
-        $event->getSubject()->url['menu_id'] = $entity->menu_id;
+        $event->getSubject()->url['?'] = ['menu_id' => $entity->menu_id];
     }
 
     public function implementedEvents(): array
