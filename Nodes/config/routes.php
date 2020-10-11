@@ -34,6 +34,7 @@ $routes->plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) 
 
     $route->connect('/', ['controller' => 'Nodes', 'action' => 'promoted']);
     $route->connect('/feed', ['controller' => 'Nodes', 'action' => 'feed', '_ext' => 'rss']);
+    $route->connect('/promoted', ['controller' => 'Nodes', 'action' => 'feed', '_ext' => 'rss']);
     $route->connect('/search', ['controller' => 'Nodes', 'action' => 'search']);
 
     // Content types
