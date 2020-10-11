@@ -8,6 +8,7 @@ use Cake\Database\Exception\MissingConnectionException;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\RouteBuilder as CakeRouteBuilder;
 use Cake\Routing\Router as CakeRouter;
 use Cake\Utility\Inflector;
 use Croogo\Core\Link;
@@ -208,7 +209,7 @@ class Router extends CakeRouter
         }
     }
 
-    public static function createRouteBuilder(string $path, array $options = []): RouteBuilder
+    public static function createRouteBuilder(string $path, array $options = []): CakeRouteBuilder
     {
         $defaults = [
             'routeClass' => static::defaultRouteClass(),
