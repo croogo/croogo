@@ -9,8 +9,6 @@ echo $this->Form->create(null, [
     ],
 ]);
 
-$this->Form->unlockField('q');
-
 ?>
 <div class="input-group">
 
@@ -22,6 +20,7 @@ $this->Form->unlockField('q');
                 'inputContainer' => '{{content}}',
             ],
             'required' => true,
+            'secure' => false,
         ]);
 ?>
 
