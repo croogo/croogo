@@ -61,7 +61,8 @@ class CroogoView extends AppView
             $themePaths,
             $pluginPaths,
             $templatePaths,
-            [dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . static::NAME_TEMPLATE . DIRECTORY_SEPARATOR]
+            [dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . static::NAME_TEMPLATE . DIRECTORY_SEPARATOR],
+            [CAKE_CORE_INCLUDE_PATH . DIRECTORY_SEPARATOR . static::NAME_TEMPLATE . DIRECTORY_SEPARATOR]
         );
 
         if ($plugin !== null) {
