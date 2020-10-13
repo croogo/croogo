@@ -27,11 +27,12 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0",
+        "php": ">=7.2.0",
         "cakephp/cakephp": "^4.1.4",
         "cakephp/migrations": "^3.0",
         "cakephp/acl": "^0.7.0",
         "cakephp/plugin-installer": "~1.2",
+        "char0n/ffmpeg-php": "^3.0.0",
         "admad/cakephp-sequence": "^3.0.1",
         "firebase/php-jwt": "^5.2.0",
         "friendsofcake/crud": "^6.0",
@@ -43,8 +44,8 @@
         "league/flysystem": "^1.0"
     },
     "require-dev": {
-        "cakephp/cakephp-codesniffer": "^3.0",
-        "phpunit/phpunit": "^5|^6",
+        "cakephp/cakephp-codesniffer": "~4.2.0",
+        "phpunit/phpunit": "~8.50",
         "friendsofcake/cakephp-test-utilities": "^0.0.2"
     },
     "autoload": {
