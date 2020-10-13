@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Croogo\FileManager\Event;
 
+use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
@@ -42,10 +43,8 @@ class FileManagerEventHandler implements EventListenerInterface
     /**
      * Registers usage when new attachment is created and attached to a resource
      */
-    public function onNewAttachment($event)
+    public function onNewAttachment(EventInterface $event)
     {
-        $controller = $event->getSubject();
-        $request = $controller->request;
         $attachment = $event->getData('attachment');
 
         // create poster for video, ideally should be done via a job queue
@@ -84,7 +83,7 @@ class FileManagerEventHandler implements EventListenerInterface
      *
      * @return void
      */
-    public function onSetupLinkChooser($event)
+    public function onSetupLinkChooser(EventInterface $event)
     {
         $linkChoosers = [];
         $linkChoosers['Images'] = [
@@ -127,7 +126,7 @@ class FileManagerEventHandler implements EventListenerInterface
     /**
      * Setup admin data
      */
-    public function onSetupAdminData($event)
+    public function onSetupAdminData(EventInterface $event)
     {
         Nav::add('media.children.attachments', [
             'title' => __d('croogo', 'Attachments'),

@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace Croogo\FileManager\View\Helper;
 
+use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
 use Croogo\Core\View\Helper\ImageHelper;
+use Exception;
 
 class AssetsImageHelper extends ImageHelper
 {
@@ -31,8 +33,12 @@ class AssetsImageHelper extends ImageHelper
             $options['uploadsDir'] = 'uploads';
         }
         $result = parent::resize($path, $width, $height, $options, $htmlAttributes, $return);
-        $record = compact('result', 'path', 'width', 'height', 'aspect', 'htmlAttributes', 'adapter');
-        Croogo::dispatchEvent('Assets.AssetsImageHelper.resize', $this->_View, compact('record'));
+        $record = compact('result', 'path', 'width', 'height', 'htmlAttributes', 'adapter');
+        try {
+            Croogo::dispatchEvent('Assets.AssetsImageHelper.resize', $this->_View, compact('record'));
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
 
         return $result;
     }

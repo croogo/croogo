@@ -73,6 +73,10 @@ class ImageHelper extends HtmlHelper
 
         $size = getimagesize($sourcefile);
 
+        if (!$size) {
+            return;
+        }
+
         if ($aspect) {
             if (($size[1] / $height) > ($size[0] / $width)) {
                 $width = ceil(($size[0] / $size[1]) * $height);
@@ -171,7 +175,12 @@ class ImageHelper extends HtmlHelper
         $w = (int)ceil($w);
         $h = (int)ceil($h);
 
-        $image = call_user_func('imagecreatefrom' . $format, $source);
+        $createimagefromFunc = 'imagecreatefrom' . $format;
+        if (!function_exists($createimagefromFunc)) {
+            return;
+        }
+        $image = call_user_func($createimagefromFunc, $source);
+
         if (function_exists('imagecreatetruecolor')) {
             $temp = imagecreatetruecolor($w, $h);
             if (in_array($format, $transparency)) {

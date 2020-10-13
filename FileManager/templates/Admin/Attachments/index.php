@@ -115,7 +115,7 @@ $this->append('table-heading');
                 $thumbnail = $this->Html->link($imgUrl, $path, [
                     'escape' => false,
                     'data-toggle' => 'lightbox',
-                    'title' => $attachment['AssetsAttachment']['title'],
+                    'title' => $attachment->asset->title,
                 ]);
                 break;
             case 'video':
