@@ -195,7 +195,7 @@ class FileManager
     {
         $editablePaths = (array)Configure::check('FileManager.editablePaths');
         foreach ($editablePaths as $editablePath) {
-            if ($this->_isWithinPath($editablePath, $path)) {
+            if (file_exists($editablePath) && $this->_isWithinPath($editablePath, $path)) {
                 return true;
             }
         }
@@ -219,7 +219,7 @@ class FileManager
             if ($deletablePath == $path) {
                 continue;
             }
-            if ($this->_isWithinPath($deletablePath, $path)) {
+            if (file_exists($deletablePath) && $this->_isWithinPath($deletablePath, $path)) {
                 return true;
             }
         }
@@ -252,7 +252,7 @@ class FileManager
      * @param string $pathToCheck Path to check
      * @return bool True if $pathToCheck resides under $referencePath
      */
-    protected function _isWithinPath($referencePath, $pathToCheck)
+    protected function _isWithinPath(string $referencePath, string $pathToCheck)
     {
         $path = realpath($pathToCheck);
         $regex = '/^' . preg_quote(realpath($referencePath), '/') . '/';
