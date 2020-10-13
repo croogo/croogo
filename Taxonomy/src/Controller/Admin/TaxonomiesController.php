@@ -103,7 +103,12 @@ class TaxonomiesController extends AppController
             if ($success) {
                 $this->Flash->success(__d('croogo', 'Taxonomy deleted successfully'));
 
-                return $this->redirect(['action' => 'index', 'vocabulary_id' => $vocabularyId]);
+                return $this->redirect([
+                    'action' => 'index',
+                    '?' => [
+                        'vocabulary_id' => $vocabularyId,
+                    ],
+                ]);
             }
         }
     }

@@ -41,17 +41,26 @@ $this->append('table-body');
 $rows = [];
 
 foreach ($terms as $term) :
+    $taxonomy = current($term->taxonomies);
     $actions = [];
     $actions[] = $this->Croogo->adminRowActions($term->id);
     $actions[] = $this->Croogo->adminRowAction('', [
-        'action' => 'edit', $term->id,
+        'action' => 'edit',
+        $term->id,
+        '?' => [
+            'vocabulary_id' => $taxonomy->vocabulary_id,
+        ],
     ], [
         'icon' => $this->Theme->getIcon('update'),
         'escapeTitle' => false,
         'tooltip' => __d('croogo', 'Edit this item'),
     ]);
     $actions[] = $this->Croogo->adminRowAction('', [
-        'action' => 'delete', $term->id,
+        'action' => 'delete',
+        $term->id,
+        '?' => [
+            'vocabulary_id' => $taxonomy->vocabulary_id,
+        ],
     ], [
         'icon' => $this->Theme->getIcon('delete'),
         'escapeTitle' => false,
@@ -67,8 +76,10 @@ foreach ($terms as $term) :
             'plugin' => 'Croogo/Nodes',
             'controller' => 'Nodes',
             'action' => 'term',
-            'type' => $defaultType->alias,
-            'term' => $term->slug,
+            '?' => [
+                'type' => $defaultType->alias,
+                'term' => $term->slug,
+            ],
         ], [
             'target' => '_blank',
         ]);

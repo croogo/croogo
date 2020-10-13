@@ -18,7 +18,9 @@ $this->append('action-buttons');
 echo $this->Croogo->adminAction(__d('croogo', 'Create term'), [
     'controller' => 'Terms',
     'action' => 'add',
-    'vocabulary_id' => $vocabulary->id,
+    '?' => [
+        'vocabulary_id' => $vocabulary->id,
+    ],
 ]);
 $this->end();
 
@@ -63,7 +65,9 @@ foreach ($taxonomies as $taxonomy) :
         'controller' => 'Terms',
         'action' => 'edit',
         $term->id,
-        'vocabulary_id' => $vocabulary->id,
+        '?' => [
+            'vocabulary_id' => $vocabulary->id,
+        ],
     ], [
         'icon' => $this->Theme->getIcon('update'),
         'escapeTitle' => false,
@@ -73,7 +77,9 @@ foreach ($taxonomies as $taxonomy) :
         'controller' => 'Taxonomies',
         'action' => 'delete',
         $taxonomy->id,
-        'vocabulary_id' => $vocabulary->id,
+        '?' => [
+            'vocabulary_id' => $vocabulary->id,
+        ],
     ], [
         'icon' => $this->Theme->getIcon('delete'),
         'escapeTitle' => false,

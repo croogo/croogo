@@ -39,10 +39,9 @@ class TermsController extends AppController
     /**
      * Admin index
      *
-     * @param int $vocabularyId
      * @access public
      */
-    public function index($vocabularyId = null)
+    public function index()
     {
         $this->Crud->on('beforePaginate', function (Event $event) {
             return $event->getSubject()->query
@@ -56,14 +55,19 @@ class TermsController extends AppController
      * Admin delete
      *
      * @param int $id
-     * @param int $vocabularyId
      * @return \Cake\Http\Response|void
      * @access public
      */
-    public function delete($id = null, $vocabularyId = null)
+    public function delete($id)
     {
+        $vocabularyId = $this->request->getQuery('vocabulary_id');
         if ($vocabularyId) {
-            $redirectUrl = ['action' => 'index', 'vocabulary_id' => $vocabularyId];
+            $redirectUrl = [
+                'action' => 'index',
+                '?' => [
+                    'vocabulary_id' => $vocabularyId,
+                ],
+            ];
             $this->Taxonomy->ensureVocabularyIdExists($vocabularyId);
             $this->Terms->Taxonomies->termInVocabulary($id, $vocabularyId);
         } else {
@@ -158,13 +162,17 @@ class TermsController extends AppController
                     return $this->redirect([
                         'action' => 'edit',
                         $term->id,
-                        'vocabulary_id' => $vocabularyId,
+                        '?' => [
+                            'vocabulary_id' => $vocabularyId,
+                        ],
                     ]);
                 } else {
                     return $this->redirect([
                         'controller' => 'Taxonomies',
                         'action' => 'index',
-                        'vocabulary_id' => $vocabularyId,
+                        '?' => [
+                            'vocabulary_id' => $vocabularyId,
+                        ],
                     ]);
                 }
             } else {
@@ -172,7 +180,7 @@ class TermsController extends AppController
             }
         }
         $parentTree = $this->Terms->Taxonomies->getTree($vocabulary->alias, ['taxonomyId' => true]);
-        $this->set(compact('taxonomies', 'vocabulary', 'parentTree', 'term', 'taxonomy', 'vocabularyId'));
+        $this->set(compact('taxonomies', 'vocabulary', 'parentTree', 'term', 'vocabularyId'));
     }
 
     /**
@@ -206,13 +214,17 @@ class TermsController extends AppController
                 $redirectUrl = [
                     'action' => 'edit',
                     $term->id,
-                    'vocabulary_id' => $vocabularyId,
+                    '?' => [
+                        'vocabulary_id' => $vocabularyId,
+                    ],
                 ];
                 if (!$term->has('_apply')) {
                     $redirectUrl = [
                         'controller' => 'Taxonomies',
                         'action' => 'index',
-                        'vocabulary_id' => $vocabularyId,
+                        '?' => [
+                            'vocabulary_id' => $vocabularyId,
+                        ],
                     ];
                 }
 

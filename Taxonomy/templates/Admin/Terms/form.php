@@ -5,19 +5,27 @@ $this->Croogo->adminScript('Croogo/Taxonomy.terms');
 
 $this->Breadcrumbs
     ->add(__d('croogo', 'Content'), [
-        'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index',
+        'plugin' => 'Croogo/Nodes',
+        'controller' => 'Nodes',
+        'action' => 'index',
     ])
     ->add(__d('croogo', 'Vocabularies'), [
-        'controller' => 'Vocabularies', 'action' => 'index',
+        'controller' => 'Vocabularies',
+        'action' => 'index',
     ]);
 
 if (isset($vocabulary)) :
     $this->Breadcrumbs->add($vocabulary->title, [
-        'controller' => 'Taxonomies', 'action' => 'index', 'vocabulary_id' => $vocabulary->id,
+        'controller' => 'Taxonomies',
+        'action' => 'index',
+        '?' => [
+            'vocabulary_id' => $vocabulary->id,
+        ],
     ]);
 else :
     $this->Breadcrumbs->add(__d('croogo', 'Terms'), [
-        'controller' => 'Terms', 'action' => 'index',
+        'controller' => 'Terms',
+        'action' => 'index',
     ]);
 endif;
 
@@ -41,7 +49,9 @@ if (isset($vocabularyId)) :
     $cancelUrl = [
         'controller' => 'Taxonomies',
         'action' => 'index',
-        'vocabulary_id' => $vocabularyId,
+        '?' => [
+            'vocabulary_id' => $vocabularyId,
+        ],
     ];
 else :
     $cancelUrl = [
@@ -54,7 +64,9 @@ $this->set('cancelUrl', $cancelUrl);
 $formUrl = [
     'action' => $this->getRequest()->getParam('action'),
     $termId,
-    'vocabulary_id' => $vocabulary->id,
+    '?' => [
+        'vocabulary_id' => $vocabulary->id,
+    ],
 ];
 
 $this->assign('form-start', $this->Form->create($term, [
@@ -109,19 +121,19 @@ $this->append('tab-content');
             'label' => __d('croogo', 'Description'),
         ]);
 
-        echo $this->Html->tabEnd();
+    echo $this->Html->tabEnd();
 
-        echo $this->Html->tabStart('term-misc');
+    echo $this->Html->tabStart('term-misc');
         echo $this->Form->control('params', [
             'label' => __d('croogo', 'Params'),
             'type' => 'stringlist',
         ]);
-        echo $this->Html->tabEnd();
+    echo $this->Html->tabEnd();
 
-        $this->end();
+$this->end();
 
-        $this->start('buttons');
-        echo $this->Html->beginBox(__d('croogo', 'Publishing'));
-        echo $this->element('Croogo/Core.admin/buttons', ['type' => 'Terms']);
-        echo $this->Html->endBox();
-        $this->end();
+$this->start('buttons');
+    echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+    echo $this->element('Croogo/Core.admin/buttons', ['type' => 'Terms']);
+    echo $this->Html->endBox();
+$this->end();
