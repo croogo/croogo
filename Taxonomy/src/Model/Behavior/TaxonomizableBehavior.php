@@ -28,8 +28,7 @@ use Croogo\Taxonomy\Model\Entity\Term;
 class TaxonomizableBehavior extends Behavior
 {
     /**
-     * @param array $config
-     * @return void
+     * @inheritdoc
      */
     public function initialize(array $config): void
     {
@@ -45,7 +44,7 @@ class TaxonomizableBehavior extends Behavior
     }
 
     /**
-     * Setup Event handlers
+     * @inheritdoc
      */
     public function implementedEvents(): array
     {
@@ -77,7 +76,7 @@ class TaxonomizableBehavior extends Behavior
                 'model' => $this->_table->getRegistryAlias(),
             ],
         ]);
-        $this->_table->Taxonomies->belongsToMany($this->_table->getAlias(), [
+        $this->_table->Taxonomies->belongsToMany($this->_table->getRegistryAlias(), [
             'targetTable' => $this->_table,
             'through' => 'Croogo/Taxonomy.ModelTaxonomies',
             'foreignKey' => 'foreign_key',
@@ -291,20 +290,13 @@ class TaxonomizableBehavior extends Behavior
      */
     public function beforeFind(EventInterface $event, Query $query)
     {
-        $query->traverse(function ($value, $clause) use ($query) {
-            if (
-                $clause === 'select' &&
-                (count($value) === 0 || in_array($this->getTable()->getPrimaryKey(), $value))
-            ) {
-                return $query->contain([
-                    'Taxonomies' => [
-                        'Terms',
-                        'Vocabularies',
-                    ],
-                    'Types',
-                ]);
-            }
-        });
+        return $query->contain([
+            'Taxonomies' => [
+                'Terms',
+                'Vocabularies',
+            ],
+            'Types',
+        ]);
 
         return $query;
     }
@@ -341,9 +333,9 @@ class TaxonomizableBehavior extends Behavior
         $query
             ->matching('Taxonomies', function (Query $q) use ($entity) {
                 return $q
-                   ->where([
-                       'term_id' => $entity->id
-                   ]);
+                    ->where([
+                        'term_id' => $entity->id
+                    ]);
             });
 
         return $query;
@@ -381,9 +373,9 @@ class TaxonomizableBehavior extends Behavior
         $query
             ->matching('Taxonomies', function (Query $q) use ($entity) {
                 return $q
-                   ->where([
-                       'vocabulary_id' => $entity->id
-                   ]);
+                    ->where([
+                        'vocabulary_id' => $entity->id
+                    ]);
             });
 
         return $query;
