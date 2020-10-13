@@ -27,6 +27,11 @@ class NodesController extends AppController
         return $this->Crud->execute();
     }
 
+    public function view()
+    {
+        return $this->Crud->execute();
+    }
+
     public function lookup()
     {
         // FIXME: Things get broken when Translate is activated
