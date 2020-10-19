@@ -212,6 +212,23 @@ class TermsTable extends CroogoTable
         return $query;
     }
 
+    public function findBySlug(Query $query, array $options)
+    {
+        $defaults = ['slug' => null];
+        $options += $defaults;
+
+        if ($this->hasBehavior('Translate')) {
+            $conditions['OR'] = [
+                $this->aliasField('slug') => $options['slug'],
+                $this->translationField('slug') => $options['slug'],
+            ];
+        } else {
+            $conditions[$this->aliasField('slug')] = $options['slug'];
+        }
+
+        return $query->where($conditions);
+    }
+
     /**
      * Save new/updated term data
      *

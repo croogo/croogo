@@ -55,6 +55,7 @@ Wysiwyg::setActions([
 Croogo::translateModel('Croogo/Nodes.Nodes', [
     'fields' => [
         'title',
+        'slug',
         'excerpt',
         'body',
     ],
