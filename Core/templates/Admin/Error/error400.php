@@ -5,7 +5,7 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
- $this->setLayout('error');
+$this->setLayout('admin_error');
 
 if (Configure::read('debug')) :
     $this->layout = 'dev_error';

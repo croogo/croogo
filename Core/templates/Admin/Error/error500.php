@@ -5,13 +5,13 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
- $this->setLayout('error');
+$this->setLayout('admin_error');
 
 if (Configure::read('debug')) :
     $this->layout = 'dev_error';
 
     $this->assign('title', $message);
-    $this->assign('templateName', 'error400.php');
+    $this->assign('templateName', 'error500.php');
 
     $this->start('file');
 ?>
@@ -25,14 +25,18 @@ if (Configure::read('debug')) :
         <strong>SQL Query Params: </strong>
         <?php Debugger::dump($error->params) ?>
 <?php endif; ?>
-<?= $this->element('auto_table_warning') ?>
+<?php if ($error instanceof Error) : ?>
+        <strong>Error in: </strong>
+        <?= sprintf('%s, line %s', str_replace(ROOT, 'ROOT', $error->getFile()), $error->getLine()) ?>
+<?php endif; ?>
 <?php
+    echo $this->element('auto_table_warning');
 
-$this->end();
+    $this->end();
 endif;
 ?>
-<h2><?= h($message) ?></h2>
+<h2><?= __d('cake', 'An Internal Error Has Occurred') ?></h2>
 <p class="error">
     <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= __d('cake', 'The requested address {0} was not found on this server.', "<strong>'{$url}'</strong>") ?>
+    <?= h($message) ?>
 </p>

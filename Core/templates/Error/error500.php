@@ -5,11 +5,7 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
-if ($this->getRequest()->getParam('prefix') === 'Admin'):
-    $this->setLayout('admin_error');
-else:
-    $this->setLayout('error');
-endif;
+$this->setLayout('error');
 
 if (Configure::read('debug')) :
     $this->layout = 'dev_error';
