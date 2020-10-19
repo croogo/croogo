@@ -67,7 +67,7 @@ foreach ($taxonomies as $taxonomy) :
     ]);
 
 
-    if (false && $hasTranslate):
+    if ($hasTranslate):
         $actions[] = $this->Croogo->adminRowAction(
             '',
             ['plugin' => 'Croogo/Translate', 'controller' => 'Translate', 'action' => 'index',
