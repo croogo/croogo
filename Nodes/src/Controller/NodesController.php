@@ -155,9 +155,8 @@ class NodesController extends AppController
 
         $cacheKeys = ['term', $locale, $termSlug];
         $cacheKey = implode('_', $cacheKeys);
-        $term = $this->Nodes->Taxonomies->Terms->find()
-            ->where([
-                'Terms.slug' => $termSlug,
+        $term = $this->Nodes->Taxonomies->Terms->find('bySlug', [
+                'slug' => $termSlug,
             ])
             ->cache($cacheKey, 'nodes_term')
             ->firstOrFail();

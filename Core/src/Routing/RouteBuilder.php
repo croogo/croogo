@@ -18,12 +18,12 @@ class RouteBuilder extends CakeRouteBuilder
 
     public function connect($path, $defaults = [], array $options = []): Route
     {
-        $route = parent::connect($path, $defaults, $options);
         if (CorePluginManager::isLoaded('Croogo/Translate')) {
             $languages = Configure::read('I18n.languages');
             $i18nOptions = array_merge($options, ['lang' => implode('|', $languages)]);
             parent::connect('/{lang}/' . $path, $defaults, $i18nOptions);
         }
+        $route = parent::connect($path, $defaults, $options);
         return $route;
     }
 

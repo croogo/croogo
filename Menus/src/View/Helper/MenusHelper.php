@@ -228,7 +228,7 @@ class MenusHelper extends Helper
      * @param array $link Link data
      * @param string $param Parameter name
      * @param array $options Default options
-     * @return string
+     * @return array
      */
     protected function _mergeLinkParams($link, $param, $options = [])
     {

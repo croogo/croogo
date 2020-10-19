@@ -15,9 +15,18 @@ Croogo::hookComponent('*', 'Croogo/Taxonomy.Taxonomy');
 
 Croogo::hookHelper('*', 'Croogo/Taxonomy.Taxonomies');
 
+Croogo::translateModel('Croogo/Taxonomy.Vocabularies', [
+    'fields' => [
+        'title',
+        'alias',
+        'description',
+    ],
+]);
+
 Croogo::translateModel('Croogo/Taxonomy.Terms', [
     'fields' => [
         'title',
+        'slug',
         'description',
     ],
 ]);
@@ -25,6 +34,7 @@ Croogo::translateModel('Croogo/Taxonomy.Terms', [
 Croogo::translateModel('Croogo/Taxonomy.Types', [
     'fields' => [
         'title',
+        'alias',
         'description',
     ],
 ]);

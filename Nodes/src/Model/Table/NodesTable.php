@@ -256,10 +256,19 @@ class NodesTable extends CroogoTable
         $defaults = ['slug' => null, 'type' => null];
         $options += $defaults;
 
-        return $query->where([
-            $this->aliasField('slug') => $options['slug'],
+        $conditions = [
             $this->aliasField('type') => $options['type'],
-        ]);
+        ];
+        if ($this->hasBehavior('Translate')) {
+            $conditions['OR'] = [
+                $this->aliasField('slug') => $options['slug'],
+                $this->translationField('slug') => $options['slug'],
+            ];
+        } else {
+            $conditions[$this->aliasField('slug')] = $options['slug'];
+        }
+
+        return $query->where($conditions);
     }
 
     /**
