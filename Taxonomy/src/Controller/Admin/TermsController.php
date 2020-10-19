@@ -180,7 +180,12 @@ class TermsController extends AppController
             }
         }
         $parentTree = $this->Terms->Taxonomies->getTree($vocabulary->alias, ['taxonomyId' => true]);
-        $this->set(compact('taxonomies', 'vocabulary', 'parentTree', 'term', 'vocabularyId'));
+
+        // TranslateEventHandler expects this variable to be set.
+        // Typically this is set by Crud, but since we do not use Crud for this action, we have to set it manually
+        $viewVar = 'term';
+
+        $this->set(compact('taxonomies', 'vocabulary', 'parentTree', 'term', 'vocabularyId', 'viewVar'));
     }
 
     /**

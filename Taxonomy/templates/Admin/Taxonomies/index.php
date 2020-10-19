@@ -1,5 +1,9 @@
 <?php
 
+use Croogo\Core\PluginManager;
+
+$hasTranslate = PluginManager::loaded('Croogo/Translate');
+
 $this->assign('title', __d('croogo', 'Vocabulary: %s', $vocabulary->title));
 
 $this->extend('Croogo/Core./Common/admin_index');
@@ -61,6 +65,21 @@ foreach ($taxonomies as $taxonomy) :
         'tooltip' => __d('croogo', 'Move down'),
         'method' => 'post',
     ]);
+
+
+    if (false && $hasTranslate):
+        $actions[] = $this->Croogo->adminRowAction(
+            '',
+            ['plugin' => 'Croogo/Translate', 'controller' => 'Translate', 'action' => 'index',
+                '?' => [
+                    'id' => $vocabulary->id,
+                    'model' => 'Croogo/Taxonomy.Terms',
+                ],
+            ],
+            ['icon' => $this->Theme->getIcon('translate'), 'escapeTitle' => false, 'tooltip' => __d('croogo', 'Translate this item')]
+        );
+    endif;
+
     $actions[] = $this->Croogo->adminRowAction('', [
         'controller' => 'Terms',
         'action' => 'edit',
