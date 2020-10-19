@@ -55,7 +55,7 @@ class TranslateController extends AppController
 
             return $this->redirect([
                 'plugin' => $plugin,
-                'controller' => Inflector::pluralize($modelAlias),
+                'controller' => Inflector::pluralize($model),
                 'action' => 'index',
             ]);
         }
