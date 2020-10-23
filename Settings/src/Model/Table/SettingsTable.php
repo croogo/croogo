@@ -218,7 +218,7 @@ class SettingsTable extends CroogoTable
     public function updateAppVersionInfo()
     {
         $gitDir = realpath(ROOT . DS . '.git');
-        if (!file_exists($gitDir)) {
+        if (!$gitDir || !file_exists($gitDir)) {
             Log::error('Git repository not found');
 
             return false;
