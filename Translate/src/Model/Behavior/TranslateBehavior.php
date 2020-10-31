@@ -30,6 +30,24 @@ class TranslateBehavior extends CakeTranslateBehavior
     }
 
     /**
+     * @inheritdoc
+     *
+     * Override `translationTable` to use I18n Table and Entity classes to make crud-json-api happy
+     */
+    protected function createStrategy()
+    {
+        $config = array_diff_key(
+            $this->_config,
+            ['implementedFinders', 'implementedMethods', 'strategyClass']
+        );
+        $config['translationTable'] = 'Croogo/Translate.I18n';
+        /** @var class-string<\Cake\ORM\Behavior\Translate\TranslateStrategyInterface> $className */
+        $className = $this->getConfig('strategyClass', static::$defaultStrategyClass);
+
+        return new $className($this->_table, $config);
+    }
+
+    /**
      * Delete translations
      */
     public function deleteTranslation(EntityInterface $entity, string $locale)
