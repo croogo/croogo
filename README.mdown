@@ -4,6 +4,8 @@
 
 It is powered by [CakePHP](http://cakephp.org) MVC framework.
 
+This repository contains the plugins that made up the core of croogo. Application template repository is [https://github.com/croogo/app](https://github.com/croogo/app).
+
 [![Build Status](https://travis-ci.org/croogo/croogo.svg?branch=master)](https://travis-ci.org/croogo/croogo)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/croogo/croogo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/croogo/croogo/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/croogo/croogo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/croogo/croogo/?branch=master)
