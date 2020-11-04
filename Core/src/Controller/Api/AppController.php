@@ -112,6 +112,8 @@ class AppController extends Controller
             ]
         ]);
 
+        $this->loadComponent('Croogo/Core.TranslateHook');
+
         Configure::write('debug', false);
         $this->setupCors();
     }
