@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Users\Model\Entity\Role $role
+ */
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Breadcrumbs
     ->add(__d('croogo', 'Users'), ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'])

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\FileManager\Model\Entity\Attachment $attachment
+ */
 
 $this->loadHelper('Croogo/FileManager.Filemanager');
 

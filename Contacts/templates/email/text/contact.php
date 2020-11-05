@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $_SERVER
+ * @var \Croogo\Contacts\Model\Entity\Contact $contact
+ * @var \Croogo\Contacts\Model\Entity\Message $message
+ */
 
 use Cake\Routing\Router;
 

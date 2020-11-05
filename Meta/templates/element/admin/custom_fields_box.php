@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var object $entity
+ */
+?>
 <div class="meta-fields">
     <?php
 

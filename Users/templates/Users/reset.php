@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Users\Model\Entity\User $user
+ */
+?>
 <div class="users form">
     <h2><?= $this->fetch('title'); ?></h2>
     <?= $this->Form->create($user); ?>

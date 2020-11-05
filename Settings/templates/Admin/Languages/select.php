@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $id
+ * @var mixed $modelAlias
+ * @var \Croogo\Settings\Model\Entity\Language[]|\Cake\Collection\CollectionInterface $languages
+ */
 
 $this->extend('/Common/admin_index');
 

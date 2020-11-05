@@ -1,4 +1,13 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $loggedInUser
+ * @var mixed $parents
+ * @var mixed $roles
+ * @var object $type
+ * @var mixed $users
+ * @var \Croogo\Nodes\Model\Entity\Node $node
+ */
 
 if (empty($type)):
     echo $this->Html->div('alert alert-danger', __d('croogo', 'Invalid type'));

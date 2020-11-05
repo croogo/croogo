@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $_SERVER
+ * @var \Croogo\Users\Model\Entity\User $user
+ */
+?>
 <p>
 <?= __d('croogo', 'Hello %s', $user->name); ?>,
 </p>

@@ -10,6 +10,9 @@ use Cake\View\Helper;
  * Recaptcha Helper
  *
  * @package Croogo.Core.View.Helper
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\FormHelper $Form
+ * @property \Croogo\Core\View\Helper\JsHelper $Js
  */
 class RecaptchaHelper extends Helper
 {

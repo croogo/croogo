@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $types
+ */
 $this->assign('title', __d('croogo', 'Create content'));
 ?>
 <h2 class="d-md-none"><?= $this->fetch('title') ?></h2>

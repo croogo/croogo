@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 $title = isset($title) ? $title : null;
 if (empty($id)) {
     $id = 'modal';

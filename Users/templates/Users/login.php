@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <div class="users form">
     <h2><?= __d('croogo', 'Login') ?></h2>
     <?= $this->Form->create(null, ['url' => ['action' => 'login']]);?>

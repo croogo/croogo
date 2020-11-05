@@ -9,6 +9,7 @@ use Croogo\Core\TestSuite\IntegrationTestCase;
 
 /**
  * @property \Croogo\Nodes\Model\Table\NodesTable Nodes
+ * @uses \Croogo\Nodes\Controller\NodesController
  */
 class NodesControllerTest extends IntegrationTestCase
 {

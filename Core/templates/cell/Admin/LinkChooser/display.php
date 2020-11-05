@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $dropdowns
+ * @var mixed $linkChoosers
+ * @var mixed $target
+ */
 
 use Cake\Utility\Hash;
 

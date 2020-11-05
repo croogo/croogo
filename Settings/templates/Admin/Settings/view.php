@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Settings\Model\Entity\Setting $setting
+ */
+?>
 <div class="settings view">
 <h2><?= __d('croogo', 'Setting'); ?></h2>
     <dl><?php $i = 0;

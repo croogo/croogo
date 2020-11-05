@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $a
+ * @var array $b
+ * @var mixed $locales
+ */
 
 use Cake\Core\Configure;
 

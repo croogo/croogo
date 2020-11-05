@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <nav class="navbar-dark bg-black">
     <?php
 

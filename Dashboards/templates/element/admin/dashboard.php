@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var string $alias
+ * @var array $dashboard
+ */
 
 if (isset($dashboard['id'])) :
     $dataId = 'data-id="' . h($dashboard['id']) . '"';

@@ -18,6 +18,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property int $created_by
  * @property int|null $modified_by
+ * @property \Croogo\Users\Model\Entity\User $trackable_creator
+ * @property \Croogo\Users\Model\Entity\User|null $trackable_updater
  */
 class I18n extends Entity
 {

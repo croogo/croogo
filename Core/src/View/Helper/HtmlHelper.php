@@ -14,6 +14,8 @@ use Croogo\Extensions\CroogoTheme;
  * Croogo Html Helper
  *
  * @package Croogo.Croogo.View.Helper
+ * @property \Cake\View\Helper\UrlHelper $Url
+ * @property \Croogo\Core\View\Helper\ThemeHelper $Theme
  */
 class HtmlHelper extends BaseHtmlHelper
 {

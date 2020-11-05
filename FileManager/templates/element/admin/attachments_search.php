@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 $chooserType = isset($this->getRequest()->query['chooser_type']) ? $this->getRequest()->query['chooser_type'] : 'attachment';
 ?>
 <div class="clearfix filter">

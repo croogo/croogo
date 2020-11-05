@@ -16,6 +16,8 @@ use Croogo\Core\Routing\Router;
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ * @property \Croogo\Core\View\Helper\CroogoHelper $Croogo
+ * @property \Cake\View\Helper\UrlHelper $Url
  */
 class WysiwygHelper extends Helper
 {

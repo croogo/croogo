@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Contacts\Model\Entity\Message[]|\Cake\Collection\CollectionInterface $messages
+ */
 
 $this->Croogo->adminScript('Croogo/Contacts.admin');
 

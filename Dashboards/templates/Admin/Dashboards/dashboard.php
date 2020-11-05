@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <?php $this->assign('title', __d('croogo', 'Dashboards')) ?>
 <?php
 $this->Croogo->adminScript('Croogo/Dashboards.admin');

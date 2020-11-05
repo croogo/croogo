@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $path
+ */
 
 $this->assign('title', __d('croogo', 'Create File'));
 $this->extend('Croogo/Core./Common/admin_edit');

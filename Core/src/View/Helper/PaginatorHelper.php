@@ -10,6 +10,10 @@ use Cake\View\View;
  * Croogo Paginator Helper
  *
  * @package Croogo.Croogo.View.Helper
+ * @property \Cake\View\Helper\UrlHelper $Url
+ * @property \Cake\View\Helper\NumberHelper $Number
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\FormHelper $Form
  */
 class PaginatorHelper extends BasePaginatorHelper
 {

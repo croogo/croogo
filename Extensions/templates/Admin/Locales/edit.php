@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $content
+ * @var array $locale
+ */
 
 $this->extend('/Common/admin_edit');
 

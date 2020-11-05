@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 
 $adminThemeScripts = <<<EOF
     Admin.form();

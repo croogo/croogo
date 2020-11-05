@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var object $entity
+ */
 
 use Cake\Core\Configure;
 use Cake\Utility\Hash;

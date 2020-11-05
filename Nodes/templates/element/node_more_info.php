@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $typesForLayout
+ */
+?>
 <div class="node-more-info text-muted mb-5">
 <?php
     $type = $typesForLayout[$this->Nodes->field('type')];

@@ -20,7 +20,11 @@ use Croogo\Core\Utility\StringConverter;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  *
- * @property \Croogo\Core\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\UrlHelper $Url
+ * @property \Croogo\Core\View\Helper\LayoutHelper $Layout
+ * @property \Croogo\Core\View\Helper\CroogoHelper $Croogo
+ * @property \Cake\View\Helper\FormHelper $Form
  */
 class MetaHelper extends Helper
 {

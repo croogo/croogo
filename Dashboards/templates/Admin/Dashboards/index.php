@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $dashboards
+ */
 $this->assign('title', __d('croogo', 'Dashboards'));
 
 $this->extend('Croogo/Core./Common/admin_index');

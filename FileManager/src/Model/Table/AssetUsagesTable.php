@@ -34,7 +34,7 @@ class AssetUsagesTable extends CroogoTable
 
     /**
      * @param Event $event
-     * @param EntityInterface $entity
+     * @param \Croogo\FileManager\Model\Entity\AssetUsage $entity
      * @param ArrayObject $options
      *
      * @return bool

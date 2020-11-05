@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $user
+ */
 $this->assign('title', __d('croogo', 'Successful'));
 
 use Croogo\Core\Routing\Router; ?>

@@ -1,4 +1,11 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $Url
+ * @var object $item
+ * @var object $nodes
+ * @var object $type
+ */
 
 use Cake\Core\Configure;
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $context
+ * @var array $currentConfiguration
+ * @var mixed $drivers
+ */
 $this->assign('title', __d('croogo', 'Database'));
 
 $this->start('before');

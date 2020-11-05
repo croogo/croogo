@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 $this->Html->script([
     'jquery/jquery.min',
     'core/bootstrap.min',

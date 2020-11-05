@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $params
+ */
 $escape = isset($params['escape']) ? $params['escape'] : true;
 
 if ($escape) :

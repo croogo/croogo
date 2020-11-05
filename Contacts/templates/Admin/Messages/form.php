@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Contacts\Model\Entity\Message $message
+ */
 $this->assign('title', __d('croogo', 'Edit Message'));
 $this->extend('/Common/admin_edit');
 

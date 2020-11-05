@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $currentBackendTheme
+ * @var array $currentTheme
+ * @var array $theme
+ */
 
 $activeThemes = [$currentTheme['name'], $currentBackendTheme['name']];
 

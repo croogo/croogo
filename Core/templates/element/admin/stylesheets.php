@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 
 if (!$this->getRequest()->is('ajax')) :
     echo $this->Html->css([

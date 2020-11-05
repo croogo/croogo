@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $nodeTypes
+ */
 echo $this->Form->create(null, [
     'align' => 'inline',
 ]);

@@ -1,4 +1,11 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $_assetButtons
+ * @var mixed $foreignKey
+ * @var mixed $junk
+ * @var mixed $mimeType
+ */
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;

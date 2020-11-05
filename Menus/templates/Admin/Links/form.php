@@ -1,4 +1,11 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $parentLinks
+ * @var mixed $roles
+ * @var \Croogo\Menus\Model\Entity\Link $link
+ * @var \Croogo\Menus\Model\Entity\Menu $menu
+ */
 
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Croogo->adminScript('Croogo/Menus.admin');

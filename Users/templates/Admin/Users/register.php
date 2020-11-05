@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 
 $this->assign('title', __d('croogo', 'Registration'));
 $this->setLayout('admin_login');

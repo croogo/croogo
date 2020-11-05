@@ -24,6 +24,13 @@ use Croogo\Core\Status;
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ * @property \Cake\View\Helper\FormHelper $Form
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\UrlHelper $Url
+ * @property \Croogo\Core\View\Helper\LayoutHelper $Layout
+ * @property \Croogo\Core\View\Helper\ThemeHelper $Theme
+ * @property \Croogo\Menus\View\Helper\MenusHelper $Menus
+ * @property \Croogo\Acl\View\Helper\AclHelper $Acl
  */
 class CroogoHelper extends Helper
 {

@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $linksStatus
+ * @var mixed $linksTree
+ * @var \Croogo\Menus\Model\Entity\Menu $menu
+ */
 
 use Croogo\Core\Status;
 

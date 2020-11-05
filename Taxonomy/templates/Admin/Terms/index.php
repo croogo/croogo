@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $defaultType
+ * @var \Croogo\Taxonomy\Model\Entity\Term[]|\Cake\Collection\CollectionInterface $terms
+ * @var \Croogo\Taxonomy\Model\Entity\Vocabulary $vocabulary
+ */
 
 if (isset($vocabulary)) :
     $title = __d('croogo', 'Vocabulary: %s', $vocabulary->title);

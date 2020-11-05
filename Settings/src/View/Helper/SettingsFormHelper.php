@@ -16,6 +16,8 @@ use Croogo\Settings\Model\Entity\Setting;
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ * @property \Cake\View\Helper\FormHelper $Form
+ * @property \Croogo\Core\View\Helper\CroogoHelper $Croogo
  */
 class SettingsFormHelper extends Helper
 {

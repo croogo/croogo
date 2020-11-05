@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var string $_siteTitle
+ */
 
 $this->loadHelper('Croogo/Core.Croogo');
 $this->loadHelper('Html', ['className' => 'Croogo/Core.Html']);

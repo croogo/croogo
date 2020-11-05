@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 $this->Breadcrumbs->add(
     __d('croogo', 'Content'),
     ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']

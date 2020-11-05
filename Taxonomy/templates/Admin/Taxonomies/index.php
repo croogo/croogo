@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $defaultType
+ * @var \Croogo\Taxonomy\Model\Entity\Taxonomy[]|\Cake\Collection\CollectionInterface $taxonomies
+ * @var \Croogo\Taxonomy\Model\Entity\Vocabulary $vocabulary
+ */
 
 use Croogo\Core\PluginManager;
 

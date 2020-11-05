@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $content
+ * @var mixed $path
+ */
 
 $this->extend('Croogo/Core./Common/admin_index');
 $tableHeaderClass = $this->Theme->getCssClass('tableHeaderClass');

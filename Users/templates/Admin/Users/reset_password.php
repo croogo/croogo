@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Users\Model\Entity\User $user
+ */
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->assign('title', __d('croogo', 'Reset password: %s', $user->username));

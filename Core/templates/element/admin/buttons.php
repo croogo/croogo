@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \Croogo\Core\View\CroogoView $this
+ * @var \App\View\AppView $this
  */
 
 $iconSet = $this->Theme->settings('iconDefaults.iconSet');

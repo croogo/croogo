@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $items
+ */
 
 use Cake\Core\Configure;
 

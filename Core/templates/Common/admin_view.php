@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $editFields
+ * @var mixed $tabId
+ * @var mixed $title_for_layout
+ */
 
 use Cake\Utility\Inflector;
 

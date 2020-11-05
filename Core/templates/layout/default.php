@@ -4,6 +4,7 @@
  *
  * @author Fahad Ibnay Heylaal <contact@fahad19.com>
  * @link http://www.croogo.org
+ * @var \App\View\AppView $this
  */
 
 use Cake\Core\Configure;

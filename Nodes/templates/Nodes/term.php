@@ -1,4 +1,11 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var object $term
+ * @var object $type
+ * @var object $vocabulary
+ * @var \Croogo\Nodes\Model\Entity\Node[]|\Cake\Collection\CollectionInterface $nodes
+ */
 
 $titles = [];
 if (isset($vocabulary)) :

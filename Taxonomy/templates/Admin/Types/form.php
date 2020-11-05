@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Taxonomy\Model\Entity\Type $type
+ */
 
 $this->extend('Croogo/Core./Common/admin_edit');
 

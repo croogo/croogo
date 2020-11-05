@@ -5,6 +5,9 @@ use Contacts\Controller\ContactsController;
 use Croogo\TestSuite\CroogoControllerTestCase;
 use Croogo\TestSuite\CroogoTestFixture;
 
+/**
+ * @uses \Croogo\Contacts\Controller\ContactsController
+ */
 class ContactsControllerTest extends CroogoControllerTestCase
 {
 

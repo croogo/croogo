@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $themesData
+ */
 
 $this->extend('Croogo/Core./Common/admin_index');
 

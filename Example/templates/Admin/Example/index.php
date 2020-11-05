@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 $this->extend('Croogo/Core./Common/admin_index');
 $this->Breadcrumbs
     ->add('Example', ['controller' => 'Example', 'action' => 'index']);

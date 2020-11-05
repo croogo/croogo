@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Blocks\Model\Entity\Block[]|\Cake\Collection\CollectionInterface $blocks
+ */
 
 use Croogo\Core\Status;
 

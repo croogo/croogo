@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <p>
     Welcome to your new Croogo installation. Use the menu on the left to manage your site.
 </p>

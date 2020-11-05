@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Nodes\Model\Entity\Node[]|\Cake\Collection\CollectionInterface $nodes
+ */
 
 $this->assign('title', 'Home');
 

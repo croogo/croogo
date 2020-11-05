@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Settings\Model\Entity\Language $language
+ */
 
 $this->extend('Croogo/Core./Common/admin_edit');
 

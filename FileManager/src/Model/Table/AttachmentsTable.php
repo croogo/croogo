@@ -278,7 +278,7 @@ class AttachmentsTable extends CroogoTable
 
     /**
      * @param Event $event
-     * @param EntityInterface $entity
+     * @param \Croogo\FileManager\Model\Entity\Attachment $entity
      * @param ArrayObject|null $options
      *
      * @return bool|string

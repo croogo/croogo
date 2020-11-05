@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $displayFields
+ * @var mixed $model
+ */
 
 use Cake\Utility\Inflector;
 

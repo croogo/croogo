@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $typesForLayout
+ * @var \Croogo\Nodes\Model\Entity\Node $node
+ */
 
 use Cake\Core\Plugin;
 

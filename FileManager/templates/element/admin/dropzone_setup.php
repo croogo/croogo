@@ -1,6 +1,7 @@
 <?php
 /**
- * @var \uAfrica\View\AppView $this
+ * @var \App\View\AppView $this
+ * @var string $type
  */
 
 echo $this->Html->tag(

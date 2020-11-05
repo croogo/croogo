@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 if (!empty($this->Breadcrumbs->getCrumbs())) {
     $this->Breadcrumbs->setTemplates([
         'item' => '<li class="breadcrumb-item" {{attrs}}><a href="{{url}}"{{innerAttrs}}>{{title}}</a></li>{{separator}}',

@@ -25,6 +25,7 @@ use InvalidArgumentException;
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ * @property \Croogo\Core\Controller\Component\CroogoComponent $Croogo
  */
 class TaxonomyComponent extends Component
 {

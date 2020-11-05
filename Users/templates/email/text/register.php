@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Users\Model\Entity\User $user
+ */
+?>
 <?php use Cake\Routing\Router;
 
 echo __d('croogo', 'Hello %s', $user->name); ?>,

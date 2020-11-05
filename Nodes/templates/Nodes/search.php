@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $q
+ * @var \Croogo\Nodes\Model\Entity\Node[]|\Cake\Collection\CollectionInterface $nodes
+ */
 
 $this->assign('title', __d('croogo', 'Search Results: %s', h($q)));
 

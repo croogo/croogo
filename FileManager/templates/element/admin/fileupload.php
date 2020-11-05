@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <!-- Redirect browsers with JavaScript disabled to the origin page -->
 <?php
 

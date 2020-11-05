@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Menus\Model\Entity\Menu $menu
+ */
 
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Croogo->adminScript('Croogo/Menus.admin');

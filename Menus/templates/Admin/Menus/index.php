@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Menus\Model\Entity\Menu[]|\Cake\Collection\CollectionInterface $menus
+ */
 
 use Croogo\Core\Status;
 

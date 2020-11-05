@@ -1,4 +1,12 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $parentTree
+ * @var mixed $taxonomies
+ * @var mixed $vocabularyId
+ * @var \Croogo\Taxonomy\Model\Entity\Term $term
+ * @var \Croogo\Taxonomy\Model\Entity\Vocabulary $vocabulary
+ */
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Croogo->adminScript('Croogo/Taxonomy.terms');

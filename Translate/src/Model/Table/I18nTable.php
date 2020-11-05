@@ -26,6 +26,9 @@ use Cake\Validation\Validator;
  * @method \Croogo\Translate\Model\Entity\I18n[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @property \Croogo\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $TrackableCreator
+ * @property \Croogo\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $TrackableUpdater
+ * @mixin \Croogo\Core\Model\Behavior\TrackableBehavior
  */
 class I18nTable extends Table
 {

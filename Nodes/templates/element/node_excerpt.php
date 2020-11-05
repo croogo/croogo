@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var string $excerpt
+ * @var \Croogo\Nodes\Model\Entity\Node $node
+ */
+?>
 <?php if (isset($excerpt)) : ?>
 <div class="node-excerpt my-2">
     <?= $excerpt ?>

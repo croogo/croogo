@@ -24,6 +24,7 @@ use Croogo\Core\PluginManager;
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ * @property \Croogo\Settings\Model\Table\SettingsTable $Settings
  */
 class SettingsShell extends Shell
 {

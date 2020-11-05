@@ -1,4 +1,11 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $id
+ * @var array $node
+ * @var mixed $runtimeModelAlias
+ * @var mixed $translations
+ */
 
 $this->append('action-buttons');
     echo $this->Html->link(__d('croogo', 'Translate in a new language'), [

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $searchFields
+ */
 
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;

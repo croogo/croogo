@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $_SERVER
+ * @var \Croogo\Users\Model\Entity\User $user
+ */
 
 echo __d('croogo', 'Hello %s', $user->name) ?>,
 

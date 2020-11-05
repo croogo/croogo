@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \Croogo\Core\View\CroogoView $this
+ * @var \App\View\AppView $this
  */
 ?>
 <div class="card text-xs-center selector item-choose">

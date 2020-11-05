@@ -11,6 +11,9 @@ use Cake\View\Helper\HtmlHelper;
  * @version 1.1
  * @author Josh Hundley
  * @author Jorge Orpinel <jop@levogiro.net> (changes)
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Croogo\Core\View\Helper\ThemeHelper $Theme
+ * @property \Cake\View\Helper\UrlHelper $Url
  */
 class ImageHelper extends HtmlHelper
 {

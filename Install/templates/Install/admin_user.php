@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $user
+ */
 $this->assign('before', $this->Form->create($user, [
     'align' => ['left' => 4, 'middle' => 8, 'right' => 0],
 ]));

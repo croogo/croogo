@@ -20,6 +20,7 @@ use Croogo\Core\Croogo;
  * @author   Rachman Chavik
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ * @property \Cake\Controller\Component\FlashComponent $Flash
  */
 class BulkProcessComponent extends Component
 {

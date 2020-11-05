@@ -17,6 +17,9 @@ use Cake\View\Helper;
  * given client-side library.
  *
  * Note: onDomReady always defaults to false now, you will to add this yourself.
+ *
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\FormHelper $Form
  */
 class JsHelper extends Helper
 {

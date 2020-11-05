@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Taxonomy\Model\Entity\Vocabulary[]|\Cake\Collection\CollectionInterface $vocabularies
+ */
 
 $this->extend('Croogo/Core./Common/admin_index');
 

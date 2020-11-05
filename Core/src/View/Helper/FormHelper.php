@@ -13,6 +13,10 @@ use Croogo\Extensions\CroogoTheme;
  * Croogo Form Helper
  *
  * @package Croogo.Croogo.View.Helper
+ * @property \Croogo\Core\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\UrlHelper $Url
+ * @property \Croogo\Core\View\Helper\ThemeHelper $Theme
+ * @property \Croogo\Core\View\Helper\CroogoHelper $Croogo
  */
 class FormHelper extends BaseFormHelper
 {

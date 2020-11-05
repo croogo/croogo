@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\FileManager\Model\Entity\Attachment[]|\Cake\Collection\CollectionInterface $attachments
+ */
+?>
 <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
     <div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
     <?php

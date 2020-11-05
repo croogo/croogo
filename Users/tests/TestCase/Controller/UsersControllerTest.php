@@ -5,6 +5,8 @@ use Croogo\Core\TestSuite\CroogoControllerTestCase;
 
 /**
  * UsersController Test
+ *
+ * @uses \Croogo\Users\Controller\UsersController
  */
 class UsersControllerTest extends CroogoControllerTestCase
 {

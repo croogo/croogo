@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Users\Model\Entity\User $user
+ */
 
 use Cake\Routing\Router;
 

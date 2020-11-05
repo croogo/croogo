@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var object $viewVar
+ */
 
 $this->extend('Croogo/Core./Common/admin_edit');
 

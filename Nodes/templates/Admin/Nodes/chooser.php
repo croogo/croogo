@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $el
+ * @var array $nodeTypes
+ * @var \Croogo\Nodes\Model\Entity\Node[]|\Cake\Collection\CollectionInterface $nodes
+ */
+?>
 <div class="navbar navbar-light bg-light">
     <div class="float-left">
         <?php

@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var string $alias
+ * @var mixed $nodesList
+ * @var array $options
+ */
+?>
 <div id="node-list-<?= $alias ?>" class="node-list">
     <ul>
     <?php

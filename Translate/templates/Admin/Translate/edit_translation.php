@@ -1,4 +1,15 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $displayField
+ * @var object $entity
+ * @var mixed $fields
+ * @var mixed $id
+ * @var object $language
+ * @var string $locale
+ * @var mixed $model
+ * @var mixed $modelAlias
+ */
 
 use Cake\Utility\Inflector;
 

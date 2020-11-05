@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $absolutefilepath
+ * @var mixed $content
+ * @var mixed $path
+ */
 
 $this->assign('title', __d('croogo', 'Edit file: %s', $path));
 

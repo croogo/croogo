@@ -1,4 +1,14 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $displayField
+ * @var mixed $id
+ * @var mixed $languages
+ * @var mixed $model
+ * @var mixed $modelAlias
+ * @var object $record
+ * @var object $translations
+ */
 
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;

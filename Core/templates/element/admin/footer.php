@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <footer class="navbar-dark">
     <div class="navbar-inner">
 

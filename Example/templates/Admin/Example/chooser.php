@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 
 $this->extend('/Common/admin_index');
 $this->Breadcrumbs

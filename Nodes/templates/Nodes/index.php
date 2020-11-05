@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var object $type
+ * @var \Croogo\Nodes\Model\Entity\Node[]|\Cake\Collection\CollectionInterface $nodes
+ */
 if (isset($type)) :
     $this->assign('title', $type->title);
 endif;

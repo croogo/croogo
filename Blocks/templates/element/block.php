@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Blocks\Model\Entity\Block $block
+ */
 $this->set(compact('block'));
 $class = 'block block-' . $block->alias;
 if ($block->class != null) {

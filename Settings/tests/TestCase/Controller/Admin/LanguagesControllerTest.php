@@ -5,6 +5,9 @@ namespace Croogo\Settings\Test\TestCase\Controller\Admin;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\TestSuite\IntegrationTestCase;
 
+/**
+ * @uses \Croogo\Settings\Controller\Admin\LanguagesController
+ */
 class LanguagesControllerTest extends IntegrationTestCase
 {
     public $fixtures = [

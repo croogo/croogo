@@ -9,6 +9,11 @@ use Croogo\Core\Croogo;
 use Croogo\Core\View\Helper\ImageHelper;
 use Exception;
 
+/**
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Croogo\Core\View\Helper\ThemeHelper $Theme
+ * @property \Cake\View\Helper\UrlHelper $Url
+ */
 class AssetsImageHelper extends ImageHelper
 {
 

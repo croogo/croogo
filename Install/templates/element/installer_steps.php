@@ -1,6 +1,7 @@
 <?php
 /**
- * @var \uAfrica\View\AppView $this
+ * @var \App\View\AppView $this
+ * @var mixed $onStep
  */
 
 use Croogo\Install\Controller\InstallController;

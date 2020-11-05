@@ -1,6 +1,7 @@
 <?php
 /**
- * @var \Croogo\Core\View\CroogoView $this
+ * @var \App\View\AppView $this
+ * @var mixed $editFields
  */
 
 use Cake\Utility\Inflector;

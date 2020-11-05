@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Blocks\Model\Entity\Region $region
+ */
 
 $this->extend('Croogo/Core./Common/admin_edit');
 

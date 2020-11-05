@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\FileManager\Model\Entity\Attachment[]|\Cake\Collection\CollectionInterface $attachments
+ */
 
 $this->Croogo->adminScript('Croogo/FileManager.admin');
 $this->Croogo->adminScript('Croogo/FileManager.assets');

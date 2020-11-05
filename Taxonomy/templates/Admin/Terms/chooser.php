@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var array $defaultType
+ * @var \Croogo\Taxonomy\Model\Entity\Term[]|\Cake\Collection\CollectionInterface $terms
+ */
+?>
 <table class="table table-striped">
     <?php
     $tableHeaders = $this->Html->tableHeaders([

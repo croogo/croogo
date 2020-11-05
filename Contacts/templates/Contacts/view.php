@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Contacts\Model\Entity\Message $message
+ * @var \Croogo\Contacts\Model\Entity\Contact $contact
+ */
+?>
 <div id="contact-<?= $contact->id ?>" class="">
     <h2><?= $contact->title ?></h2>
     <div class="contact-body">

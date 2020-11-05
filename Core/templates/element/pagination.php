@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <ul class="pagination justify-content-center my-5">
 <?php
     $requestAttributes = $this->getRequest()->getAttributes();

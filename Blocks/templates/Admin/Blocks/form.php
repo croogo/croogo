@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $roles
+ * @var \Croogo\Blocks\Model\Entity\Block $block
+ */
 
 $this->extend('Croogo/Core./Common/admin_edit');
 

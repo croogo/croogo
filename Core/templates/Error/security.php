@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $message
+ */
 
 use Cake\Core\Configure;
 use Cake\Error\Debugger;

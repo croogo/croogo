@@ -12,6 +12,7 @@ use Croogo\Users\Model\Entity\User;
  * UsersShell
  *
  * @package Croogo.Users.Shell
+ * @property \Croogo\Users\Model\Table\UsersTable $Users
  */
 class UsersShell extends Shell
 {

@@ -10,6 +10,10 @@ use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\Utility\StringConverter;
 
+/**
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Croogo\Nodes\View\Helper\NodesHelper $Nodes
+ */
 class AssetsFilterHelper extends Helper
 {
 

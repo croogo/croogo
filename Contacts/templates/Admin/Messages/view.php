@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \Croogo\Contacts\Model\Entity\Message $message
+ */
 
 $this->extend('Croogo/Core./Common/admin_view');
 

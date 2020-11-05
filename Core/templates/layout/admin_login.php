@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var string $_siteTitle
+ */
 
 use Cake\Core\Configure;
 

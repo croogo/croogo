@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var object $entity
+ * @var mixed $taxonomies
+ * @var array $vocabularies
+ */
 
 use Cake\Utility\Hash;
 

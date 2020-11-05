@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 $this->assign('title', __d('croogo', 'Step 2: Build database'));
 ?>
 

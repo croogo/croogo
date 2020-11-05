@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $bundledPlugins
+ * @var mixed $corePlugins
+ * @var mixed $plugins
+ */
 
 $this->extend('Croogo/Core./Common/admin_index');
 

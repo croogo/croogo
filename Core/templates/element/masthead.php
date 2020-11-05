@@ -1,4 +1,11 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var object $contact
+ * @var mixed $mimeSubtype
+ * @var object $node
+ * @var object $type
+ */
 
 use Cake\Core\Configure;
 
