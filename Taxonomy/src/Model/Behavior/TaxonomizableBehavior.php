@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Croogo\Taxonomy\Model\Behavior;
 
 use ArrayObject;
+use Cake\Core\Plugin;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\I18n\I18n;
@@ -325,9 +326,10 @@ class TaxonomizableBehavior extends Behavior
             $locale = I18n::getLocale();
             $cacheKeys = ['term', $locale, $term];
             $cacheKey = implode('_', $cacheKeys);
-            $entity = $this->_table->Taxonomies->Terms->find()
-                ->where([
-                    'Terms.slug' => $term
+            $entity = $this->_table->Taxonomies->Terms->find('bySlug', [
+                    'options' => [
+                        'search' => $term,
+                    ],
                 ])
                 ->cache($cacheKey, 'nodes_term')
                 ->first();
@@ -365,9 +367,10 @@ class TaxonomizableBehavior extends Behavior
             $locale = I18n::getLocale();
             $cacheKeys = ['term', $locale, $vocab];
             $cacheKey = implode('_', $cacheKeys);
-            $entity = $this->_table->Taxonomies->Vocabularies->find()
-                ->where([
-                    'Vocabularies.alias' => $vocab
+            $entity = $this->_table->Taxonomies->Vocabularies->find('bySlug', [
+                    'options' => [
+                        'slug' => $vocab,
+                    ],
                 ])
                 ->cache($cacheKey, 'croogo_vocabularies')
                 ->first();

@@ -21,6 +21,9 @@ class VocabulariesTable extends CroogoTable
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Search.Search');
+        $this->addBehavior('Croogo/Core.Sluggable', [
+            'slugField' => 'alias',
+        ]);
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Croogo/Core.Cached', [
             'groups' => ['taxonomy']

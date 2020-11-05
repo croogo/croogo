@@ -27,6 +27,7 @@ class NodesTable extends CroogoTable
             ],
         ]);
         $this->addBehavior('Croogo/Core.Publishable');
+        $this->addBehavior('Croogo/Core.Sluggable');
         $this->addBehavior('Croogo/Core.Url', [
             'url' => [
                 'plugin' => 'Croogo/Nodes',
@@ -82,10 +83,8 @@ class NodesTable extends CroogoTable
                 'before' => true,
                 'after' => true
             ])
-            ->add('slug', 'Search.Like', [
-                'fields' => $this->aliasField('slug'),
-                'before' => true,
-                'after' => true
+            ->add('slug', 'Search.Finder', [
+                'finder' => 'bySlug',
             ])
             ->add('type', 'Search.Like', [
                 'fields' => $this->aliasField('type'),

@@ -10,6 +10,7 @@ use Cake\Event\EventManager;
 use Cake\Http\ServerRequest;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use Croogo\Core\Routing\Router;
 
 /**
  * Croogo

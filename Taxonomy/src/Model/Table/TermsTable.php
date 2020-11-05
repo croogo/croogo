@@ -35,6 +35,7 @@ class TermsTable extends CroogoTable
         $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp');
         $this->addBehavior('Croogo/Core.Trackable');
+        $this->addBehavior('Croogo/Core.Sluggable');
 
         $this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
             'through' => 'Croogo/Taxonomy.Taxonomies',
@@ -53,7 +54,9 @@ class TermsTable extends CroogoTable
                     });
                 },
             ])
-            ->value('slug');
+            ->add('slug', 'Search.Finder', [
+                'finder' => 'bySlug',
+            ]);
     }
 
     protected function _initializeSchema(TableSchemaInterface $table): TableSchemaInterface
@@ -212,22 +215,6 @@ class TermsTable extends CroogoTable
         return $query;
     }
 
-    public function findBySlug(Query $query, array $options)
-    {
-        $defaults = ['slug' => null];
-        $options += $defaults;
-
-        if ($this->hasBehavior('Translate')) {
-            $conditions['OR'] = [
-                $this->aliasField('slug') => $options['slug'],
-                $this->translationField('slug') => $options['slug'],
-            ];
-        } else {
-            $conditions[$this->aliasField('slug')] = $options['slug'];
-        }
-
-        return $query->where($conditions);
-    }
 
     /**
      * Save new/updated term data
