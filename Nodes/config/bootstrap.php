@@ -56,6 +56,7 @@ Croogo::translateModel('Croogo/Nodes.Nodes', [
     'fields' => [
         'title',
         'slug',
+        'path',
         'excerpt',
         'body',
     ],
