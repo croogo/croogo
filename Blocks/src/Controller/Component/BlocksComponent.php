@@ -6,7 +6,7 @@ namespace Croogo\Blocks\Controller\Component;
 use Cake\Cache\Cache;
 use Cake\Collection\Collection;
 use Cake\Controller\Component;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
@@ -52,7 +52,7 @@ class BlocksComponent extends Component
      *
      * @param Event $event
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $this->controller = $event->getSubject();
         $this->_stringConverter = new StringConverter();
@@ -69,7 +69,7 @@ class BlocksComponent extends Component
      * @param Event $event
      * @return void
      */
-    public function startup(Event $event)
+    public function startup(EventInterface $event)
     {
         if ($this->controller->getRequest()->getParam('prefix') !== 'Admin' && !$this->controller->getRequest()->getParam('requested')) {
             $this->blocks();
@@ -82,7 +82,7 @@ class BlocksComponent extends Component
      * @param object $event
      * @return void
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         $event->getSubject()->set('blocksForLayout', $this->blocksForLayout);
     }
