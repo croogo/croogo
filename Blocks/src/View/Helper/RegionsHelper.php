@@ -144,7 +144,6 @@ class RegionsHelper extends Helper
             'elementOptions' => [],
         ], $options);
 
-        $defaultElement = 'Croogo/Blocks.block';
         $blocksForLayout = $this->_View->get('blocksForLayout');
         $blocks = $blocksForLayout[$regionAlias];
         foreach ($blocks as $block) {

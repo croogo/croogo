@@ -18,10 +18,7 @@ class SluggableBehavior extends Behavior
         $slugField = $this->_config['slugField'];
         if ($this->_table->behaviors()->has('Translate')) {
             $query->where([
-                'OR' => [
-                    $this->_table->aliasField('slug') . ' LIKE'=> '%' . $options['search']['slug'] . '%',
-                    $this->_table->translationField($slugField) . ' LIKE'=> '%' . $options['search']['slug'] . '%',
-                ],
+                $this->_table->translationField($slugField) . ' LIKE'=> '%' . $options['search']['slug'] . '%',
             ]);
         } else {
             $query->where([
