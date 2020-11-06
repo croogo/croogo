@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace Croogo\Core;
 
 use ArrayObject;
+use Cake\Core\Configure;
 use Cake\Log\Log;
+use Cake\I18n\I18n;
 use Cake\Routing\Exception\MissingRouteException;
 use Cake\Routing\Router;
 use Croogo\Core\Utility\StringConverter;
@@ -32,6 +34,10 @@ class Link extends ArrayObject
     {
         $copy = $this->getArrayCopy();
         unset($copy['pass']);
+        $locale = I18n::getLocale();
+        if ($locale && $locale !== Configure::read('App.defaultLocale')) {
+            $copy['lang'] = $locale;
+        }
         foreach ($copy as $key => $val) {
             if (!is_string($val)) {
                 continue;
