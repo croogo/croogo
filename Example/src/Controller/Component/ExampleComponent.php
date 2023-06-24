@@ -50,7 +50,7 @@ class ExampleComponent extends Component
      * @param object $event Controller with components to shutdown
      * @return void
      */
-    public function shutdown(\Cake\Event\EventInterface $event)
+    public function afterFilter(\Cake\Event\EventInterface $event)
     {
     }
 }
