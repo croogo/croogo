@@ -16,7 +16,7 @@ class VisibilityBehavior extends Behavior
 
         return $query->andWhere([
             'OR' => [
-                $visibilityRolesField => $query->newExpr()
+                $visibilityRolesField => $query->expr()
                     ->add('\'\''),
                 $visibilityRolesField . ' IS NULL',
                 $visibilityRolesField . ' LIKE' => '%"' . $options['roleId'] . '"%',
