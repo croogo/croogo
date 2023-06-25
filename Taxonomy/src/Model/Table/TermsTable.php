@@ -106,7 +106,7 @@ class TermsTable extends CroogoTable
      *
      * @return bool
      */
-    public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeDelete(\Cake\Event\EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
         $count = $this->Taxonomies->find()
             ->where([

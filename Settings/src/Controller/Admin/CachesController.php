@@ -42,7 +42,7 @@ class CachesController extends AppController
             }
         }
         foreach ($configured as $cache) {
-            $engine = Cache::engine($cache);
+            $engine = Cache::pool($cache);
             $caches[$cache] = $engine;
         }
         $this->set(compact('caches'));

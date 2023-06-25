@@ -98,7 +98,7 @@ class TrackableBehavior extends Behavior
      * Fill the created_by and modified_by fields in an entity
      *
      */
-    public function beforeSave(Event $event, $options = [])
+    public function beforeSave(\Cake\Event\EventInterface $event, $options = [])
     {
         if (!$this->_hasTrackableFields()) {
             return true;

@@ -105,7 +105,7 @@ class LinksTable extends CroogoTable
     /**
      * Calls TreeBehavior::recover when we are changing scope
      */
-    public function afterSave(Event $event, Entity $entity, $options = [])
+    public function afterSave(\Cake\Event\EventInterface $event, Entity $entity, $options = [])
     {
         if ($entity->isNew()) {
             return;

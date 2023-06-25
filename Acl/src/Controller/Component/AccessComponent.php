@@ -36,7 +36,7 @@ class AccessComponent extends Component
      *
      * @param Event $event
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event)
     {
         $controller = $event->getSubject();
         $this->_controller = $controller;

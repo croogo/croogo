@@ -342,7 +342,7 @@ class NodesTable extends CroogoTable
         ]);
     }
 
-    public function beforeSave(Event $event)
+    public function beforeSave(\Cake\Event\EventInterface $event)
     {
         $node = $event->getData()['entity'];
 
@@ -366,7 +366,7 @@ class NodesTable extends CroogoTable
         }
     }
 
-    public function afterSave(Event $event)
+    public function afterSave(\Cake\Event\EventInterface $event)
     {
         $node = $event->getData()['entity'];
         $event = Croogo::dispatchEvent('Model.Nodes.afterSaveNode', $this, [

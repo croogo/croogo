@@ -67,7 +67,7 @@ class TaxonomyComponent extends Component
      * @param object $event instance of controller
      * @return void
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event)
     {
         $this->controller = $event->getSubject();
         if ((isset($this->controller->Taxonomies)) && ($this->controller->Taxonomies instanceof TaxonomiesTable)) {
@@ -93,7 +93,7 @@ class TaxonomyComponent extends Component
         }
     }
 
-    public function beforeRender(Event $event)
+    public function beforeRender(\Cake\Event\EventInterface $event)
     {
         $this->controller = $event->getSubject();
         $this->controller->set('typesForLayout', $this->typesForLayout);

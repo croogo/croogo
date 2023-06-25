@@ -34,7 +34,7 @@ class NodesComponent extends Component
      *
      * @param Event $event instance of controller
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         $this->controller = $event->getSubject();
         if (isset($this->controller->Nodes)) {
@@ -50,7 +50,7 @@ class NodesComponent extends Component
      * @param Controller $event instance of controller
      * @return void
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event)
     {
         $controller = $event->getSubject();
         if (($controller->getRequest()->getParam('prefix') !== 'Admin') && !$controller->getRequest()->getParam('requested')) {
@@ -102,7 +102,7 @@ class NodesComponent extends Component
      * @param object $event instance of controller
      * @return void
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(\Cake\Event\EventInterface $event)
     {
         $event->getSubject()->set('nodesForLayout', $this->nodesForLayout);
     }

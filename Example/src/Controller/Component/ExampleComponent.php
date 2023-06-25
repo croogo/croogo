@@ -27,7 +27,7 @@ class ExampleComponent extends Component
      * @param object $event Controller with components to startup
      * @return void
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event)
     {
         $controller = $this->_registry->getController();
         $controller->set('exampleComponent', 'ExampleComponent startup');
@@ -40,7 +40,7 @@ class ExampleComponent extends Component
      * @param object $event Controller with components to beforeRender
      * @return void
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(\Cake\Event\EventInterface $event)
     {
     }
 
@@ -50,7 +50,7 @@ class ExampleComponent extends Component
      * @param object $event Controller with components to shutdown
      * @return void
      */
-    public function shutdown(Event $event)
+    public function shutdown(\Cake\Event\EventInterface $event)
     {
     }
 }

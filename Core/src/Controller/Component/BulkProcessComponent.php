@@ -39,7 +39,7 @@ class BulkProcessComponent extends Component
     /**
      * beforeFilter
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         $this->_controller = $event->getSubject();
         if ($this->_controller->getRequest()->getParam('action') == 'process') {

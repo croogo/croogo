@@ -98,7 +98,7 @@ class AkismetComponent extends Component
     /**
      * @param \Cake\Event\Event $event Event object
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event)
     {
         $this->blogURL = Configure::read('Service.akismet_url');
         $this->akismetAPIKey = Configure::read('Service.akismet_key');

@@ -283,7 +283,7 @@ class AttachmentsTable extends CroogoTable
      *
      * @return bool|string
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options = null)
+    public function beforeSave(\Cake\Event\EventInterface $event, EntityInterface $entity, ArrayObject $options = null)
     {
         /** @var \Laminas\Diactoros\UploadedFile */
         $assetFile = $entity->asset->file;

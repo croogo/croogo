@@ -26,7 +26,7 @@ class ThemeComponent extends Component
         parent::__construct($registry, $config);
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         $this->_controller = $event->getSubject();
         $theme = $this->getConfig('theme');

@@ -78,7 +78,7 @@ class CroogoComponent extends Component
      * @param object $event instance of controller
      * @return void
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event)
     {
         $this->_controller = $event->getSubject();
 

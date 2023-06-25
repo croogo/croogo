@@ -32,7 +32,7 @@ class WysiwygComponent extends Component
     /**
      * Store the referer information for use later
      */
-    public function startup(Controller $controller)
+    public function startup(\Cake\Event\EventInterface $controller)
     {
         $redirect = $controller->Session->read($this->_key);
         if (!in_array($controller->action, $this->_actions)) {
@@ -47,7 +47,7 @@ class WysiwygComponent extends Component
     /**
      * Replace the redirect $url when appropriate
      */
-    public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true)
+    public function beforeRedirect(\Cake\Event\EventInterface $controller, $url, $status = null, $exit = true)
     {
         $redirect = $controller->Session->read($this->_key);
         if (!empty($redirect)) {

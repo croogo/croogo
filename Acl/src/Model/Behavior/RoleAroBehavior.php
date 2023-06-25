@@ -66,7 +66,7 @@ class RoleAroBehavior extends Behavior
      *
      * Update the corresponding ACO record alias
      */
-    public function afterSave(Event $event, Entity $entity)
+    public function afterSave(\Cake\Event\EventInterface $event, Entity $entity)
     {
         $model = $event->getSubject();
         $ref = ['model' => $model->getAlias(), 'foreign_key' => $entity->id];
@@ -166,7 +166,7 @@ class RoleAroBehavior extends Behavior
     /**
      * afterDelete
      */
-    public function afterDelete(Event $event)
+    public function afterDelete(\Cake\Event\EventInterface $event)
     {
         Cache::clearGroup('acl', 'permissions');
     }

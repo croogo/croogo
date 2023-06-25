@@ -75,7 +75,7 @@ class MenusTable extends CroogoTable
     /**
      * beforeDelete callback
      */
-    public function beforeDelete(Event $event, Entity $entity, $options)
+    public function beforeDelete(\Cake\Event\EventInterface $event, Entity $entity, $options)
     {
         // Set tree scope for Links association
         $settings = [

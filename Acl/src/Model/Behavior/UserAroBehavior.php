@@ -53,7 +53,7 @@ class UserAroBehavior extends Behavior
      * @param bool $entity
      * @return void
      */
-    public function afterSave(Event $event, Entity $entity)
+    public function afterSave(\Cake\Event\EventInterface $event, Entity $entity)
     {
         // update ACO alias
         if (!empty($entity->username)) {
@@ -74,7 +74,7 @@ class UserAroBehavior extends Behavior
     /**
      * afterDelete
      */
-    public function afterDelete(Event $event)
+    public function afterDelete(\Cake\Event\EventInterface $event)
     {
         Cache::clearGroup('acl', 'permissions');
     }

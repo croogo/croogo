@@ -39,7 +39,7 @@ class AssetUsagesTable extends CroogoTable
      *
      * @return bool
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(\Cake\Event\EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
         if (!empty($entity->featured_image)) {
             $entity->type = 'FeaturedImage';
@@ -52,7 +52,7 @@ class AssetUsagesTable extends CroogoTable
     /**
      * After Save Handler
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(\Cake\Event\EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
         Cache::clearGroup('nodes');
     }

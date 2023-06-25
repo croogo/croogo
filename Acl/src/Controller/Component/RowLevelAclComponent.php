@@ -79,7 +79,7 @@ class RowLevelAclComponent extends Component
     /**
      * startup
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event)
     {
         $controller = $this->getController();
         $params = $controller->getRequest()->getAttribute('params');
