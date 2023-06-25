@@ -6,7 +6,7 @@ use Phinx\Seed\AbstractSeed;
 class LanguagesSeed extends AbstractSeed
 {
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('languages');
 
@@ -35,7 +35,7 @@ class LanguagesSeed extends AbstractSeed
             $data['native'] = Locale::getDisplayRegion($locale);
 
             try {
-                $Table->insert([$data])->save();
+                // $Table->insert([$data])->save();
             } catch (\Exception $e) {
                 dump($e);
                 dump($data);

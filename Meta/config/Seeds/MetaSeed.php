@@ -34,7 +34,7 @@ class MetaSeed extends AbstractSeed
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('meta');
         $Table->insert($this->records)->save();

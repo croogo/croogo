@@ -32,7 +32,7 @@ class ContactsSeed extends AbstractSeed
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('contacts');
         $Table->insert($this->records)->save();

@@ -56,7 +56,7 @@ class MenusSeed extends AbstractSeed
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('menus');
         $Table->insert($this->records)->save();

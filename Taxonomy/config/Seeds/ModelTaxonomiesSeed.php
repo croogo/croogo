@@ -16,7 +16,7 @@ class ModelTaxonomiesSeed extends AbstractSeed
         ],
     ];
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             'NodesSeed',
@@ -24,7 +24,7 @@ class ModelTaxonomiesSeed extends AbstractSeed
         ];
     }
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('model_taxonomies');
         $Table->insert($this->records)->save();

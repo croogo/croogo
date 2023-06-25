@@ -350,7 +350,7 @@ options={"Croogo/Nodes.Nodes": "Nodes", "Croogo/Blocks.Blocks": "Blocks", "Croog
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('settings');
         $Table->insert($this->records)->save();

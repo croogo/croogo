@@ -27,7 +27,7 @@ class CommentsSeed extends AbstractSeed
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('comments');
         $Table->insert($this->records)->save();

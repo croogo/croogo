@@ -31,7 +31,7 @@ class TermsSeed extends AbstractSeed
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('terms');
         $Table->insert($this->records)->save();

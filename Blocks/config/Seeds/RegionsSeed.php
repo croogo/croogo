@@ -120,7 +120,7 @@ class RegionsSeed extends AbstractSeed
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('regions');
         $Table->insert($this->records)->save();

@@ -34,7 +34,7 @@ class VocabulariesSeed extends AbstractSeed
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('vocabularies');
         $Table->insert($this->records)->save();

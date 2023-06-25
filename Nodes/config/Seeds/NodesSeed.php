@@ -52,7 +52,7 @@ class NodesSeed extends AbstractSeed
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('nodes');
         $Table->insert($this->records)->save();
