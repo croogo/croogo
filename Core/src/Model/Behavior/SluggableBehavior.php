@@ -15,6 +15,10 @@ class SluggableBehavior extends Behavior
 
     public function findBySlug(Query $query, array $options = [])
     {
+        if (empty($options['search']['slug'])) {
+            return $query;
+        }
+
         $slugField = $this->_config['slugField'];
         if ($this->_table->behaviors()->has('Translate')) {
             $query->where([
