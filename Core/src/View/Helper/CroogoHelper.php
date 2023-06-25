@@ -297,7 +297,7 @@ class CroogoHelper extends Helper
                     }
                     $link = key($link);
                 }
-                $link = $this->Menus->linkStringToArray(str_replace(':id', $id, $link));
+                $link = $this->Menus->linkStringToArray(str_replace(':id', "$id", $link));
                 if (isset($linkOptions['icon'])) {
                     $linkOptions['escapeTitle'] = false;
                 }

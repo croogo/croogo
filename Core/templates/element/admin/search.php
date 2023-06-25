@@ -21,7 +21,7 @@ if (!empty($searchFields)) :
         ],
     ]);
     $this->Form->setTemplates([
-        'label' => false,
+        'label' => '',
         'submitContainer' => '{{content}}',
     ]);
     if ($this->getRequest()->getQuery('chooser')) :

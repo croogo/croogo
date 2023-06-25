@@ -318,7 +318,7 @@ class DummyShell extends Shell
     use LogTrait;
     public function out($message, int $newlines = 1, int $level = Shell::NORMAL): ?int
     {
-        $msg = preg_replace('/\<\/?\w+\>/', null, $message);
+        $msg = preg_replace('/\<\/?\w+\>/', '', $message);
         $this->log($msg);
         return parent::out($message, $newlines, $level);
     }

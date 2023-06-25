@@ -8,7 +8,7 @@ echo $this->Form->create(null, [
 ]);
 
 $this->Form->setTemplates([
-    'label' => false,
+    'label' => '',
     'submitContainer' => '{{content}}',
 ]);
 

@@ -317,7 +317,7 @@ class FormHelper extends BaseFormHelper
             'default' => $default,
             'autocomplete' => 'off',
         ]);
-        $out .= $this->control("autocomplete_${field}", $autocomplete);
+        $out .= $this->control("autocomplete_{$field}", $autocomplete);
 
         return $out;
     }
