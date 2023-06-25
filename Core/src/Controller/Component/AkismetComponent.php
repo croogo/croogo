@@ -193,7 +193,7 @@ class AkismetComponent extends Component
             '/' . $this->akismetVersion . '/comment-check');
 
         if ($response[1] == 'invalid' && !$this->isKeyValid()) {
-            throw new Exception('The API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://akismet.com/');
+            throw new \Cake\Core\Exception\CakeException('The API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://akismet.com/');
         }
 
         return ($response[1] == 'true');
@@ -373,7 +373,7 @@ class SocketWriteRead
         $fs = fsockopen($this->host, $this->port, $this->errorNumber, $this->errorString, 3);
 
         if ($this->errorNumber != 0) {
-            throw new Exception('Error connecting to host: ' . $this->host . ' Error number: ' . $this->errorNumber . ' Error message: ' . $this->errorString);
+            throw new \Cake\Core\Exception\CakeException('Error connecting to host: ' . $this->host . ' Error number: ' . $this->errorNumber . ' Error message: ' . $this->errorString);
         }
 
         if ($fs !== false) {

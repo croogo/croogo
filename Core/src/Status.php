@@ -125,7 +125,7 @@ class Status implements ArrayAccess
             $Permission = TableRegistry::getTableLocator()->get('Acl.Permissions');
             try {
                 $allow = $Permission->check(['model' => 'Roles', 'foreign_key' => $roleId], 'controllers/Croogo\Nodes/Admin/Nodes/edit');
-            } catch (Exception $e) {
+            } catch (\Cake\Core\Exception\CakeException $e) {
                 Log::error($e->getMessage());
             }
         }

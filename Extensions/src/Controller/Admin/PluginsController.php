@@ -90,7 +90,7 @@ class PluginsController extends AppController
             $Installer = new ExtensionsInstaller;
             try {
                 $Installer->extractPlugin($file['tmp_name']);
-            } catch (Exception $e) {
+            } catch (\Cake\Core\Exception\CakeException $e) {
                 $this->Flash->error($e->getMessage());
 
                 return $this->redirect(['action' => 'add']);
@@ -198,7 +198,7 @@ class PluginsController extends AppController
     /**
      * Move up a plugin in bootstrap order
      *
-     * @throws Exception
+     * @throws \Cake\Core\Exception\CakeException
      */
     public function moveUp()
     {
@@ -206,7 +206,7 @@ class PluginsController extends AppController
         $this->getRequest()->allowMethod('post');
 
         if ($plugin === null) {
-            throw new Exception(__d('croogo', 'Invalid plugin'));
+            throw new \Cake\Core\Exception\CakeException(__d('croogo', 'Invalid plugin'));
         }
 
         $class = 'success';
@@ -225,7 +225,7 @@ class PluginsController extends AppController
     /**
      * Move down a plugin in bootstrap order
      *
-     * @throws Exception
+     * @throws \Cake\Core\Exception\CakeException
      */
     public function moveDown()
     {
@@ -233,7 +233,7 @@ class PluginsController extends AppController
         $this->getRequest()->allowMethod('post');
 
         if ($plugin === null) {
-            throw new Exception(__d('croogo', 'Invalid plugin'));
+            throw new \Cake\Core\Exception\CakeException(__d('croogo', 'Invalid plugin'));
         }
 
         $element = 'success';

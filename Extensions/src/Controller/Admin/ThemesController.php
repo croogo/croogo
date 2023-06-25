@@ -124,7 +124,7 @@ class ThemesController extends AppController
             try {
                 $Installer->extractTheme($file['tmp_name']);
                 $this->Flash->success(__d('croogo', 'Theme uploaded successfully.'));
-            } catch (Exception $e) {
+            } catch (\Cake\Core\Exception\CakeException $e) {
                 $this->Flash->error($e->getMessage());
             }
 

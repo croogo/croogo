@@ -1092,14 +1092,14 @@ class PluginManager extends Plugin
      *
      * @param array $bootstraps array of plugin aliases
      * @return bool
-     * @throws Exception
+     * @throws \Cake\Core\Exception\CakeException
      */
     protected function _saveBootstraps($bootstraps)
     {
         static $Setting = null;
         if (empty($Setting)) {
             if (!Configure::read('Croogo.installed')) {
-                throw new Exception('Unable to save Hook.bootstraps when Croogo is not fully installed');
+                throw new \Cake\Core\Exception\CakeException('Unable to save Hook.bootstraps when Croogo is not fully installed');
             }
             $Settings = TableRegistry::getTableLocator()->get('Croogo/Settings.Settings');
         }
@@ -1259,7 +1259,7 @@ class PluginManager extends Plugin
             /** @var \Cake\Database\Connection $defaultConnection*/
             $defaultConnection = ConnectionManager::get('default');
             $dbConfigExists = $defaultConnection->connect();
-        } catch (Exception $e) {
+        } catch (\Cake\Core\Exception\CakeException $e) {
             $dbConfigExists = false;
         }
 

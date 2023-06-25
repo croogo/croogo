@@ -99,14 +99,14 @@ class DashboardsController extends AppController
     /**
      * Saves dashboard setting
      *
-     * @throws \Cake\Core\Exception\Exception
+     * @throws \Cake\Core\Exception\CakeException
      * @return void
      */
     public function save()
     {
         $userId = $this->Auth->user('id');
         if (!$userId) {
-            throw new Exception('You must be logged in');
+            throw new \Cake\Core\Exception\CakeException('You must be logged in');
         }
         $data = Hash::insert($this->getRequest()->getData('dashboard'), '{n}.user_id', $userId);
         $dashboardIds = array_filter(Hash::extract($data, '{n}.id'));

@@ -94,13 +94,13 @@ class CookieAuthenticate extends BaseAuthenticate
      *
      * @param Request $request The unused request object
      * @return mixed False on login failure. An array of User data on success.
-     * @throws Exception
+     * @throws \Cake\Core\Exception\CakeException
      */
     public function getUser(ServerRequest $request)
     {
         $config = $this->getConfig();
         if (!function_exists('mcrypt_encrypt') && !function_exists('openssl_encrypt')) {
-            throw new Exception('Cannot use encryption, either mcrypt_encrypt() or openssl_encrypt() is required');
+            throw new \Cake\Core\Exception\CakeException('Cannot use encryption, either mcrypt_encrypt() or openssl_encrypt() is required');
         }
 
         list(, $model) = pluginSplit($config['userModel']);

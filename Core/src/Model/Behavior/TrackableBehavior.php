@@ -172,7 +172,7 @@ class TrackableBehavior extends Behavior
         if ($user && array_key_exists($userPk, $user)) {
             $userId = $user[$userPk];
         } else {
-            Log::error('Trackable cannot obtain userId for model: ' . $this->getTable()->getAlias());
+            Log::error('Trackable cannot obtain userId for model: ' . $this->table()->getAlias());
             $userId = null;
         }
 

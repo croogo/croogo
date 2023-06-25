@@ -67,13 +67,13 @@ class TokenAuthenticate extends BaseAuthenticate
      *
      * @param ComponentRegistry $collection The Component collection used on this request.
      * @param array $settings Array of settings to use.
-     * @throws Exception
+     * @throws \Cake\Core\Exception\CakeException
      */
     public function __construct(ComponentRegistry $collection, $settings)
     {
         parent::__construct($collection, $settings);
         if (empty($this->settings['parameter']) && empty($this->settings['header'])) {
-            throw new Exception(__d('croogo', 'You need to specify token parameter and/or header'));
+            throw new \Cake\Core\Exception\CakeException(__d('croogo', 'You need to specify token parameter and/or header'));
         }
     }
 

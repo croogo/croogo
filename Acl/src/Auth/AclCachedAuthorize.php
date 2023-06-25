@@ -201,7 +201,7 @@ class AclCachedAuthorize extends BaseAuthorize
     /**
      * Checks authorization by content
      *
-     * @throws Exception
+     * @throws \Cake\Core\Exception\CakeException
      */
     protected function _authorizeByContent($user, ServerRequest $request, $id)
     {
@@ -213,7 +213,7 @@ class AclCachedAuthorize extends BaseAuthorize
                 $request->controller
             );
             Log::critical($message);
-            throw new Exception($message);
+            throw new \Cake\Core\Exception\CakeException($message);
         }
 
         list($plugin, $userModel) = pluginSplit($this->getConfig('userModel'));

@@ -294,7 +294,7 @@ class TaxonomizableBehavior extends Behavior
         $query->traverse(function ($value, $clause) use ($query) {
             if (
                 $clause === 'select' &&
-                (count($value) === 0 || in_array($this->getTable()->getPrimaryKey(), $value))
+                (count($value) === 0 || in_array($this->table()->getPrimaryKey(), $value))
             ) {
                 return $query->contain([
                     'Taxonomies' => [

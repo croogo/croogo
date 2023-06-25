@@ -26,7 +26,7 @@ class LinkedModelBehavior extends Behavior
             return $resultSet->map(function (Entity $entity) {
                 try {
                     $entity->related = $this->relatedTable($entity)->get($entity->get($this->getConfig('foreignKeyField')));
-                } catch (Exception $e) {
+                } catch (\Cake\Database\Exception\DatabaseException $e) {
                     Log::error(Debugger::trace());
                 }
 

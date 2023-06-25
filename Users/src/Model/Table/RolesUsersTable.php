@@ -57,7 +57,7 @@ class RolesUsersTable extends CroogoTable
                     'foreign_key' => $rolesUser->role_id,
                 ])->first();
                 $aroIds[] = $aro->id;
-            } catch (Exception $e) {
+            } catch (\Cake\Core\Exception\CakeException $e) {
                 continue;
             }
         }

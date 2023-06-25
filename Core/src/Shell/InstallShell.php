@@ -117,7 +117,7 @@ class InstallShell extends AppShell
                         $this->err(__d('croogo', 'Package installed but not activated.'));
                     }
                 }
-            } catch (Exception $e) {
+            } catch (\Cake\Core\Exception\CakeException $e) {
                 $this->err($e->getMessage());
             }
         } else {
@@ -175,7 +175,7 @@ class InstallShell extends AppShell
             $this->dispatchShell('ext', 'activate', $type, $ext, '--quiet');
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Cake\Core\Exception\CakeException $e) {
             $this->err($e->getMessage());
         }
 
@@ -196,7 +196,7 @@ class InstallShell extends AppShell
             $this->_ExtensionsInstaller->{'extract' . ucfirst($type)}($zip);
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Cake\Core\Exception\CakeException $e) {
             $this->err($e->getMessage());
         }
 

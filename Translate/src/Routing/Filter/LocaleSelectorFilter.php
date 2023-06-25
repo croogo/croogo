@@ -39,7 +39,7 @@ class LocaleSelectorFilter extends DispatcherFilter
      * Constructor.
      *
      * @param array $config Settings for the filter.
-     * @throws \Cake\Core\Exception\Exception When 'when' conditions are not callable.
+     * @throws \Cake\Core\Exception\CakeException When 'when' conditions are not callable.
      */
     public function __construct($config = [])
     {

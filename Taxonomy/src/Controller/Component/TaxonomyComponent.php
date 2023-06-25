@@ -202,7 +202,7 @@ class TaxonomyComponent extends Component
      * @param array $type Type data
      * @param array $options Options
      * @return void
-     * @throws Exception
+     * @throws \Cake\Core\Exception\CakeException
      */
     public function prepareCommonData(Type $type, $options = [])
     {
@@ -215,7 +215,7 @@ class TaxonomyComponent extends Component
         if (isset($this->controller->{$modelClass})) {
             $table = $this->controller->{$modelClass};
         } else {
-            throw new Exception(
+            throw new \Cake\Core\Exception\CakeException(
                 sprintf(
                     'Model %s not found in controller %s',
                     $modelClass,

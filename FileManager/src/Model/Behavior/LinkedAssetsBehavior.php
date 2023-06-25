@@ -56,7 +56,7 @@ class LinkedAssetsBehavior extends Behavior
         $query->traverse(function ($value, $clause) use ($query) {
             if (
                 $clause === 'select' &&
-                (count($value) === 0 || in_array($this->getTable()->getPrimaryKey(), $value))
+                (count($value) === 0 || in_array($this->table()->getPrimaryKey(), $value))
             ) {
                 $query->contain('AssetUsages.Assets');
                 $query->contain('AssetUsages.Assets.Attachments');
@@ -79,8 +79,8 @@ class LinkedAssetsBehavior extends Behavior
     {
         $key = $this->getConfig('key');
 
-        if (isset($this->getTable()->Assets)) {
-            $Assets = $this->getTable()->Assets;
+        if (isset($this->table()->Assets)) {
+            $Assets = $this->table()->Assets;
         } else {
             $Assets = TableRegistry::getTableLocator()->get('Croogo/FileManager.Assets');
         }
