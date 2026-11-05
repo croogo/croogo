@@ -11,7 +11,7 @@ class ApiFormAuthenticate extends FormAuthenticate
 {
 
     public function unauthenticated(ServerRequest $request, Response $response) {
-        throw new ForbiddenException($this->_config['authError']);
+        throw new ForbiddenException($this->_config['authError'] ?? null);
     }
 
 }
