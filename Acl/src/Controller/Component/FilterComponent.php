@@ -223,11 +223,50 @@ class FilterComponent extends Component
         }
 
         $authorizer = $this->_controller->Auth->getAuthorize('Croogo/Acl.AclCached');
+        $path = $authorizer->action($this->_controller->getRequest());
 
-        if ($this->_controller->Acl->check('Role-public', $authorizer->action($this->_controller->getRequest()))) {
+        if ($this->_controller->Acl->check('Role-public', $path)
+            && $this->_publicGrantApplies($path, (string)$authorizer->getConfig('actionPath'))
+        ) {
             $this->_controller->Auth->allow(
                 $this->_controller->getRequest()->getParam('action')
             );
         }
+    }
+
+    /**
+     * Whether a Role-public grant may open this action to an anonymous visitor.
+     *
+     * `Acl.anonymousAdminActions` lets the application name, in code, the only Admin-prefix
+     * actions an anonymous visitor may reach (paths without the leading action path, e.g.
+     * `Plugin/Admin/Controller/action`); a grant on any other Admin action then needs a login.
+     * With the key unset every grant applies as before; other prefixes are never affected.
+     *
+     * @param string $path ACO path of the request, as built by the authorize object
+     * @param string $actionPath Root node of that path (`controllers`)
+     * @return bool
+     */
+    protected function _publicGrantApplies(string $path, string $actionPath): bool
+    {
+        $allowed = Configure::read('Acl.anonymousAdminActions');
+        $prefix = (string)$this->_controller->getRequest()->getParam('prefix');
+        if ($allowed === null || ($prefix !== 'Admin' && !str_starts_with($prefix, 'Admin/'))) {
+            return true;
+        }
+
+        $relative = $path;
+        if ($actionPath !== '' && str_starts_with($path, $actionPath . '/')) {
+            $relative = substr($path, strlen($actionPath) + 1);
+        }
+        if (in_array($relative, (array)$allowed, true)) {
+            return true;
+        }
+
+        $this->log(sprintf(
+            'Role-public grant on %s not applied: the action is not listed in Acl.anonymousAdminActions',
+            $relative
+        ), 'notice');
+
+        return false;
     }
 }
