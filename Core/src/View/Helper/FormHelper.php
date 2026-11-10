@@ -16,13 +16,23 @@ use Croogo\Extensions\CroogoTheme;
 class FormHelper extends BaseFormHelper
 {
 
-    public $helpers = [
+    public array $helpers = [
         'Html',
         'Url',
         'Croogo/Core.Theme',
         'Croogo/Core.Croogo',
         'Croogo/Core.Html',
     ];
+
+    /**
+     * @var array
+     */
+    protected $_fieldAccess = [];
+
+    /**
+     * @var int|null
+     */
+    protected $_currentRoleId;
 
     /**
      * Constructor
@@ -92,7 +102,7 @@ class FormHelper extends BaseFormHelper
     /**
      * placeholderOptions
      */
-    protected function _placeholderOptions($fieldName, $options = [])
+    protected function _placeholderOptions(string $fieldName, array $options): array
     {
         $autoPlaceholder = empty($options['placeholder']) &&
             isset($this->_inputDefaults['placeholder']) &&
@@ -125,7 +135,7 @@ class FormHelper extends BaseFormHelper
      * @param array $fieldName Options list
      * @return array
      */
-    protected function _parseOptions($fieldName, $options)
+    protected function _parseOptions($fieldName, $options): array
     {
         $options = parent::_parseOptions($fieldName, $options);
 
@@ -200,7 +210,7 @@ class FormHelper extends BaseFormHelper
      * @return string A formatted opening FORM tag
      * @see FormHelper::create()
      */
-    public function create($model = null, array $options = [])
+    public function create($model = null, array $options = []): string
     {
         if (!empty($options['fieldAccess'])) {
             $this->_fieldAccess = $this->_setupFieldAccess($options['fieldAccess']);
@@ -216,7 +226,7 @@ class FormHelper extends BaseFormHelper
         return $this->control($fieldName, $options);
     }
 
-    public function control($fieldName, array $options = [])
+    public function control($fieldName, array $options = []): string
     {
         if (!$this->_isEditable($fieldName)) {
             return null;
@@ -248,8 +258,8 @@ class FormHelper extends BaseFormHelper
 
         if (substr($field, -3) === '_id') {
             $varName = Inflector::variable(Inflector::pluralize(substr($field, 0, -3)));
-            if (isset($this->_View->viewVars[$varName])) {
-                $lookupData = $this->_View->viewVars[$varName];
+            if ($this->_View->get($varName) !== null) {
+                $lookupData = $this->_View->get($varName);
                 if (isset($lookupData[$displayKey])) {
                     $displayValue = $lookupData[$displayKey];
                 }
@@ -322,8 +332,77 @@ class FormHelper extends BaseFormHelper
             'default' => $default,
             'autocomplete' => 'off',
         ]);
-        $out .= $this->input("autocomplete_${field}", $autocomplete);
+        // PHP 8.2+: interpolacja ${var} deprecated (emisja przy KOMPILACJI klasy!)
+        $out .= $this->input("autocomplete_{$field}", $autocomplete);
 
         return $out;
+    }
+
+    /**
+     * BootstrapUI 5 taguje select klasą Bootstrap-5-ową `form-select`. Admin działa na
+     * Bootstrap 4 — przywracamy `form-control` (mirror BootstrapUI::select).
+     */
+    public function select(string $fieldName, iterable $options = [], array $attributes = []): string
+    {
+        $attributes['injectFormControl'] = false;
+        $attributes = $this->injectClasses('form-control', $attributes);
+
+        return \Cake\View\Helper\FormHelper::select($fieldName, $options, $attributes);
+    }
+
+    /**
+     * BootstrapUI 5 zawsze dokłada `form-check-input`. To poprawne w kontenerze
+     * `.form-check`, ale psuje „gołe" checkboxy w komórkach tabel (BS4 pozycjonuje je
+     * absolutnie). `'formCheckInput' => false` pozwala się z tego wypisać.
+     */
+    public function checkbox(string $fieldName, array $options = []): array|string
+    {
+        if (array_key_exists('formCheckInput', $options) && $options['formCheckInput'] === false) {
+            unset($options['formCheckInput']);
+
+            return \Cake\View\Helper\FormHelper::checkbox($fieldName, $options);
+        }
+
+        return parent::checkbox($fieldName, $options);
+    }
+
+    /**
+     * BootstrapUI 5 przy align=inline generuje siatkę Bootstrap 5 (row/g-N/
+     * align-items-center + wrapper col-auto). Admin to Bootstrap 4 — sprowadzamy
+     * z powrotem do `form-inline` bez wrappera.
+     */
+    protected function _processFormOptions(array $options): array
+    {
+        $options = parent::_processFormOptions($options);
+        if ($this->_align === static::ALIGN_INLINE) {
+            $class = preg_replace('/\b(row|align-items-center|g-[0-9]+)\b/', '', (string)($options['class'] ?? ''));
+            $options['class'] = trim(preg_replace('/\s+/', ' ', $class . ' form-inline'));
+            $options['role'] = $options['role'] ?? 'form';
+            $options['templates']['elementWrapper'] = '{{content}}';
+        }
+
+        return $options;
+    }
+
+    /**
+     * Usuń Bootstrap-5-owe `form-label` (BS4 go nie zna) i zamień `visually-hidden`
+     * (BS5) na `sr-only` (BS4) na etykietach.
+     */
+    protected function _labelOptions(?string $fieldName, array $options): array
+    {
+        $options = parent::_labelOptions($fieldName, $options);
+        if (isset($options['label']['class'])) {
+            $class = (string)$options['label']['class'];
+            $class = preg_replace('/\bform-label\b/', '', $class);
+            $class = preg_replace('/\bvisually-hidden\b/', 'sr-only', $class);
+            $class = trim(preg_replace('/\s+/', ' ', $class));
+            if ($class === '') {
+                unset($options['label']['class']);
+            } else {
+                $options['label']['class'] = $class;
+            }
+        }
+
+        return $options;
     }
 }

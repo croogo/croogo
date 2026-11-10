@@ -42,10 +42,10 @@ class RolesSeed extends AbstractSeed
         ],
     ];
 
-    public function run()
+    public function run(): void
     {
         $this->getAdapter()->commitTransaction();
-        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $Roles = TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
         $entities = $Roles->newEntities($this->records);
         $result = $Roles->saveMany($entities);
         $this->getAdapter()->beginTransaction();

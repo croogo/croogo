@@ -35,7 +35,7 @@ class MultiUserFixture extends CroogoTestFixture
      *
      * @var array
      */
-    public $records = [
+    public array $records = [
         ['user' => 'mariano', 'email' => 'mariano@example.com', 'password' => '5f4dcc3b5aa765d61d8327deb882cf99', 'token' => '12345', 'created' => '2007-03-17 01:16:23', 'updated' => '2007-03-17 01:18:31'],
         ['user' => 'nate', 'email' => 'nate@example.com', 'password' => '5f4dcc3b5aa765d61d8327deb882cf99', 'token' => '23456', 'created' => '2007-03-17 01:18:23', 'updated' => '2007-03-17 01:20:31'],
         ['user' => 'larry', 'email' => 'larry@example.com', 'password' => '5f4dcc3b5aa765d61d8327deb882cf99', 'token' => '34567', 'created' => '2007-03-17 01:20:23', 'updated' => '2007-03-17 01:22:31'],

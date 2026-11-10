@@ -11,7 +11,7 @@ use Croogo\Core\Controller\Api\AppController;
 class LinksController extends AppController
 {
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         $this->Auth->allow([
@@ -21,7 +21,7 @@ class LinksController extends AppController
 
     public function index()
     {
-        $this->Crud->on('beforePaginate', function (Event $event) {
+        $this->Crud->on('beforePaginate', function (Event $event): void {
             $sort = $this->getRequest()->getQuery('sort');
             if (!$sort) {
                 $event->getSubject()->query->sortBy('lft', 'ASC');

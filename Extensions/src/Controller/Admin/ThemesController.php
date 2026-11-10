@@ -4,8 +4,8 @@ namespace Croogo\Extensions\Controller\Admin;
 
 use UnexpectedValueException;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
-use Cake\Network\Exception\BadRequestException;
+use Cake\Core\Exception\CakeException;
+use Cake\Http\Exception\BadRequestException;
 use Croogo\Extensions\CroogoTheme;
 use Croogo\Extensions\Exception\MissingThemeException;
 use Croogo\Extensions\ExtensionsInstaller;
@@ -32,7 +32,7 @@ class ThemesController extends AppController
     /**
      * Constructor
      */
-    public function initialize(array $config = [])
+    public function initialize(array $config = []): void
     {
         parent::initialize($config);
         $this->_CroogoTheme = new CroogoTheme();
@@ -43,7 +43,7 @@ class ThemesController extends AppController
      *
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->set('title_for_layout', __d('croogo', 'Themes'));
 
@@ -111,7 +111,7 @@ class ThemesController extends AppController
             try {
                 $Installer->extractTheme($file['tmp_name']);
                 $this->Flash->success(__d('croogo', 'Theme uploaded successfully.'));
-            } catch (Exception $e) {
+            } catch (CakeException $e) {
                 $this->Flash->error($e->getMessage());
             }
 
@@ -124,7 +124,7 @@ class ThemesController extends AppController
      *
      * @return void
      */
-    public function editor()
+    public function editor(): void
     {
         $this->set('title_for_layout', __d('croogo', 'Theme Editor'));
     }
@@ -134,7 +134,7 @@ class ThemesController extends AppController
      *
      * @return void
      */
-    public function save()
+    public function save(): void
     {
     }
 

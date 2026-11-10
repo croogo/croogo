@@ -23,11 +23,13 @@ class LanguagesTable extends CroogoTable
     /**
      * Initialize
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('ADmad/Sequence.Sequence', [
-            'order' => 'weight',
+            // admad/cakephp-sequence: 'order' zastąpiony 'sequenceField' (domyślne 'position'
+            // nie istnieje -> Unknown column w ORDER BY na każdym find).
+            'sequenceField' => 'weight',
         ]);
         $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp');
@@ -36,13 +38,13 @@ class LanguagesTable extends CroogoTable
             'before' => true,
             'after' => true,
         ];
-        $this->searchManager()
+        $this->getBehavior('Search')->searchManager()
             ->add('title', 'Search.Like', $likeOptions)
             ->add('alias', 'Search.Like', $likeOptions)
             ->add('locale', 'Search.Like', $likeOptions);
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
@@ -53,7 +55,7 @@ class LanguagesTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): \Cake\ORM\RulesChecker
     {
         $rules
             ->add($rules->isUnique(
@@ -68,7 +70,7 @@ class LanguagesTable extends CroogoTable
         return $rules;
     }
 
-    public function findActive(Query $query)
+    public function findActive(\Cake\ORM\Query\SelectQuery $query)
     {
         $query
             ->select(['id', 'alias', 'locale'])

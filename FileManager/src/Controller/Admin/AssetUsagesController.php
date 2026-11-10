@@ -9,7 +9,7 @@ class AssetUsagesController extends AppController
         'Croogo/FileManager.AssetUsages',
     ];
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -17,11 +17,11 @@ class AssetUsagesController extends AppController
             'changeType', 'unregister',
         ];
         if (in_array($this->getRequest()->getParam('action'), $excludeActions)) {
-            $this->Security->setConfig('validatePost', false);
+            $this->FormProtection->setConfig('validate', false);
         }
     }
 
-    public function add()
+    public function add(): void
     {
         if ($this->getRequest()->getQuery()) {
             $assetId = $this->getRequest()->getQuery('asset_id');
@@ -55,15 +55,16 @@ class AssetUsagesController extends AppController
         $this->redirect($this->referer());
     }
 
-    public function changeType()
+    public function changeType(): void
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
         $result = true;
+        // Cake 5: legacy properties $request->data/query nie istnieja -> getData()/getQuery()
         $data = ['pk' => null, 'value' => null];
-        if (isset($this->getRequest()->data['pk'])) {
-            $data = $this->getRequest()->data;
-        } elseif (isset($this->getRequest()->query['pk'])) {
-            $data = $this->getRequest()->query;
+        if ($this->getRequest()->getData('pk') !== null) {
+            $data = $this->getRequest()->getData();
+        } elseif ($this->getRequest()->getQuery('pk') !== null) {
+            $data = $this->getRequest()->getQuery();
         }
 
         $id = $data['pk'];
@@ -75,10 +76,10 @@ class AssetUsagesController extends AppController
             $result = $this->AssetUsages->save($entity);
         }
         $this->set(compact('result'));
-        $this->set('_serialize', 'result');
+        $this->viewBuilder()->setOption('serialize', 'result');
     }
 
-    public function unregister()
+    public function unregister(): void
     {
         $this->viewBuilder()->setClassName('Json');
         $result = false;
@@ -87,6 +88,6 @@ class AssetUsagesController extends AppController
             $result = $this->AssetUsages->delete($assetUsage);
         }
         $this->set(compact('result'));
-        $this->set('_serialize', 'result');
+        $this->viewBuilder()->setOption('serialize', 'result');
     }
 }

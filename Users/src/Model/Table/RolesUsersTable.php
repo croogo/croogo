@@ -2,7 +2,7 @@
 
 namespace Croogo\Users\Model\Table;
 
-use Cake\Core\Exception\Exception;
+use Cake\Core\Exception\CakeException;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -18,7 +18,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class RolesUsersTable extends CroogoTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->belongsTo('Users', [
             'className' => 'Croogo/Users.Users',
@@ -38,15 +38,14 @@ class RolesUsersTable extends CroogoTable
      */
     public function getRolesAro($userId)
     {
-        $rolesUsers = $this->find('all', [
-            'fields' => 'role_id',
-            'conditions' => [
-                $this->aliasField('user_id') => $userId,
-            ],
-            'cache' => [
-                'name' => 'user_roles_' . $userId,
-                'config' => 'nodes_index',
-            ],
+        $rolesUsers = $this->find('all',
+        fields: 'role_id',
+        conditions: [
+            $this->aliasField('user_id') => $userId,
+        ],
+        cache: [
+            'name' => 'user_roles_' . $userId,
+            'config' => 'nodes_index',
         ]);
         $aroIds = [];
         foreach ($rolesUsers as $rolesUser) {
@@ -56,7 +55,7 @@ class RolesUsersTable extends CroogoTable
                     'foreign_key' => $rolesUser->role_id,
                 ])->first();
                 $aroIds[] = $aro->id;
-            } catch (Exception $e) {
+            } catch (CakeException $e) {
                 continue;
             }
         }

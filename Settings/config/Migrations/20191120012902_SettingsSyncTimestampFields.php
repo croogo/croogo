@@ -10,7 +10,7 @@ class SettingsSyncTimestampFields extends AbstractMigration
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
      * @return void
      */
-    public function change()
+    public function change(): void
     {
         $this->table('settings')
             ->renameColumn('updated', 'modified')

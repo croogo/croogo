@@ -3,7 +3,6 @@
 namespace Croogo\FileManager\Utility;
 
 use Cake\Core\Configure;
-use Cake\Filesystem\Folder;
 use Cake\Log\Log;
 
 /**
@@ -192,14 +191,7 @@ class FileManager
      */
     public function isEditable($path)
     {
-        $editablePaths = (array)Configure::check('FileManager.editablePaths');
-        foreach ($editablePaths as $editablePath) {
-            if ($this->_isWithinPath($editablePath, $path)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->_isWithinAnyPath('FileManager.editablePaths', $path, true);
     }
 
     /**
@@ -213,17 +205,69 @@ class FileManager
      */
     public function isDeletable($path)
     {
-        $deletablePaths = (array)Configure::read('FileManager.deletablePaths');
-        foreach ($deletablePaths as $deletablePath) {
-            if ($deletablePath == $path) {
-                continue;
-            }
-            if ($this->_isWithinPath($deletablePath, $path)) {
-                return true;
+        return $this->_isWithinAnyPath('FileManager.deletablePaths', $path, false);
+    }
+
+    /**
+     * Checks that $path is an existing directory new entries may be written into
+     *
+     * Unlike isDeletable() the configured root itself qualifies, so uploads and
+     * new directories can still land directly in it.
+     *
+     * @param string $path Directory to check
+     * @return bool True when $path is a directory under FileManager.deletablePaths
+     */
+    public function isWritableDirectory($path)
+    {
+        return $this->_isWithinAnyPath('FileManager.deletablePaths', $path, true) && is_dir($path);
+    }
+
+    /**
+     * Checks whether an entry called $name may be written through the file manager
+     *
+     * The managed directories are served by the web server, so a name it could execute
+     * or read as configuration (`x.php`, `x.php.jpg`, `.htaccess`, `.user.ini`) would turn
+     * a file write into code execution. Every extension segment is checked, not just the
+     * last one, because a multi-extension handler mapping runs `x.php.jpg` as PHP.
+     *
+     * @param string $name Bare file or directory name
+     * @return bool True when the name is safe to create, write or rename to
+     */
+    public function isAllowedName($name)
+    {
+        if (!is_string($name) || $name === '' || $name[0] === '.') {
+            return false;
+        }
+        foreach (array_slice(explode('.', $name), 1) as $extension) {
+            if (preg_match('/^(php\d*|pht|phtml|phps|phar)$/i', trim($extension))) {
+                return false;
             }
         }
 
-        return false;
+        return true;
+    }
+
+    /**
+     * Joins a user-supplied entry name onto $directory
+     *
+     * The name must be a bare file/directory name that isAllowedName() accepts: a
+     * separator or `..` in it would leave the directory the caller has just checked.
+     * An existing symlink is refused too, dangling ones included, because writes follow
+     * it out of the directory.
+     *
+     * @param string $directory Directory the entry belongs to
+     * @param string $name Entry name as submitted by the user
+     * @return string|null Joined path, or null when the entry cannot be written safely
+     */
+    public function childPath($directory, $name)
+    {
+        if (!is_string($directory) || !$this->isAllowedName($name) || strpbrk($name, "/\\\0") !== false) {
+            return null;
+        }
+
+        $path = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . $name;
+
+        return is_link($path) ? null : $path;
     }
 
     /**
@@ -235,17 +279,37 @@ class FileManager
      */
     public function rename($oldPath, $newPath)
     {
-        if (is_dir($oldPath)) {
-            $Folder = new Folder($oldPath);
-
-            return $Folder->move(['from' => $oldPath, 'to' => $newPath]);
-        } else {
-            return rename($oldPath, $newPath);
-        }
+        // Cake 5: Folder usunięty — rename() obsługuje też katalogi.
+        return rename($oldPath, $newPath);
     }
 
     /**
-     * Checks that $pathToCheck resides under $referencePath
+     * Checks $path against every directory listed under the Configure key $key
+     *
+     * @param string $key Configure key holding the list of allowed directories
+     * @param string $path Path to check
+     * @param bool $allowRoot Whether a listed directory itself qualifies
+     * @return bool True when $path resides under one of the listed directories
+     */
+    protected function _isWithinAnyPath($key, $path, $allowRoot)
+    {
+        foreach ((array)Configure::read($key) as $referencePath) {
+            if (!$this->_isWithinPath($referencePath, $path)) {
+                continue;
+            }
+            if ($allowRoot || realpath($referencePath) !== realpath($path)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks that $pathToCheck resides under $referencePath (or is that directory)
+     *
+     * Fails closed: a path that does not resolve never matches, and the prefix only
+     * matches on a separator boundary, so `assets` does not cover `assets-old`.
      *
      * @param string $referencePath Reference path
      * @param string $pathToCheck Path to check
@@ -253,10 +317,18 @@ class FileManager
      */
     protected function _isWithinPath($referencePath, $pathToCheck)
     {
+        // realpath('') resolves to the working directory, so an empty entry must not reach it.
+        if (!is_string($referencePath) || !is_string($pathToCheck) || $referencePath === '' || $pathToCheck === '') {
+            return false;
+        }
+        $reference = realpath($referencePath);
         $path = realpath($pathToCheck);
-        $regex = '/^' . preg_quote(realpath($referencePath), '/') . '/';
+        if ($reference === false || $path === false) {
+            return false;
+        }
 
-        return preg_match($regex, $path) > 0;
+        return $path === $reference
+            || str_starts_with($path, rtrim($reference, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
     }
 
     public function filename2mime($filename) {

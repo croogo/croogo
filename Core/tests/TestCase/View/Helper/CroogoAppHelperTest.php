@@ -31,14 +31,14 @@ class CroogoAppHelperTest extends CroogoTestCase
      */
     public $AppHelper;
 
-    public $fixtures = [
+    protected array $fixtures = [
 //      'plugin.Croogo/Settings.Setting',
 //      'plugin.Croogo/Taxonomy.Type',
 //      'plugin.Croogo/Taxonomy.Vocabulary',
 //      'plugin.Croogo/Taxonomy.TypesVocabulary',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -50,22 +50,22 @@ class CroogoAppHelperTest extends CroogoTestCase
         $this->AppHelper->getView()->setRequest($request);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
-        PluginManager::unload('Translate');
+        PluginManager::clear('Translate');
 
         unset($this->AppHelper->request, $this->AppHelper, $this->View);
     }
 
-    public function testUrlWithoutLocale()
+    public function testUrlWithoutLocale(): void
     {
         $url = $this->AppHelper->url();
         $this->assertEquals($url, Router::url('/'));
     }
 
-    public function testUrlWithLocale()
+    public function testUrlWithLocale(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -73,7 +73,7 @@ class CroogoAppHelperTest extends CroogoTestCase
         $this->assertEquals($url, Router::url('/por/index'));
     }
 
-    public function testFullUrlWithLocale()
+    public function testFullUrlWithLocale(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -81,7 +81,7 @@ class CroogoAppHelperTest extends CroogoTestCase
         $this->assertEquals($url, Router::url('/por/index', true));
     }
 
-    public function testUrlWithRequestParams()
+    public function testUrlWithRequestParams(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -90,7 +90,7 @@ class CroogoAppHelperTest extends CroogoTestCase
         $this->assertEquals($url, Router::url('/por/index'));
     }
 
-    public function testFullUrlWithRequestParams()
+    public function testFullUrlWithRequestParams(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 

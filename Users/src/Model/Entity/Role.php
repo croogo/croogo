@@ -17,7 +17,7 @@ class Role extends Entity
         if (!$this->id) {
             return null;
         } else {
-            $aro = TableRegistry::get('Croogo/Acl.Aros')->node('first', [
+            $aro = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Acl.Aros')->node('first', [
                 'conditions' => [
                     'model' => $this->alias,
                     'foreign_key' => $this->id,

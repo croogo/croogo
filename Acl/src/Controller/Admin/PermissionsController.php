@@ -19,14 +19,19 @@ use Croogo\Core\Croogo;
 class PermissionsController extends AppController
 {
 
-    public function initialize()
+    /**
+     * Most leaves a permissions search lists; the rest is only counted
+     */
+    private const SEARCH_LIMIT = 100;
+
+    public function initialize(): void
     {
         parent::initialize();
 
-        $this->loadModel('Croogo/Acl.Acos');
-        $this->loadModel('Croogo/Acl.Aros');
-        $this->loadModel('Croogo/Users.Roles');
-        $this->loadModel('Croogo/Acl.Permissions');
+        $this->Acos = $this->fetchTable('Croogo/Acl.Acos');
+        $this->Aros = $this->fetchTable('Croogo/Acl.Aros');
+        $this->Roles = $this->fetchTable('Croogo/Users.Roles');
+        $this->Permissions = $this->fetchTable('Croogo/Acl.Permissions');
     }
 
     /**
@@ -34,7 +39,7 @@ class PermissionsController extends AppController
      *
      * @return void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         parent::beforeFilter($event);
         if ($this->getRequest()->getParam('action') == 'toggle') {
@@ -48,8 +53,18 @@ class PermissionsController extends AppController
      * @param id integer aco id, when null, the root ACO is used
      * @return void
      */
-    public function index($id = null, $level = null)
+    public function index($id = null, $level = null): void
     {
+        // Cake 4: RequestHandler->ext (rozszerzenie URL) usunięte; $.getJSON wysyła
+        // Accept: application/json bez sufiksu .json -> wykrywamy po nagłówku Accept.
+        $isJson = strpos($this->getRequest()->getHeaderLine('Accept'), 'application/json') !== false;
+        $search = trim((string)$this->getRequest()->getQuery('q'));
+        if ($isJson && $search !== '') {
+            $this->_search($search);
+
+            return;
+        }
+
         if ($this->getRequest()->getQuery('root')) {
             $query = strtolower($this->getRequest()->getQuery('root'));
         }
@@ -74,14 +89,14 @@ class PermissionsController extends AppController
         $this->set(compact('acos', 'roles', 'level'));
 
         $aros = $this->Aros->getRoles($roles);
-        if ($root && $this->RequestHandler->ext == 'json') {
+        if ($root && $isJson) {
             $options = array_intersect_key(
                 $this->getRequest()->getQuery(),
                 ['perms' => null, 'urls' => null]
             );
             $cacheName = 'permissions_aco_' . $root->id;
             $permissions = Cache::read($cacheName, 'permissions');
-            if ($permissions === false) {
+            if ($permissions === null) {
                 $permissions = $this->Permissions->format($acos, $aros, $options);
                 Cache::write($cacheName, $permissions, 'permissions');
             }
@@ -93,9 +108,49 @@ class PermissionsController extends AppController
 
         if ($this->getRequest()->is('ajax') && isset($query)) {
             $this->render('Croogo/Acl.acl_permissions_table');
+        } elseif ($isJson) {
+            // Detekcja po naglowku Accept (bez _ext=json) NIE ustawia subDir 'json',
+            // wiec szablon json/index.php (echo json_encode) wskazujemy jawnie.
+            $this->viewBuilder()->disableAutoLayout();
+            $this->setResponse($this->getResponse()->withType('application/json'));
+            $this->render('json/index');
         } else {
             $this->_setPermissionRoots();
         }
+    }
+
+    /**
+     * JSON for the filter above the permission tabs: the whole tree, not just the loaded level
+     *
+     * @param string $search Search terms
+     * @return void
+     */
+    protected function _search(string $search): void
+    {
+        $roleList = $this->Roles->find('list');
+        $aros = $this->Aros->getRoles($roleList);
+        $found = $this->Acos->searchLeaves($search, self::SEARCH_LIMIT);
+        $verdicts = $this->Permissions->roleVerdicts($found['acos'], $aros);
+
+        $roles = [];
+        foreach ($roleList as $roleId => $title) {
+            $roles[] = ['id' => $roleId, 'title' => $title, 'aroId' => $aros[$roleId] ?? null];
+        }
+        $results = [];
+        foreach ($found['acos'] as $acoId => $path) {
+            $results[] = [
+                'id' => $acoId,
+                'path' => $path,
+                'roles' => $verdicts[$acoId] ?? [],
+                'damaged' => in_array($acoId, $found['damaged'], true),
+            ];
+        }
+        $total = $found['total'];
+
+        $this->set(compact('roles', 'results', 'total'));
+        $this->viewBuilder()->disableAutoLayout();
+        $this->setResponse($this->getResponse()->withType('application/json'));
+        $this->render('json/search');
     }
 
     protected function _setPermissionRoots()
@@ -131,7 +186,7 @@ class PermissionsController extends AppController
 
         // see if acoId and aroId combination exists
         $aro = $this->Aros->get($aroId);
-        $path = $this->Acos->find('path', ['for' => $acoId]);
+        $path = $this->Acos->find('path', for: $acoId);
         $path = join('/', collection($path)->extract('alias')->toArray());
 
         $permitted = !$this->Permissions->check(['model' => $aro->model, 'foreign_key' => $aro->foreign_key], $path);
@@ -143,7 +198,7 @@ class PermissionsController extends AppController
             Cache::delete('permissions_public', 'permissions');
         }
 
-        $this->viewBuilder()->autoLayout(false);
+        $this->viewBuilder()->enableAutoLayout(false);
 
         $this->set(compact('acoId', 'aroId', 'success', 'permitted'));
     }

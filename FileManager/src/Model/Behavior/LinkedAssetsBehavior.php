@@ -18,7 +18,7 @@ class LinkedAssetsBehavior extends Behavior
     /**
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'key' => 'linked_assets',
     ];
 
@@ -26,7 +26,7 @@ class LinkedAssetsBehavior extends Behavior
      * @param array $config
      * @return void
      */
-    public function initialize(array $config = [])
+    public function initialize(array $config = []): void
     {
         $this->_table->addAssociations([
             'hasMany' => [
@@ -44,13 +44,13 @@ class LinkedAssetsBehavior extends Behavior
 
     /**
      * @param Event $event
-     * @param Query $query
+     * @param \Cake\ORM\Query\SelectQuery $query
      * @param ArrayObject $options
      * @param $primary
      *
-     * @return Query
+     * @return \Cake\ORM\Query\SelectQuery
      */
-    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
+    public function beforeFind(\Cake\Event\EventInterface $event, \Cake\ORM\Query\SelectQuery $query, ArrayObject $options, $primary)
     {
         //if ($model->findQueryType == 'list') {
             //return $query;
@@ -131,7 +131,7 @@ class LinkedAssetsBehavior extends Behavior
                             'Assets.parent_asset_id' => $seedId,
                         ])
                         ->cache('linked_assets_' . $assetUsage->asset->id, 'nodes')
-                        ->order(['width' => 'DESC']);
+                        ->orderBy(['width' => 'DESC']);
                     if (!$assetUsage->versions) {
                         $versions = [];
                     }

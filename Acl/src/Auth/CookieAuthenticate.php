@@ -2,7 +2,7 @@
 
 namespace Croogo\Acl\Auth;
 
-use Cake\Auth\BaseAuthenticate;
+use Croogo\Core\Auth\BaseAuthenticate;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Http\Response;
@@ -97,7 +97,9 @@ class CookieAuthenticate extends BaseAuthenticate
     public function getUser(ServerRequest $request)
     {
         if (!$this->_registry->has('Cookie')) {
-            throw new Exception('CookieComponent is not loaded');
+            // CookieComponent usunięty w Cake 4 — auto-login z cookie wyłączony
+            // do czasu reworku na CookieCollection. Brak cookie -> brak usera.
+            return false;
         }
 
         $config = $this->getConfig();
@@ -155,7 +157,7 @@ class CookieAuthenticate extends BaseAuthenticate
             $conditions = array_merge($conditions, $this->settings['scope']);
         }
 
-        $query = TableRegistry::get($userModel)->find()
+        $query = \Cake\ORM\TableRegistry::getTableLocator()->get($userModel)->find()
             ->where($conditions);
 
         if (!empty($config['contain'])) {

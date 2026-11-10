@@ -24,15 +24,25 @@ class HabtmDbAcl extends CachedDbAcl
     ];
 
     /**
+     * Containing AclComponent
+     *
+     * @var \Acl\Controller\Component\AclComponent
+     */
+    public $Acl;
+
+    /**
      * Initializes the containing component and sets the Aro/Aco objects to it.
      *
      * @param AclComponent $component
      * @return void
      */
-    public function initialize(Component $component)
+    public function initialize(Component $component): void
     {
-        if (!empty($component->settings['habtm'])) {
-            $this->settings = array_merge($this->settings, $component->settings['habtm']);
+        parent::initialize($component);
+
+        $habtm = $component->getConfig('habtm');
+        if (!empty($habtm)) {
+            $this->settings = array_merge($this->settings, $habtm);
         }
         $this->Acl = $component;
     }
@@ -56,16 +66,25 @@ class HabtmDbAcl extends CachedDbAcl
         }
         extract($this->settings);
 
-        $User = TableRegistry::get($userModel);
+        $User = \Cake\ORM\TableRegistry::getTableLocator()->get($userModel);
         list($plugin, $groupAlias) = pluginSplit($groupAlias);
         $assoc = $User->associations()->get($groupAlias);
+        if (!$assoc instanceof \Cake\ORM\Association\BelongsToMany) {
+            return false;
+        }
 
         $joinModel = $assoc->junction();
 
-        $userField = $assoc->foreignKey();
-        $groupField = $assoc->targetForeignKey();
+        $userField = $assoc->getForeignKey();
+        $groupField = $assoc->getTargetForeignKey();
 
-        $node = $this->Acl->Aro->node($aro)->first();
+        $nodes = $this->Acl->Aro->node($aro);
+        $node = $nodes ? $nodes->first() : null;
+        // role HABTM dotycza tylko ARO uzytkownika (np. nie 'Role-public',
+        // ktorego foreign_key to id roli, nie uzytkownika)
+        if (!$node || $node->model !== $User->getAlias() || !$node->foreign_key) {
+            return false;
+        }
         $userId = $node->foreign_key;
         $query = $joinModel->find()
             ->select([$groupField])

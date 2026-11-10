@@ -10,16 +10,16 @@ use Menus\View\Helper\MenusHelper;
 class MenusHelperTest extends TestCase
 {
 
-    public $fixtures = [
-        'plugin.users.user',
-        'plugin.users.role',
-        'plugin.settings.setting',
+    public array $fixtures = [
+        'plugin.Users',
+        'plugin.Users',
+        'plugin.Settings',
     ];
 
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->ComponentRegistry = new ComponentRegistry();
@@ -36,7 +36,7 @@ class MenusHelperTest extends TestCase
     /**
      * tearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Configure::write('App.encoding', $this->_appEncoding);
         Configure::write('Asset', $this->_asset);
@@ -48,7 +48,7 @@ class MenusHelperTest extends TestCase
     /**
      * Test [menu] shortcode
      */
-    public function testMenuShortcode()
+    public function testMenuShortcode(): void
     {
         $content = '[menu:blogroll]';
         $this->View->viewVars['menusForLayout']['blogroll'] = [
@@ -69,7 +69,7 @@ class MenusHelperTest extends TestCase
 class TheMenuTestController extends Controller
 {
 
-    public $name = 'TheTest';
+    public string $name = 'TheTest';
 
     public $uses = null;
 }

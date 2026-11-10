@@ -7,5 +7,5 @@ use Cake\Core\Exception\MissingPluginException;
 class MissingThemeException extends MissingPluginException
 {
 
-    protected $_messageTemplate = 'Theme %s could not be found.';
+    protected string $_messageTemplate = 'Theme %s could not be found.';
 }

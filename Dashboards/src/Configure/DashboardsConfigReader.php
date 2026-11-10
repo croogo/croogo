@@ -27,7 +27,7 @@ class DashboardsConfigReader extends PhpConfig implements ConfigEngineInterface
      * @param string $key Configuration key name
      * @return array
      */
-    public function read($key)
+    public function read($key): array
     {
         $config = parent::read($key);
         $defaults = [
@@ -58,7 +58,7 @@ class DashboardsConfigReader extends PhpConfig implements ConfigEngineInterface
      * @param array $data The data to dump.
      * @return void True on success or false on failure.
      */
-    public function dump($key, array $data)
+    public function dump($key, array $data): bool
     {
         // TODO: Implement dump() method.
     }

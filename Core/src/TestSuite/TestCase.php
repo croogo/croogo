@@ -4,13 +4,13 @@ namespace Croogo\Core\TestSuite;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest;
 use Cake\ORM\Query;
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Croogo\Core\Event\EventManager;
 use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\Constraint\QueryCount;
-use PHPUnit_Util_InvalidArgumentHelper;
+use InvalidArgumentException;
 
 /**
  * CroogoTestCase class
@@ -27,12 +27,12 @@ class TestCase extends CakeTestCase
 {
     protected $previousPlugins = [];
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         Configure::write('Config.language', 'eng');
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         Configure::write('Config.language', Configure::read('Site.locale'));
     }
@@ -42,35 +42,34 @@ class TestCase extends CakeTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         EventManager::instance(new EventManager);
         Configure::write('EventHandlers', []);
 
-        PluginManager::unload('Croogo/Install');
-        PluginManager::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
+        PluginManager::clear('Croogo/Install');
         Configure::write('Acl.database', 'test');
 
         $this->previousPlugins = Plugin::loaded();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
         // Unload all plugins that were loaded while running tests
         $diff = array_diff(Plugin::loaded(), $this->previousPlugins);
         foreach ($diff as $plugin) {
-            PluginManager::unload($plugin);
+            PluginManager::clear($plugin);
         }
     }
 
-    public function assertQueryCount($count, Query $query, $message = '')
+    public function assertQueryCount($count, \Cake\ORM\Query\SelectQuery $query, $message = '')
     {
         if (!is_int($count)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
+            throw new InvalidArgumentException('Argument 1 must be of type integer.');
         }
 
         $constraint = new QueryCount($count);
@@ -83,12 +82,10 @@ class TestCase extends CakeTestCase
      */
     protected function _apiRequest($params)
     {
-        $request = new Request();
-        $request->addParams($params);
-        $request->addDetector('api', [
+        ServerRequest::addDetector('api', [
             'callback' => ['Croogo\\Core\\Router', 'isApiRequest'],
         ]);
 
-        return $request;
+        return new ServerRequest(['params' => $params]);
     }
 }

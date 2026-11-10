@@ -24,19 +24,19 @@ use Croogo\Menus\Model\Table\LinksTable;
  */
 class LinksController extends AppController
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
         $this->loadComponent('Croogo/Core.BulkProcess');
-        $this->loadModel('Croogo/Users.Roles');
+        $this->Roles = $this->fetchTable('Croogo/Users.Roles');
 
         if ($this->getRequest()->getParam('action') == 'toggle') {
             $this->Croogo->protectToggleAction();
         }
     }
 
-    public function index()
+    public function index(): void
     {
         $menuId = $this->getRequest()->getQuery('menu_id');
         $menu = $this->Links->Menus->get($menuId);
@@ -45,15 +45,13 @@ class LinksController extends AppController
             ->where([
                 'Links.menu_id' => $menuId,
             ]);
-        $linksStatus = $this->Links->find('list', [
-            'valueField' => 'status',
-        ])
+        $linksStatus = $this->Links->find('list', valueField: 'status')
             ->where([
                 'Links.menu_id' => $menuId,
             ])
             ->toArray();
         $this->set(compact('linksTree', 'linksStatus', 'menu'));
-        $this->set('_serialize', ['linksTree', 'menu', 'linksStatus']);
+        $this->viewBuilder()->setOption('serialize', ['linksTree', 'menu', 'linksStatus']);
     }
 
     /**
@@ -61,7 +59,7 @@ class LinksController extends AppController
      *
      * @param int $id
      *
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function delete($id = null)
     {
@@ -88,7 +86,7 @@ class LinksController extends AppController
      * @param int $id
      * @param int $step
      *
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function moveup($id, $step = 1)
     {
@@ -104,7 +102,8 @@ class LinksController extends AppController
         }
 
         $this->Links->setTreeScope($link->menu_id);
-        if ($this->Links->moveUp($link, $step)) {
+        // Cake 5.3: metody behaviora na instancji tabeli deprecated
+        if ($this->Links->getBehavior('Tree')->moveUp($link, $step)) {
             Cache::clearGroup('menus', 'croogo_menus');
             $this->Flash->success(__d('croogo', 'Moved up successfully'));
         } else {
@@ -125,7 +124,7 @@ class LinksController extends AppController
      * @param int $id
      * @param int $step
      *
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function movedown($id, $step = 1)
     {
@@ -141,7 +140,8 @@ class LinksController extends AppController
         }
 
         $this->Links->setTreeScope($link->menu_id);
-        if ($this->Links->moveDown($link, $step)) {
+        // Cake 5.3: metody behaviora na instancji tabeli deprecated
+        if ($this->Links->getBehavior('Tree')->moveDown($link, $step)) {
             Cache::clearGroup('menus', 'croogo_menus');
             $this->Flash->success(__d('croogo', 'Moved down successfully'));
         } else {
@@ -187,7 +187,7 @@ class LinksController extends AppController
         return $this->BulkProcess->process($this->Links, $action, $ids, $options);
     }
 
-    public function beforeCrudRender(Event $event)
+    public function beforeCrudRender(Event $event): void
     {
         $menuId = null;
         $conditions = [];
@@ -210,7 +210,7 @@ class LinksController extends AppController
         $this->set('parentLinks', $this->Links->find('treeList')->where($conditions));
     }
 
-    public function beforeCrudRedirect(Event $event)
+    public function beforeCrudRedirect(Event $event): void
     {
         if ($this->redirectToSelf($event)) {
             return;
@@ -220,7 +220,7 @@ class LinksController extends AppController
         $event->getSubject()->url['menu_id'] = $entity->menu_id;
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforeRender' => 'beforeCrudRender',

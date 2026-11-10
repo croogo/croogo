@@ -4,7 +4,7 @@ use Migrations\AbstractMigration;
 
 class AclInitialMigration extends AbstractMigration
 {
-    public function up()
+    public function up(): void
     {
 
         $this->table('acos')
@@ -107,7 +107,7 @@ class AclInitialMigration extends AbstractMigration
             ->create();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('acos')->drop()->save();
         $this->table('aros')->drop()->save();

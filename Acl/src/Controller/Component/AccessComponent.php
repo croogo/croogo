@@ -35,11 +35,11 @@ class AccessComponent extends Component
      *
      * @param Event $event
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event): void
     {
         $controller = $event->getSubject();
         $this->_controller = $controller;
-        if ($controller->request->getParam('prefix') != 'admin') {
+        if ($controller->getRequest()->getParam('prefix') != 'Admin') {
             return;
         }
 
@@ -61,10 +61,13 @@ class AccessComponent extends Component
         Croogo::hookAdminTab('Admin/Roles/edit', $title, $element);
 
         $id = null;
-        if (!empty($this->_controller->request->getParam('pass')[0])) {
-            $id = $this->_controller->request->getParam('pass')[0];
+        if (!empty($this->_controller->getRequest()->getParam('pass')[0])) {
+            $id = $this->_controller->getRequest()->getParam('pass')[0];
         }
-        $this->_controller->set('parents', $this->_controller->Roles->allowedParents($id));
+        $this->_controller->set(
+            'parents',
+            $this->_controller->Roles->getBehavior('RoleAro')->allowedParents($id)
+        );
     }
 
     /**
@@ -80,13 +83,13 @@ class AccessComponent extends Component
      * @param array $allowRoles Role aliases
      * @return void
      */
-    public function addAco($action, $allowRoles = [])
+    public function addAco($action, $allowRoles = []): void
     {
-        $actionPath = $this->_controller->Auth->config('authorize.all.actionPath');
+        $actionPath = $this->_controller->Auth->getConfig('authorize.all.actionPath');
         if (strpos($action, $actionPath) === false) {
             $action = str_replace('//', '/', $actionPath . '/' . $action);
         }
-        $Aco = TableRegistry::get('Croogo/Acl.Acos');
+        $Aco = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $Aco->addAco($action, $allowRoles);
     }
 
@@ -102,20 +105,20 @@ class AccessComponent extends Component
      * @param string $action action path
      * @return void
      */
-    public function removeAco($action)
+    public function removeAco($action): void
     {
         $actionPath = $this->_controller->Auth->authorize['all']['actionPath'];
         if (strpos($action, $actionPath) === false) {
             $action = str_replace('//', '/', $actionPath . '/' . $action);
         }
-        $Aco = TableRegistry::get('Croogo/Acl.Acos');
+        $Aco = TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $Aco->removeAco($action);
     }
 
     public function isUrlAuthorized($user, $url)
     {
         if (is_string($url)) {
-            $request = new ServerRequest($url);
+            $request = new ServerRequest(['url' => $url]);
             $params = Router::parseRequest($request);
             $request = $request->withAttribute('params', $params);
         } else {

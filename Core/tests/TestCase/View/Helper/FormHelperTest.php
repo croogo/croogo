@@ -13,7 +13,7 @@ class FormHelperTest extends CroogoTestCase
      */
     private $Form;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -22,13 +22,13 @@ class FormHelperTest extends CroogoTestCase
         $this->Form = new FormHelper($this->View);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->View);
         unset($this->Html);
     }
 
-    public function testInputTooltips()
+    public function testInputTooltips(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -113,7 +113,7 @@ class FormHelperTest extends CroogoTestCase
     /**
      * testInputAutoTooltips
      */
-    public function testInputAutoTooltips()
+    public function testInputAutoTooltips(): void
     {
         // automatic tooltips
         $result = $this->Form->input('username', [
@@ -158,7 +158,7 @@ class FormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testButtonDefault()
+    public function testButtonDefault(): void
     {
         $result = $this->Form->button('Button');
         $expected = [
@@ -172,7 +172,7 @@ class FormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testButtonDanger()
+    public function testButtonDanger(): void
     {
         $result = $this->Form->button('Button', ['button' => 'danger']);
 
@@ -187,7 +187,7 @@ class FormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testButtonWithIcon()
+    public function testButtonWithIcon(): void
     {
         $result = $this->Form->button('Button', ['icon' => 'pencil']);
 
@@ -208,7 +208,7 @@ class FormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testSubmitDefault()
+    public function testSubmitDefault(): void
     {
         $result = $this->Form->submit('Send');
 
@@ -228,7 +228,7 @@ class FormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testSubmitDanger()
+    public function testSubmitDanger(): void
     {
         $result = $this->Form->submit('Send', ['button' => 'danger']);
 
@@ -248,7 +248,7 @@ class FormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testInputPlaceholders()
+    public function testInputPlaceholders(): void
     {
         $result = $this->Form->input('username', [
             'placeholder' => true,
@@ -348,7 +348,7 @@ class FormHelperTest extends CroogoTestCase
     /**
      * testAutocomplete
      */
-    public function testAutocomplete()
+    public function testAutocomplete(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -391,7 +391,7 @@ class FormHelperTest extends CroogoTestCase
     /**
      * testAutocompleteWithDefault
      */
-    public function testAutocompleteWithDefault()
+    public function testAutocompleteWithDefault(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -439,7 +439,7 @@ class FormHelperTest extends CroogoTestCase
     /**
      * testAutocompleteWithDefaultFromViewVars
      */
-    public function testAutocompleteWithDefaultFromViewVars()
+    public function testAutocompleteWithDefaultFromViewVars(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -497,7 +497,7 @@ class FormHelperTest extends CroogoTestCase
     /**
      * Test placeholder with nested model fields
      */
-    public function testInputPlaceholderNestedModel()
+    public function testInputPlaceholderNestedModel(): void
     {
         $expected = [
             'div' => [
@@ -528,7 +528,7 @@ class FormHelperTest extends CroogoTestCase
     /**
      * Test radio button class
      */
-    public function testInputRadioButtonClass()
+    public function testInputRadioButtonClass(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -547,7 +547,7 @@ class FormHelperTest extends CroogoTestCase
     /**
      * Test checkbox class
      */
-    public function testInputCheckboxClass()
+    public function testInputCheckboxClass(): void
     {
         $result = $this->Form->input('Node.promote', [
             'type' => 'checkbox',

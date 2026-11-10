@@ -19,17 +19,17 @@ class UsersSeed extends AbstractSeed
         'created_by' => 1,
     ];
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             'RolesSeed',
         ];
     }
 
-    public function run()
+    public function run(): void
     {
         $this->getAdapter()->commitTransaction();
-        $Users = TableRegistry::get('Croogo/Users.Users');
+        $Users = TableRegistry::getTableLocator()->get('Croogo/Users.Users');
         $entity = $Users->newEntity($this->record);
         $result = $Users->save($entity);
         $this->getAdapter()->beginTransaction();

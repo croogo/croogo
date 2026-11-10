@@ -9,13 +9,13 @@ class MenusComponentTest extends CroogoControllerTestCase
 {
 
     public $fixtures = [
-        'plugin.blocks.block',
-        'plugin.blocks.region',
-        'plugin.menus.menu',
-        'plugin.menus.link',
+        'plugin.Blocks',
+        'plugin.Blocks',
+        'plugin.Menus',
+        'plugin.Menus',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->_paths = App::paths();
         $app = Plugin::path('Menus') . 'Test' . DS . 'test_app' . DS;
@@ -30,7 +30,7 @@ class MenusComponentTest extends CroogoControllerTestCase
         $this->generate('MenusTest');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         App::paths($this->_paths);
         unset($this->controller);
@@ -39,7 +39,7 @@ class MenusComponentTest extends CroogoControllerTestCase
     /**
      * test that public Links are displayed
      */
-    public function testMenuGenerationForPublic()
+    public function testMenuGenerationForPublic(): void
     {
         $vars = $this->testAction('/index', [
             'return' => 'vars',
@@ -54,7 +54,7 @@ class MenusComponentTest extends CroogoControllerTestCase
     /**
      * test that public Links are not displayed
      */
-    public function testMenuGenerationForRegistered()
+    public function testMenuGenerationForRegistered(): void
     {
         $this->controller->Session->write('Auth.User', ['id' => 3, 'role_id' => 2]);
         $vars = $this->testAction('/index', [
@@ -81,13 +81,13 @@ class MenusTestController extends Controller
         'Menus.Menus',
     ];
 
-    public function beforeFilter()
+    public function beforeFilter(): void
     {
         $this->Auth->allow('index');
         parent::beforeFilter();
     }
 
-    public function index()
+    public function index(): void
     {
     }
 }

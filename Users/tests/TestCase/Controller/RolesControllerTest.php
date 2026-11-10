@@ -6,25 +6,25 @@ use Croogo\Core\TestSuite\CroogoControllerTestCase;
 class RolesControllerTest extends CroogoControllerTestCase
 {
 
-    public $fixtures = [
-        'plugin.Croogo/Users.Role',
-        'plugin.Croogo/Users.User',
-        'plugin.Croogo/Users.Aco',
-        'plugin.Croogo/Users.Aro',
-        'plugin.Croogo/Users.ArosAco',
+    protected array $fixtures = [
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
 //      'plugin.Croogo/Blocks.Block',
 //      'plugin.Croogo/Comments.Comment',
 //      'plugin.Croogo/Contacts.Contact',
 //      'plugin.Croogo/Translate.I18n',
-        'plugin.Croogo/Settings.Language',
+        'plugin.Croogo/Settings',
 //      'plugin.Croogo/Menus.Link',
 //      'plugin.Croogo/Menus.Menu',
 //      'plugin.Croogo/Contacts.Message',
 //      'plugin.Croogo/Meta.Meta',
-        'plugin.Croogo/Nodes.Node',
+        'plugin.Croogo/Nodes',
 //      'plugin.Croogo/Taxonomy.ModelTaxonomy',
 //      'plugin.Croogo/Blocks.Region',
-        'plugin.Croogo/Settings.Setting',
+        'plugin.Croogo/Settings',
 //      'plugin.Croogo/Taxonomy.Taxonomy',
 //      'plugin.Croogo/Taxonomy.Term',
 //      'plugin.Croogo/Taxonomy.Type',
@@ -37,7 +37,7 @@ class RolesControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->RolesController = $this->generate('Users.Roles', [
@@ -61,7 +61,7 @@ class RolesControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->RolesController);
@@ -72,7 +72,7 @@ class RolesControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminIndex()
+    public function testAdminIndex(): void
     {
         $this->testAction('/admin/users/roles/index');
         $this->assertNotEmpty($this->vars['displayFields']);
@@ -84,7 +84,7 @@ class RolesControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminAdd()
+    public function testAdminAdd(): void
     {
         $this->expectFlashAndRedirect('The Role has been saved');
         $this->testAction('admin/users/roles/add', [
@@ -104,7 +104,7 @@ class RolesControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminEdit()
+    public function testAdminEdit(): void
     {
         $this->expectFlashAndRedirect('The Role has been saved');
         $this->testAction('/admin/users/roles/edit/1', [
@@ -124,7 +124,7 @@ class RolesControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminDelete()
+    public function testAdminDelete(): void
     {
         $this->expectFlashAndRedirect('Role deleted');
         $this->testAction('/admin/users/roles/delete/1'); // ID of Admin

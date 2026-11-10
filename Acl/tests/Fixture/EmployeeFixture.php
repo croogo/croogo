@@ -26,7 +26,7 @@ class EmployeeFixture extends CroogoTestFixture
      *
      * @var array
      */
-    public $records = [
+    public array $records = [
         ['username' => 'mark', 'created' => '2007-03-17 01:16:23', 'primary_department_id' => 2],
         ['username' => 'jack', 'created' => '2007-03-17 01:18:23', 'primary_department_id' => null],
         ['username' => 'larry', 'created' => '2007-03-17 01:20:23', 'primary_department_id' => null],

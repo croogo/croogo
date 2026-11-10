@@ -3,7 +3,7 @@
 namespace Croogo\Core;
 
 use ArrayAccess;
-use Cake\Core\Exception\Exception;
+use Cake\Core\Exception\CakeException;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 
@@ -53,12 +53,12 @@ class Status implements ArrayAccess
         $event = Croogo::dispatchEvent('Croogo.Status.setup', null, $this);
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->_statuses[$offset]);
     }
 
-    public function &offsetGet($offset)
+    public function &offsetGet($offset): mixed
     {
         $result = null;
         if (isset($this->_statuses[$offset])) {
@@ -68,12 +68,12 @@ class Status implements ArrayAccess
         return $result;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->_statuses[$offset] = $value;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if (isset($this->_statuses[$offset])) {
             unset($this->_statuses[$offset]);
@@ -121,10 +121,10 @@ class Status implements ArrayAccess
         $allow = false;
 
         if ($roleId && $roleId !== 1) {
-            $Permission = TableRegistry::get('Acl.Permissions');
+            $Permission = \Cake\ORM\TableRegistry::getTableLocator()->get('Acl.Permissions');
             try {
                 $allow = $Permission->check(['model' => 'Roles', 'foreign_key' => $roleId], 'controllers/Croogo\Nodes/Admin/Nodes/edit');
-            } catch (Exception $e) {
+            } catch (CakeException $e) {
                 Log::error($e->getMessage());
             }
         }

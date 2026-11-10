@@ -46,7 +46,7 @@ class AclAcoFixture extends CroogoTestFixture
      *
      * @var array
      */
-    public $records = [
+    public array $records = [
         ['parent_id' => null, 'model' => null, 'foreign_key' => null, 'alias' => 'Controllers', 'lft' => 1, 'rght' => 24],
         ['parent_id' => 1, 'model' => null, 'foreign_key' => null, 'alias' => 'Controller1', 'lft' => 2, 'rght' => 9],
         ['parent_id' => 2, 'model' => null, 'foreign_key' => null, 'alias' => 'action1', 'lft' => 3, 'rght' => 6],

@@ -14,7 +14,7 @@ class LocalAttachmentStorageHandler extends BaseStorageHandler implements EventL
 
     use LogTrait;
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'FileStorage.beforeSave' => 'onBeforeSave',

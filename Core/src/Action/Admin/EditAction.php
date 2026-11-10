@@ -6,7 +6,7 @@ use Crud\Action\EditAction as CrudEditAction;
 
 class EditAction extends CrudEditAction
 {
-    protected function _get($id = null)
+    protected function _get($id = null): void
     {
         parent::_get($id);
 

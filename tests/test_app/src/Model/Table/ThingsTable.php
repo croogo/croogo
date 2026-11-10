@@ -7,7 +7,7 @@ use Cake\ORM\Table;
 class ThingsTable extends Table
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 

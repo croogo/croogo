@@ -18,7 +18,7 @@ class EncoderBehaviorTest extends CroogoTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -32,21 +32,21 @@ class EncoderBehaviorTest extends CroogoTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
         unset($this->nodesTable);
     }
 
-    public function testEncodeWithoutKeys()
+    public function testEncodeWithoutKeys(): void
     {
         $array = ['hello', 'world'];
         $encoded = $this->nodesTable->encodeData($array);
         $this->assertEquals('["hello","world"]', $encoded);
     }
 
-    public function testEncodeWithKeys()
+    public function testEncodeWithKeys(): void
     {
         $array = [
             'first' => 'hello',
@@ -59,14 +59,14 @@ class EncoderBehaviorTest extends CroogoTestCase
         $this->assertEquals('{"first":"hello","second":"world"}', $encoded);
     }
 
-    public function testDecodeWithoutKeys()
+    public function testDecodeWithoutKeys(): void
     {
         $encoded = '["hello","world"]';
         $array = $this->nodesTable->decodeData($encoded);
         $this->assertEquals(['hello', 'world'], $array);
     }
 
-    public function testDecodeWithKeys()
+    public function testDecodeWithKeys(): void
     {
         $encoded = '{"first":"hello","second":"world"}';
         $array = $this->nodesTable->decodeData($encoded);

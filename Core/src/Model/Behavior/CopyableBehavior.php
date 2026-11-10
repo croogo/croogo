@@ -199,7 +199,7 @@ class CopyableBehavior extends Behavior
 
                     $foreignKey = $val->getForeignKey();
                     if ($innerVal->has($foreignKey)) {
-                        $innerVal->unsetProperty($foreignKey);
+                        $innerVal->unset($foreignKey);
                     }
 
                     $child[$innerKey] = $this->_convertChildren($val->getTarget(), $child[$innerKey]);
@@ -209,7 +209,7 @@ class CopyableBehavior extends Behavior
 
                 $foreignKey = $val->getForeignKey();
                 if ($child->has($foreignKey)) {
-                    $child->unsetProperty($foreignKey);
+                    $child->unset($foreignKey);
                 }
 
                 $child = $this->_convertChildren($val->getTarget(), $child);
@@ -284,7 +284,7 @@ class CopyableBehavior extends Behavior
         $belongsToMany = $table->associations()->getByType('BelongsToMany');
         foreach ($belongsToMany as $key => $val) {
             // retrieve the reverse association
-            $hasMany = $val->getTarget()->association($val->junction()->getAlias());
+            $hasMany = $val->getTarget()->getAssociation($val->junction()->getAlias());
             $property = $hasMany->getProperty();
 
             if (!$record->has($property) || empty($record->{$property})) {
@@ -295,7 +295,7 @@ class CopyableBehavior extends Behavior
                 $joinVal = $this->_stripFields($joinVal);
                 $foreignKey = $val->getForeignKey();
                 if ($joinVal->has($foreignKey)) {
-                    $joinVal->unsetProperty($foreignKey);
+                    $joinVal->unset($foreignKey);
                 }
             }
         }
@@ -343,7 +343,7 @@ class CopyableBehavior extends Behavior
         $stripFields = (array)$this->getConfig('stripFields');
         foreach ($stripFields as $field) {
             if ($record->has($field)) {
-                $record->unsetProperty($field);
+                $record->unset($field);
                 $record->isNew(true);
             }
         }

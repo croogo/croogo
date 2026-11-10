@@ -10,7 +10,7 @@ use Acl\Controller\Component\AclAutoLoginComponent;
 class TestAclAutoLoginComponent extends AclAutoLoginComponent
 {
 
-    public function setupTestVars()
+    public function setupTestVars(): void
     {
         $this->_userModel = 'User';
         $this->_fields = [
@@ -53,7 +53,7 @@ class TestAclAutoLoginComponent extends AclAutoLoginComponent
 class AclAutoLoginComponentTest extends CakeTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->skipIf(!function_exists('mcrypt_decrypt'), 'mcrypt not found');
         $this->controller = $this->getMock('Controller', null);
@@ -66,7 +66,7 @@ class AclAutoLoginComponentTest extends CakeTestCase
     /**
      * Test login succesfull event
      */
-    public function testLoginSuccessful()
+    public function testLoginSuccessful(): void
     {
         $cookie = $this->autoLogin->readCookie('User');
         $this->assertNull($cookie);

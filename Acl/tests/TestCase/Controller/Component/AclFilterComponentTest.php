@@ -19,16 +19,16 @@ class AclFilterTestController extends Controller
 class AclFilterComponentTest extends CroogoTestCase
 {
 
-    public $fixtures = [
-        'plugin.Croogo/Users.Aro',
-        'plugin.Croogo/Users.Aco',
-        'plugin.Croogo/Users.ArosAco',
-        'plugin.Croogo/Users.User',
-        'plugin.Croogo/Users.Role',
-        'plugin.Croogo/Settings.Setting',
+    protected array $fixtures = [
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Settings',
     ];
 
-    public function testAllowedActions()
+    public function testAllowedActions(): void
     {
         $request = new Request('/users/view/yvonne');
         $request->addParams([
@@ -37,7 +37,7 @@ class AclFilterComponentTest extends CroogoTestCase
         ]);
         $response = $this->getMock('Response');
         $this->Controller = new AclFilterTestController($request, $response);
-        $this->Controller->name = 'Users';
+        $this->Controller->setName('Users');
         $this->Controller->constructClasses();
         $this->Controller->startupProcess();
         $this->Controller->AclFilter->auth();
@@ -45,7 +45,7 @@ class AclFilterComponentTest extends CroogoTestCase
         $this->assertTrue(in_array('view', $result));
     }
 
-    public function testPrefixedAllowedActions()
+    public function testPrefixedAllowedActions(): void
     {
         $request = new Request('/admin/users/view/3');
         $request->addParams([
@@ -79,7 +79,7 @@ class AclFilterComponentTest extends CroogoTestCase
         $this->assertEquals(true, $allowed);
     }
 
-    public function testLoginActionOverrides()
+    public function testLoginActionOverrides(): void
     {
         $this->Controller = new AclFilterTestController(
             $this->getMock('Request'),

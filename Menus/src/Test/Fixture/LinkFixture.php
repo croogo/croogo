@@ -34,7 +34,7 @@ class LinkFixture extends CroogoTestFixture
         '_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
     ];
 
-    public $records = [
+    public array $records = [
         [
             'id' => 5,
             'parent_id' => null,

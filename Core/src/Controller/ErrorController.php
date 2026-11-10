@@ -25,20 +25,18 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
 {
     use HookableComponentTrait;
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->_dispatchBeforeInitialize();
 
-        if (count(Router::extensions()) && !isset($this->RequestHandler)) {
-            $this->loadComponent('RequestHandler');
-        }
+        // Cake 5: RequestHandlerComponent usunięty (negocjacja treści przez ViewBuilder).
 
         $eventManager = $this->getEventManager();
         if (isset($this->Auth)) {
             $eventManager->off($this->Auth);
         }
-        if (isset($this->Security)) {
-            $eventManager->off($this->Security);
+        if (isset($this->FormProtection)) {
+            $eventManager->off($this->FormProtection);
         }
 
         parent::initialize();
@@ -49,7 +47,7 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
      *
      * @return void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         parent::beforeFilter($event);
         if ($this->getRequest()->is('json')) {
@@ -57,7 +55,7 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
         }
         $viewBuilder = $this->viewBuilder();
         $viewBuilder->setClassName('Croogo/Core.Croogo');
-        if ($this->getRequest()->getParam('prefix') === 'admin') {
+        if ($this->getRequest()->getParam('prefix') === 'Admin') {
             $adminTheme = Configure::read('Site.admin_theme');
             if ($adminTheme) {
                 $viewBuilder->setTheme($adminTheme);

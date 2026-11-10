@@ -36,10 +36,10 @@ class AjaxView extends AppView
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
-        $this->response->type('ajax');
+        $this->getResponse()->type('ajax');
     }
 }

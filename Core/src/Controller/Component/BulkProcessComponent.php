@@ -23,7 +23,7 @@ use Croogo\Core\Croogo;
 class BulkProcessComponent extends Component
 {
 
-    public $components = [
+    public array $components = [
         'Flash'
     ];
 
@@ -37,11 +37,11 @@ class BulkProcessComponent extends Component
     /**
      * beforeFilter
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         $this->_controller = $event->getSubject();
-        if ($this->_controller->request->getParam('action') == 'process') {
-            $this->_controller->Security->setConfig('validatePost', false);
+        if ($this->_controller->getRequest()->getParam('action') == 'process') {
+            $this->_controller->FormProtection->setConfig('validate', false);
         }
     }
 
@@ -55,8 +55,8 @@ class BulkProcessComponent extends Component
      */
     public function getRequestVars($model, $primaryKey = 'id')
     {
-        $data = $this->_controller->request->getData($model);
-        $action = $this->_controller->request->getData('action');
+        $data = $this->_controller->getRequest()->getData($model);
+        $action = $this->_controller->getRequest()->getData('action');
         $ids = [];
         foreach ($data as $id => $value) {
             if (is_array($value) && !empty($value[$primaryKey])) {
@@ -138,7 +138,7 @@ class BulkProcessComponent extends Component
         }
 
         try {
-            $processed = $table->processAction($action, $ids);
+            $processed = $table->getBehavior('BulkProcess')->processAction($action, $ids);
         } catch (\Exception $e) {
             $message = $e->getMessage();
         }
@@ -148,10 +148,10 @@ class BulkProcessComponent extends Component
             if (!empty($messageMap[$action])) {
                 $message = $messageMap[$action];
             } else {
-                $message = __d('croogo', '%s processed', Inflector::humanize($table->alias()));
+                $message = __d('croogo', '%s processed', Inflector::humanize($table->getAlias()));
             }
             $flashMethod = 'success';
-            Croogo::dispatchEvent($eventName, $Controller, compact($ids));
+            Croogo::dispatchEvent($eventName, $Controller, compact('ids'));
         } else {
             $message = $message ?: __d('croogo', 'An error occured');
             $flashMethod = 'error';

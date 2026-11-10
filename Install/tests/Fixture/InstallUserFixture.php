@@ -47,5 +47,5 @@ class InstallUserFixture extends CakeTestFixture
      *
      * @var array
      */
-    public $records = [];
+    public array $records = [];
 }

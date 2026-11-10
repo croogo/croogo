@@ -11,7 +11,7 @@ use Croogo\Core\Link;
 class BlogFeedCell extends Cell
 {
 
-    public function dashboard()
+    public function dashboard(): void
     {
         $posts = $this->getPosts();
 

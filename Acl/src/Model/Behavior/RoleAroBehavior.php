@@ -23,7 +23,7 @@ use Cake\Utility\Text;
 class RoleAroBehavior extends Behavior
 {
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'implementedFinders' => [
             'roleHierarchy' => 'findRoleHierarchy',
         ],
@@ -65,11 +65,12 @@ class RoleAroBehavior extends Behavior
      *
      * Update the corresponding ACO record alias
      */
-    public function afterSave(Event $event, Entity $entity)
+    public function afterSave(\Cake\Event\EventInterface $event, Entity $entity): void
     {
         $model = $event->getSubject();
         $ref = ['model' => $model->getAlias(), 'foreign_key' => $entity->id];
-        $aro = $model->node($ref)->firstOrFail();
+        // Cake 5.3: metody behaviora na instancji tabeli deprecated
+        $aro = $model->getBehavior('Acl')->node($ref)->firstOrFail();
         if (!empty($entity->alias)) {
             $aro->alias = sprintf(
                 'Role-%s',
@@ -88,7 +89,7 @@ class RoleAroBehavior extends Behavior
      *
      * binds Aro model so that it gets retrieved during admin_[edit|add].
      */
-    public function findRoleHierarchy(Query $query, array $options)
+    public function findRoleHierarchy(\Cake\ORM\Query\SelectQuery $query, array $options)
     {
         $alias = $this->_table->getAlias();
         $primaryKey = $this->_table->getPrimaryKey();
@@ -112,7 +113,7 @@ class RoleAroBehavior extends Behavior
                         $result->setDirty('parent_id', false);
                         $result->setDirty('lft', false);
                         $result->setDirty('rght', false);
-                        $result->unsetProperty('parent_aro');
+                        $result->unset('parent_aro');
                     }
                 }
 
@@ -145,13 +146,14 @@ class RoleAroBehavior extends Behavior
      */
     public function allowedParents($id = null)
     {
-        if (!$this->_table->behaviors()->has('Croogo/Core.Aliasable')) {
+        if (!$this->_table->behaviors()->has('Aliasable')) {
             $this->_table->addBehavior('Croogo/Core.Aliasable');
         }
-        if ($id == $this->_table->byAlias('public')) {
+        $aliasable = $this->_table->getBehavior('Aliasable');
+        if ($id == $aliasable->byAlias('public')) {
             return [];
         }
-        $adminRoleId = $this->_table->byAlias('superadmin');
+        $adminRoleId = $aliasable->byAlias('superadmin');
         $excludes = Hash::filter(array_values([$adminRoleId, $id]));
         $conditions = [
             'NOT' => [$this->_table->aliasField('id') . ' IN' => $excludes],
@@ -165,7 +167,7 @@ class RoleAroBehavior extends Behavior
     /**
      * afterDelete
      */
-    public function afterDelete(Event $event)
+    public function afterDelete(\Cake\Event\EventInterface $event): void
     {
         Cache::clearGroup('acl', 'permissions');
     }

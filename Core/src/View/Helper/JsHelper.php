@@ -32,7 +32,7 @@ class JsHelper extends Helper
      *
      * @var array
      */
-    public $helpers = ['Html', 'Form'];
+    public array $helpers = ['Html', 'Form'];
 
     /**
      * Variables to pass to Javascript.
@@ -138,7 +138,7 @@ class JsHelper extends Helper
      * @return void
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/js.html#JsHelper::buffer
      */
-    public function buffer($script, $top = false)
+    public function buffer($script, $top = false): void
     {
         if ($top) {
             array_unshift($this->_bufferedScripts, $script);
@@ -189,7 +189,7 @@ class JsHelper extends Helper
      * @return void
      * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/js.html#JsHelper::set
      */
-    public function set($one, $two = null)
+    public function set($one, $two = null): void
     {
         $data = null;
         if (is_array($one)) {

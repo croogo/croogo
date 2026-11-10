@@ -16,7 +16,7 @@ class AssetsTable extends CroogoTable
         'file' => 'checkFileUpload'
     ];
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('assets');
 
@@ -45,7 +45,7 @@ class AssetsTable extends CroogoTable
         $this->addBehavior('Croogo/Core.Trackable');
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         $validator
             ->requirePresence('adapter', 'create');
@@ -53,7 +53,7 @@ class AssetsTable extends CroogoTable
         return $validator;
     }
 
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options = null)
+    public function beforeSave(\Cake\Event\EventInterface $event, EntityInterface $entity, ?ArrayObject $options = null)
     {
         $adapter = $entity->get('adapter');
         if (!$entity->filename) {
@@ -73,7 +73,7 @@ class AssetsTable extends CroogoTable
         return true;
     }
 
-    public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options = null)
+    public function beforeDelete(\Cake\Event\EventInterface $event, EntityInterface $entity, ?ArrayObject $options = null)
     {
         $Event = Croogo::dispatchEvent('FileStorage.beforeDelete', $this, [
             'record' => $entity,

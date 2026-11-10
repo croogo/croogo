@@ -37,7 +37,7 @@ class InstallRoleFixture extends CakeTestFixture
      *
      * @var array
      */
-    public $records = [
+    public array $records = [
         [
             'id' => '1',
             'title' => 'Admin',

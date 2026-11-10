@@ -8,14 +8,14 @@ use Crud\Listener\BaseListener;
 
 class FlashListener extends BaseListener
 {
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Crud.setFlash' => ['callable' => 'onSetFlash'],
         ];
     }
 
-    public function onSetFlash(Event $event)
+    public function onSetFlash(Event $event): void
     {
         $subject = $event->getSubject();
         $type = !empty($subject->params['type']) ? $subject->params['type'] : 'error';

@@ -9,25 +9,30 @@ use Croogo\Core\TestSuite\TestCase;
  */
 class SettingsTableTest extends TestCase
 {
-    public $fixtures = [
+    protected array $fixtures = [
         'plugin.Croogo/Core.Settings',
     ];
 
-    public function setUp()
+    /**
+     * @var \Croogo\Settings\Model\Table\SettingsTable
+     */
+    protected $Settings;
+
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->Settings = TableRegistry::get('Croogo/Settings.Settings');
+        $this->Settings = TableRegistry::getTableLocator()->get('Croogo/Settings.Settings');
     }
 
-    public function testWriteNew()
+    public function testWriteNew(): void
     {
         $this->Settings->write('Prefix.key', 'value');
         $prefixAnything = $this->Settings->findByKey('Prefix.key')->first();
         $this->assertEquals('value', $prefixAnything->value);
     }
 
-    public function testWriteUpdate()
+    public function testWriteUpdate(): void
     {
         $this->Settings->write('Site.title', 'My new site title', ['editable' => 1]);
         $siteTitle = $this->Settings->findByKey('Site.title')->first();
@@ -43,7 +48,7 @@ class SettingsTableTest extends TestCase
         $this->assertFalse($siteTitle->editable);
     }
 
-    public function testDeleteKey()
+    public function testDeleteKey(): void
     {
         $this->Settings->write('Prefix.key', 'value');
         $this->Settings->deleteKey('Prefix.key');

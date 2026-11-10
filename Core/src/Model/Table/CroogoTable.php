@@ -19,6 +19,7 @@ use Croogo\Core\PropertyHookTrait;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
+#[\AllowDynamicProperties]
 class CroogoTable extends Table
 {
 
@@ -61,19 +62,21 @@ class CroogoTable extends Table
      */
     public function __construct(array $config)
     {
+        // applyHookProperties ustawia skonfigurowane właściwości dynamicznie
+        // (Hook.table_properties) - stąd atrybut AllowDynamicProperties na klasie.
         Croogo::applyHookProperties('Hook.table_properties', $this);
 
         parent::__construct($config);
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Model.initialize' => 'onModelInitialized',
         ];
     }
 
-    public function onModelInitialized(Event $event)
+    public function onModelInitialized(Event $event): void
     {
         foreach ($this->hookedBehaviors as $behavior => $config) {
             $this->addBehavior($behavior, $config);
@@ -140,7 +143,7 @@ class CroogoTable extends Table
             $this->_editFields = $editFields;
         }
         if (empty($this->_editFields)) {
-            $this->_editFields = $this->schema()->columns();
+            $this->_editFields = $this->getSchema()->columns();
             $id = array_search('id', $this->_editFields);
             if ($id !== false) {
                 unset($this->_editFields[$id]);

@@ -24,11 +24,21 @@ use Croogo\Dashboards\CroogoDashboard;
 class DashboardsHelper extends Helper
 {
 
-    public $helpers = [
+    public array $helpers = [
         'Html' => ['className' => 'Croogo/Core.Html'],
         'Croogo/Core.Layout',
         'Croogo/Core.Theme',
     ];
+
+    /**
+     * @var array
+     */
+    protected $settings = [];
+
+    /**
+     * @var \Croogo\Users\Model\Table\RolesTable
+     */
+    protected $Roles;
 
     /**
      * Constructor
@@ -45,10 +55,10 @@ class DashboardsHelper extends Helper
     /**
      * Before Render callback
      */
-    public function beforeRender($viewFile)
+    public function beforeRender($viewFile): void
     {
         $request = $this->getView()->getRequest();
-        if ($request->getParam('prefix') === 'admin') {
+        if ($request->getParam('prefix') === 'Admin') {
             Croogo::dispatchEvent('Croogo.setupAdminDashboardData', $this->_View);
         }
     }
@@ -72,15 +82,15 @@ class DashboardsHelper extends Helper
             CroogoDashboard::FULL => [],
         ];
         if (empty($this->Roles)) {
-            $this->Roles = TableRegistry::get('Croogo/Users.Roles');
+            $this->Roles = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
             $this->Roles->addBehavior('Croogo/Core.Aliasable');
         }
-        $currentRole = $this->Roles->byId($this->Layout->getRoleId());
+        $currentRole = $this->Roles->getBehavior('Aliasable')->byId($this->Layout->getRoleId());
 
         $cssSetting = $this->Theme->settings('css');
 
-        if (!empty($this->_View->viewVars['boxes_for_dashboard'])) {
-            $boxesForLayout = collection($this->_View->viewVars['boxes_for_dashboard'])->combine('alias', function ($entity) {
+        if (!empty($this->_View->get('boxes_for_dashboard'))) {
+            $boxesForLayout = collection($this->_View->get('boxes_for_dashboard'))->combine('alias', function ($entity) {
                 return $entity;
             })->toArray();
             $dashboards = [];

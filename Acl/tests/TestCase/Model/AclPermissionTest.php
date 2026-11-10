@@ -8,18 +8,18 @@ use Croogo\TestSuite\CroogoTestCase;
 class AclPermissionTest extends CroogoTestCase
 {
 
-    public $fixtures = [
-        'plugin.Croogo/Users.Aro',
-        'plugin.Croogo/Users.Aco',
-        'plugin.Croogo/Users.ArosAco',
-        'plugin.Croogo/Users.Role',
-        'plugin.Croogo/Users.User',
+    protected array $fixtures = [
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
     ];
 
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Permission = ClassRegistry::init('Acl.AclPermission');
@@ -32,7 +32,7 @@ class AclPermissionTest extends CroogoTestCase
     /**
      * testPermissionCacheClearedAfterSave
      */
-    public function testPermissionCacheClearedAfterSave()
+    public function testPermissionCacheClearedAfterSave(): void
     {
         $key = 'permission_cache';
         $value = 'cached valued';
@@ -56,7 +56,7 @@ class AclPermissionTest extends CroogoTestCase
     /**
      * testNoDuplicateActions
      */
-    public function testNoDuplicateActions()
+    public function testNoDuplicateActions(): void
     {
         $permissions = $this->Permission->getAllowedActionsByUserId(3);
         $expected = count(array_unique($permissions));

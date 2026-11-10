@@ -2,7 +2,7 @@
 
 namespace Croogo\Dashboards\Controller\Admin;
 
-use Cake\Core\Exception\Exception;
+use Cake\Core\Exception\CakeException;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 
@@ -19,12 +19,12 @@ use Cake\Utility\Hash;
 class DashboardsController extends AppController
 {
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         parent::beforeFilter($event);
 
-        if ($event->getSubject()->request->getParam('action') === 'save') {
-            $this->components()->unload('Security');
+        if ($event->getSubject()->getRequest()->getParam('action') === 'save') {
+            $this->components()->unload('FormProtection');
         }
     }
 
@@ -33,7 +33,7 @@ class DashboardsController extends AppController
      *
      * Load the dashboards helper
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(\Cake\Event\EventInterface $event): void
     {
         parent::beforeRender($event);
 
@@ -47,13 +47,13 @@ class DashboardsController extends AppController
      *
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $query = $this->Dashboards->find()
             ->where([
                 'user_id' => $this->Auth->user('id')
             ])
-            ->order(['column' => 'asc', 'weight' => 'asc']);
+            ->orderBy(['column' => 'asc', 'weight' => 'asc']);
         $dashboards = $this->paginate($query);
 
         $this->set(compact('dashboards'));
@@ -64,8 +64,12 @@ class DashboardsController extends AppController
      *
      * @return void
      */
-    public function dashboard()
+    public function dashboard(): void
     {
+        if( $this->Auth->user('role_id') == 8 ) {
+            $this->redirect(['plugin' => 'Mobile', 'controller' => 'Wms', 'action' => 'index']);
+        }
+
         $boxesForDashboard = $this->Dashboards->find('all')->select([
             'id',
             'alias',
@@ -75,7 +79,7 @@ class DashboardsController extends AppController
             'weight',
         ])->where([
             'user_id' => $this->Auth->user('id'),
-        ])->order([
+        ])->orderBy([
             'weight',
         ]);
         $this->set('boxes_for_dashboard', $boxesForDashboard);
@@ -91,9 +95,10 @@ class DashboardsController extends AppController
     {
         $userId = $this->Auth->user('id');
         if (!$userId) {
-            throw new Exception('You must be logged in');
+            throw new CakeException('You must be logged in');
         }
-        $data = Hash::insert($this->getRequest()->data['dashboard'], '{n}.user_id', $userId);
+        // Cake 5: legacy property $request->data nie istnieje -> getData()
+        $data = Hash::insert((array)$this->getRequest()->getData('dashboard'), '{n}.user_id', $userId);
         $dashboardIds = array_filter(Hash::extract($data, '{n}.id'));
         $query = $this->Dashboards->find();
         if ($dashboardIds) {
@@ -104,7 +109,7 @@ class DashboardsController extends AppController
         $this->Dashboards->connection()->getDriver()->enableAutoQuoting();
         $results = $this->Dashboards->saveMany($patched);
         $this->set(compact('results'));
-        $this->set('_serialize', 'results');
+        $this->viewBuilder()->setOption('serialize', 'results');
     }
 
     /**
@@ -135,7 +140,7 @@ class DashboardsController extends AppController
      * @param int $status Status
      * @return void
      */
-    public function toggle($id = null, $status = null)
+    public function toggle($id = null, $status = null): void
     {
         $this->Croogo->fieldToggle($this->Dashboards, $id, $status);
     }

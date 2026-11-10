@@ -115,10 +115,15 @@ Admin.protectForms = function () {
 Admin.formFeedback = function () {
   $('body').on('submit', 'form', function (el) {
     var submitButtons = $(this).find('[type=submit]');
+
+    if( submitButtons.hasClass('noFormFeedback') ) {
+        return;
+    }
+
     submitButtons
       .addClass('disabled');
 
-    if (el.originalEvent.submitter) {
+    if (el.originalEvent && el.originalEvent.submitter) {
       var $button = $(el.originalEvent.submitter);
       if ($button.find('i').length == 0) {
         $button

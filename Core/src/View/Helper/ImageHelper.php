@@ -14,7 +14,7 @@ use Cake\View\Helper\HtmlHelper;
 class ImageHelper extends HtmlHelper
 {
 
-    public $helpers = [
+    public array $helpers = [
         'Html',
         'Theme',
         'Url',
@@ -70,7 +70,16 @@ class ImageHelper extends HtmlHelper
             return;
         }
 
-        $size = getimagesize($sourcefile);
+        // A truncated, empty or non-image upload makes getimagesize() return false, and the aspect
+        // maths below would then divide by zero. Returning null matches the missing-source case
+        // above, so callers already handle it. The read notice is suppressed because a broken
+        // upload is an expected condition here, not something worth one error-log entry per render.
+        // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+        $size = @getimagesize($sourcefile);
+
+        if (!$size || empty($size[0]) || empty($size[1])) {
+            return;
+        }
 
         if ($aspect) {
             if (($size[1] / $height) > ($size[0] / $width)) {
@@ -82,15 +91,20 @@ class ImageHelper extends HtmlHelper
 
         $dimension = $resizedInd . $width . 'x' . $height;
         $parts = pathinfo(WWW_ROOT . $path);
+        // pathinfo() omits `extension` entirely for a name carrying no dot, while file_exists()
+        // above has already proven the source is really there - so an extension-less upload warned
+        // on every render and built a cache name ending in a bare dot. Carry the separator with
+        // the extension so the normal case is byte-identical and the odd one simply has neither.
+        $extension = isset($parts['extension']) ? '.' . $parts['extension'] : '';
         if ($resizedInd === '') {
             // legacy format
             $filename = $parts['filename'];
             $filename = preg_replace('/^[0-9]*x[0-9]*_/', '', $filename);
-            $resized = $width . 'x' . $height . '_' . $filename . '.' . $parts['extension'];
+            $resized = $width . 'x' . $height . '_' . $filename . $extension;
         } else {
             $filename = $parts['filename'];
             $filename = preg_replace('/' . preg_quote($resizedInd) . '[0-9]*x[0-9]*/', '', $filename);
-            $resized = $filename . $dimension . '.' . $parts['extension'];
+            $resized = $filename . $dimension . $extension;
         }
         $relfile = '/';
         if ($uploadsDir) {
@@ -149,7 +163,32 @@ class ImageHelper extends HtmlHelper
     }
 
     /**
+     * GD reader/writer suffix per IMAGETYPE_* constant.
+     *
+     * Only formats GD can actually round-trip belong here. The list is deliberately shorter than
+     * the IMAGETYPE_* family: TIFF, ICO, PSD and SWF have no imagecreatefrom*() at all, so
+     * _resize() copies the original for them rather than guessing a function name.
+     *
+     * @var array<int, string>
+     */
+    protected const RESIZE_FORMATS = [
+        IMAGETYPE_GIF => 'gif',
+        IMAGETYPE_JPEG => 'jpeg',
+        IMAGETYPE_PNG => 'png',
+        IMAGETYPE_BMP => 'bmp',
+        IMAGETYPE_WBMP => 'wbmp',
+        IMAGETYPE_XBM => 'xbm',
+        IMAGETYPE_WEBP => 'webp',
+        IMAGETYPE_AVIF => 'avif',
+    ];
+
+    /**
      * Convenience method to resize image
+     *
+     * The format is derived from the IMAGETYPE_* constant reported by getimagesize(), never from
+     * the file name - an upload is routinely stored under an extension that does not match its
+     * real content. When the format is one GD cannot read here, the original is copied to the
+     * target unchanged: an oversized thumbnail beats a fatal error on the whole page.
      *
      * @param string $source File name of the source image
      * @param array $sourceSize Result of getimagesize() against $source
@@ -160,14 +199,30 @@ class ImageHelper extends HtmlHelper
      */
     protected function _resize($source, $sourceSize, $target, $w, $h)
     {
-        $types = [1 => "gif", "jpeg", "png", "swf", "psd", "wbmp"];
-        $transparency = ["gif", "png"];
+        $transparency = ['gif', 'png', 'webp'];
 
-        $format = $types[$sourceSize[2]];
+        $format = static::RESIZE_FORMATS[$sourceSize[2]] ?? null;
+        $reader = $format === null ? null : 'imagecreatefrom' . $format;
+        $writer = $format === null ? null : 'image' . $format;
+
+        // An unknown IMAGETYPE, or a GD build compiled without this format (WebP and AVIF are both
+        // optional), leaves no function to call, so the name is validated before it ever reaches
+        // call_user_func() - an invalid callback there is a fatal, not a recoverable warning.
+        $image = $reader !== null && function_exists($reader) && function_exists($writer)
+            ? call_user_func($reader, $source)
+            : false;
+
+        if (!$image) {
+            if (is_writable(dirname($target))) {
+                copy($source, $target);
+            }
+
+            return;
+        }
+
         $sw = $sourceSize[0];
         $sh = $sourceSize[1];
 
-        $image = call_user_func('imagecreatefrom' . $format, $source);
         if (function_exists('imagecreatetruecolor')) {
             $temp = imagecreatetruecolor($w, $h);
             if (in_array($format, $transparency)) {
@@ -182,10 +237,10 @@ class ImageHelper extends HtmlHelper
             imagecopyresized($temp, $image, 0, 0, 0, 0, $w, $h, $sw, $sh);
         }
         if (is_writable(dirname($target))) {
-            call_user_func('image' . $format, $temp, $target);
-            imagedestroy($image);
-            imagedestroy($temp);
+            call_user_func($writer, $temp, $target);
         }
+        // No imagedestroy() here: GdImage has been garbage-collected since PHP 8.0, where the call
+        // became a no-op, and PHP 8.5 deprecates it - two log entries per rendered thumbnail.
     }
 
     /**

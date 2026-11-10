@@ -8,7 +8,7 @@ use Croogo\Core\Croogo;
 class LinkChooserController extends AppController
 {
 
-    public function linkChooser()
+    public function linkChooser(): void
     {
         Croogo::dispatchEvent('Controller.Links.setupLinkChooser', $this);
         $linkChoosers = Configure::read('Croogo.linkChoosers');

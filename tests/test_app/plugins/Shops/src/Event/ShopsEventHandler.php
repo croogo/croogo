@@ -7,7 +7,7 @@ use Cake\Event\EventListenerInterface;
 class ShopsEventHandler implements EventListenerInterface
 {
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.Users.activationFailure' => [

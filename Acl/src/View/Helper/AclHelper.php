@@ -47,7 +47,7 @@ class AclHelper extends Helper
         parent::__construct($View, $settings);
         $plugin = 'Croogo/Acl';
         /* TODO: App::uses('AclPermission', $plugin . '.Model'); */
-        $this->Permissions = TableRegistry::get($plugin . '.Permissions');
+        $this->Permissions = \Cake\ORM\TableRegistry::getTableLocator()->get($plugin . '.Permissions');
 
         $this->Acl = new AclComponent(new ComponentRegistry());
     }
@@ -73,8 +73,8 @@ class AclHelper extends Helper
     public function linkIsAllowedByUserId($userId, $url)
     {
         if (is_array($url)) {
-            if (isset($url['admin']) && $url['admin'] == true && empty($url['prefix'])) {
-                $url['prefix'] = 'admin';
+            if (isset($url['Admin']) && $url['Admin'] == true && empty($url['prefix'])) {
+                $url['prefix'] = 'Admin';
             }
             $prefix = isset($url['prefix']) ? $url['prefix'] : null;
             $plugin = empty($url['plugin']) ? null : str_replace('/', '\\', Inflector::camelize($url['plugin'])) . '/';
@@ -85,8 +85,8 @@ class AclHelper extends Helper
                 [ ':plugin/', ':prefix', ':controller', ':action' ],
                 [
                     $plugin,
-                    Inflector::camelize($prefix),
-                    Inflector::camelize($controller),
+                    Inflector::camelize((string)$prefix),
+                    Inflector::camelize((string)$controller),
                     $action,
                 ],
                 'controllers/' . $path

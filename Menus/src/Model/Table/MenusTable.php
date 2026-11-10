@@ -23,7 +23,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class MenusTable extends CroogoTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'))
@@ -32,7 +32,7 @@ class MenusTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): \Cake\ORM\RulesChecker
     {
         $rules
             ->add($rules->isUnique(
@@ -43,7 +43,7 @@ class MenusTable extends CroogoTable
         return $rules;
     }
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Croogo/Core.Cached', [
             'groups' => [
@@ -64,7 +64,7 @@ class MenusTable extends CroogoTable
         ]);
     }
 
-    protected function _initializeSchema(TableSchema $table)
+    protected function _initializeSchema(TableSchema $table): \Cake\Database\Schema\TableSchemaInterface
     {
         $table->setColumnType('params', 'params');
 
@@ -74,14 +74,14 @@ class MenusTable extends CroogoTable
     /**
      * beforeDelete callback
      */
-    public function beforeDelete(Event $event, Entity $entity, $options)
+    public function beforeDelete(\Cake\Event\EventInterface $event, Entity $entity, $options): void
     {
         // Set tree scope for Links association
         $settings = [
             'scope' => [$this->Links->getAlias() . '.menu_id' => $entity->id],
         ];
         if ($this->Links->hasBehavior('Tree')) {
-            $this->Links->behaviors()->get('Tree')->config($settings);
+            $this->Links->behaviors()->get('Tree')->setConfig($settings);
         } else {
             $this->Links->addBehavior('Tree', $settings);
         }

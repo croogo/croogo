@@ -20,7 +20,7 @@ class ExtensionsEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Croogo.bootstrapComplete' => [
@@ -38,7 +38,7 @@ class ExtensionsEventHandler implements EventListenerInterface
     /**
      * Before Setup admin data
      */
-    public function onBeforeSetupAdminData($event)
+    public function onBeforeSetupAdminData($event): void
     {
         $plugins = Plugin::loaded();
         $config = 'config' . DS . 'admin.php';
@@ -53,7 +53,7 @@ class ExtensionsEventHandler implements EventListenerInterface
     /**
      * Setup admin data
      */
-    public function onSetupAdminData($event)
+    public function onSetupAdminData($event): void
     {
         $plugins = Plugin::loaded();
         $config = 'config' . DS . 'admin_menu.php';
@@ -72,7 +72,7 @@ class ExtensionsEventHandler implements EventListenerInterface
     /**
      * onBootstrapComplete
      */
-    public function onBootstrapComplete($event)
+    public function onBootstrapComplete($event): void
     {
         PluginManager::cacheDependencies();
     }

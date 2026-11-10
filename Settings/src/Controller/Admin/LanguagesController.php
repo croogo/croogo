@@ -16,7 +16,7 @@ use Cake\Event\Event;
  */
 class LanguagesController extends AppController
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -55,21 +55,18 @@ class LanguagesController extends AppController
         }
 
         $this->set('title_for_layout', __d('croogo', 'Select a language'));
-        $languages = $this->Languages->find('all', [
-            'conditions' => [
-                'status' => 1,
-            ],
-            'order' => 'weight ASC',
-        ]);
+        $languages = $this->Languages->find()
+            ->where(['status' => 1])
+            ->orderByAsc('weight');
         $this->set(compact('id', 'modelAlias', 'languages'));
     }
 
     public function index()
     {
-        $this->Crud->on('beforePaginate', function (Event $e) {
+        $this->Crud->on('beforePaginate', function (Event $e): void {
             if (empty($this->getRequest()->getQuery('sort'))) {
                 $e->getSubject()->query
-                    ->orderDesc('status');
+                    ->orderByDesc('status');
             }
         });
 

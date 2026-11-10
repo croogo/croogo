@@ -19,7 +19,7 @@ class MenusEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.Links.afterPublish' => [
@@ -40,7 +40,7 @@ class MenusEventHandler implements EventListenerInterface
      * @param Event $event
      * @return void
      */
-    public function onAfterBulkProcess(Event $event)
+    public function onAfterBulkProcess(Event $event): void
     {
         Cache::clearGroup('menus', 'croogo_menus');
     }

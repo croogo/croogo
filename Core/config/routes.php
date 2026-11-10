@@ -1,12 +1,12 @@
 <?php
-
+/** @var \Cake\Routing\RouteBuilder $routes */
 use Cake\Core\Configure;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Croogo\Core\Utility\StringConverter;
 
-Router::prefix('admin', function (RouteBuilder $routeBuilder) {
+$routes->prefix('admin', function (RouteBuilder $routeBuilder) {
     $routeBuilder->registerMiddleware('csrf', new CsrfProtectionMiddleware());
     $routeBuilder->applyMiddleware('csrf');
 
@@ -23,8 +23,8 @@ Router::prefix('admin', function (RouteBuilder $routeBuilder) {
     $routeBuilder->connect('/', $dashboardUrl);
 });
 
-Router::plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+$routes->plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('Admin', function (RouteBuilder $routeBuilder) {
         $routeBuilder->setExtensions(['json']);
 
         $routeBuilder->connect('/link-chooser/*', ['controller' => 'LinkChooser', 'action' => 'linkChooser']);

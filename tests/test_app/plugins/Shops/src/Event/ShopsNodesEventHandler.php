@@ -7,7 +7,7 @@ use Cake\Event\EventListenerInterface;
 class ShopsNodesEventHandler implements EventListenerInterface
 {
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.Nodes.afterAdd' => [

@@ -2,9 +2,9 @@
 
 namespace Croogo\FileManager\Model\Entity;
 
-use Croogo\Nodes\Model\Entity\Node;
+use Cake\ORM\Entity;
 
-class Attachment extends Node
+class Attachment extends Entity
 {
 
 }

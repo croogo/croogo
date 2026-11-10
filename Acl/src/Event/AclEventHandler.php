@@ -18,7 +18,7 @@ class AclEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Dispatcher.beforeDispatch' => [
@@ -31,13 +31,13 @@ class AclEventHandler implements EventListenerInterface
     /**
      * Dispatcher.beforeDispatch handler
      */
-    public function onBeforeDispatch($event)
+    public function onBeforeDispatch($event): void
     {
         if (!Configure::read('Access Control.splitSession')) {
             return;
         }
         $request = $event->data['request'];
-        $cookiePath = $request->base . '/' . $request->param('prefix');
+        $cookiePath = $request->getAttribute('base') . '/' . $request->getParam('prefix');
         ini_set('session.cookie_path', $cookiePath);
     }
 }

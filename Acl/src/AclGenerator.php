@@ -18,7 +18,7 @@ class AclGenerator extends AclExtras
      */
     public function __construct()
     {
-        $this->Aco = TableRegistry::get('Croogo/Acl.Acos');
+        $this->Aco = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $this->_buildPrefixes();
     }
 
@@ -26,7 +26,7 @@ class AclGenerator extends AclExtras
      * @param ConnectionInterface $connection
      * @return void
      */
-    public function insertAcos(ConnectionInterface $connection)
+    public function insertAcos(ConnectionInterface $connection): void
     {
         $this->Aco->setConnection($connection);
         $this->acoUpdate();
@@ -71,7 +71,7 @@ class AclGenerator extends AclExtras
     /**
      * @return void
      */
-    public function syncContentAcos()
+    public function syncContentAcos(): void
     {
         $models = Configure::read('Access Control.models');
         if (!$models) {
@@ -80,7 +80,7 @@ class AclGenerator extends AclExtras
         }
         $models = json_decode($models, true);
 
-        $Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $Acos = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
         $query = $Acos->node('contents');
         if ($query) {
             $parent = $query->first();
@@ -92,7 +92,7 @@ class AclGenerator extends AclExtras
             $parent = $Acos->save($entity);
         }
         foreach ($models as $model) {
-            $Model = TableRegistry::get($model);
+            $Model = \Cake\ORM\TableRegistry::getTableLocator()->get($model);
             $rows = $Model->find()
                 ->select('id')
                 ->all();
@@ -101,9 +101,9 @@ class AclGenerator extends AclExtras
                     $node = $Acos->node($row);
                 } catch (\Exception $e) {
                     $aco = $Acos->newEntity([
-                        'model' => $Model->alias(),
+                        'model' => $Model->getAlias(),
                         'foreign_key' => $row->id,
-                        'alias' => sprintf('%s.%s', $Model->alias(), $row->id),
+                        'alias' => sprintf('%s.%s', $Model->getAlias(), $row->id),
                         'parent_id' => $parent->id,
                     ]);
                     $saved = $Acos->save($aco);

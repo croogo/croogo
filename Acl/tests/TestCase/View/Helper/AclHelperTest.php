@@ -8,15 +8,15 @@ use Croogo\TestSuite\CroogoTestCase;
 class AclHelperTest extends CroogoTestCase
 {
 
-    public $fixtures = [
-        'plugin.Croogo/Users.User',
-        'plugin.Croogo/Users.Role',
-        'plugin.Croogo/Users.Aro',
-        'plugin.Croogo/Users.Aco',
-        'plugin.Croogo/Users.ArosAco',
+    protected array $fixtures = [
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $View = $this->getMock('View');
@@ -26,7 +26,7 @@ class AclHelperTest extends CroogoTestCase
     /**
      * testLinkIsAllowedByRoleId
      */
-    public function testLinkIsAllowedByRoleId()
+    public function testLinkIsAllowedByRoleId(): void
     {
         Cache::clearGroup('acl', 'permissions');
         $resetUrl = [
@@ -61,7 +61,7 @@ class AclHelperTest extends CroogoTestCase
     /**
      * testLinkIsAllowedByUserId
      */
-    public function testLinkIsAllowedByUserId()
+    public function testLinkIsAllowedByUserId(): void
     {
         Cache::clearGroup('acl', 'permissions');
         $resetUrl = 'controllers/Users/reset';

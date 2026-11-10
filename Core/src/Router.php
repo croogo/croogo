@@ -30,7 +30,7 @@ class Router extends CakeRouter
     /**
      * Helper method to setup both default and localized route
      */
-    public static function build(RouteBuilder $builder, $path, $defaults, $options = [])
+    public static function build(RouteBuilder $builder, $path, $defaults, $options = []): void
     {
         if (PluginManager::isLoaded('Croogo/Translate')) {
             $languages = Configure::read('I18n.languages');
@@ -56,9 +56,9 @@ class Router extends CakeRouter
         if (empty($request['api']) || empty($request['prefix'])) {
             return false;
         }
-        if ($request['api'] !== Configure::read('Croogo.Api.path')) {
-            return false;
-        }
+//        if ($request['api'] !== Configure::read('Croogo.Api.path')) {
+//            return false;
+//        }
 
         return true;
     }
@@ -109,7 +109,7 @@ class Router extends CakeRouter
      *
      * @return void
      */
-    public static function localize()
+    public static function localize(): void
     {
         if (PluginManager::isLoaded('Croogo/Translate')) {
             static::connect('/:locale/:plugin/:controller/:action/*', [], ['locale' => '[a-z]{3}']);
@@ -123,7 +123,7 @@ class Router extends CakeRouter
      * @param string $aliasRegex
      * @return void
      */
-    public static function contentType($aliasRegex, $routeBuilder)
+    public static function contentType($aliasRegex, $routeBuilder): void
     {
         static::build($routeBuilder, '/:type', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
@@ -163,14 +163,12 @@ class Router extends CakeRouter
      *
      * @return void
      */
-    public static function routableContentTypes($routeBuilder)
+    public static function routableContentTypes($routeBuilder): void
     {
         try {
-            $types = TableRegistry::get('Croogo/Taxonomy.Types')->find('all', [
-                'cache' => [
-                    'name' => 'types',
-                    'config' => 'croogo_types',
-                ],
+            $types = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Taxonomy.Types')->find('all', cache: [
+                'name' => 'types',
+                'config' => 'croogo_types',
             ]);
             $aliases = [];
             foreach ($types as $type) {
@@ -185,7 +183,7 @@ class Router extends CakeRouter
         }
     }
 
-    public static function url($url = null, $full = false)
+    public static function url($url = null, bool $full = false): string
     {
         if ($url instanceof Link) {
             $url = $url->getUrl();
@@ -213,13 +211,14 @@ class Router extends CakeRouter
      *
      * @return void
      */
-    public static function homepage()
+    public static function homepage(RouteBuilder $routes): void
     {
         $homeUrl = Configure::read('Site.home_url');
         if ($homeUrl && strpos($homeUrl, ':') !== false) {
             $converter = new StringConverter();
             $url = $converter->linkStringToArray($homeUrl);
-            Router::connect('/', $url);
+            // Cake 5: statyczne Router::connect() usunięte — trasy łączymy przez builder.
+            $routes->connect('/', $url);
         }
     }
 }

@@ -9,8 +9,6 @@ Cache::setConfig('croogo_menus', array_merge(
     ['groups' => ['menus']]
 ));
 
-Croogo::hookComponent('*', 'Croogo/Menus.Menu');
-
 Croogo::hookHelper('*', 'Croogo/Menus.Menus');
 
 Croogo::translateModel('Croogo/Menus.Links', [

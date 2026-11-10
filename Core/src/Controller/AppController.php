@@ -5,11 +5,12 @@ namespace Croogo\Core\Controller;
 use Cake\Controller\Exception\MissingActionException;
 use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\Configure;
+use Cake\Datasource\Paging\PaginatedInterface;
 use Cake\Event\Event;
 use Cake\Http\Response;
-use Cake\Http\ResponseEmitter;
 use Cake\Http\ServerRequest;
 use Cake\View\Exception\MissingTemplateException;
+use Closure;
 use Croogo\Core\Croogo;
 
 /**
@@ -22,6 +23,7 @@ use Croogo\Core\Croogo;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
+#[\AllowDynamicProperties]
 class AppController extends \App\Controller\AppController implements HookableComponentInterface
 {
 
@@ -38,7 +40,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
     /**
      * Pagination
      */
-    public $paginate = [
+    public array $paginate = [
         'limit' => 10,
     ];
 
@@ -58,9 +60,16 @@ class AppController extends \App\Controller\AppController implements HookableCom
      * @param Response $response
      * @param null $name
      */
-    public function __construct(ServerRequest $request = null, Response $response = null, $name = null)
+    public function __construct(?ServerRequest $request = null, ?Response $response = null, ?string $name = null)
     {
-        parent::__construct($request, $response, $name);
+        // Cake 5: Controller::__construct(request, name, ...) - $response wypadl z sygnatury
+        parent::__construct($request ?? new ServerRequest(), $name);
+        // Cake 4.5+: Controller ustawia $defaultTable z nazwy tylko gdy $modelClass === null.
+        // Croogo ustawia $modelClass w kontrolerach, więc $defaultTable zostawałby null
+        // (fetchTable()/Crud -> "must provide $alias or set $defaultTable"). Synchronizujemy.
+        if (empty($this->defaultTable) && !empty($this->modelClass)) {
+            $this->defaultTable = $this->modelClass;
+        }
         if ($request) {
             $request->addDetector('api', [
                 'callback' => ['Croogo\\Core\\Router', 'isApiRequest'],
@@ -75,11 +84,21 @@ class AppController extends \App\Controller\AppController implements HookableCom
     /**
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->_dispatchBeforeInitialize();
 
         parent::initialize();
+
+        // Cake 5: public $helpers na kontrolerze nie jest juz auto-ladowane. Doladowujemy
+        // je do ViewBuildera, zeby istniejace deklaracje ($this->helpers) dzialaly (BC).
+        if (property_exists($this, 'helpers') && !empty($this->helpers)) {
+            foreach ((array)$this->helpers as $name => $config) {
+                is_string($name)
+                    ? $this->viewBuilder()->addHelper($name, (array)$config)
+                    : $this->viewBuilder()->addHelper($config);
+            }
+        }
 
         $this->_setupAclComponent();
     }
@@ -87,22 +106,100 @@ class AppController extends \App\Controller\AppController implements HookableCom
     /**
      * {@inheritDoc}
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(\Cake\Event\EventInterface $event): void
     {
         parent::beforeRender($event);
 
-        if (empty($this->viewBuilder()->getClassName()) || $this->viewBuilder()->getClassName() === 'App\View\AjaxView') {
+        if (!$this->_setupLegacySerializedView()) {
+            if (empty($this->viewBuilder()->getClassName()) || $this->viewBuilder()->getClassName() === 'App\View\AjaxView') {
+                unset($this->viewClass);
+                $this->viewBuilder()->setClassName('Croogo/Core.Croogo');
+            }
+        }
+
+        $this->_restoreLegacyPagingParam();
+    }
+
+    /**
+     * Cake 5: RequestHandlerComponent usunięty. Kontrolery w stylu Cake 3 sygnalizują
+     * odpowiedź JSON zmienną widoku `_serialize` — RequestHandler przełączał wtedy widok
+     * na JsonView i honorował tę zmienną. Bez niego beforeRender wymuszał widok Croogo
+     * (HTML) także na takiej akcji, więc szukała nieistniejącego szablonu i kończyła się
+     * MissingTemplateException — renderowaną jako error400 „The requested address ... was
+     * not found on this server." (wyjątek niesie kod 0, a renderer bierze error400 dla
+     * wszystkiego < 500), przez co wygląda to na 404 routingu. Realny przypadek:
+     * /admin/photo_ai/editor/create-directory.json na prod85.
+     *
+     * Odpowiednik shimu z Api\AppController, ale WARUNKOWY: admin serwuje HTML, więc
+     * bezwarunkowy JsonView położyłby każdy zwykły widok. `_serialize` ustawiają wyłącznie
+     * akcje JSON-owe, więc obecność tej zmiennej jest wystarczającym sygnałem.
+     *
+     * @return bool Czy akcja deklaruje odpowiedź serializowaną (i widok jest już ustawiony).
+     */
+    protected function _setupLegacySerializedView(): bool
+    {
+        $builder = $this->viewBuilder();
+        $serialize = $builder->getVar('_serialize');
+        if ($serialize === null) {
+            return false;
+        }
+
+        if ($builder->getOption('serialize') === null) {
+            $builder->setOption('serialize', $serialize);
+        }
+
+        $className = $builder->getClassName();
+        if (empty($className) || $className === 'App\View\AjaxView') {
             unset($this->viewClass);
-            $this->viewBuilder()->setClassName('Croogo/Core.Croogo');
+            $builder->setClassName('Json');
+        }
+
+        return true;
+    }
+
+    /**
+     * Cake 5 trzyma dane paginacji tylko w PaginatedResultSet (nie w request params jak
+     * Cake 3), a klucze zmieniły semantykę. ~34 szablony admina bramkują blok paginacji na
+     * request param 'paging' z legacy kluczami — odtwarzamy go z każdej zmiennej widoku
+     * implementującej PaginatedInterface.
+     *
+     * @return void
+     */
+    protected function _restoreLegacyPagingParam(): void
+    {
+        $builder = $this->viewBuilder();
+        $paging = [];
+        // getVars() w Cake 5 zwraca mape nazwa => wartosc (nie liste nazw)
+        foreach ($builder->getVars() as $name => $var) {
+            $var = $builder->getVar($name);
+            if (!$var instanceof PaginatedInterface) {
+                continue;
+            }
+            $params = $var->pagingParams();
+            $alias = $var->pagingParam('alias') ?? $name;
+            $paging[$alias] = [
+                'page' => $var->currentPage(),
+                'current' => $var->count(),
+                'count' => $var->totalCount(),
+                'perPage' => $var->perPage(),
+                'limit' => $var->perPage(),
+                'pageCount' => $var->pageCount(),
+                'prevPage' => $var->hasPrevPage(),
+                'nextPage' => $var->hasNextPage(),
+            ] + $params;
+        }
+        if ($paging) {
+            $existing = (array)$this->getRequest()->getParam('paging');
+            $this->setRequest($this->getRequest()->withParam('paging', $paging + $existing));
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function render($view = null, $layout = null)
+    public function render($view = null, $layout = null): \Cake\Http\Response
     {
-        if ($this->getRequest()->getParam('prefix') === 'admin') {
+        if ($this->getRequest()->getParam('prefix') === 'Admin') {
             Croogo::dispatchEvent('Croogo.setupAdminData', $this);
         }
 
@@ -125,23 +222,23 @@ class AppController extends \App\Controller\AppController implements HookableCom
      *
      * @throws MissingActionException
      */
-    public function invokeAction()
+    public function invokeAction(Closure $action, array $args): void
     {
-        $request = $this->request;
+        $request = $this->getRequest();
         try {
-            return parent::invokeAction();
+            parent::invokeAction($action, $args);
         } catch (MissingActionException $e) {
-            $params = $request->params;
-            $prefix = isset($params['prefix']) ? $params['prefix'] : '';
-            $action = str_replace($prefix . '_', '', $params['action']);
+            $prefix = $request->getParam('prefix', '');
+            $actionName = str_replace($prefix . '_', '', $request->getParam('action'));
             foreach ($this->_apiComponents as $component => $setting) {
                 if (empty($this->{$component})) {
                     continue;
                 }
-                if ($this->{$component}->isValidAction($action)) {
+                if ($this->{$component}->isValidAction($actionName)) {
                     $this->setRequest($request);
+                    $this->{$component}->{$actionName}($this);
 
-                    return $this->{$component}->{$action}($this);
+                    return;
                 }
             }
             throw $e;
@@ -154,7 +251,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
      * @return void
      * @throws MissingComponentException
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
         $aclFilterComponent = 'Filter';
@@ -168,21 +265,24 @@ class AppController extends \App\Controller\AppController implements HookableCom
         ) {
             if (!$this->getRequest()->is('whitelisted') &&
                 !(
-                    $this->getRequest()->getParam('prefix') == 'admin' &&
+                    $this->getRequest()->getParam('prefix') == 'Admin' &&
                     $this->getRequest()->getParam('action') === 'login'
                 )
             ) {
                 $this->viewBuilder()->setLayout('maintenance');
-                $this->response->statusCode(503);
+                $this->setResponse($this->getResponse()->withStatus(503));
                 $this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
-                $this->viewBuilder()->templatePath('Maintenance');
+                $this->viewBuilder()->setTemplatePath('Maintenance');
                 $this->render('Croogo/Core.blank');
             }
         }
 
         if (!$this->getRequest()->is('api')) {
-            $this->Security->blackHoleCallback = '_securityError';
-            if ($this->getRequest()->getParam('action') == 'delete' && $this->getRequest()->getParam('prefix') == 'admin') {
+            // Cake 5: SecurityComponent::$blackHoleCallback -> FormProtection validationFailureCallback (Closure).
+            $this->FormProtection->setConfig('validationFailureCallback', function ($exception) {
+                return $this->_securityError('post', $exception);
+            });
+            if ($this->getRequest()->getParam('action') == 'delete' && $this->getRequest()->getParam('prefix') == 'Admin') {
                 $this->getRequest()->allowMethod('post');
             }
         }
@@ -197,11 +297,11 @@ class AppController extends \App\Controller\AppController implements HookableCom
     }
 
     /**
-     * blackHoleCallback for SecurityComponent
+     * validationFailureCallback for FormProtectionComponent
      *
-     * @return bool
+     * @return \Cake\Http\Response|null
      */
-    public function _securityError($type = null, $exception = null)
+    public function _securityError($type = null, $exception = null): ?Response
     {
         switch ($type) {
             case 'auth':
@@ -221,17 +321,16 @@ class AppController extends \App\Controller\AppController implements HookableCom
         }
         $message = $exception ? $exception->getMessage() : null;
         $this->set(compact('type', 'message'));
-        if ($this->getRequest()->getParam('prefix') == 'admin') {
+        if ($this->getRequest()->getParam('prefix') == 'Admin') {
             $theme = Configure::read('Site.admin_theme');
         } else {
             $theme = Configure::read('Site.theme');
         }
         $template = $theme . './Error/security';
-        $response = $this->render($template);
-        $response = $response->withStatus(400);
-        $emitter = new ResponseEmitter();
-        $emitter->emit($this->response);
-        exit(-1);
+
+        // Cake 5: zwrocony Response staje sie wynikiem eventu Controller.startup,
+        // ControllerFactory konczy zadanie sam - bez recznej emisji i exit().
+        return $this->render($template)->withStatus(400);
     }
 
     /**
@@ -256,7 +355,8 @@ class AppController extends \App\Controller\AppController implements HookableCom
      */
     protected function _setupPrg()
     {
-        $this->loadComponent('Search.Prg', [
+        // Search 6: PrgComponent scalony w SearchComponent (Search.Search).
+        $this->loadComponent('Search.Search', [
             'queryStringWhitelist' => ['sort', 'direction', 'limit', 'chooser'],
             'actions' => ['index']
         ]);

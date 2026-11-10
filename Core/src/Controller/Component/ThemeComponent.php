@@ -25,7 +25,7 @@ class ThemeComponent extends Component
         parent::__construct($registry, $config);
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         $this->_controller = $event->getSubject();
         $theme = $this->getConfig('theme');
@@ -38,7 +38,8 @@ class ThemeComponent extends Component
         $this->_controller->viewBuilder()->setTheme($theme);
         $this->loadThemeSettings($theme);
 
-        $this->_controller->viewBuilder()->setHelpers(['Croogo/Core.Theme']);
+        // Cake 5: setHelpers() zastepuje liste (w Cake 4 mergowal) -> addHelpers
+        $this->_controller->viewBuilder()->addHelpers(['Croogo/Core.Theme']);
     }
 
     /**
@@ -46,9 +47,9 @@ class ThemeComponent extends Component
      *
      * @return void
      */
-    public function loadThemeSettings($theme)
+    public function loadThemeSettings($theme): void
     {
-        $prefix = $this->request->getParam('prefix');
+        $prefix = $this->_controller->getRequest()->getParam('prefix');
         $croogoTheme = new CroogoTheme();
         $settings = $croogoTheme->getData($theme)['settings'];
 
@@ -61,6 +62,6 @@ class ThemeComponent extends Component
             }
         }
 
-        $this->_controller->viewBuilder()->setHelpers($themeHelpers);
+        $this->_controller->viewBuilder()->addHelpers($themeHelpers);
     }
 }

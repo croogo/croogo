@@ -17,7 +17,7 @@ use Croogo\Extensions\CroogoTheme;
 class HtmlHelper extends BaseHtmlHelper
 {
 
-    public $helpers = [
+    public array $helpers = [
         'Url',
         'Croogo/Core.Theme',
     ];
@@ -58,7 +58,7 @@ class HtmlHelper extends BaseHtmlHelper
     /**
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         $events = parent::implementedEvents();
         $events['Helper.Layout.beforeFilter'] = [
@@ -109,7 +109,7 @@ class HtmlHelper extends BaseHtmlHelper
      * @param array $options Options list
      * @return string Completed img tag
      */
-    public function image($path, array $options = [])
+    public function image($path, array $options = []): string
     {
         $class = $this->Theme->getCssClass('imageClass');
         if (empty($options['class'])) {
@@ -179,14 +179,15 @@ class HtmlHelper extends BaseHtmlHelper
      * @param array $options Icon html attributes
      * @return string Icon markup
      */
-    public function icon($name, array $options = [])
+    public function icon(string $name, array $options = []): string
     {
         $iconDefaults = $this->getConfig('iconDefaults');
 
-        $defaults = [
-            'iconSet' => $iconDefaults['iconSet'],
-        ];
-        $options += $defaults;
+        // BootstrapUI 5: klasa bazowa ikony pochodzi z 'namespace' (domyślnie 'bi'),
+        // nie z legacy 'iconSet' (BS-UI 2 / Cake 3). Mapujemy iconSet->namespace i
+        // zerujemy iconSet, bo BS-UI 5 go nie wyklucza -> wyciekał jako atrybut HTML.
+        $options += ['namespace' => $iconDefaults['iconSet'] ?? 'fa'];
+        $options['iconSet'] = null;
 
         return parent::icon($this->Theme->getIcon($name), $options);
     }
@@ -229,7 +230,7 @@ class HtmlHelper extends BaseHtmlHelper
      * @param array $options Array of HTML attributes.
      * @return string An `<a />` element.
      */
-    public function link($title, $url = null, array $options = [])
+    public function link($title, $url = null, array $options = []): string
     {
         $defaults = ['escape' => true];
         $options = is_null($options) ? [] : $options;

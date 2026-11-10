@@ -8,13 +8,13 @@ use Users\Model\User;
 class InstallTest extends CroogoTestCase
 {
 
-    public $fixtures = [
-        'plugin.Croogo/Users.Aro',
-        'plugin.Croogo/Install.InstallUser',
-        'plugin.Croogo/Install.InstallRole',
+    protected array $fixtures = [
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Install',
+        'plugin.Croogo/Install',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -22,7 +22,7 @@ class InstallTest extends CroogoTestCase
         $this->Install = ClassRegistry::init('Install.Install');
     }
 
-    public function testRunMigrationsOk()
+    public function testRunMigrationsOk(): void
     {
         $croogoPlugin = $this->getMock('CroogoPlugin');
         $croogoPlugin->expects($this->any())
@@ -32,7 +32,7 @@ class InstallTest extends CroogoTestCase
         $this->assertEquals(true, $this->Install->runMigrations('Users'));
     }
 
-    public function testRunMigrationsFailed()
+    public function testRunMigrationsFailed(): void
     {
         $croogoPlugin = $this->getMock('CroogoPlugin');
         $croogoPlugin->expects($this->any())
@@ -42,7 +42,7 @@ class InstallTest extends CroogoTestCase
         $this->assertEquals(false, $this->Install->runMigrations('Users'));
     }
 
-    public function testAddAdminUserOk()
+    public function testAddAdminUserOk(): void
     {
         $user = ['User' => [
             'username' => 'admin',
@@ -59,7 +59,7 @@ class InstallTest extends CroogoTestCase
         $this->assertEqual($expected, $saved['User']['password'], 'Password mismatch');
     }
 
-    public function testAddAdminUserBadPassword()
+    public function testAddAdminUserBadPassword(): void
     {
         $user = ['User' => [
             'username' => 'admin',

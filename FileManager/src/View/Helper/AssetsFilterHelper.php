@@ -17,7 +17,7 @@ class AssetsFilterHelper extends Helper
     /**
      * @var array
      */
-    public $helpers = [
+    public array $helpers = [
         'Html',
         'Croogo/Nodes.Nodes',
     ];
@@ -70,7 +70,7 @@ class AssetsFilterHelper extends Helper
         }
 
         preg_match_all('/\[(image):[ ]*([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
-        $AssetUsages = TableRegistry::get('Croogo/FileManager.AssetUsages');
+        $AssetUsages = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/FileManager.AssetUsages');
 
         for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
             $assets = $converter->parseString('image|i', $tagMatches[0][$i]);
@@ -92,7 +92,7 @@ class AssetsFilterHelper extends Helper
                 continue;
             }
 
-            $options = !empty($assets[$assetId]) ? $assets[$assetId] : ['class' => $this->_View->Theme->getCssClass('thumbnailClass')];
+            $options = !empty($assets[$assetId]) ? $assets[$assetId] : ['class' => $this->_View->getTheme()->getCssClass('thumbnailClass')];
             $img = $this->Html->image($assetUsage->asset->path, $options);
             $regex = '/' . preg_quote($tagMatches[0][$i]) . '/';
             $content = preg_replace($regex, $img, $content);
@@ -104,7 +104,7 @@ class AssetsFilterHelper extends Helper
     /**
      * @return void
      */
-    public function afterSetNode()
+    public function afterSetNode(): void
     {
         $body = $this->Nodes->field('body');
         //$body = $this->filter($body, array(

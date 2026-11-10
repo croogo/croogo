@@ -21,7 +21,7 @@ use Cake\Event\Event;
 class AutoLoginComponent extends Component
 {
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'cookieName' => 'CAL',
         'cookieConfig' => [
             'expires' => '+1 day',
@@ -47,7 +47,7 @@ class AutoLoginComponent extends Component
     /**
      * Component startup
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event): void
     {
         $this->_Controller = $controller = $event->getSubject();
         $controller->getEventManager()->on(
@@ -101,7 +101,7 @@ class AutoLoginComponent extends Component
      */
     public function onAdminLoginSuccessful(Event $event)
     {
-        $request = $event->getSubject()->request;
+        $request = $event->getSubject()->getRequest();
         $remember = $request->getData('remember');
         $expires = Configure::read('Access Control.autoLoginDuration');
         if (strtotime($expires) === false) {

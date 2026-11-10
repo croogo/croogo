@@ -15,16 +15,16 @@ class AclActionsControllerTest extends CroogoControllerTestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.Croogo/Users.Aro',
-        'plugin.Croogo/Users.Aco',
-        'plugin.Croogo/Users.ArosAco',
-        'plugin.Croogo/Users.Role',
-        'plugin.Croogo/Menus.Menu',
-        'plugin.Croogo/Taxonomy.Type',
-        'plugin.Croogo/Taxonomy.TypesVocabulary',
-        'plugin.Croogo/Taxonomy.Vocabulary',
-        'plugin.Croogo/Settings.Setting',
+    protected array $fixtures = [
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Menus',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Settings',
     ];
 
     /**
@@ -32,7 +32,7 @@ class AclActionsControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testGenerateActions()
+    public function testGenerateActions(): void
     {
         $AclActions = $this->generate('Acl.AclActions', [
             'methods' => [

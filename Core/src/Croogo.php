@@ -28,7 +28,7 @@ class Croogo
      * @param string $controllerName Controller Name
      * @param mixed $componentName  Component name or array of Component and settings
      */
-    public static function hookComponent($controllerName, $componentName)
+    public static function hookComponent($controllerName, $componentName): void
     {
         if (is_string($componentName)) {
             $componentName = [$componentName];
@@ -42,7 +42,7 @@ class Croogo
      * @param string $controllerName Controller Name
      * @param mixed $componentName  Component name or array of Component and settings
      */
-    public static function hookApiComponent($controllerName, $componentName)
+    public static function hookApiComponent($controllerName, $componentName): void
     {
         $defaults = [
             'priority' => 8,
@@ -65,7 +65,7 @@ class Croogo
      * @param string $behaviorName
      * @param array  $config
      */
-    public static function hookBehavior($tableName, $behaviorName, $config = [])
+    public static function hookBehavior($tableName, $behaviorName, $config = []): void
     {
         self::hookTableProperty(
             App::className($tableName, 'Model/Table', 'Table'),
@@ -82,7 +82,7 @@ class Croogo
      * @param string $controllerName
      * @param mixed $helperName Helper name or array of Helper and settings
      */
-    public static function hookHelper($controllerName, $helperName)
+    public static function hookHelper($controllerName, $helperName): void
     {
         if (is_string($helperName)) {
             $helperName = [$helperName];
@@ -95,7 +95,7 @@ class Croogo
      *
      * @param string $pluginName
      */
-    public static function hookAdminMenu($pluginName)
+    public static function hookAdminMenu($pluginName): void
     {
         $pluginName = Inflector::underscore($pluginName);
         Configure::write('Admin.menus.' . $pluginName, 1);
@@ -108,7 +108,7 @@ class Croogo
      * @param string $title Link title
      * @param string $url
      */
-    public static function hookAdminRowAction($action, $title, $url)
+    public static function hookAdminRowAction($action, $title, $url): void
     {
         $action = base64_encode($action);
         $rowActions = Configure::read('Admin.rowActions');
@@ -130,7 +130,7 @@ class Croogo
      * @param string $element element name, like plugin_name.element_name
      * @param array  $options array with options for the hook to take effect
      */
-    public static function hookAdminTab($action, $title, $element, $options = [])
+    public static function hookAdminTab($action, $title, $element, $options = []): void
     {
         self::_hookAdminBlock('Admin.tabs', $action, $title, $element, $options);
     }
@@ -143,7 +143,7 @@ class Croogo
      * @param string $element element name, like plugin_name.element_name
      * @param array  $options array with options for the hook to take effect
      */
-    public static function hookAdminBox($action, $title, $element, $options = [])
+    public static function hookAdminBox($action, $title, $element, $options = []): void
     {
         self::_hookAdminBlock('Admin.boxes', $action, $title, $element, $options);
     }
@@ -180,7 +180,7 @@ class Croogo
      * @param string $property for e.g., actsAs
      * @param string|array $value
      */
-    public static function hookTableProperty($tableName, $property, $value)
+    public static function hookTableProperty($tableName, $property, $value): void
     {
         $configKeyPrefix = 'Hook.table_properties';
 
@@ -198,7 +198,7 @@ class Croogo
      * @param string $property for e.g., components
      * @param string|array $value
      */
-    public static function hookControllerProperty($controllerName, $property, $value)
+    public static function hookControllerProperty($controllerName, $property, $value): void
     {
         $configKeyPrefix = 'Hook.controller_properties';
         $controllerClass = self::_getClassName($controllerName, 'Controller', 'Controller');
@@ -215,7 +215,7 @@ class Croogo
      * @param string $option for e.g., components
      * @param string|array $value
      */
-    public static function hookViewBuilderOption($controllerName, $option, $value)
+    public static function hookViewBuilderOption($controllerName, $option, $value): void
     {
         $configKeyPrefix = 'Hook.view_builder_options';
         $controllerClass = self::_getClassName($controllerName, 'Controller', 'Controller');
@@ -265,7 +265,9 @@ class Croogo
                 $pluginPath = $object->getParam('plugin') . '.';
             }
             if (!empty($object->getParam('controller'))) {
-                $controller = $object->getParam('controller');
+                // Cake 4 (InflectedRoute) przekazuje 'controller' małymi literami;
+                // App::className wymaga CamelCase, inaczej $objectName=null i merge '*' się psuje.
+                $controller = Inflector::camelize($object->getParam('controller'));
             }
             if (!empty($object->getParam('prefix'))) {
                 $prefixes = array_map(
@@ -288,7 +290,9 @@ class Croogo
         }
 
         if ($option) {
-            return $options[$option];
+            // PHP 8: dostęp do offsetu na null daje warning. Configure::read może zwrócić
+            // null, gdy dla obiektu nie ma zarejestrowanych opcji.
+            return $options[$option] ?? null;
         }
 
         return $options;
@@ -299,7 +303,7 @@ class Croogo
      *
      * @param string $configKey
      */
-    public static function applyHookProperties($configKey, $object = null)
+    public static function applyHookProperties($configKey, $object = null): void
     {
         if (empty($object)) {
             $object = self;
@@ -340,7 +344,8 @@ class Croogo
      */
     public static function dispatchEvent($name, $subject = null, $data = null)
     {
-        $event = new Event($name, $subject, $data);
+        // Cake 5: Event::__construct wymaga array w $data.
+        $event = new Event($name, $subject, (array)$data);
         if ($subject) {
             $event = $subject->getEventManager()->dispatch($event);
         } else {
@@ -393,7 +398,7 @@ class Croogo
         return $values;
     }
 
-    public static function translateModel($model, $config)
+    public static function translateModel($model, $config): void
     {
         Croogo::mergeConfig('Translate.models', [
             $model => $config

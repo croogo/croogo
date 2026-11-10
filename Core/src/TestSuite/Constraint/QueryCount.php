@@ -41,7 +41,7 @@ class QueryCount extends PHPUnit_Framework_Constraint
      */
     protected function matches($query)
     {
-        if (!$query instanceof Query) {
+        if (!$query instanceof \Cake\ORM\Query\SelectQuery) {
             throw new InvalidArgumentException();
         }
 
@@ -73,7 +73,7 @@ class QueryCount extends PHPUnit_Framework_Constraint
      */
     protected function failureDescription($query)
     {
-        if (!$query instanceof Query) {
+        if (!$query instanceof \Cake\ORM\Query\SelectQuery) {
             return null;
         }
 

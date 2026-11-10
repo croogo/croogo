@@ -32,7 +32,7 @@ class UserFixture extends CroogoTestFixture
         '_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
     ];
 
-    public $records = [
+    public array $records = [
         [
             'id' => 1,
             'role_id' => 1,

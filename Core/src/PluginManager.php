@@ -1,23 +1,23 @@
 <?php
+declare(strict_types=1);
 
 namespace Croogo\Core;
 
 use App\Controller\AppController;
-use Aura\Intl\Package;
+use Cake\I18n\Package;
 use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\BasePlugin;
-use Cake\Core\ClassLoader;
+use Croogo\Core\ClassLoader;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
+use Cake\Core\Exception\CakeException;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Database\SchemaCache;
-use Cake\Database\Type;
+use Cake\Database\TypeFactory;
 use Cake\Datasource\ConnectionManager;
 use Cake\Datasource\Exception\MissingDatasourceConfigException;
-use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
 use Cake\I18n\MessagesFileLoader;
 use Cake\Log\Log;
@@ -28,6 +28,7 @@ use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Croogo\Core\Event\EventManager;
 use Croogo\Settings\Configure\Engine\DatabaseConfig;
+use DirectoryIterator;
 use InvalidArgumentException;
 use Migrations\Migrations;
 
@@ -105,6 +106,8 @@ class PluginManager extends Plugin
         'Croogo/Users',
     ];
 
+    protected static $_loader;
+
     /**
      * __construct
      */
@@ -129,11 +132,16 @@ class PluginManager extends Plugin
     }
 
     /**
+     * @var \Croogo\Core\Controller\AppController|null
+     */
+    protected $_Controller;
+
+    /**
      * AppController setter
      *
      * @return void
      */
-    public function setController(AppController $controller)
+    public function setController(AppController $controller): void
     {
         $this->_Controller = $controller;
     }
@@ -141,18 +149,28 @@ class PluginManager extends Plugin
     /**
      * Get plugin aliases (folder names)
      *
+     * @param string $type Type of plugin (plugin|theme)
      * @return array
      */
     public function getPlugins($type = 'plugin')
     {
         $plugins = [];
-        $this->folder = new Folder;
+        $pluginPaths = [];
         $registered = Configure::read('plugins');
-        $pluginPaths = Hash::merge(App::path('Plugin'), $registered);
+
+        $configuredPaths = Configure::read('App.paths.plugins');
+        foreach ($configuredPaths as $configuredPath) {
+            foreach (new DirectoryIterator($configuredPath) as $fileInfo) {
+                $pluginDirectory = $fileInfo->getFilename();
+                if($fileInfo->isDot() || $fileInfo->isFile() || strpos($pluginDirectory, '.') === 0) continue;
+                $pluginPaths[$pluginDirectory] = $configuredPath . $pluginDirectory . DIRECTORY_SEPARATOR;
+            }
+        }
+
+        $pluginPaths = Hash::merge($pluginPaths, $registered);
         unset($pluginPaths['Croogo']); //Otherwise we get croogo plugins twice!
         foreach ($pluginPaths as $pluginName => $pluginPath) {
-            $this->folder->path = $pluginPath;
-            if (!file_exists($this->folder->path)) {
+            if (!file_exists($pluginPath)) {
                 continue;
             }
             if ((
@@ -165,8 +183,14 @@ class PluginManager extends Plugin
                 continue;
             }
 
-            $pluginFolders = $this->folder->read();
-            foreach ($pluginFolders[0] as $pluginFolder) {
+            // Cake 5: Cake\Filesystem\Folder usunięty -> natywny scandir (tylko katalogi).
+            $pluginFolders = array_values(array_filter(
+                (array)scandir($pluginPath),
+                function ($entry) use ($pluginPath) {
+                    return is_dir($pluginPath . DIRECTORY_SEPARATOR . $entry);
+                }
+            ));
+            foreach ($pluginFolders as $pluginFolder) {
                 if (substr($pluginFolder, 0, 1) != '.') {
                     if ($type === 'plugin' && !$this->_isCroogoPlugin($pluginPath, $pluginFolder)) {
                         continue;
@@ -266,7 +290,7 @@ class PluginManager extends Plugin
                 return $manifestData['name'];
             }
         }
-        $composerFile = $pluginPath . $alias . DS . 'composer.json';
+        $composerFile = $pluginPath . DS . 'composer.json';
 
         if (file_exists($composerFile)) {
             $composerData = json_decode(file_get_contents($composerFile), true);
@@ -440,6 +464,10 @@ class PluginManager extends Plugin
     public function getDependencies($plugin)
     {
         $pluginData = $this->getData($plugin);
+        // PHP 8.5: automatyczna konwersja false -> array deprecated (getData zwraca false)
+        if (!is_array($pluginData)) {
+            $pluginData = [];
+        }
         if (!isset($pluginData['dependencies']['plugins'])) {
             $pluginData['dependencies']['plugins'] = [];
         }
@@ -478,7 +506,7 @@ class PluginManager extends Plugin
         $plugin = [Inflector::underscore($plugin), Inflector::camelize($plugin)];
 
         foreach ($configureKeys as $configureKey) {
-            $hooks = explode(',', Configure::read($configureKey));
+            $hooks = explode(',', (string)Configure::read($configureKey));
             foreach ($hooks as $hook) {
                 if (in_array($hook, $plugin)) {
                     return true;
@@ -618,7 +646,7 @@ class PluginManager extends Plugin
      * @param string $plugin Plugin name
      * @return void
      */
-    public function addBootstrap($plugin)
+    public function addBootstrap($plugin): void
     {
         $hookBootstraps = Configure::read('Hook.bootstraps');
         if (!$hookBootstraps) {
@@ -645,7 +673,7 @@ class PluginManager extends Plugin
      * @param string $plugin Plugin name
      * @return void
      */
-    public function removeBootstrap($plugin)
+    public function removeBootstrap($plugin): void
     {
         $hookBootstraps = Configure::read('Hook.bootstraps');
         if (!$hookBootstraps) {
@@ -676,7 +704,7 @@ class PluginManager extends Plugin
             $className = 'PluginActivation';
 
             $registered = Configure::read('plugins');
-            $pluginPaths = Hash::merge(App::path('Plugin'), $registered);
+            $pluginPaths = Hash::merge(App::classPath('plugins'), $registered);
             unset($pluginPaths['Croogo']); //Otherwise we get croogo plugins twice!
 
             if (isset($pluginPaths[$plugin])) {
@@ -722,6 +750,21 @@ class PluginManager extends Plugin
         }
 
         return $this->_PluginActivation;
+    }
+
+    /**
+     * Drop the cached event listener map.
+     *
+     * Plugin loading runs on every request. Invalidate the listener map
+     * only when the set of enabled plugins changes.
+     *
+     * @return void
+     */
+    private static function invalidateEventHandlersCache(): void
+    {
+        if (in_array('cached_settings', Cache::configured(), true)) {
+            Cache::delete('EventHandlers', 'cached_settings');
+        }
     }
 
     /**
@@ -776,8 +819,9 @@ class PluginManager extends Plugin
                 $pluginActivation->onActivation($this->_Controller);
             }
 
-            Cache::clear(false, 'croogo_menus');
-            Cache::delete('file_map', '_cake_core_');
+            Cache::clear('croogo_menus');
+            self::invalidateEventHandlersCache();
+            Cache::delete('file_map', '_cake_translations_');
 
             return true;
         }
@@ -794,7 +838,7 @@ class PluginManager extends Plugin
         if (empty($deps['usedBy'][$plugin])) {
             return false;
         }
-        $usedBy = array_filter($deps['usedBy'][$plugin], ['Croogo\\Core\\Plugin', 'loaded']);
+        $usedBy = array_filter($deps['usedBy'][$plugin], [\Cake\Core\Plugin::class, 'isLoaded']);
         if (!empty($usedBy)) {
             return $usedBy;
         }
@@ -823,10 +867,11 @@ class PluginManager extends Plugin
             if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
                 $pluginActivation->onDeactivation($this->_Controller);
             }
-            static::unload($plugin);
+            // clear() already invalidated the listener map for this plugin
+            static::clear($plugin);
 
-            Cache::clear(false, 'croogo_menus');
-            Cache::delete('file_map', '_cake_core_');
+            Cache::clear('croogo_menus');
+            Cache::delete('file_map', '_cake_translations_');
 
             return true;
         } else {
@@ -837,7 +882,7 @@ class PluginManager extends Plugin
     /**
      * Cache plugin dependency list
      */
-    public static function cacheDependencies()
+    public static function cacheDependencies(): void
     {
         $pluginDeps = Cache::read('pluginDeps', 'cached_settings');
         if (!$pluginDeps) {
@@ -877,6 +922,15 @@ class PluginManager extends Plugin
         );
     }
 
+    public static function _includeFile($file, $ignoreMissing)
+    {
+        if ($ignoreMissing && !is_file($file)) {
+            return false;
+        }
+
+        return include $file;
+    }
+
     /**
      * Loads a plugin and optionally loads bootstrapping and routing files.
      *
@@ -887,7 +941,7 @@ class PluginManager extends Plugin
      * @return void
      * @see Plugin::load()
      */
-    public static function load($plugin, array $config = [])
+    public static function load($plugin, array $config = []): void
     {
         if (is_array($plugin)) {
             foreach ($plugin as $name => $conf) {
@@ -917,7 +971,13 @@ class PluginManager extends Plugin
         if (!isset($config['configPath'])) {
             $config['configPath'] = $config['path'] . 'config' . DIRECTORY_SEPARATOR;
         }
-        $pluginClass = str_replace('/', '\\', $plugin) . '\\Plugin';
+        // Cake 5.3: konwencja <Nazwa>Plugin (klasa `Plugin` deprecated)
+        $namespace = str_replace('/', '\\', $plugin);
+        $shortName = ($pos = strrpos($plugin, '/')) !== false ? substr($plugin, $pos + 1) : $plugin;
+        $pluginClass = $namespace . '\\' . $shortName . 'Plugin';
+        if (!class_exists($pluginClass)) {
+            $pluginClass = $namespace . '\\Plugin';
+        }
         if (class_exists($pluginClass)) {
             $instance = new $pluginClass($config);
         } else {
@@ -944,10 +1004,6 @@ class PluginManager extends Plugin
         if ($config['bootstrap'] === true) {
             static::bootstrap($plugin);
         }
-
-        if (in_array('cached_settings', Cache::configured())) {
-            Cache::delete('EventHandlers', 'cached_settings');
-        }
     }
 
     /**
@@ -959,7 +1015,7 @@ class PluginManager extends Plugin
      * @param string $plugin name of the plugin to forget
      * @return void
      */
-    public static function unload($plugin = null)
+    public static function clear($plugin = null): void
     {
         if (is_array($plugin)) {
             foreach ($plugin as $name) {
@@ -984,7 +1040,7 @@ class PluginManager extends Plugin
                 $eventManager->detachPluginSubscribers($plugin);
             }
         }
-        Cache::delete('EventHandlers', 'cached_settings');
+        self::invalidateEventHandlersCache();
     }
 
     /**
@@ -1003,10 +1059,22 @@ class PluginManager extends Plugin
         if (is_link($pluginPath)) {
             return unlink($pluginPath);
         }
-        $folder = new Folder();
-        $result = $folder->delete($pluginPath);
-        if ($result !== true) {
-            return $folder->errors();
+        // Cake 5: Cake\Filesystem\Folder usunięty -> rekursywne usuwanie natywnie.
+        if (!is_dir($pluginPath)) {
+            return true;
+        }
+        $it = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($pluginPath, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($it as $item) {
+            $ok = $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());
+            if (!$ok) {
+                return [__d('croogo', 'Could not delete %s', $item->getPathname())];
+            }
+        }
+        if (!rmdir($pluginPath)) {
+            return [__d('croogo', 'Could not delete %s', $pluginPath)];
         }
 
         return true;
@@ -1067,16 +1135,16 @@ class PluginManager extends Plugin
      *
      * @param array $bootstraps array of plugin aliases
      * @return bool
-     * @throws Exception
+     * @throws \Cake\Core\Exception\CakeException
      */
     protected function _saveBootstraps($bootstraps)
     {
         static $Setting = null;
         if (empty($Setting)) {
             if (!Configure::read('Croogo.installed')) {
-                throw new Exception('Unable to save Hook.bootstraps when Croogo is not fully installed');
+                throw new \Cake\Core\Exception\CakeException('Unable to save Hook.bootstraps when Croogo is not fully installed');
             }
-            $Settings = TableRegistry::get('Croogo/Settings.Settings');
+            $Settings = TableRegistry::getTableLocator()->get('Croogo/Settings.Settings');
         }
 
         return $Settings->write('Hook.bootstraps', implode(',', $bootstraps));
@@ -1111,7 +1179,7 @@ class PluginManager extends Plugin
      * @throws \Cake\Core\Exception\MissingPluginException if the folder for plugin was not found or plugin has not
      *     been loaded
      */
-    public static function path($plugin)
+    public static function path(string $plugin): string
     {
         if (strstr($plugin, 'Croogo/')) {
             return realpath(parent::path('Croogo/Core') . '..' . DS . substr($plugin, 7) . DS) . DS;
@@ -1122,7 +1190,7 @@ class PluginManager extends Plugin
             return $path;
         }
 
-        $paths = App::path('Plugin');
+        $paths = App::classPath('plugins');
         $pluginPath = str_replace('/', DIRECTORY_SEPARATOR, $plugin);
         foreach ($paths as $path) {
             if (!is_dir($path . $pluginPath)) {
@@ -1220,27 +1288,30 @@ class PluginManager extends Plugin
      * @param PluginApplicationInterface $app
      * @return void
      */
-    public static function setup(PluginApplicationInterface $app)
+    public static function setup(PluginApplicationInterface $app): void
     {
         $dbConfigExists = false;
 
         if (file_exists(ROOT . DS . 'config' . DS . 'database.php')) {
             Configure::load('database', 'default');
             ConnectionManager::drop('default');
-            ConnectionManager::config(Configure::consume('Datasources'));
+            ConnectionManager::setConfig(Configure::consume('Datasources'));
         }
 
         try {
+            /** @var \Cake\Database\Connection $defaultConnection*/
             $defaultConnection = ConnectionManager::get('default');
-            $dbConfigExists = $defaultConnection->connect();
-        } catch (Exception $e) {
+            // Cake 5: Connection::connect() usunięty — łączymy przez driver.
+            $defaultConnection->getDriver()->connect();
+            $dbConfigExists = true;
+        } catch (\Exception $e) {
             $dbConfigExists = false;
         }
 
         // Map our custom types
-        Type::map('params', 'Croogo\Core\Database\Type\ParamsType');
-        Type::map('encoded', 'Croogo\Core\Database\Type\EncodedType');
-        Type::map('link', 'Croogo\Core\Database\Type\LinkType');
+        TypeFactory::map('params', 'Croogo\Core\Database\Type\ParamsType');
+        TypeFactory::map('encoded', 'Croogo\Core\Database\Type\EncodedType');
+        TypeFactory::map('link', 'Croogo\Core\Database\Type\LinkType');
 
         /**
          * Cache configuration
@@ -1265,11 +1336,6 @@ class PluginManager extends Plugin
                 ['groups' => ['settings']]
             ));
         }
-
-        /**
-         * Default Acl plugin.  Custom Acl plugin should override this value.
-         */
-        Configure::write('Site.acl_plugin', 'Croogo/Acl');
 
         /**
          * Default API Route Prefix. This can be overriden in settings.
@@ -1306,7 +1372,7 @@ class PluginManager extends Plugin
      * @param $app
      * @return void
      */
-    public static function croogoBootstrap($app)
+    public static function croogoBootstrap($app): void
     {
         Configure::write(
             'DebugKit.panels',
@@ -1324,15 +1390,20 @@ class PluginManager extends Plugin
             ]
         ]);
         Croogo::hookComponent('*', 'Croogo/Acl.Filter');
-        Croogo::hookComponent('*', [
-            'Security' => [
-                'blackHoleCallback' => '_securityError',
-            ],
-        ]);
+        // Access musi być hookowany globalnie obok Filter — inaczej UsersController::login()
+        // woła $this->Access->isUrlAuthorized() na null (500 po udanym logowaniu).
+        Croogo::hookComponent('*', 'Croogo/Acl.Access');
+        // Acl/config/bootstrap.php (martwy na Cake 5) hookował behaviory ARO — przenosimy
+        // tu, inaczej /admin/users/roles = 500 i zapis usera nie synchronizuje ARO.
+        Croogo::hookBehavior('Croogo/Users.Users', 'Croogo/Acl.UserAro', ['priority' => 20]);
+        Croogo::hookBehavior('Croogo/Users.Roles', 'Croogo/Acl.RoleAro', ['priority' => 20]);
+        // Cake 5: SecurityComponent usunięty -> FormProtectionComponent.
+        // blackHoleCallback -> validationFailureCallback (Closure) ustawiany
+        // per-request w AppController::beforeFilter (nie w statycznym hooku).
+        Croogo::hookComponent('*', 'FormProtection');
         Croogo::hookComponent('*', 'Acl.Acl');
-        Croogo::hookComponent('*', 'Auth');
+        Croogo::hookComponent('*', 'Croogo/Core.Auth');
         Croogo::hookComponent('*', 'Flash');
-        //Croogo::hookComponent('*', 'RequestHandler');
         Croogo::hookComponent('*', 'Croogo/Core.Theme');
 
         Croogo::hookHelper('*', 'Croogo/Core.Js');
@@ -1341,14 +1412,16 @@ class PluginManager extends Plugin
         // Make sure that the Croogo event manager is the global one
         EventManager::instance();
 
-        time(function () {
+        time(function (): void {
 
             /**
              * Locale
              */
             $siteLocale = Configure::read('Site.locale');
             Configure::write('App.defaultLocale', $siteLocale);
-            I18n::setLocale($siteLocale);
+            if ($siteLocale) {
+                I18n::setLocale($siteLocale);
+            }
 
             /**
              * Assets
@@ -1398,7 +1471,7 @@ class PluginManager extends Plugin
             return $package;
         });
 
-        time(function () use ($app) {
+        time(function () use ($app): void {
             /**
              * Load required plugins
              */
@@ -1423,15 +1496,15 @@ class PluginManager extends Plugin
         /**
          * Plugins
          */
-        $aclPlugin = Configure::read('Site.acl_plugin');
-        $pluginBootstraps = Configure::read('Hook.bootstraps');
+        $aclPlugin = 'Croogo/Acl';
+        $pluginBootstraps = (string)Configure::read('Hook.bootstraps');
         $plugins = array_filter(explode(',', $pluginBootstraps));
 
         if (!in_array($aclPlugin, $plugins)) {
             $plugins = Hash::merge((array)$aclPlugin, $plugins);
         }
         $themes = [Configure::read('Site.theme'), Configure::read('Site.admin_theme')];
-        time(function () use ($app, $plugins, $themes) {
+        time(function () use ($app, $plugins, $themes): void {
             $option = [
                 'autoload' => true,
                 'bootstrap' => true,
@@ -1448,7 +1521,12 @@ class PluginManager extends Plugin
                 try {
                     PluginManager::load($plugin, $option);
                 } catch (MissingPluginException $e) {
-                    Log::error('Plugin not found during bootstrap: ' . $plugin);
+                    // With a settings DB shared between apps, `Hook.bootstraps` may list
+                    // plugins only the other app ships — that is what `ignoreMissing`
+                    // opts into, so skip those without flooding the error log.
+                    if (empty($option['ignoreMissing'])) {
+                        Log::error('Plugin not found during bootstrap: ' . $plugin);
+                    }
                     continue;
                 }
             }
@@ -1468,18 +1546,13 @@ class PluginManager extends Plugin
 
         // FIXME DispatcherFactory::add('Croogo/Core.HomePage');
 
-        time(function () {
+        time(function (): void {
             PluginManager::events();
 
             EventManager::loadListeners();
         }, 'Registering plugin listeners');
 
-        $setupFile = ROOT . '/config/croogo.php';
-        if (file_exists ($setupFile)) {
-            require_once $setupFile;
-        }
-
-        time(function () {
+        time(function (): void {
             Croogo::dispatchEvent('Croogo.bootstrapComplete');
         }, 'event-Croogo.bootstrapComplete', 'Event: Croogo.bootstrapComplete');
     }

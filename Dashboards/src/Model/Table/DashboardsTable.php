@@ -17,12 +17,14 @@ use Croogo\Core\Model\Table\CroogoTable;
 class DashboardsTable extends CroogoTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('dashboards');
         $this->addBehavior('Timestamp');
         $this->addBehavior('ADmad/Sequence.Sequence', [
-            'order' => 'weight',
+            // admad/cakephp-sequence: klucz 'order' zastąpiony 'sequenceField' (inaczej
+            // behavior sięga po domyślną kolumnę 'position' -> Unknown column w ORDER BY).
+            'sequenceField' => 'weight',
             'scope' => ['user_id', 'column'],
         ]);
         $this->belongsTo('Users', [

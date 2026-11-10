@@ -25,7 +25,7 @@ class FileManagerHelper extends Helper
      * @var array
      * @access public
      */
-    public $helpers = ['Html', 'Form'];
+    public array $helpers = ['Html', 'Form'];
 
     private $__actionsAsButton = [
         'upload',
@@ -136,7 +136,8 @@ class FileManagerHelper extends Helper
      */
     public function breadcrumb($path)
     {
-        $pathE = explode(DS, $path);
+        // PHP 8.1+: null do explode() deprecated
+        $pathE = explode(DS, (string)$path);
 
         $output = [];
         if (DS == '/') {
@@ -187,7 +188,9 @@ class FileManagerHelper extends Helper
         if (isset($url['action']) && in_array($url['action'], $this->__postLinkActions)) {
             $output = $this->Form->postLink($title, $url, ['data' => compact('path'), 'escape' => true], __d('croogo', 'Are you sure?'));
         } else {
-            $url[$pathKey] = $path;
+            // Cake 5: nieznane klucze w tablicy URL sa GUBIONE (w Cake 3 szly
+            // do query stringa) -> jawnie do '?'
+            $url['?'][$pathKey] = $path;
             $output = $this->Html->link($title, $url, [
                 'class' => $class,
             ]);

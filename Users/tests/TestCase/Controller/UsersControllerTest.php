@@ -14,30 +14,30 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.Croogo/Users.Aco',
-        'plugin.Croogo/Users.Aro',
-        'plugin.Croogo/Users.ArosAco',
-        'plugin.Croogo/Blocks.Block',
-        'plugin.Croogo/Comments.Comment',
-        'plugin.Croogo/Contacts.Contact',
-        'plugin.Croogo/Translate.I18n',
-        'plugin.Croogo/Settings.Language',
-        'plugin.Croogo/Menus.Link',
-        'plugin.Croogo/Menus.Menu',
-        'plugin.Croogo/Contacts.Message',
-        'plugin.Croogo/Meta.Meta',
-        'plugin.Croogo/Nodes.Node',
-        'plugin.Croogo/Taxonomy.ModelTaxonomy',
-        'plugin.Croogo/Blocks.Region',
-        'plugin.Croogo/Users.Role',
-        'plugin.Croogo/Settings.Setting',
-        'plugin.Croogo/Taxonomy.Taxonomy',
-        'plugin.Croogo/Taxonomy.Term',
-        'plugin.Croogo/Taxonomy.Type',
-        'plugin.Croogo/Taxonomy.TypesVocabulary',
-        'plugin.Croogo/Users.User',
-        'plugin.Croogo/Taxonomy.Vocabulary',
+    protected array $fixtures = [
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Blocks',
+        'plugin.Croogo/Comments',
+        'plugin.Croogo/Contacts',
+        'plugin.Croogo/Translate',
+        'plugin.Croogo/Settings',
+        'plugin.Croogo/Menus',
+        'plugin.Croogo/Menus',
+        'plugin.Croogo/Contacts',
+        'plugin.Croogo/Meta',
+        'plugin.Croogo/Nodes',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Blocks',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Settings',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Taxonomy',
     ];
 
     /**
@@ -45,7 +45,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->UsersController = $this->generate('Users.Users', [
@@ -94,7 +94,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->UsersController);
@@ -105,7 +105,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminIndex()
+    public function testAdminIndex(): void
     {
         $this->_setupAuthUser();
         $this->testAction('/admin/users/users/index');
@@ -119,7 +119,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminIndexSearch()
+    public function testAdminIndexSearch(): void
     {
         $this->_setupAuthUser();
         $this->testAction('/admin/users/users/index?name=admin');
@@ -131,7 +131,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAddInvalidPassword()
+    public function testAddInvalidPassword(): void
     {
         $this->_setupAuthUser();
         $_SERVER['SERVER_NAME'] = 'croogo.dev';
@@ -164,7 +164,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAddtestAddOtherErrors()
+    public function testAddtestAddOtherErrors(): void
     {
         $this->_setupAuthUser();
         $_SERVER['SERVER_NAME'] = 'croogo.dev';
@@ -200,7 +200,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminAdd()
+    public function testAdminAdd(): void
     {
         $this->_setupAuthUser();
         $this->expectFlashAndRedirect('The User has been saved');
@@ -224,7 +224,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminEdit()
+    public function testAdminEdit(): void
     {
         $this->_setupAuthUser();
         $this->expectFlashAndRedirect('The User has been saved');
@@ -248,7 +248,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminResetPassword()
+    public function testAdminResetPassword(): void
     {
         $this->_setupAuthUser();
         $this->expectFlashAndRedirect('Password has been reset.');
@@ -268,7 +268,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminResetPasswordValidationErrors()
+    public function testAdminResetPasswordValidationErrors(): void
     {
         $this->_setupAuthUser();
         $result = $this->testAction('/admin/users/users/reset_password/1', [
@@ -289,7 +289,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminDelete()
+    public function testAdminDelete(): void
     {
         $this->_setupAuthUser();
         $this->expectFlashAndRedirect('User deleted');
@@ -305,7 +305,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminDeleteCurrentUser()
+    public function testAdminDeleteCurrentUser(): void
     {
         $this->_setupAuthUser();
         // check that another admin exists
@@ -330,7 +330,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testResetPasswordWithValidInfo()
+    public function testResetPasswordWithValidInfo(): void
     {
         $this->_setupAuthUser();
         $this->testAction(
@@ -344,7 +344,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testResetPasswordWithInvalidInfo()
+    public function testResetPasswordWithInvalidInfo(): void
     {
         $this->_setupAuthUser();
         $this->UsersController->Session
@@ -368,7 +368,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testResetPasswordUpdatesPassword()
+    public function testResetPasswordUpdatesPassword(): void
     {
         $this->_setupAuthUser();
         $this->testAction(
@@ -393,7 +393,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testResetPasswordWithMismatchValues()
+    public function testResetPasswordWithMismatchValues(): void
     {
         $this->_setupAuthUser();
         $this->testAction(
@@ -417,7 +417,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminLoginFailureEvent()
+    public function testAdminLoginFailureEvent(): void
     {
         $this->controller->Auth->request = $this->controller->request;
         $this->controller->Auth->response = $this->controller->response;
@@ -446,7 +446,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testRedirectAfterAdminLogin()
+    public function testRedirectAfterAdminLogin(): void
     {
         $controller = $this->generate('Users.Users', [
             'methods' => [
@@ -476,7 +476,7 @@ class UsersControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testRedirectAfterLogin()
+    public function testRedirectAfterLogin(): void
     {
         $controller = $this->generate('Users.Users', [
             'methods' => [

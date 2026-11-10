@@ -71,7 +71,7 @@ class Link extends ArrayObject
         return $stringConverter->urlToLinkString($this->getArrayCopy());
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return (isset($this->controller)) ? $this->toLinkString() : $this->url;
     }

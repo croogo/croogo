@@ -10,11 +10,11 @@ use Croogo\Core\View\Helper\CroogoPaginatorHelper;
 class CroogoPaginatorHelperTest extends CroogoTestCase
 {
 
-    public $fixtures = [
+    protected array $fixtures = [
 //      'plugin.Croogo/Taxonomy.Type',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         $controller = null;
         $this->View = new View($controller);
@@ -23,12 +23,12 @@ class CroogoPaginatorHelperTest extends CroogoTestCase
         $this->Paginator->Html = new HtmlHelper($this->View);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->View, $this->Paginator);
     }
 
-    public function testPrev()
+    public function testPrev(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -48,7 +48,7 @@ class CroogoPaginatorHelperTest extends CroogoTestCase
             $this->assertContains('</li>', $result);
     }
 
-    public function testNext()
+    public function testNext(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -68,7 +68,7 @@ class CroogoPaginatorHelperTest extends CroogoTestCase
             $this->assertContains('</li>', $result);
     }
 
-    public function testFirst()
+    public function testFirst(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -88,7 +88,7 @@ class CroogoPaginatorHelperTest extends CroogoTestCase
             $this->assertContains('</li>', $result);
     }
 
-    public function testLast()
+    public function testLast(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -108,7 +108,7 @@ class CroogoPaginatorHelperTest extends CroogoTestCase
             $this->assertContains('</li>', $result);
     }
 
-    public function testNumbersFewPages()
+    public function testNumbersFewPages(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -127,7 +127,7 @@ class CroogoPaginatorHelperTest extends CroogoTestCase
             $this->assertContains('class="active">3</a>', $result);
     }
 
-    public function testNumbersManyPages()
+    public function testNumbersManyPages(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -146,7 +146,7 @@ class CroogoPaginatorHelperTest extends CroogoTestCase
             $this->assertContains('class="active">25</a>', $result);
     }
 
-    public function testNumbersPageEqualsEnd()
+    public function testNumbersPageEqualsEnd(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 

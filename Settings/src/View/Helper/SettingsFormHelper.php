@@ -19,7 +19,7 @@ use Croogo\Settings\Model\Entity\Setting;
 class SettingsFormHelper extends Helper
 {
 
-    public $helpers = [
+    public array $helpers = [
         'Form' => [
             'className' => 'Croogo/Core.Form'
         ],
@@ -108,7 +108,7 @@ class SettingsFormHelper extends Helper
                         'escape' => false,
                     ]
                 );
-                $output .= $this->_View->Form->input('_clearbackground', [
+                $output .= $this->_View->Form->control('_clearbackground', [
                     'type' => 'checkbox',
                     'label' => 'Delete Theme Background Image',
                 ]);

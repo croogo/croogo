@@ -23,19 +23,19 @@ class FileManagerControllerTest extends CroogoControllerTestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.Croogo/Users.Aco',
-        'plugin.Croogo/Users.Aro',
-        'plugin.Croogo/Users.ArosAco',
-        'plugin.Croogo/Settings.Setting',
-        'plugin.Croogo/Users.Role',
-        'plugin.Croogo/Blocks.Block',
-        'plugin.Croogo/Nodes.Node',
-        'plugin.Croogo/Menus.Menu',
-        'plugin.Croogo/Menus.Link',
-        'plugin.Croogo/Taxonomy.Type',
-        'plugin.Croogo/Taxonomy.TypesVocabulary',
-        'plugin.Croogo/Taxonomy.Vocabulary',
+    protected array $fixtures = [
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Settings',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Blocks',
+        'plugin.Croogo/Nodes',
+        'plugin.Croogo/Menus',
+        'plugin.Croogo/Menus',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Taxonomy',
     ];
 
     /**
@@ -43,7 +43,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->FileManager);
@@ -54,7 +54,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminBrowseRestricted()
+    public function testAdminBrowseRestricted(): void
     {
         $url = '/admin/file_manager/file_manager/browse?path=' . urlencode(APP . '../../..');
         $request = new Request($url);
@@ -90,7 +90,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminBrowse()
+    public function testAdminBrowse(): void
     {
         $url = '/admin/file_manager/file_manager/browse?path=' . urlencode(APP);
         $request = new Request($url);
@@ -126,7 +126,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminBrowseSubfolder()
+    public function testAdminBrowseSubfolder(): void
     {
         $url = '/admin/file_manager/file_manager/browse?path=' . urlencode(APP) . 'webroot';
         $request = new Request($url);
@@ -162,7 +162,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminUploadRestricted()
+    public function testAdminUploadRestricted(): void
     {
         $url = '/admin/file_manager/file_manager/upload?path=' . urlencode(APP . '../../..');
         $request = new CakeRequest($url);
@@ -202,7 +202,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminCreateFileRestricted()
+    public function testAdminCreateFileRestricted(): void
     {
         $url = '/admin/file_manager/file_manager/create_file?path=' . urlencode(APP . '../../..');
         $request = new CakeRequest($url);
@@ -242,7 +242,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminCreateDirectoryRestricted()
+    public function testAdminCreateDirectoryRestricted(): void
     {
         $url = '/admin/file_manager/file_manager/create_directory?path=' . urlencode(APP . '../../..');
         $request = new CakeRequest($url);
@@ -282,7 +282,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminDeleteDirectoryRestricted()
+    public function testAdminDeleteDirectoryRestricted(): void
     {
         $url = '/admin/file_manager/file_manager/delete_directory';
         $request = new CakeRequest($url);

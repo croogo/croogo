@@ -25,7 +25,7 @@ class BulkProcessComponentTest extends CroogoTestCase
     /**
      * Test that presence of `action` does not affect result
      */
-    public function testGetRequestVarsDoNotCountActionAsId()
+    public function testGetRequestVarsDoNotCountActionAsId(): void
     {
         $controller = $this->_createController([
             'Node' => [
@@ -43,7 +43,7 @@ class BulkProcessComponentTest extends CroogoTestCase
     /**
      * Test that presence of `checkAll` does not affect result
      */
-    public function testGetRequestVarsWithCheckallData()
+    public function testGetRequestVarsWithCheckallData(): void
     {
         $controller = $this->_createController([
             'Node' => [

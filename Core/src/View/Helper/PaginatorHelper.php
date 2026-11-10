@@ -41,7 +41,7 @@ class PaginatorHelper extends BasePaginatorHelper
      * @param array $options
      * @return bool
      */
-    public function numbers(array $options = [])
+    public function numbers(array $options = []): string
     {
         return parent::numbers($options);
     }

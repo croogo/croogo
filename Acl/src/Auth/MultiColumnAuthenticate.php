@@ -1,8 +1,8 @@
 <?php
 
-namespace Croogo\Acl\Controller\Component\Auth;
+namespace Croogo\Acl\Auth;
 
-use Cake\Auth\FormAuthenticate;
+use Croogo\Core\Auth\FormAuthenticate;
 use Cake\Controller\ComponentRegistry;
 
 /**

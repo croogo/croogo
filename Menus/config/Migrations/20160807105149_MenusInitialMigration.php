@@ -4,7 +4,7 @@ use Migrations\AbstractMigration;
 
 class MenusInitialMigration extends AbstractMigration
 {
-    public function up()
+    public function up(): void
     {
         $this->table('menus')
             ->addColumn('title', 'string', [
@@ -173,7 +173,7 @@ class MenusInitialMigration extends AbstractMigration
             ->create();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('links')->drop()->save();
         $this->table('menus')->drop()->save();

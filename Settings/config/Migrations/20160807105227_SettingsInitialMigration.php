@@ -4,7 +4,7 @@ use Migrations\AbstractMigration;
 
 class SettingsInitialMigration extends AbstractMigration
 {
-    public function up()
+    public function up(): void
     {
 
         $this->table('languages')
@@ -116,7 +116,7 @@ class SettingsInitialMigration extends AbstractMigration
             ->create();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('languages')->drop()->save();
         $this->table('settings')->drop()->save();

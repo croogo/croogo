@@ -1,28 +1,30 @@
 <?php
-
+/** @var \Cake\Routing\RouteBuilder $routes */
 use Cake\Routing\RouteBuilder;
 use Croogo\Core\Router;
 
-Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
-    $route->prefix('admin', function (RouteBuilder $route) {
+$routes->plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('Admin', function (RouteBuilder $route) {
         $route->setExtensions(['json']);
         $route->applyMiddleware('csrf');
 
         $route->scope('/users', [], function (RouteBuilder $route) {
-            $route->fallbacks();
+            $route->fallbacks('Croogo/Core.InflectedRoute');
         });
     });
 
-    Router::build($route, '/register', ['controller' => 'Users', 'action' => 'add']);
-    Router::build($route, '/user/:username', ['controller' => 'Users', 'action' => 'view'], ['pass' => ['username']]);
+    Router::build($route, '/', ['controller' => 'Users', 'action' => 'login']);
 
-    Router::build($route, '/users', ['controller' => 'Users', 'action' => 'index']);
-    Router::build($route, '/users/:action/*', ['controller' => 'Users']);
+//    Router::build($route, '/register', ['controller' => 'Users', 'action' => 'add']);
+//    Router::build($route, '/user/:username', ['controller' => 'Users', 'action' => 'view'], ['pass' => ['username']]);
+//
+//    Router::build($route, '/users', ['controller' => 'Users', 'action' => 'index']);
+//    Router::build($route, '/users/:action/*', ['controller' => 'Users']);
 });
 
-Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
-    $route->prefix('api', function (RouteBuilder $route) {
-        $route->prefix('v10', ['path' => '/v1.0'], function (RouteBuilder $route) {
+$routes->plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('Api', function (RouteBuilder $route) {
+        $route->prefix('V10', ['path' => '/v1.0'], function (RouteBuilder $route) {
             $route->setExtensions(['json']);
 
             $route->resources('Roles');
@@ -31,9 +33,11 @@ Router::plugin('Croogo/Users', ['path' => '/'], function (RouteBuilder $route) {
                     'lookup' => [
                         'action' => 'lookup',
                         'method' => 'GET',
-                    ],
+                    ]
                 ],
             ]);
+
+            $route->connect('/token', ['controller' => 'Users', 'action' => 'token', '_method' => 'POST']);
         });
     });
 });

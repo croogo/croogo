@@ -4,9 +4,7 @@ namespace Croogo\Core\Error;
 
 use Cake\Controller\Controller;
 use Cake\Core\App;
-use Cake\Error\ExceptionRenderer as CakeExceptionRenderer;
-use Cake\Event\Event;
-use Cake\Http\Response;
+use Cake\Error\Renderer\WebExceptionRenderer;
 use Cake\Http\ServerRequestFactory;
 use Cake\Routing\Router;
 use Exception;
@@ -14,37 +12,27 @@ use Exception;
 /**
  * Class ExceptionRenderer
  */
-class ExceptionRenderer extends CakeExceptionRenderer
+class ExceptionRenderer extends WebExceptionRenderer
 {
-    protected function _getController()
+    protected function _getController(): Controller
     {
-        if (!$request = Router::getRequest(true)) {
+        // Cake 5: Router::getRequest() bez argumentu; Controller przyjmuje tylko request.
+        $request = Router::getRequest();
+        if (!$request) {
             $request = ServerRequestFactory::fromGlobals();
         }
-        $response = new Response();
 
         try {
             $class = App::className('Croogo/Core.Error', 'Controller', 'Controller');
-            $controller = new $class($request, $response);
+            /** @var \Cake\Controller\Controller $controller */
+            $controller = new $class($request);
             $controller->startupProcess();
-            $startup = true;
         } catch (Exception $e) {
-            $startup = false;
         }
 
-        // Retry RequestHandler, as another aspect of startupProcess()
-        // could have failed. Ignore any exceptions out of startup, as
-        // there could be userland input data parsers.
-        if ($startup === false && !empty($controller) && isset($controller->RequestHandler)) {
-            try {
-                $event = new Event('Controller.startup', $controller);
-                $controller->RequestHandler->startup($event);
-            } catch (Exception $e) {
-            }
-        }
         if (empty($controller)) {
-            $controller = new Controller($request, $response);
-            $controller->viewBuilder()->className('Croogo/Core.Croogo');
+            $controller = new Controller($request);
+            $controller->viewBuilder()->setClassName('Croogo/Core.Croogo');
         }
 
         return $controller;

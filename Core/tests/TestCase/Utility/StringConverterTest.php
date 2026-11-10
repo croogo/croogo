@@ -15,7 +15,7 @@ class StringConverterTest extends CroogoTestCase
      */
     private $Converter;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Converter = new StringConverter();
@@ -24,7 +24,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testLinkStringToArray
      */
-    public function testLinkStringToArray()
+    public function testLinkStringToArray(): void
     {
         $this->assertEquals([
             'plugin' => null,
@@ -67,7 +67,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testLinkStringToArrayWithQueryString
      */
-    public function testLinkStringToArrayWithQueryString()
+    public function testLinkStringToArrayWithQueryString(): void
     {
         $expected = [
             'prefix' => 'admin',
@@ -87,7 +87,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testLinkStringToArrayWithQueryStringAndPassedArgs
      */
-    public function testLinkStringToArrayWithQueryStringAndPassedArgs()
+    public function testLinkStringToArrayWithQueryStringAndPassedArgs(): void
     {
         $expected = [
             'prefix' => 'admin',
@@ -108,7 +108,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testLinkStringToArrayWithQueryStringAndPassedAndNamedArgs
      */
-    public function testLinkStringToArrayWithQueryStringAndPassedAndNamedArgs()
+    public function testLinkStringToArrayWithQueryStringAndPassedAndNamedArgs(): void
     {
         $expected = [
             'prefix' => false,
@@ -129,7 +129,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testLinkStringToArrayWithUtf8
      */
-    public function testLinkStringToArrayWithUtf8()
+    public function testLinkStringToArrayWithUtf8(): void
     {
         $expected = [
             'prefix' => false,
@@ -148,7 +148,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testLinkStringToArrayWithUtf8PassedArgs
      */
-    public function testLinkStringToArrayWithUtf8PassedArgs()
+    public function testLinkStringToArrayWithUtf8PassedArgs(): void
     {
         $expected = [
             'prefix' => false,
@@ -167,7 +167,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testLinkStringToArrayWithUtf8InQueryString
      */
-    public function testLinkStringToArrayWithUtf8InQueryString()
+    public function testLinkStringToArrayWithUtf8InQueryString(): void
     {
         $expected = [
             'prefix' => false,
@@ -188,7 +188,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testLinkStringToArrayWithEncodedUtf8
      */
-    public function testLinkStringToArrayWithEncodedUtf8()
+    public function testLinkStringToArrayWithEncodedUtf8(): void
     {
         $expected = [
             'prefix' => false,
@@ -207,7 +207,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testUrlToLinkString
      */
-    public function testUrlToLinkString()
+    public function testUrlToLinkString(): void
     {
         $url = [
             'controller' => 'contacts',
@@ -278,7 +278,7 @@ class StringConverterTest extends CroogoTestCase
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
     }
 
-    public function testUrlToLinkStringWithQueryStringAndNamedArgs()
+    public function testUrlToLinkStringWithQueryStringAndNamedArgs(): void
     {
         $url = [
             'controller' => 'contacts',
@@ -308,7 +308,7 @@ class StringConverterTest extends CroogoTestCase
     /**
      * testFirstPara
      */
-    public function testFirstPara()
+    public function testFirstPara(): void
     {
         $text = '<p>First paragraph</p>';
         $expected = 'First paragraph';

@@ -46,5 +46,5 @@ class AclArosAcoFixture extends CroogoTestFixture
      *
      * @var array
      */
-    public $records = [];
+    public array $records = [];
 }

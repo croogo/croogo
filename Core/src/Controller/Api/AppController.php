@@ -2,7 +2,7 @@
 
 namespace Croogo\Core\Controller\Api;
 
-use Cake\Controller\Component\AuthComponent;
+use Croogo\Core\Controller\Component\AuthComponent;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -58,6 +58,10 @@ class AppController extends Controller
                 'parameter' => 'token',
                 'queryDatasource' => true,
             ];
+
+//            $authConfig['authorize']['ADmad/JwtAuth.Jwt'] = [
+//                'actionPath' => 'controllers',
+//            ];
         }
 
         return $authConfig;
@@ -68,12 +72,13 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
-        $this->loadComponent('Auth', $this->setupAuthConfig());
-        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Croogo/Core.Auth', $this->setupAuthConfig());
+        // Cake 5: RequestHandlerComponent usunięty — negocjacja treści JSON:API
+        // przechodzi przez Crud/CrudJsonApi i ViewBuilder.
 
         $this->loadComponent('Crud.Crud', [
             'actions' => [
@@ -108,11 +113,37 @@ class AppController extends Controller
     }
 
     /**
+     * Cake 5: RequestHandlerComponent usunięty. (a) Wybieramy JsonView dla każdego
+     * żądania API — nie tylko .json: RequestHandler negocjował JSON także bez
+     * rozszerzenia, a SPA/PWA wołają endpointy bez niego — o ile Crud/CrudJsonApi
+     * nie ustawiło własnej klasy widoku, (b) mapujemy legacy zmienną widoku
+     * `_serialize` na opcję widoku `serialize`. Dzięki temu kontrolery API w stylu
+     * Cake 3 ($this->set(['_serialize' => [...]])) działają bez zmian.
+     *
+     * @param \Cake\Event\EventInterface $event
+     * @return void
+     */
+    public function beforeRender(\Cake\Event\EventInterface $event): void
+    {
+        parent::beforeRender($event);
+
+        $builder = $this->viewBuilder();
+        if ($builder->getClassName() === null) {
+            $builder->setClassName('Json');
+        }
+
+        $serialize = $builder->getVar('_serialize');
+        if ($serialize !== null && $builder->getOption('serialize') === null) {
+            $builder->setOption('serialize', $serialize);
+        }
+    }
+
+    /**
      * beforeFilter
      *
      * @return void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         parent::beforeFilter($event);
 
@@ -120,7 +151,7 @@ class AppController extends Controller
             $this->Auth->user('role_id') != 1
         ) {
             if (!$this->getRequest()->is('whitelisted')) {
-                $this->response->statusCode(503);
+                $this->setResponse($this->getResponse()->withStatus(503));
             }
         }
     }

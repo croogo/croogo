@@ -2,8 +2,8 @@
 
 namespace Croogo\Core\Test\TestCase\View\Helper;
 
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\ServerRequest as Request;
+use Cake\Http\Response;
 use Cake\View\View;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\View\Helper\HtmlHelper;
@@ -11,7 +11,7 @@ use Croogo\Core\View\Helper\HtmlHelper;
 class HtmlHelperTest extends CroogoTestCase
 {
 
-    public $fixtures = [
+    protected array $fixtures = [
 //      'plugin.Croogo/Taxonomy.Type',
     ];
 
@@ -20,7 +20,7 @@ class HtmlHelperTest extends CroogoTestCase
      */
     private $Html;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -29,25 +29,25 @@ class HtmlHelperTest extends CroogoTestCase
         $this->Html = new HtmlHelper($this->View);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->View);
         unset($this->Html);
     }
 
-    public function testIcon()
+    public function testIcon(): void
     {
         $result = $this->Html->icon('remove');
         $this->assertContains('<i class="icon-remove"></i>', $result);
     }
 
-    public function testStatusOk()
+    public function testStatusOk(): void
     {
         $result = $this->Html->status(1);
         $this->assertContains('<i class="icon-ok green"></i>', $result);
     }
 
-    public function testStatusOkWithUrl()
+    public function testStatusOkWithUrl(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -68,13 +68,13 @@ class HtmlHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testStatusRemove()
+    public function testStatusRemove(): void
     {
         $result = $this->Html->status(0);
         $this->assertContains('<i class="icon-remove red"></i>', $result);
     }
 
-    public function testStatusRemoveWithUrl()
+    public function testStatusRemoveWithUrl(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -95,7 +95,7 @@ class HtmlHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testLink()
+    public function testLink(): void
     {
         $result = $this->Html->link('', '/remove', ['icon' => 'remove', 'button' => 'danger']);
         $this->assertContains('class="btn btn-danger"', $result);
@@ -105,7 +105,7 @@ class HtmlHelperTest extends CroogoTestCase
     /**
      * testLinkWithSmallIcon
      */
-    public function testLinkWithSmallIcon()
+    public function testLinkWithSmallIcon(): void
     {
         $result = $this->Html->link('', '/remove', [
             'icon' => 'remove',
@@ -119,7 +119,7 @@ class HtmlHelperTest extends CroogoTestCase
     /**
      * testLinkWithInlineIcon
      */
-    public function testLinkWithInlineIcon()
+    public function testLinkWithInlineIcon(): void
     {
         $result = $this->Html->link('', '/remove', [
             'icon' => 'remove',
@@ -149,20 +149,20 @@ class HtmlHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testLinkDefaultButton()
+    public function testLinkDefaultButton(): void
     {
         $result = $this->Html->link('Remove', '/remove', ['button' => 'default']);
         $this->assertContains('<a href="/remove" class="btn btn-default">Remove</a>', $result);
     }
 
-    public function testLinkOptionsIsNull()
+    public function testLinkOptionsIsNull(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $result = $this->Html->link('Remove', '/remove', null);
     }
 
-    public function testLinkTooltip()
+    public function testLinkTooltip(): void
     {
         $result = $this->Html->link('', '/remove', ['tooltip' => 'remove it']);
         $expected = [
@@ -178,7 +178,7 @@ class HtmlHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testLinkButtonTooltipWithArrayOptions()
+    public function testLinkButtonTooltipWithArrayOptions(): void
     {
         $result = $this->Html->link('', '/remove', [
             'button' => ['success'],
@@ -202,7 +202,7 @@ class HtmlHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
     }
 
-    public function testAddPathAndGetCrumbList()
+    public function testAddPathAndGetCrumbList(): void
     {
         $this->Html->addPath('/yes/we/can', '/');
         $result = $this->Html->getCrumbList();

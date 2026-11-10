@@ -4,7 +4,7 @@ use Migrations\AbstractMigration;
 
 class DashboardsInitialMigration extends AbstractMigration
 {
-    public function up()
+    public function up(): void
     {
 
         $this->table('dashboards')
@@ -46,7 +46,7 @@ class DashboardsInitialMigration extends AbstractMigration
             ->create();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('dashboards')->drop()->save();
     }

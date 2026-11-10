@@ -8,7 +8,7 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
-use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\Http\Exception\MethodNotAllowedException;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Exception\Exception;
@@ -47,43 +47,17 @@ class CroogoComponent extends Component
     protected $_controller = null;
 
     /**
-     * Method to lazy load classes
-     *
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        switch ($name) {
-            case '_CroogoPlugin':
-            case '_CroogoTheme':
-                if (!isset($this->{$name})) {
-                    $class = 'Croogo\\Extensions\\' . substr($name, 1);
-                    $this->{$name} = new $class();
-                    if (method_exists($this->{$name}, 'setController')) {
-                        $this->{$name}->setController($this->_controller);
-                    }
-                }
-
-                return $this->{$name};
-            case 'roleId':
-                return $this->roleId();
-            default:
-                return parent::__get($name);
-        }
-    }
-
-    /**
      * Startup
      *
      * @param object $event instance of controller
      * @return void
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event): void
     {
         $this->_controller = $event->getSubject();
 
-        if ($this->_controller->request->getParam('prefix') == 'admin') {
-            if (!$this->_controller->request->getParam('requested')) {
+        if ($this->_controller->getRequest()->getParam('prefix') == 'Admin') {
+            if (!$this->_controller->getRequest()->getParam('requested')) {
                 $this->_adminData();
             }
         }
@@ -106,53 +80,10 @@ class CroogoComponent extends Component
      */
     protected function _adminMenus()
     {
-        Nav::add('top-left', 'site', [
-            'icon' => false,
-            'title' => __d('croogo', 'Visit website'),
-            'url' => '/',
-            'weight' => 0,
-            'htmlAttributes' => [
-                'target' => '_blank',
-            ],
-        ]);
-
-        $user = $this->getController()->request->getSession()->read('Auth.User');
+        $user = $this->getController()->getRequest()->getSession()->read('Auth.User');
         if (empty($user)) {
             return;
         }
-        $gravatarUrl = '<img src="//www.gravatar.com/avatar/' . md5($user['email']) . '?s=23" class="rounded mx-auto"/> ';
-        Nav::add('top-right', 'user', [
-            'icon' => false,
-            'title' => $user['username'],
-            'before' => $gravatarUrl,
-            'url' => '#',
-            'children' => [
-                'profile' => [
-                    'title' => __d('croogo', 'Profile'),
-                    'icon' => 'user',
-                    'url' => [
-                        'prefix' => 'admin',
-                        'plugin' => 'Croogo/Users',
-                        'controller' => 'Users',
-                        'action' => 'view',
-                        $user['id'],
-                    ],
-                ],
-                'separator-1' => [
-                    'separator' => true,
-                ],
-                'logout' => [
-                    'icon' => 'power-off',
-                    'title' => __d('croogo', 'Logout'),
-                    'url' => [
-                        'prefix' => 'admin',
-                        'plugin' => 'Croogo/Users',
-                        'controller' => 'Users',
-                        'action' => 'logout',
-                    ],
-                ],
-            ],
-        ]);
     }
 
     /**
@@ -162,12 +93,13 @@ class CroogoComponent extends Component
      */
     public function roleId()
     {
-        $roleId = $this->_controller->request->getSession()->read('Auth.User.role_id');
+        $roleId = $this->_controller->getRequest()->getSession()->read('Auth.User.role_id');
         if ($roleId) {
             return $roleId;
         }
 
-        return TableRegistry::get('Croogo/Users.Roles')->byAlias('public');
+        return \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Roles')
+            ->getBehavior('Aliasable')->byAlias('public');
     }
 
     /**
@@ -179,7 +111,7 @@ class CroogoComponent extends Component
      * @param array $allowRoles Role aliases
      * @return void
      */
-    public function addAco($action, $allowRoles = [])
+    public function addAco($action, $allowRoles = []): void
     {
         $this->_controller->CroogoAccess->addAco($action, $allowRoles);
     }
@@ -192,7 +124,7 @@ class CroogoComponent extends Component
      * @param string $action possible values: ControllerName, ControllerName/method_name
      * @return void
      */
-    public function removeAco($action)
+    public function removeAco($action): void
     {
         $this->_controller->CroogoAccess->removeAco($action);
     }
@@ -277,7 +209,7 @@ class CroogoComponent extends Component
      * @param string|array $templates view path or array of view paths
      * @return void
      */
-    public function viewFallback($templates)
+    public function viewFallback($templates): void
     {
         $templates = (array)$templates;
         $controller = $this->_controller;
@@ -286,7 +218,7 @@ class CroogoComponent extends Component
             foreach ($templatePaths as $templatePath) {
                 $templatePath = $templatePath . $this->_viewPath() . DS . $template;
                 if (file_exists($templatePath . '.ctp')) {
-                    $controller->viewBuilder()->template($this->_viewPath() . DS . $template);
+                    $controller->viewBuilder()->setTemplate($this->_viewPath() . DS . $template);
 
                     return;
                 }
@@ -297,10 +229,10 @@ class CroogoComponent extends Component
     protected function _viewPath()
     {
         $viewPath = $this->_controller->getName();
-        if (!empty($this->request->getParam('prefix'))) {
+        if (!empty($this->getController()->getRequest()->getParam('prefix'))) {
             $prefixes = array_map(
                 'Cake\Utility\Inflector::camelize',
-                explode('/', $this->_controller->request->params['prefix'])
+                explode('/', $this->_controller->getRequest()->getParam('prefix'))
             );
             $viewPath = implode(DS, $prefixes) . DS . $viewPath;
         }
@@ -311,12 +243,12 @@ class CroogoComponent extends Component
     public function protectToggleAction()
     {
         $controller = $this->getController();
-        if ($controller->request->getParam('action') !== 'toggle') {
+        if ($controller->getRequest()->getParam('action') !== 'toggle') {
             return;
         }
-        if (!$controller->request->is('post')) {
-            throw new MethodNotAllowedException();
+        if (!$controller->getRequest()->is('post')) {
+            throw new \Cake\Http\Exception\MethodNotAllowedException();
         }
-        $controller->Security->setConfig('validatePost', false);
+        $controller->FormProtection->setConfig('validate', false);
     }
 }

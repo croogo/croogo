@@ -21,7 +21,7 @@ namespace Croogo\Acl\Test\TestCase\Controller\Component\Auth;
 use Acl\Controller\Component\Auth\TokenAuthenticate;
 use App\Controller\Component\AuthComponent;
 use App\Model\AppModel;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest as Request;
 
 /**
  * Test case for FormAuthentication
@@ -31,14 +31,14 @@ use Cake\Network\Request;
 class TokenAuthenticateTest extends CakeTestCase
 {
 
-    public $fixtures = ['plugin.acl.multi_user'];
+    protected array $fixtures = ['plugin.Acl'];
 
     /**
      * setup
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Collection = $this->getMock('ComponentRegistry');
@@ -61,7 +61,7 @@ class TokenAuthenticateTest extends CakeTestCase
      *
      * @return void
      */
-    public function testAuthenticateTokenParameter()
+    public function testAuthenticateTokenParameter(): void
     {
         $this->auth->settings['_parameter'] = 'token';
         $request = new Request('posts/index?_token=54321');
@@ -92,7 +92,7 @@ class TokenAuthenticateTest extends CakeTestCase
      *
      * @return void
      */
-    public function testAuthenticateTokenHeader()
+    public function testAuthenticateTokenHeader(): void
     {
         $_SERVER['HTTP_X_APITOKEN'] = '54321';
         $request = new Request('posts/index', false);

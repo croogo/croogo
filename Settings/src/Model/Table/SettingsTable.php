@@ -30,7 +30,7 @@ use Croogo\Core\PluginManager;
 class SettingsTable extends CroogoTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         $validator
             ->notBlank('key', __d('croogo', 'Key cannot be empty.'));
@@ -38,7 +38,7 @@ class SettingsTable extends CroogoTable
         return $validator;
     }
 
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): \Cake\ORM\RulesChecker
     {
         $rules
             ->add($rules->isUnique(
@@ -52,7 +52,7 @@ class SettingsTable extends CroogoTable
     /**
      * @param array $config
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Croogo/Core.Trackable');
 //        $this->addBehavior('Croogo/Core.Ordered', [
@@ -66,10 +66,10 @@ class SettingsTable extends CroogoTable
         ]);
         $this->addBehavior('Search.Search');
 
-        $this->searchManager()
+        $this->getBehavior('Search')->searchManager()
             ->add('key', 'Search.Like', [
                 'after' => true,
-                'field' => $this->aliasField('key'),
+                'fields' => [$this->aliasField('key')],
             ]);
     }
 
@@ -77,7 +77,7 @@ class SettingsTable extends CroogoTable
      * @param Table $schema
      * @return Table
      */
-    protected function _initializeSchema(TableSchema $schema)
+    protected function _initializeSchema(\Cake\Database\Schema\TableSchemaInterface $schema): \Cake\Database\Schema\TableSchemaInterface
     {
         $schema->setColumnType('params', 'params');
 
@@ -87,7 +87,7 @@ class SettingsTable extends CroogoTable
     /**
      * beforeSave callback
      */
-    public function beforeSave()
+    public function beforeSave(): void
     {
         $this->getConnection()->getDriver()->enableAutoQuoting();
     }
@@ -95,7 +95,7 @@ class SettingsTable extends CroogoTable
     /**
      * afterSave callback
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(\Cake\Event\EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         $this->getConnection()->getDriver()->enableAutoQuoting(false);
         if ($entity->key == 'Access Control.rowLevel') {

@@ -30,7 +30,7 @@ class CroogoHelper extends Helper
     /**
      * @var array
      */
-    public $helpers = [
+    public array $helpers = [
         'Form',
         'Html' => [
             'className' => 'Croogo/Core.Html'
@@ -48,6 +48,32 @@ class CroogoHelper extends Helper
      * @var Croogo\Core\Database\Type\ParamsType;
      */
     protected $_ParamsType;
+
+    /**
+     * Status instance
+     *
+     * @var \Croogo\Core\Status
+     */
+    protected $_CroogoStatus;
+
+    /**
+     * @var \Croogo\Users\Model\Table\RolesTable
+     */
+    protected $Role;
+
+    /**
+     * Czy wyrenderowano zakładki admina (ustawiane w adminTabs())
+     *
+     * @var bool|null
+     */
+    protected $adminTabs;
+
+    /**
+     * Boxy już wyrenderowane na stronie
+     *
+     * @var array|null
+     */
+    protected $boxAlreadyPrinted;
 
     /**
      * Default Constructor
@@ -85,7 +111,7 @@ class CroogoHelper extends Helper
     {
         $options = Hash::merge(['block' => true, 'defer' => true], $options);
         $request = $this->getView()->getRequest();
-        if ($request->is('ajax') || $request->getParam('prefix') !== 'admin') {
+        if ($request->is('ajax') || $request->getParam('prefix') !== 'Admin') {
             return null;
         }
 
@@ -120,10 +146,10 @@ class CroogoHelper extends Helper
         $out = null;
         $sorted = Hash::sort($menus, '{s}.weight', 'ASC');
         if (empty($this->Role)) {
-            $this->Role = TableRegistry::get('Croogo/Users.Roles');
+            $this->Role = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
             $this->Role->addBehavior('Croogo/Core.Aliasable');
         }
-        $currentRole = $this->Role->byId($this->Layout->getRoleId());
+        $currentRole = $this->Role->getBehavior('Aliasable')->byId($this->Layout->getRoleId());
 
         foreach ($sorted as $menu) {
             if (isset($menu['separator'])) {
@@ -421,11 +447,11 @@ class CroogoHelper extends Helper
      */
     public function adminTab($title, $url, $options = [])
     {
-        $options = Hash::merge([
-            'data-toggle' => 'tab',
-        ], $options);
+//        $options = Hash::merge([
+//            'data-toggle' => 'tab',
+//        ], $options);
 
-        $options = $this->addClass($options, 'nav-link');
+        $options = $this->addClass($options, 'nav-link scroll');
 
         return $this->Html->tag('li', $this->Html->link($title, $url, $options), [
             'class' => 'nav-item',
@@ -463,17 +489,17 @@ class CroogoHelper extends Helper
 
                 if (!isset($tab['options']['type']) ||
                     (isset($tab['options']['type']) &&
-                        (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))
+                        (in_array($this->_View->get('typeAlias'), $tab['options']['type'])))
                 ) {
                     $domId = strtolower(Inflector::singularize($request->getParam('controller'))) .
                         '-' .
                         strtolower(Text::slug($title, '-'));
                     if ($this->adminTabs) {
-                        if (isset($this->_View->viewVars['viewVar'])) {
-                            $entity = $this->_View->viewVars[$this->_View->viewVars['viewVar']];
+                        if ($this->_View->get('viewVar') !== null) {
+                            $entity = $this->_View->get($this->_View->get('viewVar'));
                             $tab['options']['elementData']['entity'] = $entity;
                         }
-                        $output .= $this->Html->tabStart($domId);
+                        $output .= $this->Html->tabStart($domId, ['class' => 'wayPoint']);
                         $output .= $this->_View->element(
                             $tab['element'],
                             $tab['options']['elementData'],
@@ -534,10 +560,10 @@ class CroogoHelper extends Helper
                 ],
             ], $box);
             $issetType = isset($box['options']['type']);
-            $typeInTypeAlias = $issetType && in_array($this->_View->viewVars['typeAlias'], $box['options']['type']);
+            $typeInTypeAlias = $issetType && in_array($this->_View->get('typeAlias'), $box['options']['type']);
             if (!$issetType || $typeInTypeAlias) {
-                if (isset($this->_View->viewVars['viewVar'])) {
-                    $entity = $this->_View->viewVars[$this->_View->viewVars['viewVar']];
+                if ($this->_View->get('viewVar') !== null) {
+                    $entity = $this->_View->get($this->_View->get('viewVar'));
                     $box['options']['elementData']['entity'] = $entity;
                 }
                 $output .= $this->Html->beginBox($title);

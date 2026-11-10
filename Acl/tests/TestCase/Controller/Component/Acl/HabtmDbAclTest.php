@@ -33,16 +33,16 @@ class HabtmDbAclTest extends CakeTestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.acl.acl_aro', 'plugin.acl.acl_aco', 'plugin.acl.acl_aros_aco',
-        'plugin.acl.employee', 'plugin.acl.department', 'plugin.acl.membership'];
+    protected array $fixtures = [
+        'plugin.Acl', 'plugin.Acl', 'plugin.Acl',
+        'plugin.Acl', 'plugin.Acl', 'plugin.Acl'];
 
     /**
      * setUp method
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         Configure::write('Acl.classname', 'HabtmDbAcl');
@@ -60,7 +60,7 @@ class HabtmDbAclTest extends CakeTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->Acl);
@@ -84,7 +84,7 @@ class HabtmDbAclTest extends CakeTestCase
      *
      * @return void
      */
-    public function testCheck()
+    public function testCheck(): void
     {
         $this->assertTrue($this->Acl->check(['Employee' => ['id' => 1]], 'Controllers/Controller1', 'read'));
         $this->assertFalse($this->Acl->check(['Employee' => ['id' => 1]], 'Controllers/Controller1', 'create'));

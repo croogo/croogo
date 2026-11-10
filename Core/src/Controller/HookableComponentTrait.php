@@ -26,6 +26,13 @@ trait HookableComponentTrait
      */
     public function _loadHookableComponent($name, array $config)
     {
-        return $this->loadComponent($name, $config);
+        $component = $this->loadComponent($name, $config);
+        // Cake 5: loadComponent nie ustawia już property, a Controller nie ma
+        // __isset() — przez co isset()/empty($this->X) w Croogo zawsze widziały
+        // brak komponentu. Przywracamy zachowanie Cake 4.
+        [, $prop] = pluginSplit($name);
+        $this->{$prop} = $component;
+
+        return $component;
     }
 }

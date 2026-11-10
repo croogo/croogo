@@ -14,13 +14,13 @@ class CroogoThemeTest extends CroogoTestCase
      */
     public $CroogoTheme;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->CroogoTheme = $this->getMock('CroogoTheme', null);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->CroogoTheme);
@@ -30,7 +30,7 @@ class CroogoThemeTest extends CroogoTestCase
      * testDeleteEmptyTheme
      * @expectedException InvalidArgumentException
      */
-    public function testDeleteEmptyTheme()
+    public function testDeleteEmptyTheme(): void
     {
         $this->CroogoTheme->delete(null);
     }
@@ -39,7 +39,7 @@ class CroogoThemeTest extends CroogoTestCase
      * testDeleteBogusTheme
      * @expectedException UnexpectedValueException
      */
-    public function testDeleteBogusTheme()
+    public function testDeleteBogusTheme(): void
     {
         $this->CroogoTheme->delete('Bogus');
     }
@@ -47,7 +47,7 @@ class CroogoThemeTest extends CroogoTestCase
     /**
      * testGetThemes
      */
-    public function testGetThemes()
+    public function testGetThemes(): void
     {
         $themes = $this->CroogoTheme->getThemes();
         $this->assertTrue(array_key_exists('Mytheme', $themes));
@@ -56,7 +56,7 @@ class CroogoThemeTest extends CroogoTestCase
     /**
      * testGetDataBogusTheme
      */
-    public function testGetDataBogusTheme()
+    public function testGetDataBogusTheme(): void
     {
         $data = $this->CroogoTheme->getData('BogusTheme');
         $this->assertSame([], $data);
@@ -65,7 +65,7 @@ class CroogoThemeTest extends CroogoTestCase
     /**
      * testGetDataMixedManifest
      */
-    public function testGetDataMixedManifest()
+    public function testGetDataMixedManifest(): void
     {
         $data = $this->CroogoTheme->getData('MixedManifest');
 

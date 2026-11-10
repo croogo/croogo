@@ -12,14 +12,14 @@ use Croogo\Core\TestSuite\TestCase;
 class CroogoRouterTest extends TestCase
 {
 
-    public $fixtures = [
+    protected array $fixtures = [
 //      'plugin.Croogo/Settings.Setting',
 //      'plugin.Croogo/Taxonomy.Vocabulary',
-        'plugin.Croogo/Taxonomy.Type',
+        'plugin.Croogo/Taxonomy',
 //      'plugin.Croogo/Taxonomy.TypesVocabulary',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -30,7 +30,7 @@ class CroogoRouterTest extends TestCase
     /**
      * testHomeRoute
      */
-    public function testHomeRoute()
+    public function testHomeRoute(): void
     {
         $promoted = [
             'plugin' => 'Croogo/Nodes',
@@ -74,7 +74,7 @@ class CroogoRouterTest extends TestCase
         $this->assertEquals($terms, array_intersect_key($terms, $reversed));
     }
 
-    public function testContentType()
+    public function testContentType(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
         // Reload plugin routes
@@ -108,7 +108,7 @@ class CroogoRouterTest extends TestCase
         Router::$initialized = false;
     }
 
-    public function testRoutableContentTypes()
+    public function testRoutableContentTypes(): void
     {
         // Reload plugin routes
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
@@ -150,7 +150,7 @@ class CroogoRouterTest extends TestCase
     /**
      * testWhitelistedDetectorWithInvalidIp
      */
-    public function testWhitelistedDetectorWithInvalidIp()
+    public function testWhitelistedDetectorWithInvalidIp(): void
     {
         $request = $this->getMockBuilder(ServerRequest::class)
             ->setMethods(['clientIp'])
@@ -167,7 +167,7 @@ class CroogoRouterTest extends TestCase
     /**
      * testWhitelistedDetectorWithValidIp
      */
-    public function testWhitelistedDetectorWithValidIp()
+    public function testWhitelistedDetectorWithValidIp(): void
     {
         $request = $this->getMockBuilder(ServerRequest::class)
             ->setMethods(['clientIp'])

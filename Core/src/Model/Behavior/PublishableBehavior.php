@@ -27,7 +27,7 @@ use DateTime;
 class PublishableBehavior extends Behavior
 {
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'admin' => false,
         'fields' => [
             'publish_start' => 'publish_start',
@@ -45,7 +45,12 @@ class PublishableBehavior extends Behavior
      *
      * @return void
      */
-    public function initialize(array $config)
+    /**
+     * @var \Croogo\Core\Status
+     */
+    protected $_CroogoStatus;
+
+    public function initialize(array $config): void
     {
         $this->_CroogoStatus = new Status();
     }
@@ -65,26 +70,27 @@ class PublishableBehavior extends Behavior
      *
      * @return array Options passed to Model::find()
      */
-    public function beforeFind(Event $event, Query $query, $options)
+    public function beforeFind(\Cake\Event\EventInterface $event, \Cake\ORM\Query\SelectQuery $query, $options): void
     {
+        // Cake 5.2: zwracanie wartosci z listenera deprecated; where() mutuje query in-place
         $table = $this->_table;
         $config = $this->getConfig();
         if (!empty($config['enabled'])) {
-            return $query;
+            return;
         }
 
         if ($config['admin'] === false && isset($_SESSION)) {
             // FIXME Avoid superglobals
             $roleId = Hash::get($_SESSION, 'Auth.User.role_id');
             if ($roleId == 1) {
-                return $query;
+                return;
             }
         }
 
         if (!$table->hasField($config['fields']['publish_start']) ||
             !$table->hasField($config['fields']['publish_end'])
         ) {
-            return $query;
+            return;
         }
 
         $date = isset($options['date']) ? $options['date'] : new DateTime();
@@ -101,7 +107,7 @@ class PublishableBehavior extends Behavior
             ],
         ]);
 
-        $query = $query->andWhere([
+        $query->andWhere([
             'OR' => [
                 $end . ' IS' => null,
                 [
@@ -110,14 +116,12 @@ class PublishableBehavior extends Behavior
                 ],
             ],
         ]);
-
-        return $query;
     }
 
     /**
      * Populate publish_start
      */
-    public function beforeMarshal(Event $event, $options = [])
+    public function beforeMarshal(Event $event, $options = []): void
     {
         $data = $event->getData('data');
         if (array_key_exists('publish_start', $data)) {
@@ -125,7 +129,6 @@ class PublishableBehavior extends Behavior
                 $data['publish_start'] = new \DateTime();
             }
         }
-        return true;
     }
 
 }

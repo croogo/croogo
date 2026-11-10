@@ -6,7 +6,7 @@ use Crud\Action\AddAction as CrudAddAction;
 
 class AddAction extends CrudAddAction
 {
-    protected function _get()
+    protected function _get(): void
     {
         parent::_get();
 

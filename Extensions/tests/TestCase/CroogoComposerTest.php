@@ -23,7 +23,7 @@ class CroogoComposerTest extends CroogoTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         App::build([
@@ -41,7 +41,7 @@ class CroogoComposerTest extends CroogoTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $path = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example';
@@ -59,7 +59,7 @@ class CroogoComposerTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testGetComposer()
+    public function testGetComposer(): void
     {
         $CroogoComposer = $this->getMock('CroogoComposer', ['_shellExec']);
         $CroogoComposer->appPath = $this->CroogoComposer->appPath;
@@ -77,7 +77,7 @@ class CroogoComposerTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testRunComposer()
+    public function testRunComposer(): void
     {
         $CroogoComposer = $this->getMock('CroogoComposer', ['_shellExec']);
         $CroogoComposer->appPath = $this->CroogoComposer->appPath;
@@ -96,7 +96,7 @@ class CroogoComposerTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testSetConfig()
+    public function testSetConfig(): void
     {
         $result = $this->CroogoComposer->setConfig([
             'shama/ftp' => '*',

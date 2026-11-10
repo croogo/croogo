@@ -9,11 +9,11 @@ use Croogo\Core\TestSuite\CroogoTestCase;
 class ApiRouteTest extends CroogoTestCase
 {
 
-    public $fixtures = [
+    protected array $fixtures = [
 //      'plugin.Croogo/Settings.Setting',
     ];
 
-    public function testParse()
+    public function testParse(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -26,13 +26,13 @@ class ApiRouteTest extends CroogoTestCase
             'action' => 'index',
         ]);
 
-        $result = $route->parse('/' . $apiPath . '/x1.0/users/index');
+        $result = $route->parseRequest('/' . $apiPath . '/x1.0/users/index');
         $this->assertFalse($result);
 
-        $result = $route->parse('/foo/v1.0/users/index');
+        $result = $route->parseRequest('/foo/v1.0/users/index');
         $this->assertFalse($result);
 
-        $result = $route->parse($url . 'index');
+        $result = $route->parseRequest($url . 'index');
         $expected = [
             'api' => 'api',
             'prefix' => 'v1_0',
@@ -44,7 +44,7 @@ class ApiRouteTest extends CroogoTestCase
         ];
         $this->assertEquals($expected, $result);
 
-        $result = $route->parse($url . 'lookup/pass/1/name:foo');
+        $result = $route->parseRequest($url . 'lookup/pass/1/name:foo');
 
         $expected = [
             'api' => 'api',
@@ -59,7 +59,7 @@ class ApiRouteTest extends CroogoTestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testMatch()
+    public function testMatch(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 

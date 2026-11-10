@@ -5,14 +5,15 @@ namespace Croogo\Core\TestSuite;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\EntityInterface;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest as Request;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase as CakeTestCase;
 use Croogo\Core\Event\EventManager;
 use Croogo\Core\PluginManager;
 use Croogo\Core\TestSuite\Constraint\EntityHasProperty;
-use PHPUnit_Util_InvalidArgumentHelper;
+use InvalidArgumentException;
 
 /**
  * CroogoTestCase class
@@ -25,16 +26,19 @@ use PHPUnit_Util_InvalidArgumentHelper;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class IntegrationTestCase extends CakeIntegrationTestCase
+// Cake 5: klasa IntegrationTestCase usunięta -> TestCase + IntegrationTestTrait
+class IntegrationTestCase extends CakeTestCase
 {
+    use IntegrationTestTrait;
+
     protected $previousPlugins = [];
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         Configure::write('Config.language', 'eng');
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         Configure::write('Config.language', Configure::read('Site.locale'));
     }
@@ -44,15 +48,17 @@ class IntegrationTestCase extends CakeIntegrationTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         EventManager::instance(new EventManager);
         Configure::write('EventHandlers', []);
 
-        PluginManager::unload('Croogo/Install');
-        PluginManager::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
+        PluginManager::clear('Croogo/Install');
+        if (!Plugin::isLoaded('Croogo/Example')) {
+            PluginManager::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
+        }
         Configure::write('Acl.database', 'test');
 
         PluginManager::events();
@@ -61,12 +67,12 @@ class IntegrationTestCase extends CakeIntegrationTestCase
         $this->previousPlugins = Plugin::loaded();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
         // Unload all plugins that were loaded while running tests
-        PluginManager::unload(array_diff(Plugin::loaded(), $this->previousPlugins));
+        PluginManager::clear(array_diff(Plugin::loaded(), $this->previousPlugins));
     }
 
     /**
@@ -74,25 +80,23 @@ class IntegrationTestCase extends CakeIntegrationTestCase
      */
     protected function _apiRequest($params)
     {
-        $request = new Request();
-        $request->addParams($params);
-        $request->addDetector('api', [
+        Request::addDetector('api', [
             'callback' => ['Croogo\\Core\\Router', 'isApiRequest'],
         ]);
 
-        return $request;
+        return new Request(['params' => $params]);
     }
 
     /**
-     * @param \Croogo\Users\Model\Entity\User|\Cake\ORM\Query|string $user
+     * @param \Croogo\Users\Model\Entity\User|\Cake\ORM\Query\SelectQuery|string $user
      */
-    public function user($user)
+    public function user($user): void
     {
         if (is_string($user)) {
-            $user = TableRegistry::get('Croogo/Users.Users')
+            $user = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Users')
                 ->findByUsername($user);
         }
-        if ($user instanceof Query) {
+        if ($user instanceof \Cake\ORM\Query\SelectQuery) {
             $user = $user->firstOrFail();
         }
 
@@ -111,7 +115,7 @@ class IntegrationTestCase extends CakeIntegrationTestCase
      * @param int $index
      * @param string $message The failure message that will be appended to the generated message.
      */
-    public function assertFlash($expected, $key = 'flash', $index = 0, $message = '')
+    public function assertFlash($expected, $key = 'flash', $index = 0, $message = ''): void
     {
         $this->assertSession(
             $expected,
@@ -123,11 +127,11 @@ class IntegrationTestCase extends CakeIntegrationTestCase
     public function assertEntityHasProperty($propertyName, EntityInterface $entity, $message = '')
     {
         if (!is_string($propertyName)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+            throw new InvalidArgumentException('Argument 1 must be of type string.');
         }
 
         if (!preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $propertyName)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'valid property name');
+            throw new InvalidArgumentException('Argument 1 must be a valid property name.');
         }
 
         $constraint = new EntityHasProperty(

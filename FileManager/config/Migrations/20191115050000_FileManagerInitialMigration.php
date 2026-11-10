@@ -7,7 +7,7 @@ class FileManagerInitialMigration extends AbstractMigration
 
     public $description = '';
 
-    public function up()
+    public function up(): void
     {
         $this->table('attachments')
             ->addColumn('title', 'string', [
@@ -133,7 +133,7 @@ class FileManagerInitialMigration extends AbstractMigration
             ->create();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('asset_usages')->drop()->save();
         $this->table('assets')->drop()->save();

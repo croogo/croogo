@@ -33,7 +33,7 @@ class CroogoJsonReaderTest extends TestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->CroogoJsonReader = $this->getMockBuilder(MockCroogoJsonReader::class)
@@ -48,7 +48,7 @@ class CroogoJsonReaderTest extends TestCase
     /**
      * tearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if (file_exists($this->testFile)) {
             unlink($this->testFile);
@@ -58,7 +58,7 @@ class CroogoJsonReaderTest extends TestCase
     /**
      * testDefaultPath
      */
-    public function testDefaultPath()
+    public function testDefaultPath(): void
     {
         $path = $this->CroogoJsonReader->getPath();
         $this->assertEquals(Plugin::path('Croogo/Core') . '..' . DS . 'tests' . DS . 'test_app' . DS . 'config' . DS, $path);
@@ -67,7 +67,7 @@ class CroogoJsonReaderTest extends TestCase
     /**
      * testRead
      */
-    public function testRead()
+    public function testRead(): void
     {
         $settings = $this->CroogoJsonReader->read('settings', 'settings');
         $expected = [
@@ -87,7 +87,7 @@ class CroogoJsonReaderTest extends TestCase
     /**
      * testDump
      */
-    public function testDump()
+    public function testDump(): void
     {
         $settings = [
             'Site' => [

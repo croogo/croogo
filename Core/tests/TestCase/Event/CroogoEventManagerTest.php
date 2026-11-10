@@ -27,15 +27,15 @@ class TestNodesEventController extends NodesController
 class EventManagerTest extends TestCase
 {
 
-    public $fixtures = [
-        'plugin.Croogo/Core.Settings',
+    protected array $fixtures = [
+        'plugin.Croogo/Core',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        PluginManager::unload('Example');
+        PluginManager::clear('Example');
         PluginManager::load('Shops', ['events' => true, 'autoload' => true]);
         PluginManager::events();
         EventManager::loadListeners();
@@ -50,18 +50,18 @@ class EventManagerTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
-        PluginManager::unload('Shops');
+        PluginManager::clear('Shops');
     }
 
     /**
      * Indirectly test EventManager::detachPluginSubscribers()
      * triggerred by calling PluginManager::unload(null)
      */
-    public function testDetachPluginSubscribers()
+    public function testDetachPluginSubscribers(): void
     {
         $loaded = Plugin::isLoaded('Shops');
         $this->assertNotEmpty($loaded);
@@ -70,7 +70,7 @@ class EventManagerTest extends TestCase
         $event = Croogo::dispatchEvent($eventName, $this->Users);
         $this->assertTrue($event->result, sprintf('Event: %s', $eventName));
 
-        PluginManager::unload('Shops');
+        PluginManager::clear('Shops');
 
         $eventName = 'Controller.Users.activationFailure';
         $event = Croogo::dispatchEvent($eventName, $this->Users);
@@ -80,7 +80,7 @@ class EventManagerTest extends TestCase
     /**
      * Test Reuse the same Event Listener class
      */
-    public function testAliasingEventListener()
+    public function testAliasingEventListener(): void
     {
         $eventManager = EventManager::instance();
         $listeners = $eventManager->listeners('Controller.Nodes.afterAdd');
@@ -108,7 +108,7 @@ class EventManagerTest extends TestCase
     /**
      * testDispatchUsersEvents
      */
-    public function testDispatchUsersEvents()
+    public function testDispatchUsersEvents(): void
     {
         $eventNames = [
             'Controller.Users.activationFailure',
@@ -148,7 +148,7 @@ class EventManagerTest extends TestCase
     /**
      * testDispatchNodesEvents
      */
-    public function testDispatchNodesEvents()
+    public function testDispatchNodesEvents(): void
     {
         $eventNames = [
             'Controller.Nodes.afterAdd',
@@ -172,7 +172,7 @@ class EventManagerTest extends TestCase
     /**
      * testDispatchHelperEvents
      */
-    public function testDispatchHelperEvents()
+    public function testDispatchHelperEvents(): void
     {
         $eventNames = [
             'Helper.Layout.afterFilter',

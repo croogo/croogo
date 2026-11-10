@@ -23,7 +23,7 @@ class DepartmentFixture extends CroogoTestFixture
      *
      * @var array
      */
-    public $records = [
+    public array $records = [
         ['name' => 'Development'],
         ['name' => 'Design'],
         ['name' => 'Management'],

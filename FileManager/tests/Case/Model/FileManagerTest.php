@@ -1,27 +1,27 @@
 <?php
-App::uses('FileManager', 'FileManager.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
+use App\FileManager\Model\FileManager;
+use App\Croogo\TestSuite\CroogoTestCase;
 
 class FileManagerTest extends CroogoTestCase
 {
 
     public $FileManager;
 
-    public $fixtures = [
-        'plugin.settings.setting'
+    protected array $fixtures = [
+        'plugin.Settings'
     ];
 
     private $__testAppPath;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->FileManager = new FileManager(false, null, null, null);
-        $this->__testAppPath = CakePlugin::path('FileManager') . 'Test' . DS . 'test_app' . DS;
+        $this->__testAppPath = \Plugin::path('FileManager') . 'Test' . DS . 'test_app' . DS;
         $this->__setFilePathsForTests();
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->FileManager);
         parent::tearDown();
@@ -30,7 +30,7 @@ class FileManagerTest extends CroogoTestCase
     /**
      * @group isEditable
      */
-    public function testIsEditableShouldReturnTrueWhenPathIsWithinEditablePaths()
+    public function testIsEditableShouldReturnTrueWhenPathIsWithinEditablePaths(): void
     {
         $isEditable = $this->FileManager->isEditable($this->__testAppPath . DS . 'renameMeTooPlease.txt');
         $this->assertTrue($isEditable);
@@ -39,7 +39,7 @@ class FileManagerTest extends CroogoTestCase
     /**
      * @group isEditable
      */
-    public function testIsEditableShouldReturnFalseWhenPathIsOutsideEditablePaths()
+    public function testIsEditableShouldReturnFalseWhenPathIsOutsideEditablePaths(): void
     {
         $isEditable = $this->FileManager->isEditable('/var/log/apache2');
         $this->assertFalse($isEditable);
@@ -48,7 +48,7 @@ class FileManagerTest extends CroogoTestCase
     /**
      * @group rename
      */
-    public function testRenameShouldReturnedTrueOnSuccess()
+    public function testRenameShouldReturnedTrueOnSuccess(): void
     {
         $oldPath = $this->__testAppPath . DS . 'renameMe';
         $newPath = $this->__testAppPath . DS . 'renamed';
@@ -60,7 +60,7 @@ class FileManagerTest extends CroogoTestCase
     /**
      * @group rename
      */
-    public function testRenameShouldRenamedOldFileToNewFile()
+    public function testRenameShouldRenamedOldFileToNewFile(): void
     {
         $oldPath = $this->__testAppPath . DS . 'renameMeTooPlease.txt';
         $newPath = $this->__testAppPath . DS . 'renamed.txt';
@@ -74,7 +74,7 @@ class FileManagerTest extends CroogoTestCase
     /**
      * @group rename
      */
-    public function testRenameShouldRenamedOldFolderToNewFolder()
+    public function testRenameShouldRenamedOldFolderToNewFolder(): void
     {
         $oldPath = $this->__testAppPath . 'renameMe';
         $newPath = $this->__testAppPath . 'renamed';
@@ -88,7 +88,7 @@ class FileManagerTest extends CroogoTestCase
     /**
      * Convenient methods for testsuite
      */
-    private function __setFilePathsForTests()
+    private function __setFilePathsForTests(): void
     {
         Configure::write('FileManager.editablePaths', [$this->__testAppPath]);
         Configure::write('FileManager.deletablePaths', [$this->__testAppPath]);

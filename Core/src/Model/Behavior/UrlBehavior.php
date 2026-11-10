@@ -21,13 +21,13 @@ use Croogo\Core\Link;
 class UrlBehavior extends Behavior
 {
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'url' => [],
         'fields' => [],
         'pass' => []
     ];
 
-    public function beforeFind(Event $event, Query $query, $options)
+    public function beforeFind(\Cake\Event\EventInterface $event, \Cake\ORM\Query\SelectQuery $query, $options): void
     {
         $query->formatResults(function ($results) {
             return $results->map(function ($row) {

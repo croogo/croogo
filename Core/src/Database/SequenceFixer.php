@@ -12,7 +12,7 @@ class SequenceFixer
 
     use LogTrait;
 
-    public function fix($connectionName)
+    public function fix($connectionName): void
     {
         $db = ConnectionManager::get($connectionName);
         $driver = $db->getDriver();

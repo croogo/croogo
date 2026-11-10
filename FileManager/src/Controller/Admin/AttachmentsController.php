@@ -3,7 +3,7 @@
 namespace Croogo\FileManager\Controller\Admin;
 
 use Cake\Event\Event;
-use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Response;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
@@ -30,28 +30,28 @@ class AttachmentsController extends AppController
      * @var array
      * @access public
      */
-    public $helpers = [
-        'Croogo/FileManager.AssetsImage',
-        'Croogo/FileManager.FileManager',
-        'Text',
-    ];
-
-    public $paginate = [
-        'paramType' => 'querystring',
+    public array $paginate = [
         'limit' => 5,
     ];
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
-        $this->loadComponent('Search.Prg', [
+        // Cake 4.5+: $helpers jako właściwość kontrolera usunięte -> setHelpers().
+        $this->viewBuilder()->setHelpers([
+            'Croogo/FileManager.AssetsImage',
+            'Croogo/FileManager.FileManager',
+            'Text',
+        ]);
+        // Search 6: PrgComponent scalony w SearchComponent (Search.Search).
+        $this->loadComponent('Search.Search', [
             'actions' => [
                 'index', 'browse', 'listings',
             ],
         ]);
 
         $this->_loadCroogoComponents(['BulkProcess']);
-        $this->loadModel('Croogo/FileManager.Attachments');
+        $this->Attachments = $this->fetchTable('Croogo/FileManager.Attachments');
     }
 
     /**
@@ -60,12 +60,12 @@ class AttachmentsController extends AppController
      * @return void
      * @access public
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         parent::beforeFilter($event);
 
         if ($this->getRequest()->getParam('action') == 'resize') {
-            $this->Security->setConfig('validatePost', false);
+            $this->FormProtection->setConfig('validate', false);
         }
     }
 
@@ -75,7 +75,7 @@ class AttachmentsController extends AppController
      * @return void
      * @access public
      */
-    public function index()
+    public function index(): void
     {
         $this->set('title_for_layout', __d('croogo', 'Attachments'));
 
@@ -117,7 +117,7 @@ class AttachmentsController extends AppController
             unset($httpQuery['foreign_key']);
 
             if (!$this->getRequest()->getQuery('sort')) {
-                $query->order([
+                $query->orderBy([
                     $this->Attachments->aliasField('id') => 'desc',
                 ]);
             }
@@ -135,7 +135,7 @@ class AttachmentsController extends AppController
         }
 
         if (!$this->getRequest()->getQuery('sort')) {
-            $query->order(['Attachments.created' => 'DESC']);
+            $query->orderBy(['Attachments.created' => 'DESC']);
         }
 
         if ($isChooser) {
@@ -158,7 +158,8 @@ class AttachmentsController extends AppController
             $query->find($finder);
         }
 
-        $query->formatResults([$this->Attachments, 'getVideoPoster']);
+        // Cake 5: formatResults przyjmuje tylko Closure
+        $query->formatResults($this->Attachments->getVideoPoster(...));
 
         $this->set('attachments', $this->paginate($query));
 
@@ -230,7 +231,7 @@ class AttachmentsController extends AppController
                 }
 
                 $this->set(compact('files', 'error'));
-                $this->set('_serialize', ['files', 'error']);
+                $this->viewBuilder()->setOption('serialize', ['files', 'error']);
 
                 return;
             } else {
@@ -240,8 +241,8 @@ class AttachmentsController extends AppController
             if ($attachment) {
                 $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
                 $url = [];
-                if (isset($attachment->asset->asset_usage[0])) {
-                    $usage = $attachment->asset->asset_usage[0];
+                if (isset($saved->asset->asset_usage[0])) {
+                    $usage = $saved->asset->asset_usage[0];
                     if (!empty($usage->model) && !empty($usage->foreign_key)) {
                         $url['?']['model'] = $usage->model;
                         $url['?']['foreign_key'] = $usage->foreign_key;
@@ -272,7 +273,7 @@ class AttachmentsController extends AppController
      * @return \Cake\Http\Response|void
      * @access public
      */
-    public function edit($id)
+    public function edit($id = null)
     {
         $this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
 
@@ -321,7 +322,7 @@ class AttachmentsController extends AppController
      * @return \Cake\Http\Response|void
      * @access public
      */
-    public function delete($id)
+    public function delete($id = null)
     {
         if (!$id) {
             $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
@@ -351,13 +352,13 @@ class AttachmentsController extends AppController
      * @return void
      * @access public
      */
-    public function browse()
+    public function browse(): void
     {
         $this->viewBuilder()->setLayout('admin_popup');
         $this->index();
     }
 
-    public function listing()
+    public function listing(): void
     {
         if ($this->getRequest()->is('ajax')) {
             $this->viewBuilder()->setLayout('ajax');
@@ -390,7 +391,7 @@ class AttachmentsController extends AppController
         }
 
         $this->set(compact('result'));
-        $this->set('_serialize', 'result');
+        $this->viewBuilder()->setOption('serialize', 'result');
     }
 
     public function process()

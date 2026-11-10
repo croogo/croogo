@@ -234,6 +234,164 @@ AclPermissions.tableToggle = function() {
 };
 
 /**
+ * Filter actions by name or path across the whole tree
+ *
+ * The tree loads one level per click, so the search runs on the server
+ * (`?q=` on the index action) and its results replace the tabs until the
+ * field is cleared. Toggles in the results call the same toggle action;
+ * after one, clearing the field reloads the active tab so it is not stale.
+ *
+ * @return void
+ */
+AclPermissions.search = function() {
+  const $form = $('#permissions-search');
+  if ($form.length === 0) {
+    return;
+  }
+  const $input = $('input[type=search]', $form);
+  const $results = $('#permissions-search-results');
+  const $tree = $('#permissions-tab, #permissions-tab-content');
+  const text = (name) => $form.attr('data-' + name);
+  let timer = null;
+  let requestNo = 0;
+  let toggled = false;
+
+  const showTree = function() {
+    requestNo++;
+    $results.addClass('hidden').empty();
+    $tree.removeClass('hidden');
+    if (toggled) {
+      toggled = false;
+      const tab = $('#permissions-tab .nav-link.active').get(0) || $('#permissions-tab li:first-child a').get(0);
+      if (tab) {
+        AclPermissions.tabLoad({ target: tab });
+      }
+    }
+  };
+
+  const roleCell = function(result, role) {
+    if (!role.aroId) {
+      return '<td></td>';
+    }
+    let classes = 'red ' + Admin.iconClass('x-mark');
+    if (role.id == 1) {
+      classes = 'lightgray permission-disabled ' + Admin.iconClass('check-mark');
+    } else if (result.roles[role.id]) {
+      classes = 'green ' + Admin.iconClass('check-mark');
+    }
+    if (result.damaged) {
+      // toggle() resolves this row by its lft/rght path, another action's: verdict only
+      return '<td><i class="' + classes + '" title="' + _.escape(text('damaged')) + '"></i></td>';
+    }
+    return AclPermissions.templates.toggleButton({
+      classes: 'permission-toggle ' + classes,
+      aroId: role.aroId,
+      acoId: result.id
+    });
+  };
+
+  const render = function(data) {
+    let summary = text('count').replace('{0}', data.total);
+    if (data.total === 0) {
+      summary = text('empty');
+    } else if (data.total > data.results.length) {
+      summary = text('truncated').replace('{0}', data.results.length).replace('{1}', data.total);
+    }
+    let html = '<p class="text-muted">' + _.escape(summary) + '</p>';
+    if (data.results.length > 0) {
+      let head = '<th>' + _.escape(text('id-label')) + '</th><th>' + _.escape(text('path-label')) + '</th>';
+      data.roles.forEach((role) => {
+        head += '<th>' + _.escape(role.title) + '</th>';
+      });
+      let rows = '';
+      data.results.forEach((result) => {
+        let path = _.escape(result.path);
+        if (result.damaged) {
+          path += ' <i class="text-warning fa fa-exclamation-triangle" title="' + _.escape(text('damaged')) + '"></i>';
+        }
+        rows += '<tr><td>' + result.id + '</td><td>' + path + '</td>';
+        data.roles.forEach((role) => {
+          rows += roleCell(result, role);
+        });
+        rows += '</tr>';
+      });
+      html += '<table class="table table-sm"><thead><tr>' + head + '</tr></thead><tbody>' + rows + '</tbody></table>';
+    }
+    $results.html(html);
+  };
+
+  const run = function() {
+    const term = String($input.val()).trim();
+    if (term.length < 2) {
+      showTree();
+      return;
+    }
+    const current = ++requestNo;
+    $.getJSON(Croogo.basePath + 'admin/acl/permissions/index', { q: term })
+      .done((data) => {
+        if (current !== requestNo) {
+          return;
+        }
+        $tree.addClass('hidden');
+        $results.removeClass('hidden');
+        render(data);
+      })
+      .fail(() => {
+        if (current === requestNo) {
+          $results.removeClass('hidden').text(text('error'));
+        }
+      });
+  };
+
+  $input.on('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(run, 300);
+  });
+  $input.on('keydown', (e) => {
+    if (e.key === 'Escape') {
+      clearTimeout(timer);
+      $input.val('');
+      showTree();
+    }
+  });
+  $form.on('submit', () => {
+    clearTimeout(timer);
+    run();
+    return false;
+  });
+
+  $results.on('click', '.permission-toggle:not(.permission-disabled)', function() {
+    const $icon = $(this);
+    const $cell = $icon.parent();
+    if ($cell.data('busy')) {
+      return false;
+    }
+    $cell.data('busy', true);
+    $icon
+      .removeClass(Admin.iconClass('check-mark') + ' ' + Admin.iconClass('x-mark'))
+      .addClass(Admin.spinnerClass());
+    // before the request: clearing the filter while it runs must still reload the tree
+    toggled = true;
+    $.post({
+      url: Croogo.basePath + 'admin/acl/permissions/toggle/' + $icon.data('aco_id') + '/' + $icon.data('aro_id') + '/',
+      headers: {
+        'X-CSRF-Token': Admin.getCookie('csrfToken'),
+      }
+    })
+      .done((html) => {
+        $cell.html(html);
+      })
+      .fail(() => {
+        $cell.text(text('error'));
+      })
+      .always(() => {
+        $cell.data('busy', false);
+      });
+    return false;
+  });
+};
+
+/**
  * document ready
  *
  * @return void

@@ -3,7 +3,7 @@
 namespace Croogo\Core\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest as Request;
 use Cake\ORM\Entity;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\Utility\VisibilityFilter;
@@ -57,7 +57,7 @@ class VisibilityFilterTest extends CroogoTestCase
         ]);
     }
 
-    public function testLinkstringRule()
+    public function testLinkstringRule(): void
     {
         $request = new Request();
         $request->addParams([
@@ -96,7 +96,7 @@ class VisibilityFilterTest extends CroogoTestCase
         ])->isEmpty(), 'with query string');
     }
 
-    public function testLinkstringRuleWithContacts()
+    public function testLinkstringRuleWithContacts(): void
     {
         $request = new Request();
         $request->addParams([
@@ -131,7 +131,7 @@ class VisibilityFilterTest extends CroogoTestCase
         ])->isEmpty(), 'with query string');
     }
 
-    public function testLinkstringRuleWithQueryString()
+    public function testLinkstringRuleWithQueryString(): void
     {
         $request = new Request();
         $request->addParams([

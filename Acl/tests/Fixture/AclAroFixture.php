@@ -46,7 +46,7 @@ class AclAroFixture extends CakeTestFixture
      *
      * @var array
      */
-    public $records = [
+    public array $records = [
         ['parent_id' => null, 'model' => null, 'foreign_key' => null, 'alias' => 'ROOT', 'lft' => 1, 'rght' => 20],
         ['parent_id' => '1', 'model' => 'Department', 'foreign_key' => '1', 'alias' => '', 'lft' => 2, 'rght' => 3],
         ['parent_id' => '1', 'model' => 'Department', 'foreign_key' => '2', 'alias' => '', 'lft' => 4, 'rght' => 7],

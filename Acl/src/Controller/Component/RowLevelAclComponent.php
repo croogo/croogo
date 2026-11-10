@@ -52,16 +52,16 @@ class RowLevelAclComponent extends Component
      * attaches Acl and RowLevelAcl behavior to the controller's primary model and
      * hook the appropriate admin tabs
      */
-    public function initialize(array $settings)
+    public function initialize(array $settings): void
     {
         $controller = $this->getController();
-        $Model = $controller->{$controller->name};
+        $Model = $controller->{$controller->getName()};
         $Model->addBehavior('Acl', [
             'className' => 'Croogo/Core.CroogoAcl', 'type' => 'controlled',
         ]);
         $Model->addBehavior('Croogo/Acl.RowLevelAcl');
 
-        $name = $controller->name;
+        $name = $controller->getName();
         $element = 'Croogo/Acl.admin/row_acl';
         if (!empty($this->settings['adminTabElement'])) {
             $element = $this->settings['adminTabElement'];
@@ -78,11 +78,11 @@ class RowLevelAclComponent extends Component
     /**
      * startup
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event): void
     {
         $controller = $this->getController();
-        if (!empty($controller->request->params['pass'][0])) {
-            $id = $controller->request->params['pass'][0];
+        if (!empty($controller->getRequest()->getParam('pass')[0])) {
+            $id = $controller->getRequest()->getParam('pass')[0];
             $this->_rolePermissions($id);
         }
     }
@@ -97,11 +97,9 @@ class RowLevelAclComponent extends Component
     {
         $controller = $this->getController();
         $Permission = $controller->Acl->adapter()->Permission;
-        $Role = TableRegistry::get('Croogo/Users.Roles');
-        $roles = $Role->find('list', [
-            'cache' => ['name' => 'roles', 'config' => 'permissions'],
-        ]);
-        $modelClass = $controller->name;
+        $Role = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
+        $roles = $Role->find('list', cache: ['name' => 'roles', 'config' => 'permissions']);
+        $modelClass = $controller->getName();
         $aco = ['model' => $modelClass, 'foreign_key' => $id];
         foreach ($roles as $roleId => $role) {
             $aro = ['model' => 'Roles', 'foreign_key' => $roleId];

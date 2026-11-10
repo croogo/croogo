@@ -3,9 +3,9 @@ namespace Croogo\Core\Test\TestCase\View\Helper;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
-use Cake\Network\Request;
-use Cake\Network\Response;
-use Cake\Network\Session;
+use Cake\Http\ServerRequest as Request;
+use Cake\Http\Response;
+use Cake\Http\Session;
 use Cake\View\View;
 use Croogo\Core\Nav;
 use Croogo\Core\TestSuite\CroogoTestCase;
@@ -15,7 +15,13 @@ use Croogo\Extensions\CroogoTheme;
 class CroogoHelperTest extends CroogoTestCase
 {
 
-    public $fixtures = [
+    protected $menus;
+
+    protected $ComponentRegistry;
+
+    protected $Croogo;
+
+    protected array $fixtures = [
 //      'plugin.Croogo/Users.Aco',
 //      'plugin.Croogo/Users.Aro',
 //      'plugin.Croogo/Users.ArosAco',
@@ -27,7 +33,7 @@ class CroogoHelperTest extends CroogoTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -68,7 +74,7 @@ class CroogoHelperTest extends CroogoTestCase
     /**
      * tearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
 //      ClassRegistry::flush();
         Nav::items('sidebar', $this->menus);
@@ -78,7 +84,7 @@ class CroogoHelperTest extends CroogoTestCase
     /**
      * testAdminMenus
      */
-    public function testAdminMenus()
+    public function testAdminMenus(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -96,7 +102,7 @@ class CroogoHelperTest extends CroogoTestCase
     /**
      * testAdminRowActions
      */
-    public function testAdminRowActions()
+    public function testAdminRowActions(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -174,7 +180,7 @@ class CroogoHelperTest extends CroogoTestCase
     /**
      * testAdminTabs
      */
-    public function testAdminTabs()
+    public function testAdminTabs(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -199,7 +205,7 @@ class CroogoHelperTest extends CroogoTestCase
     /**
      * testAdminTabsOptions
      */
-    public function testAdminTabsOptions()
+    public function testAdminTabsOptions(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -230,7 +236,7 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertContains('test-title', $result);
     }
 
-    public function testAdminBoxes()
+    public function testAdminBoxes(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -249,7 +255,7 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertContains("class='box'", $result);
     }
 
-    public function testAdminBoxesAlreadyPrinted()
+    public function testAdminBoxesAlreadyPrinted(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -269,7 +275,7 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertEquals('', $result);
     }
 
-    public function testAdminBoxesAll()
+    public function testAdminBoxesAll(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -293,7 +299,7 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertContains('Content', $result);
     }
 
-    public function testSettingsInputCheckbox()
+    public function testSettingsInputCheckbox(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -304,7 +310,7 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertContains('type="checkbox"', $result);
     }
 
-    public function testSettingsInputCheckboxChecked()
+    public function testSettingsInputCheckboxChecked(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -316,7 +322,7 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertContains('checked="checked"', $result);
     }
 
-    public function testSettingsInputTextbox()
+    public function testSettingsInputTextbox(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -327,7 +333,7 @@ class CroogoHelperTest extends CroogoTestCase
         $this->assertContains('type="text"', $result);
     }
 
-    public function testSettingsInputTextarea()
+    public function testSettingsInputTextarea(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -341,7 +347,7 @@ class CroogoHelperTest extends CroogoTestCase
     /**
      * testAdminRowAction
      */
-    public function testAdminRowAction()
+    public function testAdminRowAction(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -382,7 +388,7 @@ class CroogoHelperTest extends CroogoTestCase
     /**
      * testAdminRowActionEscapedConfirmMessage
      */
-    public function testAdminRowActionEscapedConfirmMessage()
+    public function testAdminRowActionEscapedConfirmMessage(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -422,7 +428,7 @@ class CroogoHelperTest extends CroogoTestCase
     /**
      * testAdminRowActionBulkDelete
      */
-    public function testAdminRowActionBulkDelete()
+    public function testAdminRowActionBulkDelete(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 

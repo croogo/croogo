@@ -17,7 +17,7 @@ trait RowLevelAclTrait
         if (!$this->id && !$this->isDirty()) {
             return null;
         } else {
-            $Table = TableRegistry::get($this->getSource());
+            $Table = \Cake\ORM\TableRegistry::getTableLocator()->get($this->getSource());
             $alias = $this->getSource();
 
             $aco = $Table->Aco->find()

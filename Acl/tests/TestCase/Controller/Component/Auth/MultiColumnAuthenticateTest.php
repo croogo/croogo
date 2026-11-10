@@ -21,7 +21,7 @@ namespace Croogo\Acl\Test\TestCase\Controller\Component\Auth;
 use Acl\Controller\Component\Auth\MultiColumnAuthenticate;
 use App\Controller\Component\AuthComponent;
 use App\Model\AppModel;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest as Request;
 use Croogo\TestSuite\CroogoTestCase;
 
 /**
@@ -32,7 +32,7 @@ use Croogo\TestSuite\CroogoTestCase;
 class MultiColumnAuthenticateTest extends CroogoTestCase
 {
 
-    public $fixtures = ['plugin.acl.multi_user'];
+    protected array $fixtures = ['plugin.acl.multi_user'];
 
     /**
      * setup

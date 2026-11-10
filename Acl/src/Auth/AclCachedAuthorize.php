@@ -3,13 +3,14 @@
 namespace Croogo\Acl\Auth;
 
 use Acl\Auth\BaseAuthorize;
+use Acl\Controller\Component\AclComponent;
 use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest as Request;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -54,6 +55,13 @@ class AclCachedAuthorize extends BaseAuthorize
     }
 
     /**
+     * Cached superadmin role id
+     *
+     * @var int|null
+     */
+    protected $_adminRole;
+
+    /**
      * Checks whether $user is an administrator
      *
      * @param bool True if user has administrative role
@@ -66,10 +74,10 @@ class AclCachedAuthorize extends BaseAuthorize
         }
         if (empty($this->_adminRole)) {
             if (empty($Role)) {
-                $Role = TableRegistry::get('Croogo/Users.Roles');
+                $Role = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
                 $Role->addBehavior('Croogo/Core.Aliasable');
             }
-            $this->_adminRole = $Role->byAlias('superadmin');
+            $this->_adminRole = $Role->getBehavior('Aliasable')->byAlias('superadmin');
         }
 
         return $user['role_id'] == $this->_adminRole;
@@ -112,7 +120,7 @@ class AclCachedAuthorize extends BaseAuthorize
      * check request request authorization
      *
      */
-    public function authorize($user, ServerRequest $request)
+    public function authorize($user, ServerRequest $request): bool
     {
         // Admin role is allowed to perform all actions, bypassing ACL
         if ($this->_isAdmin($user)) {
@@ -120,7 +128,8 @@ class AclCachedAuthorize extends BaseAuthorize
         }
 
         $allowed = false;
-        $Acl = $this->_registry->load('Acl');
+//        $Acl = $this->_registry->load('Acl');
+        $Acl = new AclComponent(new ComponentRegistry());
         list($plugin, $userModel) = pluginSplit($this->getConfig('userModel'));
 
         $action = $this->action($request);
@@ -159,7 +168,7 @@ class AclCachedAuthorize extends BaseAuthorize
 
         // bail out when controller's primary model does not want row level acl
         $controller = $this->_registry->getController();
-        $model = $controller->name;
+        $model = $controller->getName();
         $Model = $controller->{$model};
         if ($Model && !$Model->behaviors()->has('RowLevelAcl')) {
             return $allowed;
@@ -181,7 +190,7 @@ class AclCachedAuthorize extends BaseAuthorize
                 }
             }
 
-            $id = $request->param('pass.0');
+            $id = $request->getParam('pass.0');
             if ($id) {
                 $ids[] = $id;
             }
@@ -212,7 +221,7 @@ class AclCachedAuthorize extends BaseAuthorize
      */
     protected function _authorizeByContent($user, ServerRequest $request, $id)
     {
-        if (!isset($this->getConfig('actionMap')[$request->params['action']])) {
+        if (!isset($this->getConfig('actionMap')[$request->getParam('action')])) {
             $message = __d(
                 'croogo',
                 '_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
@@ -225,11 +234,11 @@ class AclCachedAuthorize extends BaseAuthorize
 
         list($plugin, $userModel) = pluginSplit($this->getConfig('userModel'));
         $acoNode = [
-            'model' => $this->_registry->getController()->name,
+            'model' => $this->_registry->getController()->getName(),
             'foreign_key' => $id,
         ];
         $alias = sprintf('%s.%s', $acoNode['model'], $acoNode['foreign_key']);
-        $action = $this->getConfig('actionMap')[$request->param('action')];
+        $action = $this->getConfig('actionMap')[$request->getParam('action')];
 
         $cacheName = 'permissions_content_' . strval($user['id']);
         if (($permissions = Cache::read($cacheName, 'permissions')) === false) {

@@ -31,7 +31,7 @@ use InvalidArgumentException;
 class BulkProcessBehavior extends Behavior
 {
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'fields' => [
             'status' => 'status',
             'promote' => 'promote',
@@ -136,7 +136,7 @@ class BulkProcessBehavior extends Behavior
      */
     public function bulkPromote($ids)
     {
-        $field = $this->config('fields.promote');
+        $field = $this->getConfig('fields.promote');
 
         return $this->_saveStatus($ids, $field, Status::PROMOTED);
     }
@@ -149,7 +149,7 @@ class BulkProcessBehavior extends Behavior
      */
     public function bulkUnpromote($ids)
     {
-        $field = $this->config('fields.promote');
+        $field = $this->getConfig('fields.promote');
 
         return $this->_saveStatus($ids, $field, Status::UNPROMOTED);
     }
@@ -199,7 +199,7 @@ class BulkProcessBehavior extends Behavior
         }
 
         foreach ($ids as $id) {
-            if (!$this->_table->copy($id)) {
+            if (!$this->_table->getBehavior('Copyable')->copy($id)) {
                 return false;
             }
         }

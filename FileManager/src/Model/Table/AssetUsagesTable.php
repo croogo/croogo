@@ -19,7 +19,7 @@ class AssetUsagesTable extends CroogoTable
      * @param array $config
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('asset_usages');
 
@@ -38,11 +38,11 @@ class AssetUsagesTable extends CroogoTable
      *
      * @return bool
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(\Cake\Event\EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
         if (!empty($entity->featured_image)) {
             $entity->type = 'FeaturedImage';
-            $entity->unsetProperty('featured_image');
+            $entity->unset('featured_image');
         }
 
         return true;
@@ -51,7 +51,7 @@ class AssetUsagesTable extends CroogoTable
     /**
      * After Save Handler
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(\Cake\Event\EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         Cache::clearGroup('nodes');
     }

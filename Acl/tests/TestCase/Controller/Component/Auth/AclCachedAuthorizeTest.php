@@ -17,7 +17,7 @@ class AclCachedAuthorizeTest extends CroogoTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->apiPath = Configure::read('Croogo.Api.path');
         $this->actionPath = sprintf(
@@ -33,7 +33,7 @@ class AclCachedAuthorizeTest extends CroogoTestCase
         $this->Authorize = new AclCachedAuthorize($Controller->Components);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Controller);
     }
@@ -41,7 +41,7 @@ class AclCachedAuthorizeTest extends CroogoTestCase
     /**
      * testAction
      */
-    public function testAction()
+    public function testAction(): void
     {
         $request = $this->_apiRequest([
             'plugin' => 'users',
@@ -65,7 +65,7 @@ class AclCachedAuthorizeTest extends CroogoTestCase
     /**
      * test action() with invalid request
      */
-    public function testActionWithInvalidRequest()
+    public function testActionWithInvalidRequest(): void
     {
         $request = $this->_apiRequest([
             'api' => $this->apiPath,

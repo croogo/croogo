@@ -4,7 +4,7 @@ use Migrations\AbstractMigration;
 
 class UsersInitialMigration extends AbstractMigration
 {
-    public function up()
+    public function up(): void
     {
 
         $this->table('roles')
@@ -143,7 +143,7 @@ class UsersInitialMigration extends AbstractMigration
             ->create();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('roles')->drop()->save();
         $this->table('users')->drop()->save();

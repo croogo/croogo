@@ -26,7 +26,7 @@ namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
+use Cake\Core\Exception\CakeException;
 use Cake\Event\Event;
 
 /**
@@ -97,7 +97,7 @@ class AkismetComponent extends Component
     /**
      * @param \Cake\Event\Event $event Event object
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event): void
     {
         $this->blogURL = Configure::read('Service.akismet_url');
         $this->akismetAPIKey = Configure::read('Service.akismet_key');
@@ -109,7 +109,7 @@ class AkismetComponent extends Component
 
         // Start to populate the comment data
         $this->comment['blog'] = $this->blogURL;
-        $this->comment['user_agent'] = $this->request->header('user-agent') ?: 'Unknown';
+        $this->comment['user_agent'] = $this->request->getHeaderLine('user-agent') ?: 'Unknown';
 
         if ($this->request->referer()) {
             $this->comment['referrer'] = $this->request->referer();
@@ -192,7 +192,7 @@ class AkismetComponent extends Component
             '/' . $this->akismetVersion . '/comment-check');
 
         if ($response[1] == 'invalid' && !$this->isKeyValid()) {
-            throw new Exception('The API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://akismet.com/');
+            throw new CakeException('The API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://akismet.com/');
         }
 
         return ($response[1] == 'true');
@@ -203,7 +203,7 @@ class AkismetComponent extends Component
      *
      *    Using this function will make you a good citizen as it helps Akismet to learn from its mistakes.  This will improve the service for everybody.
      */
-    public function submitSpam()
+    public function submitSpam(): void
     {
         $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.' . $this->akismetServer,
             '/' . $this->akismetVersion . '/submit-spam');
@@ -214,7 +214,7 @@ class AkismetComponent extends Component
      *
      *    Using this function will make you a good citizen as it helps Akismet to learn from its mistakes.  This will improve the service for everybody.
      */
-    public function submitHam()
+    public function submitHam(): void
     {
         $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.' . $this->akismetServer,
             '/' . $this->akismetVersion . '/submit-ham');
@@ -225,7 +225,7 @@ class AkismetComponent extends Component
      *
      * @param string $userip An IP address.  Optional.
      */
-    public function setUserIP($userip)
+    public function setUserIP($userip): void
     {
         $this->comment['user_ip'] = $userip;
     }
@@ -235,7 +235,7 @@ class AkismetComponent extends Component
      *
      * @param string $referrer The referring page.  Optional.
      */
-    public function setReferrer($referrer)
+    public function setReferrer($referrer): void
     {
         $this->comment['referrer'] = $referrer;
     }
@@ -245,7 +245,7 @@ class AkismetComponent extends Component
      *
      * @param string $permalink The URL.  Optional.
      */
-    public function setPermalink($permalink)
+    public function setPermalink($permalink): void
     {
         $this->comment['permalink'] = $permalink;
     }
@@ -255,7 +255,7 @@ class AkismetComponent extends Component
      *
      *    May be blank, comment, trackback, pingback, or a made up value like "registration" or "wiki".
      */
-    public function setCommentType($commentType)
+    public function setCommentType($commentType): void
     {
         $this->comment['comment_type'] = $commentType;
     }
@@ -263,7 +263,7 @@ class AkismetComponent extends Component
     /**
      *    The name that the author submitted with the comment.
      */
-    public function setCommentAuthor($commentAuthor)
+    public function setCommentAuthor($commentAuthor): void
     {
         $this->comment['comment_author'] = $commentAuthor;
     }
@@ -273,7 +273,7 @@ class AkismetComponent extends Component
      *
      *    The address is assumed to be valid.
      */
-    public function setCommentAuthorEmail($authorEmail)
+    public function setCommentAuthorEmail($authorEmail): void
     {
         $this->comment['comment_author_email'] = $authorEmail;
     }
@@ -281,7 +281,7 @@ class AkismetComponent extends Component
     /**
      *    The URL that the author submitted with the comment.
      */
-    public function setCommentAuthorURL($authorURL)
+    public function setCommentAuthorURL($authorURL): void
     {
         $this->comment['comment_author_url'] = $authorURL;
     }
@@ -289,7 +289,7 @@ class AkismetComponent extends Component
     /**
      *    The comment's body text.
      */
-    public function setCommentContent($commentBody)
+    public function setCommentContent($commentBody): void
     {
         $this->comment['comment_content'] = $commentBody;
     }
@@ -297,7 +297,7 @@ class AkismetComponent extends Component
     /**
      *    Defaults to 80
      */
-    public function setAPIPort($apiPort)
+    public function setAPIPort($apiPort): void
     {
         $this->apiPort = $apiPort;
     }
@@ -305,7 +305,7 @@ class AkismetComponent extends Component
     /**
      *    Defaults to rest.akismet.com
      */
-    public function setAkismetServer($akismetServer)
+    public function setAkismetServer($akismetServer): void
     {
         $this->akismetServer = $akismetServer;
     }
@@ -313,7 +313,7 @@ class AkismetComponent extends Component
     /**
      *    Defaults to '1.1'
      */
-    public function setAkismetVersion($akismetVersion)
+    public function setAkismetVersion($akismetVersion): void
     {
         $this->akismetVersion = $akismetVersion;
     }
@@ -372,7 +372,7 @@ class SocketWriteRead
         $fs = fsockopen($this->host, $this->port, $this->errorNumber, $this->errorString, 3);
 
         if ($this->errorNumber != 0) {
-            throw new Exception('Error connecting to host: ' . $this->host . ' Error number: ' . $this->errorNumber . ' Error message: ' . $this->errorString);
+            throw new CakeException('Error connecting to host: ' . $this->host . ' Error number: ' . $this->errorNumber . ' Error message: ' . $this->errorString);
         }
 
         if ($fs !== false) {

@@ -3,8 +3,8 @@ namespace Croogo\Core\Test\TestCase\View\Helper;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\ServerRequest as Request;
+use Cake\Http\Response;
 use Cake\View\View;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\View\Helper\HtmlHelper;
@@ -13,7 +13,17 @@ use Croogo\Core\View\Helper\LayoutHelper;
 class LayoutHelperTest extends CroogoTestCase
 {
 
-    public $fixtures = [
+    protected $Layout;
+
+    protected $Html;
+
+    protected $_appEncoding;
+
+    protected $_asset;
+
+    protected $_debug;
+
+    protected array $fixtures = [
 //      'plugin.Croogo/Users.User',
 //      'plugin.Croogo/Users.Role',
 //      'plugin.Croogo/Settings.Setting',
@@ -25,7 +35,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +60,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * tearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Configure::write('App.encoding', $this->_appEncoding);
         Configure::write('Asset', $this->_asset);
@@ -62,7 +72,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * testJs
      */
-    public function testJs()
+    public function testJs(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -82,7 +92,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * testStatus
      */
-    public function testStatus()
+    public function testStatus(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -97,7 +107,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * testIsLoggedIn
      */
-    public function testIsLoggedIn()
+    public function testIsLoggedIn(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -116,7 +126,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * testGetRoleId
      */
-    public function testGetRoleId()
+    public function testGetRoleId(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -135,7 +145,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * testProcessLink
      */
-    public function testProcessLinks()
+    public function testProcessLinks(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -168,7 +178,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * testDisplayFields
      */
-    public function testDisplayFields()
+    public function testDisplayFields(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -276,7 +286,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * Test filterElements shortcode detection
      */
-    public function testFilterElementWithoutAttributes()
+    public function testFilterElementWithoutAttributes(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -302,7 +312,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * Test filterElements with short syntax
      */
-    public function testFilterElementShortSyntax()
+    public function testFilterElementShortSyntax(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -328,7 +338,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * Test filterElements with multiple elements
      */
-    public function testFilterElementMultipleElements()
+    public function testFilterElementMultipleElements(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -355,7 +365,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * Test filterElements and parameter parsing
      */
-    public function testFilterElementParseParams()
+    public function testFilterElementParseParams(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -383,7 +393,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * Test filterElements with quoted digits
      */
-    public function testFilterElementParamsValueQuotedDigit()
+    public function testFilterElementParamsValueQuotedDigit(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -405,7 +415,7 @@ class LayoutHelperTest extends CroogoTestCase
     /**
      * Test filterElements with value containing '=' sign
      */
-    public function testFilterElementParamsValueContainsEqual()
+    public function testFilterElementParamsValueContainsEqual(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 

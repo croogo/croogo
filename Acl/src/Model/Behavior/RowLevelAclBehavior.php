@@ -22,7 +22,7 @@ class RowLevelAclBehavior extends Behavior
      * creator. If 'RolePermission' is present, 'grant' or 'inherit' permissions
      * for the role.
      */
-    public function afterSave(Event $event)
+    public function afterSave(\Cake\Event\EventInterface $event): void
     {
         $entity = $event->data['entity'];
         if (!$entity || !$entity->id) {
@@ -30,12 +30,13 @@ class RowLevelAclBehavior extends Behavior
         }
         $Table = $event->getSubject();
         $alias = $Table->getAlias();
-        $aco = $Table->node($entity)->firstOrFail();
+        // Cake 5.3: metody behaviora na instancji tabeli deprecated
+        $aco = $Table->getBehavior('Acl')->node($entity)->firstOrFail();
         $aco->alias = sprintf('%s.%s', $alias, $entity->id);
         $saved = $Table->Aco->save($aco);
 
         $user = $_SESSION['Auth']['User'];
-        $Permissions = TableRegistry::get('Permissions');
+        $Permissions = \Cake\ORM\TableRegistry::getTableLocator()->get('Permissions');
         if ($entity->isNew() && !empty($user['id'])) {
             $aro = ['Users' => $user];
             $Permissions->allow($aro, $aco->alias);

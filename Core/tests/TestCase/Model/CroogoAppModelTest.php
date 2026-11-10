@@ -29,7 +29,7 @@ class CroogoAppModelTest extends CroogoTestCase
      *
      * @var array
      */
-    public $fixtures = [
+    protected array $fixtures = [
 //      'plugin.Croogo/Users.Aco',
 //      'plugin.Croogo/Users.Aro',
 //      'plugin.Croogo/Users.ArosAco',
@@ -55,7 +55,7 @@ class CroogoAppModelTest extends CroogoTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -70,7 +70,7 @@ class CroogoAppModelTest extends CroogoTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->User);
@@ -79,7 +79,7 @@ class CroogoAppModelTest extends CroogoTestCase
     /**
      * testValidName
      */
-    public function testValidName()
+    public function testValidName(): void
     {
         $this->assertTrue($this->usersTable->validName(['name' => 'Kyle']));
         $this->assertFalse($this->usersTable->validName(['name' => 'what%is@this#i*dont!even']));
@@ -88,7 +88,7 @@ class CroogoAppModelTest extends CroogoTestCase
     /**
      * testValidAlias
      */
-    public function testValidAlias()
+    public function testValidAlias(): void
     {
         $this->assertTrue($this->usersTable->validAlias(['name' => 'Kyle']));
         $this->assertFalse($this->usersTable->validAlias(['name' => 'Not an Alias']));

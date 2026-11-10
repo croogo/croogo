@@ -18,12 +18,12 @@ class MenuTest extends CroogoTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.users.aco',
-        'plugin.users.aro',
-        'plugin.users.aros_aco',
-        'plugin.settings.setting',
-        'plugin.menus.menu',
-        'plugin.menus.link',
+        'plugin.Users',
+        'plugin.Users',
+        'plugin.Users',
+        'plugin.Settings',
+        'plugin.Menus',
+        'plugin.Menus',
     ];
 
     /**
@@ -38,7 +38,7 @@ class MenuTest extends CroogoTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Menu = ClassRegistry::init('TestMenu');
@@ -49,7 +49,7 @@ class MenuTest extends CroogoTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->Menu);
@@ -58,7 +58,7 @@ class MenuTest extends CroogoTestCase
     /**
      * testDeleteDependentLinks method
      */
-    public function testDeleteDependentLinks()
+    public function testDeleteDependentLinks(): void
     {
         $totalLinks = $this->Menu->Link->find('count');
 
@@ -80,7 +80,7 @@ class MenuTest extends CroogoTestCase
     /**
      * Test deleting a menu should not mess up other menu Link hierarchy
      */
-    public function testDeleteMenuLinkIntegrity()
+    public function testDeleteMenuLinkIntegrity(): void
     {
         $settings = ['scope' => ['Link.menu_id' => 3]];
 

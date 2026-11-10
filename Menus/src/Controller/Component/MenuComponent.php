@@ -25,7 +25,7 @@ class MenuComponent extends Component
      * @var array
      * @access public
      */
-    public $components = [
+    public array $components = [
         'Croogo.Croogo',
     ];
 
@@ -43,17 +43,17 @@ class MenuComponent extends Component
      * @param object $event instance of controller
      * @return void
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event): void
     {
         $this->controller = $event->getSubject();
         if (isset($this->controller->Link)) {
             $this->Links = $this->controller->Links;
         } else {
-            $this->Links = TableRegistry::get('Croogo/Menus.Links');
+            $this->Links = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Menus.Links');
         }
 
         $controller = $event->getSubject();
-        if (($controller->request->getParam('prefix') !== 'admin') && !$controller->request->getParam('requested')) {
+        if (($controller->getRequest()->getParam('prefix') !== 'Admin') && !$controller->getRequest()->getParam('requested')) {
             $this->menus();
         } else {
             $this->_adminData();
@@ -65,7 +65,7 @@ class MenuComponent extends Component
         // menus
         $menus = $this->Links->Menus
             ->find('all')
-            ->order([
+            ->orderBy([
                 $this->Links->Menus->aliasField('id') => 'ASC',
             ]);
         $this->controller->set('menus_for_admin_layout', $menus);
@@ -76,7 +76,7 @@ class MenuComponent extends Component
      *
      * @param Event $event
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(\Cake\Event\EventInterface $event): void
     {
         $event->getSubject()->set('menusForLayout', $this->menusForLayout);
     }
@@ -88,7 +88,7 @@ class MenuComponent extends Component
      *
      * @return void
      */
-    public function menus()
+    public function menus(): void
     {
         $menus = ['main'];
 
@@ -102,13 +102,12 @@ class MenuComponent extends Component
         $menus = Hash::merge($menus, array_keys($this->controller->BlocksHook->blocksData['menus']));
 
         $roleId = $this->controller->Croogo->roleId();
-        $status = $this->Links->status();
+        $status = $this->Links->getBehavior('Publishable')->status();
         foreach ($menus as $menuAlias) {
-            $menu = $this->Links->Menus->find('all', [
-                'cache' => [
-                    'name' => $menuAlias,
-                    'config' => 'croogo_menus',
-                ],
+            // Cake 5: opcje findera przez named arguments (positional array deprecated)
+            $menu = $this->Links->Menus->find('all', cache: [
+                'name' => $menuAlias,
+                'config' => 'croogo_menus',
             ])->where([
                 'Menus.status IN' => $status,
                 'Menus.alias' => $menuAlias,
@@ -116,17 +115,13 @@ class MenuComponent extends Component
             ])->first();
             if ($menu) {
                 $this->menusForLayout[$menuAlias] = $menu;
-                $links = $this->Links->find('threaded', [
-                    'cache' => [
-                        'name' => $menu->alias . '_links_' . $roleId,
-                        'config' => 'croogo_menus',
-                    ]
-                ])->find('byAccess', ['roleId' => $roleId])->where([
+                $links = $this->Links->find('threaded', cache: [
+                    'name' => $menu->alias . '_links_' . $roleId,
+                    'config' => 'croogo_menus',
+                ])->find('byAccess', roleId: $roleId)->where([
                     'Links.menu_id' => $menu->id,
                     'Links.status IN' => $status,
-                ])->order([
-                    'Links.lft' => 'ASC',
-                ]);
+                ])->orderByAsc('Links.lft');
                 $this->menusForLayout[$menuAlias]['threaded'] = $links;
             }
         }

@@ -22,7 +22,7 @@ use Croogo\Core\Model\Table\CroogoTable;
 class LinksTable extends CroogoTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         $validator
             ->notBlank('title', __d('croogo', 'Title cannot be empty.'));
@@ -38,7 +38,7 @@ class LinksTable extends CroogoTable
         return $validator;
     }
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->addBehavior('Tree');
         $this->addBehavior('Croogo/Core.Cached', [
@@ -58,21 +58,21 @@ class LinksTable extends CroogoTable
         $this->addBehavior('Croogo/Core.Visibility');
         $this->addBehavior('Search.Search');
 
-        $this->searchManager()
+        $this->getBehavior('Search')->searchManager()
             ->add('menu_id', 'Search.Value', [
-                'field' => 'menu_id'
+                'fields' => 'menu_id'
             ])
             ->add('menuAlias', 'Search.Finder', [
                 'finder' => 'filterByMenuAlias',
             ])
             ->add('title', 'Search.Like', [
-                'field' => 'title',
+                'fields' => 'title',
                 'before' => true,
                 'after' => true
             ]);
     }
 
-    protected function _initializeSchema(TableSchema $table)
+    protected function _initializeSchema(TableSchema $table): \Cake\Database\Schema\TableSchemaInterface
     {
         $table->setColumnType('visibility_roles', 'encoded');
         $table->setColumnType('link', 'link');
@@ -87,7 +87,7 @@ class LinksTable extends CroogoTable
      * @param int $menuId menu id
      * @return void
      */
-    public function setTreeScope($menuId)
+    public function setTreeScope($menuId): void
     {
         $settings = [
             'scope' => ['menu_id' => $menuId],
@@ -104,23 +104,24 @@ class LinksTable extends CroogoTable
     /**
      * Calls TreeBehavior::recover when we are changing scope
      */
-    public function afterSave(Event $event, Entity $entity, $options = [])
+    public function afterSave(\Cake\Event\EventInterface $event, Entity $entity, $options = []): void
     {
         if ($entity->isNew()) {
             return;
         }
         if ($entity->isDirty('menu_id')) {
+            // Cake 5.3: metody behaviora na instancji tabeli deprecated
             $this->setTreeScope($entity->menu_id);
-            $this->recover();
+            $this->getBehavior('Tree')->recover();
             $this->setTreeScope($entity->getOriginal('menu_id'));
-            $this->recover();
+            $this->getBehavior('Tree')->recover();
         }
     }
 
     /**
      * Filters active links based on menu.alias
      */
-    public function findFilterByMenuAlias(Query $query, array $options = [])
+    public function findFilterByMenuAlias(\Cake\ORM\Query\SelectQuery $query, array $options = [])
     {
         return $query
             ->innerJoinWith('Menus')

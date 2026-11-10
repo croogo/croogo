@@ -24,7 +24,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $path = Plugin::path('Extensions') . 'Test' . DS;
@@ -44,7 +44,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $path = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example';
@@ -99,7 +99,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testGetPluginName()
+    public function testGetPluginName(): void
     {
         $result = $this->ExtensionsInstaller->getPluginName($this->testPlugin);
         $this->assertEquals('Example', $result);
@@ -110,7 +110,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testGetPluginNameMinimal()
+    public function testGetPluginNameMinimal(): void
     {
         $this->_createZip($this->minimalPlugin, 'Minimal');
         $result = $this->ExtensionsInstaller->getPluginName($this->minimalPlugin);
@@ -123,7 +123,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
      * @return void
      * @expectedException Exception
      */
-    public function testGetPluginNameInvalid()
+    public function testGetPluginNameInvalid(): void
     {
         $this->_createZip($this->invalidPlugin, 'Invalid');
         $result = $this->ExtensionsInstaller->getPluginName($this->invalidPlugin);
@@ -132,7 +132,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
     /**
      * testExtractPlugin
      */
-    public function testExtractPlugin()
+    public function testExtractPlugin(): void
     {
         $result = $this->ExtensionsInstaller->extractPlugin($this->testPlugin);
         $this->assertTrue($result);
@@ -150,7 +150,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
     /**
      * testGetThemeName
      */
-    public function testGetThemeName()
+    public function testGetThemeName(): void
     {
         $result = $this->ExtensionsInstaller->getThemeName($this->testTheme);
         $this->assertEquals('Minimal', $result);
@@ -159,7 +159,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
     /**
      * testExtractTheme
      */
-    public function testExtractTheme()
+    public function testExtractTheme(): void
     {
         $result = $this->ExtensionsInstaller->extractTheme($this->testTheme);
         $this->assertTrue($result);
@@ -180,7 +180,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
      *
      * @expectedException Exception
      */
-    public function testComposerInstall()
+    public function testComposerInstall(): void
     {
         $this->skipIf(version_compare(PHP_VERSION, '5.3.0', '<'), 'PHP >= 5.3.0 required to run this test.');
 

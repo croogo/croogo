@@ -7,7 +7,7 @@ use Croogo\Core\Link;
 
 class LinkTest extends TestCase
 {
-    public function testCreateFromLinkString()
+    public function testCreateFromLinkString(): void
     {
         $link = Link::createFromLinkString('plugin:Croogo%2FNodes/controller:Nodes/action:promoted');
 
@@ -16,7 +16,7 @@ class LinkTest extends TestCase
         $this->assertEquals('promoted', $link['action']);
     }
 
-    public function testToLinkString()
+    public function testToLinkString(): void
     {
         $link = new Link([
             'plugin' => 'Croogo/Nodes',
@@ -27,7 +27,7 @@ class LinkTest extends TestCase
         $this->assertEquals('plugin:Croogo%2FNodes/controller:Nodes/action:promoted', $link->toLinkString());
     }
 
-    public function testGetUrl()
+    public function testGetUrl(): void
     {
         $link = new Link([
             'plugin' => 'Croogo/Nodes',
@@ -46,7 +46,7 @@ class LinkTest extends TestCase
         $this->assertEquals('http://example.com', $linkExample->getUrl());
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $link = new Link([
             'plugin' => 'Croogo/Nodes',
@@ -61,7 +61,7 @@ class LinkTest extends TestCase
         $this->assertEquals('http://example.com', (string)$linkExample);
     }
 
-    public function testObjectProperties()
+    public function testObjectProperties(): void
     {
         $link = new Link([
             'plugin' => 'Croogo/Nodes',

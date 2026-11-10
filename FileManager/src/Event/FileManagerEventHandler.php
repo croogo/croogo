@@ -23,7 +23,7 @@ class FileManagerEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.FileManager/Attachment.newAttachment' => [
@@ -41,14 +41,14 @@ class FileManagerEventHandler implements EventListenerInterface
     /**
      * Registers usage when new attachment is created and attached to a resource
      */
-    public function onNewAttachment($event)
+    public function onNewAttachment($event): void
     {
         $controller = $event->getSubject();
-        $request = $controller->request;
+        $request = $controller->getRequest();
         $attachment = $event->getData('attachment');
 
         // create poster for video, ideally should be done via a job queue
-        $Attachments = TableRegistry::get('Croogo/FileManager.Attachments');
+        $Attachments = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/FileManager.Attachments');
         if (
             strstr($attachment->asset->mime_type, 'video') !== false &&
             class_exists('Char0n\FFMpegPHP\Movie')
@@ -63,7 +63,7 @@ class FileManagerEventHandler implements EventListenerInterface
         }
 
         $usage = $attachment->asset->asset_usage[0];
-        $Usage = TableRegistry::get('Croogo/FileManager.AssetUsages');
+        $Usage = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/FileManager.AssetUsages');
         $data = $Usage->newEntity([
             'asset_id' => $attachment->asset->id,
             'model' => $usage['model'],
@@ -83,7 +83,7 @@ class FileManagerEventHandler implements EventListenerInterface
      *
      * @return void
      */
-    public function onSetupLinkChooser($event)
+    public function onSetupLinkChooser($event): void
     {
         $linkChoosers = [];
         $linkChoosers['Images'] = [
@@ -126,16 +126,16 @@ class FileManagerEventHandler implements EventListenerInterface
     /**
      * Setup admin data
      */
-    public function onSetupAdminData($event)
+    public function onSetupAdminData($event): void
     {
-        Nav::add('media.children.attachments', [
-            'title' => __d('croogo', 'Attachments'),
-            'url' => [
-                'prefix' => 'admin',
-                'plugin' => 'Croogo/FileManager',
-                'controller' => 'Attachments',
-                'action' => 'index',
-            ],
-        ]);
+//        Nav::add('media.children.attachments', [
+//            'title' => __d('croogo', 'Attachments'),
+//            'url' => [
+//                'prefix' => 'Admin',
+//                'plugin' => 'Croogo/FileManager',
+//                'controller' => 'Attachments',
+//                'action' => 'index',
+//            ],
+//        ]);
     }
 }

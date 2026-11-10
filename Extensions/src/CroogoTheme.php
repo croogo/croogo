@@ -6,14 +6,13 @@ use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
-use Cake\Filesystem\Folder;
-use Cake\Http\Exception\BadRequestException;
+use Croogo\Core\Utility\FsUtils;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Croogo\Core\PluginManager;
 use Croogo\Extensions\Exception\MissingThemeException;
-use InvalidArgumentException;
+
 use UnexpectedValueException;
 
 /**
@@ -233,7 +232,7 @@ class CroogoTheme
 
         Cache::clearAll();
         (new PluginManager())->activate($theme);
-        $settings = TableRegistry::get('Croogo/Settings.Settings');
+        $settings = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Settings.Settings');
 
         return $settings->write('Site.' . $type, $theme);
     }
@@ -255,7 +254,6 @@ class CroogoTheme
         $paths = array_map(function ($path) use ($alias) {
             return $path . $alias;
         }, $paths);
-        $folder = new Folder;
 
         foreach ($paths as $path) {
             if (!file_exists($path)) {
@@ -270,10 +268,10 @@ class CroogoTheme
             if (is_link($path)) {
                 return unlink($path);
             } elseif (is_dir($path)) {
-                if ($folder->delete($path)) {
+                if (FsUtils::deleteTree($path)) {
                     return true;
                 } else {
-                    return $folder->errors();
+                    return [__d('croogo', 'Could not delete %s', $path)];
                 }
             }
         }
@@ -288,6 +286,9 @@ class CroogoTheme
      */
     public static function config($theme = null)
     {
+        // PHP 8.5: null jako offset tablicy ($themeData[$theme]) jest deprecated.
+        // Prefix pusty na froncie/instalatorze wołał config(null) — normalizujemy na wejściu.
+        $theme = $theme ?? '';
         static $croogoTheme = null;
         static $themeData = [];
         if ($croogoTheme === null) {
@@ -298,7 +299,8 @@ class CroogoTheme
             $data = $croogoTheme->getData($theme);
             $request = Router::getRequest();
             if ($request) {
-                $prefix = $request->getParam('prefix');
+                // PHP 8.5: null jako offset tablicy deprecated (prefix pusty na froncie/instalatorze)
+                $prefix = $request->getParam('prefix') ?? '';
                 if (isset($data['settings']['prefixes'][$prefix]['css'])) {
                     $data['settings']['css'] = Hash::merge(
                         $data['settings']['prefixes'][$prefix]['css'],

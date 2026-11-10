@@ -48,7 +48,7 @@ class TrackableBehavior extends Behavior
     /**
      * Setup
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         if ($this->_hasTrackableFields()) {
             $this->_setupBelongsTo();
@@ -96,10 +96,11 @@ class TrackableBehavior extends Behavior
      * Fill the created_by and modified_by fields in an entity
      *
      */
-    public function beforeSave(Event $event, $options = [])
+    public function beforeSave(\Cake\Event\EventInterface $event, $options = []): void
     {
+        // Cake 5.2: zwracanie wartosci z listenera deprecated (abort = stopPropagation+setResult)
         if (!$this->_hasTrackableFields()) {
-            return true;
+            return;
         }
 
         list($userId, $createdByField, $modifiedByField) = $this->getFieldValues($event, $options);
@@ -107,7 +108,7 @@ class TrackableBehavior extends Behavior
         $entity = $event->getData('entity');
 
         if (empty($userId)) {
-            return true;
+            return;
         }
 
         if (empty($entity[$createdByField])) {
@@ -116,18 +117,16 @@ class TrackableBehavior extends Behavior
             }
         }
         $entity->{$modifiedByField} = $userId;
-
-        return true;
     }
 
 
     /**
      * Fill the created_by and modified_by fields from request
      **/
-    public function beforeMarshal(Event $event, $options = [])
+    public function beforeMarshal(Event $event, $options = []): void
     {
         if (!$this->_hasTrackableFields()) {
-            return true;
+            return;
         }
 
         list($userId, $createdByField, $modifiedByField) = $this->getFieldValues($event, $options);
@@ -137,8 +136,6 @@ class TrackableBehavior extends Behavior
             $data[$createdByField] = $userId;
         }
         $data[$modifiedByField] = $userId;
-
-        return true;
     }
 
     /**
@@ -158,7 +155,7 @@ class TrackableBehavior extends Behavior
     {
         $config = $this->getConfig();
 
-        $User = TableRegistry::get($config['userModel']);
+        $User = \Cake\ORM\TableRegistry::getTableLocator()->get($config['userModel']);
         $userAlias = $User->getAlias();
         $userPk = $User->getPrimaryKey();
 
@@ -170,7 +167,7 @@ class TrackableBehavior extends Behavior
         if ($user && array_key_exists($userPk, $user)) {
             $userId = $user[$userPk];
         } else {
-            Log::error('Trackable cannot obtain userId for model: ' . $this->getTable()->getAlias());
+//            Log::error('Trackable cannot obtain userId for model: ' . $this->getTable()->getAlias());
             $userId = null;
         }
 

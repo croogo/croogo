@@ -6,7 +6,7 @@ use Phinx\Seed\AbstractSeed;
 class LanguagesSeed extends AbstractSeed
 {
 
-    public function run()
+    public function run(): void
     {
         $Table = $this->table('languages');
 

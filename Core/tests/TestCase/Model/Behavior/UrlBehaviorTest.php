@@ -9,23 +9,21 @@ use Croogo\Core\TestSuite\CroogoTestCase;
 class UrlBehaviorTest extends CroogoTestCase
 {
 
-    public $fixtures = [
-        'plugin.Croogo/Core.Things'
-    ];
+    protected array $fixtures = [];
 
     /**
      * setUp
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->Things = TableRegistry::get('Things');
     }
 
-    public function testSingle()
+    public function testSingle(): void
     {
         $thing = $this->Things->findByTitle('First Article')->first();
 
@@ -36,7 +34,7 @@ class UrlBehaviorTest extends CroogoTestCase
         ]), $thing->url);
     }
 
-    public function testMultiple()
+    public function testMultiple(): void
     {
         $things = $this->Things->find('all')->toArray();
 

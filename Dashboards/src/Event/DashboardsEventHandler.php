@@ -20,7 +20,7 @@ class DashboardsEventHandler implements EventListenerInterface
     /**
      * implementedEvents
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Croogo.setupAdminDashboardData' => [
@@ -32,7 +32,7 @@ class DashboardsEventHandler implements EventListenerInterface
     /**
      * Setup admin data
      */
-    public function onSetupAdminDashboardData($event)
+    public function onSetupAdminDashboardData($event): void
     {
         $plugins = Plugin::loaded();
         $config = 'config' . DS . 'admin_dashboard.php';

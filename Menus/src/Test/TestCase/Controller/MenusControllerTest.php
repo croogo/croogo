@@ -8,29 +8,29 @@ class MenusControllerTest extends CroogoControllerTestCase
 {
 
     public $fixtures = [
-        'plugin.users.aco',
-        'plugin.users.aro',
-        'plugin.users.aros_aco',
-        'plugin.blocks.block',
-        'plugin.comments.comment',
-        'plugin.contacts.contact',
-        'plugin.translate.i18n',
-        'plugin.settings.language',
-        'plugin.contacts.message',
-        'plugin.nodes.node',
-        'plugin.taxonomy.model_taxonomy',
-        'plugin.blocks.region',
-        'plugin.users.role',
-        'plugin.settings.setting',
-        'plugin.menus.menu',
-        'plugin.menus.link',
-        'plugin.meta.meta',
-        'plugin.taxonomy.taxonomy',
-        'plugin.taxonomy.term',
-        'plugin.taxonomy.type',
-        'plugin.taxonomy.types_vocabulary',
-        'plugin.users.user',
-        'plugin.taxonomy.vocabulary',
+        'plugin.Users',
+        'plugin.Users',
+        'plugin.Users',
+        'plugin.Blocks',
+        'plugin.Comments',
+        'plugin.Contacts',
+        'plugin.Translate',
+        'plugin.Settings',
+        'plugin.Contacts',
+        'plugin.Nodes',
+        'plugin.Taxonomy',
+        'plugin.Blocks',
+        'plugin.Users',
+        'plugin.Settings',
+        'plugin.Menus',
+        'plugin.Menus',
+        'plugin.Meta',
+        'plugin.Taxonomy',
+        'plugin.Taxonomy',
+        'plugin.Taxonomy',
+        'plugin.Taxonomy',
+        'plugin.Users',
+        'plugin.Taxonomy',
     ];
 
     /**
@@ -38,7 +38,7 @@ class MenusControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->MenusController = $this->generate('Menus.Menus', [
@@ -61,7 +61,7 @@ class MenusControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->MenusController);
@@ -72,7 +72,7 @@ class MenusControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminIndex()
+    public function testAdminIndex(): void
     {
         $this->testAction('/admin/menus/menus/index');
         $this->assertNotEmpty($this->vars['menus']);
@@ -83,7 +83,7 @@ class MenusControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminAdd()
+    public function testAdminAdd(): void
     {
         $this->expectFlashAndRedirect('The Menu has been saved');
         $mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
@@ -106,7 +106,7 @@ class MenusControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminEdit()
+    public function testAdminEdit(): void
     {
         $this->expectFlashAndRedirect('The Menu has been saved');
         $this->testAction('/admin/menus/menus/edit/1', [
@@ -126,7 +126,7 @@ class MenusControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminDelete()
+    public function testAdminDelete(): void
     {
         $this->expectFlashAndRedirect('Menu deleted');
         $this->testAction('/admin/menus/menus/delete/4');

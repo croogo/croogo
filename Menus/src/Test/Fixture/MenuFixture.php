@@ -29,7 +29,7 @@ class MenuFixture extends CroogoTestFixture
         '_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
     ];
 
-    public $records = [
+    public array $records = [
         [
             'id' => 3,
             'title' => 'Main Menu',

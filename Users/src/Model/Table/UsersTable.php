@@ -34,11 +34,11 @@ class UsersTable extends CroogoTable
     ];
 
     public $filterArgs = [
-        'name' => ['type' => 'like', 'field' => ['Users.name', 'Users.username']],
+        'name' => ['type' => 'like', 'fields' => ['Users.name', 'Users.username']],
         'role_id' => ['type' => 'value'],
     ];
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $multiRole = Configure::read('Access Control.multiRole');
 
@@ -52,7 +52,8 @@ class UsersTable extends CroogoTable
             $this->belongsTo('Croogo/Users.Roles');
         }
 
-        $this->addBehavior('Acl.Acl', [
+        // alias 'Acl' (przy className alias = pelna nazwa, wiec bez prefiksu pluginu)
+        $this->addBehavior('Acl', [
             'className' => 'Croogo/Core.CroogoAcl',
             'type' => 'requester'
         ]);
@@ -65,20 +66,20 @@ class UsersTable extends CroogoTable
 
         $this->getEventManager()->on($this->getMailer('Croogo/Users.User'));
 
-        $this->searchManager()
+        $this->getBehavior('Search')->searchManager()
             ->add('name', 'Search.Like', [
-                'field' => ['Users.name', 'Users.username', 'Users.email'],
+                'fields' => ['Users.name', 'Users.username', 'Users.email'],
                 'before' => true,
                 'after' => true,
             ]);
 
         if ($multiRole) {
-            $this->searchManager()
+            $this->getBehavior('Search')->searchManager()
                 ->add('role_id', 'Search.Finder', [
                     'finder' => 'filterMultiRoles',
                 ]);
         } else {
-            $this->searchManager()
+            $this->getBehavior('Search')->searchManager()
                 ->value('role_id');
         }
     }
@@ -102,8 +103,8 @@ class UsersTable extends CroogoTable
             ]
         ]);
 
-        $user->set([
-            'role_id' => $this->Roles->byAlias('registered'),
+        $user->patch([
+            'role_id' => $this->Roles->getBehavior('Aliasable')->byAlias('registered'),
             'activation_key' => $this->generateActivationKey(),
         ]);
 
@@ -167,7 +168,7 @@ class UsersTable extends CroogoTable
         // Send out an password reset email
         $email = $this
             ->getMailer('Croogo/Users.User')
-            ->viewVars(compact('options'))
+            ->setViewVars(compact('options'))
             ->send('resetPassword', [$user]);
         if (!$email) {
             return false;
@@ -181,10 +182,10 @@ class UsersTable extends CroogoTable
         return true;
     }
 
-    public function sendActivationEmail($user)
+    public function sendActivationEmail($user): void
     {
         $email = $this->getMailer('Croogo/Users.User')
-            ->viewVars(compact('user'))
+            ->setViewVars(compact('user'))
             ->send('registrationActivation', [$user]);
 
         Croogo::dispatchEvent('Model.Users.afterActivationEmail',
@@ -196,12 +197,12 @@ class UsersTable extends CroogoTable
     public function changePasswordFromReset(User $user, array $data)
     {
         $user = $this->patchEntity($user, $data, [
-            'fieldList' => [
+            'fields' => [
                 'password',
                 'verify_password',
             ]
         ]);
-        if ($user->errors()) {
+        if ($user->getErrors()) {
             return $user;
         }
 
@@ -210,7 +211,7 @@ class UsersTable extends CroogoTable
         return $user;
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         return $validator
             ->add('username', [
@@ -273,7 +274,7 @@ class UsersTable extends CroogoTable
                     'last' => true
                 ]
             ])
-            ->allowEmpty('website')
+            ->allowEmptyString('website')
             ->add('website', [
                 'url' => [
                     'rule' => 'url',
@@ -283,15 +284,15 @@ class UsersTable extends CroogoTable
             ]);
     }
 
-    public function findFilterMultiRoles(Query $query, array $options)
+    public function findFilterMultiRoles(\Cake\ORM\Query\SelectQuery $query, array $options)
     {
         $roleId = isset($options['role_id']) ? $options['role_id'] : false;
         $query
             ->where([
-                $this->aliasField('role_id') => $roleId,
-            ])
-            ->orWhere([
-                $this->Roles->aliasField('id') => $roleId,
+                'OR' => [
+                    $this->aliasField('role_id') => $roleId,
+                    $this->Roles->aliasField('id') => $roleId,
+                ],
             ]);
 
         return $query;
@@ -306,7 +307,7 @@ class UsersTable extends CroogoTable
         return bin2hex(Security::randomBytes($length));
     }
 
-    public function findAuthUser(Query $query, array $options)
+    public function findAuthUser(\Cake\ORM\Query\SelectQuery $query, array $options)
     {
         return $query
             ->where([$this->aliasField('status') => 1]);

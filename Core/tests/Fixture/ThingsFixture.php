@@ -18,7 +18,7 @@ class ThingsFixture extends TestFixture
             'primary' => ['type' => 'primary', 'columns' => ['id']]
         ]
     ];
-    public $records = [
+    public array $records = [
         [
             'title' => 'First Article',
             'body' => 'First Article Body',

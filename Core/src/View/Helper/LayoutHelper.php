@@ -33,7 +33,7 @@ class LayoutHelper extends Helper
      * @var array
      * @access public
      */
-    public $helpers = [
+    public array $helpers = [
         'Croogo/Core.Croogo',
         'Croogo/Core.Theme',
         'Html',
@@ -170,7 +170,7 @@ class LayoutHelper extends Helper
             return $this->Html->icon($icon, compact('class'));
         } else {
             if (empty($this->_View->Html)) {
-                $this->_View->Helpers->load('Croogo/Core.Html');
+                $this->_View->helpers()->load('Croogo/Core.Html');
             }
 
             return $this->_View->Html->icon($icon, compact('class'));
@@ -188,8 +188,11 @@ class LayoutHelper extends Helper
      */
     public function displayField(Entity $item, $model, $field, $options = [])
     {
+        // array_intersect_key() drops absent keys, so extract() leaves $type
+        // undefined for callers passing no options — read it before extract()
+        // can overwrite $options with its 'options' key.
+        $type = $options['type'] ?? null;
         extract(array_intersect_key($options, [
-            'type' => null,
             'url' => [],
             'options' => [],
         ]));
@@ -364,8 +367,8 @@ class LayoutHelper extends Helper
                     $data[$attributes[1][$j]] = $attributes[2][$j];
                 }
             }
-            if (!empty($this->_View->viewVars['block'])) {
-                $data['block'] = $this->_View->viewVars['block'];
+            if (!empty($this->_View->get('block'))) {
+                $data['block'] = $this->_View->get('block');
             }
             if (!empty($options['plugin'])) {
                 $element = $options['plugin'] . '.' . $element;
@@ -415,12 +418,12 @@ class LayoutHelper extends Helper
      */
     public function valueOf($name, $path, $options = [])
     {
-        if (!isset($this->_View->viewVars[$name])) {
+        if ($this->_View->get($name) === null) {
             $this->log(sprintf('Invalid viewVars "%s"', $name));
 
             return [];
         }
-        $result = Hash::extract($this->_View->viewVars[$name], $path);
+        $result = Hash::extract($this->_View->get($name), $path);
         $result = isset($result[0]) ? $result[0] : $result;
 
         return $result;

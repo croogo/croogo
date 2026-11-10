@@ -21,17 +21,17 @@ class ActionsController extends AppController
 
     private $Acos;
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
-        $this->Acos = TableRegistry::get('Croogo/Acl.Acos');
+        $this->Acos = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Acl.Acos');
     }
 
     /**
      * admin_index
      */
-    public function index($id = null)
+    public function index($id = null): void
     {
         if ($id == null) {
             $root = $this->Acos->node('controllers')->firstOrFail();
@@ -51,8 +51,8 @@ class ActionsController extends AppController
         $aco = $this->Acos->newEntity();
 
         if ($this->getRequest()->is('post')) {
-            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->data());
-            if ($this->getRequest()->data('parent_id') == null) {
+            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->getData());
+            if ($this->getRequest()->getData('parent_id') == null) {
                 $aco->parent_id = 1;
                 $acoType = 'controller';
             } else {
@@ -82,8 +82,8 @@ class ActionsController extends AppController
         $aco = $this->Acos->get($id);
 
         if ($this->getRequest()->is('put')) {
-            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->data());
-            if ($this->getRequest()->data('parent_id') == null) {
+            $aco = $this->Acos->patchEntity($aco, $this->getRequest()->getData());
+            if ($this->getRequest()->getData('parent_id') == null) {
                 $aco->parent_id = 1;
                 $acoType = 'controller';
             } else {
@@ -133,14 +133,16 @@ class ActionsController extends AppController
     {
         $aco = $this->Acos->get($id);
 
+        // Cake 5.3: metody behaviora na instancji tabeli deprecated
+        $tree = $this->Acos->getBehavior('Tree');
         if ($direction == 'up') {
-            if ($this->Acos->moveUp($aco)) {
+            if ($tree->moveUp($aco)) {
                 $this->Flash->success(__d('croogo', 'Action moved up'));
 
                 return $this->redirect(['action' => 'index']);
             }
         } else {
-            if ($this->Acos->moveDown($aco)) {
+            if ($tree->moveDown($aco)) {
                 $this->Flash->success(__d('croogo', 'Action moved down'));
 
                 return $this->redirect(['action' => 'index']);

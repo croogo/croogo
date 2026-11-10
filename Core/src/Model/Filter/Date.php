@@ -14,7 +14,7 @@ class Date extends Base
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'mode' => 'AND'
     ];
 
@@ -23,7 +23,7 @@ class Date extends Base
      *
      * @return bool
      */
-    public function process()
+    public function process(): bool
     {
         $start = $this->value();
         if (!is_scalar($start)) {

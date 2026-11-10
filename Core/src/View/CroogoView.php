@@ -24,7 +24,7 @@ class CroogoView extends AppView
      * @param bool $cached Set to false to force a refresh of view paths. Default true.
      * @return array paths
      */
-    protected function _paths($plugin = null, $cached = true)
+    protected function _paths(?string $plugin = null, bool $cached = true): array
     {
         if ($cached === true) {
             if ($plugin === null && !empty($this->_paths)) {
@@ -58,7 +58,9 @@ class CroogoView extends AppView
             $themePaths,
             $pluginPaths,
             $templatePaths,
-            [dirname(__DIR__) . DIRECTORY_SEPARATOR . static::NAME_TEMPLATE . DIRECTORY_SEPARATOR]
+            // Cake 5: szablony Core leżą w Core/templates/, nie Core/src/templates/.
+            // Z Core/src/View trzeba wyjść 2 poziomy (dirname(__DIR__,2) = Core).
+            [dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . static::NAME_TEMPLATE . DIRECTORY_SEPARATOR]
         );
 
         if ($plugin !== null) {
@@ -68,12 +70,47 @@ class CroogoView extends AppView
         return $this->_paths = $paths;
     }
 
-    public function loadHelpers()
+    /**
+     * Cake 5: helpery są dostępne wyłącznie przez View::__get() (bez właściwości i bez
+     * __isset), więc isset($this->Paginator) zawsze zwracało false — a ~34 szablony admina
+     * bramkują na tym blok paginacji. Odtwarzamy semantykę „helper istnieje".
+     *
+     * @param string $name Helper name
+     * @return bool
+     */
+    public function __isset(string $name): bool
     {
+        if ($this->helpers()->has($name)) {
+            return true;
+        }
+        try {
+            return $this->loadHelper($name) !== null;
+        } catch (\Throwable) {
+            return false;
+        }
+    }
+
+    public function loadHelpers(): void
+    {
+        // Aliasuj Html/Form na wersje Croogo PRZED parent (inaczej parent ładuje
+        // bazowe Cake helpery i theme nie może ich nadpisać -> brak m.in. Html::icon()).
+        if (!$this->helpers()->has('Html')) {
+            $this->loadHelper('Html', ['className' => 'Croogo/Core.Html']);
+        }
+        if (!$this->helpers()->has('Form')) {
+            $this->loadHelper('Form', ['className' => 'Croogo/Core.Form']);
+        }
+
         parent::loadHelpers();
 
+        // Cake 5: helpery nie doładowują się magicznie na poziomie widoku, a szablony
+        // Croogo używają $this->Theme wprost - gwarantujemy jego obecność.
+        if (!$this->helpers()->has('Theme')) {
+            $this->loadHelper('Croogo/Core.Theme');
+        }
+
         $prefix = $this->getRequest()->getParam('prefix') ?: '';
-        if ($prefix === 'admin') {
+        if ($prefix === 'Admin') {
             $this->loadHelper('Croogo/Core.Croogo');
         }
 
@@ -82,7 +119,7 @@ class CroogoView extends AppView
             $this->loadHelperList($themeConfig['settings']['prefixes'][$prefix]['helpers']);
         }
 
-        $hookHelpers = Croogo::options('Hook.view_builder_options', $this->request, 'helpers');
+        $hookHelpers = Croogo::options('Hook.view_builder_options', $this->getRequest(), 'helpers');
 
         $this->loadHelperList($hookHelpers);
         $this->loadHelper('Time', [
@@ -90,7 +127,7 @@ class CroogoView extends AppView
         ]);
     }
 
-    public function loadHelperList($list)
+    public function loadHelperList($list): void
     {
         foreach ((array)$list as $helper => $config) {
             if (!is_array($config)) {

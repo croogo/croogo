@@ -10,7 +10,7 @@ use Cake\ORM\TableRegistry;
 class LoggedInUserComponent extends Component
 {
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         /** @var Controller $controller */
         $controller = $event->getSubject();
@@ -21,7 +21,7 @@ class LoggedInUserComponent extends Component
             return;
         }
 
-        $users = TableRegistry::get('Croogo/Users.Users');
+        $users = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Users');
         $controller->set('loggedInUser', $users->get($controller->Auth->user('id')));
     }
 }

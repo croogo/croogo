@@ -26,7 +26,7 @@ class UserAroBehavior extends Behavior
     /**
      * Setup
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->_setupMultirole($this->_table);
     }
@@ -37,6 +37,11 @@ class UserAroBehavior extends Behavior
     protected function _setupMultirole(Table $model)
     {
         if (!Configure::read('Access Control.multiRole')) {
+            return;
+        }
+        // UsersTable deklaruje Roles (through RolesUsers) sam; Cake 5 rzuca
+        // wyjatek przy ponownej deklaracji aliasu asocjacji
+        if ($model->associations()->has('Roles')) {
             return;
         }
         $model->belongsToMany('Roles', [
@@ -52,15 +57,16 @@ class UserAroBehavior extends Behavior
      * @param bool $entity
      * @return void
      */
-    public function afterSave(Event $event, Entity $entity)
+    public function afterSave(\Cake\Event\EventInterface $event, Entity $entity): void
     {
         // update ACO alias
         if (!empty($entity->username)) {
             $model = $event->getSubject();
-            $arosTable = TableRegistry::get('Aros');
+            $arosTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Aros');
 
             $ref = ['model' => $model->getAlias(), 'foreign_key' => $entity->id];
-            $node = $model->node($ref);
+            // Cake 5.3: metody behaviora na instancji tabeli deprecated
+            $node = $model->getBehavior('Acl')->node($ref);
             $aro = $node->firstOrFail();
 
             $aro->alias = $entity->username;
@@ -73,7 +79,7 @@ class UserAroBehavior extends Behavior
     /**
      * afterDelete
      */
-    public function afterDelete(Event $event)
+    public function afterDelete(\Cake\Event\EventInterface $event): void
     {
         Cache::clearGroup('acl', 'permissions');
     }

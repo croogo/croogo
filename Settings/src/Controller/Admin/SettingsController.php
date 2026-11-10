@@ -18,21 +18,21 @@ use Exception;
  */
 class SettingsController extends AppController
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
         $this->_setupPrg();
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return parent::implementedEvents() + [
             'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
 
-    public function beforeCrudRedirect(Event $event)
+    public function beforeCrudRedirect(Event $event): void
     {
         if ($this->redirectToSelf($event)) {
             return;
@@ -93,13 +93,12 @@ success:
             return $this->redirect(['action' => 'prefix', $prefix]);
         }
 
-        $settings = $this->Settings->find('all', [
-            'order' => 'Settings.weight ASC',
-            'conditions' => [
+        $settings = $this->Settings->find()
+            ->where([
                 'Settings.key LIKE' => $prefix . '.%',
                 'Settings.editable' => 1,
-            ],
-        ]);
+            ])
+            ->orderByAsc('Settings.weight');
 
         if ($settings->count() == 0) {
             $this->Flash->error(__d('croogo', 'Invalid Setting key'));

@@ -29,7 +29,7 @@ if (!function_exists('\Croogo\Core\link')) {
 }
 
 if (!function_exists('\Croogo\Core\timerStart')) {
-    function timerStart($name, $message = null)
+    function timerStart($name, $message = null): void
     {
         if (!PluginManager::available('DebugKit')) {
             return;
@@ -40,7 +40,7 @@ if (!function_exists('\Croogo\Core\timerStart')) {
 }
 
 if (!function_exists('\Croogo\Core\timerStop')) {
-    function timerStop($name)
+    function timerStop($name): void
     {
         if (!PluginManager::available('DebugKit')) {
             return;
@@ -51,7 +51,7 @@ if (!function_exists('\Croogo\Core\timerStop')) {
 }
 
 if (!function_exists('\Croogo\Core\time')) {
-    function time(callable $callable, $name, $message = null)
+    function time(callable $callable, $name, $message = null): void
     {
         timerStart($name, $message);
 

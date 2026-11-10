@@ -21,7 +21,7 @@ class PluginTest extends TestCase
      */
     public $connection;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -55,7 +55,7 @@ class PluginTest extends TestCase
             ->getConnection();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -76,7 +76,7 @@ class PluginTest extends TestCase
             ->getMock();
     }
 
-    public function testGetDataPluginNotActive()
+    public function testGetDataPluginNotActive(): void
     {
         $actives = Configure::read('Hook.bootstraps');
         Configure::write('Hook.bootstraps', '');
@@ -94,7 +94,7 @@ class PluginTest extends TestCase
         Configure::write('Hook.bootstraps', $actives);
     }
 
-    public function testGetDataPluginActive()
+    public function testGetDataPluginActive(): void
     {
         $actives = Configure::read('Hook.bootstraps');
         Configure::write('Hook.bootstraps', 'suppliers');
@@ -115,13 +115,13 @@ class PluginTest extends TestCase
         Configure::write('Hook.bootstraps', $actives);
     }
 
-    public function testGetDataPluginNotExists()
+    public function testGetDataPluginNotExists(): void
     {
         $data = $this->plugin->getData('NotARealPlugin');
         $this->assertEquals(false, $data);
     }
 
-    public function testGetDataWithEmptyJson()
+    public function testGetDataWithEmptyJson(): void
     {
         $expected = [
             'needMigration' => false, 'active' => false, 'name' => 'EmptyJson',
@@ -130,7 +130,7 @@ class PluginTest extends TestCase
         $this->assertEquals($expected, $data);
     }
 
-    public function testGetDataWithMixedManifest()
+    public function testGetDataWithMixedManifest(): void
     {
         $data = $this->plugin->getData('MixedManifest');
         $expected = [
@@ -147,7 +147,7 @@ class PluginTest extends TestCase
         $this->assertEquals('MixedManifest', $data['name']);
     }
 
-    public function testNeedMigrationPluginNotExists()
+    public function testNeedMigrationPluginNotExists(): void
     {
         $migrationVersion = $this->_getMockMigrationVersion();
         $migrationVersion->expects($this->any())
@@ -157,13 +157,13 @@ class PluginTest extends TestCase
         $this->assertEquals(false, $croogoPlugin->needMigration('Anything', true));
     }
 
-    public function testNeedMigrationPluginNotActive()
+    public function testNeedMigrationPluginNotActive(): void
     {
         $croogoPlugin = new PluginManager();
         $this->assertEquals(false, $croogoPlugin->needMigration('Anything', false));
     }
 
-    public function testNeedMigrationPluginNoMigration()
+    public function testNeedMigrationPluginNoMigration(): void
     {
         $this->markTestSkipped('This test needs to be ported to CakePHP 3.0');
 
@@ -178,7 +178,7 @@ class PluginTest extends TestCase
         $this->assertEquals(false, $croogoPlugin->needMigration('app', true));
     }
 
-    public function testNeedMigrationPluginWithMigration()
+    public function testNeedMigrationPluginWithMigration(): void
     {
         $this->markTestSkipped('This test needs to be ported to CakePHP 3.0');
 
@@ -193,7 +193,7 @@ class PluginTest extends TestCase
         $this->assertEquals(true, $croogoPlugin->needMigration('app', true));
     }
 
-    public function testMigratePluginNotNeedMigration()
+    public function testMigratePluginNotNeedMigration(): void
     {
         $this->markTestSkipped('This test needs to be ported to CakePHP 3.0');
 
@@ -211,7 +211,7 @@ class PluginTest extends TestCase
         Configure::read('Hook.bootstraps', $actives);
     }
 
-    public function testMigratePluginWithMigration()
+    public function testMigratePluginWithMigration(): void
     {
         PluginManager::load('Suppliers');
 
@@ -234,7 +234,7 @@ class PluginTest extends TestCase
         Configure::read('Hook.bootstraps', $actives);
     }
 
-    public function testMigratePluginWithMigrationError()
+    public function testMigratePluginWithMigrationError(): void
     {
         $this->markTestSkipped('This test needs to be ported to CakePHP 3.0');
 
@@ -258,7 +258,7 @@ class PluginTest extends TestCase
         Configure::read('Hook.bootstraps', $actives);
     }
 
-    public function testUnmigrate()
+    public function testUnmigrate(): void
     {
         $this->markTestSkipped('This test needs to be ported to CakePHP 3.0');
 
@@ -281,7 +281,7 @@ class PluginTest extends TestCase
         Configure::read('Hook.bootstraps', $actives);
     }
 
-    public function testUnmigrateNoMapping()
+    public function testUnmigrateNoMapping(): void
     {
         $this->markTestSkipped('This test needs to be ported to CakePHP 3.0');
 
@@ -306,7 +306,7 @@ class PluginTest extends TestCase
     /**
      * testReorderBootstraps
      */
-    public function testReorderBootstraps()
+    public function testReorderBootstraps(): void
     {
         $bootstraps = explode(',', 'Croogo/Settings,Croogo/Taxonomy,Sites,Croogo/Example');
 
@@ -326,7 +326,7 @@ class PluginTest extends TestCase
     /**
      * testReorderBootstrapsWithDependency
      */
-    public function testReorderBootstrapsWithDependency()
+    public function testReorderBootstrapsWithDependency(): void
     {
         $bootstraps = explode(',', 'Widgets,Editors');
 
@@ -341,17 +341,17 @@ class PluginTest extends TestCase
 
     /**
      * testDeleteEmptyPlugin
-     * @expectedException InvalidArgumentException
      */
-    public function testDeleteEmptyPlugin()
+    public function testDeleteEmptyPlugin(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->plugin->delete(null);
     }
 
     /**
      * testUsedBy
      */
-    public function testUsedBy()
+    public function testUsedBy(): void
     {
         Cache::delete('pluginDeps', 'cached_settings');
         PluginManager::load('Widgets');
@@ -361,17 +361,17 @@ class PluginTest extends TestCase
         $usedBy = $this->plugin->usedBy('Widgets');
         $this->assertTrue(in_array('Articles', $usedBy));
         $this->assertTrue(in_array('Editors', $usedBy));
-        PluginManager::unload('Articles');
-        PluginManager::unload('Editors');
-        PluginManager::unload('Widgets');
+        PluginManager::clear('Articles');
+        PluginManager::clear('Editors');
+        PluginManager::clear('Widgets');
     }
 
     /**
      * @dataProvider pathDataProvider
      */
-    public function testPath($plugin, $path, $expectedException = null)
+    public function testPath($plugin, $path, $expectedException = null): void
     {
-        $this->setExpectedException($expectedException);
+        $this->expectException($expectedException);
 
         $this->assertEquals($path, Plugin::path($plugin));
     }
@@ -379,7 +379,7 @@ class PluginTest extends TestCase
     /**
      * @dataProvider pathDataProvider
      */
-    public function testAvailable($plugin, $path)
+    public function testAvailable($plugin, $path): void
     {
         if ($path) {
             $this->assertTrue(PluginManager::available($plugin));
@@ -390,7 +390,7 @@ class PluginTest extends TestCase
         $this->assertFalse(PluginManager::available($plugin));
     }
 
-    public function testEventsSinglePlugin()
+    public function testEventsSinglePlugin(): void
     {
         PluginManager::load('Shops', [
             'events' => true
@@ -408,7 +408,7 @@ class PluginTest extends TestCase
         ], Configure::read('EventHandlers'));
     }
 
-    public function testEventsAllPlugins()
+    public function testEventsAllPlugins(): void
     {
         PluginManager::load('Shops', [
             'events' => true

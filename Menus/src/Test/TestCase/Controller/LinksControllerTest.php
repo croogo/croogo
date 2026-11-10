@@ -8,29 +8,29 @@ class LinksControllerTest extends CroogoControllerTestCase
 {
 
     public $fixtures = [
-        'plugin.users.aco',
-        'plugin.users.aro',
-        'plugin.users.aros_aco',
-        'plugin.blocks.block',
-        'plugin.comments.comment',
-        'plugin.contacts.contact',
-        'plugin.translate.i18n',
-        'plugin.settings.language',
-        'plugin.contacts.message',
-        'plugin.meta.meta',
-        'plugin.nodes.node',
-        'plugin.taxonomy.model_taxonomy',
-        'plugin.blocks.region',
-        'plugin.users.role',
-        'plugin.settings.setting',
-        'plugin.menus.menu',
-        'plugin.menus.link',
-        'plugin.taxonomy.taxonomy',
-        'plugin.taxonomy.term',
-        'plugin.taxonomy.type',
-        'plugin.taxonomy.types_vocabulary',
-        'plugin.users.user',
-        'plugin.taxonomy.vocabulary',
+        'plugin.Users',
+        'plugin.Users',
+        'plugin.Users',
+        'plugin.Blocks',
+        'plugin.Comments',
+        'plugin.Contacts',
+        'plugin.Translate',
+        'plugin.Settings',
+        'plugin.Contacts',
+        'plugin.Meta',
+        'plugin.Nodes',
+        'plugin.Taxonomy',
+        'plugin.Blocks',
+        'plugin.Users',
+        'plugin.Settings',
+        'plugin.Menus',
+        'plugin.Menus',
+        'plugin.Taxonomy',
+        'plugin.Taxonomy',
+        'plugin.Taxonomy',
+        'plugin.Taxonomy',
+        'plugin.Users',
+        'plugin.Taxonomy',
     ];
 
     /**
@@ -38,7 +38,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->LinksController = $this->generate('Menus.Links', [
@@ -61,7 +61,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->LinksController);
@@ -85,7 +85,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminIndex()
+    public function testAdminIndex(): void
     {
         $this->LinksController
             ->expects($this->once())
@@ -109,7 +109,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminAdd()
+    public function testAdminAdd(): void
     {
         $this->expectFlashAndRedirect('The Link has been saved');
         $mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
@@ -137,7 +137,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminEdit()
+    public function testAdminEdit(): void
     {
         $this->expectFlashAndRedirect('The Link has been saved');
         $homeLink = $this->LinksController->Link->find('first', [
@@ -165,7 +165,7 @@ class LinksControllerTest extends CroogoControllerTestCase
         $this->assertEquals('Home [modified]', $result['Link']['title']);
     }
 
-    public function testAdminEditShouldReorderLinkWhenChangingLinkMenu()
+    public function testAdminEditShouldReorderLinkWhenChangingLinkMenu(): void
     {
         $contactLink = $this->LinksController->Link->findById(15);
 
@@ -180,7 +180,7 @@ class LinksControllerTest extends CroogoControllerTestCase
         $this->assertNotEquals($contactLink['Link']['lft'], $newContactLink['Link']['lft']);
     }
 
-    public function testAdminEditShouldReorderOldMenuWhenChangingLinkMenu()
+    public function testAdminEditShouldReorderOldMenuWhenChangingLinkMenu(): void
     {
         $homeLink = $this->LinksController->Link->findById(7);
 
@@ -200,7 +200,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminDelete()
+    public function testAdminDelete(): void
     {
         $this->expectFlashAndRedirect('Link deleted');
         $homeLink = ClassRegistry::init('Menus.Link')->find('first', [
@@ -223,7 +223,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminMoveUp()
+    public function testAdminMoveUp(): void
     {
         $this->expectFlashAndRedirect('Moved up successfully');
         $mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
@@ -253,7 +253,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminMoveUpWithSteps()
+    public function testAdminMoveUpWithSteps(): void
     {
         $this->expectFlashAndRedirect('Moved up successfully');
         $mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
@@ -282,7 +282,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminMoveDown()
+    public function testAdminMoveDown(): void
     {
         $this->expectFlashAndRedirect('Moved down successfully');
         $mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
@@ -312,7 +312,7 @@ class LinksControllerTest extends CroogoControllerTestCase
      *
      * @return void
      */
-    public function testAdminMoveDownWithSteps()
+    public function testAdminMoveDownWithSteps(): void
     {
         $this->expectFlashAndRedirect('Moved down successfully');
         $mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');

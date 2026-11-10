@@ -13,7 +13,7 @@ class ViewHelpersPanel extends DebugPanel
 
     protected $_loadedViewHelpers = [];
 
-    public function afterFilter(Event $event)
+    public function afterFilter(Event $event): void
     {
         /* @var HelperRegistry $helperRegistry */
         if (!isset($event->getSubject()->View)) {
@@ -25,7 +25,7 @@ class ViewHelpersPanel extends DebugPanel
         $viewHelperNames = $helperRegistry->loaded();
 
         foreach ($viewHelperNames as $name) {
-            $this->_loadedViewHelpers[$name] = $helperRegistry->get($name)->config();
+            $this->_loadedViewHelpers[$name] = $helperRegistry->get($name)->getConfig();
         }
     }
 
@@ -41,7 +41,7 @@ class ViewHelpersPanel extends DebugPanel
         return count($this->_loadedViewHelpers);
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.shutdown' => 'afterFilter'

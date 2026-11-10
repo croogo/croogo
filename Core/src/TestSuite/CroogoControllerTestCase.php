@@ -5,7 +5,7 @@ namespace Croogo\Core\TestSuite;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Log\Log;
-use Cake\Network\Session;
+use Cake\Http\Session;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Hash;
 use Croogo\Core\Configure\JsonReader;
@@ -26,13 +26,13 @@ use Croogo\Core\TestSuite\CroogoTestFixture;
 class CroogoControllerTestCase extends TestCase
 {
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::_restoreSettings();
         Configure::write('Config.language', 'eng');
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::_restoreSettings();
         Configure::write('Config.language', Configure::read('Site.locale'));
@@ -51,7 +51,7 @@ class CroogoControllerTestCase extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -66,7 +66,7 @@ class CroogoControllerTestCase extends TestCase
             $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         }
 
-        PluginManager::unload('Install');
+        PluginManager::clear('Install');
 
 /**
  * Thease plugins are being loaded in the test bootstrap file
@@ -90,12 +90,12 @@ class CroogoControllerTestCase extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
-        if (Session::started()) {
-            Session::clear();
-            Session::destroy();
+        if (\Cake\Http\Session::started()) {
+            \Cake\Http\Session::clear();
+            \Cake\Http\Session::destroy();
         }
         ClassRegistry::flush();
     }
@@ -130,7 +130,7 @@ class CroogoControllerTestCase extends TestCase
      * @param string $class class name, when null current class will be used
      * @param array $flashOptions expected SessionComponent::setFlash arguments
      */
-    public function expectFlashAndRedirect($message = '', $class = false, $flashOptions = [])
+    public function expectFlashAndRedirect($message = '', $class = false, $flashOptions = []): void
     {
         if (!$class) {
             $class = substr(get_class($this), 0, -4);

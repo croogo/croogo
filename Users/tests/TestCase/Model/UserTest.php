@@ -17,12 +17,12 @@ class UserTest extends CroogoTestCase
      *
      * @var array
      */
-    public $fixtures = [
-        'plugin.Croogo/Users.Role',
-        'plugin.Croogo/Users.User',
-        'plugin.Croogo/Users.Aco',
-        'plugin.Croogo/Users.Aro',
-        'plugin.Croogo/Users.ArosAco',
+    protected array $fixtures = [
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
     ];
 
     /**
@@ -37,7 +37,7 @@ class UserTest extends CroogoTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 //      $this->User = ClassRegistry::init('TestUser');
@@ -49,7 +49,7 @@ class UserTest extends CroogoTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->User->request, $this->User);
@@ -60,7 +60,7 @@ class UserTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testPasswords()
+    public function testPasswords(): void
     {
         $this->User->create([
             'username' => 'new_user',
@@ -100,7 +100,7 @@ class UserTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testValidIdenticalPassword()
+    public function testValidIdenticalPassword(): void
     {
         $this->User->data['User'] = ['password' => '123456'];
         $this->assertTrue($this->User->validIdentical(['verify_password' => '123456']));
@@ -113,7 +113,7 @@ class UserTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testDeleteLastUser()
+    public function testDeleteLastUser(): void
     {
         $this->User->create([
             'username' => 'new_user',
@@ -136,7 +136,7 @@ class UserTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testDeleteAdminUser()
+    public function testDeleteAdminUser(): void
     {
         $this->User->create([
             'username' => 'admin_user',
@@ -171,7 +171,7 @@ class UserTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testDisplayFields()
+    public function testDisplayFields(): void
     {
         $result = $this->User->displayFields();
         $expected = [
@@ -254,7 +254,7 @@ class UserTest extends CroogoTestCase
      *
      * @return void
      */
-    public function testEditFields()
+    public function testEditFields(): void
     {
         $result = $this->User->editFields();
         $expected = [
@@ -301,7 +301,7 @@ class UserTest extends CroogoTestCase
     /**
      * testDeleteAdminUsers
      */
-    public function testDeleteAdminUsers()
+    public function testDeleteAdminUsers(): void
     {
         // delete an admin
         $this->User->id = 2;
@@ -325,7 +325,7 @@ class UserTest extends CroogoTestCase
     /**
      * testDeleteUsers
      */
-    public function testDeleteUsers()
+    public function testDeleteUsers(): void
     {
         // delete normal user
         $this->User->id = 3;

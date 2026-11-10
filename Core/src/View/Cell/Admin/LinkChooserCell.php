@@ -11,7 +11,7 @@ use Croogo\Core\Croogo;
  */
 class LinkChooserCell extends Cell
 {
-    public function display($target)
+    public function display($target): void
     {
         Croogo::dispatchEvent('Controller.Links.setupLinkChooser', $this);
         $linkChoosers = Configure::read('Croogo.linkChoosers');

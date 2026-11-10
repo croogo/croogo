@@ -3,7 +3,7 @@
 namespace Croogo\Extensions;
 
 use Cake\Core\App;
-use Cake\Filesystem\Folder;
+use Croogo\Core\Utility\FsUtils;
 use Croogo\Core\Exception\Exception;
 use ZipArchive;
 
@@ -148,13 +148,12 @@ class ExtensionsInstaller
 
         $Zip = new ZipArchive;
         if ($Zip->open($path) === true) {
-            new Folder($pluginPath, true);
+            mkdir($pluginPath, 0777, true);
             $Zip->extractTo($pluginPath);
             if (!empty($this->_rootPath[$path])) {
                 $old = $pluginPath . $this->_rootPath[$path];
                 $new = $pluginPath;
-                $Folder = new Folder($old);
-                $Folder->move($new);
+                FsUtils::moveContents($old, $new);
             }
             $Zip->close();
 
@@ -235,13 +234,12 @@ class ExtensionsInstaller
 
         $Zip = new ZipArchive;
         if ($Zip->open($path) === true) {
-            new Folder($themePath, true);
+            mkdir($themePath, 0777, true);
             $Zip->extractTo($themePath);
             if (!empty($this->_rootPath[$path])) {
                 $old = $themePath . $this->_rootPath[$path];
                 $new = $themePath;
-                $Folder = new Folder($old);
-                $Folder->move($new);
+                FsUtils::moveContents($old, $new);
             }
             $Zip->close();
 

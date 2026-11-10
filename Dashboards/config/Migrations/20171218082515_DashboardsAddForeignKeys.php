@@ -4,7 +4,7 @@ use Migrations\AbstractMigration;
 
 class DashboardsAddForeignKeys extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
     }
 }

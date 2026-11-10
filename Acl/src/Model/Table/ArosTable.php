@@ -22,11 +22,9 @@ class ArosTable extends \Acl\Model\Table\ArosTable
      */
     public function getRoles($roles)
     {
-        $aros = $this->find('all', [
-            'conditions' => [
-                'Aros.model' => 'Roles',
-                'Aros.foreign_key IN' => array_keys($roles->toArray()),
-            ],
+        $aros = $this->find('all', conditions: [
+            'Aros.model' => 'Roles',
+            'Aros.foreign_key IN' => array_keys($roles->toArray()),
         ]);
 
         return collection($aros)->combine('foreign_key', 'id')->toArray();

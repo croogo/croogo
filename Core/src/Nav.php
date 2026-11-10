@@ -96,7 +96,7 @@ class Nav
      * @param array $path menu options array
      * @return void
      */
-    public static function add($menu, $path, $options = [])
+    public static function add($menu, $path, $options = []): void
     {
         // Juggle argument for backward compatibility
         if (is_array($path)) {
@@ -174,7 +174,7 @@ class Nav
      * @param string $path dot separated path in the array.
      * @return void
      */
-    public static function remove($path)
+    public static function remove($path): void
     {
         self::$_items = Hash::remove(self::$_items, $path);
     }

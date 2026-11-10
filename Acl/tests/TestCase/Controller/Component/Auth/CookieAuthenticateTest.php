@@ -41,7 +41,7 @@ class CookieAuthenticateTest extends CakeTestCase
     /**
      * setup
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->skipIf(!function_exists('mcrypt_decrypt'), 'mcrypt not found');
         $this->controller = $this->getMock('Controller', null);
@@ -55,7 +55,7 @@ class CookieAuthenticateTest extends CakeTestCase
     /**
      * Test verify
      */
-    public function testVerifySuccessful()
+    public function testVerifySuccessful(): void
     {
         $username = 'teresa';
         $cookie = $this->autoLogin->testCookie($username);
@@ -70,7 +70,7 @@ class CookieAuthenticateTest extends CakeTestCase
     /**
      * Verify against tampered data
      */
-    public function testVerifyTamperedCookie()
+    public function testVerifyTamperedCookie(): void
     {
         $username = 'rchavik';
         $cookie = $this->autoLogin->testCookie('rchavik');
@@ -91,7 +91,7 @@ class CookieAuthenticateTest extends CakeTestCase
     /**
      * Test Ignore requests with data
      */
-    public function testIgnoreRequestWithData()
+    public function testIgnoreRequestWithData(): void
     {
         $request = $this->getMock('Request', null);
         $response = $this->getMock('Response');
@@ -110,7 +110,7 @@ class CookieAuthenticateTest extends CakeTestCase
     /**
      * Test Ignore POST requests
      */
-    public function testIgnorePostRequest()
+    public function testIgnorePostRequest(): void
     {
         $request = $this->getMock('Request', null);
         $response = $this->getMock('Response');

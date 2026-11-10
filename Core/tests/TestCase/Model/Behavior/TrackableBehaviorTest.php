@@ -22,14 +22,14 @@ use Croogo\Users\Model\User;
 class TrackableBehaviorTest extends CroogoTestCase
 {
 
-    public $fixtures = [
+    protected array $fixtures = [
 //      'plugin.Croogo/Core.Trackable',
 //      'plugin.Croogo/Users.User',
 //      'plugin.Croogo/Users.Role',
 //      'plugin.Croogo/Settings.Setting',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -44,7 +44,7 @@ class TrackableBehaviorTest extends CroogoTestCase
 //      $this->model->Behaviors->attach('Croogo.Trackable');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Configure::delete('Trackable.Auth');
 //      Session::delete('Auth.User');
@@ -97,7 +97,7 @@ class TrackableBehaviorTest extends CroogoTestCase
     /**
      * Test model operation using session auth data
      */
-    public function testUserDataFromSession()
+    public function testUserDataFromSession(): void
     {
         $this->_testFieldPopulation('_authSession');
     }
@@ -105,7 +105,7 @@ class TrackableBehaviorTest extends CroogoTestCase
     /**
      * Test model operation using manually setup auth data
      */
-    public function testUserDataFromTrackable()
+    public function testUserDataFromTrackable(): void
     {
         $this->_testFieldPopulation('_authTrackable');
     }
@@ -113,7 +113,7 @@ class TrackableBehaviorTest extends CroogoTestCase
     /**
      * Test auth data override
      */
-    public function testAuthDataOverride()
+    public function testAuthDataOverride(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -132,7 +132,7 @@ class TrackableBehaviorTest extends CroogoTestCase
     /**
      * Test with uncommon/inherited User model
      */
-    public function testUncommonInheritedUserModel()
+    public function testUncommonInheritedUserModel(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -160,7 +160,7 @@ class TrackableBehaviorTest extends CroogoTestCase
     /**
      * Test Trackable saveField
      */
-    public function testTrackableSaveField()
+    public function testTrackableSaveField(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 

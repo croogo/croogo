@@ -25,9 +25,9 @@ class SettingsComponent extends Component
     /**
      * startup
      */
-    public function startup(Event $event)
+    public function startup(\Cake\Event\EventInterface $event): void
     {
         $this->_controller = $event->getSubject();
-        $this->_controller->loadModel('Croogo/Settings.Settings');
+        $this->_controller->Settings = $this->_controller->fetchTable('Croogo/Settings.Settings');
     }
 }

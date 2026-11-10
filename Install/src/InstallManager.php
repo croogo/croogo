@@ -3,13 +3,12 @@
 namespace Croogo\Install;
 
 use Cake\Cache\Cache;
-use Cake\Console\Shell;
+use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Database\Exception\MissingConnectionException;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\LogTrait;
-use Cake\Utility\Security;
 use Cake\ORM\TableRegistry;
 use Croogo\Acl\AclGenerator;
 use Croogo\Core\Database\SequenceFixer;
@@ -20,6 +19,8 @@ class InstallManager
 {
     const PHP_VERSION = '7.1.30';
     const CAKE_VERSION = '3.8.0';
+
+    const DATASOURCE_REGEX = "/(\'Datasources'\s\=\>\s\[\n\s*\'default\'\s\=\>\s\[\n\X*\'__FIELD__\'\s\=\>\s\').*(\'\,)(?=\X*\'test\'\s\=\>\s)/";
 
     use LogTrait;
 
@@ -54,6 +55,13 @@ class InstallManager
      */
     protected $_croogoPlugin;
 
+    /**
+     * Kontroler (ustawiany przez InstallController przy setupAcos)
+     *
+     * @var \Cake\Controller\Controller|null
+     */
+    public $controller;
+
     public function __construct()
     {
         Configure::write('Trackable.Auth.User.id', 1);
@@ -67,29 +75,20 @@ class InstallManager
         ];
     }
 
-    /**
-     * Set the security.salt value in application config file
-     *
-     * @return string Success or error message
-     */
-    public function replaceSalt()
+    protected function _updateDatasourceConfig($path, $field, $value)
     {
-        $file = ROOT . '/config/app.php';
-        $content = file_get_contents($file);
-        $newKey = hash('sha256', Security::randomBytes(64));
+        $config = file_get_contents($path);
+        $config = preg_replace(
+            str_replace('__FIELD__', $field, InstallManager::DATASOURCE_REGEX),
+            '$1' . addslashes($value) . '$2',
+            $config
+        );
 
-        $content = str_replace('__SALT__', $newKey, $content, $count);
-
-        if ($count == 0) {
-            return 'No Security.salt placeholder to replace.';
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
         }
 
-        $result = file_put_contents($file, $content);
-        if ($result) {
-            return 'Updated Security.salt value in config/' . $file;
-        }
-
-        return 'Unable to update Security.salt value.';
+        return file_put_contents($path, $config);
     }
 
     public function createDatabaseFile($config)
@@ -106,7 +105,6 @@ class InstallManager
         ConnectionManager::setConfig('default', $config);
 
         try {
-            /** @var \Cake\Database\Connection */
             $db = ConnectionManager::get('default');
             $db->connect();
         } catch (MissingConnectionException $e) {
@@ -121,7 +119,11 @@ class InstallManager
         }
 
         $configPath = ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'app.php';
-        DatasourceConfigUpdater::update($configPath, $config);
+        foreach (['host', 'username', 'password', 'database', 'driver'] as $field) {
+            if (isset($config[$field]) && (!empty($config[$field] || $field == 'password'))) {
+                $this->_updateDatasourceConfig($configPath, $field, $config[$field]);
+            }
+        }
 
         return true;
     }
@@ -133,8 +135,10 @@ class InstallManager
      */
     public function installCompleted()
     {
-        PluginManager::load('Croogo/Settings', ['routes' => true]);
-        $Setting = TableRegistry::get('Croogo/Settings.Settings');
+        if (!Plugin::isLoaded('Croogo/Settings')) {
+            PluginManager::load('Croogo/Settings', ['routes' => true]);
+        }
+        $Setting = TableRegistry::getTableLocator()->get('Croogo/Settings.Settings');
         $Setting->removeBehavior('Cached');
         if (!function_exists('mcrypt_decrypt') && !function_exists('openssl_decrypt')) {
             $Setting->write('Access Control.autoLoginDuration', '');
@@ -153,17 +157,13 @@ class InstallManager
      */
     public function setupDatabase()
     {
+        // Tylko pluginy obecne w tym forku (pełny Croogo miał też Blocks/Taxonomy/
+        // Meta/Nodes/Comments/Contacts — usunięte z forka).
         $plugins = [
             'Croogo/Users',
             'Croogo/Acl',
             'Croogo/Settings',
-            'Croogo/Blocks',
-            'Croogo/Taxonomy',
             'Croogo/FileManager',
-            'Croogo/Meta',
-            'Croogo/Nodes',
-            'Croogo/Comments',
-            'Croogo/Contacts',
             'Croogo/Menus',
             'Croogo/Dashboards',
         ];
@@ -231,7 +231,32 @@ class InstallManager
         return $croogoPlugin->seed($plugin);
     }
 
-    public function setupAcos()
+    /**
+     * Create admin user
+     *
+     * @var User $user User entity
+     * @return If user is created
+     */
+    public function createAdminUser($user)
+    {
+        $Users = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Users');
+        $Roles = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
+        $Roles->addBehavior('Croogo/Core.Aliasable');
+
+        $user->name = $user['username'];
+        $user->email = '';
+        $user->timezone = 'UTC';
+        $user->role_id = $Roles->getBehavior('Aliasable')->byAlias('superadmin');
+        $user->status = true;
+        $user->activation_key = md5(uniqid());
+        if ($user->getErrors()) {
+            return __d('croogo', 'Unable to create administrative user. Validation errors:');
+        }
+
+        return $Users->save($user) !== false;
+    }
+
+    public function setupAcos(): void
     {
         Cache::clearAll();
         $generator = new AclGenerator();
@@ -242,57 +267,39 @@ class InstallManager
         $generator->insertAcos(ConnectionManager::get('default'));
     }
 
-    public function setupGrants($success = null, $error = null)
+    public function setupGrants($success = null, $error = null): void
     {
         if (!$success) {
-            $success = function () {
+            $success = function (): void {
             };
         }
         if (!$error) {
-            $error = function () {
+            $error = function (): void {
             };
         }
 
-        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $Roles = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Users.Roles');
         $Roles->addBehavior('Croogo/Core.Aliasable');
 
-        $Permission = TableRegistry::get('Croogo/Acl.Permissions');
+        $Permission = \Cake\ORM\TableRegistry::getTableLocator()->get('Croogo/Acl.Permissions');
         $admin = 'Role-admin';
         $public = 'Role-public';
         $registered = 'Role-registered';
         $publisher = 'Role-publisher';
 
+        // Tylko pluginy/akcje obecne w tym forku (pełny Croogo miał też Nodes/
+        // Contacts/Blocks/Comments, a frontowy UsersController więcej akcji —
+        // nieistniejące ACO -> DbAcl::allow() "Invalid node").
         $setup = [
-            //            'controllers/Croogo\Comments/Comments/index' => [$public],
-            //            'controllers/Croogo\Comments/Comments/add' => [$public],
-            //            'controllers/Croogo\Comments/Comments/delete' => [$registered],
-            'controllers/Croogo\Contacts/Contacts/view' => [$public],
-            'controllers/Croogo\Nodes/Nodes/index' => [$public],
-            'controllers/Croogo\Nodes/Nodes/feed' => [$public],
-            'controllers/Croogo\Nodes/Nodes/term' => [$public],
-            'controllers/Croogo\Nodes/Nodes/promoted' => [$public],
-            'controllers/Croogo\Nodes/Nodes/search' => [$public],
-            'controllers/Croogo\Nodes/Nodes/view' => [$public],
-            'controllers/Croogo\Users/Users/index' => [$registered],
-            'controllers/Croogo\Users/Users/add' => [$public],
-            'controllers/Croogo\Users/Users/activate' => [$public],
-            'controllers/Croogo\Users/Users/edit' => [$registered],
-            'controllers/Croogo\Users/Users/forgot' => [$public],
-            'controllers/Croogo\Users/Users/reset' => [$public],
             'controllers/Croogo\Users/Users/login' => [$public],
-            'controllers/Croogo\Users/Users/logout' => [$public, $registered],
-            'controllers/Croogo\Users/Admin/Users/logout' => [$public, $registered],
-            'controllers/Croogo\Users/Users/view' => [$registered],
+            'controllers/Croogo\Users/Users/logout' => [$registered],
+            'controllers/Croogo\Users/Admin/Users/logout' => [$registered],
 
             'controllers/Croogo\Dashboards/Admin/Dashboards' => [$admin],
-            'controllers/Croogo\Nodes/Admin/Nodes' => [$publisher],
             'controllers/Croogo\Menus/Admin/Menus' => [$publisher],
             'controllers/Croogo\Menus/Admin/Links' => [$publisher],
-            'controllers/Croogo\Blocks/Admin/Blocks' => [$publisher],
             'controllers/Croogo\FileManager/Admin/Attachments' => [$publisher],
             'controllers/Croogo\FileManager/Admin/FileManager' => [$publisher],
-            'controllers/Croogo\Contacts/Admin/Contacts' => [$publisher],
-            'controllers/Croogo\Contacts/Admin/Messages' => [$publisher],
             'controllers/Croogo\Users/Admin/Users/view' => [$admin],
         ];
 
@@ -312,12 +319,15 @@ class InstallManager
 }
 
 //phpcs:disable
-class DummyShell extends Shell
+// Cake 5: Shell usunięty -> adapter na ConsoleIo (AclExtras::setShell przyjmuje ConsoleIo).
+class DummyShell extends ConsoleIo
 {
     use LogTrait;
-    public function out($msg = null, $newlines = 1, $level = Shell::NORMAL)
+    public function out(array|string $message = '', int $newlines = 1, int $level = ConsoleIo::NORMAL): ?int
     {
-        $msg = preg_replace('/\<\/?\w+\>/', null, $msg);
+        $msg = preg_replace('/\<\/?\w+\>/', '', is_array($message) ? implode("\n", $message) : (string)$message);
         $this->log($msg);
+
+        return null;
     }
 }

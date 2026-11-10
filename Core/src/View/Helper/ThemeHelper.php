@@ -30,7 +30,7 @@ class ThemeHelper extends Helper
      * @var array
      * @access public
      */
-    public $helpers = [
+    public array $helpers = [
     ];
 
     /**
@@ -44,7 +44,8 @@ class ThemeHelper extends Helper
         $this->_themeSettings = $themeConfig['settings'];
 
         $this->_iconMap = $this->_themeSettings['icons'];
-        $prefix = $View->getRequest()->getParam('prefix');
+        // PHP 8.5: null jako offset tablicy deprecated
+        $prefix = $View->getRequest()->getParam('prefix') ?? '';
         if (isset($this->_themeSettings['prefixes'][$prefix]['helpers']['Html']['icons'])) {
             $this->_iconMap = Hash::merge(
                 $this->_iconMap,

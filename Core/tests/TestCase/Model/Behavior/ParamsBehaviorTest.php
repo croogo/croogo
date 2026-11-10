@@ -7,7 +7,7 @@ use Taxonomy\Model\Type;
 class ParamsBehaviorTest extends CroogoTestCase
 {
 
-    public $fixtures = [
+    protected array $fixtures = [
 //      'plugin.Croogo/Users.Aco',
 //      'plugin.Croogo/Users.Aro',
 //      'plugin.Croogo/Users.ArosAco',
@@ -40,7 +40,7 @@ class ParamsBehaviorTest extends CroogoTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 //      $this->Type = ClassRegistry::init('Taxonomy.Type');
@@ -51,14 +51,14 @@ class ParamsBehaviorTest extends CroogoTestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->Type);
 //      ClassRegistry::flush();
     }
 
-    public function testSingle()
+    public function testSingle(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -75,7 +75,7 @@ class ParamsBehaviorTest extends CroogoTestCase
         $this->assertEqual($type['Params'], $expected);
     }
 
-    public function testMultiple()
+    public function testMultiple(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -93,7 +93,7 @@ class ParamsBehaviorTest extends CroogoTestCase
         $this->assertEqual($type['Params'], $expected);
     }
 
-    public function testMixedLineEndings()
+    public function testMixedLineEndings(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -113,7 +113,7 @@ class ParamsBehaviorTest extends CroogoTestCase
         $this->assertEqual($type['Params'], $expected);
     }
 
-    public function testEmbeddedOptions()
+    public function testEmbeddedOptions(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -139,7 +139,7 @@ class ParamsBehaviorTest extends CroogoTestCase
         $this->assertEqual($type['Params'], $expected);
     }
 
-    public function testBoolean()
+    public function testBoolean(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
@@ -167,7 +167,7 @@ class ParamsBehaviorTest extends CroogoTestCase
         $this->assertInternalType('boolean', $type['Params']['param6']);
     }
 
-    public function testNumeric()
+    public function testNumeric(): void
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 

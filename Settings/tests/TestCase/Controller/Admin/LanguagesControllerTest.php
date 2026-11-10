@@ -7,21 +7,21 @@ use Croogo\Core\TestSuite\IntegrationTestCase;
 
 class LanguagesControllerTest extends IntegrationTestCase
 {
-    public $fixtures = [
-        'plugin.Croogo/Blocks.Block',
-        'plugin.Croogo/Comments.Comment',
-        'plugin.Croogo/Core.Settings',
-        'plugin.Croogo/Settings.Language',
-        'plugin.Croogo/Menus.Menu',
-        'plugin.Croogo/Meta.Meta',
-        'plugin.Croogo/Nodes.Node',
-        'plugin.Croogo/Users.User',
-        'plugin.Croogo/Users.Role',
-        'plugin.Croogo/Taxonomy.Type',
-        'plugin.Croogo/Taxonomy.Vocabulary',
+    protected array $fixtures = [
+        'plugin.Croogo/Blocks',
+        'plugin.Croogo/Comments',
+        'plugin.Croogo/Core',
+        'plugin.Croogo/Settings',
+        'plugin.Croogo/Menus',
+        'plugin.Croogo/Meta',
+        'plugin.Croogo/Nodes',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Users',
+        'plugin.Croogo/Taxonomy',
+        'plugin.Croogo/Taxonomy',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -39,14 +39,14 @@ class LanguagesControllerTest extends IntegrationTestCase
         ]);
     }
 
-    public function testAdminIndex()
+    public function testAdminIndex(): void
     {
         $this->get('/admin/settings/Languages/index');
 
         $this->assertNotEmpty($this->viewVariable('languages'));
     }
 
-    public function testAdminAdd()
+    public function testAdminAdd(): void
     {
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -64,7 +64,7 @@ class LanguagesControllerTest extends IntegrationTestCase
         $this->assertEquals('Bengali', $language->title);
     }
 
-    public function testAdminEdit()
+    public function testAdminEdit(): void
     {
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -83,7 +83,7 @@ class LanguagesControllerTest extends IntegrationTestCase
         $this->assertEquals('English [modified]', $language->title);
     }
 
-    public function testAdminDelete()
+    public function testAdminDelete(): void
     {
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -103,7 +103,7 @@ class LanguagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testAdminMoveUp()
+    public function testAdminMoveUp(): void
     {
         $id = $this->_addLanguages();
 
@@ -120,7 +120,7 @@ class LanguagesControllerTest extends IntegrationTestCase
         ], $list);
     }
 
-    public function testAdminMoveUpWithSteps()
+    public function testAdminMoveUpWithSteps(): void
     {
         $id = $this->_addLanguages();
 
@@ -137,7 +137,7 @@ class LanguagesControllerTest extends IntegrationTestCase
         ], $list);
     }
 
-    public function testAdminMoveDown()
+    public function testAdminMoveDown(): void
     {
         $this->_addLanguages();
 
@@ -154,7 +154,7 @@ class LanguagesControllerTest extends IntegrationTestCase
         ], $list);
     }
 
-    public function testAdminMoveDownWithSteps()
+    public function testAdminMoveDownWithSteps(): void
     {
         $this->_addLanguages();
 
@@ -176,7 +176,7 @@ class LanguagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testAdminSelect()
+    public function testAdminSelect(): void
     {
         $this->markTestIncomplete('Still being ported');
 

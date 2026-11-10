@@ -7,7 +7,7 @@ use Exception;
 
 class ToggleAction extends BaseAction
 {
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'enabled' => true,
         'field' => 'status'
     ];
@@ -31,10 +31,10 @@ class ToggleAction extends BaseAction
         $this->_controller()->viewBuilder()->setLayout('ajax');
         $this->_controller()->viewBuilder()->setTemplate('Croogo/Core./Common/admin_toggle');
 
-        $entity = $this->_table()->get($id);
+        $entity = $this->_model()->get($id);
         $entity->set($this->getConfig('field'), $status);
-        if (!$this->_table()->save($entity)) {
-            throw new Exception(__d('croogo', 'Failed toggling field %s to %s', $this->config('field'), $status));
+        if (!$this->_model()->save($entity)) {
+            throw new Exception(__d('croogo', 'Failed toggling field %s to %s', $this->getConfig('field'), $status));
         }
 
         $this->_controller()->set(compact('id', 'status'));

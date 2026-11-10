@@ -140,11 +140,13 @@ class StringConverter
                 }
             }
         }
+        // Cake 5: Route::__construct waliduje 'plugin'/'prefix' jako string|null.
+        // Konwencja Cake 3 (false) daje fatal przy connect() trasy z takiego linka.
         if (!isset($linkArr['prefix'])) {
-            $linkArr['prefix'] = false;
+            $linkArr['prefix'] = null;
         }
         if (!isset($linkArr['plugin'])) {
-            $linkArr['plugin'] = false;
+            $linkArr['plugin'] = null;
         }
 
         if (isset($query)) {
