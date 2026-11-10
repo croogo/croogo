@@ -31,6 +31,7 @@ use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
+use Crud\Controller\ControllerTrait as CrudControllerTrait;
 use function Cake\I18n\__d;
 
 /**
@@ -290,7 +291,7 @@ class AuthComponent extends Component implements EventDispatcherInterface
         $controller = $event->getSubject();
 
         $action = $controller->getRequest()->getParam('action');
-        if ($action === null || !$controller->isAction($action)) {
+        if ($action === null || !$this->_isRunnableAction($controller, $action)) {
             return null;
         }
 
@@ -338,6 +339,34 @@ class AuthComponent extends Component implements EventDispatcherInterface
             'Controller.initialize' => 'handleInitialize',
             'Controller.startup' => 'startup',
         ];
+    }
+
+    /**
+     * Whether the controller will run code for this action.
+     *
+     * A controller using the Crud ControllerTrait runs enabled Crud-mapped actions that have no
+     * method of their own, so those get the same checks as method actions. Disabled and unknown
+     * actions are left to answer 404.
+     *
+     * @param \Cake\Controller\Controller $controller Controller handling the request.
+     * @param string $action Requested action name.
+     * @return bool
+     */
+    protected function _isRunnableAction(Controller $controller, string $action): bool
+    {
+        if ($controller->isAction($action)) {
+            return true;
+        }
+
+        $traits = [];
+        for ($class = get_class($controller); $class !== false; $class = get_parent_class($class)) {
+            $traits += class_uses($class);
+        }
+        if (!isset($traits[CrudControllerTrait::class]) || !$controller->components()->has('Crud')) {
+            return false;
+        }
+
+        return $controller->components()->get('Crud')->isActionMapped($action);
     }
 
     /**
