@@ -21,28 +21,32 @@ class UserMailer extends Mailer
 
     public function resetPassword(User $user)
     {
-        return $this
-            ->profile('default')
-            ->to($user->email)
-            ->subject(__d('croogo', '[%s] Reset Password', Configure::read('Site.title')))
-            ->template('Croogo/Users.forgot_password')
-            ->emailFormat('both')
-            ->set([
-                'user' => $user
+        $this
+            ->setProfile('default')
+            ->setTo($user->email)
+            ->setSubject(__d('croogo', '[%s] Reset Password', Configure::read('Site.title')))
+            ->setEmailFormat('both')
+            ->setViewVars([
+                'user' => $user,
             ]);
+        $this->viewBuilder()->setTemplate('Croogo/Users.forgot_password');
+
+        return $this;
     }
 
     public function registrationActivation(User $user)
     {
-        return $this
-            ->profile('default')
-            ->to($user->email)
-            ->subject(__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')))
-            ->template('Croogo/Users.register')
-            ->emailFormat('both')
-            ->set([
-            'user' => $user
+        $this
+            ->setProfile('default')
+            ->setTo($user->email)
+            ->setSubject(__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')))
+            ->setEmailFormat('both')
+            ->setViewVars([
+                'user' => $user,
             ]);
+        $this->viewBuilder()->setTemplate('Croogo/Users.register');
+
+        return $this;
     }
 
     public function onRegistration(Event $event, User $user): void

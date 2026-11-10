@@ -197,12 +197,12 @@ class UsersTable extends CroogoTable
     public function changePasswordFromReset(User $user, array $data)
     {
         $user = $this->patchEntity($user, $data, [
-            'fieldList' => [
+            'fields' => [
                 'password',
                 'verify_password',
             ]
         ]);
-        if ($user->errors()) {
+        if ($user->getErrors()) {
             return $user;
         }
 
